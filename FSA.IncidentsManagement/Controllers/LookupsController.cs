@@ -14,6 +14,7 @@ namespace FSA.IncidentsManagement.Controllers
     [Route("api/[controller]")]
     [Produces("application/json")]
     [ApiController]
+    [Authorize]
     public class LookupsController : ControllerBase
     {
         private readonly ILogger<LookupsController> log;
@@ -28,8 +29,6 @@ namespace FSA.IncidentsManagement.Controllers
         [HttpGet("Categories")]
         public async Task<IActionResult> Categories()
         {
-            Debug.WriteLine(this.User);
-            Debug.WriteLine(this.User.Claims);
             return new OkObjectResult((await this.lookupdata.Categories
                             .GetAll()).ToList());
         }

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -21,13 +21,13 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Identity.Client" Version="4.14.0" />
-    <PackageReference Include="Microsoft.Identity.Web" Version="0.1.4-preview" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.4.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\FSA.IncidentMangementMent.Root\FSA.IncidentsManagement.Root.csproj" />
     <ProjectReference Include="..\FSA.IncidentsManagementDb\FSA.IncidentsManagementDb.csproj" />
+    <ProjectReference Include="..\microsoft-identity-web\src\Microsoft.Identity.Web\Microsoft.Identity.Web.csproj" />
   </ItemGroup>
 
 </Project>

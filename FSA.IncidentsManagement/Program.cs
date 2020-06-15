@@ -21,7 +21,7 @@ namespace FSA.IncidentsManagement
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((context, config) =>
                 {
-                    if(Environment.GetEnvironmentVariable("ENVIRONMENT")!="Development")
+                    if(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") !="Development")
                     {
                         var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("VaultUri"));
                         config.AddAzureKeyVault(
