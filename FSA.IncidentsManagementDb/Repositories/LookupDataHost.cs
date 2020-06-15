@@ -29,7 +29,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         public IReferenceDataRepo<PersonaRole> PersonaRole => new ReferenceDataRepo<PersonaRole, PersonaRoleDb>(ctx, (itm) => itm.ToClient());
         public IReferenceDataRepo<ProductType> ProductTypes => new ReferenceDataRepo<ProductType, ProductTypeDb>(ctx, (itm) => itm.ToClient());
         public IReferenceDataRepo<Status> Status => new ReferenceDataRepo<Status, StatusDb>(ctx, (itm) => itm.ToClient());
-        public IReferenceDataRepo<UnitQuantity> UnitQuantity => new ReferenceDataRepo<UnitQuantity, UnitQuantityDb>(ctx, (itm) => itm.ToClient());
+        public IReferenceDataRepo<UnitQuantity> Units => new ReferenceDataRepo<UnitQuantity, UnitQuantityDb>(ctx, (itm) => itm.ToClient());
 
         public IReferenceDataRepo<PersonaRole> PersonaRoles => new ReferenceDataRepo<PersonaRole, PersonaRoleDb>(ctx, (itm) => itm.ToClient());
     }

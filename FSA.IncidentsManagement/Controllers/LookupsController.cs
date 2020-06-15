@@ -115,5 +115,12 @@ namespace FSA.IncidentsManagement.Controllers
             return new OkObjectResult((await this.lookupdata.Status
                             .GetAll()).ToList());
         }
+
+        [HttpGet("Units")]
+        public async Task<IActionResult> UnitQuantities()
+        {
+            return new OkObjectResult((await this.lookupdata.Units
+                            .GetAll()).ToList());
+        }
     }
 }

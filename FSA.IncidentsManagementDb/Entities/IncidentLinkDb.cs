@@ -2,11 +2,9 @@
 
 namespace FSA.IncidentsManagementDb.Entities
 {
-    internal class IncidentIncidentLinkDb
+    internal class IncidentLinkDb : BaseEntityDb
     {
         public int LinkFromIncidentId{ get; set; }
         public int LinkToIncidentId{ get; set; }
-        public int LastChangedById{ get; set; }
-        public DateTime LastChangedDate { get; set; }
     }
 }

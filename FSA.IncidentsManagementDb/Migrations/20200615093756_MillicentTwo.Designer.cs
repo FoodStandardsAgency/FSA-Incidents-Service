@@ -4,14 +4,16 @@ using FSA.IncidentsManagementDb;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FSA.IncidentsManagementDb.Migrations
 {
     [DbContext(typeof(FSADbContext))]
-    partial class FSADbContextModelSnapshot : ModelSnapshot
+    [Migration("20200615093756_MillicentTwo")]
+    partial class MillicentTwo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -240,15 +242,6 @@ namespace FSA.IncidentsManagementDb.Migrations
                     b.Property<int>("ClassificationId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ContactMethodId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("DataSourceId")
                         .HasColumnType("int");
 
@@ -287,12 +280,6 @@ namespace FSA.IncidentsManagementDb.Migrations
 
                     b.Property<int?>("LeadOfficerId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("Modified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("NotifierId")
                         .HasColumnType("int");
@@ -335,7 +322,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                     b.ToTable("Incidents");
                 });
 
-            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.IncidentLinkDb", b =>
+            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.IncidentIncidentLinkDb", b =>
                 {
                     b.Property<int>("LinkFromIncidentId")
                         .HasColumnType("int");
@@ -343,17 +330,11 @@ namespace FSA.IncidentsManagementDb.Migrations
                     b.Property<int>("LinkToIncidentId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Created")
+                    b.Property<int>("LastChangedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("LastChangedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Modified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("LinkFromIncidentId", "LinkToIncidentId");
 
@@ -428,17 +409,11 @@ namespace FSA.IncidentsManagementDb.Migrations
                     b.Property<string>("EmailAddress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FaxAddress")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("LastChangedById")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("LastChangedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("MainContact")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Organisation")
                         .HasColumnType("nvarchar(max)");

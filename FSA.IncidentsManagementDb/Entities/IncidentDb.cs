@@ -4,12 +4,13 @@ using System.Collections.Generic;
 
 namespace FSA.IncidentsManagementDb.Entities
 {
-    internal class IncidentDb
+    internal class IncidentDb : BaseEntityDb
     {
         public int Id { get; set; }
         public string IncidentTitle { get; set; }
         public string IncidentDescription { get; set; }
         public int IncidentTypeId { get; set; }
+        public int ContactMethodId { get; set; }
         public CategoryDb IncidentType { get; set; }
         public int StatusId { get; set; }
         public StatusDb Status { get; set; }

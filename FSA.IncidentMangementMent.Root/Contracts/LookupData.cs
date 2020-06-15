@@ -19,5 +19,6 @@ namespace FSA.IncidentsManagement.Root.Contracts
         IReferenceDataRepo<PersonaRole> PersonaRoles { get; }
         IReferenceDataRepo<ProductType> ProductTypes { get; }
         IReferenceDataRepo<Status> Status { get; }
+        IReferenceDataRepo<UnitQuantity> Units { get; }
     }
 }
