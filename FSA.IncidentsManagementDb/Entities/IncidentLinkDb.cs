@@ -4,7 +4,7 @@ namespace FSA.IncidentsManagementDb.Entities
 {
     internal class IncidentLinkDb : BaseEntityDb
     {
-        public int LinkFromIncidentId{ get; set; }
-        public int LinkToIncidentId{ get; set; }
+        public int FromIncidentId{ get; set; }
+        public int ToIncidentId{ get; set; }
     }
 }

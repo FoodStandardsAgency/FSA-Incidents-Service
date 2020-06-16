@@ -2,8 +2,12 @@
 
 namespace FSA.IncidentsManagementDb.Entities
 {
-    internal class IncidentCommentDb
+    internal class IncidentCommentDb : BaseEntityDb
     {
+        public IncidentCommentDb()
+        {
+        }
+
         public int Id{ get; set; }
         public int IncidentId { get; set; }
         public IncidentDb Incident { get; set; }

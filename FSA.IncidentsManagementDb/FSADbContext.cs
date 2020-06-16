@@ -15,7 +15,7 @@ namespace FSA.IncidentsManagementDb
         internal DbSet<GatewayUserIncidentDb> GatewayUserIncidents { get; set; }
         internal DbSet<IncidentCommentDb> IncidentComments { get; set; }
         internal DbSet<IncidentDb> Incidents { get; set; }
-        internal DbSet<IncidentLinkDb> IncidentIncidentLinks { get; set; }
+        internal DbSet<IncidentLinkDb> IncidentLinks { get; set; }
         internal DbSet<IncidentOMITGroupDb> IncidentOMITGroups { get; set; }
         internal DbSet<OrganisationDb> Organisations { get; set; }
         internal DbSet<CategoryDb> Categories { get; set; }
@@ -41,7 +41,7 @@ namespace FSA.IncidentsManagementDb
         {
             modelBuilder.Entity<GatewayErrorCodeDb>().HasKey(p => p.ReturnCode);
             modelBuilder.Entity<GatewayRequestDetailDb>().HasKey(p => p.RequestId);
-            modelBuilder.Entity<IncidentLinkDb>().HasKey(p => new { p.LinkFromIncidentId, p.LinkToIncidentId });
+            modelBuilder.Entity<IncidentLinkDb>().HasKey(p => new { p.FromIncidentId, p.ToIncidentId });
 
             //modelBuilder.Entity<OrganisationDb>().HasOne(p=>p.OrganisationRole).WithOne().OnDelete(DeleteBehavior.NoAction);
         }

@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FSA.IncidentsManagement.Models;
+using FSA.IncidentsManagement.Root.Contracts;
+using FSA.IncidentsManagement.Root.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace FSA.IncidentsManagement.Controllers
 {
@@ -12,32 +16,58 @@ namespace FSA.IncidentsManagement.Controllers
     [ApiController]
     public class IncidentsController : ControllerBase
     {
-        public IncidentsController(ILogger<IncidentsController> log)
-        {
+        private readonly ILogger<IncidentsController> log;
+        private readonly IFSAIncidentsData fsaData;
 
+        public IncidentsController(ILogger<IncidentsController> log, IFSAIncidentsData fsaData)
+        {
+            this.log = log;
+            this.fsaData = fsaData;
         }
 
         [HttpGet()]
-        public async Task<IActionResult>GetIncident()
+        [SwaggerOperation(Summary ="Get incident by id")]
+        [ProducesResponseType(typeof(Incident), 200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> GetIncident(int id)
         {
-            return new OkObjectResult(Enumerable.Empty<string>());
+            return new OkObjectResult(await this.fsaData.Incidents.Get(id));
+        }
+
+        [HttpPut()]
+        [SwaggerOperation(Summary ="Replace an existing incident")]
+        [ProducesResponseType(typeof(Incident), 200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> UpdateIncident([FromBody, SwaggerParameter("Updated Incident", Required = true)] Incident incident) {
+            return new OkObjectResult(await this.fsaData.Incidents.UpdateIncident(incident));
         }
 
         [HttpPost()]
-        public async Task<IActionResult> UpdateIncident() {
-            return new OkObjectResult(Enumerable.Empty<string>());
+        [SwaggerOperation(Summary = "Create an existing incident")]
+        [ProducesResponseType(typeof(Incident), 200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> CreateIncident([FromBody, SwaggerParameter("Create Incident", Required = true)] IncidentApiModel incident)
+        {
+            //return new OkObjectResult(await this.fsaData.Incidents.Add(incident)); 
+            return Ok();
         }
 
         [HttpPost("Classification")]
-        public async Task<IActionResult> UpdateClassification(int incidentId)
+        [SwaggerOperation(Summary = "Update classification of an incident")]
+        [ProducesResponseType(typeof(Incident), 200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> UpdateClassification(int incidentId, int classificationId)
         {
-            return new OkObjectResult(new { });
+            return new OkObjectResult(await this.fsaData.Incidents.UpdateClassification(incidentId,classificationId));
         }
 
         [HttpPost("Status")]
-        public async Task<IActionResult> UpdateStatus(int incidentId)
+        [SwaggerOperation(Summary = "Update status of an incident")]
+        [ProducesResponseType(typeof(Incident), 200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> UpdateStatus(int incidentId, int statusId)
         {
-            return new OkResult();
+            return new OkObjectResult(await this.fsaData.Incidents.UpdateStatus(incidentId, statusId));
         }
     }
 }

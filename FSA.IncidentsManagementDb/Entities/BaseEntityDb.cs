@@ -7,7 +7,7 @@ namespace FSA.IncidentsManagementDb.Entities
     /// <summary>
     ///  All entities will required this information in one form or another.
     /// </summary>
-    internal class BaseEntityDb
+    internal abstract class BaseEntityDb
     {
         public string ModifiedBy { get; set; }
         public DateTime Modified { get; set; }

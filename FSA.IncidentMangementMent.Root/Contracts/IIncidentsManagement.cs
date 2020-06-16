@@ -7,18 +7,22 @@ using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Root.Contracts
 {
-    interface IIncidentsManagement
+    public interface IIncidentsManagement
     {
-        public Task<Incident> Get(int Id);
+        Task<Incident> Get(int Id);
 
-        public Task<IEnumerable<Incident>> GetAll();
+        Task<IEnumerable<Incident>> GetAll();
 
-        public Task<Incident> UpdateStatus(int Id, int statusId);
+        Task<Incident> UpdateStatus(int Id, int statusId);
 
-        public Task<Incident> AssignIncident(int id, string user);
+        Task<Incident> AssignIncident(int id, string user);
 
-        public Task<Incident> UpdateClassification(int id, int ClassificationId);
+        Task<Incident> UpdateClassification(int id, int ClassificationId);
 
-        public void LinkIncident(int from, int to);
+        Task LinkIncident(int from, int to);
+
+        Task<Incident> Add(Incident incident);
+
+        Task<Incident> UpdateIncident(Incident incident);
     }
 }

@@ -21,6 +21,11 @@ using Microsoft.EntityFrameworkCore.Storage;
 using FSA.IncidentsManagement.Root.Contracts;
 using FSA.IncidentsManagementDb.Repositories;
 using Microsoft.OpenApi.Models;
+using RestApi.Example.Utils.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Reflection;
+using FSA.IncidentsManagement.ModelValidators;
+using FluentValidation.AspNetCore;
 
 namespace FSA.IncidentsManagement
 {
@@ -38,7 +43,7 @@ namespace FSA.IncidentsManagement
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddProtectedWebApi(Configuration, subscribeToJwtBearerMiddlewareDiagnosticsEvents: true);
+            // services.AddProtectedWebApi(Configuration, subscribeToJwtBearerMiddlewareDiagnosticsEvents: true);
             //services.Configure<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme, options =>
             //        {
             //            // This is an Microsoft identity platform Web API
@@ -53,7 +58,12 @@ namespace FSA.IncidentsManagement
             //            options.TokenValidationParameters.IssuerValidator = Microsoft.IdentityModel.Tokens.Validators.ValidateIssuer;
             //        });
 
+            services.AddMvc(opt =>
+            {
+                opt.Filters.Add(typeof(ValidatorActionFilter));
+            }).AddFluentValidation(fvc => fvc.RegisterValidatorsFromAssemblyContaining<Startup>());
 
+            
             services.AddControllers();
 
             var fsaConn = Configuration.GetConnectionString("FSADbConn");
@@ -67,8 +77,17 @@ namespace FSA.IncidentsManagement
 
             services.AddSwaggerGen(c =>
             {
+                //c.DocumentFilter<YamlDocumentFilter>();
+                c.CustomOperationIds(apiDesc =>
+                {
+                    return apiDesc.TryGetMethodInfo(out MethodInfo methodInfo) ? methodInfo.Name : null;
+                });
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "fsa incident management", Version = "v1" });
             });
+
+
+            services.AddScoped<IFSAIncidentsData, FSAIncidentsManagement>(ids=> new FSAIncidentsManagement(ids.GetRequiredService<FSADbContext>(), "Paul Lawrenc"));
+            
 
         }
 
@@ -83,15 +102,20 @@ namespace FSA.IncidentsManagement
             Microsoft.IdentityModel.Logging.IdentityModelEventSource.ShowPII = true;
             app.UseSwagger();
             app.UseSwaggerUI(c =>
-            {
+            {   
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "FSA Incident Management v1");
             });
 
+            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                ServeUnknownFileTypes = true,
+                DefaultContentType = "application/yaml"
+            });
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
 
 
             app.UseAuthentication();

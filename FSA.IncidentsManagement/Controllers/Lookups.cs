@@ -4,10 +4,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using FSA.IncidentsManagement.Root.Contracts;
+using FSA.IncidentsManagement.Root.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace FSA.IncidentsManagement.Controllers
 {
@@ -27,6 +29,9 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpGet("Categories")]
+        [ProducesResponseType(typeof(IEnumerable<Category>), 200)]
+        [ProducesResponseType(500)]
+        [SwaggerOperation(Summary = "Get all categories")]
         public async Task<IActionResult> Categories()
         {
             return new OkObjectResult((await this.lookupdata.Categories
@@ -39,6 +44,9 @@ namespace FSA.IncidentsManagement.Controllers
         /// <returns></returns>
         /// <response code="200">A list of items (Can be empty)</response>
         [HttpGet("Classifications")]
+        [ProducesResponseType(typeof(IEnumerable<Classification>), 200)]
+        [ProducesResponseType(500)]
+        [SwaggerOperation(Summary = "Get all classifications")]
         public async Task<IActionResult> Classifications()
         {
             return new OkObjectResult((await this.lookupdata.Classifications
@@ -49,6 +57,9 @@ namespace FSA.IncidentsManagement.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("Countries")]
+        [ProducesResponseType(typeof(IEnumerable<Country>), 200)]
+        [ProducesResponseType(500)]
+        [SwaggerOperation(Summary = "Get all countries")]
         public async Task<IActionResult> Countries()
         {
             return new OkObjectResult((await this.lookupdata.Countries
@@ -56,6 +67,9 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpGet("ContactMethod")]
+        [ProducesResponseType(typeof(IEnumerable<ContactMethod>), 200)]
+        [ProducesResponseType(500)]
+        [SwaggerOperation(Summary = "Get all Contact methods")]
         public async Task<IActionResult> ContactMethod()
         {
             return new OkObjectResult((await this.lookupdata.ContactMethods
@@ -64,6 +78,9 @@ namespace FSA.IncidentsManagement.Controllers
 
 
         [HttpGet("DataSources")]
+        [ProducesResponseType(typeof(IEnumerable<DataSource>), 200)]
+        [ProducesResponseType(500)]
+        [SwaggerOperation(Summary = "Data sources")]
         public async Task<IActionResult> DataSource()
         {
             return new OkObjectResult((await this.lookupdata.DataSources
@@ -72,6 +89,9 @@ namespace FSA.IncidentsManagement.Controllers
 
 
         [HttpGet("DeathIllnesses")]
+        [ProducesResponseType(typeof(IEnumerable<DeathIllness>), 200)]
+        [ProducesResponseType(500)]
+        [SwaggerOperation(Summary = "Get all Death/Illnes")]
         public async Task<IActionResult> DeathIllness()
         {
             return new OkObjectResult((await this.lookupdata.DeathIllnesses
@@ -79,6 +99,9 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpGet("OMITGroups")]
+        [ProducesResponseType(typeof(IEnumerable<OMITGroup>), 200)]
+        [ProducesResponseType(500)]
+        [SwaggerOperation(Summary = "Get all OMIT groups")]
         public async Task<IActionResult> OMITGroup()
         {
             return new OkObjectResult((await this.lookupdata.OMITGroups
@@ -86,6 +109,9 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpGet("OrganisationRoles")]
+        [ProducesResponseType(typeof(IEnumerable<OrganisationRole>), 200)]
+        [ProducesResponseType(500)]
+        [SwaggerOperation(Summary = "Get all organisational roles")]
         public async Task<IActionResult> OrganisationRole()
         {
             return new OkObjectResult((await this.lookupdata.OrganisationsRoles
@@ -93,6 +119,9 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpGet("PersonaRoles")]
+        [ProducesResponseType(typeof(IEnumerable<PersonaRole>), 200)]
+        [ProducesResponseType(500)]
+        [SwaggerOperation(Summary = "Get all Persona Roiles")]
         public async Task<IActionResult> PersonaRole()
         {
             return new OkObjectResult((await this.lookupdata.PersonaRoles
@@ -100,6 +129,9 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpGet("ProductTypes")]
+        [ProducesResponseType(typeof(IEnumerable<ProductType>), 200)]
+        [ProducesResponseType(500)]
+        [SwaggerOperation(Summary = "list all Product types")]
         public async Task<IActionResult> ProductType()
         {
             return new OkObjectResult((await this.lookupdata.ProductTypes
@@ -107,6 +139,9 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpGet("Status")]
+        [ProducesResponseType(typeof(IEnumerable<Status>), 200)]
+        [ProducesResponseType(500)]
+        [SwaggerOperation(Summary = "Divine all status values")]
         public async Task<IActionResult> Status()
         {
             return new OkObjectResult((await this.lookupdata.Status
@@ -114,6 +149,9 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpGet("Units")]
+        [ProducesResponseType(typeof(IEnumerable<UnitQuantity>), 200)]
+        [ProducesResponseType(500)]
+        [SwaggerOperation(Summary = "an absolute unit")]
         public async Task<IActionResult> UnitQuantities()
         {
             return new OkObjectResult((await this.lookupdata.Units
