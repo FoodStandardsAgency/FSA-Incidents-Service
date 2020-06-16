@@ -66,8 +66,6 @@ namespace FSA.IncidentsManagement.Controllers
         [HttpGet("DataSources")]
         public async Task<IActionResult> DataSource()
         {
-            Debug.WriteLine(this.User);
-            Debug.WriteLine(this.User.Claims);
             return new OkObjectResult((await this.lookupdata.DataSources
                             .GetAll()).ToList());
         }
