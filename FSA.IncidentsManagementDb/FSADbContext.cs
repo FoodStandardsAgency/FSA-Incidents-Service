@@ -10,9 +10,13 @@ namespace FSA.IncidentsManagementDb
         {
         }
 
+        [Obsolete]
         internal DbSet<GatewayErrorCodeDb> GatewayErrorCodes { get; set; }
+        [Obsolete]
         internal DbSet<GatewayRequestDetailDb> GatewayRequestDetails { get; set; }
+        [Obsolete]
         internal DbSet<GatewayUserIncidentDb> GatewayUserIncidents { get; set; }
+
         internal DbSet<IncidentCommentDb> IncidentComments { get; set; }
         internal DbSet<IncidentDb> Incidents { get; set; }
         internal DbSet<IncidentLinkDb> IncidentLinks { get; set; }
@@ -20,15 +24,17 @@ namespace FSA.IncidentsManagementDb
         internal DbSet<OrganisationDb> Organisations { get; set; }
         internal DbSet<CategoryDb> Categories { get; set; }
         internal DbSet<ClassificationDb> Classifications { get; set; }
+        internal DbSet<PriorityDb> Priorities { get; set; }
         internal DbSet<ContactMethodDb> ContactMethods { get; set; }
-        internal DbSet<CountryDb> Countrys { get; set; }
+        internal DbSet<CountryDb> Countries { get; set; }
         internal DbSet<DataSourceDb> DataSources { get; set; }
         internal DbSet<DeathIllnessDb> DeathIllnesss { get; set; }
         internal DbSet<OMITGroupDb> OMITGroups { get; set; }
         internal DbSet<OrganisationRoleDb> OrganisationRoles { get; set; }
         internal DbSet<PersonaRoleDb> PersonaRoles { get; set; }
         internal DbSet<ProductTypeDb> ProductTypes { get; set; }
-        internal DbSet<StatusDb> Status { get; set; }
+        internal DbSet<IncidentStatusDb> IncidentStatus { get; set; }
+        internal DbSet<SignalStatusDb> SignalStatus { get; set; }
         internal DbSet<UnitQuantityDb> UnitQuantities { get; set; }
         internal DbSet<UserDb> Users { get; set; }
         internal DbSet<UserRoleDb> UserRoles { get; set; }

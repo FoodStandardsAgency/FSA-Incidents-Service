@@ -9,6 +9,7 @@ namespace FSA.IncidentsManagement.Root.Contracts
     public interface ILookupDataHost
     {
         IReferenceDataRepo<Category> Categories { get; }
+        IReferenceDataRepo<Priority> Priorities { get; }
         IReferenceDataRepo<Classification> Classifications { get; }
         IReferenceDataRepo<ContactMethod> ContactMethods{ get; }
         IReferenceDataRepo<Country> Countries { get; }
@@ -18,7 +19,9 @@ namespace FSA.IncidentsManagement.Root.Contracts
         IReferenceDataRepo<OrganisationRole> OrganisationsRoles { get; }
         IReferenceDataRepo<PersonaRole> PersonaRoles { get; }
         IReferenceDataRepo<ProductType> ProductTypes { get; }
-        IReferenceDataRepo<Status> Status { get; }
+        IReferenceDataRepo<SignalStatus> SignalStatus { get; }
+        IReferenceDataRepo<IncidentStatus> Status { get; }
         IReferenceDataRepo<UnitQuantity> Units { get; }
+        IReferenceDataRepo<OrganisationLookup> Organisations { get; }
     }
 }

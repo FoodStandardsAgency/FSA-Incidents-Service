@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FSA.IncidentsManagementDb.Migrations
 {
     [DbContext(typeof(FSADbContext))]
-    [Migration("20200612150852_Initial")]
-    partial class Initial
+    [Migration("20200617153721_MoarMoore")]
+    partial class MoarMoore
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,9 +28,6 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("IsIncidentsDefault")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
@@ -46,9 +43,6 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("IsIncidentsDefault")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
@@ -63,9 +57,6 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("IsIncidentsDefault")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -97,9 +88,6 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("IsIncidentsDefault")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
@@ -114,9 +102,6 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("IsIncidentsDefault")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -210,6 +195,12 @@ namespace FSA.IncidentsManagementDb.Migrations
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("IncidentId")
                         .HasColumnType("int");
 
@@ -221,6 +212,12 @@ namespace FSA.IncidentsManagementDb.Migrations
 
                     b.Property<DateTime>("LastChangedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -242,6 +239,15 @@ namespace FSA.IncidentsManagementDb.Migrations
                     b.Property<int>("ClassificationId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ContactMethodId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("DataSourceId")
                         .HasColumnType("int");
 
@@ -259,6 +265,9 @@ namespace FSA.IncidentsManagementDb.Migrations
 
                     b.Property<string>("IncidentDescription")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IncidentStatusId")
+                        .HasColumnType("int");
 
                     b.Property<string>("IncidentTitle")
                         .HasColumnType("nvarchar(max)");
@@ -281,10 +290,19 @@ namespace FSA.IncidentsManagementDb.Migrations
                     b.Property<int?>("LeadOfficerId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("NotifierId")
                         .HasColumnType("int");
 
                     b.Property<int?>("PrincipalFBOId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PriorityId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProductTypeId")
@@ -293,7 +311,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                     b.Property<DateTime?>("ReceivedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("StatusId")
+                    b.Property<int?>("SignalStatusId")
                         .HasColumnType("int");
 
                     b.Property<string>("_reserved_importref")
@@ -307,6 +325,8 @@ namespace FSA.IncidentsManagementDb.Migrations
 
                     b.HasIndex("DeathIllnessId");
 
+                    b.HasIndex("IncidentStatusId");
+
                     b.HasIndex("IncidentTypeId");
 
                     b.HasIndex("LeadLocalAuthorityId");
@@ -315,30 +335,43 @@ namespace FSA.IncidentsManagementDb.Migrations
 
                     b.HasIndex("PrincipalFBOId");
 
+                    b.HasIndex("PriorityId");
+
                     b.HasIndex("ProductTypeId");
 
-                    b.HasIndex("StatusId");
+                    b.HasIndex("SignalStatusId");
 
                     b.ToTable("Incidents");
                 });
 
-            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.IncidentIncidentLinkDb", b =>
+            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.IncidentLinkDb", b =>
                 {
-                    b.Property<int>("LinkFromIncidentId")
+                    b.Property<int>("FromIncidentId")
                         .HasColumnType("int");
 
-                    b.Property<int>("LinkToIncidentId")
+                    b.Property<int>("ToIncidentId")
                         .HasColumnType("int");
 
-                    b.Property<int>("LastChangedById")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("LastChangedDate")
+                    b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("LinkFromIncidentId", "LinkToIncidentId");
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("IncidentIncidentLinks");
+                    b.Property<int?>("IncidentDbId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("FromIncidentId", "ToIncidentId");
+
+                    b.HasIndex("IncidentDbId");
+
+                    b.ToTable("IncidentLinks");
                 });
 
             modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.IncidentOMITGroupDb", b =>
@@ -370,6 +403,33 @@ namespace FSA.IncidentsManagementDb.Migrations
                     b.HasIndex("OMITGroupId");
 
                     b.ToTable("IncidentOMITGroups");
+                });
+
+            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.IncidentStatusDb", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("IncidentStatus");
                 });
 
             modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.OMITGroupDb", b =>
@@ -409,11 +469,17 @@ namespace FSA.IncidentsManagementDb.Migrations
                     b.Property<string>("EmailAddress")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("FaxAddress")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("LastChangedById")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("LastChangedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("MainContact")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Organisation")
                         .HasColumnType("nvarchar(max)");
@@ -434,8 +500,7 @@ namespace FSA.IncidentsManagementDb.Migrations
 
                     b.HasIndex("ContactMethodId");
 
-                    b.HasIndex("OrganisationRoleId")
-                        .IsUnique();
+                    b.HasIndex("OrganisationRoleId");
 
                     b.ToTable("Organisations");
                 });
@@ -488,15 +553,39 @@ namespace FSA.IncidentsManagementDb.Migrations
                     b.ToTable("PersonaRoles");
                 });
 
-            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.ProductTypeDb", b =>
+            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.PriorityDb", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("IsIncidentsDefault")
-                        .HasColumnType("bit");
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Priorities");
+                });
+
+            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.ProductTypeDb", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -506,15 +595,12 @@ namespace FSA.IncidentsManagementDb.Migrations
                     b.ToTable("ProductTypes");
                 });
 
-            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.StatusDb", b =>
+            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.SignalStatusDb", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("IsIncidentsDefault")
-                        .HasColumnType("bit");
 
                     b.Property<bool>("IsOpen")
                         .HasColumnType("bit");
@@ -532,7 +618,7 @@ namespace FSA.IncidentsManagementDb.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("Status");
+                    b.ToTable("SignalStatus");
                 });
 
             modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.UnitQuantityDb", b =>
@@ -636,6 +722,12 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("FSA.IncidentsManagementDb.Entities.IncidentStatusDb", "IncidentStatus")
+                        .WithMany()
+                        .HasForeignKey("IncidentStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("FSA.IncidentsManagementDb.Entities.CategoryDb", "IncidentType")
                         .WithMany()
                         .HasForeignKey("IncidentTypeId")
@@ -654,17 +746,28 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .WithMany()
                         .HasForeignKey("PrincipalFBOId");
 
+                    b.HasOne("FSA.IncidentsManagementDb.Entities.PriorityDb", "Priority")
+                        .WithMany()
+                        .HasForeignKey("PriorityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("FSA.IncidentsManagementDb.Entities.ProductTypeDb", "ProductType")
                         .WithMany()
                         .HasForeignKey("ProductTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FSA.IncidentsManagementDb.Entities.StatusDb", "Status")
+                    b.HasOne("FSA.IncidentsManagementDb.Entities.SignalStatusDb", "SignalStatus")
                         .WithMany()
-                        .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SignalStatusId");
+                });
+
+            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.IncidentLinkDb", b =>
+                {
+                    b.HasOne("FSA.IncidentsManagementDb.Entities.IncidentDb", null)
+                        .WithMany("Links")
+                        .HasForeignKey("IncidentDbId");
                 });
 
             modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.IncidentOMITGroupDb", b =>
@@ -688,16 +791,16 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FSA.IncidentsManagementDb.Entities.OrganisationDb", "OrganisationRole")
-                        .WithOne()
-                        .HasForeignKey("FSA.IncidentsManagementDb.Entities.OrganisationDb", "OrganisationRoleId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                    b.HasOne("FSA.IncidentsManagementDb.Entities.OrganisationRoleDb", "OrganisationRole")
+                        .WithMany()
+                        .HasForeignKey("OrganisationRoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.StatusDb", b =>
+            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.SignalStatusDb", b =>
                 {
-                    b.HasOne("FSA.IncidentsManagementDb.Entities.StatusDb", "Parent")
+                    b.HasOne("FSA.IncidentsManagementDb.Entities.SignalStatusDb", "Parent")
                         .WithMany()
                         .HasForeignKey("ParentId");
                 });

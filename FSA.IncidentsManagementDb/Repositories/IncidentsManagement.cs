@@ -15,11 +15,13 @@ namespace FSA.IncidentsManagementDb.Repositories
     {
         private readonly FSADbContext ctx;
         private readonly string userIdent;
+        private OrganisationLookupManager orgLookups;
 
         public IncidentsManagement(FSADbContext ctx, string userIdent)
         {
             this.ctx = ctx;
             this.userIdent = userIdent;
+            this.orgLookups = new OrganisationLookupManager(ctx);
         }
 
         public async Task<Incident> Add(Incident incident)
@@ -109,9 +111,39 @@ namespace FSA.IncidentsManagementDb.Repositories
         public async Task<Incident> UpdateStatus(int id, int statusId)
         {
             var itm = await ctx.Incidents.FindAsync(id);
-            itm.StatusId = statusId;
+            itm.SignalStatusId = statusId;
             await ctx.SaveChangesAsync();
             return itm.ToClient();
+        }
+
+        public async Task<IncidentsDisplayModel> GetDisplayItem(int id)
+        {
+            // get the db version.
+            // with most lookups (excluding organisations)
+            var dbIncident = this.ctx.Incidents.AsNoTracking()
+                        .Include(p => p.Priority)
+                        .Include(i => i.Classification)
+                        .Include(i => i.DataSource)
+                        .Include(i => i.DeathIllness)
+                        .Include(i => i.IncidentType)
+                        .Include(i => i.ProductType)
+                        .Include(i=>i.PrincipalFBO)
+                        .Include(i => i.ContactMethodId)
+                        .Include(i => i.IncidentStatus).First(p => p.Id == id);
+            // now get the fbo organisations data
+            var fboOrg = await this.ctx.Organisations.FindAsync(dbIncident.PrincipalFBOId);
+            // Now fetch all the organisations that match this query.
+            var allOrgIds = new HashSet<int>
+            {
+                dbIncident.NotifierId ?? 0, dbIncident.LeadLocalAuthorityId ?? 0
+            };
+            // remove empty elements = 
+            allOrgIds.RemoveWhere(o => o == 0); ;
+
+            var allOrgs = await this.orgLookups.FindAllLookups(allOrgIds);
+            // Finally we can now build our tower of wonder
+            return dbIncident.ToClient(allOrgs);
+
         }
 
     }

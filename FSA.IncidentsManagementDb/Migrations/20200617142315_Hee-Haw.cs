@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FSA.IncidentsManagementDb.Migrations
 {
-    public partial class Initial : Migration
+    public partial class HeeHaw : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,8 +13,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(nullable: true),
-                    IsIncidentsDefault = table.Column<bool>(nullable: false)
+                    Title = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -27,8 +26,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(nullable: true),
-                    IsIncidentsDefault = table.Column<bool>(nullable: false)
+                    Title = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -41,8 +39,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(nullable: true),
-                    IsIncidentsDefault = table.Column<bool>(nullable: false)
+                    Title = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -68,8 +65,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(nullable: true),
-                    IsIncidentsDefault = table.Column<bool>(nullable: false)
+                    Title = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -82,8 +78,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(nullable: true),
-                    IsIncidentsDefault = table.Column<bool>(nullable: false)
+                    Title = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -139,17 +134,36 @@ namespace FSA.IncidentsManagementDb.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "IncidentIncidentLinks",
+                name: "IncidentLinks",
                 columns: table => new
                 {
-                    LinkFromIncidentId = table.Column<int>(nullable: false),
-                    LinkToIncidentId = table.Column<int>(nullable: false),
-                    LastChangedById = table.Column<int>(nullable: false),
-                    LastChangedDate = table.Column<DateTime>(nullable: false)
+                    FromIncidentId = table.Column<int>(nullable: false),
+                    ToIncidentId = table.Column<int>(nullable: false),
+                    ModifiedBy = table.Column<string>(nullable: true),
+                    Modified = table.Column<DateTime>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
+                    Created = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_IncidentIncidentLinks", x => new { x.LinkFromIncidentId, x.LinkToIncidentId });
+                    table.PrimaryKey("PK_IncidentLinks", x => new { x.FromIncidentId, x.ToIncidentId });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "IncidentStatus",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ModifiedBy = table.Column<string>(nullable: true),
+                    Modified = table.Column<DateTime>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
+                    Created = table.Column<DateTime>(nullable: false),
+                    Title = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IncidentStatus", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -203,8 +217,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(nullable: true),
-                    IsIncidentsDefault = table.Column<bool>(nullable: false)
+                    Title = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -212,24 +225,23 @@ namespace FSA.IncidentsManagementDb.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Status",
+                name: "SignalStatus",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(nullable: true),
                     ParentId = table.Column<int>(nullable: true),
-                    IsIncidentsDefault = table.Column<bool>(nullable: false),
                     IsOpen = table.Column<bool>(nullable: false),
                     IsUnassigned = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Status", x => x.Id);
+                    table.PrimaryKey("PK_SignalStatus", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Status_Status_ParentId",
+                        name: "FK_SignalStatus_SignalStatus_ParentId",
                         column: x => x.ParentId,
-                        principalTable: "Status",
+                        principalTable: "SignalStatus",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -288,6 +300,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    MainContact = table.Column<string>(nullable: true),
                     Organisation = table.Column<string>(nullable: true),
                     OrganisationRoleId = table.Column<int>(nullable: false),
                     AddressLine1 = table.Column<string>(nullable: true),
@@ -297,6 +310,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                     PostCode = table.Column<string>(nullable: true),
                     TelephoneNumber = table.Column<string>(nullable: true),
                     EmailAddress = table.Column<string>(nullable: true),
+                    FaxAddress = table.Column<string>(nullable: true),
                     ContactMethodId = table.Column<int>(nullable: false),
                     LastChangedById = table.Column<int>(nullable: false),
                     LastChangedDate = table.Column<DateTime>(nullable: false)
@@ -311,10 +325,11 @@ namespace FSA.IncidentsManagementDb.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Organisations_Organisations_OrganisationRoleId",
+                        name: "FK_Organisations_OrganisationRoles_OrganisationRoleId",
                         column: x => x.OrganisationRoleId,
-                        principalTable: "Organisations",
-                        principalColumn: "Id");
+                        principalTable: "OrganisationRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -323,10 +338,16 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    ModifiedBy = table.Column<string>(nullable: true),
+                    Modified = table.Column<DateTime>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
+                    Created = table.Column<DateTime>(nullable: false),
                     IncidentTitle = table.Column<string>(nullable: true),
                     IncidentDescription = table.Column<string>(nullable: true),
                     IncidentTypeId = table.Column<int>(nullable: false),
-                    StatusId = table.Column<int>(nullable: false),
+                    ContactMethodId = table.Column<int>(nullable: false),
+                    SignalStatusId = table.Column<int>(nullable: true),
+                    IncidentStatusId = table.Column<int>(nullable: false),
                     NotifierId = table.Column<int>(nullable: true),
                     PrincipalFBOId = table.Column<int>(nullable: true),
                     ClassificationId = table.Column<int>(nullable: false),
@@ -367,6 +388,12 @@ namespace FSA.IncidentsManagementDb.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
+                        name: "FK_Incidents_IncidentStatus_IncidentStatusId",
+                        column: x => x.IncidentStatusId,
+                        principalTable: "IncidentStatus",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Incidents_Categories_IncidentTypeId",
                         column: x => x.IncidentTypeId,
                         principalTable: "Categories",
@@ -397,11 +424,11 @@ namespace FSA.IncidentsManagementDb.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Incidents_Status_StatusId",
-                        column: x => x.StatusId,
-                        principalTable: "Status",
+                        name: "FK_Incidents_SignalStatus_SignalStatusId",
+                        column: x => x.SignalStatusId,
+                        principalTable: "SignalStatus",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -410,6 +437,10 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    ModifiedBy = table.Column<string>(nullable: true),
+                    Modified = table.Column<DateTime>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
+                    Created = table.Column<DateTime>(nullable: false),
                     IncidentId = table.Column<int>(nullable: false),
                     IncidentProductId = table.Column<int>(nullable: true),
                     Comment = table.Column<string>(nullable: true),
@@ -487,6 +518,11 @@ namespace FSA.IncidentsManagementDb.Migrations
                 column: "DeathIllnessId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Incidents_IncidentStatusId",
+                table: "Incidents",
+                column: "IncidentStatusId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Incidents_IncidentTypeId",
                 table: "Incidents",
                 column: "IncidentTypeId");
@@ -512,9 +548,9 @@ namespace FSA.IncidentsManagementDb.Migrations
                 column: "ProductTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Incidents_StatusId",
+                name: "IX_Incidents_SignalStatusId",
                 table: "Incidents",
-                column: "StatusId");
+                column: "SignalStatusId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Organisations_ContactMethodId",
@@ -524,12 +560,11 @@ namespace FSA.IncidentsManagementDb.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Organisations_OrganisationRoleId",
                 table: "Organisations",
-                column: "OrganisationRoleId",
-                unique: true);
+                column: "OrganisationRoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Status_ParentId",
-                table: "Status",
+                name: "IX_SignalStatus_ParentId",
+                table: "SignalStatus",
                 column: "ParentId");
         }
 
@@ -551,13 +586,10 @@ namespace FSA.IncidentsManagementDb.Migrations
                 name: "IncidentComments");
 
             migrationBuilder.DropTable(
-                name: "IncidentIncidentLinks");
+                name: "IncidentLinks");
 
             migrationBuilder.DropTable(
                 name: "IncidentOMITGroups");
-
-            migrationBuilder.DropTable(
-                name: "OrganisationRoles");
 
             migrationBuilder.DropTable(
                 name: "PersonaRoles");
@@ -587,6 +619,9 @@ namespace FSA.IncidentsManagementDb.Migrations
                 name: "DeathIllnesss");
 
             migrationBuilder.DropTable(
+                name: "IncidentStatus");
+
+            migrationBuilder.DropTable(
                 name: "Categories");
 
             migrationBuilder.DropTable(
@@ -596,10 +631,13 @@ namespace FSA.IncidentsManagementDb.Migrations
                 name: "ProductTypes");
 
             migrationBuilder.DropTable(
-                name: "Status");
+                name: "SignalStatus");
 
             migrationBuilder.DropTable(
                 name: "ContactMethods");
+
+            migrationBuilder.DropTable(
+                name: "OrganisationRoles");
         }
     }
 }

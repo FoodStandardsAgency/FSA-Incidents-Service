@@ -11,21 +11,32 @@ namespace FSA.IncidentsManagementDb.Repositories
 {
     // This is a basic repo for pureley getting and transforming.
     // You will need to define a mapping operations.
-    internal class ReferenceDataRepo<T, Db> : IReferenceDataRepo<T> 
+    internal class ReferenceDataRepo<T, Db> : IReferenceDataRepo<T>
                         where Db : class
     {
-        private readonly FSADbContext ctx;
-        private readonly Func<Db, T> toClient;
+        protected readonly FSADbContext ctx;
+        protected readonly Func<Db, T> toClient;
+        protected readonly Func<FSADbContext, Task<List<Db>>> _customFetch;
 
-        internal ReferenceDataRepo(FSADbContext ctx, Func<Db,T> ToClient)
+        internal ReferenceDataRepo() { }
+
+        internal ReferenceDataRepo(FSADbContext ctx, Func<Db, T> toClient)
         {
             this.ctx = ctx;
-            toClient = ToClient;
+            this.toClient = toClient;
+        }
+
+
+        internal ReferenceDataRepo(FSADbContext ctx, Func<FSADbContext, Task<List<Db>>> customFetch, Func<Db, T> toClient) : this(ctx, toClient)
+        {
+            this._customFetch = customFetch;
         }
 
         public async Task<IEnumerable<T>> GetAll()
         {
-            var items = await this.ctx.Set<Db>().ToListAsync();
+            var items = _customFetch == null ? 
+                            await this.ctx.Set<Db>().AsNoTracking().ToListAsync() : 
+                            await _customFetch(this.ctx);
             return items.Select(toClient).ToList();
         }
 

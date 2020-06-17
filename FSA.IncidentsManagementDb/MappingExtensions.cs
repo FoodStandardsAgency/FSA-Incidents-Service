@@ -1,35 +1,41 @@
 ﻿using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagementDb.Entities;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace FSA.IncidentsManagementDb
 {
-    internal static class MappingExtensions
+    internal static class MappingExtensionsDb
     {
         public static Category ToClient(this CategoryDb @this)
         {
             return new Category
             {
                 Id = @this.Id,
-                IsIncidentsDefault = @this.IsIncidentsDefault,
                 Title = @this.Title
             };
         }
 
+        public static Priority ToClient(this PriorityDb @this) => new Priority
+        {
+            Id = @this.Id,
+            Title = @this.Title
+        };
+
         public static Classification ToClient(this ClassificationDb @this) => new Classification
         {
             Id = @this.Id,
-            IsIncidentsDefault = @this.IsIncidentsDefault,
             Title = @this.Title
         };
 
         public static ContactMethod ToClient(this ContactMethodDb @this) => new ContactMethod
         {
             Id = @this.Id,
-            IsIncidentsDefault = @this.IsIncidentsDefault,
             Title = @this.Title
         };
 
@@ -43,14 +49,12 @@ namespace FSA.IncidentsManagementDb
         {
             Id = @this.Id,
             Title = @this.Title,
-            IsIncidentsDefault = @this.IsIncidentsDefault
         };
 
         public static DeathIllness ToClient(this DeathIllnessDb @this) => new DeathIllness
         {
             Id = @this.Id,
             Title = @this.Title,
-            IsIncidentsDefault = @this.IsIncidentsDefault
         };
 
         public static OMITGroup ToClient(this OMITGroupDb @this) => new OMITGroup
@@ -81,7 +85,6 @@ namespace FSA.IncidentsManagementDb
         {
             Id = @this.Id,
             Title = @this.Title,
-            IsIncidentsDefault = @this.IsIncidentsDefault
         };
 
         public static UnitQuantity ToClient(this UnitQuantityDb @this) => new UnitQuantity
@@ -90,15 +93,16 @@ namespace FSA.IncidentsManagementDb
             Title = @this.Title,
         };
 
-        public static Status ToClient(this StatusDb @this) => new Status
+        public static SignalStatus ToClient(this SignalStatusDb @this) => new SignalStatus
         {
             Id = @this.Id,
             Title = @this.Title,
             ParentId = @this.ParentId,
-            IsIncidentsDefault = @this.IsIncidentsDefault,
             IsOpen = @this.IsOpen,
             IsUnassigned = @this.IsUnassigned
         };
+
+        public static IncidentStatus ToClient(this IncidentStatusDb @this) => new IncidentStatus { Id = @this.Id, Title = @this.Title };
 
         public static IEnumerable<Incident> ToClient(this IEnumerable<IncidentDb> @this)
         {
@@ -116,23 +120,66 @@ namespace FSA.IncidentsManagementDb
                 incidentDescription: @this.IncidentDescription,
                 incidentTypeId: @this.IncidentTypeId,
                 contactMethodId: @this.ContactMethodId,
-                statusId: @this.StatusId,
+                statusId: @this.IncidentStatusId,
+                signalStatusId: @this.SignalStatusId,
                 notifierId: @this.NotifierId,
                 principalFBOId: @this.PrincipalFBOId,
+                priorityId: @this.PriorityId,
                 classificationId: @this.ClassificationId,
                 dataSourceId: @this.DataSourceId,
                 productTypeId: @this.ProductTypeId,
-                leadOfficerId: @this.LeadOfficerId,
-                adminLeadId: @this.AdminLeadId,
-                fieldOfficerId: @this.FieldOfficerId,
+                leadOfficer: @this.LeadOfficer,
+                adminLead: @this.AdminLead,
+                fieldOfficer: @this.FieldOfficer,
                 leadLocalAuthorityId: @this.LeadLocalAuthorityId,
                 lAAdvised: @this.LAAdvised,
                 deathIllnessId: @this.DeathIllnessId,
                 receivedOn: @this.ReceivedOn,
                 incidentCreated: @this.IncidentCreated,
                 incidentClosed: @this.IncidentClosed,
-                lastChangedById: @this.LastChangedById,
-                lastChangedDate: @this.LastChangedDate
+                lastChangedBy: @this.ModifiedBy,
+                lastChangedDate: @this.Modified
+                );
+        }
+
+        public static IncidentsDisplayModel ToClient(this IncidentDb @this, Dictionary<int, OrganisationLookup> allOrgs)
+        {
+            return new IncidentsDisplayModel(
+                     @this.Id,
+                incidentTitle: @this.IncidentTitle,
+                incidentDescription: @this.IncidentDescription,
+                incidentTypeId: @this.IncidentTypeId,
+                contactMethodId: @this.ContactMethodId,
+                statusId: @this.IncidentStatusId,
+                signalStatusId: @this.SignalStatusId,
+                notifierId: @this.NotifierId,
+                principalFBOId: @this.PrincipalFBOId,
+                priorityId: @this.PriorityId,
+                classificationId: @this.ClassificationId,
+                dataSourceId: @this.DataSourceId,
+                productTypeId: @this.ProductTypeId,
+                leadOfficer: @this.LeadOfficer,
+                adminLead: @this.AdminLead,
+                fieldOfficer: @this.FieldOfficer,
+                leadLocalAuthorityId: @this.LeadLocalAuthorityId,
+                lAAdvised: @this.LAAdvised,
+                deathIllnessId: @this.DeathIllnessId,
+                receivedOn: @this.ReceivedOn,
+                incidentCreated: @this.IncidentCreated,
+                incidentClosed: @this.IncidentClosed,
+                lastChangedBy: @this.ModifiedBy,
+                lastChangedDate: @this.Modified,
+                category: @this.IncidentType.Title,
+                signalStatus: @this.SignalStatus.Title,
+                incidentStatus: @this.IncidentStatus.Title,
+                notifier: allOrgs.ContainsKey(@this.NotifierId ?? 0) ? allOrgs[@this.NotifierId ?? 0].Name: "",
+                principalFBO: @this.PrincipalFBO?.Organisation ?? "",
+                priority: @this.Priority?.Title ?? "",
+                classification: @this.Classification?.Title ?? "",
+                datasource: @this.DataSource?.Title ?? "",
+                productType: @this.ProductType?.Title ?? "",
+                leadLocalAuthority: allOrgs.ContainsKey(@this.LeadLocalAuthorityId ?? 0) ? allOrgs[@this.LeadLocalAuthorityId ?? 0].Name : "",
+                deathIllness: @this.DeathIllness?.Title ?? ""
                 );
         }
 
@@ -141,28 +188,36 @@ namespace FSA.IncidentsManagementDb
             return new IncidentDb
             {
                 Id = @this.CommonId,
-                IncidentTitle= @this.IncidentTitle,
-                IncidentDescription= @this.IncidentDescription,
-                IncidentTypeId= @this.IncidentTypeId,
-                ContactMethodId= @this.ContactMethodId,
-                StatusId= @this.StatusId,
-                NotifierId= @this.NotifierId,
-                PrincipalFBOId= @this.PrincipalFBOId,
-                ClassificationId= @this.ClassificationId,
-                DataSourceId= @this.DataSourceId,
-                ProductTypeId= @this.ProductTypeId,
-                LeadOfficerId= @this.LeadOfficerId,
-                AdminLeadId= @this.AdminLeadId,
-                FieldOfficerId= @this.FieldOfficerId,
-                LeadLocalAuthorityId= @this.LeadLocalAuthorityId,
-                LAAdvised= @this.LAAdvised,
-                DeathIllnessId= @this.DeathIllnessId,
-                ReceivedOn= @this.ReceivedOn,
-                IncidentCreated= @this.IncidentCreated,
-                IncidentClosed= @this.IncidentClosed,
-                LastChangedById= @this.LastChangedById,
-                LastChangedDate= @this.LastChangedDate
+                IncidentTitle = @this.IncidentTitle,
+                IncidentDescription = @this.IncidentDescription,
+                IncidentTypeId = @this.IncidentTypeId,
+                ContactMethodId = @this.ContactMethodId,
+                IncidentStatusId = @this.StatusId,
+                PriorityId = @this.PriorityId,
+                SignalStatusId = @this.StatusId,
+                NotifierId = @this.NotifierId,
+                PrincipalFBOId = @this.PrincipalFBOId,
+                ClassificationId = @this.ClassificationId,
+                DataSourceId = @this.DataSourceId,
+                ProductTypeId = @this.ProductTypeId,
+                LeadOfficer = @this.LeadOfficer,
+                AdminLead = @this.AdminLead,
+                FieldOfficer = @this.FieldOfficer,
+                LeadLocalAuthorityId = @this.LeadLocalAuthorityId,
+                LAAdvised = @this.LAAdvised,
+                DeathIllnessId = @this.DeathIllnessId,
+                ReceivedOn = @this.ReceivedOn,
+                IncidentCreated = @this.IncidentCreated,
+                IncidentClosed = @this.IncidentClosed,
             };
         }
+
+
+
+        public static OrganisationLookup ToLookup(this OrganisationDb @this) => new OrganisationLookup { Id = @this.Id, Name = @this.Organisation };
+
+        public static OrganisationLookup ToLookup(this OrganisationLookupDb @this) => new OrganisationLookup { Id = @this.Id, Name = @this.Organisation };
+
+
     }
 }

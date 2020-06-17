@@ -26,6 +26,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 using FSA.IncidentsManagement.ModelValidators;
 using FluentValidation.AspNetCore;
+using FSA.IncidentsManagement.Misc;
 
 namespace FSA.IncidentsManagement
 {
@@ -43,7 +44,7 @@ namespace FSA.IncidentsManagement
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // services.AddProtectedWebApi(Configuration, subscribeToJwtBearerMiddlewareDiagnosticsEvents: true);
+            services.AddProtectedWebApi(Configuration, subscribeToJwtBearerMiddlewareDiagnosticsEvents: true);
             //services.Configure<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme, options =>
             //        {
             //            // This is an Microsoft identity platform Web API
@@ -58,22 +59,17 @@ namespace FSA.IncidentsManagement
             //            options.TokenValidationParameters.IssuerValidator = Microsoft.IdentityModel.Tokens.Validators.ValidateIssuer;
             //        });
 
+            // grabbing current userInfo
+            services.AddHttpContextAccessor();
+            // outside api calls [OBO]
+            services.AddHttpClient();
+
             services.AddMvc(opt =>
             {
                 opt.Filters.Add(typeof(ValidatorActionFilter));
             }).AddFluentValidation(fvc => fvc.RegisterValidatorsFromAssemblyContaining<Startup>());
 
-            
             services.AddControllers();
-
-            var fsaConn = Configuration.GetConnectionString("FSADbConn");
-            services.AddDbContext<FSADbContext>((opts) => opts.UseSqlServer(fsaConn, (d) =>
-            {
-                d.EnableRetryOnFailure(15);
-                d.CommandTimeout(100);
-            }));
-
-            services.AddScoped<ILookupDataHost, LookupDataHost>();
 
             services.AddSwaggerGen(c =>
             {
@@ -85,10 +81,16 @@ namespace FSA.IncidentsManagement
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "fsa incident management", Version = "v1" });
             });
 
+            var fsaConn = Configuration.GetConnectionString("FSADbConn");
+            services.AddDbContext<FSADbContext>((opts) => opts.UseSqlServer(fsaConn, (d) =>
+            {
+                d.EnableRetryOnFailure(15);
+                d.CommandTimeout(100);
+            }));
 
-            services.AddScoped<IFSAIncidentsData, FSAIncidentsManagement>(ids=> new FSAIncidentsManagement(ids.GetRequiredService<FSADbContext>(), "Paul Lawrenc"));
-            
-
+            services.AddScoped<UserInfo>();
+            services.AddScoped<ILookupDataHost, LookupDataHost>();
+            services.AddScoped<IFSAIncidentsData, FSAIncidentsManagement>(ids=> new FSAIncidentsManagement(ids.GetRequiredService<FSADbContext>(), ids.GetRequiredService<UserInfo>().GetUserId()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

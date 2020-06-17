@@ -139,22 +139,51 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpGet("Status")]
-        [ProducesResponseType(typeof(IEnumerable<Status>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<SignalStatus>), 200)]
         [ProducesResponseType(500)]
         [SwaggerOperation(Summary = "Divine all status values")]
-        public async Task<IActionResult> Status()
+        public async Task<IActionResult> SignalStatus()
         {
-            return new OkObjectResult((await this.lookupdata.Status
+            return new OkObjectResult((await this.lookupdata.SignalStatus
                             .GetAll()).ToList());
         }
 
         [HttpGet("Units")]
         [ProducesResponseType(typeof(IEnumerable<UnitQuantity>), 200)]
         [ProducesResponseType(500)]
-        [SwaggerOperation(Summary = "an absolute unit")]
+        [SwaggerOperation(Summary = "unit information")]
         public async Task<IActionResult> UnitQuantities()
         {
             return new OkObjectResult((await this.lookupdata.Units
+                            .GetAll()).ToList());
+        }
+        [HttpGet("Organisations")]
+        [ProducesResponseType(typeof(IEnumerable<UnitQuantity>), 200)]
+        [ProducesResponseType(500)]
+        [SwaggerOperation(Summary = "Organisation pick list")]
+        public async Task<IActionResult> Organisations()
+        {
+            return new OkObjectResult((await this.lookupdata.Organisations
+                            .GetAll()).ToList());
+        }
+
+        [HttpGet("Priorities")]
+        [ProducesResponseType(typeof(IEnumerable<UnitQuantity>), 200)]
+        [ProducesResponseType(500)]
+        [SwaggerOperation(Summary = "Priorities values")]
+        public async Task<IActionResult> Priorities()
+        {
+            return new OkObjectResult((await this.lookupdata.Priorities
+                            .GetAll()).ToList());
+        }
+
+        [HttpGet("Status")]
+        [ProducesResponseType(typeof(IEnumerable<UnitQuantity>), 200)]
+        [ProducesResponseType(500)]
+        [SwaggerOperation(Summary = "Incident Statusvalues")]
+        public async Task<IActionResult> IncidentStatus()
+        {
+            return new OkObjectResult((await this.lookupdata.Status
                             .GetAll()).ToList());
         }
     }

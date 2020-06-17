@@ -12,22 +12,29 @@ namespace FSA.IncidentsManagementDb.Entities
         public int IncidentTypeId { get; set; }
         public int ContactMethodId { get; set; }
         public CategoryDb IncidentType { get; set; }
-        public int StatusId { get; set; }
-        public StatusDb Status { get; set; }
+        public int? SignalStatusId { get; set; }
+        public SignalStatusDb SignalStatus { get; set; }
+
+        public int IncidentStatusId { get; set; }
+        public IncidentStatusDb IncidentStatus { get; set; }
         public int? NotifierId { get; set; }
         public OrganisationDb Notifier { get; set; }
 
         public int? PrincipalFBOId { get; set; }
         public OrganisationDb PrincipalFBO { get; set; }
+        public int PriorityId { get; set; }
+        public PriorityDb Priority { get; set; }
         public int ClassificationId { get; set; }
         public ClassificationDb Classification { get; set; }
         public int DataSourceId { get; set; }
         public DataSourceDb DataSource { get; set; }
         public int ProductTypeId { get; set; }
         public ProductTypeDb ProductType { get; set; }
-        public int? LeadOfficerId { get; set; }
-        public int? AdminLeadId { get; set; }
-        public int? FieldOfficerId { get; set; }
+        
+        public string LeadOfficer { get; set; }
+        public string AdminLead { get; set; }
+        public string FieldOfficer { get; set; }
+
         public int? LeadLocalAuthorityId { get; set; }
         public OrganisationDb LeadLocalAuthority { get; set; }
         public bool LAAdvised { get; set; }
@@ -36,11 +43,10 @@ namespace FSA.IncidentsManagementDb.Entities
         public DateTime? ReceivedOn { get; set; }
         public DateTime IncidentCreated { get; set; }
         public DateTime? IncidentClosed { get; set; }
-        public int LastChangedById { get; set; }
-        public DateTime LastChangedDate { get; set; }
 
         public ICollection<IncidentCommentDb> Comments { get; set; }
+        public ICollection<IncidentLinkDb> Links { get; set; }
 
-        public string _reserved_importref { get; set; }
+        
     }
 }

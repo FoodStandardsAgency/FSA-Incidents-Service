@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FSA.IncidentsManagement.Models;
+using FSA.IncidentsManagement.ModelValidators;
 using FSA.IncidentsManagement.Root.Contracts;
 using FSA.IncidentsManagement.Root.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -14,6 +16,7 @@ namespace FSA.IncidentsManagement.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class IncidentsController : ControllerBase
     {
         private readonly ILogger<IncidentsController> log;
@@ -38,8 +41,9 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary ="Replace an existing incident")]
         [ProducesResponseType(typeof(Incident), 200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> UpdateIncident([FromBody, SwaggerParameter("Updated Incident", Required = true)] Incident incident) {
-            return new OkObjectResult(await this.fsaData.Incidents.UpdateIncident(incident));
+        public async Task<IActionResult> UpdateIncident([FromBody, SwaggerParameter("Updated Incident", Required = true)] IncidentApiModel incident) {
+
+            return new OkObjectResult(await this.fsaData.Incidents.UpdateIncident(incident.ToClient()));
         }
 
         [HttpPost()]
@@ -48,8 +52,8 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(500)]
         public async Task<IActionResult> CreateIncident([FromBody, SwaggerParameter("Create Incident", Required = true)] IncidentApiModel incident)
         {
-            //return new OkObjectResult(await this.fsaData.Incidents.Add(incident)); 
-            return Ok();
+            return new OkObjectResult(await this.fsaData.Incidents.Add(incident.ToClient()));
+            
         }
 
         [HttpPost("Classification")]

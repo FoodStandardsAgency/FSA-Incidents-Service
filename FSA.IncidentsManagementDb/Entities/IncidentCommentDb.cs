@@ -13,7 +13,8 @@ namespace FSA.IncidentsManagementDb.Entities
         public IncidentDb Incident { get; set; }
         public int? IncidentProductId { get; set; }
         public string Comment { get; set; }
-        public int LastChangedById { get; set; }
+
+        public string LastChangedBy { get; set; }
         public DateTime LastChangedDate { get; set; }
     }
 }

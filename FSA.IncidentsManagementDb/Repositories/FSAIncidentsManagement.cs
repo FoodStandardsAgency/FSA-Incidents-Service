@@ -1,6 +1,9 @@
 ﻿using FSA.IncidentsManagement.Root.Contracts;
+using FSA.IncidentsManagement.Root.Models;
+using FSA.IncidentsManagementDb.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace FSA.IncidentsManagementDb.Repositories

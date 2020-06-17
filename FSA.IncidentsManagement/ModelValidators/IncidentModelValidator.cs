@@ -19,6 +19,8 @@ namespace FSA.IncidentsManagement.ModelValidators
             RuleFor(incident => incident.IncidentTypeId).NotEqual(default(int)).WithMessage("Incident type");
 
             RuleFor(incident => incident.IncidentTitle).NotNull().WithMessage("Cannot have a null title");
+            RuleFor(incident => incident.LeadOfficer).NotNull().WithMessage("Must have a lead officer assigned.");
+            RuleFor(incident => incident.AdminLead).NotNull().WithMessage("This field cannot null.");
             RuleFor(incident => incident.IncidentDescription).NotNull().WithMessage("Description must have a value.");
         }
     }
