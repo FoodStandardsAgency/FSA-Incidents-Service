@@ -82,15 +82,16 @@ namespace FSA.IncidentsManagement
             });
 
             var fsaConn = Configuration.GetConnectionString("FSADbConn");
-            services.AddDbContext<FSADbContext>((opts) => opts.UseSqlServer(fsaConn, (d) =>
-            {
-                d.EnableRetryOnFailure(15);
-                d.CommandTimeout(100);
-            }));
+            services.AddDbContext<FSADbContext>((opts) => opts
+                        .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddDebug()))
+                        .UseSqlServer(fsaConn, (d) =>{
+                                d.EnableRetryOnFailure(15);
+                                d.CommandTimeout(100);
+                            }));
 
             services.AddScoped<UserInfo>();
             services.AddScoped<ILookupDataHost, LookupDataHost>();
-            services.AddScoped<IFSAIncidentsData, FSAIncidentsManagement>(ids=> new FSAIncidentsManagement(ids.GetRequiredService<FSADbContext>(), ids.GetRequiredService<UserInfo>().GetUserId()));
+            services.AddScoped<IFSAIncidentsData, FSAIncidentsManagement>(ids => new FSAIncidentsManagement(ids.GetRequiredService<FSADbContext>(), ids.GetRequiredService<UserInfo>().GetUserId()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -104,7 +105,7 @@ namespace FSA.IncidentsManagement
             Microsoft.IdentityModel.Logging.IdentityModelEventSource.ShowPII = true;
             app.UseSwagger();
             app.UseSwaggerUI(c =>
-            {   
+            {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "FSA Incident Management v1");
             });
 

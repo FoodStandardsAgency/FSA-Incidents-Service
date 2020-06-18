@@ -13,10 +13,10 @@ namespace FSA.IncidentsManagementDb.Builders
         {
             builder.Property(aud => aud.CreatedBy).HasMaxLength(70);
             builder.Property(aud => aud.ModifiedBy).HasMaxLength(70);
-            builder.Property(aud => aud.Created).IsRequired().HasDefaultValueSql("getdate()");
+            builder.Property(aud => aud.Created).IsRequired().HasDefaultValueSql("getutcdate()").ValueGeneratedOnAddOrUpdate();
             builder.Property(aud => aud.CreatedBy).IsRequired();
 
-            builder.Property(aud => aud.Modified).IsRequired().HasDefaultValueSql("getdate()");
+            builder.Property(aud => aud.Modified).IsRequired().HasDefaultValueSql("getutcdate()").ValueGeneratedOnAddOrUpdate();
             builder.Property(aud => aud.ModifiedBy).IsRequired();
         }
     }

@@ -38,7 +38,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         public IReferenceDataRepo<PersonaRole> PersonaRoles => new ReferenceDataRepo<PersonaRole, PersonaRoleDb>(ctx, (itm) => itm.ToClient());
         public IReferenceDataRepo<OrganisationLookup> Organisations => new ReferenceDataRepo<OrganisationLookup, OrganisationLookupDb>(ctx,
                                                                                             customFetch: (ctx) => {
-                                                                                                var items = ctx.Organisations.Select(o => new OrganisationLookupDb { Id = o.Id, Organisation = o.Organisation }).ToListAsync();
+                                                                                                var items = ctx.Organisations.Select(o => new OrganisationLookupDb { Id = o.Id, Title = o.Title }).ToListAsync();
                                                                                                 return items;
                                                                                             }, 
                                                                                             toClient: (itm) => itm.ToLookup());

@@ -2,7 +2,7 @@
 
 namespace FSA.IncidentsManagementDb.Entities
 {
-    internal class IncidentOMITGroupDb
+    internal class IncidentOMITGroupDb : BaseEntityDb
     {
         public int Id{ get; set; }
         public int OMITGroupId{ get; set; }

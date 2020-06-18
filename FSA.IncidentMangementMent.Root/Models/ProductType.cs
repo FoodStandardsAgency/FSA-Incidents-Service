@@ -1,6 +1,7 @@
 ﻿namespace FSA.IncidentsManagement.Root.Models
 {
-    public class ProductType    {
+    public class ProductType    
+    {
         public int Id{ get; set; }
         public string Title { get; set; }
     }

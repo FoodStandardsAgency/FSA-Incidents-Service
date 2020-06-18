@@ -1,6 +1,6 @@
 ﻿namespace FSA.IncidentsManagementDb.Entities
 {
-    internal class OrganisationRoleDb
+    internal class OrganisationRoleDb : BaseEntityDb
     {
         public int Id{ get; set; }
         public string Title { get; set; }

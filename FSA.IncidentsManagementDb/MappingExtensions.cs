@@ -173,7 +173,7 @@ namespace FSA.IncidentsManagementDb
                 productType: @this.ProductType?.Title ?? "",
                 leadLocalAuthority: allOrgs.ContainsKey(@this.LeadLocalAuthorityId ?? 0) ? allOrgs[@this.LeadLocalAuthorityId ?? 0].Name : "",
                 deathIllness: @this.DeathIllness?.Title ?? "",
-                principalFBO: @this.PrincipalFBO?.Organisation ?? "",
+                principalFBO: @this.PrincipalFBO?.Title?? "",
                 fBOEmail: @this.PrincipalFBO.EmailAddress,
                 fBOPhone: @this.PrincipalFBO.TelephoneNumber,
                 fBOAddressLine1: @this.PrincipalFBO.AddressLine1,
@@ -214,9 +214,9 @@ namespace FSA.IncidentsManagementDb
 
 
 
-        public static OrganisationLookup ToLookup(this OrganisationDb @this) => new OrganisationLookup { Id = @this.Id, Name = @this.Organisation };
+        public static OrganisationLookup ToLookup(this OrganisationDb @this) => new OrganisationLookup { Id = @this.Id, Name = @this.Title };
 
-        public static OrganisationLookup ToLookup(this OrganisationLookupDb @this) => new OrganisationLookup { Id = @this.Id, Name = @this.Organisation };
+        public static OrganisationLookup ToLookup(this OrganisationLookupDb @this) => new OrganisationLookup { Id = @this.Id, Name = @this.Title};
 
 
     }

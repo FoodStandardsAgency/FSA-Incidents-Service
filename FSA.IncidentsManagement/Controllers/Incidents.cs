@@ -79,7 +79,7 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "Assign lead officer.")]
         [ProducesResponseType(typeof(Incident), 200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> UpdateStatus([Required] int incidentId, [Required]string officer)
+        public async Task<IActionResult> UpdateLeadOfficer([Required] int incidentId, [Required]string officer)
         {
             return new OkObjectResult(await this.fsaData.Incidents.AssignLeadOfficer(incidentId, officer));
         }

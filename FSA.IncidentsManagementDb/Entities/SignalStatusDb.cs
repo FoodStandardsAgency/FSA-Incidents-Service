@@ -1,6 +1,6 @@
 ﻿namespace FSA.IncidentsManagementDb.Entities
 {
-    internal class SignalStatusDb
+    internal class SignalStatusDb : BaseEntityDb, IIDbLookup
     {
         public int Id{ get; set; }
         public string Title { get; set; }

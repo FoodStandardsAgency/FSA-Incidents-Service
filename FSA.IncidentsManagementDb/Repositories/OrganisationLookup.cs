@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FSA.IncidentsManagement.Root.Models;
+using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace FSA.IncidentsManagementDb.Repositories
 {
@@ -17,7 +19,7 @@ namespace FSA.IncidentsManagementDb.Repositories
     internal class OrganisationLookupManager : ReferenceDataRepo<OrganisationLookup, OrganisationLookupDb>
     {
         internal OrganisationLookupManager(FSADbContext ctx) : base(ctx,
-                (ctx) => ctx.Organisations.Select(o => new OrganisationLookupDb { Id = o.Id, Organisation = o.Organisation })
+                (ctx) => ctx.Organisations.Select(o => new OrganisationLookupDb { Id = o.Id, Title = o.Title})
                                             .ToListAsync(),
                 (itm) => itm.ToLookup())
         {
@@ -28,18 +30,11 @@ namespace FSA.IncidentsManagementDb.Repositories
             if (ids == null || ids.Count == 0) return new Dictionary<int, OrganisationLookup>();
 
 
-            // build a list of predicates
-            var predicates = new List<IQueryable<OrganisationDb>>();
-            IQueryable<OrganisationDb> dd = null;
-            foreach (var id in ids)
-            {
-                if (dd == null)
-                    dd = ctx.Organisations.Where(o => o.Id == id);
-                else
-                    dd = dd.Where(o => o.Id == id);
-            }
+            var whereClause = string.Join(" OR ", ids.ToList().Select(a => $"Id={a}"));
 
-            return await dd.Select(o => o.ToLookup()).ToDictionaryAsync(k => k.Id, v => new OrganisationLookup { Id = v.Id, Name = v.Name });
+            var allTheOrgs = await ctx.Organisations.FromSqlRaw($"Select * FROM dbo.Organisations WHERE {whereClause}")
+                            .AsNoTracking().ToDictionaryAsync(k => k.Id, v => new OrganisationLookup { Id = v.Id, Name = v.Title});
+            return allTheOrgs;
         }
 
     }

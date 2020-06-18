@@ -23,7 +23,7 @@ namespace FSA.IncidentsManagementDb.Entities
         public DateTime? BestBeforeDate { get; set; }
         public DateTime? DisplayUntil { get; set; }
         public ICollection<OrganisationDb> FboFebo { get; set; }
-        public ICollection<BatchCodesDb> BatchCodes { get; set; }
+        public ICollection<BatchCodeDb> BatchCodes { get; set; }
     
     }
 }
