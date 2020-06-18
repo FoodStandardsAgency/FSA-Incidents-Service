@@ -33,7 +33,7 @@ namespace FSA.IncidentsManagementDb.Entities
         public ProductTypeDb ProductType { get; set; }
         
         public string LeadOfficer { get; set; }
-        public string AdminLead { get; set; }
+        public string LeadOffice { get; set; }
         public string FieldOfficer { get; set; }
 
         public int? LeadLocalAuthorityId { get; set; }

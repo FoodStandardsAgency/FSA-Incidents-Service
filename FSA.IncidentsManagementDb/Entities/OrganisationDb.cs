@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace FSA.IncidentsManagementDb.Entities
 {
@@ -13,6 +14,8 @@ namespace FSA.IncidentsManagementDb.Entities
         public string AddressLine2 { get; set; }
         public string TownCity { get; set; }
         public string County { get; set; }
+        public int? CountryId { get; set; }
+        public CountryDb Country { get; set; }
         public string PostCode { get; set; }
         public string TelephoneNumber { get; set; }
         public string EmailAddress { get; set; }

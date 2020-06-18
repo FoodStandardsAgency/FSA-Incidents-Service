@@ -4,14 +4,16 @@ using FSA.IncidentsManagementDb;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FSA.IncidentsManagementDb.Migrations
 {
     [DbContext(typeof(FSADbContext))]
-    partial class FSADbContextModelSnapshot : ModelSnapshot
+    [Migration("20200618084825_productName")]
+    partial class productName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -231,6 +233,9 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("AdminLead")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("ClassificationId")
                         .HasColumnType("int");
 
@@ -275,9 +280,6 @@ namespace FSA.IncidentsManagementDb.Migrations
 
                     b.Property<int?>("LeadLocalAuthorityId")
                         .HasColumnType("int");
-
-                    b.Property<string>("LeadOffice")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LeadOfficer")
                         .HasColumnType("nvarchar(max)");
@@ -454,9 +456,6 @@ namespace FSA.IncidentsManagementDb.Migrations
                     b.Property<int>("ContactMethodId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CountryId")
-                        .HasColumnType("int");
-
                     b.Property<string>("County")
                         .HasColumnType("nvarchar(max)");
 
@@ -493,8 +492,6 @@ namespace FSA.IncidentsManagementDb.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ContactMethodId");
-
-                    b.HasIndex("CountryId");
 
                     b.HasIndex("OrganisationRoleId");
 
@@ -792,10 +789,6 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasForeignKey("ContactMethodId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("FSA.IncidentsManagementDb.Entities.CountryDb", "Country")
-                        .WithMany()
-                        .HasForeignKey("CountryId");
 
                     b.HasOne("FSA.IncidentsManagementDb.Entities.OrganisationRoleDb", "OrganisationRole")
                         .WithMany()

@@ -10,7 +10,7 @@ namespace FSA.IncidentsManagement.Root.Models
     {
         private readonly int _Id;
 
-        public Incident(int id, string incidentTitle, string incidentDescription, int incidentTypeId, int contactMethodId, int statusId,  int? signalStatusId, int? notifierId, int? principalFBOId, int priorityId, int classificationId, int dataSourceId, int productTypeId, string leadOfficer, string adminLead, string fieldOfficer, int? leadLocalAuthorityId, bool lAAdvised, int deathIllnessId, DateTime? receivedOn, DateTime incidentCreated, DateTime? incidentClosed, string lastChangedBy, DateTime lastChangedDate)
+        public Incident(int id, string incidentTitle, string incidentDescription, int incidentTypeId, int contactMethodId, int statusId,  int? signalStatusId, int? notifierId, int? principalFBOId, int priorityId, int classificationId, int dataSourceId, int productTypeId, string leadOfficer, string leadOffice, string fieldOfficer, int? leadLocalAuthorityId, bool lAAdvised, int deathIllnessId, DateTime? receivedOn, DateTime incidentCreated, DateTime? incidentClosed, string lastChangedBy, DateTime lastChangedDate)
         {
             _Id = id;
             IncidentTitle = incidentTitle;
@@ -26,7 +26,7 @@ namespace FSA.IncidentsManagement.Root.Models
             DataSourceId = dataSourceId;
             ProductTypeId = productTypeId;
             LeadOfficer = leadOfficer;
-            AdminLead = adminLead;
+            LeadOffice = leadOffice;
             FieldOfficer = fieldOfficer;
             LeadLocalAuthorityId = leadLocalAuthorityId;
             LAAdvised = lAAdvised;
@@ -60,7 +60,7 @@ namespace FSA.IncidentsManagement.Root.Models
         public int DataSourceId {get;}
         public int ProductTypeId {get;}
         public string LeadOfficer {get;}
-        public string AdminLead {get;}
+        public string LeadOffice {get;}
         public string FieldOfficer {get;}
         public int? LeadLocalAuthorityId {get;}
         public bool LAAdvised {get;}
