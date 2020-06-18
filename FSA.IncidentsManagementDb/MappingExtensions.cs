@@ -1,12 +1,6 @@
 ﻿using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagementDb.Entities;
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Text;
 
 namespace FSA.IncidentsManagementDb
 {
@@ -142,7 +136,7 @@ namespace FSA.IncidentsManagementDb
                 );
         }
 
-        public static IncidentsDisplayModel ToClient(this IncidentDb @this, Dictionary<int, OrganisationLookup> allOrgs)
+        public static IncidentsDisplayModel ToClient(this IncidentDb @this, Dictionary<int, OrganisationLookup> allOrgs, OrganisationDb fboOrg)
         {
             return new IncidentsDisplayModel(
                      @this.Id,
@@ -170,16 +164,22 @@ namespace FSA.IncidentsManagementDb
                 lastChangedBy: @this.ModifiedBy,
                 lastChangedDate: @this.Modified,
                 category: @this.IncidentType.Title,
-                signalStatus: @this.SignalStatus.Title,
+                signalStatus: @this.SignalStatus?.Title ?? "",
                 incidentStatus: @this.IncidentStatus.Title,
-                notifier: allOrgs.ContainsKey(@this.NotifierId ?? 0) ? allOrgs[@this.NotifierId ?? 0].Name: "",
-                principalFBO: @this.PrincipalFBO?.Organisation ?? "",
+                notifier: allOrgs.ContainsKey(@this.NotifierId ?? 0) ? allOrgs[@this.NotifierId ?? 0].Name : "",
                 priority: @this.Priority?.Title ?? "",
                 classification: @this.Classification?.Title ?? "",
-                datasource: @this.DataSource?.Title ?? "",
+                dataSource: @this.DataSource?.Title ?? "",
                 productType: @this.ProductType?.Title ?? "",
                 leadLocalAuthority: allOrgs.ContainsKey(@this.LeadLocalAuthorityId ?? 0) ? allOrgs[@this.LeadLocalAuthorityId ?? 0].Name : "",
-                deathIllness: @this.DeathIllness?.Title ?? ""
+                deathIllness: @this.DeathIllness?.Title ?? "",
+                principalFBO: @this.PrincipalFBO?.Organisation ?? "",
+                fBOEmail: @this.PrincipalFBO.EmailAddress,
+                fBOPhone: @this.PrincipalFBO.TelephoneNumber,
+                fBOAddressLine1: @this.PrincipalFBO.AddressLine1,
+                fBOAddressLine2: @this.PrincipalFBO.AddressLine2,
+                fBOAddressTown: @this.PrincipalFBO.TownCity,
+                fBOAddressPostcode: @this.PrincipalFBO.PostCode
                 );
         }
 
@@ -194,7 +194,7 @@ namespace FSA.IncidentsManagementDb
                 ContactMethodId = @this.ContactMethodId,
                 IncidentStatusId = @this.StatusId,
                 PriorityId = @this.PriorityId,
-                SignalStatusId = @this.StatusId,
+                SignalStatusId = @this.SignalStatusId,
                 NotifierId = @this.NotifierId,
                 PrincipalFBOId = @this.PrincipalFBOId,
                 ClassificationId = @this.ClassificationId,

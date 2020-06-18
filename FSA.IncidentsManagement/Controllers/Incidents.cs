@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using FSA.IncidentsManagement.Models;
@@ -30,11 +31,11 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpGet()]
         [SwaggerOperation(Summary ="Get incident by id")]
-        [ProducesResponseType(typeof(Incident), 200)]
+        [ProducesResponseType(typeof(IncidentsDisplayModel), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetIncident(int id)
         {
-            return new OkObjectResult(await this.fsaData.Incidents.Get(id));
+            return new OkObjectResult(await this.fsaData.Incidents.GetDisplayItem(id));
         }
 
         [HttpPut()]
@@ -60,7 +61,7 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "Update classification of an incident")]
         [ProducesResponseType(typeof(Incident), 200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> UpdateClassification(int incidentId, int classificationId)
+        public async Task<IActionResult> UpdateClassification([Required] int incidentId, [Required] int classificationId)
         {
             return new OkObjectResult(await this.fsaData.Incidents.UpdateClassification(incidentId,classificationId));
         }
@@ -69,9 +70,18 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "Update status of an incident")]
         [ProducesResponseType(typeof(Incident), 200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> UpdateStatus(int incidentId, int statusId)
+        public async Task<IActionResult> UpdateStatus([Required] int incidentId, [Required] int statusId)
         {
             return new OkObjectResult(await this.fsaData.Incidents.UpdateStatus(incidentId, statusId));
+        }
+
+        [HttpPost("LeadOfficer")]
+        [SwaggerOperation(Summary = "Assign lead officer.")]
+        [ProducesResponseType(typeof(Incident), 200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> UpdateStatus([Required] int incidentId, [Required]string officer)
+        {
+            return new OkObjectResult(await this.fsaData.Incidents.AssignLeadOfficer(incidentId, officer));
         }
     }
 }

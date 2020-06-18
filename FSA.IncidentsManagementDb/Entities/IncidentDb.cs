@@ -11,6 +11,7 @@ namespace FSA.IncidentsManagementDb.Entities
         public string IncidentDescription { get; set; }
         public int IncidentTypeId { get; set; }
         public int ContactMethodId { get; set; }
+        public ContactMethodDb ContactMethod { get; set; }
         public CategoryDb IncidentType { get; set; }
         public int? SignalStatusId { get; set; }
         public SignalStatusDb SignalStatus { get; set; }

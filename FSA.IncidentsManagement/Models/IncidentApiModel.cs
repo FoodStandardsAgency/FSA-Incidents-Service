@@ -13,6 +13,7 @@ namespace FSA.IncidentsManagement.Models
         public int IncidentTypeId { get; set; }
         public int ContactMethodId { get; set; }
         public int StatusId { get; set; }   // Not signal status
+        public int? SignalStatusId { get; set; }   // Not signal status
         public int? NotifierId { get; set; }     // organisations
         public int? PrincipalFBOId { get; set; } // Organisations
         public int ClassificationId { get; set; }
@@ -30,6 +31,5 @@ namespace FSA.IncidentsManagement.Models
         public DateTime? IncidentClosed { get; set; }
         public string LastChangedBy { get; set; }
         public DateTime LastChangedDate { get; set; }
-
     }
 }

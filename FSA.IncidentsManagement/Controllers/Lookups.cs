@@ -138,10 +138,10 @@ namespace FSA.IncidentsManagement.Controllers
                             .GetAll()).ToList());
         }
 
-        [HttpGet("Status")]
+        [HttpGet("SignalStatus")]
         [ProducesResponseType(typeof(IEnumerable<SignalStatus>), 200)]
         [ProducesResponseType(500)]
-        [SwaggerOperation(Summary = "Divine all status values")]
+        [SwaggerOperation(Summary = "Divine all SignalStatus values")]
         public async Task<IActionResult> SignalStatus()
         {
             return new OkObjectResult((await this.lookupdata.SignalStatus
@@ -180,7 +180,7 @@ namespace FSA.IncidentsManagement.Controllers
         [HttpGet("Status")]
         [ProducesResponseType(typeof(IEnumerable<UnitQuantity>), 200)]
         [ProducesResponseType(500)]
-        [SwaggerOperation(Summary = "Incident Statusvalues")]
+        [SwaggerOperation(Summary = "Incident Status values")]
         public async Task<IActionResult> IncidentStatus()
         {
             return new OkObjectResult((await this.lookupdata.Status

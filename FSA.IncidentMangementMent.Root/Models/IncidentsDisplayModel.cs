@@ -10,8 +10,8 @@ namespace FSA.IncidentsManagement.Root.Models
                                     int? signalStatusId, int? notifierId, int? principalFBOId, int priorityId, int classificationId, int dataSourceId, 
                                     int productTypeId, string leadOfficer, string adminLead, string fieldOfficer, int? leadLocalAuthorityId, 
                                     bool lAAdvised, int deathIllnessId, DateTime? receivedOn, DateTime incidentCreated, DateTime? incidentClosed, 
-                                    string lastChangedBy, DateTime lastChangedDate, string category, string signalStatus, string incidentStatus, string notifier, string principalFBO, 
-                                    string priority, string classification, string datasource, string productType, string leadLocalAuthority, string deathIllness ) 
+                                    string lastChangedBy, DateTime lastChangedDate, string category, string signalStatus, string incidentStatus, string notifier, 
+                                    string priority, string classification, string dataSource, string productType, string leadLocalAuthority, string deathIllness, string principalFBO, string fBOEmail, string fBOPhone, string fBOAddressLine1, string fBOAddressLine2, string fBOAddressTown, string fBOAddressPostcode) 
              : base(id, incidentTitle, incidentDescription, incidentTypeId, contactMethodId, statusId, signalStatusId, notifierId, principalFBOId, priorityId, classificationId, dataSourceId, productTypeId, leadOfficer, adminLead, fieldOfficer, leadLocalAuthorityId, lAAdvised, deathIllnessId, receivedOn, incidentCreated, incidentClosed, lastChangedBy, lastChangedDate)
         {
             Category = category;
@@ -19,9 +19,15 @@ namespace FSA.IncidentsManagement.Root.Models
             IncidentStatus = incidentStatus;
             Notifier = notifier;
             PrincipalFBO = principalFBO;
+            FBOEmail = fBOEmail;
+            FBOPhone = fBOPhone;
+            FBOAddressLine1 = fBOAddressLine1;
+            FBOAddressLine2 = fBOAddressLine2;
+            FBOAddressTown = fBOAddressTown;
+            FBOAddressPostcode = fBOAddressPostcode;
             Priority = priority;
             Classification = classification;
-            Datasource = datasource;
+            DataSource = dataSource;
             ProductType = productType;
             LeadLocalAuthority = leadLocalAuthority;
             DeathIllness = deathIllness;
@@ -33,9 +39,13 @@ namespace FSA.IncidentsManagement.Root.Models
         public string Notifier { get;  }
         
         public string PrincipalFBO { get;  }
-
+        public string FBOEmail { get; }
+        public string FBOPhone { get; }
+        public string FBOAddressLine1 { get; }
+        public string FBOAddressLine2 { get; }
+        public string FBOAddressTown { get; }
+        public string FBOAddressPostcode { get; }
         public string Priority { get; }
-        public string Datasource { get; }
         public string Classification { get; }
         public string DataSource { get; }
         public string ProductType { get; }

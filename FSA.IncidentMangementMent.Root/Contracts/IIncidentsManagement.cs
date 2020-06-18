@@ -13,9 +13,11 @@ namespace FSA.IncidentsManagement.Root.Contracts
 
         Task<IEnumerable<Incident>> GetAll();
 
+        Task<IncidentsDisplayModel> GetDisplayItem(int id);
+
         Task<Incident> UpdateStatus(int Id, int statusId);
 
-        Task<Incident> AssignIncident(int id, string user);
+        Task<Incident> AssignLeadOfficer(int id, string user);
 
         Task<Incident> UpdateClassification(int id, int ClassificationId);
 

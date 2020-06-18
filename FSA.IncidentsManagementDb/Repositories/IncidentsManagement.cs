@@ -1,5 +1,6 @@
 ﻿using FSA.IncidentsManagement.Root.Contracts;
 using FSA.IncidentsManagement.Root.Models;
+using FSA.IncidentsManagementDb.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Caching.Memory;
@@ -17,6 +18,23 @@ namespace FSA.IncidentsManagementDb.Repositories
         private readonly string userIdent;
         private OrganisationLookupManager orgLookups;
 
+        private void UpdateAuditInfo(IncidentDb incident, DateTime? setCurrentDate=null)
+        {
+            var currentDate = setCurrentDate ?? DateTime.UtcNow;
+            incident.ModifiedBy = this.userIdent;
+            incident.Modified = currentDate;
+        }
+
+
+        private void SetAuditData(IncidentDb incident, DateTime? setCurrentDate = null)
+        {
+            var currentDate = setCurrentDate ?? DateTime.UtcNow;
+            
+            incident.Created = currentDate;
+            incident.CreatedBy = this.userIdent;
+            this.UpdateAuditInfo(incident, currentDate);
+        }
+
         public IncidentsManagement(FSADbContext ctx, string userIdent)
         {
             this.ctx = ctx;
@@ -29,15 +47,20 @@ namespace FSA.IncidentsManagementDb.Repositories
             if (incident.CommonId != 0) throw new ArgumentOutOfRangeException("This item has already been added.");
 
             var dbItem = incident.ToDb();
-
+            SetAuditData(dbItem);
+            dbItem.IncidentCreated = dbItem.Created;
             var dbPonder = this.ctx.Incidents.Add(dbItem);
             await this.ctx.SaveChangesAsync();
             return dbPonder.Entity.ToClient();
         }
 
-        public Task<Incident> AssignIncident(int id, string user)
+        public async Task<Incident> AssignLeadOfficer(int id, string user)
         {
-            throw new NotImplementedException();
+            var incidentDb = this.ctx.Incidents.Find(id);
+            incidentDb.LeadOfficer = user;
+            UpdateAuditInfo(incidentDb);
+            await this.ctx.SaveChangesAsync();
+            return incidentDb.ToClient();
         }
 
         /// <summary>
@@ -56,6 +79,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         {
             return (await this.ctx.Incidents.AsNoTracking().ToListAsync()).ToClient().ToList();
         }
+
         /// <summary>
         /// Joins two incidents
         /// As long as they have not already been joined.
@@ -85,15 +109,17 @@ namespace FSA.IncidentsManagementDb.Repositories
         /// <exception cref="NullReferenceException" />
         public async Task<Incident> UpdateClassification(int id, int ClassificationId)
         {
-            var itm = await ctx.Incidents.FindAsync(id);
-            itm.ClassificationId = ClassificationId;
+            var dbItem = await ctx.Incidents.FindAsync(id);
+            dbItem.ClassificationId = ClassificationId;
+            UpdateAuditInfo(dbItem);
             await ctx.SaveChangesAsync();
-            return itm.ToClient();
+            return dbItem.ToClient();
         }
 
         public async Task<Incident> UpdateIncident(Incident incident)
         {
             var dbItem = incident.ToDb();
+            UpdateAuditInfo(dbItem);
             var updatedDbItem = this.ctx.Incidents.Update(dbItem);
             await this.ctx.SaveChangesAsync();
             return updatedDbItem.Entity.ToClient();
@@ -112,6 +138,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         {
             var itm = await ctx.Incidents.FindAsync(id);
             itm.SignalStatusId = statusId;
+            UpdateAuditInfo(itm);
             await ctx.SaveChangesAsync();
             return itm.ToClient();
         }
@@ -127,22 +154,22 @@ namespace FSA.IncidentsManagementDb.Repositories
                         .Include(i => i.DeathIllness)
                         .Include(i => i.IncidentType)
                         .Include(i => i.ProductType)
-                        .Include(i=>i.PrincipalFBO)
-                        .Include(i => i.ContactMethodId)
+                        .Include(i => i.PrincipalFBO)
+                        .Include(i => i.ContactMethod)
                         .Include(i => i.IncidentStatus).First(p => p.Id == id);
             // now get the fbo organisations data
             var fboOrg = await this.ctx.Organisations.FindAsync(dbIncident.PrincipalFBOId);
-            // Now fetch all the organisations that match this query.
-            var allOrgIds = new HashSet<int>
-            {
-                dbIncident.NotifierId ?? 0, dbIncident.LeadLocalAuthorityId ?? 0
-            };
-            // remove empty elements = 
+
+            // Ensure we only add the same id once.
+            var allOrgIds = new HashSet<int>{dbIncident.NotifierId ?? 0, dbIncident.LeadLocalAuthorityId ?? 0};
+            // remove empty elements
             allOrgIds.RemoveWhere(o => o == 0); ;
 
+            // Now fetch all the organisations that match this query.
             var allOrgs = await this.orgLookups.FindAllLookups(allOrgIds);
+
             // Finally we can now build our tower of wonder
-            return dbIncident.ToClient(allOrgs);
+            return dbIncident.ToClient(allOrgs, fboOrg);
 
         }
 

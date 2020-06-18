@@ -18,7 +18,7 @@ namespace FSA.IncidentsManagement.ModelValidators
                 incidentTypeId: @this.IncidentTypeId,
                 contactMethodId: @this.ContactMethodId,
                 statusId: @this.StatusId,
-                signalStatusId: @this.StatusId,
+                signalStatusId: @this.SignalStatusId,
                 notifierId: @this.NotifierId,
                 priorityId: @this.PriorityId,
                 principalFBOId: @this.PrincipalFBOId,
