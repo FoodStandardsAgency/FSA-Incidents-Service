@@ -21,7 +21,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using FSA.IncidentsManagement.Root.Contracts;
 using FSA.IncidentsManagementDb.Repositories;
 using Microsoft.OpenApi.Models;
-using RestApi.Example.Utils.Swagger;
+
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 using FSA.IncidentsManagement.ModelValidators;
@@ -103,18 +103,13 @@ namespace FSA.IncidentsManagement
 
             }
             Microsoft.IdentityModel.Logging.IdentityModelEventSource.ShowPII = true;
-            app.UseSwagger();
+            app.UseSwagger(opts=>opts.SerializeAsV2=true);
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "FSA Incident Management v1");
             });
 
             app.UseStaticFiles();
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                ServeUnknownFileTypes = true,
-                DefaultContentType = "application/yaml"
-            });
 
             app.UseHttpsRedirection();
 

@@ -4,14 +4,16 @@ using FSA.IncidentsManagementDb;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FSA.IncidentsManagementDb.Migrations
 {
     [DbContext(typeof(FSADbContext))]
-    partial class FSADbContextModelSnapshot : ModelSnapshot
+    [Migration("20200619151215_oopse")]
+    partial class oopse
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -434,6 +436,9 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasColumnType("nvarchar(70)")
                         .HasMaxLength(70);
 
+                    b.Property<int?>("IncidentDbId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Modified")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
@@ -446,7 +451,7 @@ namespace FSA.IncidentsManagementDb.Migrations
 
                     b.HasKey("FromIncidentId", "ToIncidentId");
 
-                    b.HasIndex("ToIncidentId");
+                    b.HasIndex("IncidentDbId");
 
                     b.ToTable("IncidentLinks");
                 });
@@ -951,17 +956,9 @@ namespace FSA.IncidentsManagementDb.Migrations
 
             modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.IncidentLinkDb", b =>
                 {
-                    b.HasOne("FSA.IncidentsManagementDb.Entities.IncidentDb", "FromIncident")
-                        .WithMany("FromLinks")
-                        .HasForeignKey("FromIncidentId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("FSA.IncidentsManagementDb.Entities.IncidentDb", "ToIncident")
-                        .WithMany("ToLinks")
-                        .HasForeignKey("ToIncidentId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                    b.HasOne("FSA.IncidentsManagementDb.Entities.IncidentDb", null)
+                        .WithMany("Links")
+                        .HasForeignKey("IncidentDbId");
                 });
 
             modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.IncidentOMITGroupDb", b =>

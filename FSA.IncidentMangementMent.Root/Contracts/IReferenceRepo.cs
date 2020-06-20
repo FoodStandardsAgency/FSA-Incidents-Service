@@ -9,6 +9,6 @@ namespace FSA.IncidentsManagement.Root.Contracts
     {
         Task<T> GetById(int id);
         Task<IEnumerable<T>> GetAll();
-
+        Task<T> Find(string title);
     }
 }

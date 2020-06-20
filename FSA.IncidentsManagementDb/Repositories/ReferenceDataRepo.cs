@@ -1,4 +1,5 @@
 ﻿using FSA.IncidentsManagement.Root.Contracts;
+using FSA.IncidentsManagementDb.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
@@ -12,7 +13,7 @@ namespace FSA.IncidentsManagementDb.Repositories
     // This is a basic repo for pureley getting and transforming.
     // You will need to define a mapping operations.
     internal class ReferenceDataRepo<T, Db> : IReferenceDataRepo<T>
-                        where Db : class
+                        where Db : class, IIDbLookup
     {
         protected readonly FSADbContext ctx;
         protected readonly Func<Db, T> toClient;
@@ -32,6 +33,12 @@ namespace FSA.IncidentsManagementDb.Repositories
             this._customFetch = customFetch;
         }
 
+        public async Task<T> Find(string title)
+        {
+            var item = await this.ctx.Set<Db>().FirstAsync(f=>f.Title == title);
+            return toClient(item);
+        }
+
         public async Task<IEnumerable<T>> GetAll()
         {
             var items = _customFetch == null ? 
@@ -42,7 +49,7 @@ namespace FSA.IncidentsManagementDb.Repositories
 
         public async Task<T> GetById(int id)
         {
-            var item = this.ctx.Set<Db>().Find(id);
+            var item = await this.ctx.Set<Db>().AsNoTracking().FirstAsync(f=>f.Id==id);
             return toClient(item);
         }
     }

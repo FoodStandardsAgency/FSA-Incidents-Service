@@ -1,5 +1,6 @@
 ﻿using FSA.IncidentsManagement.Root.Contracts;
 using FSA.IncidentsManagement.Root.Models;
+using FSA.IncidentsManagement.Root.Shared;
 using FSA.IncidentsManagementDb.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -12,34 +13,18 @@ using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagementDb.Repositories
 {
-    public class IncidentsManagement : IIncidentsManagement
+    public class IncidentsManagement : CoreRepositoryActions, IIncidentsManagement
     {
         private readonly FSADbContext ctx;
         private readonly string userIdent;
         private OrganisationLookupManager orgLookups;
+        private ILookupDataHost lkups;
 
-        private void UpdateAuditInfo(IncidentDb incident, DateTime? setCurrentDate=null)
+
+        public IncidentsManagement(FSADbContext ctx, string editor, ILookupDataHost lkups) :base(ctx, editor)
         {
-            var currentDate = setCurrentDate ?? DateTime.UtcNow;
-            incident.ModifiedBy = this.userIdent;
-            incident.Modified = currentDate;
-        }
-
-
-        private void SetAuditData(IncidentDb incident, DateTime? setCurrentDate = null)
-        {
-            var currentDate = setCurrentDate ?? DateTime.UtcNow;
-            
-            incident.Created = currentDate;
-            incident.CreatedBy = this.userIdent;
-            this.UpdateAuditInfo(incident, currentDate);
-        }
-
-        public IncidentsManagement(FSADbContext ctx, string userIdent)
-        {
-            this.ctx = ctx;
-            this.userIdent = userIdent;
-            this.orgLookups = new OrganisationLookupManager(ctx);
+            this.orgLookups = lkups.Organisations as  OrganisationLookupManager;       
+            this.lkups = lkups;
         }
 
         public async Task<Incident> Add(Incident incident)
@@ -53,10 +38,25 @@ namespace FSA.IncidentsManagementDb.Repositories
             await this.ctx.SaveChangesAsync();
             return dbPonder.Entity.ToClient();
         }
-
+        /// <summary>
+        /// Assigns a lead officer to a case.
+        /// incidentStatus will be updated to open, if not already set, or closed.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public async Task<Incident> AssignLeadOfficer(int id, string user)
         {
-            var incidentDb = this.ctx.Incidents.Find(id);
+            var incidentDb = await this.ctx.Incidents.Include(i=>i.IncidentStatus).FirstAsync(o=>o.Id == id);
+
+            // We are updating the lead officer.
+            // If so we can change the incidentStatus to open
+            var openStatus = await this.lkups.Status.Find("Open");
+            var closeStatus = await this.lkups.Status.Find("Close");    
+            if (incidentDb.IncidentStatusId != openStatus.Id  && incidentDb.IncidentStatusId!= closeStatus.Id && user != null)
+                incidentDb.IncidentStatusId = openStatus.Id;
+
+
             incidentDb.LeadOfficer = user;
             UpdateAuditInfo(incidentDb);
             await this.ctx.SaveChangesAsync();
@@ -87,15 +87,25 @@ namespace FSA.IncidentsManagementDb.Repositories
         /// </summary>
         /// <param name="from"></param>
         /// <param name="to"></param>
-        public async Task LinkIncident(int from, int to)
+        public async Task AddLink(int from, int to, string reason)
         {
-            var fromTo = ctx.IncidentLinks.Find(new { FromIncidentId = from, ToIncidentId = to });
-            var toFrom = ctx.IncidentLinks.Find(new { FromIncidentId = to, ToIncidentId = from });
+            var fromTo = ctx.IncidentLinks.AsNoTracking().FirstOrDefault(a => a.FromIncidentId == from && a.ToIncidentId == to);
+            var toFrom = ctx.IncidentLinks.AsNoTracking().FirstOrDefault(a => a.FromIncidentId == to && a.ToIncidentId == from);
 
             if (fromTo == null && toFrom == null)
-                ctx.IncidentLinks.Add(new Entities.IncidentLinkDb { FromIncidentId = from, ToIncidentId = to });
-
-            await ctx.SaveChangesAsync();
+            {
+                var now = DateTime.UtcNow;
+                var newLink = new Entities.IncidentLinkDb { FromIncidentId = from, ToIncidentId = to };
+                var newFromComment = new IncidentCommentDb { Comment = reason, IncidentId = from };
+                var newToComment = new IncidentCommentDb { Comment = reason, IncidentId = to };
+                SetAuditData(newLink, now);
+                SetAuditData(newFromComment, now);
+                SetAuditData(newToComment, now);
+                ctx.IncidentLinks.Add(newLink);
+                ctx.IncidentComments.Add(newFromComment);
+                ctx.IncidentComments.Add(newToComment);
+                await ctx.SaveChangesAsync();
+            }
         }
 
         /// <summary>
@@ -137,7 +147,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         public async Task<Incident> UpdateStatus(int id, int statusId)
         {
             var itm = await ctx.Incidents.FindAsync(id);
-            itm.SignalStatusId = statusId;
+            itm.IncidentStatusId = statusId;
             UpdateAuditInfo(itm);
             await ctx.SaveChangesAsync();
             return itm.ToClient();
@@ -161,7 +171,7 @@ namespace FSA.IncidentsManagementDb.Repositories
             var fboOrg = await this.ctx.Organisations.FindAsync(dbIncident.PrincipalFBOId);
 
             // Ensure we only add the same id once.
-            var allOrgIds = new HashSet<int>{dbIncident.NotifierId ?? 0, dbIncident.LeadLocalAuthorityId ?? 0};
+            var allOrgIds = new HashSet<int> { dbIncident.NotifierId ?? 0, dbIncident.LeadLocalAuthorityId ?? 0 };
             // remove empty elements
             allOrgIds.RemoveWhere(o => o == 0); ;
 
@@ -172,6 +182,51 @@ namespace FSA.IncidentsManagementDb.Repositories
             return dbIncident.ToClient(allOrgs, fboOrg);
 
         }
+        /// <summary>
+        /// Insert comment can be done in various situations
+        /// </summary>
+        /// <param name="incidentId"></param>
+        /// <param name="note"></param>
+        /// <returns></returns>
+        public async Task<IncidentNote> AddNote(int incidentId, string note)
+        {
+            var newComment = new IncidentCommentDb { Comment = note, Id = incidentId };
+            SetAuditData(newComment, DateTime.UtcNow);
+            ctx.IncidentComments.Add(newComment);
+            await ctx.SaveChangesAsync();
+            return newComment.ToClient();
+        }
 
+        /// <summary>
+        /// return 1 PageSize of data from the incidents table for the dashboard.
+        /// returns an empty setother wise.
+        /// </summary>
+        /// <param name="search"> Null/Empty returns all records for the pages</param>
+        /// <param name="PageSize"></param>
+        /// <param name="startPage" default="1" ></param>
+        /// <returns></returns>
+        public async Task<IPaging<IncidentDashboardView>> DashboardSearch(string search = null, int PageSize = 500, int startPage = 1)
+        {
+            if (startPage < 1 || PageSize < 1) return new PagedResult<IncidentDashboardView>(Enumerable.Empty<IncidentDashboardView>(), 0);
+
+            var qry = this.ctx.Incidents.AsNoTracking()
+                       .Include(i => i.Priority)
+                       .Include(i => i.IncidentStatus)
+                       .Include(i => i.Notifier)
+                       .Include(i => i.ToLinks)
+                       .Include(i => i.FromLinks).AsQueryable();
+
+            if (!String.IsNullOrEmpty(search))
+                qry = qry.Where(i => EF.Functions.Like(i.IncidentTitle, $"%{search}%") || EF.Functions.Like(i.IncidentDescription, $"%{search}%"));// || EF.Functions.Like(i.IncidentDescription, search));
+            // build a where clause
+            var totalRecords = await qry.CountAsync();
+            // Find the start record
+            var startRecord = (startPage - 1) * PageSize;
+
+            // WE also need to query the links table a second time for any appearances in the 'to' column.
+            
+            var results = await qry.Skip(startRecord).Take(PageSize).Select(i => i.ToDashboard()).ToListAsync();
+            return new PagedResult<IncidentDashboardView>(results, totalRecords);
+        }
     }
 }

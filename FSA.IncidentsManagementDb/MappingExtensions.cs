@@ -1,6 +1,9 @@
 ﻿using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagementDb.Entities;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading;
 
 namespace FSA.IncidentsManagementDb
 {
@@ -173,7 +176,7 @@ namespace FSA.IncidentsManagementDb
                 productType: @this.ProductType?.Title ?? "",
                 leadLocalAuthority: allOrgs.ContainsKey(@this.LeadLocalAuthorityId ?? 0) ? allOrgs[@this.LeadLocalAuthorityId ?? 0].Name : "",
                 deathIllness: @this.DeathIllness?.Title ?? "",
-                principalFBO: @this.PrincipalFBO?.Title?? "",
+                principalFBO: @this.PrincipalFBO?.Title ?? "",
                 fBOEmail: @this.PrincipalFBO.EmailAddress,
                 fBOPhone: @this.PrincipalFBO.TelephoneNumber,
                 fBOAddressLine1: @this.PrincipalFBO.AddressLine1,
@@ -212,11 +215,37 @@ namespace FSA.IncidentsManagementDb
             };
         }
 
+        public static IncidentNote ToClient(this IncidentCommentDb @this) => new IncidentNote
+        {
+            Id = @this.Id,
+            Note = @this.Comment,
+            Created = @this.Created,
+            CreatedBy = @this.CreatedBy,
+            IncidentId = @this.IncidentId
+        };
 
+        public static IncidentDashboardView ToDashboard(this IncidentDb @this)
+        {
+            return new IncidentDashboardView
+            {
+                CommonId = @this.Id,
+                Priority = @this.Priority.Title,
+                Title = @this.IncidentTitle,
+                Notifier = @this.Notifier.Title,
+                LeadOfficer = @this.LeadOfficer,
+                Status = @this.IncidentStatus.Title,
+                Updated = @this.Modified,
+                Links = @this.ToLinks.Select(o => o.FromIncidentId)
+                            //.Concat(@this.ToLinks.Select(o => o.FromIncidentId)
+                            .Concat(@this.FromLinks.Select(o => o.ToIncidentId))
+                            //.Concat(@this.ToLinks.Select(o => o.ToIncidentId))
+                            .ToList()
+            };
+        }
 
         public static OrganisationLookup ToLookup(this OrganisationDb @this) => new OrganisationLookup { Id = @this.Id, Name = @this.Title };
 
-        public static OrganisationLookup ToLookup(this OrganisationLookupDb @this) => new OrganisationLookup { Id = @this.Id, Name = @this.Title};
+        public static OrganisationLookup ToLookup(this OrganisationLookupDb @this) => new OrganisationLookup { Id = @this.Id, Name = @this.Title };
 
 
     }

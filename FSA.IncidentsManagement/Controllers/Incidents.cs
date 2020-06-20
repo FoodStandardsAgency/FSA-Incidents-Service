@@ -10,6 +10,7 @@ using FSA.IncidentsManagement.Root.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Update;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -30,7 +31,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpGet()]
-        [SwaggerOperation(Summary ="Get incident by id")]
+        [SwaggerOperation(Summary = "Get incident by id")]
         [ProducesResponseType(typeof(IncidentsDisplayModel), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetIncident(int id)
@@ -38,11 +39,25 @@ namespace FSA.IncidentsManagement.Controllers
             return new OkObjectResult(await this.fsaData.Incidents.GetDisplayItem(id));
         }
 
+        [HttpGet("dashboard")]
+        [SwaggerOperation(Summary = "Incident dashboard search")]
+        [ProducesResponseType(typeof(IncidentsDisplayModel), 200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> GetIncidentDashboard(string search, int pageNo, int? pageSize)
+        {
+            if (pageNo < 1)
+                return new OkObjectResult(new PagedResult<IncidentDashboardView>(Enumerable.Empty<IncidentDashboardView>(), 0));
+
+            var dashBoard = await this.fsaData.Incidents.DashboardSearch(search: search?? "", startPage: pageNo);
+            return new OkObjectResult(new { Results=dashBoard, TotalRecords =dashBoard.TotalResults});
+        }
+
         [HttpPut()]
-        [SwaggerOperation(Summary ="Replace an existing incident")]
+        [SwaggerOperation(Summary = "Replace an existing incident")]
         [ProducesResponseType(typeof(Incident), 200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> UpdateIncident([FromBody, SwaggerParameter("Updated Incident", Required = true)] IncidentApiModel incident) {
+        public async Task<IActionResult> UpdateIncident([FromBody, SwaggerParameter("Updated Incident", Required = true)] IncidentApiModel incident)
+        {
 
             return new OkObjectResult(await this.fsaData.Incidents.UpdateIncident(incident.ToClient()));
         }
@@ -54,7 +69,7 @@ namespace FSA.IncidentsManagement.Controllers
         public async Task<IActionResult> CreateIncident([FromBody, SwaggerParameter("Create Incident", Required = true)] IncidentApiModel incident)
         {
             return new OkObjectResult(await this.fsaData.Incidents.Add(incident.ToClient()));
-            
+
         }
 
         [HttpPost("Classification")]
@@ -63,7 +78,7 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(500)]
         public async Task<IActionResult> UpdateClassification([Required] int incidentId, [Required] int classificationId)
         {
-            return new OkObjectResult(await this.fsaData.Incidents.UpdateClassification(incidentId,classificationId));
+            return new OkObjectResult(await this.fsaData.Incidents.UpdateClassification(incidentId, classificationId));
         }
 
         [HttpPost("Status")]
@@ -79,9 +94,20 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "Assign lead officer.")]
         [ProducesResponseType(typeof(Incident), 200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> UpdateLeadOfficer([Required] int incidentId, [Required]string officer)
+        public async Task<IActionResult> UpdateLeadOfficer([Required] int incidentId, [Required] string officer)
         {
             return new OkObjectResult(await this.fsaData.Incidents.AssignLeadOfficer(incidentId, officer));
         }
+
+        [HttpPost("AddLink")]
+        [SwaggerOperation(Summary = "Link two incidets.")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> AddIncidentLink([FromBody] LinkIncidents addIncident)
+        {
+            await this.fsaData.Incidents.AddLink(addIncident.FromIncidentId, addIncident.ToIncidentId, addIncident.Comment);
+            return new OkResult();
+        }
+
     }
 }

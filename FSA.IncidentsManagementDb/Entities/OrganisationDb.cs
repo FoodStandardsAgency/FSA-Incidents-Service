@@ -22,11 +22,10 @@ namespace FSA.IncidentsManagementDb.Entities
         public string FaxAddress { get; set; }
         public int ContactMethodId { get; set; }
         public ContactMethodDb ContactMethod { get; set; }
-        public int LastChangedById { get; set; }
-        public DateTime LastChangedDate { get; set; }
-    }
 
-    internal class OrganisationLookupDb
+    }
+    // not actual a storage representation so no need to inherit from baseEntitry
+    internal class OrganisationLookupDb : IIDbLookup
     {
         public int Id {get;set;}
         public string Title { get; set; }

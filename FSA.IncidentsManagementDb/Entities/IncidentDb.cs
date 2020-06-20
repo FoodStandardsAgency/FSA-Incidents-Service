@@ -46,7 +46,9 @@ namespace FSA.IncidentsManagementDb.Entities
         public DateTime? IncidentClosed { get; set; }
 
         public ICollection<IncidentCommentDb> Comments { get; set; }
-        public ICollection<IncidentLinkDb> Links { get; set; }
+        
+        public ICollection<IncidentLinkDb> FromLinks { get; set; }
+        public ICollection<IncidentLinkDb> ToLinks { get; set; }
 
         
     }

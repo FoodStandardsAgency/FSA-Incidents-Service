@@ -6,17 +6,13 @@ using System.Text;
 
 namespace FSA.IncidentsManagementDb.Builders
 {
-    internal class IncidentBuilderConfig : AuditInfoBuilderConfiguration<IncidentDb>
+    class IncidentOMITGroupDbBuilder : AuditInfoBuilderConfiguration<IncidentOMITGroupDb>
     {
-        public IncidentBuilderConfig()
-        {
-        }
 
-        public override void Configure(EntityTypeBuilder<IncidentDb> builder)
+        public override void Configure(EntityTypeBuilder<IncidentOMITGroupDb> builder)
         {
             base.Configure(builder);
-            //builder.Property()
-            
+            //builder.HasKey(p => new { p.FromIncidentId, p.ToIncidentId });
         }
     }
 }

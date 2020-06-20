@@ -73,8 +73,7 @@ namespace FSA.IncidentsManagement.Root.Models
 
         private string FormatId()
         {
-            var paddedNumber = _Id.ToString("D6");
-            return $"I-{paddedNumber.Substring(0, 3)}-{paddedNumber.Substring(3, 3)}";
+            return GeneralExtensions.GenerateIncidentId(this._Id);
         }
 
         //public ICollection<IncidentCommentDb> Comments {get;}

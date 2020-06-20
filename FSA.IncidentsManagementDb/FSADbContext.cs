@@ -65,10 +65,11 @@ namespace FSA.IncidentsManagementDb
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<SignalStatusDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<UnitQuantityDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<IncidentStatusDb>());
-
+            modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<PriorityDb>());
+            
             modelBuilder.ApplyConfiguration(new IncidentBuilderConfig());
             modelBuilder.ApplyConfiguration(new IncidentLinkBuilder());
-
+            modelBuilder.ApplyConfiguration(new IncidentOMITGroupDbBuilder());
             //modelBuilder.Entity<GatewayErrorCodeDb>().HasKey(p => p.ReturnCode);
             //modelBuilder.Entity<GatewayRequestDetailDb>().HasKey(p => p.RequestId);
 
