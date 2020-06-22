@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "module": "commonjs",
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "allowJs": true,
+    "lib": ["DOM", "ES2016"],
+    "target": "es6", 
+    "outDir": "../public"
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

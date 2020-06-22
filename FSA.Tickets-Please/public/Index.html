@@ -1,13 +1,39 @@
 ﻿<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="utf-8" />
     <title>Tickets please</title>
 </head>
+
 <body>
     <h2>FSA incidents managment</h2>
     <h3>Developer token fetcher</h3>
-    div.s
+    <div id="msgBox"></div>
+    <div class="fetchToken">
+        <div>
+            <label for="tenantId">Tenant Id</label>
+            <input type="text" name="tbClientId" id="tenantId" value="07a873a5-a97e-4071-ae81-f811731ff691">
+        </div>
+        <div>
+            <label for="clientId">Client Id</label>
+            <input type="text" name="tbClientId" id="clientId" value="e0076234-5d57-446a-b4a2-c360819f496d">
+        </div>
+
+        <div>
+            <label for="redirectUri">Redirect uti</label>
+            <input type="text" name="tbRedirec" id="redirectUri" value="http://localhost:8080">
+        </div>
+        <div>
+            <button type="button" id="getTokenButton">Get new Token</button>
+        </div>
+    </div>
+    <div class="tokenResults">
+        <p id="errorResults"></p>
+        <input type="text" name="tbAccessToken" id="tbAccessToken">
+    </div>
+    <script type="text/javascript" src="app.js"></script>
 </body>
+
 </html>

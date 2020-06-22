@@ -15,8 +15,6 @@ namespace FSA.IncidentsManagementDb.Repositories
 {
     public class IncidentsManagement : CoreRepositoryActions, IIncidentsManagement
     {
-        private readonly FSADbContext ctx;
-        private readonly string userIdent;
         private OrganisationLookupManager orgLookups;
         private ILookupDataHost lkups;
 

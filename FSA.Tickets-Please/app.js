@@ -39,8 +39,8 @@ app.use((err, req, res, next) => {
         error: {}
     });
 });
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 8080);
 const server = app.listen(app.get('port'), function () {
-    debug('Express server listening on port ' + server.address().port);
+    debug('Express server listening on port ' + server.address());
 });
 //# sourceMappingURL=app.js.map
