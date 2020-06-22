@@ -6,6 +6,12 @@ namespace FSA.IncidentsManagementDb.Entities
 {
     internal class IncidentDb : BaseEntityDb
     {
+        public IncidentDb()
+        {
+            this.FromLinks = new List<IncidentLinkDb>();
+            this.ToLinks = new List<IncidentLinkDb>();
+        }
+
         public int Id { get; set; }
         public string IncidentTitle { get; set; }
         public string IncidentDescription { get; set; }

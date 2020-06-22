@@ -8,6 +8,7 @@ using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,9 +20,9 @@ namespace FSA.IncidentsManagementDb.Repositories
         private ILookupDataHost lkups;
 
 
-        public IncidentsManagement(FSADbContext ctx, string editor, ILookupDataHost lkups) :base(ctx, editor)
+        public IncidentsManagement(FSADbContext ctx, string editor, ILookupDataHost lkups) : base(ctx, editor)
         {
-            this.orgLookups = lkups.Organisations as  OrganisationLookupManager;       
+            this.orgLookups = lkups.Organisations as OrganisationLookupManager;
             this.lkups = lkups;
         }
 
@@ -45,13 +46,13 @@ namespace FSA.IncidentsManagementDb.Repositories
         /// <returns></returns>
         public async Task<Incident> AssignLeadOfficer(int id, string user)
         {
-            var incidentDb = await this.ctx.Incidents.Include(i=>i.IncidentStatus).FirstAsync(o=>o.Id == id);
+            var incidentDb = await this.ctx.Incidents.Include(i => i.IncidentStatus).FirstAsync(o => o.Id == id);
 
             // We are updating the lead officer.
             // If so we can change the incidentStatus to open
             var openStatus = await this.lkups.Status.Find("Open");
-            var closeStatus = await this.lkups.Status.Find("Close");    
-            if (incidentDb.IncidentStatusId != openStatus.Id  && incidentDb.IncidentStatusId!= closeStatus.Id && user != null)
+            var closeStatus = await this.lkups.Status.Find("Close");
+            if (incidentDb.IncidentStatusId != openStatus.Id && incidentDb.IncidentStatusId != closeStatus.Id && user != null)
                 incidentDb.IncidentStatusId = openStatus.Id;
 
 
@@ -222,9 +223,39 @@ namespace FSA.IncidentsManagementDb.Repositories
             var startRecord = (startPage - 1) * PageSize;
 
             // WE also need to query the links table a second time for any appearances in the 'to' column.
-            
+
             var results = await qry.Skip(startRecord).Take(PageSize).Select(i => i.ToDashboard()).ToListAsync();
             return new PagedResult<IncidentDashboardView>(results, totalRecords);
+        }
+
+        public async Task<IEnumerable<IncidentDashboardView>> DashboardIncidentLinks(int incidentId)
+        {
+            var incident = await this.ctx.Incidents
+                                    .Include(o => o.FromLinks)
+                                    .Include(o => o.ToLinks).AsNoTracking().FirstAsync(f => f.Id == incidentId);
+
+            var incidentsQry = this.ctx.Incidents
+                                  .Include(i => i.Priority)
+                                   .Include(i => i.IncidentStatus)
+                                   .Include(i => i.Notifier).AsQueryable();
+
+            // ALl from incidents where parent is in then to Column
+            var fromQ = (from iq in incidentsQry
+                         join fromLink in ctx.IncidentLinks
+                             on iq.Id equals fromLink.FromIncidentId
+                         where fromLink.ToIncidentId == incidentId
+                         select iq);
+            // ALl from incidents where parent is in then from Column
+            var toQ = (from iq in incidentsQry
+                       join toLink in ctx.IncidentLinks
+                           on iq.Id equals toLink.ToIncidentId
+                       where toLink.FromIncidentId == incidentId
+                       select iq);
+
+
+            var allItems = fromQ.Concat(toQ).Where(o => o.Id != incidentId);
+
+            return  await allItems.Select(i => i.ToDashboard()).ToListAsync();
         }
     }
 }

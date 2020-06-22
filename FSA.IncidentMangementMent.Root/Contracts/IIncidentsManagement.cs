@@ -31,5 +31,6 @@ namespace FSA.IncidentsManagement.Root.Contracts
         Task<Incident> Add(Incident incident);
 
         Task<Incident> UpdateIncident(Incident incident);
+        Task<IEnumerable<IncidentDashboardView>> DashboardIncidentLinks(int incidentId);
     }
 }

@@ -4,12 +4,14 @@
 
 <head>
     <meta charset="utf-8" />
+    <base href="/" />
     <title>Tickets please</title>
 </head>
 
 <body>
     <h2>FSA incidents managment</h2>
     <h3>Developer token fetcher</h3>
+    <a href="/"><h1>Reload</h1></a>
     <div id="msgBox"></div>
     <div class="fetchToken">
         <div>
@@ -18,7 +20,7 @@
         </div>
         <div>
             <label for="clientId">Client Id</label>
-            <input type="text" name="tbClientId" id="clientId" value="e0076234-5d57-446a-b4a2-c360819f496d">
+            <input type="text" name="tbClientId" id="clientId" value="78085c96-db80-49fc-b3a2-229671cb7f8e">
         </div>
 
         <div>
@@ -26,8 +28,22 @@
             <input type="text" name="tbRedirec" id="redirectUri" value="http://localhost:8080">
         </div>
         <div>
+            <label for="scopes">Scopes</label>
+            <input type="text" name="tbscope" id="scopes" value="api://9aff1d72-f4d9-4bb4-b223-21e45c6657ea/user_impersonation+openid">
+        </div>
+        <div>
             <button type="button" id="getTokenButton">Get new Token</button>
         </div>
+        <!-- <form action="" method="POST" id="loginForm" >
+            <input type="text" name="client_id" id="client_id" value="78085c96-db80-49fc-b3a2-229671cb7f8e">
+            <input type="text" name="redirect_uri" id="recirect_uri" value="http://localhost:8080">
+            <input type="text" name="grant_type" id="grant_type" value="authorization_code">
+            <input type="text" name="scope" id="scope" value=".default">
+            <input type="text" name="client_secret" id="client_secret" value="BK2~FGI-F-J8Hikl0tRm_67I5xmS8_Rf5x">
+            <input type="text" name="code" id="code" value="code">
+            <input type="submit">
+        </form> -->
+
     </div>
     <div class="tokenResults">
         <p id="errorResults"></p>

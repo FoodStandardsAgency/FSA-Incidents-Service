@@ -39,9 +39,9 @@ namespace FSA.IncidentsManagement.Controllers
             return new OkObjectResult(await this.fsaData.Incidents.GetDisplayItem(id));
         }
 
-        [HttpGet("dashboard")]
+        [HttpGet("Dashboard")]
         [SwaggerOperation(Summary = "Incident dashboard search")]
-        [ProducesResponseType(typeof(IncidentsDisplayModel), 200)]
+        [ProducesResponseType(typeof(IncidentDashboardView), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetIncidentDashboard(string search, int pageNo, int? pageSize)
         {
@@ -100,12 +100,32 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPost("AddLink")]
-        [SwaggerOperation(Summary = "Link two incidets.")]
+        [SwaggerOperation(Summary = "Link two incidents.")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> AddIncidentLink([FromBody] LinkIncidents addIncident)
         {
             await this.fsaData.Incidents.AddLink(addIncident.FromIncidentId, addIncident.ToIncidentId, addIncident.Comment);
+            return new OkResult();
+        }
+
+        [HttpGet("GetIncidentLinks")]
+        [SwaggerOperation(Summary = "Dashboard info for an incidents links")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> GetIncidentLinks([FromQuery] int incidentId)
+        {
+            
+            return new OkObjectResult(await this.fsaData.Incidents.DashboardIncidentLinks(incidentId));
+        }
+
+        [HttpPost("AddNote")]
+        [SwaggerOperation(Summary = "Add note to an incident.")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> AddNote([FromBody] IncidentComment addIncident)
+        {
+            await this.fsaData.Incidents.AddNote(addIncident.IncidentId, addIncident.Note);
             return new OkResult();
         }
 
