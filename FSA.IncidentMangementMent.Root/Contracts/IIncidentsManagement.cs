@@ -18,16 +18,18 @@ namespace FSA.IncidentsManagement.Root.Contracts
 
         Task<Incident> UpdateStatus(int Id, int statusId);
 
-        Task<Incident> AssignLeadOfficer(int id, string user);
+        Task AssignLeadOfficer(IEnumerable<int> id, string user);
 
         Task<Incident> UpdateClassification(int id, int ClassificationId);
 
-        Task AddLink(int from, int to, string reason);
+        Task AddLink(int from, IEnumerable<int> to, string reason);
 
         Task<IncidentNote> AddNote(int incidentId, string note);
 
+        Task<IEnumerable<IncidentNote>>GetNotes(int incidentId);
+
         Task<IPaging<IncidentDashboardView>> DashboardSearch(string search = null, int pageSize = 500, int startPage = 1);
-        
+
         Task<Incident> Add(Incident incident);
 
         Task<Incident> UpdateIncident(Incident incident);

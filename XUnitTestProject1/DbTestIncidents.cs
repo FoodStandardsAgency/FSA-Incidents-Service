@@ -42,10 +42,12 @@ namespace FSA.UnitTests.WebApi
 
         }
 
+        [Fact]
         public async Task AddIncidents()
         {
 
         }
+
 
         public void Dispose()
         {

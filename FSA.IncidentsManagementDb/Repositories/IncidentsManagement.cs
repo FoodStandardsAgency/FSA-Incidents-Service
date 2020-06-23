@@ -44,22 +44,30 @@ namespace FSA.IncidentsManagementDb.Repositories
         /// <param name="id"></param>
         /// <param name="user"></param>
         /// <returns></returns>
-        public async Task<Incident> AssignLeadOfficer(int id, string user)
+        public async Task AssignLeadOfficer(IEnumerable<int> ids, string user)
         {
-            var incidentDb = await this.ctx.Incidents.Include(i => i.IncidentStatus).FirstAsync(o => o.Id == id);
 
             // We are updating the lead officer.
             // If so we can change the incidentStatus to open
             var openStatus = await this.lkups.Status.Find("Open");
             var closeStatus = await this.lkups.Status.Find("Close");
-            if (incidentDb.IncidentStatusId != openStatus.Id && incidentDb.IncidentStatusId != closeStatus.Id && user != null)
-                incidentDb.IncidentStatusId = openStatus.Id;
 
+            foreach (var id in ids)
+            {
+                // Fiind the incident only if its not closed.
+                var incidentDb = await this.ctx.Incidents.Include(i => i.IncidentStatus).FirstOrDefaultAsync(o => o.Id == id && o.IncidentStatusId != closeStatus.Id);
 
-            incidentDb.LeadOfficer = user;
-            UpdateAuditInfo(incidentDb);
+                // Don't touch closed entries.
+
+                if (incidentDb.IncidentStatusId != openStatus.Id && incidentDb.IncidentStatusId != closeStatus.Id && user != null)
+                    incidentDb.IncidentStatusId = openStatus.Id;
+                incidentDb.LeadOfficer = user;
+                UpdateAuditInfo(incidentDb);
+
+            }
+
             await this.ctx.SaveChangesAsync();
-            return incidentDb.ToClient();
+            
         }
 
         /// <summary>
@@ -86,25 +94,34 @@ namespace FSA.IncidentsManagementDb.Repositories
         /// </summary>
         /// <param name="from"></param>
         /// <param name="to"></param>
-        public async Task AddLink(int from, int to, string reason)
+        public async Task AddLink(int from, IEnumerable<int> tos, string reason)
         {
-            var fromTo = ctx.IncidentLinks.AsNoTracking().FirstOrDefault(a => a.FromIncidentId == from && a.ToIncidentId == to);
-            var toFrom = ctx.IncidentLinks.AsNoTracking().FirstOrDefault(a => a.FromIncidentId == to && a.ToIncidentId == from);
+            var allTo = new HashSet<int>(tos);
+            // remove our from numb if present
+            allTo.Remove(from);
 
-            if (fromTo == null && toFrom == null)
+
+            // not my favourite option
+            foreach (var to in allTo)
             {
-                var now = DateTime.UtcNow;
-                var newLink = new Entities.IncidentLinkDb { FromIncidentId = from, ToIncidentId = to };
-                var newFromComment = new IncidentCommentDb { Comment = reason, IncidentId = from };
-                var newToComment = new IncidentCommentDb { Comment = reason, IncidentId = to };
-                SetAuditData(newLink, now);
-                SetAuditData(newFromComment, now);
-                SetAuditData(newToComment, now);
-                ctx.IncidentLinks.Add(newLink);
-                ctx.IncidentComments.Add(newFromComment);
-                ctx.IncidentComments.Add(newToComment);
-                await ctx.SaveChangesAsync();
+                var fromTo = ctx.IncidentLinks.AsNoTracking().FirstOrDefault(a => a.FromIncidentId == from && a.ToIncidentId == to);
+                var toFrom = ctx.IncidentLinks.AsNoTracking().FirstOrDefault(a => a.FromIncidentId == to && a.ToIncidentId == from);
+
+                if (fromTo == null && toFrom == null)
+                {
+                    var now = DateTime.UtcNow;
+                    var newLink = new Entities.IncidentLinkDb { FromIncidentId = from, ToIncidentId = to };
+                    var newFromComment = new IncidentCommentDb { Comment = reason, IncidentId = from };
+                    var newToComment = new IncidentCommentDb { Comment = reason, IncidentId = to };
+                    SetAuditData(newLink, now);
+                    SetAuditData(newFromComment, now);
+                    SetAuditData(newToComment, now);
+                    ctx.IncidentLinks.Add(newLink);
+                    ctx.IncidentComments.Add(newFromComment);
+                    ctx.IncidentComments.Add(newToComment);
+                }
             }
+            await ctx.SaveChangesAsync();
         }
 
         /// <summary>
@@ -216,11 +233,11 @@ namespace FSA.IncidentsManagementDb.Repositories
                        .Include(i => i.FromLinks).AsQueryable();
 
             if (!String.IsNullOrEmpty(search))
-                qry = qry.Where(i => EF.Functions.Like(i.IncidentTitle, $"%{search}%") 
-                                  || EF.Functions.Like(i.IncidentDescription, $"%{search}%") 
-                                  || EF.Functions.Like(i.Priority.Title , $"%{search}%")
-                                  || EF.Functions.Like(i.Notifier.Title , $"%{search}%")
-                                  || EF.Functions.Like(i.IncidentStatus.Title , $"%{search}%"));// || EF.Functions.Like(i.IncidentDescription, search));
+                qry = qry.Where(i => EF.Functions.Like(i.IncidentTitle, $"%{search}%")
+                                  || EF.Functions.Like(i.IncidentDescription, $"%{search}%")
+                                  || EF.Functions.Like(i.Priority.Title, $"%{search}%")
+                                  || EF.Functions.Like(i.Notifier.Title, $"%{search}%")
+                                  || EF.Functions.Like(i.IncidentStatus.Title, $"%{search}%"));// || EF.Functions.Like(i.IncidentDescription, search));
             // build a where clause
             var totalRecords = await qry.CountAsync();
             // Find the start record
@@ -229,6 +246,12 @@ namespace FSA.IncidentsManagementDb.Repositories
             return new PagedResult<IncidentDashboardView>(results, totalRecords);
         }
 
+        /// <summary>
+        /// Returns dashbord view for linked incidents.
+        /// Excludes the parent Incident.
+        /// </summary>
+        /// <param name="incidentId"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<IncidentDashboardView>> DashboardIncidentLinks(int incidentId)
         {
             var incident = await this.ctx.Incidents
@@ -256,7 +279,18 @@ namespace FSA.IncidentsManagementDb.Repositories
 
             var allItems = fromQ.Concat(toQ).Where(o => o.Id != incidentId);
 
-            return  await allItems.Select(i => i.ToDashboard()).ToListAsync();
+            return await allItems.Select(i => i.ToDashboard()).ToListAsync();
+        }
+
+        /// <summary>
+        /// Gets all the notes for a given incident.
+        /// </summary>
+        /// <param name="incidentId"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<IncidentNote>> GetNotes(int incidentId)
+        {
+            var allNotes = await ctx.IncidentComments.Where(o => o.IncidentId == incidentId).Select(s=>s.ToClient()).ToListAsync();
+            return allNotes;
         }
     }
 }
