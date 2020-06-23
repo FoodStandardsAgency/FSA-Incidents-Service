@@ -177,12 +177,12 @@ namespace FSA.IncidentsManagementDb
                 leadLocalAuthority: allOrgs.ContainsKey(@this.LeadLocalAuthorityId ?? 0) ? allOrgs[@this.LeadLocalAuthorityId ?? 0].Name : "",
                 deathIllness: @this.DeathIllness?.Title ?? "",
                 principalFBO: @this.PrincipalFBO?.Title ?? "",
-                fBOEmail: @this.PrincipalFBO.EmailAddress,
-                fBOPhone: @this.PrincipalFBO.TelephoneNumber,
-                fBOAddressLine1: @this.PrincipalFBO.AddressLine1,
-                fBOAddressLine2: @this.PrincipalFBO.AddressLine2,
-                fBOAddressTown: @this.PrincipalFBO.TownCity,
-                fBOAddressPostcode: @this.PrincipalFBO.PostCode
+                fBOEmail: @this.PrincipalFBO?.EmailAddress ?? "",
+                fBOPhone: @this.PrincipalFBO?.TelephoneNumber ?? "",
+                fBOAddressLine1: @this.PrincipalFBO?.AddressLine1?? "",
+                fBOAddressLine2: @this.PrincipalFBO?.AddressLine2??"",
+                fBOAddressTown: @this.PrincipalFBO?.TownCity??"",
+                fBOAddressPostcode: @this.PrincipalFBO?.PostCode??""
                 );
         }
 

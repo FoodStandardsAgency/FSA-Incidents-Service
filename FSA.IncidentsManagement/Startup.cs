@@ -44,20 +44,8 @@ namespace FSA.IncidentsManagement
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddProtectedWebApi(Configuration, subscribeToJwtBearerMiddlewareDiagnosticsEvents: true);
-            //services.Configure<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme, options =>
-            //        {
-            //            // This is an Microsoft identity platform Web API
-            //            //options.Authority += "/v2.0";
-                        
-            //            // The valid audiences are both the Client ID (options.Audience) and api://{ClientID}
-            //            options.TokenValidationParameters.ValidAudiences = new string[]
-            //            {
-            //            options.Audience, $"api://{options.Audience}", $"https://{options.Audience}"
-            //            };
-            //            // D-d-d-delegate
-            //            options.TokenValidationParameters.IssuerValidator = Microsoft.IdentityModel.Tokens.Validators.ValidateIssuer;
-            //        });
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddMicrosoftWebApi(Configuration, subscribeToJwtBearerMiddlewareDiagnosticsEvents: true);
 
             // grabbing current userInfo
             services.AddHttpContextAccessor();
@@ -84,10 +72,11 @@ namespace FSA.IncidentsManagement
             var fsaConn = Configuration.GetConnectionString("FSADbConn");
             services.AddDbContext<FSADbContext>((opts) => opts
                         .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddDebug()))
-                        .UseSqlServer(fsaConn, (d) =>{
-                                d.EnableRetryOnFailure(15);
-                                d.CommandTimeout(100);
-                            }));
+                        .UseSqlServer(fsaConn, (d) =>
+                        {
+                            d.EnableRetryOnFailure(15);
+                            d.CommandTimeout(100);
+                        }));
 
             services.AddScoped<UserInfo>();
             services.AddScoped<ILookupDataHost, LookupDataHost>();
@@ -103,7 +92,7 @@ namespace FSA.IncidentsManagement
 
             }
             Microsoft.IdentityModel.Logging.IdentityModelEventSource.ShowPII = true;
-            app.UseSwagger(opts=>opts.SerializeAsV2=true);
+            app.UseSwagger(opts => opts.SerializeAsV2 = true);
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "FSA Incident Management v1");

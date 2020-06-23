@@ -45,10 +45,10 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetIncidentDashboard(string search, int pageNo, int? pageSize)
         {
-            if (pageNo < 1)
+            if (pageNo < 1 || pageNo<1  )
                 return new OkObjectResult(new PagedResult<IncidentDashboardView>(Enumerable.Empty<IncidentDashboardView>(), 0));
-
-            var dashBoard = await this.fsaData.Incidents.DashboardSearch(search: search?? "", startPage: pageNo);
+            
+            var dashBoard = pageSize.HasValue ? await this.fsaData.Incidents.DashboardSearch(search: search ?? "", startPage: pageNo, pageSize: pageSize.Value) :await this.fsaData.Incidents.DashboardSearch(search: search?? "", startPage: pageNo);
             return new OkObjectResult(new { Results=dashBoard, TotalRecords =dashBoard.TotalResults});
         }
 

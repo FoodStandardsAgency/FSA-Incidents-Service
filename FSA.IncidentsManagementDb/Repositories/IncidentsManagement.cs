@@ -216,14 +216,15 @@ namespace FSA.IncidentsManagementDb.Repositories
                        .Include(i => i.FromLinks).AsQueryable();
 
             if (!String.IsNullOrEmpty(search))
-                qry = qry.Where(i => EF.Functions.Like(i.IncidentTitle, $"%{search}%") || EF.Functions.Like(i.IncidentDescription, $"%{search}%"));// || EF.Functions.Like(i.IncidentDescription, search));
+                qry = qry.Where(i => EF.Functions.Like(i.IncidentTitle, $"%{search}%") 
+                                  || EF.Functions.Like(i.IncidentDescription, $"%{search}%") 
+                                  || EF.Functions.Like(i.Priority.Title , $"%{search}%")
+                                  || EF.Functions.Like(i.Notifier.Title , $"%{search}%")
+                                  || EF.Functions.Like(i.IncidentStatus.Title , $"%{search}%"));// || EF.Functions.Like(i.IncidentDescription, search));
             // build a where clause
             var totalRecords = await qry.CountAsync();
             // Find the start record
             var startRecord = (startPage - 1) * PageSize;
-
-            // WE also need to query the links table a second time for any appearances in the 'to' column.
-
             var results = await qry.Skip(startRecord).Take(PageSize).Select(i => i.ToDashboard()).ToListAsync();
             return new PagedResult<IncidentDashboardView>(results, totalRecords);
         }

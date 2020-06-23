@@ -15,5 +15,6 @@ namespace _UnitTests
         public string password { get; set; }
         public string clientid { get; set; }
         public string secret { get; set; }
+        public string dbConn { get; set; }
     }
 }

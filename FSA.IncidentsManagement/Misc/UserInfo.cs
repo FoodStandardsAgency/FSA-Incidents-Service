@@ -25,7 +25,7 @@ namespace FSA.IncidentsManagement.Misc
         public string GetUserId()
         {
 #if DEBUG
-            return this.httpContextAccess.HttpContext.User.GetObjectId() ?? "Developer Mode";
+            return this.httpContextAccess.HttpContext.User.GetObjectId() ?? "Developer Mode"; //51b75a03-4bb1-4e03-bd91-469fe7a1e6e9
 #endif
             return this.httpContextAccess.HttpContext.User.GetObjectId();
         }

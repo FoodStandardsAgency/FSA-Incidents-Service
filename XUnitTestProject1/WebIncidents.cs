@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace FSA.UnitTests.IncidentTests
+namespace FSA.UnitTests.WebApi
 {
     public class IncidentT
     {
@@ -29,7 +29,9 @@ namespace FSA.UnitTests.IncidentTests
                 { "username",this.Config.username},
                 { "password", this.Config.password},
                 {"client_secret", this.Config.secret },
-                {"grant_type","password"}
+                {"redirect_uri","https://login.microsoftonline.com/common/oauth2/nativeclient" },
+                {"response_type","code"},
+                {"response_mode","fragment"}
             };
 
             var url = $"https://login.microsoftonline.com/organizations/oauth2/v2.0/token";
