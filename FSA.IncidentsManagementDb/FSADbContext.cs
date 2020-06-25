@@ -44,13 +44,15 @@ namespace FSA.IncidentsManagementDb
         internal DbSet<ProductDb> Products { get; set; }
         internal DbSet<ProductTypeDb> ProductTypes { get; set; }
         internal DbSet<ProductDateDb> ProductDates { get; set; }
-
+        internal DbSet<ProductFBODb> ProductFBOItems { get; set; }
         internal DbSet<IncidentStatusDb> IncidentStatus { get; set; }
         internal DbSet<SignalStatusDb> SignalStatus { get; set; }
         internal DbSet<UnitQuantityDb> UnitQuantities { get; set; }
         internal DbSet<ProductPackSizeDb> ProductPackSizes { get; set; }
         internal DbSet<BatchCodeDb> BatchCodes { get; set; }
 
+        internal DbSet<FBODb> FBOs { get; set; }
+        internal DbSet<FBOTypeDb> FBOTypes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -72,6 +74,8 @@ namespace FSA.IncidentsManagementDb
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<IncidentStatusDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<PriorityDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<DateTypeDb>());
+            modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<NotifierTypeDb>());
+            modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<FBOTypeDb>());
 
             modelBuilder.ApplyConfiguration(new IncidentBuilderConfig());
             modelBuilder.ApplyConfiguration(new IncidentLinkBuilder());

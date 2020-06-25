@@ -28,5 +28,6 @@ namespace FSA.IncidentsManagementDb.Entities
         public int? DataSourceId { get; set; }
         public DataSourceDb DataSource { get; set; }
         public string SignalUrl { get; set; }
+        public ICollection<ProductFBODb> RelatedFBOs { get; set; }
     }
 }
