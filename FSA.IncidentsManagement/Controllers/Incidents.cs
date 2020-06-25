@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Update;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace FSA.IncidentsManagement.Controllers
@@ -92,30 +93,30 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpPost("LeadOfficer")]
         [SwaggerOperation(Summary = "Assign lead officer.")]
-        [ProducesResponseType(typeof(Incident), 200)]
+        [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> UpdateLeadOfficer([Required] int incidentId, [Required] string officer)
+        public async Task<IActionResult> UpdateLeadOfficer([FromBody, SwaggerParameter("Update Lead officer entries", Required =true)] UpdateLeadOfficer officer)
         {
-            return new OkObjectResult(await this.fsaData.Incidents.AssignLeadOfficer(incidentId, officer));
+            await this.fsaData.Incidents.AssignLeadOfficer(officer.IncidentIds, officer.Officer);
+            return new OkResult();
         }
 
-        [HttpPost("AddLink")]
+        [HttpPost("AddLinks")]
         [SwaggerOperation(Summary = "Link two incidents.")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> AddIncidentLink([FromBody] LinkIncidents addIncident)
         {
-            await this.fsaData.Incidents.AddLink(addIncident.FromIncidentId, addIncident.ToIncidentId, addIncident.Comment);
+            await this.fsaData.Incidents.AddLink(addIncident.FromIncidentId, addIncident.ToIncidentIds, addIncident.Comment);
             return new OkResult();
         }
 
         [HttpGet("GetIncidentLinks")]
         [SwaggerOperation(Summary = "Dashboard info for an incidents links")]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(IEnumerable<IncidentDashboardView>), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetIncidentLinks([FromQuery] int incidentId)
         {
-            
             return new OkObjectResult(await this.fsaData.Incidents.DashboardIncidentLinks(incidentId));
         }
 
@@ -123,10 +124,19 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "Add note to an incident.")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> AddNote([FromBody] IncidentComment addIncident)
+        public async Task<IActionResult> AddNote([FromBody, SwaggerParameter(Required=true)] IncidentComment addIncident)
         {
             await this.fsaData.Incidents.AddNote(addIncident.IncidentId, addIncident.Note);
             return new OkResult();
+        }
+
+        [HttpGet("GetNotes")]
+        [SwaggerOperation(Summary = "Get notes for an incident")]
+        [ProducesResponseType(typeof(IEnumerable<IncidentNote>), 200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> GetNotes([FromQuery] int incidentId)
+        {
+            return new OkObjectResult(await this.fsaData.Incidents.GetNotes(incidentId));
         }
 
     }

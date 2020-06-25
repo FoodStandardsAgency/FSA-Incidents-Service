@@ -12,6 +12,10 @@
     <Compile Remove="Migrations\20200620145818_Willond.Designer.cs" />
     <Compile Remove="Migrations\20200620151932_Tabel.cs" />
     <Compile Remove="Migrations\20200620151932_Tabel.Designer.cs" />
+    <Compile Remove="Migrations\20200625084208_sonow.cs" />
+    <Compile Remove="Migrations\20200625084208_sonow.Designer.cs" />
+    <Compile Remove="Migrations\20200625084926_sonow.cs" />
+    <Compile Remove="Migrations\20200625084926_sonow.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

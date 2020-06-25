@@ -40,10 +40,15 @@ namespace FSA.IncidentsManagementDb
         internal DbSet<OMITGroupDb> OMITGroups { get; set; }
         internal DbSet<OrganisationRoleDb> OrganisationRoles { get; set; }
         internal DbSet<PersonaRoleDb> PersonaRoles { get; set; }
+        
+        internal DbSet<ProductDb> Products { get; set; }
         internal DbSet<ProductTypeDb> ProductTypes { get; set; }
+        internal DbSet<ProductDateDb> ProductDates { get; set; }
+
         internal DbSet<IncidentStatusDb> IncidentStatus { get; set; }
         internal DbSet<SignalStatusDb> SignalStatus { get; set; }
         internal DbSet<UnitQuantityDb> UnitQuantities { get; set; }
+        internal DbSet<ProductPackSizeDb> ProductPackSizes { get; set; }
         internal DbSet<BatchCodeDb> BatchCodes { get; set; }
 
 
@@ -66,10 +71,14 @@ namespace FSA.IncidentsManagementDb
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<UnitQuantityDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<IncidentStatusDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<PriorityDb>());
-            
+            modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<DateTypeDb>());
+
             modelBuilder.ApplyConfiguration(new IncidentBuilderConfig());
             modelBuilder.ApplyConfiguration(new IncidentLinkBuilder());
             modelBuilder.ApplyConfiguration(new IncidentOMITGroupDbBuilder());
+            modelBuilder.ApplyConfiguration(new ProductBuilder());
+            modelBuilder.ApplyConfiguration(new ProductDatesBuilder());
+            modelBuilder.ApplyConfiguration(new ProductPackSizeBuilder());
             //modelBuilder.Entity<GatewayErrorCodeDb>().HasKey(p => p.ReturnCode);
             //modelBuilder.Entity<GatewayRequestDetailDb>().HasKey(p => p.RequestId);
 

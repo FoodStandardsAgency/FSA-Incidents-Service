@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -50,7 +51,7 @@ namespace FSA.IncidentsManagementDb.Repositories
             // We are updating the lead officer.
             // If so we can change the incidentStatus to open
             var openStatus = await this.lkups.Status.Find("Open");
-            var closeStatus = await this.lkups.Status.Find("Close");
+            var closeStatus = await this.lkups.Status.Find("Closed");
 
             foreach (var id in ids)
             {
@@ -67,7 +68,7 @@ namespace FSA.IncidentsManagementDb.Repositories
             }
 
             await this.ctx.SaveChangesAsync();
-            
+
         }
 
         /// <summary>
@@ -96,32 +97,43 @@ namespace FSA.IncidentsManagementDb.Repositories
         /// <param name="to"></param>
         public async Task AddLink(int from, IEnumerable<int> tos, string reason)
         {
-            var allTo = new HashSet<int>(tos);
-            // remove our from numb if present
-            allTo.Remove(from);
-
-
-            // not my favourite option
-            foreach (var to in allTo)
+            try
             {
-                var fromTo = ctx.IncidentLinks.AsNoTracking().FirstOrDefault(a => a.FromIncidentId == from && a.ToIncidentId == to);
-                var toFrom = ctx.IncidentLinks.AsNoTracking().FirstOrDefault(a => a.FromIncidentId == to && a.ToIncidentId == from);
+                var allTo = new HashSet<int>(tos);
+                // remove our from numb if present
+                allTo.Remove(from);
 
-                if (fromTo == null && toFrom == null)
+                // helper
+                var hasReason = string.IsNullOrEmpty(reason);
+                // not my favourite option
+                foreach (var to in allTo)
                 {
-                    var now = DateTime.UtcNow;
-                    var newLink = new Entities.IncidentLinkDb { FromIncidentId = from, ToIncidentId = to };
-                    var newFromComment = new IncidentCommentDb { Comment = reason, IncidentId = from };
-                    var newToComment = new IncidentCommentDb { Comment = reason, IncidentId = to };
-                    SetAuditData(newLink, now);
-                    SetAuditData(newFromComment, now);
-                    SetAuditData(newToComment, now);
-                    ctx.IncidentLinks.Add(newLink);
-                    ctx.IncidentComments.Add(newFromComment);
-                    ctx.IncidentComments.Add(newToComment);
+                    var fromTo = ctx.IncidentLinks.AsNoTracking().FirstOrDefault(a => a.FromIncidentId == from && a.ToIncidentId == to);
+                    var toFrom = ctx.IncidentLinks.AsNoTracking().FirstOrDefault(a => a.FromIncidentId == to && a.ToIncidentId == from);
+
+                    if (fromTo == null && toFrom == null)
+                    {
+                        var now = DateTime.UtcNow;
+                        var newLink = new Entities.IncidentLinkDb { FromIncidentId = from, ToIncidentId = to };
+                        if (!hasReason)
+                        {
+                            var newFromComment = new IncidentCommentDb { Comment = reason, IncidentId = from };
+                            var newToComment = new IncidentCommentDb { Comment = reason, IncidentId = to };
+                            SetAuditData(newFromComment, now);
+                            SetAuditData(newLink, now);
+                            SetAuditData(newToComment, now);
+                            ctx.IncidentComments.Add(newFromComment);
+                            ctx.IncidentComments.Add(newToComment);
+                        }
+                        ctx.IncidentLinks.Add(newLink);
+                    }
                 }
+                await ctx.SaveChangesAsync();
             }
-            await ctx.SaveChangesAsync();
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -206,7 +218,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         /// <returns></returns>
         public async Task<IncidentNote> AddNote(int incidentId, string note)
         {
-            var newComment = new IncidentCommentDb { Comment = note, Id = incidentId };
+            var newComment = new IncidentCommentDb { Comment = note, IncidentId = incidentId };
             SetAuditData(newComment, DateTime.UtcNow);
             ctx.IncidentComments.Add(newComment);
             await ctx.SaveChangesAsync();
@@ -238,6 +250,7 @@ namespace FSA.IncidentsManagementDb.Repositories
                                   || EF.Functions.Like(i.Priority.Title, $"%{search}%")
                                   || EF.Functions.Like(i.Notifier.Title, $"%{search}%")
                                   || EF.Functions.Like(i.IncidentStatus.Title, $"%{search}%"));// || EF.Functions.Like(i.IncidentDescription, search));
+
             // build a where clause
             var totalRecords = await qry.CountAsync();
             // Find the start record
@@ -262,22 +275,44 @@ namespace FSA.IncidentsManagementDb.Repositories
                                   .Include(i => i.Priority)
                                    .Include(i => i.IncidentStatus)
                                    .Include(i => i.Notifier).AsQueryable();
+            // Where incident was assigned too. from->to
+            var fromIds = this.ctx
+                                .IncidentLinks.AsNoTracking().Where(o => o.ToIncidentId == incidentId);
 
-            // ALl from incidents where parent is in then to Column
-            var fromQ = (from iq in incidentsQry
-                         join fromLink in ctx.IncidentLinks
-                             on iq.Id equals fromLink.FromIncidentId
-                         where fromLink.ToIncidentId == incidentId
-                         select iq);
-            // ALl from incidents where parent is in then from Column
-            var toQ = (from iq in incidentsQry
+            // the From incidents [This contains the ToLinks]
+            var fromIncidents = (from iq in incidentsQry
+                                 join fIds in fromIds
+                                  on iq.Id equals fIds.FromIncidentId
+                                 select iq);
+            var tLinks = fromIncidents.Select(i => i.FromLinks).SelectMany(o => o);
+            // The children of the from incidents
+            var fromIncidentList = (from iq in incidentsQry
+                                    where tLinks.Any(p => p.ToIncidentId == iq.Id)
+                                    select iq);
+
+
+           // ALl from incidents where incidentId is in `from` Column( the original linker)
+           var toQ = (from iq in incidentsQry
                        join toLink in ctx.IncidentLinks
                            on iq.Id equals toLink.ToIncidentId
                        where toLink.FromIncidentId == incidentId
                        select iq);
 
 
-            var allItems = fromQ.Concat(toQ).Where(o => o.Id != incidentId);
+
+            // ALl `from` incidents where parent is in then to Column
+            //var fromQ = (from iq in incidentsQry
+            //             join fromLink in ctx.IncidentLinks
+            //                 on iq.Id equals fromLink.FromIncidentId
+            //             where fromLink.ToIncidentId == incidentId
+            //             select iq);
+            // Now get *all* the entries for a from.
+
+
+
+
+            var allItems = toQ.Concat(fromIncidentList)
+                              .Concat(fromIncidents).Where(o => o.Id != incidentId);
 
             return await allItems.Select(i => i.ToDashboard()).ToListAsync();
         }
@@ -289,7 +324,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         /// <returns></returns>
         public async Task<IEnumerable<IncidentNote>> GetNotes(int incidentId)
         {
-            var allNotes = await ctx.IncidentComments.Where(o => o.IncidentId == incidentId).Select(s=>s.ToClient()).ToListAsync();
+            var allNotes = await ctx.IncidentComments.Where(o => o.IncidentId == incidentId).Select(s => s.ToClient()).ToListAsync();
             return allNotes;
         }
     }
