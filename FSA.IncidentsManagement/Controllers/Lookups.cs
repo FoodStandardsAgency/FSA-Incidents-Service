@@ -132,9 +132,39 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(typeof(IEnumerable<ProductType>), 200)]
         [ProducesResponseType(500)]
         [SwaggerOperation(Summary = "list all Product types")]
-        public async Task<IActionResult> ProductType()
+        public async Task<IActionResult> ProductTypes()
         {
             return new OkObjectResult((await this.lookupdata.ProductTypes
+                            .GetAll()).ToList());
+        }
+
+        [HttpGet("FBOTypes")]
+        [ProducesResponseType(typeof(IEnumerable<FBOType>), 200)]
+        [ProducesResponseType(500)]
+        [SwaggerOperation(Summary = "list all FBO types")]
+        public async Task<IActionResult> FBOTypes()
+        {
+            return new OkObjectResult((await this.lookupdata.FBOTypes
+                            .GetAll()).ToList());
+        }
+
+        [HttpGet("ProductDateTypes")]
+        [ProducesResponseType(typeof(IEnumerable<ProductDateType>), 200)]
+        [ProducesResponseType(500)]
+        [SwaggerOperation(Summary = "Product Date types")]
+        public async Task<IActionResult> ProductDateTypes()
+        {
+            return new OkObjectResult((await this.lookupdata.ProductDateTypes
+                            .GetAll()).ToList());
+        }
+
+        [HttpGet("AdminLeads")]
+        [ProducesResponseType(typeof(IEnumerable<AdminLead>), 200)]
+        [ProducesResponseType(500)]
+        [SwaggerOperation(Summary = "Incident office list")]
+        public async Task<IActionResult> AdminLeads()
+        {
+            return new OkObjectResult((await this.lookupdata.AdminLeads
                             .GetAll()).ToList());
         }
 

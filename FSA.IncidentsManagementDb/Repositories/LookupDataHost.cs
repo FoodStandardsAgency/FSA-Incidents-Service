@@ -23,7 +23,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         public IReferenceDataRepo<Category> Categories => new ReferenceDataRepo<Category, CategoryDb>(ctx, (itm) => itm.ToClient());
         public IReferenceDataRepo<Classification> Classifications => new ReferenceDataRepo<Classification, ClassificationDb>(ctx, (itm) => itm.ToClient());
         public IReferenceDataRepo<Priority> Priorities => new ReferenceDataRepo<Priority, PriorityDb>(ctx, (itm) => itm.ToClient());
-        public IReferenceDataRepo<IncidentStatus> Status => new ReferenceDataRepo<IncidentStatus, IncidentStatusDb>(ctx, (itm) => itm.ToClient());
+        public IReferenceDataRepo<IncidentStatusLkUp> Status => new ReferenceDataRepo<IncidentStatusLkUp, IncidentStatusDb>(ctx, (itm) => itm.ToClient());
         public IReferenceDataRepo<ContactMethod> ContactMethods => new ReferenceDataRepo<ContactMethod, ContactMethodDb>(ctx, (itm) => itm.ToClient());
         public IReferenceDataRepo<Country> Countries => new ReferenceDataRepo<Country, CountryDb>(ctx, (itm) => itm.ToClient());
         public IReferenceDataRepo<DataSource> DataSources => new ReferenceDataRepo<DataSource, DataSourceDb>(ctx, (itm) => itm.ToClient());

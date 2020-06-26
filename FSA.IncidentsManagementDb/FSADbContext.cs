@@ -29,7 +29,11 @@ namespace FSA.IncidentsManagementDb
         internal DbSet<IncidentDb> Incidents { get; set; }
         internal DbSet<IncidentLinkDb> IncidentLinks { get; set; }
         internal DbSet<IncidentOMITGroupDb> IncidentOMITGroups { get; set; }
+        
         internal DbSet<OrganisationDb> Organisations { get; set; }
+        internal DbSet<OrganisationRoleDb> OrganisationRoles { get; set; }
+        internal DbSet<NotifierTypeDb> NotifierTypes{ get; set; }
+
         internal DbSet<CategoryDb> Categories { get; set; }
         internal DbSet<ClassificationDb> Classifications { get; set; }
         internal DbSet<PriorityDb> Priorities { get; set; }
@@ -38,9 +42,10 @@ namespace FSA.IncidentsManagementDb
         internal DbSet<DataSourceDb> DataSources { get; set; }
         internal DbSet<DeathIllnessDb> DeathIllnesss { get; set; }
         internal DbSet<OMITGroupDb> OMITGroups { get; set; }
-        internal DbSet<OrganisationRoleDb> OrganisationRoles { get; set; }
         internal DbSet<PersonaRoleDb> PersonaRoles { get; set; }
-        
+
+        internal DbSet<AdminLeadDb> AdminLeads { get; set; }
+
         internal DbSet<ProductDb> Products { get; set; }
         internal DbSet<ProductTypeDb> ProductTypes { get; set; }
         internal DbSet<ProductDateDb> ProductDates { get; set; }
@@ -82,12 +87,17 @@ namespace FSA.IncidentsManagementDb
 
             modelBuilder.ApplyConfiguration(new IncidentBuilderConfig());
             modelBuilder.ApplyConfiguration(new IncidentLinkBuilder());
+            modelBuilder.ApplyConfiguration(new IncidentCommentsBuilder());
             modelBuilder.ApplyConfiguration(new IncidentOMITGroupDbBuilder());
+            modelBuilder.ApplyConfiguration(new FBOBuilder());
             modelBuilder.ApplyConfiguration(new ProductBuilder());
             modelBuilder.ApplyConfiguration(new ProductDatesBuilder());
             modelBuilder.ApplyConfiguration(new ProductPackSizeBuilder());
             modelBuilder.ApplyConfiguration(new ProductFBOBuilder());
+            modelBuilder.ApplyConfiguration(new FBOTypesBuilder());
 
+
+            new Seeder().SeedLookups(modelBuilder);
             //modelBuilder.Entity<GatewayErrorCodeDb>().HasKey(p => p.ReturnCode);
             //modelBuilder.Entity<GatewayRequestDetailDb>().HasKey(p => p.RequestId);
 

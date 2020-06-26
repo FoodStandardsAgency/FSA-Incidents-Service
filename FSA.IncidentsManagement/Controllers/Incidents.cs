@@ -33,7 +33,7 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpGet()]
         [SwaggerOperation(Summary = "Get incident by id")]
-        [ProducesResponseType(typeof(IncidentsDisplayModel), 200)]
+        [ProducesResponseType(typeof(IncidentStatusLkUp), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetIncident(int id)
         {
@@ -89,6 +89,16 @@ namespace FSA.IncidentsManagement.Controllers
         public async Task<IActionResult> UpdateStatus([Required] int incidentId, [Required] int statusId)
         {
             return new OkObjectResult(await this.fsaData.Incidents.UpdateStatus(incidentId, statusId));
+        }
+
+        [HttpPost("CloseAll")]
+        [SwaggerOperation(Summary = "Update status of an incident")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> CloseAll([Required] int[] incidentIds)
+        {
+            await this.fsaData.Incidents.BulkClose(incidentIds);
+            return new OkResult();
         }
 
         [HttpPost("LeadOfficer")]

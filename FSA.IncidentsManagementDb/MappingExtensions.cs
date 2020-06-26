@@ -125,7 +125,7 @@ namespace FSA.IncidentsManagementDb
             IsUnassigned = @this.IsUnassigned
         };
 
-        public static IncidentStatus ToClient(this IncidentStatusDb @this) => new IncidentStatus { Id = @this.Id, Title = @this.Title };
+        public static IncidentStatusLkUp ToClient(this IncidentStatusDb @this) => new IncidentStatusLkUp { Id = @this.Id, Title = @this.Title };
 
         public static IEnumerable<Incident> ToClient(this IEnumerable<IncidentDb> @this)
         {
@@ -273,6 +273,23 @@ namespace FSA.IncidentsManagementDb
 
         public static OrganisationLookup ToLookup(this OrganisationLookupDb @this) => new OrganisationLookup { Id = @this.Id, Name = @this.Title };
 
+        public static FboAddress ToClient(this FBODb @this) => new FboAddress
+        {
+            Id = @this.Organisation.Id,
+            Title = @this.Organisation.Title,
+            MainContact = @this.Organisation.MainContact,
+            AddressLine1 = @this.Organisation.AddressLine1,
+            AddressLine2 = @this.Organisation.AddressLine2,
+            TownCity = @this.Organisation.TownCity,
+            County = @this.Organisation.County,
+            PostCode = @this.Organisation.PostCode,
+            CountryId = @this.Organisation.CountryId,
+            TelephoneNumber = @this.Organisation.TelephoneNumber,
+            EmailAddress = @this.Organisation.EmailAddress,
+            ContactMethodId = @this.Organisation.ContactMethodId,
+            FboId = @this.Id,
+            FboTypes = @this.FBOTypeId
+        };
 
     }
 }

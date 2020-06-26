@@ -2,7 +2,7 @@
 
 namespace FSA.IncidentsManagementDb.Migrations
 {
-    public partial class openthesunshine : Migration
+    public partial class secondVersePt2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

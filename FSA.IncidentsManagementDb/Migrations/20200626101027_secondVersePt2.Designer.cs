@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FSA.IncidentsManagementDb.Migrations
 {
     [DbContext(typeof(FSADbContext))]
-    [Migration("20200619151215_oopse")]
-    partial class oopse
+    [Migration("20200626101027_secondVersePt2")]
+    partial class secondVersePt2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,42 @@ namespace FSA.IncidentsManagementDb.Migrations
                 .HasAnnotation("ProductVersion", "3.1.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.AdminLeadDb", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AdminLeads");
+                });
 
             modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.BatchCodeDb", b =>
                 {
@@ -231,6 +267,42 @@ namespace FSA.IncidentsManagementDb.Migrations
                     b.ToTable("DataSources");
                 });
 
+            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.DateTypeDb", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductDateTypes");
+                });
+
             modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.DeathIllnessDb", b =>
                 {
                     b.Property<int>("Id")
@@ -267,6 +339,80 @@ namespace FSA.IncidentsManagementDb.Migrations
                     b.ToTable("DeathIllnesss");
                 });
 
+            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.FBODb", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<int>("FBOTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<int>("OrganisationId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrganisationId");
+
+                    b.ToTable("FBOs");
+                });
+
+            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.FBOTypeDb", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FBOTypes");
+                });
+
             modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.IncidentCommentDb", b =>
                 {
                     b.Property<int>("Id")
@@ -278,19 +424,27 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
 
                     b.Property<int>("IncidentId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Modified")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
 
                     b.HasKey("Id");
 
@@ -305,6 +459,9 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AdminLeadId")
+                        .HasColumnType("int");
 
                     b.Property<int>("ClassificationId")
                         .HasColumnType("int");
@@ -371,6 +528,11 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasColumnType("nvarchar(70)")
                         .HasMaxLength(70);
 
+                    b.Property<Guid>("MostUniqueId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("newid()");
+
                     b.Property<int?>("NotifierId")
                         .HasColumnType("int");
 
@@ -390,6 +552,8 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AdminLeadId");
 
                     b.HasIndex("ClassificationId");
 
@@ -436,9 +600,6 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasColumnType("nvarchar(70)")
                         .HasMaxLength(70);
 
-                    b.Property<int?>("IncidentDbId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Modified")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
@@ -451,7 +612,7 @@ namespace FSA.IncidentsManagementDb.Migrations
 
                     b.HasKey("FromIncidentId", "ToIncidentId");
 
-                    b.HasIndex("IncidentDbId");
+                    b.HasIndex("ToIncidentId");
 
                     b.ToTable("IncidentLinks");
                 });
@@ -535,6 +696,42 @@ namespace FSA.IncidentsManagementDb.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("IncidentStatus");
+                });
+
+            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.NotifierTypeDb", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("NotifierTypeDb");
                 });
 
             modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.OMITGroupDb", b =>
@@ -759,6 +956,209 @@ namespace FSA.IncidentsManagementDb.Migrations
                     b.ToTable("Priorities");
                 });
 
+            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.ProductDateDb", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DateTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<int?>("ProductDbId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DateTypeId");
+
+                    b.HasIndex("ProductDbId");
+
+                    b.ToTable("ProductDates");
+                });
+
+            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.ProductDb", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AdditionalInfo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AmountUnitType")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("AmountUnitTypeIdId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("BatchCodes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Brand")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CountryOfOriginId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<int?>("DataSourceId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PackDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SignalUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AmountUnitTypeIdId");
+
+                    b.HasIndex("CountryOfOriginId");
+
+                    b.HasIndex("DataSourceId");
+
+                    b.HasIndex("ProductTypeId");
+
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.ProductFBODb", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FBOId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.HasKey("ProductId", "FBOId");
+
+                    b.HasIndex("FBOId");
+
+                    b.ToTable("ProductFBOItems");
+                });
+
+            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.ProductPackSizeDb", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Size")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UnitId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UnitId");
+
+                    b.ToTable("ProductPackSizes");
+                });
+
             modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.ProductTypeDb", b =>
                 {
                     b.Property<int>("Id")
@@ -878,6 +1278,15 @@ namespace FSA.IncidentsManagementDb.Migrations
                     b.ToTable("UnitQuantities");
                 });
 
+            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.FBODb", b =>
+                {
+                    b.HasOne("FSA.IncidentsManagementDb.Entities.OrganisationDb", "Organisation")
+                        .WithMany()
+                        .HasForeignKey("OrganisationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.IncidentCommentDb", b =>
                 {
                     b.HasOne("FSA.IncidentsManagementDb.Entities.IncidentDb", "Incident")
@@ -889,6 +1298,10 @@ namespace FSA.IncidentsManagementDb.Migrations
 
             modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.IncidentDb", b =>
                 {
+                    b.HasOne("FSA.IncidentsManagementDb.Entities.AdminLeadDb", "AdminLead")
+                        .WithMany()
+                        .HasForeignKey("AdminLeadId");
+
                     b.HasOne("FSA.IncidentsManagementDb.Entities.ClassificationDb", "Classification")
                         .WithMany()
                         .HasForeignKey("ClassificationId")
@@ -956,9 +1369,17 @@ namespace FSA.IncidentsManagementDb.Migrations
 
             modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.IncidentLinkDb", b =>
                 {
-                    b.HasOne("FSA.IncidentsManagementDb.Entities.IncidentDb", null)
-                        .WithMany("Links")
-                        .HasForeignKey("IncidentDbId");
+                    b.HasOne("FSA.IncidentsManagementDb.Entities.IncidentDb", "FromIncident")
+                        .WithMany("FromLinks")
+                        .HasForeignKey("FromIncidentId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("FSA.IncidentsManagementDb.Entities.IncidentDb", "ToIncident")
+                        .WithMany("ToLinks")
+                        .HasForeignKey("ToIncidentId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.IncidentOMITGroupDb", b =>
@@ -989,6 +1410,72 @@ namespace FSA.IncidentsManagementDb.Migrations
                     b.HasOne("FSA.IncidentsManagementDb.Entities.OrganisationRoleDb", "OrganisationRole")
                         .WithMany()
                         .HasForeignKey("OrganisationRoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.ProductDateDb", b =>
+                {
+                    b.HasOne("FSA.IncidentsManagementDb.Entities.DateTypeDb", "DateType")
+                        .WithMany()
+                        .HasForeignKey("DateTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FSA.IncidentsManagementDb.Entities.ProductDb", null)
+                        .WithMany("ProductDates")
+                        .HasForeignKey("ProductDbId");
+                });
+
+            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.ProductDb", b =>
+                {
+                    b.HasOne("FSA.IncidentsManagementDb.Entities.UnitQuantityDb", "AmountUnitTypeId")
+                        .WithMany()
+                        .HasForeignKey("AmountUnitTypeIdId");
+
+                    b.HasOne("FSA.IncidentsManagementDb.Entities.CountryDb", "CountryOfOrigin")
+                        .WithMany()
+                        .HasForeignKey("CountryOfOriginId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FSA.IncidentsManagementDb.Entities.DataSourceDb", "DataSource")
+                        .WithMany()
+                        .HasForeignKey("DataSourceId");
+
+                    b.HasOne("FSA.IncidentsManagementDb.Entities.ProductTypeDb", "ProductType")
+                        .WithMany()
+                        .HasForeignKey("ProductTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.ProductFBODb", b =>
+                {
+                    b.HasOne("FSA.IncidentsManagementDb.Entities.FBODb", "FBO")
+                        .WithMany("RelatedProducts")
+                        .HasForeignKey("FBOId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("FSA.IncidentsManagementDb.Entities.ProductDb", "Product")
+                        .WithMany("RelatedFBOs")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.ProductPackSizeDb", b =>
+                {
+                    b.HasOne("FSA.IncidentsManagementDb.Entities.ProductDb", "Product")
+                        .WithMany("PackSizes")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FSA.IncidentsManagementDb.Entities.UnitQuantityDb", "Unit")
+                        .WithMany()
+                        .HasForeignKey("UnitId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

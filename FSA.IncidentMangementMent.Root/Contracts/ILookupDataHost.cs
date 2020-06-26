@@ -20,11 +20,12 @@ namespace FSA.IncidentsManagement.Root.Contracts
         IReferenceDataRepo<PersonaRole> PersonaRoles { get; }
         IReferenceDataRepo<ProductType> ProductTypes { get; }
         IReferenceDataRepo<SignalStatus> SignalStatus { get; }
-        IReferenceDataRepo<IncidentStatus> Status { get; }
+        IReferenceDataRepo<IncidentStatusLkUp> Status { get; }
         IReferenceDataRepo<UnitQuantity> Units { get; }
         IReferenceDataRepo<OrganisationLookup> Organisations { get; }
         IReferenceDataRepo<FBOType> FBOTypes { get; }
         IReferenceDataRepo<NotifierType> NotifierTypes { get; }
         IReferenceDataRepo<AdminLead> AdminLeads { get; }
+        IReferenceDataRepo<ProductDateType> ProductDateTypes { get; }
     }
 }

@@ -12,6 +12,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using IncidentStatus = FSA.IncidentsManagementDb.Entities.IncidentStatus;
 
 namespace FSA.IncidentsManagementDb.Repositories
 {
@@ -29,6 +30,7 @@ namespace FSA.IncidentsManagementDb.Repositories
 
         public async Task<Incident> Add(Incident incident)
         {
+
             if (incident.CommonId != 0) throw new ArgumentOutOfRangeException("This item has already been added.");
 
             var dbItem = incident.ToDb();
@@ -50,21 +52,19 @@ namespace FSA.IncidentsManagementDb.Repositories
 
             // We are updating the lead officer.
             // If so we can change the incidentStatus to open
-            var openStatus = await this.lkups.Status.Find("Open");
-            var closeStatus = await this.lkups.Status.Find("Closed");
+            var openStatus = (int)IncidentStatus.Open;
+            var closeStatus = (int)IncidentStatus.Closed;
 
             foreach (var id in ids)
             {
                 // Fiind the incident only if its not closed.
-                var incidentDb = await this.ctx.Incidents.Include(i => i.IncidentStatus).FirstOrDefaultAsync(o => o.Id == id && o.IncidentStatusId != closeStatus.Id);
+                var incidentDb = await this.ctx.Incidents.Include(i => i.IncidentStatus).FirstOrDefaultAsync(o => o.Id == id && o.IncidentStatusId != closeStatus);
 
                 // Don't touch closed entries.
-
-                if (incidentDb.IncidentStatusId != openStatus.Id && incidentDb.IncidentStatusId != closeStatus.Id && user != null)
-                    incidentDb.IncidentStatusId = openStatus.Id;
+                if (incidentDb.IncidentStatusId != openStatus && incidentDb.IncidentStatusId != closeStatus && user != null)
+                    incidentDb.IncidentStatusId = openStatus;
                 incidentDb.LeadOfficer = user;
                 UpdateAuditInfo(incidentDb);
-
             }
 
             await this.ctx.SaveChangesAsync();
@@ -179,6 +179,24 @@ namespace FSA.IncidentsManagementDb.Repositories
             UpdateAuditInfo(itm);
             await ctx.SaveChangesAsync();
             return itm.ToClient();
+        }
+
+        /// <summary>
+        /// Close all the listed incidents
+        /// No checks are done to see if this is actually valid
+        /// </summary>
+        /// <param name="incidentIds"></param>
+        /// <returns></returns>
+        public async Task BulkClose(IEnumerable<int> incidentIds)
+        {
+            var WhereClause = String.Join(" OR ", incidentIds.Select(o => $"Id={0}"));
+            var items = ctx.Incidents.FromSqlRaw($"SELECT * from Incidents where {WhereClause}");
+            var closeStatus = await this.lkups.Status.Find("Closed");
+
+            foreach (var item in items)
+                item.IncidentStatusId = closeStatus.Id;
+
+            await this.ctx.SaveChangesAsync();
         }
 
         public async Task<IncidentsDisplayModel> GetDisplayItem(int id)

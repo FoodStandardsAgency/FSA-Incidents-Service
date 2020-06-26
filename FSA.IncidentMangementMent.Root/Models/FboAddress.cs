@@ -4,9 +4,9 @@ using System.Text;
 
 namespace FSA.IncidentsManagement.Root.Models
 {
-    public class IncidentStatus
+    public class FboAddress : OrganisationAddress
     {
-        public int Id { get; set; }
-        public string Title { get; set; }
+        public FboTypes FboTypes { get; set; }
+        public int FboId{get;set;}
     }
 }
