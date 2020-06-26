@@ -4,56 +4,22 @@ using FSA.IncidentsManagementDb;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FSA.IncidentsManagementDb.Migrations
 {
     [DbContext(typeof(FSADbContext))]
-    partial class FSADbContextModelSnapshot : ModelSnapshot
+    [Migration("20200625130127_ForStrongTeeth")]
+    partial class ForStrongTeeth
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.AdminLeadDb", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AdminLeadDb");
-                });
 
             modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.BatchCodeDb", b =>
                 {
@@ -298,7 +264,7 @@ namespace FSA.IncidentsManagementDb.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductDateTypes");
+                    b.ToTable("DateTypeDb");
                 });
 
             modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.DeathIllnessDb", b =>
@@ -510,11 +476,6 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(70)")
                         .HasMaxLength(70);
-
-                    b.Property<Guid>("MostUniqueId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValueSql("newid()");
 
                     b.Property<int?>("NotifierId")
                         .HasColumnType("int");

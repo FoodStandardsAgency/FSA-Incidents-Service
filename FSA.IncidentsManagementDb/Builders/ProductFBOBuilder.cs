@@ -1,4 +1,5 @@
 ﻿using FSA.IncidentsManagementDb.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace FSA.IncidentsManagementDb.Builders
 {
-    class ProductFBOBuilder : AuditInfoBuilderConfiguration<ProductFBODb>
+    internal class ProductFBOBuilder : AuditInfoBuilderConfiguration<ProductFBODb>
     {
 
         public override void Configure(EntityTypeBuilder<ProductFBODb> builder)
@@ -15,10 +16,10 @@ namespace FSA.IncidentsManagementDb.Builders
             builder.HasKey(o => new { o.ProductId, o.FBOId });
             builder.HasOne(o => o.Product)
                     .WithMany(p => p.RelatedFBOs)
-                    .HasForeignKey(p => p.ProductId);
+                    .HasForeignKey(p => p.ProductId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(o => o.FBO)
                     .WithMany(o => o.RelatedProducts)
-                    .HasForeignKey(o => o.FBOId);
+                    .HasForeignKey(o => o.FBOId).OnDelete(DeleteBehavior.NoAction);
 
 
         }

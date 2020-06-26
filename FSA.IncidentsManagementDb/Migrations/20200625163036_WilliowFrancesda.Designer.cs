@@ -4,14 +4,16 @@ using FSA.IncidentsManagementDb;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FSA.IncidentsManagementDb.Migrations
 {
     [DbContext(typeof(FSADbContext))]
-    partial class FSADbContextModelSnapshot : ModelSnapshot
+    [Migration("20200625163036_WilliowFrancesda")]
+    partial class WilliowFrancesda
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -510,11 +512,6 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(70)")
                         .HasMaxLength(70);
-
-                    b.Property<Guid>("MostUniqueId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValueSql("newid()");
 
                     b.Property<int?>("NotifierId")
                         .HasColumnType("int");

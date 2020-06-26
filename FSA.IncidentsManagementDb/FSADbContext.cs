@@ -44,6 +44,7 @@ namespace FSA.IncidentsManagementDb
         internal DbSet<ProductDb> Products { get; set; }
         internal DbSet<ProductTypeDb> ProductTypes { get; set; }
         internal DbSet<ProductDateDb> ProductDates { get; set; }
+        internal DbSet<DateTypeDb> ProductDateTypes { get; set; }
         internal DbSet<ProductFBODb> ProductFBOItems { get; set; }
         internal DbSet<IncidentStatusDb> IncidentStatus { get; set; }
         internal DbSet<SignalStatusDb> SignalStatus { get; set; }
@@ -76,6 +77,8 @@ namespace FSA.IncidentsManagementDb
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<DateTypeDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<NotifierTypeDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<FBOTypeDb>());
+            modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<AdminLeadDb>());
+
 
             modelBuilder.ApplyConfiguration(new IncidentBuilderConfig());
             modelBuilder.ApplyConfiguration(new IncidentLinkBuilder());
@@ -83,6 +86,8 @@ namespace FSA.IncidentsManagementDb
             modelBuilder.ApplyConfiguration(new ProductBuilder());
             modelBuilder.ApplyConfiguration(new ProductDatesBuilder());
             modelBuilder.ApplyConfiguration(new ProductPackSizeBuilder());
+            modelBuilder.ApplyConfiguration(new ProductFBOBuilder());
+
             //modelBuilder.Entity<GatewayErrorCodeDb>().HasKey(p => p.ReturnCode);
             //modelBuilder.Entity<GatewayRequestDetailDb>().HasKey(p => p.RequestId);
 

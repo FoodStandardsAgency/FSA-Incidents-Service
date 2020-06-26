@@ -42,6 +42,12 @@ namespace FSA.IncidentsManagementDb
             Title = @this.Title,
         };
 
+        public static NotifierType ToClient(this NotifierTypeDb @this) => new NotifierType
+        {
+            Id = @this.Id,
+            Title = @this.Title,
+        };
+
         public static DataSource ToClient(this DataSourceDb @this) => new DataSource
         {
             Id = @this.Id,
@@ -55,6 +61,19 @@ namespace FSA.IncidentsManagementDb
         };
 
         public static OMITGroup ToClient(this OMITGroupDb @this) => new OMITGroup
+        {
+            Id = @this.Id,
+            Title = @this.Title,
+        };
+
+
+        public static FBOType ToClient(this FBOTypeDb @this) => new FBOType
+        {
+            Id = @this.Id,
+            Title = @this.Title,
+        };
+
+        public static ProductDateType ToClient(this DateTypeDb @this) => new ProductDateType
         {
             Id = @this.Id,
             Title = @this.Title,
@@ -76,6 +95,13 @@ namespace FSA.IncidentsManagementDb
             CanBeAdminLead = @this.CanBeAdminLead,
             CanBeIncidentLead = @this.CanBeIncidentLead,
             CanBeFieldOfficer = @this.CanBeFieldOfficer
+        };
+
+
+        public static AdminLead ToClient(this AdminLeadDb @this) => new AdminLead
+        {
+            Id = @this.Id,
+            Title = @this.Title,
         };
 
         public static ProductType ToClient(this ProductTypeDb @this) => new ProductType

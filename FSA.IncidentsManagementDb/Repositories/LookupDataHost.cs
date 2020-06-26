@@ -37,5 +37,9 @@ namespace FSA.IncidentsManagementDb.Repositories
 
         public IReferenceDataRepo<PersonaRole> PersonaRoles => new ReferenceDataRepo<PersonaRole, PersonaRoleDb>(ctx, (itm) => itm.ToClient());
         public IReferenceDataRepo<OrganisationLookup> Organisations => new OrganisationLookupManager(ctx);
+        public IReferenceDataRepo<FBOType> FBOTypes => new ReferenceDataRepo<FBOType, FBOTypeDb> (ctx, (itm)=>itm.ToClient());
+        public IReferenceDataRepo<NotifierType> NotifierTypes => new ReferenceDataRepo<NotifierType, NotifierTypeDb> (ctx, (itm)=>itm.ToClient());
+        public IReferenceDataRepo<AdminLead> AdminLeads => new ReferenceDataRepo<AdminLead, AdminLeadDb> (ctx, (itm)=>itm.ToClient());
+        public IReferenceDataRepo<ProductDateType> ProductDateTypes => new ReferenceDataRepo<ProductDateType, DateTypeDb>(ctx, (itm) => itm.ToClient());
     }
 }

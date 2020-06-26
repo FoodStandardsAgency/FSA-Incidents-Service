@@ -13,6 +13,7 @@ namespace FSA.IncidentsManagementDb.Entities
         }
 
         public int Id { get; set; }
+        public Guid MostUniqueId { get; set; }
         public string IncidentTitle { get; set; }
         public string IncidentDescription { get; set; }
         public int IncidentTypeId { get; set; }

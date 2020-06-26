@@ -1,4 +1,5 @@
 ﻿using FSA.IncidentsManagementDb.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace FSA.IncidentsManagementDb.Builders
         public override void Configure(EntityTypeBuilder<IncidentDb> builder)
         {
             base.Configure(builder);
-            //builder.Property()
+            builder.Property(p => p.MostUniqueId).HasDefaultValueSql("newid()");
             
         }
     }

@@ -6,13 +6,16 @@ using System.Text;
 
 namespace FSA.IncidentsManagementDb.Builders
 {
-    internal class ProductBuilder : AuditInfoBuilderConfiguration<ProductDb>
+    internal class ProductDatesBuilder : AuditInfoBuilderConfiguration<ProductDateDb>
     {
 
-        public override void Configure(EntityTypeBuilder<ProductDb> builder)
+        public override void Configure(EntityTypeBuilder<ProductDateDb> builder)
         {
             base.Configure(builder);
-            builder.Property(p => p.Name).IsRequired();
+
+            builder.Property(p => p.Date)
+                  .HasConversion(b => b, b => DateTime.SpecifyKind(b, DateTimeKind.Utc));
+            
         }
     }
 }
