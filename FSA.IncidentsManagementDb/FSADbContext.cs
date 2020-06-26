@@ -29,10 +29,10 @@ namespace FSA.IncidentsManagementDb
         internal DbSet<IncidentDb> Incidents { get; set; }
         internal DbSet<IncidentLinkDb> IncidentLinks { get; set; }
         internal DbSet<IncidentOMITGroupDb> IncidentOMITGroups { get; set; }
-        
+
         internal DbSet<OrganisationDb> Organisations { get; set; }
         internal DbSet<OrganisationRoleDb> OrganisationRoles { get; set; }
-        internal DbSet<NotifierTypeDb> NotifierTypes{ get; set; }
+        internal DbSet<NotifierTypeDb> NotifierTypes { get; set; }
 
         internal DbSet<CategoryDb> Categories { get; set; }
         internal DbSet<ClassificationDb> Classifications { get; set; }
@@ -97,7 +97,9 @@ namespace FSA.IncidentsManagementDb
             modelBuilder.ApplyConfiguration(new FBOTypesBuilder());
 
 
-            new Seeder().SeedLookups(modelBuilder);
+            var duncan = new Seeder();
+            duncan.SeedLookups(modelBuilder);
+
             //modelBuilder.Entity<GatewayErrorCodeDb>().HasKey(p => p.ReturnCode);
             //modelBuilder.Entity<GatewayRequestDetailDb>().HasKey(p => p.RequestId);
 

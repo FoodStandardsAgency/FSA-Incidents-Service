@@ -2612,321 +2612,321 @@ namespace FSA.IncidentsManagementDb
             modelBuilder.Entity<CategoryDb>()
                  .HasData(new CategoryDb
                  {
-                     Id = 2,
+                     Id = 1,
                      Title = "Adulteration / Fraud",
                      CreatedBy = "Paul",
                      ModifiedBy = "Paul"
                  }, new CategoryDb
                  {
-                     Id = 3,
+                     Id = 2,
                      Title = "ALLERGEN: Multiple Allergens",
                      CreatedBy = "Paul",
                      ModifiedBy = "Paul"
                  },
                     new CategoryDb
                     {
-                        Id = 4,
+                        Id = 3,
                         Title = "ALLERGEN: Cereals containing gluten",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 5,
+                        Id = 4,
                         Title = "ALLERGEN: Celery",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 6,
+                        Id = 5,
                         Title = "ALLERGEN: Crustaceans",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 7,
+                        Id = 6,
                         Title = "ALLERGEN: Eggs",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 8,
+                        Id = 7,
                         Title = "ALLERGEN: Fish",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 9,
+                        Id = 8,
                         Title = "ALLERGEN: Lupin",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 10,
+                        Id = 9,
                         Title = "ALLERGEN: Milk",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 11,
+                        Id = 10,
                         Title = "ALLERGEN: Molluscs",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 12,
+                        Id = 11,
                         Title = "ALLERGEN: Mustard",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 13,
+                        Id = 12,
                         Title = "ALLERGEN: Nuts",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 14,
+                        Id = 13,
                         Title = "ALLERGEN: Peanuts",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 15,
+                        Id = 14,
                         Title = "ALLERGEN: Sesame seeds",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 16,
+                        Id = 15,
                         Title = "ALLERGEN: Soya",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 17,
+                        Id = 16,
                         Title = "ALLERGEN: Sulphur dioxide / Sulphites",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 18,
+                        Id = 17,
                         Title = "ALLERGEN: Non-regulated allergen reactions",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 19,
+                        Id = 18,
                         Title = "Allergens",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 20,
+                        Id = 19,
                         Title = "Biocontaminants",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 21,
+                        Id = 20,
                         Title = "Biotoxins (other)",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 22,
+                        Id = 21,
                         Title = "Clandestine Detection",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 23,
+                        Id = 22,
                         Title = "CHEMET",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 24,
+                        Id = 23,
                         Title = "Chemical Contamination (other)",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 25,
+                        Id = 24,
                         Title = "Composition",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 26,
+                        Id = 25,
                         Title = "Feed Additives",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 27,
+                        Id = 26,
                         Title = "Food Additives & Flavourings",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 28,
+                        Id = 27,
                         Title = "Foreign Bodies",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 29,
+                        Id = 28,
                         Title = "Heavy Metals",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 30,
+                        Id = 29,
                         Title = "Industrial Contaminants",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 31,
+                        Id = 30,
                         Title = "Labelling Absent / Incomplete / Incorrect",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 32,
+                        Id = 31,
                         Title = "Migration",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 33,
+                        Id = 32,
                         Title = "Mycotoxins",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 34,
+                        Id = 33,
                         Title = "Non-Pathogenic Micro-Organisims",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 35,
+                        Id = 34,
                         Title = "Not Determined / Other",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 36,
+                        Id = 35,
                         Title = "Novel Food",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 37,
+                        Id = 36,
                         Title = "Organoleptic Aspects",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 38,
+                        Id = 37,
                         Title = "Packaging Defective / Incorrect",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 39,
+                        Id = 38,
                         Title = "Parasitic Infestation",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 40,
+                        Id = 39,
                         Title = "Pathogenic Micro-Organisms",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 41,
+                        Id = 40,
                         Title = "Pesticide Residues",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 42,
+                        Id = 41,
                         Title = "Poor or Insufficient Controls",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 43,
+                        Id = 42,
                         Title = "Radiation",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 44,
+                        Id = 43,
                         Title = "Residues of Veterinary Medicinal Products",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 45,
+                        Id = 44,
                         Title = "TSE`s",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 46,
+                        Id = 45,
                         Title = "Undefined",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
                     },
                     new CategoryDb
                     {
-                        Id = 47,
+                        Id = 46,
                         Title = "Unmapped SPT Signal Value",
                         CreatedBy = "Paul",
                         ModifiedBy = "Paul"
