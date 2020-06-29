@@ -26,6 +26,8 @@
     <Compile Remove="Migrations\20200626071529_MaryJane.Designer.cs" />
     <Compile Remove="Migrations\20200626201218_Seeed.cs" />
     <Compile Remove="Migrations\20200626201218_Seeed.Designer.cs" />
+    <Compile Remove="Migrations\20200629074744_wishy.cs" />
+    <Compile Remove="Migrations\20200629074744_wishy.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

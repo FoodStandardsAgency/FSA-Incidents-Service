@@ -1,5 +1,6 @@
 ﻿using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagementDb.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -127,7 +128,7 @@ namespace FSA.IncidentsManagementDb
 
         public static IncidentStatusLkUp ToClient(this IncidentStatusDb @this) => new IncidentStatusLkUp { Id = @this.Id, Title = @this.Title };
 
-        public static IEnumerable<Incident> ToClient(this IEnumerable<IncidentDb> @this)
+        public static IEnumerable<BaseIncident> ToClient(this IEnumerable<IncidentDb> @this)
         {
             foreach (var itm in @this)
             {
@@ -135,10 +136,11 @@ namespace FSA.IncidentsManagementDb
             }
         }
 
-        public static Incident ToClient(this IncidentDb @this)
+        public static BaseIncident ToClient(this IncidentDb @this)
         {
-            return new Incident(
+            return new BaseIncident(
                 @this.Id,
+                mostUniqueId: @this.MostUniqueId,
                 incidentTitle: @this.IncidentTitle,
                 incidentDescription: @this.IncidentDescription,
                 incidentTypeId: @this.IncidentTypeId,
@@ -153,6 +155,7 @@ namespace FSA.IncidentsManagementDb
                 productTypeId: @this.ProductTypeId,
                 leadOfficer: @this.LeadOfficer,
                 leadOffice: @this.LeadOffice,
+                adminLeadId: @this.AdminLeadId ?? 0,
                 fieldOfficer: @this.FieldOfficer,
                 leadLocalAuthorityId: @this.LeadLocalAuthorityId,
                 lAAdvised: @this.LAAdvised,
@@ -169,6 +172,7 @@ namespace FSA.IncidentsManagementDb
         {
             return new IncidentsDisplayModel(
                      @this.Id,
+
                 incidentTitle: @this.IncidentTitle,
                 incidentDescription: @this.IncidentDescription,
                 incidentTypeId: @this.IncidentTypeId,
@@ -183,6 +187,7 @@ namespace FSA.IncidentsManagementDb
                 productTypeId: @this.ProductTypeId,
                 leadOfficer: @this.LeadOfficer,
                 leadOffice: @this.LeadOffice,
+                adminLeadId: @this.AdminLeadId ?? 0,
                 fieldOfficer: @this.FieldOfficer,
                 leadLocalAuthorityId: @this.LeadLocalAuthorityId,
                 lAAdvised: @this.LAAdvised,
@@ -205,14 +210,40 @@ namespace FSA.IncidentsManagementDb
                 principalFBO: @this.PrincipalFBO?.Title ?? "",
                 fBOEmail: @this.PrincipalFBO?.EmailAddress ?? "",
                 fBOPhone: @this.PrincipalFBO?.TelephoneNumber ?? "",
-                fBOAddressLine1: @this.PrincipalFBO?.AddressLine1?? "",
-                fBOAddressLine2: @this.PrincipalFBO?.AddressLine2??"",
-                fBOAddressTown: @this.PrincipalFBO?.TownCity??"",
-                fBOAddressPostcode: @this.PrincipalFBO?.PostCode??""
+                fBOAddressLine1: @this.PrincipalFBO?.AddressLine1 ?? "",
+                fBOAddressLine2: @this.PrincipalFBO?.AddressLine2 ?? "",
+                fBOAddressTown: @this.PrincipalFBO?.TownCity ?? "",
+                fBOAddressPostcode: @this.PrincipalFBO?.PostCode ?? ""
                 );
         }
 
-        public static IncidentDb ToDb(this Incident @this)
+        public static void ToUpdateDb(this BaseIncident @this, IncidentDb entity)
+        {
+            entity.IncidentTitle = @this.IncidentTitle;
+            entity.IncidentDescription = @this.IncidentDescription;
+            entity.IncidentTypeId = @this.IncidentTypeId;
+            entity.ContactMethodId = @this.ContactMethodId;
+            entity.IncidentStatusId = @this.StatusId;
+            entity.PriorityId = @this.PriorityId;
+            entity.SignalStatusId = @this.SignalStatusId;
+            entity.NotifierId = @this.NotifierId;
+            entity.PrincipalFBOId = @this.PrincipalFBOId;
+            entity.ClassificationId = @this.ClassificationId;
+            entity.DataSourceId = @this.DataSourceId;
+            entity.ProductTypeId = @this.ProductTypeId;
+            entity.LeadOfficer = @this.LeadOfficer;
+            entity.LeadOffice = @this.LeadOffice;
+            entity.AdminLeadId = @this.AdminLeadId;
+            entity.FieldOfficer = @this.FieldOfficer;
+            entity.LeadLocalAuthorityId = @this.LeadLocalAuthorityId;
+            entity.LAAdvised = @this.LAAdvised;
+            entity.DeathIllnessId = @this.DeathIllnessId;
+            entity.ReceivedOn = @this.ReceivedOn;
+            entity.IncidentCreated = @this.IncidentCreated;
+            entity.IncidentClosed = @this.IncidentClosed;
+        }
+
+        public static IncidentDb ToDb(this BaseIncident @this)
         {
             return new IncidentDb
             {
@@ -231,6 +262,7 @@ namespace FSA.IncidentsManagementDb
                 ProductTypeId = @this.ProductTypeId,
                 LeadOfficer = @this.LeadOfficer,
                 LeadOffice = @this.LeadOffice,
+                AdminLeadId = @this.AdminLeadId,
                 FieldOfficer = @this.FieldOfficer,
                 LeadLocalAuthorityId = @this.LeadLocalAuthorityId,
                 LAAdvised = @this.LAAdvised,
@@ -238,6 +270,43 @@ namespace FSA.IncidentsManagementDb
                 ReceivedOn = @this.ReceivedOn,
                 IncidentCreated = @this.IncidentCreated,
                 IncidentClosed = @this.IncidentClosed,
+            };
+        }
+
+        public static ProductDb ToDb(this Product @this)
+        {
+            return new ProductDb
+            {
+                Id = @this.Id,
+                IncidentId = @this.IncidentId,
+                Brand = @this.Brand,
+                Name = @this.Name,
+                ProductTypeId = @this.ProductTypeId,
+                CountryOfOriginId = @this.CountryOfOriginId,
+                Amount = @this.Amount,
+                AdditionalInfo = @this.AdditionalInfo ?? "",
+                AmountUnitTypeId = @this.AmountUnitTypeId,
+                BatchCodes = @this.BatchCodes,
+                DataSourceId = @this.DataSourceId,
+                PackDescription = @this.PackDescription
+            };
+        }
+
+        public static Product ToClient(this ProductDb @this)
+        {
+            return new Product
+            {
+                Id = @this.Id,
+                IncidentId = @this.IncidentId,
+                AdditionalInfo = @this.AdditionalInfo ?? "",
+                AmountUnitTypeId = @this.AmountUnitTypeId,
+                Amount = @this.Amount,
+                BatchCodes = @this.BatchCodes,
+                Brand = @this.Brand,
+                CountryOfOriginId = @this.CountryOfOriginId,
+                DataSourceId = @this.DataSourceId,
+                Name = @this.Name,
+                PackDescription = @this.PackDescription
             };
         }
 

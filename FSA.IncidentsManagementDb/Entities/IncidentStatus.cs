@@ -10,9 +10,9 @@ namespace FSA.IncidentsManagementDb.Entities
     /// </summary>
     public enum IncidentStatus
     {
-        Unassigned =0,
+        Unassigned =4,
         Open = 1,
         Closed=2,
-        NoWait=4
+        TBC=3
     }
 }

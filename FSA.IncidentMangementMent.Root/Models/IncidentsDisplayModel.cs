@@ -4,15 +4,15 @@ using System.Text;
 
 namespace FSA.IncidentsManagement.Root.Models
 {
-    public class IncidentsDisplayModel : Incident
+    public class IncidentsDisplayModel : BaseIncident
     {
-        public IncidentsDisplayModel(int id, string incidentTitle, string incidentDescription, int incidentTypeId, int contactMethodId, int statusId, 
+        public IncidentsDisplayModel(int id,  string incidentTitle, string incidentDescription, int incidentTypeId, int contactMethodId, int statusId, 
                                     int? signalStatusId, int? notifierId, int? principalFBOId, int priorityId, int classificationId, int dataSourceId, 
-                                    int productTypeId, string leadOfficer, string leadOffice, string fieldOfficer, int? leadLocalAuthorityId, 
+                                    int productTypeId, string leadOfficer, string leadOffice, int adminLeadId, string fieldOfficer, int? leadLocalAuthorityId, 
                                     bool lAAdvised, int deathIllnessId, DateTime? receivedOn, DateTime incidentCreated, DateTime? incidentClosed, 
                                     string lastChangedBy, DateTime lastChangedDate, string category, string signalStatus, string incidentStatus, string notifier, 
                                     string priority, string classification, string dataSource, string productType, string leadLocalAuthority, string deathIllness, string principalFBO, string fBOEmail, string fBOPhone, string fBOAddressLine1, string fBOAddressLine2, string fBOAddressTown, string fBOAddressPostcode) 
-             : base(id, incidentTitle, incidentDescription, incidentTypeId, contactMethodId, statusId, signalStatusId, notifierId, principalFBOId, priorityId, classificationId, dataSourceId, productTypeId, leadOfficer, leadOffice, fieldOfficer, leadLocalAuthorityId, lAAdvised, deathIllnessId, receivedOn, incidentCreated, incidentClosed, lastChangedBy, lastChangedDate)
+             : base(id, Guid.Empty, incidentTitle, incidentDescription, incidentTypeId, contactMethodId, statusId, signalStatusId, notifierId, principalFBOId, priorityId, classificationId, dataSourceId, productTypeId, leadOfficer, leadOffice, adminLeadId, fieldOfficer, leadLocalAuthorityId, lAAdvised, deathIllnessId, receivedOn, incidentCreated, incidentClosed, lastChangedBy, lastChangedDate)
         {
             Category = category;
             SignalStatus = signalStatus;

@@ -55,7 +55,7 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpPut()]
         [SwaggerOperation(Summary = "Replace an existing incident")]
-        [ProducesResponseType(typeof(Incident), 200)]
+        [ProducesResponseType(typeof(BaseIncident), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> UpdateIncident([FromBody, SwaggerParameter("Updated Incident", Required = true)] IncidentApiModel incident)
         {
@@ -65,7 +65,7 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpPost()]
         [SwaggerOperation(Summary = "Create an existing incident")]
-        [ProducesResponseType(typeof(Incident), 200)]
+        [ProducesResponseType(typeof(BaseIncident), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> CreateIncident([FromBody, SwaggerParameter("Create Incident", Required = true)] IncidentApiModel incident)
         {
@@ -75,7 +75,7 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpPost("Classification")]
         [SwaggerOperation(Summary = "Update classification of an incident")]
-        [ProducesResponseType(typeof(Incident), 200)]
+        [ProducesResponseType(typeof(BaseIncident), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> UpdateClassification([Required] int incidentId, [Required] int classificationId)
         {
@@ -84,7 +84,7 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpPost("Status")]
         [SwaggerOperation(Summary = "Update status of an incident")]
-        [ProducesResponseType(typeof(Incident), 200)]
+        [ProducesResponseType(typeof(BaseIncident), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> UpdateStatus([Required] int incidentId, [Required] int statusId)
         {

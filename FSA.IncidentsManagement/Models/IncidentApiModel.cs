@@ -8,6 +8,7 @@ namespace FSA.IncidentsManagement.Models
     public class IncidentApiModel
     {
         public int Id { get; set; }
+        public Guid MostUniqueId { get; set; }
         public string IncidentTitle { get; set; }
         public string IncidentDescription { get; set; }
         public int IncidentTypeId { get; set; }
@@ -22,6 +23,7 @@ namespace FSA.IncidentsManagement.Models
         public int ProductTypeId { get; set; }
         public string LeadOfficer { get; set; }
         public string LeadOffice { get; set; }
+        public int AdminLeadId { get; set; }
         public string FieldOfficer { get; set; }
         public int LeadLocalAuthorityId { get; set; } // organisations
         public bool LAAdvised { get; set; }

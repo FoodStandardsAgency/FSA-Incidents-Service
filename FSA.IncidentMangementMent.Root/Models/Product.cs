@@ -1,26 +1,21 @@
-﻿using FSA.IncidentsManagement.Root.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FSA.IncidentsManagementDb.Entities
+namespace FSA.IncidentsManagement.Root.Models
 {
-    internal class ProductDb : BaseEntityDb
+    public class Product
     {
         public int Id { get; set; }
         public int IncidentId { get; set; }
-        public IncidentDb Incident {get;set;}
         public string Name { get; set; }
         public string Brand { get; set; }
         public int ProductTypeId { get; set; }
-        public ProductTypeDb ProductType { get; set; }
         public int CountryOfOriginId { get; set; }
-        public CountryDb CountryOfOrigin { get; set; }
         public int Amount { get; set; }
         public int AmountUnitTypeId { get; set; }
-        public UnitQuantityDb AmountUnitType { get; set; }
-        public ICollection<ProductPackSizeDb> PackSizes { get; set; }
-        public ICollection<ProductDateDb> ProductDates { get; set; }
+        public IEnumerable<ProductPackSize> PackSizes { get; set; }
+        public IEnumerable<ProductDate> ProductDates { get; set; }
         //public int QuantityOfUnitsMade { get; set; }
 
         public string BatchCodes { get; set; }
@@ -28,8 +23,8 @@ namespace FSA.IncidentsManagementDb.Entities
         public string AdditionalInfo { get; set; }
         //public ICollection<BatchCodeDb> BatchCodes { get; set; }
         public int? DataSourceId { get; set; }
-        public DataSourceDb DataSource { get; set; }
+
         public string SignalUrl { get; set; }
-        public ICollection<ProductFBODb> RelatedFBOs { get; set; }
+        //public IEnumerable<FBODetails> RelatedFBOs { get; set; }
     }
 }

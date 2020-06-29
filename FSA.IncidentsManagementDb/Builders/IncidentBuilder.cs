@@ -7,9 +7,9 @@ using System.Text;
 
 namespace FSA.IncidentsManagementDb.Builders
 {
-    internal class IncidentBuilderConfig : AuditInfoBuilderConfiguration<IncidentDb>
+    internal class IncidentBuilder : AuditInfoBuilderConfiguration<IncidentDb>
     {
-        public IncidentBuilderConfig()
+        public IncidentBuilder()
         {
         }
 
@@ -17,7 +17,8 @@ namespace FSA.IncidentsManagementDb.Builders
         {
             base.Configure(builder);
             builder.Property(p => p.MostUniqueId).HasDefaultValueSql("newid()");
-            
+            builder.Property(p => p.IncidentStatusId).HasDefaultValue(4);    // UNassigned
+            builder.Property(p => p.PriorityId).HasDefaultValue(1);   // TBC
         }
     }
 }

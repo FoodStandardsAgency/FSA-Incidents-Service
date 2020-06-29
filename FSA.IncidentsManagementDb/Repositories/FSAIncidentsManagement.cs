@@ -23,5 +23,6 @@ namespace FSA.IncidentsManagementDb.Repositories
         
         public IIncidentsManagement Incidents => new IncidentsManagement(ctx, editor, lkups);
         public IIAddressManagement Addresses => new AddressManagement(ctx, editor);
+        public IProductsManagement Products => new ProductsManagement(ctx, editor);
     }
 }

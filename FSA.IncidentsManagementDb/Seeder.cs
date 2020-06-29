@@ -1,4 +1,4 @@
-﻿using FSA.IncidentsManagement.Root.Models;
+﻿ using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagementDb.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -541,17 +541,18 @@ namespace FSA.IncidentsManagementDb
         private void Priorities(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PriorityDb>()
-         .HasData(new PriorityDb
-         {
-             Id = 1,
-             Title = "Unclassified",
-             CreatedBy = "Paul",
-             ModifiedBy = "Paul"
-         },
+         .HasData(
+            new PriorityDb
+            {
+                Id = 1,
+                Title = "TBC",
+                CreatedBy = "Paul",
+                ModifiedBy = "Paul"
+            },
              new PriorityDb
              {
                  Id = 2,
-                 Title = "Low",
+                 Title = "High",
                  CreatedBy = "Paul",
                  ModifiedBy = "Paul"
              },
@@ -565,7 +566,7 @@ namespace FSA.IncidentsManagementDb
              new PriorityDb
              {
                  Id = 4,
-                 Title = "High",
+                 Title = "Low",
                  CreatedBy = "Paul",
                  ModifiedBy = "Paul"
              });
@@ -2984,7 +2985,13 @@ namespace FSA.IncidentsManagementDb
                   }, new IncidentStatusDb
                   {
                       Id = 3,
-                      Title = "No wait!",
+                      Title = "TBC",
+                      CreatedBy = "Paul",
+                      ModifiedBy = "Paul"
+                  }, new IncidentStatusDb
+                  {
+                      Id = 4,
+                      Title = "Unassigned",
                       CreatedBy = "Paul",
                       ModifiedBy = "Paul"
                   });

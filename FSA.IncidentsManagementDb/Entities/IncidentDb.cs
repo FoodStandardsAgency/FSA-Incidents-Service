@@ -58,6 +58,9 @@ namespace FSA.IncidentsManagementDb.Entities
 
         public ICollection<IncidentCommentDb> Comments { get; set; }
         
+        public ICollection<ProductDb> Products { get; set; }
+
+
         public ICollection<IncidentLinkDb> FromLinks { get; set; }
         public ICollection<IncidentLinkDb> ToLinks { get; set; }
 

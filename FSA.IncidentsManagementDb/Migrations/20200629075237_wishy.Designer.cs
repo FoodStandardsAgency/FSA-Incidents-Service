@@ -4,14 +4,16 @@ using FSA.IncidentsManagementDb;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FSA.IncidentsManagementDb.Migrations
 {
     [DbContext(typeof(FSADbContext))]
-    partial class FSADbContextModelSnapshot : ModelSnapshot
+    [Migration("20200629075237_wishy")]
+    partial class wishy
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -4062,12 +4064,21 @@ namespace FSA.IncidentsManagementDb.Migrations
                     b.HasData(
                         new
                         {
+                            Id = 1,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "Paul",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "Paul",
+                            Title = "Unclassified"
+                        },
+                        new
+                        {
                             Id = 2,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "Paul",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "Paul",
-                            Title = "High"
+                            Title = "Low"
                         },
                         new
                         {
@@ -4085,7 +4096,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                             CreatedBy = "Paul",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "Paul",
-                            Title = "Low"
+                            Title = "High"
                         });
                 });
 
@@ -4147,7 +4158,10 @@ namespace FSA.IncidentsManagementDb.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<int>("AmountUnitTypeId")
+                    b.Property<int>("AmountUnitType")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("AmountUnitTypeIdId")
                         .HasColumnType("int");
 
                     b.Property<string>("BatchCodes")
@@ -4200,7 +4214,7 @@ namespace FSA.IncidentsManagementDb.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AmountUnitTypeId");
+                    b.HasIndex("AmountUnitTypeIdId");
 
                     b.HasIndex("CountryOfOriginId");
 
@@ -5182,11 +5196,9 @@ namespace FSA.IncidentsManagementDb.Migrations
 
             modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.ProductDb", b =>
                 {
-                    b.HasOne("FSA.IncidentsManagementDb.Entities.UnitQuantityDb", "AmountUnitType")
+                    b.HasOne("FSA.IncidentsManagementDb.Entities.UnitQuantityDb", "AmountUnitTypeId")
                         .WithMany()
-                        .HasForeignKey("AmountUnitTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AmountUnitTypeIdId");
 
                     b.HasOne("FSA.IncidentsManagementDb.Entities.CountryDb", "CountryOfOrigin")
                         .WithMany()

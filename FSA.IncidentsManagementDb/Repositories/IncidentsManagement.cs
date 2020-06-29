@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using IncidentStatus = FSA.IncidentsManagementDb.Entities.IncidentStatus;
@@ -28,7 +29,7 @@ namespace FSA.IncidentsManagementDb.Repositories
             this.lkups = lkups;
         }
 
-        public async Task<Incident> Add(Incident incident)
+        public async Task<BaseIncident> Add(BaseIncident incident)
         {
 
             if (incident.CommonId != 0) throw new ArgumentOutOfRangeException("This item has already been added.");
@@ -77,13 +78,13 @@ namespace FSA.IncidentsManagementDb.Repositories
         /// <param name="Id"></param>
         /// <returns>Incident</returns>
         /// <exception cref="NullReferenceException" />
-        public async Task<Incident> Get(int Id)
+        public async Task<BaseIncident> Get(int Id)
         {
             var itm = await this.ctx.Incidents.AsNoTracking().FirstAsync(f => f.Id == Id);
             return itm.ToClient();
         }
 
-        public async Task<IEnumerable<Incident>> GetAll()
+        public async Task<IEnumerable<BaseIncident>> GetAll()
         {
             return (await this.ctx.Incidents.AsNoTracking().ToListAsync()).ToClient().ToList();
         }
@@ -145,7 +146,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         /// The updated incident
         /// </returns>
         /// <exception cref="NullReferenceException" />
-        public async Task<Incident> UpdateClassification(int id, int ClassificationId)
+        public async Task<BaseIncident> UpdateClassification(int id, int ClassificationId)
         {
             var dbItem = await ctx.Incidents.FindAsync(id);
             dbItem.ClassificationId = ClassificationId;
@@ -154,9 +155,11 @@ namespace FSA.IncidentsManagementDb.Repositories
             return dbItem.ToClient();
         }
 
-        public async Task<Incident> UpdateIncident(Incident incident)
+        public async Task<BaseIncident> UpdateIncident(BaseIncident incident)
         {
-            var dbItem = incident.ToDb();
+            var dbItem = this.ctx.Incidents.Find(incident.CommonId);
+
+            incident.ToUpdateDb(dbItem);
             UpdateAuditInfo(dbItem);
             var updatedDbItem = this.ctx.Incidents.Update(dbItem);
             await this.ctx.SaveChangesAsync();
@@ -172,7 +175,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         /// The updated incident
         /// </returns>
         /// <exception cref="NullReferenceException" />
-        public async Task<Incident> UpdateStatus(int id, int statusId)
+        public async Task<BaseIncident> UpdateStatus(int id, int statusId)
         {
             var itm = await ctx.Incidents.FindAsync(id);
             itm.IncidentStatusId = statusId;

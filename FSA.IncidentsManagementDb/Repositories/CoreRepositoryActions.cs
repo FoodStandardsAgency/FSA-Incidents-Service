@@ -15,6 +15,7 @@ namespace FSA.IncidentsManagementDb.Repositories
             this.ctx = ctx;
             this.editor = editor;
         }
+
         internal void UpdateAuditInfo(BaseEntityDb entity, DateTime? setCurrentDate = null)
         {
             var currentDate = setCurrentDate ?? DateTime.UtcNow;

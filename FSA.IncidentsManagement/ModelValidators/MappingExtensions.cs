@@ -9,10 +9,11 @@ namespace FSA.IncidentsManagement.ModelValidators
 {
     public static class MappingExtensions
     {
-        public static Incident ToClient(this IncidentApiModel @this)
+        public static BaseIncident ToClient(this IncidentApiModel @this)
         {
-            return new Incident(
+            return new BaseIncident(
                 id: @this.Id,
+                mostUniqueId:@this.MostUniqueId,
                 incidentTitle: @this.IncidentTitle,
                 incidentDescription: @this.IncidentDescription,
                 incidentTypeId: @this.IncidentTypeId,
@@ -27,6 +28,7 @@ namespace FSA.IncidentsManagement.ModelValidators
                 productTypeId: @this.ProductTypeId,
                 leadOfficer: @this.LeadOfficer,
                 leadOffice: @this.LeadOffice,
+                adminLeadId:@this.AdminLeadId,
                 fieldOfficer: @this.FieldOfficer,
                 leadLocalAuthorityId: @this.LeadLocalAuthorityId,
                 lAAdvised: @this.LAAdvised,

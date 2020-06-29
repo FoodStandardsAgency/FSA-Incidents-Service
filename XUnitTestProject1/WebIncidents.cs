@@ -47,9 +47,9 @@ namespace FSA.UnitTests.WebApi
         {
             var tken = await this.GetAccessToken();
 
-            var s = new Incident("New Title", "New Description", 1, 4, 2, null, 1, 1, 1, 2, 4, 2, Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), null, false, 1, null, DateTime.Now, null, Guid.NewGuid().ToString(), DateTime.Now);
-            var j = System.Text.Json.JsonSerializer.Serialize(s);
-            Console.WriteLine(j);
+            //var s = new Incident("New Title", "New Description", 1, 4, 2, null, 1, 1, 1, 2, 4, 2, Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), null, false, 1, null, DateTime.Now, null, Guid.NewGuid().ToString(), DateTime.Now);
+            //var j = System.Text.Json.JsonSerializer.Serialize(s);
+            //Console.WriteLine(j);
         }
     }
 }

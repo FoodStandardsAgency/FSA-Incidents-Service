@@ -10,17 +10,17 @@ namespace FSA.IncidentsManagement.Root.Contracts
 {
     public interface IIncidentsManagement
     {
-        Task<Incident> Get(int Id);
+        Task<BaseIncident> Get(int Id);
 
-        Task<IEnumerable<Incident>> GetAll();
+        Task<IEnumerable<BaseIncident>> GetAll();
 
         Task<IncidentsDisplayModel> GetDisplayItem(int id);
 
-        Task<Incident> UpdateStatus(int Id, int statusId);
+        Task<BaseIncident> UpdateStatus(int Id, int statusId);
 
         Task AssignLeadOfficer(IEnumerable<int> id, string user);
 
-        Task<Incident> UpdateClassification(int id, int ClassificationId);
+        Task<BaseIncident> UpdateClassification(int id, int ClassificationId);
 
         Task AddLink(int from, IEnumerable<int> to, string reason);
 
@@ -30,9 +30,9 @@ namespace FSA.IncidentsManagement.Root.Contracts
 
         Task<IPaging<IncidentDashboardView>> DashboardSearch(string search = null, int pageSize = 500, int startPage = 1);
 
-        Task<Incident> Add(Incident incident);
+        Task<BaseIncident> Add(BaseIncident incident);
 
-        Task<Incident> UpdateIncident(Incident incident);
+        Task<BaseIncident> UpdateIncident(BaseIncident incident);
         Task<IEnumerable<IncidentDashboardView>> DashboardIncidentLinks(int incidentId);
         Task BulkClose(IEnumerable<int> incidentIds);
     }

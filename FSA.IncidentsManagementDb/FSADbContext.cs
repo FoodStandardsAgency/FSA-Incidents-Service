@@ -85,7 +85,7 @@ namespace FSA.IncidentsManagementDb
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<AdminLeadDb>());
 
 
-            modelBuilder.ApplyConfiguration(new IncidentBuilderConfig());
+            modelBuilder.ApplyConfiguration(new IncidentBuilder());
             modelBuilder.ApplyConfiguration(new IncidentLinkBuilder());
             modelBuilder.ApplyConfiguration(new IncidentCommentsBuilder());
             modelBuilder.ApplyConfiguration(new IncidentOMITGroupDbBuilder());
