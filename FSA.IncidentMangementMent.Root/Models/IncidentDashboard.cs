@@ -15,5 +15,10 @@ namespace FSA.IncidentsManagement.Root.Models
         public string Status { get; set; }
         public DateTime Updated { get; set; }
         public IEnumerable<int> Links { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Id} {Title} {Priority} {Status} {LeadOfficer}";
+        }
     }
 }

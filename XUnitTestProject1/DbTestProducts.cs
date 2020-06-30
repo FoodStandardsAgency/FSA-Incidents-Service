@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace FSA.UnitTests
+namespace FSA.UnitTests.Db
 {
     public class DbTestProducts
     {

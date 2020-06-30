@@ -60,6 +60,10 @@ namespace FSA.IncidentsManagementDb
         internal DbSet<FBODb> FBOs { get; set; }
         internal DbSet<FBOTypeDb> FBOTypes { get; set; }
 
+        internal DbSet<NotifierDb> Notifiers { get; set; }
+
+
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -90,6 +94,7 @@ namespace FSA.IncidentsManagementDb
             modelBuilder.ApplyConfiguration(new IncidentCommentsBuilder());
             modelBuilder.ApplyConfiguration(new IncidentOMITGroupDbBuilder());
             modelBuilder.ApplyConfiguration(new FBOBuilder());
+            modelBuilder.ApplyConfiguration(new NotifierBuilder());
             modelBuilder.ApplyConfiguration(new ProductBuilder());
             modelBuilder.ApplyConfiguration(new ProductDatesBuilder());
             modelBuilder.ApplyConfiguration(new ProductPackSizeBuilder());

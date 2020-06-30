@@ -706,26 +706,26 @@ namespace FSA.IncidentsManagementDb
                     CreatedBy = "Paul",
                     ModifiedBy = "Paul"
                 },
-                    new NotifierTypeDb
-                    {
-                        Id = 2,
-                        Title = "Local Authority",
-                        CreatedBy = "Paul",
-                        ModifiedBy = "Paul"
-                    },
-                    new NotifierTypeDb
-                    {
-                        Id = 3,
-                        Title = "Retailer",
-                        CreatedBy = "Paul",
-                        ModifiedBy = "Paul"
-                    }, new NotifierTypeDb
-                    {
-                        Id = 4,
-                        Title = "Manufacturer",
-                        CreatedBy = "Paul",
-                        ModifiedBy = "Paul"
-                    });
+                new NotifierTypeDb
+                {
+                    Id = 2,
+                    Title = "Local Authority",
+                    CreatedBy = "Paul",
+                    ModifiedBy = "Paul"
+                },
+                new NotifierTypeDb
+                {
+                    Id = 3,
+                    Title = "Retailer",
+                    CreatedBy = "Paul",
+                    ModifiedBy = "Paul"
+                }, new NotifierTypeDb
+                {
+                    Id = 4,
+                    Title = "Manufacturer",
+                    CreatedBy = "Paul",
+                    ModifiedBy = "Paul"
+                });
         }
 
         private void DeathIllness(ModelBuilder modelBuilder)

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FSA.IncidentsManagement.Root.Contracts;
 using FSA.IncidentsManagement.Root.Models;
+using FSA.IncidentsManagementDb.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -188,7 +189,7 @@ namespace FSA.IncidentsManagement.Controllers
                             .GetAll()).ToList());
         }
         [HttpGet("Organisations")]
-        [ProducesResponseType(typeof(IEnumerable<UnitQuantity>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<OrganisationLookup>), 200)]
         [ProducesResponseType(500)]
         [SwaggerOperation(Summary = "Organisation pick list")]
         public async Task<IActionResult> Organisations()
@@ -197,8 +198,38 @@ namespace FSA.IncidentsManagement.Controllers
                             .GetAll()).ToList());
         }
 
+        [HttpGet("FBOLookups")]
+        [ProducesResponseType(typeof(IEnumerable<OrganisationLookup>), 200)]
+        [ProducesResponseType(500)]
+        [SwaggerOperation(Summary = "FBO temporary pick list")]
+        public async Task<IActionResult> FboLookup()
+        {
+            return new OkObjectResult((await this.lookupdata.FBOs
+                            .GetAll()).ToList());
+        }
+
+        [HttpGet("NotifierLookups")]
+        [ProducesResponseType(typeof(IEnumerable<OrganisationLookup>), 200)]
+        [ProducesResponseType(500)]
+        [SwaggerOperation(Summary = "Notifier temporary pick list")]
+        public async Task<IActionResult> NotfierLookup()
+        {
+            return new OkObjectResult((await this.lookupdata.Notifiers
+                            .GetAll()).ToList());
+        }
+
+        [HttpGet("LocalAuthorityLookups")]
+        [ProducesResponseType(typeof(IEnumerable<OrganisationLookup>), 200)]
+        [ProducesResponseType(500)]
+        [SwaggerOperation(Summary = "LocalAuth temporary pick list")]
+        public async Task<IActionResult> LocalAuthorityLookups()
+        {
+            return new OkObjectResult((await this.lookupdata.LocalAuthorities
+                            .GetAll()).ToList());
+        }
+
         [HttpGet("Priorities")]
-        [ProducesResponseType(typeof(IEnumerable<UnitQuantity>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<Priority>), 200)]
         [ProducesResponseType(500)]
         [SwaggerOperation(Summary = "Priorities values")]
         public async Task<IActionResult> Priorities()
@@ -208,7 +239,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpGet("Status")]
-        [ProducesResponseType(typeof(IEnumerable<UnitQuantity>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<IncidentStatusLkUp>), 200)]
         [ProducesResponseType(500)]
         [SwaggerOperation(Summary = "Incident Status values")]
         public async Task<IActionResult> IncidentStatus()

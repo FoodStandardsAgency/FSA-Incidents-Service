@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagementDb.Repositories
 {
-    public class AddressManagement : CoreRepositoryActions,IIAddressManagement
+    public class AddressManagement : CoreRepositoryActions, IIAddressManagement
     {
         public AddressManagement(FSADbContext ctx, string editor) : base(ctx, editor)
         {
@@ -46,15 +46,21 @@ namespace FSA.IncidentsManagementDb.Repositories
 
         public async Task<FboAddress> GetFBOAddress(int FboId)
         {
-            var fboOrg  = await this.ctx.FBOs.Include(o => o.Organisation)
+            var fboOrg = await this.ctx.FBOs
+                    .Include(o => o.Organisation)
                 .AsNoTracking()
                 .FirstAsync(o => o.Id == FboId);
             return fboOrg.ToClient();
         }
 
-        public Task<NotifierAddress> GetNotifierAddress(int NotifierId)
+        public async Task<NotifierAddress> GetNotifierAddress(int NotifierId)
         {
-            throw new NotImplementedException();
+            var notifer = await this.ctx.Notifiers
+                    .Include(o => o.Organisation)
+                    .Include(o => o.NotifierType)
+                    .AsNoTracking()
+                .FirstAsync(o => o.Id == NotifierId);
+            return notifer.ToClient();
         }
     }
 }

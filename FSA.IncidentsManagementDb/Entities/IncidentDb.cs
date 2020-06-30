@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FSA.IncidentsManagement.Root.Models;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -17,19 +18,19 @@ namespace FSA.IncidentsManagementDb.Entities
         public string IncidentTitle { get; set; }
         public string IncidentDescription { get; set; }
         public int IncidentTypeId { get; set; }
+        public CategoryDb IncidentType { get; set; }
         public int ContactMethodId { get; set; }
         public ContactMethodDb ContactMethod { get; set; }
-        public CategoryDb IncidentType { get; set; }
         public int? SignalStatusId { get; set; }
         public SignalStatusDb SignalStatus { get; set; }
 
         public int IncidentStatusId { get; set; }
         public IncidentStatusDb IncidentStatus { get; set; }
         public int? NotifierId { get; set; }
-        public OrganisationDb Notifier { get; set; }
+        public NotifierDb Notifier { get; set; }
 
         public int? PrincipalFBOId { get; set; }
-        public OrganisationDb PrincipalFBO { get; set; }
+        public FBODb PrincipalFBO { get; set; }
         public int PriorityId { get; set; }
         public PriorityDb Priority { get; set; }
         public int ClassificationId { get; set; }
@@ -39,7 +40,6 @@ namespace FSA.IncidentsManagementDb.Entities
         public int ProductTypeId { get; set; }
         public ProductTypeDb ProductType { get; set; }
 
-
         public int? AdminLeadId { get; set; }
         public AdminLeadDb AdminLead { get; set; }
 
@@ -48,7 +48,7 @@ namespace FSA.IncidentsManagementDb.Entities
         public string FieldOfficer { get; set; }
 
         public int? LeadLocalAuthorityId { get; set; }
-        public OrganisationDb LeadLocalAuthority { get; set; }
+        public NotifierDb LeadLocalAuthority { get; set; }
         public bool LAAdvised { get; set; }
         public int DeathIllnessId { get; set; }
         public DeathIllnessDb DeathIllness { get; set; }
@@ -57,10 +57,7 @@ namespace FSA.IncidentsManagementDb.Entities
         public DateTime? IncidentClosed { get; set; }
 
         public ICollection<IncidentCommentDb> Comments { get; set; }
-        
         public ICollection<ProductDb> Products { get; set; }
-
-
         public ICollection<IncidentLinkDb> FromLinks { get; set; }
         public ICollection<IncidentLinkDb> ToLinks { get; set; }
 

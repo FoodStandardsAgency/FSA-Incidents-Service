@@ -11,9 +11,9 @@ namespace FSA.IncidentsManagement.Root.Contracts
         IReferenceDataRepo<Category> Categories { get; }
         IReferenceDataRepo<Priority> Priorities { get; }
         IReferenceDataRepo<Classification> Classifications { get; }
-        IReferenceDataRepo<ContactMethod> ContactMethods{ get; }
+        IReferenceDataRepo<ContactMethod> ContactMethods { get; }
         IReferenceDataRepo<Country> Countries { get; }
-        IReferenceDataRepo<DataSource> DataSources{get;}
+        IReferenceDataRepo<DataSource> DataSources { get; }
         IReferenceDataRepo<DeathIllness> DeathIllnesses { get; }
         IReferenceDataRepo<OMITGroup> OMITGroups { get; }
         IReferenceDataRepo<OrganisationRole> OrganisationsRoles { get; }
@@ -23,6 +23,11 @@ namespace FSA.IncidentsManagement.Root.Contracts
         IReferenceDataRepo<IncidentStatusLkUp> Status { get; }
         IReferenceDataRepo<UnitQuantity> Units { get; }
         IReferenceDataRepo<OrganisationLookup> Organisations { get; }
+
+        IReferenceDataRepo<OrganisationLookup> FBOs{get;}
+        IReferenceDataRepo<OrganisationLookup> Notifiers { get; }
+        IReferenceDataRepo<OrganisationLookup> LocalAuthorities { get; }
+
         IReferenceDataRepo<FBOType> FBOTypes { get; }
         IReferenceDataRepo<NotifierType> NotifierTypes { get; }
         IReferenceDataRepo<AdminLead> AdminLeads { get; }

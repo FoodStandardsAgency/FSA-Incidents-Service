@@ -172,7 +172,7 @@ namespace FSA.IncidentsManagementDb
         {
             return new IncidentsDisplayModel(
                      @this.Id,
-
+                mostUniqueId:@this.MostUniqueId,
                 incidentTitle: @this.IncidentTitle,
                 incidentDescription: @this.IncidentDescription,
                 incidentTypeId: @this.IncidentTypeId,
@@ -207,13 +207,13 @@ namespace FSA.IncidentsManagementDb
                 productType: @this.ProductType?.Title ?? "",
                 leadLocalAuthority: allOrgs.ContainsKey(@this.LeadLocalAuthorityId ?? 0) ? allOrgs[@this.LeadLocalAuthorityId ?? 0].Name : "",
                 deathIllness: @this.DeathIllness?.Title ?? "",
-                principalFBO: @this.PrincipalFBO?.Title ?? "",
-                fBOEmail: @this.PrincipalFBO?.EmailAddress ?? "",
-                fBOPhone: @this.PrincipalFBO?.TelephoneNumber ?? "",
-                fBOAddressLine1: @this.PrincipalFBO?.AddressLine1 ?? "",
-                fBOAddressLine2: @this.PrincipalFBO?.AddressLine2 ?? "",
-                fBOAddressTown: @this.PrincipalFBO?.TownCity ?? "",
-                fBOAddressPostcode: @this.PrincipalFBO?.PostCode ?? ""
+                principalFBO: @this.PrincipalFBO?.Organisation.Title ?? "",
+                fBOEmail: @this.PrincipalFBO?.Organisation.EmailAddress ?? "",
+                fBOPhone: @this.PrincipalFBO?.Organisation.TelephoneNumber ?? "",
+                fBOAddressLine1: @this.PrincipalFBO?.Organisation.AddressLine1 ?? "",
+                fBOAddressLine2: @this.PrincipalFBO?.Organisation.AddressLine2 ?? "",
+                fBOAddressTown: @this.PrincipalFBO?.Organisation.TownCity ?? "",
+                fBOAddressPostcode: @this.PrincipalFBO?.Organisation.PostCode ?? ""
                 );
         }
 
@@ -326,8 +326,8 @@ namespace FSA.IncidentsManagementDb
                 CommonId = @this.Id,
                 Priority = @this.Priority.Title,
                 Title = @this.IncidentTitle,
-                Notifier = @this.Notifier.Title,
-                LeadOfficer = @this.LeadOfficer,
+                Notifier = @this.Notifier?.Organisation.Title ?? "Unassigned",
+                LeadOfficer = @this.LeadOfficer ?? "Unassigned",
                 Status = @this.IncidentStatus.Title,
                 Updated = @this.Modified,
                 Links = @this.ToLinks.Select(o => o.FromIncidentId)
@@ -358,6 +358,24 @@ namespace FSA.IncidentsManagementDb
             ContactMethodId = @this.Organisation.ContactMethodId,
             FboId = @this.Id,
             FboTypes = @this.FBOTypeId
+        };
+
+        public static NotifierAddress ToClient(this NotifierDb @this) => new NotifierAddress
+        {
+            Id = @this.Organisation.Id,
+            Title = @this.Organisation.Title,
+            MainContact = @this.Organisation.MainContact,
+            AddressLine1 = @this.Organisation.AddressLine1,
+            AddressLine2 = @this.Organisation.AddressLine2,
+            TownCity = @this.Organisation.TownCity,
+            County = @this.Organisation.County,
+            PostCode = @this.Organisation.PostCode,
+            CountryId = @this.Organisation.CountryId,
+            TelephoneNumber = @this.Organisation.TelephoneNumber,
+            EmailAddress = @this.Organisation.EmailAddress,
+            ContactMethodId = @this.Organisation.ContactMethodId,
+            NotifierId = @this.Id,
+            NotifierType = @this.NotifierType.Title
         };
 
     }

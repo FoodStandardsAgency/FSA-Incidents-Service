@@ -8,8 +8,8 @@ namespace FSA.IncidentsManagementDb.Entities
         public int Id { get; set; }
         public string Title { get; set; }
         public string MainContact { get; set; }
-        public int? OrganisationRoleId { get; set; }
-        public OrganisationRoleDb OrganisationRole { get; set; }
+        //public int? OrganisationRoleId { get; set; }
+        //public OrganisationRoleDb OrganisationRole { get; set; }
         public string AddressLine1 { get; set; }
         public string AddressLine2 { get; set; }
         public string TownCity { get; set; }

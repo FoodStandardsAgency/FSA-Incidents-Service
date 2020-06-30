@@ -4,14 +4,16 @@ using FSA.IncidentsManagementDb;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FSA.IncidentsManagementDb.Migrations
 {
     [DbContext(typeof(FSADbContext))]
-    partial class FSADbContextModelSnapshot : ModelSnapshot
+    [Migration("20200630074748_bellyUp")]
+    partial class bellyUp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3788,24 +3790,16 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("NotifierTypeId")
                         .HasColumnType("int");
@@ -3819,7 +3813,7 @@ namespace FSA.IncidentsManagementDb.Migrations
 
                     b.HasIndex("OrganisationId");
 
-                    b.ToTable("Notifiers");
+                    b.ToTable("NotifierDb");
                 });
 
             modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.NotifierTypeDb", b =>
@@ -3851,7 +3845,8 @@ namespace FSA.IncidentsManagementDb.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 
@@ -3980,6 +3975,9 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasColumnType("nvarchar(70)")
                         .HasMaxLength(70);
 
+                    b.Property<int?>("OrganisationRoleId")
+                        .HasColumnType("int");
+
                     b.Property<string>("PostCode")
                         .HasColumnType("nvarchar(max)");
 
@@ -3998,6 +3996,8 @@ namespace FSA.IncidentsManagementDb.Migrations
                     b.HasIndex("ContactMethodId");
 
                     b.HasIndex("CountryId");
+
+                    b.HasIndex("OrganisationRoleId");
 
                     b.ToTable("Organisations");
                 });
@@ -5235,6 +5235,10 @@ namespace FSA.IncidentsManagementDb.Migrations
                     b.HasOne("FSA.IncidentsManagementDb.Entities.CountryDb", "Country")
                         .WithMany()
                         .HasForeignKey("CountryId");
+
+                    b.HasOne("FSA.IncidentsManagementDb.Entities.OrganisationRoleDb", "OrganisationRole")
+                        .WithMany()
+                        .HasForeignKey("OrganisationRoleId");
                 });
 
             modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.ProductDateDb", b =>

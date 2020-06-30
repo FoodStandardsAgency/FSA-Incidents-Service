@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
@@ -158,7 +159,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         public async Task<BaseIncident> UpdateIncident(BaseIncident incident)
         {
             var dbItem = this.ctx.Incidents.Find(incident.CommonId);
-
+            if (dbItem == null) throw new ArgumentNullException("No incident was found");
             incident.ToUpdateDb(dbItem);
             UpdateAuditInfo(dbItem);
             var updatedDbItem = this.ctx.Incidents.Update(dbItem);
@@ -179,6 +180,9 @@ namespace FSA.IncidentsManagementDb.Repositories
         {
             var itm = await ctx.Incidents.FindAsync(id);
             itm.IncidentStatusId = statusId;
+            if (statusId == (int)IncidentStatus.Unassigned)
+                itm.LeadOfficer = "";
+            
             UpdateAuditInfo(itm);
             await ctx.SaveChangesAsync();
             return itm.ToClient();
@@ -213,7 +217,7 @@ namespace FSA.IncidentsManagementDb.Repositories
                         .Include(i => i.DeathIllness)
                         .Include(i => i.IncidentType)
                         .Include(i => i.ProductType)
-                        .Include(i => i.PrincipalFBO)
+                        .Include(i => i.PrincipalFBO).ThenInclude(o => o.Organisation)
                         .Include(i => i.ContactMethod)
                         .Include(i => i.IncidentStatus).First(p => p.Id == id);
             // now get the fbo organisations data
@@ -246,6 +250,7 @@ namespace FSA.IncidentsManagementDb.Repositories
             return newComment.ToClient();
         }
 
+
         /// <summary>
         /// return 1 PageSize of data from the incidents table for the dashboard.
         /// returns an empty setother wise.
@@ -261,22 +266,33 @@ namespace FSA.IncidentsManagementDb.Repositories
             var qry = this.ctx.Incidents.AsNoTracking()
                        .Include(i => i.Priority)
                        .Include(i => i.IncidentStatus)
-                       .Include(i => i.Notifier)
+                       .Include(i => i.Notifier).ThenInclude(o => o.Organisation)
                        .Include(i => i.ToLinks)
                        .Include(i => i.FromLinks).AsQueryable();
+
+            // split out the words
+            var allWords = search.Split(" ");
+
+            for (var x = 0; x < allWords.Length; ++x)
+            {
+                Expression<Func<IncidentDb, bool>> m = i => EF.Functions.Like(i.IncidentTitle, $"%{allWords[x]}%");
+            }
 
             if (!String.IsNullOrEmpty(search))
                 qry = qry.Where(i => EF.Functions.Like(i.IncidentTitle, $"%{search}%")
                                   || EF.Functions.Like(i.IncidentDescription, $"%{search}%")
                                   || EF.Functions.Like(i.Priority.Title, $"%{search}%")
-                                  || EF.Functions.Like(i.Notifier.Title, $"%{search}%")
-                                  || EF.Functions.Like(i.IncidentStatus.Title, $"%{search}%"));// || EF.Functions.Like(i.IncidentDescription, search));
+                                  || EF.Functions.Like(i.Notifier.Organisation.Title, $"%{search}%")
+                                  || EF.Functions.Like(i.IncidentStatus.Title, $"%{search}%"));// || EF.Functions.Like
 
             // build a where clause
             var totalRecords = await qry.CountAsync();
             // Find the start record
             var startRecord = (startPage - 1) * PageSize;
-            var results = await qry.Skip(startRecord).Take(PageSize).Select(i => i.ToDashboard()).ToListAsync();
+            var results = await qry.Skip(startRecord)
+                                   .Take(PageSize)
+                                   .OrderByDescending(i => i.IncidentStatusId).ThenBy(i => i.IncidentCreated)
+                                   .Select(i => i.ToDashboard()).ToListAsync();
             return new PagedResult<IncidentDashboardView>(results, totalRecords);
         }
 
@@ -312,8 +328,8 @@ namespace FSA.IncidentsManagementDb.Repositories
                                     select iq);
 
 
-           // ALl from incidents where incidentId is in `from` Column( the original linker)
-           var toQ = (from iq in incidentsQry
+            // ALl from incidents where incidentId is in `from` Column( the original linker)
+            var toQ = (from iq in incidentsQry
                        join toLink in ctx.IncidentLinks
                            on iq.Id equals toLink.ToIncidentId
                        where toLink.FromIncidentId == incidentId

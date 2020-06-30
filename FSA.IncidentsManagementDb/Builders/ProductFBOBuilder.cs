@@ -17,6 +17,7 @@ namespace FSA.IncidentsManagementDb.Builders
             builder.HasOne(o => o.Product)
                     .WithMany(p => p.RelatedFBOs)
                     .HasForeignKey(p => p.ProductId).OnDelete(DeleteBehavior.NoAction);
+
             builder.HasOne(o => o.FBO)
                     .WithMany(o => o.RelatedProducts)
                     .HasForeignKey(o => o.FBOId).OnDelete(DeleteBehavior.NoAction);

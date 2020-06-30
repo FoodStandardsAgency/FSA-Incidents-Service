@@ -28,6 +28,20 @@
     <Compile Remove="Migrations\20200626201218_Seeed.Designer.cs" />
     <Compile Remove="Migrations\20200629074744_wishy.cs" />
     <Compile Remove="Migrations\20200629074744_wishy.Designer.cs" />
+    <Compile Remove="Migrations\20200629114628_William.cs" />
+    <Compile Remove="Migrations\20200629114628_William.Designer.cs" />
+    <Compile Remove="Migrations\20200630071719_nomorescore.cs" />
+    <Compile Remove="Migrations\20200630071719_nomorescore.Designer.cs" />
+    <Compile Remove="Migrations\20200630072119_nomorescore.cs" />
+    <Compile Remove="Migrations\20200630072119_nomorescore.Designer.cs" />
+    <Compile Remove="Migrations\20200630072427_nomorescore.cs" />
+    <Compile Remove="Migrations\20200630072427_nomorescore.Designer.cs" />
+    <Compile Remove="Migrations\20200630072945_nomorescore.cs" />
+    <Compile Remove="Migrations\20200630072945_nomorescore.Designer.cs" />
+    <Compile Remove="Migrations\20200630073914_nomorescore.cs" />
+    <Compile Remove="Migrations\20200630073914_nomorescore.Designer.cs" />
+    <Compile Remove="Migrations\20200630074232_bellyUp.cs" />
+    <Compile Remove="Migrations\20200630074232_bellyUp.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

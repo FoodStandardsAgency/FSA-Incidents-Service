@@ -16,7 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace FSA.UnitTests.WebApi
+namespace FSA.UnitTests.Db
 {
     public class DbTestIncidents : IDisposable
     {
@@ -148,9 +148,24 @@ namespace FSA.UnitTests.WebApi
         }
 
         [Fact]
-        public async Task AddIncidents()
+        public async Task DashboardSearchPeanut()
         {
+            IFSAIncidentsData incidents = new FSAIncidentsManagement(ctx, userId);
+            var results  = await incidents.Incidents.DashboardSearch("peanuts");
+            Assert.True(results.Count() > 0);
+        }
 
+
+        [Fact]
+        public async Task DashboardSearchLastPage()
+        {
+            IFSAIncidentsData incidents = new FSAIncidentsManagement(ctx, userId);
+            var finalPage = (await incidents.Incidents.DashboardSearch(pageSize:10, startPage:520)).ToList();
+            var finalPageM1 = (await incidents.Incidents.DashboardSearch(pageSize:10, startPage:518)).ToList();
+            var pages = (await incidents.Incidents.DashboardSearch(pageSize:10, startPage:516)).ToList();
+            var mpage1 = (await incidents.Incidents.DashboardSearch(pageSize:10, startPage:514)).ToList();
+            var finalPageP1 = (await incidents.Incidents.DashboardSearch(pageSize:10, startPage:521)).ToList();
+            Assert.True(finalPage.Count() > 0 && finalPageM1.Count()==10 && finalPageP1.Count()==0);
         }
 
 

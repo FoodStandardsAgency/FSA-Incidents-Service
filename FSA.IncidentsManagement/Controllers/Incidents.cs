@@ -33,8 +33,9 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpGet()]
         [SwaggerOperation(Summary = "Get incident by id")]
-        [ProducesResponseType(typeof(IncidentStatusLkUp), 200)]
+        [ProducesResponseType(typeof(IncidentsDisplayModel), 200)]
         [ProducesResponseType(500)]
+        [Produces("application/json")]
         public async Task<IActionResult> GetIncident(int id)
         {
             return new OkObjectResult(await this.fsaData.Incidents.GetDisplayItem(id));
@@ -44,6 +45,7 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "Incident dashboard search")]
         [ProducesResponseType(typeof(IncidentDashboardView), 200)]
         [ProducesResponseType(500)]
+        [Produces("application/json")]
         public async Task<IActionResult> GetIncidentDashboard(string search, int pageNo, int? pageSize)
         {
             if (pageNo < 1 || pageNo<1  )
@@ -57,6 +59,7 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "Replace an existing incident")]
         [ProducesResponseType(typeof(BaseIncident), 200)]
         [ProducesResponseType(500)]
+        [Produces("application/json")]
         public async Task<IActionResult> UpdateIncident([FromBody, SwaggerParameter("Updated Incident", Required = true)] IncidentApiModel incident)
         {
 
@@ -67,10 +70,10 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "Create an existing incident")]
         [ProducesResponseType(typeof(BaseIncident), 200)]
         [ProducesResponseType(500)]
+        [Produces("application/json")]
         public async Task<IActionResult> CreateIncident([FromBody, SwaggerParameter("Create Incident", Required = true)] IncidentApiModel incident)
         {
             return new OkObjectResult(await this.fsaData.Incidents.Add(incident.ToClient()));
-
         }
 
         [HttpPost("Classification")]
