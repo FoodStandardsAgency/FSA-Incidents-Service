@@ -47,6 +47,20 @@ namespace FSA.IncidentsManagement
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddMicrosoftWebApi(Configuration, subscribeToJwtBearerMiddlewareDiagnosticsEvents: true);
 
+            //services.Configure<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme, options =>
+            //{
+            //    // This is an Microsoft identity platform Web API
+            //    //options.Authority += "/v2.0";
+
+            //    // The valid audiences are both the Client ID (options.Audience) and api://{ClientID}
+            //    options.TokenValidationParameters.ValidAudiences = new string[]
+            //    {
+            //            options.Audience, $"api://{options.Audience}", $"https://{options.Audience}"
+            //    };
+            //    // D-d-d-delegate
+            //    options.TokenValidationParameters.IssuerValidator = Microsoft.IdentityModel.Tokens.Validators.ValidateIssuer;
+            //});
+
             // grabbing current userInfo
             services.AddHttpContextAccessor();
             // outside api calls [OBO]

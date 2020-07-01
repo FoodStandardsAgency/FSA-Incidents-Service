@@ -324,11 +324,11 @@ namespace FSA.IncidentsManagementDb
             return new IncidentDashboardView
             {
                 CommonId = @this.Id,
-                Priority = @this.Priority.Title,
+                Priority = @this.Priority?.Title ?? "TBC",
                 Title = @this.IncidentTitle,
                 Notifier = @this.Notifier?.Organisation.Title ?? "Unassigned",
                 LeadOfficer = @this.LeadOfficer ?? "Unassigned",
-                Status = @this.IncidentStatus.Title,
+                Status = @this.IncidentStatus?.Title ?? "UNK",
                 Updated = @this.Modified,
                 Links = @this.ToLinks.Select(o => o.FromIncidentId)
                             //.Concat(@this.ToLinks.Select(o => o.FromIncidentId)

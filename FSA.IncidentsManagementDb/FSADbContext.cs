@@ -66,7 +66,11 @@ namespace FSA.IncidentsManagementDb
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+#if DEBUG
+            optionsBuilder.EnableSensitiveDataLogging(true);
+#endif
             base.OnConfiguring(optionsBuilder);
+            
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

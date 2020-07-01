@@ -3,6 +3,7 @@ using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagement.Root.Shared;
 using FSA.IncidentsManagementDb.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Caching.Memory;
 using System;
@@ -117,12 +118,12 @@ namespace FSA.IncidentsManagementDb.Repositories
                     {
                         var now = DateTime.UtcNow;
                         var newLink = new Entities.IncidentLinkDb { FromIncidentId = from, ToIncidentId = to };
+                        SetAuditData(newLink, now);
                         if (!hasReason)
                         {
                             var newFromComment = new IncidentCommentDb { Comment = reason, IncidentId = from };
                             var newToComment = new IncidentCommentDb { Comment = reason, IncidentId = to };
                             SetAuditData(newFromComment, now);
-                            SetAuditData(newLink, now);
                             SetAuditData(newToComment, now);
                             ctx.IncidentComments.Add(newFromComment);
                             ctx.IncidentComments.Add(newToComment);
@@ -182,7 +183,7 @@ namespace FSA.IncidentsManagementDb.Repositories
             itm.IncidentStatusId = statusId;
             if (statusId == (int)IncidentStatus.Unassigned)
                 itm.LeadOfficer = "";
-            
+
             UpdateAuditInfo(itm);
             await ctx.SaveChangesAsync();
             return itm.ToClient();
@@ -254,6 +255,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         /// <summary>
         /// return 1 PageSize of data from the incidents table for the dashboard.
         /// returns an empty setother wise.
+        /// Search contains simple terms that are split on spcaes. Ppl ids as Person:<<guid>> and may be more.
         /// </summary>
         /// <param name="search"> Null/Empty returns all records for the pages</param>
         /// <param name="PageSize"></param>
@@ -261,6 +263,9 @@ namespace FSA.IncidentsManagementDb.Repositories
         /// <returns></returns>
         public async Task<IPaging<IncidentDashboardView>> DashboardSearch(string search = null, int PageSize = 500, int startPage = 1)
         {
+
+            var personClause = "person:";
+
             if (startPage < 1 || PageSize < 1) return new PagedResult<IncidentDashboardView>(Enumerable.Empty<IncidentDashboardView>(), 0);
 
             var qry = this.ctx.Incidents.AsNoTracking()
@@ -270,20 +275,38 @@ namespace FSA.IncidentsManagementDb.Repositories
                        .Include(i => i.ToLinks)
                        .Include(i => i.FromLinks).AsQueryable();
 
-            // split out the words
-            var allWords = search.Split(" ");
-
-            for (var x = 0; x < allWords.Length; ++x)
-            {
-                Expression<Func<IncidentDb, bool>> m = i => EF.Functions.Like(i.IncidentTitle, $"%{allWords[x]}%");
-            }
-
             if (!String.IsNullOrEmpty(search))
-                qry = qry.Where(i => EF.Functions.Like(i.IncidentTitle, $"%{search}%")
-                                  || EF.Functions.Like(i.IncidentDescription, $"%{search}%")
-                                  || EF.Functions.Like(i.Priority.Title, $"%{search}%")
-                                  || EF.Functions.Like(i.Notifier.Organisation.Title, $"%{search}%")
-                                  || EF.Functions.Like(i.IncidentStatus.Title, $"%{search}%"));// || EF.Functions.Like
+            {
+                // Split out all the terms
+
+                (var searchTerms, var person) = this.ParseSearchTerms(search);
+                // This is what we actually pass to the qry.
+                // There are several paths to execution
+                // 1. Search + Person
+                // 2. Search
+                // 3. Person
+                Expression<Func<IncidentDb, bool>> expression = null;
+                if (searchTerms.Count > 0 && !String.IsNullOrEmpty(person))
+                {
+                    expression = this.CreateDashboardSearch(searchTerms);
+                    qry = qry.Where(expression).Where(o => o.LeadOfficer == person);
+                }
+                else if (searchTerms.Count > 0 && String.IsNullOrEmpty(person))
+                {
+                    expression = this.CreateDashboardSearch(searchTerms);
+                    qry = qry.Where(expression);
+                }
+                else if (searchTerms.Count == 0 && !string.IsNullOrEmpty(person))
+                {
+                    qry = qry.Where(o => o.LeadOfficer == person);
+                }
+
+                //qry = qry.Where(i => EF.Functions.Like(i.IncidentTitle, $"%{search}%")
+                //                  || EF.Functions.Like(i.IncidentDescription, $"%{search}%")
+                //                  || EF.Functions.Like(i.Priority.Title, $"%{search}%")
+                //                  || EF.Functions.Like(i.Notifier.Organisation.Title, $"%{search}%")
+                //                  || EF.Functions.Like(i.IncidentStatus.Title, $"%{search}%"));// || EF.Functions.Like
+            }
 
             // build a where clause
             var totalRecords = await qry.CountAsync();
@@ -291,9 +314,44 @@ namespace FSA.IncidentsManagementDb.Repositories
             var startRecord = (startPage - 1) * PageSize;
             var results = await qry.Skip(startRecord)
                                    .Take(PageSize)
-                                   .OrderByDescending(i => i.IncidentStatusId).ThenBy(i => i.IncidentCreated)
+                                   .OrderByDescending(i => i.IncidentStatus.SortOrder).ThenBy(i => i.IncidentCreated)
                                    .Select(i => i.ToDashboard()).ToListAsync();
             return new PagedResult<IncidentDashboardView>(results, totalRecords);
+        }
+
+        private (List<string> search, string person) ParseSearchTerms(string search)
+        {
+            var personClause = "person:";
+            var allTerms = search.ToLowerInvariant().Split(" ", StringSplitOptions.RemoveEmptyEntries);
+            var person = allTerms.Where(o => o.ToLowerInvariant().StartsWith(personClause)).FirstOrDefault();
+            return (allTerms.Where(o => o.ToLowerInvariant().StartsWith(personClause) == false).ToList(), person!=null ? person.Substring(personClause.Length):person);
+        }
+
+        private Expression<Func<IncidentDb, bool>> CreateDashboardSearch(IEnumerable<string> allWords)
+        {
+            List<Expression<Func<IncidentDb, bool>>> allClauses = new List<Expression<Func<IncidentDb, bool>>>();
+            // The Full list of searches per word
+            foreach (var itm in allWords)
+            {
+                var wrd = $"%{itm}%";
+                allClauses.Add(i => EF.Functions.Like(i.IncidentTitle, wrd));
+                allClauses.Add(i => EF.Functions.Like(i.IncidentDescription, wrd));
+                allClauses.Add(i => EF.Functions.Like(i.Priority.Title, wrd));
+                allClauses.Add(i => EF.Functions.Like(i.Notifier.Organisation.Title, wrd));
+                allClauses.Add(i => EF.Functions.Like(i.IncidentStatus.Title, wrd));
+            }
+
+            var wordStack = new Stack<Expression<Func<IncidentDb, bool>>>(allClauses);
+            // we are going to OR all the clauses together.
+            Expression<Func<IncidentDb, bool>> completeSearch = null;
+            while (wordStack.Count > 0)
+            {
+                if (completeSearch == null)
+                    completeSearch = wordStack.Pop();
+                else
+                    completeSearch = completeSearch.Or(wordStack.Pop());
+            }
+            return completeSearch;
         }
 
         /// <summary>
@@ -309,7 +367,7 @@ namespace FSA.IncidentsManagementDb.Repositories
                                     .Include(o => o.ToLinks).AsNoTracking().FirstAsync(f => f.Id == incidentId);
 
             var incidentsQry = this.ctx.Incidents
-                                  .Include(i => i.Priority)
+                                   .Include(i => i.Priority)
                                    .Include(i => i.IncidentStatus)
                                    .Include(i => i.Notifier).AsQueryable();
             // Where incident was assigned too. from->to
@@ -326,7 +384,6 @@ namespace FSA.IncidentsManagementDb.Repositories
             var fromIncidentList = (from iq in incidentsQry
                                     where tLinks.Any(p => p.ToIncidentId == iq.Id)
                                     select iq);
-
 
             // ALl from incidents where incidentId is in `from` Column( the original linker)
             var toQ = (from iq in incidentsQry
