@@ -17,11 +17,10 @@ namespace FSA.IncidentsManagementDb.Repositories
         {
             this.ctx = ctx;
             this.editor = editor;
+            ctx.SetEditor(editor);
         }
-
-        internal ILookupDataHost lkups => new LookupDataHost(ctx);
         
-        public IIncidentsManagement Incidents => new IncidentsManagement(ctx, editor, lkups);
+        public IIncidentsManagement Incidents => new IncidentsManagement(ctx, editor);
         public IIAddressManagement Addresses => new AddressManagement(ctx, editor);
         public IProductsManagement Products => new ProductsManagement(ctx, editor);
     }

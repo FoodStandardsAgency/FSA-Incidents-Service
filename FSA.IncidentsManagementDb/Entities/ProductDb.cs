@@ -16,7 +16,7 @@ namespace FSA.IncidentsManagementDb.Entities
         public ProductTypeDb ProductType { get; set; }
         public int CountryOfOriginId { get; set; }
         public CountryDb CountryOfOrigin { get; set; }
-        public int Amount { get; set; }
+        public string Amount { get; set; }
         public int AmountUnitTypeId { get; set; }
         public UnitQuantityDb AmountUnitType { get; set; }
         public ICollection<ProductPackSizeDb> PackSizes { get; set; }

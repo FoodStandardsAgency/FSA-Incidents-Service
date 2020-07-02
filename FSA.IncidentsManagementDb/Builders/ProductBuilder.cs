@@ -11,10 +11,12 @@ namespace FSA.IncidentsManagementDb.Builders
         {
             base.Configure(builder);
 
+            
             builder.Property(p => p.Name).IsRequired();
             builder.HasOne(p => p.Incident)
                    .WithMany(i => i.Products)
                    .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction);
+
             builder.HasOne(i => i.ProductType)
                     .WithMany()
                     .OnDelete(DeleteBehavior.NoAction);
@@ -22,6 +24,7 @@ namespace FSA.IncidentsManagementDb.Builders
             builder.HasOne(o => o.AmountUnitType)
                    .WithMany()
                    .OnDelete(DeleteBehavior.NoAction);
+            builder.Property(o => o.Amount).HasDefaultValue("0.00");
         }
     }
 }

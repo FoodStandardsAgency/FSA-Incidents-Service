@@ -16,20 +16,20 @@ namespace FSA.IncidentsManagementDb.Repositories
             this.editor = editor;
         }
 
-        internal void UpdateAuditInfo(BaseEntityDb entity, DateTime? setCurrentDate = null)
+        internal void UpdateAuditInfo(BaseEntityDb entity) //, DateTime? setCurrentDate = null)
         {
-            var currentDate = setCurrentDate ?? DateTime.UtcNow;
+            //var currentDate = setCurrentDate ?? DateTime.UtcNow;
             entity.ModifiedBy = this.editor;
-            entity.Modified = currentDate;
+            //entity.Modified = currentDate;
         }
 
-        internal void SetAuditData(BaseEntityDb entity, DateTime? setCurrentDate = null)
+        internal void SetAuditInfo(BaseEntityDb entity) //, DateTime? setCurrentDate = null)
         {
-            var currentDate = setCurrentDate ?? DateTime.UtcNow;
+            //var currentDate = setCurrentDate ?? DateTime.UtcNow;
 
-            entity.Created = currentDate;
+            //entity.Created = currentDate;
             entity.CreatedBy = this.editor;
-            this.UpdateAuditInfo(entity, currentDate);
+            this.UpdateAuditInfo(entity);
         }
 
     }

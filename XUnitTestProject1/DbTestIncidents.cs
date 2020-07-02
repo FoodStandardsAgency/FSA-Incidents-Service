@@ -3,6 +3,7 @@ using FSA.IncidentsManagement.Root.Contracts;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagementDb;
 using FSA.IncidentsManagementDb.Entities;
+using FSA.IncidentsManagementDb.Entities.Helpers;
 using FSA.IncidentsManagementDb.Repositories;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Frameworks;
@@ -10,8 +11,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.ComTypes;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -108,44 +111,80 @@ namespace FSA.UnitTests.Db
             Assert.True(savedIncident.MostUniqueId != Guid.Empty);
         }
 
-        [Fact]
-        public async Task UpdateIncidents()
+        [Fact(DisplayName ="Can't change most unique")]
+        public async Task UpdateIncidentsFakeGuid()
         {
             var fakeId = Guid.Parse("00000000-0000-0000-0000-000000000001");
-            var incident = new BaseIncident(
-           id: 5,
-           mostUniqueId: fakeId,
-           incidentTitle: "Peanuts",
-           incidentDescription: "Stolen peanutes",
-           incidentTypeId: 1,
-           contactMethodId: 3,
-           statusId: (int)IncidentStatus.Unassigned,
-           priorityId: 1,
-           classificationId: 1,
-           dataSourceId: 1,
-           productTypeId: 3,
-           leadOfficer: userId,
-           adminLeadId: 1,
-           leadOffice: "",
-           fieldOfficer: "",
-           lAAdvised: false,
-           deathIllnessId: 3,
-           receivedOn: null,
-           incidentCreated: DateTime.Now,
-           lastChangedBy: "Paul",
-           lastChangedDate: DateTime.Now,
-           signalStatusId: null,
-           notifierId: null,
-           principalFBOId: null,
-           leadLocalAuthorityId: null,
-           incidentClosed: null
-            );
+           // var incident = new BaseIncident(
+           //id: 5,
+           //mostUniqueId: fakeId,
+           //incidentTitle: "Peanuts",
+           //incidentDescription: "Stolen peanutes",
+           //incidentTypeId: 1,
+           //contactMethodId: 3,
+           //statusId: (int)IncidentStatus.Unassigned,
+           //priorityId: 1,
+           //classificationId: 1,
+           //dataSourceId: 1,
+           //productTypeId: 3,
+           //leadOfficer: userId,
+           //adminLeadId: 1,
+           //leadOffice: "",
+           //fieldOfficer: "",
+           //lAAdvised: false,
+           //deathIllnessId: 3,
+           //receivedOn: null,
+           //incidentCreated: DateTime.Now,
+           //lastChangedBy: "Paul",
+           //lastChangedDate: DateTime.Now,
+           //signalStatusId: null,
+           //notifierId: null,
+           //principalFBOId: null,
+           //leadLocalAuthorityId: null,
+           //incidentClosed: null
+           // );
 
             IFSAIncidentsData incidents = new FSAIncidentsManagement(ctx, userId);
-            var savedIncident = await incidents.Incidents.UpdateIncident(incident);
 
-            Assert.True(incident.MostUniqueId == fakeId);
+            var incident  = await incidents.Incidents.Get(93);
+            var updated = incident
+                    .WithMostUnique(Guid.Parse("00000000-0000-0000-0000-000000000001"))
+                    .WithPriority((int)PrioritiesStatus.Medium);
+
+            var savedIncident = await incidents.Incidents.Update(updated);
+            Assert.False(savedIncident.MostUniqueId == fakeId && savedIncident.PriorityId == (int)PrioritiesStatus.Medium);
         }
+        [Fact]
+        public async Task RetrieveUpdateSaveLeadOfficer()
+        {
+            IFSAIncidentsData incidents = new FSAIncidentsManagement(ctx, userId);
+            var incident = await incidents.Incidents.Get(Guid.Parse("0211d96d-5109-47cc-9c91-a78565825fbd"));
+
+            // Ensure we have a lead officer and we are open
+            var changedIncident = incident
+                                    .WithStatus((int)IncidentStatus.Open)
+                                    .WithLeadOfficer(this.userId3);
+
+         var updateIncident =    await incidents.Incidents.Update(changedIncident);
+            Assert.True(updateIncident.LeadOfficer == userId3 && updateIncident.StatusId == (int)IncidentStatus.Open);
+        }
+
+        [Fact]
+        public async Task RetrieveUpdateCloseStatus()
+        {
+            IFSAIncidentsData incidents = new FSAIncidentsManagement(ctx, userId);
+            var incident = await incidents.Incidents.Get(Guid.Parse("0211d96d-5109-47cc-9c91-a78565825fbd"));
+
+            // Closing shall replace the leadOfficer
+            var changedIncident = incident
+                                    .WithStatus((int)IncidentStatus.Closed);
+                                    //.WithLeadOfficer(this.userId3);
+
+            var updateIncident = await incidents.Incidents.Update(changedIncident);
+            Assert.True(String.IsNullOrEmpty(updateIncident.LeadOfficer) && updateIncident.StatusId == (int)IncidentStatus.Closed);
+        }
+
+
 
         [Fact]
         public async Task DashboardSearchPeanut()
@@ -160,7 +199,7 @@ namespace FSA.UnitTests.Db
         public async Task DashboardSearchLastPage()
         {
             IFSAIncidentsData incidents = new FSAIncidentsManagement(ctx, userId);
-            var finalPage = (await incidents.Incidents.DashboardSearch(pageSize:10, startPage:520)).ToList();
+            var finalPage = (await incidents.Incidents.DashboardSearch(pageSize:10, startPage:519)).ToList();
             var finalPageM1 = (await incidents.Incidents.DashboardSearch(pageSize:10, startPage:518)).ToList();
             var pages = (await incidents.Incidents.DashboardSearch(pageSize:10, startPage:516)).ToList();
             var mpage1 = (await incidents.Incidents.DashboardSearch(pageSize:10, startPage:514)).ToList();

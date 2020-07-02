@@ -9,11 +9,10 @@ namespace FSA.IncidentsManagement.ModelValidators
 {
     public static class MappingExtensions
     {
-        public static BaseIncident ToClient(this IncidentApiModel @this)
+        public static BaseIncident ToClient(this IncidentUpdateModel @this)
         {
             return new BaseIncident(
                 id: @this.Id,
-                mostUniqueId:@this.MostUniqueId,
                 incidentTitle: @this.IncidentTitle,
                 incidentDescription: @this.IncidentDescription,
                 incidentTypeId: @this.IncidentTypeId,
@@ -28,17 +27,47 @@ namespace FSA.IncidentsManagement.ModelValidators
                 productTypeId: @this.ProductTypeId,
                 leadOfficer: @this.LeadOfficer,
                 leadOffice: @this.LeadOffice,
-                adminLeadId:@this.AdminLeadId,
+                adminLeadId: @this.AdminLeadId,
+                fieldOfficer: @this.FieldOfficer,
+                leadLocalAuthorityId: @this.LeadLocalAuthorityId,
+                lAAdvised: @this.LAAdvised,
+                deathIllnessId: @this.DeathIllnessId,
+                mostUniqueId:Guid.Empty,
+                incidentClosed: null,
+                lastChangedBy: null,
+                lastChangedDate: DateTime.Now,
+                receivedOn:null,
+                incidentCreated: DateTime.Now
+                );
+        }
+
+        public static BaseIncident ToClient(this IncidentCreateModel @this) => new BaseIncident(
+            id: @this.Id,
+                mostUniqueId: Guid.Empty,
+                incidentTitle: @this.IncidentTitle,
+                incidentDescription: @this.IncidentDescription,
+                incidentTypeId: @this.IncidentTypeId,
+                contactMethodId: @this.ContactMethodId,
+                statusId: @this.StatusId,
+                signalStatusId: @this.SignalStatusId,
+                notifierId: @this.NotifierId,
+                priorityId: @this.PriorityId,
+                principalFBOId: @this.PrincipalFBOId,
+                classificationId: @this.ClassificationId,
+                dataSourceId: @this.DataSourceId,
+                productTypeId: @this.ProductTypeId,
+                leadOfficer: @this.LeadOfficer,
+                leadOffice: @this.LeadOffice,
+                adminLeadId: @this.AdminLeadId,
                 fieldOfficer: @this.FieldOfficer,
                 leadLocalAuthorityId: @this.LeadLocalAuthorityId,
                 lAAdvised: @this.LAAdvised,
                 deathIllnessId: @this.DeathIllnessId,
                 receivedOn: @this.ReceivedOn,
                 incidentCreated: @this.IncidentCreated,
-                incidentClosed: @this.IncidentClosed,
-                lastChangedBy: @this.LastChangedBy,
-                lastChangedDate: @this.LastChangedDate
-                );
-        }
+                incidentClosed:null,
+                lastChangedBy:null,
+                lastChangedDate:DateTime.Now
+            );
     }
 }

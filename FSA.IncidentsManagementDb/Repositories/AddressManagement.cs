@@ -27,13 +27,13 @@ namespace FSA.IncidentsManagementDb.Repositories
                 Title = companyName,
                 ContactMethodId = 4
             };
-            this.SetAuditData(orgAddress);
+            this.SetAuditInfo(orgAddress);
             var fboAddress = new FBODb
             {
                 FBOTypeId = addressType,
                 Organisation = orgAddress
             };
-            this.SetAuditData(fboAddress);
+            //this.SetAuditInfo(fboAddress);
             ctx.FBOs.Add(fboAddress);
             await ctx.SaveChangesAsync();
             return fboAddress.Id;

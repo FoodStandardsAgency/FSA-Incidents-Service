@@ -60,10 +60,10 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(typeof(BaseIncident), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
-        public async Task<IActionResult> UpdateIncident([FromBody, SwaggerParameter("Updated Incident", Required = true)] IncidentApiModel incident)
+        public async Task<IActionResult> UpdateIncident([FromBody, SwaggerParameter("Updated Incident", Required = true)] IncidentUpdateModel incident)
         {
 
-            return new OkObjectResult(await this.fsaData.Incidents.UpdateIncident(incident.ToClient()));
+            return new OkObjectResult(await this.fsaData.Incidents.Update(incident.ToClient()));
         }
 
         [HttpPost()]
@@ -71,7 +71,7 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(typeof(BaseIncident), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
-        public async Task<IActionResult> CreateIncident([FromBody, SwaggerParameter("Create Incident", Required = true)] IncidentApiModel incident)
+        public async Task<IActionResult> CreateIncident([FromBody, SwaggerParameter("Create Incident", Required = true)] IncidentCreateModel incident)
         {
             return new OkObjectResult(await this.fsaData.Incidents.Add(incident.ToClient()));
         }
@@ -80,6 +80,8 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "Update classification of an incident")]
         [ProducesResponseType(typeof(BaseIncident), 200)]
         [ProducesResponseType(500)]
+        [Produces("application/json")]
+
         public async Task<IActionResult> UpdateClassification([Required] int incidentId, [Required] int classificationId)
         {
             return new OkObjectResult(await this.fsaData.Incidents.UpdateClassification(incidentId, classificationId));
@@ -89,6 +91,7 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "Update status of an incident")]
         [ProducesResponseType(typeof(BaseIncident), 200)]
         [ProducesResponseType(500)]
+        [Produces("application/json")]
         public async Task<IActionResult> UpdateStatus([Required] int incidentId, [Required] int statusId)
         {
             return new OkObjectResult(await this.fsaData.Incidents.UpdateStatus(incidentId, statusId));

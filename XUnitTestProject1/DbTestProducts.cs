@@ -1,10 +1,15 @@
 ﻿using _UnitTests;
+using FSA.IncidentsManagement.Root.Contracts;
+using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagementDb;
+using FSA.IncidentsManagementDb.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -29,9 +34,76 @@ namespace FSA.UnitTests.Db
         }
 
         [Fact]
-        public async Task AddProduct()
+        public async Task AddProductNoCollections()
         {
+            var product = new Product
+            {
+                BatchCodes = "BC1234 BC59867",
+                Brand = "New Brand",
+                IncidentId = 21,
+                CountryOfOriginId = 103,
+                Amount = "7",
+                ProductTypeId = 2,
+                AmountUnitTypeId = 1,
+                AdditionalInfo = "More Data needed",
+                Name = "Product no collections",
+                PackDescription = "This is descirption",
+            };
 
+            IFSAIncidentsData fsaData = new FSAIncidentsManagement(this.dbContext, userId3);
+            var updatedProduct = await fsaData.Products.AddProduct(product.IncidentId, product);
+        }
+
+        [Fact]
+        public async Task AddProductPackDates()
+        {
+            var product = new Product
+            {
+                BatchCodes = "BC1234 BC59867",
+                Brand = "New Brand",
+                IncidentId = 21,
+                CountryOfOriginId = 103,
+                Amount = "7",
+                ProductTypeId = 2,
+                AmountUnitTypeId = 1,
+                AdditionalInfo = "More Data needed",
+                Name = "Product no collections",
+                PackDescription = "This is description",
+                ProductDates = new List<ProductDate>() { 
+                        new ProductDate { Date = DateTime.Now, DateTypeId = 2 },
+                        new ProductDate { Date = DateTime.Now, DateTypeId = 3 }
+                    }
+            };
+
+            IFSAIncidentsData fsaData = new FSAIncidentsManagement(this.dbContext, userId3);
+            var updatedProduct = await fsaData.Products.AddProduct(product.IncidentId, product);
+        }
+
+        [Fact]
+        public async Task AddProductPackSizesDefaultAmount()
+        {
+            var product = new Product
+            {
+                BatchCodes = "BC New packers BNA2324",
+                Brand = "A Brand",
+                IncidentId = 17,
+                CountryOfOriginId = 89,
+                ProductTypeId = 2,
+                Amount="0.0",
+                AmountUnitTypeId = 1,
+                AdditionalInfo = "More Data needed",
+                Name = "Product no collections",
+                PackDescription = "This is description",
+                PackSizes = new List<ProductPackSize>
+                {
+                    new ProductPackSize{ Size ="7", UnitId=2 },
+                    new ProductPackSize{ Size ="18.8", UnitId=2 },
+                }
+            };
+
+            IFSAIncidentsData fsaData = new FSAIncidentsManagement(this.dbContext, userId3);
+            var updatedProduct = await fsaData.Products.AddProduct(product.IncidentId, product);
+            Assert.True(updatedProduct.PackSizes.Count() == 2 && updatedProduct.Amount == "0.0");
         }
     }
 }

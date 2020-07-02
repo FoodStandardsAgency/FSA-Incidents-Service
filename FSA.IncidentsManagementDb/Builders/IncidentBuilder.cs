@@ -17,6 +17,7 @@ namespace FSA.IncidentsManagementDb.Builders
         {
             base.Configure(builder);
             builder.Property(p => p.MostUniqueId).HasDefaultValueSql("newid()");
+            builder.HasAlternateKey(o => o.MostUniqueId);
             builder.Property(p => p.IncidentStatusId).HasDefaultValue(4);    // UNassigned
             builder.Property(p => p.PriorityId).HasDefaultValue(1);   // TBC
         }

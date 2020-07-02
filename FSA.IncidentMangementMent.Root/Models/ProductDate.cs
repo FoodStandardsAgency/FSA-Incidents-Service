@@ -6,7 +6,12 @@ namespace FSA.IncidentsManagement.Root.Models
 {
     public class ProductDate
     {
-        ProductDateType DateType { get; set; }
-        DateTime Date { get; set; }
+        public int DateTypeId { get; set; }
+        public DateTime Date { get; set; }
+
+        public override string ToString()
+        {
+            return Date.ToString();
+        }
     }
 }

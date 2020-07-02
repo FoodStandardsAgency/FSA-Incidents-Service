@@ -15,13 +15,13 @@ namespace FSA.IncidentsManagementDb.Builders
             builder.Property(aud => aud.ModifiedBy).HasMaxLength(70);
             builder.Property(aud => aud.Created).IsRequired()
                                                 .HasDefaultValueSql("getutcdate()")
-                                                .ValueGeneratedOnAddOrUpdate()
+                                                .ValueGeneratedOnAdd()
                                                 .HasConversion(b => b, b => DateTime.SpecifyKind(b, DateTimeKind.Utc));
             builder.Property(aud => aud.CreatedBy).IsRequired();
 
             builder.Property(aud => aud.Modified).IsRequired()
                                                  .HasDefaultValueSql("getutcdate()")
-                                                 .ValueGeneratedOnAddOrUpdate()
+                                                 .ValueGeneratedOnAdd()
                                                  .HasConversion(b => b, b => DateTime.SpecifyKind(b, DateTimeKind.Utc));
             builder.Property(aud => aud.ModifiedBy).IsRequired();
         }

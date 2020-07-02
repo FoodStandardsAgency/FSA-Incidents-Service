@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.ModelValidators
 {
-    public class IncidentModelValidator : AbstractValidator<IncidentApiModel>
+    public class IncidentModelValidator : AbstractValidator<IncidentUpdateModel>
     {
         public IncidentModelValidator()
         {
-            RuleFor(incident => incident.IncidentCreated).NotEqual(default(DateTime));
-            RuleFor(incident => incident.LastChangedDate).NotEqual(default(DateTime)).WithMessage("Audit failure : Unknown dateTime");
-            RuleFor(incident => incident.LastChangedBy).NotNull().WithMessage("Audit failure : Unknown user specified.");
+            //RuleFor(incident => incident.IncidentCreated).NotEqual(default(DateTime));
+            //RuleFor(incident => incident.LastChangedDate).NotEqual(default(DateTime)).WithMessage("Audit failure : Unknown dateTime");
+            //RuleFor(incident => incident.LastChangedBy).NotNull().WithMessage("Audit failure : Unknown user specified.");
             RuleFor(incident => incident.StatusId).NotEqual(default(int)).WithMessage("Incorrect Status");
 
             RuleFor(incident => incident.ContactMethodId).NotEqual(default(int)).WithMessage("Incorrect ContactMethod");

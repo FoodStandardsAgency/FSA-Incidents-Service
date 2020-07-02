@@ -15,20 +15,17 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using IncidentStatus = FSA.IncidentsManagementDb.Entities.IncidentStatus;
+using IncidentStatus = FSA.IncidentsManagementDb.Entities.Helpers.IncidentStatus;
 
 namespace FSA.IncidentsManagementDb.Repositories
 {
     public class IncidentsManagement : CoreRepositoryActions, IIncidentsManagement
     {
-        private OrganisationLookupManager orgLookups;
-        private ILookupDataHost lkups;
+        
 
-
-        public IncidentsManagement(FSADbContext ctx, string editor, ILookupDataHost lkups) : base(ctx, editor)
+        public IncidentsManagement(FSADbContext ctx, string editor) : base(ctx, editor)
         {
-            this.orgLookups = lkups.Organisations as OrganisationLookupManager;
-            this.lkups = lkups;
+            //this.orgLookups = lkups.Organisations as OrganisationLookupManager;
         }
 
         public async Task<BaseIncident> Add(BaseIncident incident)
@@ -37,12 +34,13 @@ namespace FSA.IncidentsManagementDb.Repositories
             if (incident.CommonId != 0) throw new ArgumentOutOfRangeException("This item has already been added.");
 
             var dbItem = incident.ToDb();
-            SetAuditData(dbItem);
             dbItem.IncidentCreated = dbItem.Created;
+            dbItem.IncidentClosed = null; // Ensure lack of shenanigans
             var dbPonder = this.ctx.Incidents.Add(dbItem);
             await this.ctx.SaveChangesAsync();
             return dbPonder.Entity.ToClient();
         }
+
         /// <summary>
         /// Assigns a lead officer to a case.
         /// incidentStatus will be updated to open, if not already set, or closed.
@@ -67,7 +65,7 @@ namespace FSA.IncidentsManagementDb.Repositories
                 if (incidentDb.IncidentStatusId != openStatus && incidentDb.IncidentStatusId != closeStatus && user != null)
                     incidentDb.IncidentStatusId = openStatus;
                 incidentDb.LeadOfficer = user;
-                UpdateAuditInfo(incidentDb);
+                //UpdateAuditInfo(incidentDb);
             }
 
             await this.ctx.SaveChangesAsync();
@@ -83,6 +81,18 @@ namespace FSA.IncidentsManagementDb.Repositories
         public async Task<BaseIncident> Get(int Id)
         {
             var itm = await this.ctx.Incidents.AsNoTracking().FirstAsync(f => f.Id == Id);
+            return itm.ToClient();
+        }
+
+        /// <summary>
+        /// Returns incident from its Most unique id [guid]
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns>Incident</returns>
+        /// <exception cref="NullReferenceException" />
+        public async Task<BaseIncident> Get(Guid guid)
+        {
+            var itm = await this.ctx.Incidents.AsNoTracking().FirstAsync(f => f.MostUniqueId == guid);
             return itm.ToClient();
         }
 
@@ -107,30 +117,42 @@ namespace FSA.IncidentsManagementDb.Repositories
                 allTo.Remove(from);
 
                 // helper
-                var hasReason = string.IsNullOrEmpty(reason);
+                var isReasonPresent = string.IsNullOrEmpty(reason);
+                var updatesOccured = false;
                 // not my favourite option
                 foreach (var to in allTo)
                 {
                     var fromTo = ctx.IncidentLinks.AsNoTracking().FirstOrDefault(a => a.FromIncidentId == from && a.ToIncidentId == to);
                     var toFrom = ctx.IncidentLinks.AsNoTracking().FirstOrDefault(a => a.FromIncidentId == to && a.ToIncidentId == from);
-
+                    
                     if (fromTo == null && toFrom == null)
                     {
-                        var now = DateTime.UtcNow;
+                        
                         var newLink = new Entities.IncidentLinkDb { FromIncidentId = from, ToIncidentId = to };
-                        SetAuditData(newLink, now);
-                        if (!hasReason)
+                        SetAuditInfo(newLink);
+                        if (!isReasonPresent)
                         {
                             var newFromComment = new IncidentCommentDb { Comment = reason, IncidentId = from };
                             var newToComment = new IncidentCommentDb { Comment = reason, IncidentId = to };
-                            SetAuditData(newFromComment, now);
-                            SetAuditData(newToComment, now);
+                            //SetAuditInfo(newFromComment);
+                            //SetAuditInfo(newToComment);
                             ctx.IncidentComments.Add(newFromComment);
                             ctx.IncidentComments.Add(newToComment);
                         }
+                        var toIncident = ctx.Incidents.Find(to);
+                        UpdateAuditInfo(toIncident);
+                        updatesOccured = true;
                         ctx.IncidentLinks.Add(newLink);
                     }
                 }
+                // We musht have updated something
+                if (allTo.Count > 0 && updatesOccured)
+                {
+                    var fromIncident = ctx.Incidents.Find(from);
+                    //UpdateAuditInfo(fromIncident);
+                    this.ctx.Incidents.Update(fromIncident);
+                }
+
                 await ctx.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -152,17 +174,31 @@ namespace FSA.IncidentsManagementDb.Repositories
         {
             var dbItem = await ctx.Incidents.FindAsync(id);
             dbItem.ClassificationId = ClassificationId;
-            UpdateAuditInfo(dbItem);
+            //UpdateAuditInfo(dbItem);
             await ctx.SaveChangesAsync();
             return dbItem.ToClient();
         }
-
-        public async Task<BaseIncident> UpdateIncident(BaseIncident incident)
+        /// <summary>
+        /// This is the basic update of direct incident fields
+        /// Collections are handled in their own objectsd
+        /// </summary>
+        /// <param name="incident"></param>
+        /// <returns></returns>
+        public async Task<BaseIncident> Update(BaseIncident incident)
         {
             var dbItem = this.ctx.Incidents.Find(incident.CommonId);
             if (dbItem == null) throw new ArgumentNullException("No incident was found");
+            // Logical changes.
+            // Mark some differences since last update
+            // We are using simpleFlags
+            var unassignLeadOfficer = false;
+            if (dbItem.IncidentStatusId == (int)IncidentStatus.Open && incident.StatusId == (int)IncidentStatus.Closed)
+                unassignLeadOfficer = true;
+            //Transfer our updates into the existing incident
             incident.ToUpdateDb(dbItem);
-            UpdateAuditInfo(dbItem);
+            if (unassignLeadOfficer) dbItem.LeadOfficer = "";
+            // Finally update the basic audit data.
+            //UpdateAuditInfo(dbItem);
             var updatedDbItem = this.ctx.Incidents.Update(dbItem);
             await this.ctx.SaveChangesAsync();
             return updatedDbItem.Entity.ToClient();
@@ -183,8 +219,9 @@ namespace FSA.IncidentsManagementDb.Repositories
             itm.IncidentStatusId = statusId;
             if (statusId == (int)IncidentStatus.Unassigned)
                 itm.LeadOfficer = "";
+            //UpdateAuditInfo(itm);
+            //ctx.Incidents.Update(incident);
 
-            UpdateAuditInfo(itm);
             await ctx.SaveChangesAsync();
             return itm.ToClient();
         }
@@ -199,10 +236,14 @@ namespace FSA.IncidentsManagementDb.Repositories
         {
             var WhereClause = String.Join(" OR ", incidentIds.Select(o => $"Id={0}"));
             var items = ctx.Incidents.FromSqlRaw($"SELECT * from Incidents where {WhereClause}");
-            var closeStatus = await this.lkups.Status.Find("Closed");
+            var closeStatus = (int)IncidentStatus.Closed;
 
-            foreach (var item in items)
-                item.IncidentStatusId = closeStatus.Id;
+            foreach (var incident in items)
+            {
+                incident.IncidentStatusId = closeStatus;
+                //UpdateAuditInfo(incident);
+                ctx.Incidents.Update(incident);
+            }
 
             await this.ctx.SaveChangesAsync();
         }
@@ -218,22 +259,25 @@ namespace FSA.IncidentsManagementDb.Repositories
                         .Include(i => i.DeathIllness)
                         .Include(i => i.IncidentType)
                         .Include(i => i.ProductType)
+                        .Include(i=>i.AdminLead)
+                        .Include(i=>i.Notifier).ThenInclude(o=>o.Organisation)
+                        .Include(i=>i.LeadLocalAuthority).ThenInclude(o=>o.Organisation)
                         .Include(i => i.PrincipalFBO).ThenInclude(o => o.Organisation)
                         .Include(i => i.ContactMethod)
                         .Include(i => i.IncidentStatus).First(p => p.Id == id);
-            // now get the fbo organisations data
-            var fboOrg = await this.ctx.Organisations.FindAsync(dbIncident.PrincipalFBOId);
+            //// now get the fbo organisations data
+            //var fboOrg = await this.ctx.Organisations.FindAsync(dbIncident.PrincipalFBOId);
 
-            // Ensure we only add the same id once.
-            var allOrgIds = new HashSet<int> { dbIncident.NotifierId ?? 0, dbIncident.LeadLocalAuthorityId ?? 0 };
-            // remove empty elements
-            allOrgIds.RemoveWhere(o => o == 0); ;
+            //// Ensure we only add the same id once.
+            //var allOrgIds = new HashSet<int> { dbIncident.NotifierId ?? 0, dbIncident.LeadLocalAuthorityId ?? 0 };
+            //// remove empty elements
+            //allOrgIds.RemoveWhere(o => o == 0); ;
 
             // Now fetch all the organisations that match this query.
-            var allOrgs = await this.orgLookups.FindAllLookups(allOrgIds);
+            //var allOrgs = await this.orgLookups.FindAllLookups(allOrgIds);
 
             // Finally we can now build our tower of wonder
-            return dbIncident.ToClient(allOrgs, fboOrg);
+            return dbIncident.ToClientDisplay();
 
         }
         /// <summary>
@@ -245,8 +289,14 @@ namespace FSA.IncidentsManagementDb.Repositories
         public async Task<IncidentNote> AddNote(int incidentId, string note)
         {
             var newComment = new IncidentCommentDb { Comment = note, IncidentId = incidentId };
-            SetAuditData(newComment, DateTime.UtcNow);
+            
+            SetAuditInfo(newComment );
             ctx.IncidentComments.Add(newComment);
+            //await ctx.SaveChangesAsync();
+            var incident = ctx.Incidents.FirstOrDefault(p=>p.Id == incidentId);
+            //UpdateAuditInfo(incident);
+            ctx.Incidents.Update(incident); //.State = EntityState.Modified;
+            //ent.State = EntityState.Modified;
             await ctx.SaveChangesAsync();
             return newComment.ToClient();
         }
@@ -301,11 +351,6 @@ namespace FSA.IncidentsManagementDb.Repositories
                     qry = qry.Where(o => o.LeadOfficer == person);
                 }
 
-                //qry = qry.Where(i => EF.Functions.Like(i.IncidentTitle, $"%{search}%")
-                //                  || EF.Functions.Like(i.IncidentDescription, $"%{search}%")
-                //                  || EF.Functions.Like(i.Priority.Title, $"%{search}%")
-                //                  || EF.Functions.Like(i.Notifier.Organisation.Title, $"%{search}%")
-                //                  || EF.Functions.Like(i.IncidentStatus.Title, $"%{search}%"));// || EF.Functions.Like
             }
 
             // build a where clause
@@ -324,7 +369,7 @@ namespace FSA.IncidentsManagementDb.Repositories
             var personClause = "person:";
             var allTerms = search.ToLowerInvariant().Split(" ", StringSplitOptions.RemoveEmptyEntries);
             var person = allTerms.Where(o => o.ToLowerInvariant().StartsWith(personClause)).FirstOrDefault();
-            return (allTerms.Where(o => o.ToLowerInvariant().StartsWith(personClause) == false).ToList(), person!=null ? person.Substring(personClause.Length):person);
+            return (allTerms.Where(o => o.ToLowerInvariant().StartsWith(personClause) == false).ToList(), person != null ? person.Substring(personClause.Length) : person);
         }
 
         private Expression<Func<IncidentDb, bool>> CreateDashboardSearch(IEnumerable<string> allWords)
@@ -335,7 +380,6 @@ namespace FSA.IncidentsManagementDb.Repositories
             {
                 var wrd = $"%{itm}%";
                 allClauses.Add(i => EF.Functions.Like(i.IncidentTitle, wrd));
-                allClauses.Add(i => EF.Functions.Like(i.IncidentDescription, wrd));
                 allClauses.Add(i => EF.Functions.Like(i.Priority.Title, wrd));
                 allClauses.Add(i => EF.Functions.Like(i.Notifier.Organisation.Title, wrd));
                 allClauses.Add(i => EF.Functions.Like(i.IncidentStatus.Title, wrd));

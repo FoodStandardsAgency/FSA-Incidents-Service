@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FSA.IncidentsManagementDb.Entities
+namespace FSA.IncidentsManagementDb.Entities.Helpers
 {
     /// <summary>
     /// This is a helper to stop having to do unwise lookups
@@ -10,9 +10,18 @@ namespace FSA.IncidentsManagementDb.Entities
     /// </summary>
     public enum IncidentStatus
     {
-        Unassigned =4,
+        Unknown = 0,
+        Unassigned = 4,
         Open = 1,
-        Closed=2,
-        TBC=3
+        Closed = 2
+    }
+
+    public enum PrioritiesStatus
+    {
+        Unknown = 0,
+        TBC = 1,
+        High = 2,
+        Medium = 3,
+        Low = 4
     }
 }

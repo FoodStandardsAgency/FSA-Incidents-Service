@@ -4,14 +4,16 @@ using FSA.IncidentsManagementDb;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FSA.IncidentsManagementDb.Migrations
 {
     [DbContext(typeof(FSADbContext))]
-    partial class FSADbContextModelSnapshot : ModelSnapshot
+    [Migration("20200702075718_salmance")]
+    partial class salmance
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,7 +29,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -37,7 +39,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasMaxLength(70);
 
                     b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -131,7 +133,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -141,7 +143,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasMaxLength(70);
 
                     b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -583,7 +585,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -593,7 +595,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasMaxLength(70);
 
                     b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -639,7 +641,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -649,7 +651,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasMaxLength(70);
 
                     b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -713,7 +715,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -723,7 +725,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasMaxLength(70);
 
                     b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -2542,7 +2544,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -2552,7 +2554,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasMaxLength(70);
 
                     b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -3093,7 +3095,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -3103,7 +3105,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasMaxLength(70);
 
                     b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -3167,7 +3169,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -3177,7 +3179,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasMaxLength(70);
 
                     b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -3232,7 +3234,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -3245,7 +3247,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -3270,7 +3272,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -3280,7 +3282,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasMaxLength(70);
 
                     b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -3464,7 +3466,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -3477,7 +3479,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -3510,7 +3512,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -3561,7 +3563,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -3637,7 +3639,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -3647,7 +3649,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasMaxLength(70);
 
                     b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -3671,7 +3673,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -3687,7 +3689,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -3716,7 +3718,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -3726,7 +3728,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasMaxLength(70);
 
                     b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -3787,7 +3789,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -3797,7 +3799,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasMaxLength(70);
 
                     b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -3829,7 +3831,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -3839,7 +3841,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasMaxLength(70);
 
                     b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -3903,7 +3905,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -3913,7 +3915,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasMaxLength(70);
 
                     b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -3954,7 +3956,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -3970,7 +3972,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -4081,7 +4083,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -4091,7 +4093,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasMaxLength(70);
 
                     b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -4155,7 +4157,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -4171,7 +4173,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -4220,7 +4222,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -4236,7 +4238,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -4282,7 +4284,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -4292,7 +4294,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasMaxLength(70);
 
                     b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -4316,7 +4318,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -4326,7 +4328,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasMaxLength(70);
 
                     b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -4362,7 +4364,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -4372,7 +4374,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasMaxLength(70);
 
                     b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -4733,7 +4735,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -4749,7 +4751,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -4892,7 +4894,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
@@ -4902,7 +4904,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasMaxLength(70);
 
                     b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 

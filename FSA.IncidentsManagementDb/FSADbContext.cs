@@ -3,27 +3,21 @@ using FSA.IncidentsManagementDb.Builders;
 using FSA.IncidentsManagementDb.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagementDb
 {
     public class FSADbContext : DbContext
     {
+        private string _Editor;
+
         public FSADbContext(DbContextOptions options) : base(options)
         {
         }
-
-        //[Obsolete]
-        //internal DbSet<GatewayErrorCodeDb> GatewayErrorCodes { get; set; }
-        //[Obsolete]
-        //internal DbSet<GatewayRequestDetailDb> GatewayRequestDetails { get; set; }
-        //[Obsolete]
-        //internal DbSet<GatewayUserIncidentDb> GatewayUserIncidents { get; set; }
-        //[Obsolete]
-
-        //internal DbSet<UserDb> Users { get; set; }
-        ////[Obsolete]
-        //internal DbSet<UserRoleDb> UserRoles { get; set; }
 
         internal DbSet<IncidentCommentDb> IncidentComments { get; set; }
         internal DbSet<IncidentDb> Incidents { get; set; }
@@ -62,6 +56,40 @@ namespace FSA.IncidentsManagementDb
 
         internal DbSet<NotifierDb> Notifiers { get; set; }
 
+        internal void SetEditor(string editor)
+        {
+            this._Editor = editor ?? throw new ArgumentNullException("Must have an editor name");
+        }
+
+        private void SetAuditData()
+        {
+            var items = ChangeTracker
+                            .Entries<BaseEntityDb>()
+                            .Where(o => o.State == EntityState.Modified || o.State == EntityState.Added);
+            var now = DateTime.Now;
+            foreach (var item in items)
+            {
+                item.Property(o => o.Modified).CurrentValue = now;
+                item.Property(o => o.ModifiedBy).CurrentValue = _Editor;
+                if (item.State == EntityState.Added)
+                {
+                    item.Property(o => o.Created).CurrentValue = now;
+                    item.Property(o => o.CreatedBy).CurrentValue = _Editor;
+                }
+            }
+        }
+
+        public override int SaveChanges()
+        {
+            this.SetAuditData();
+            return base.SaveChanges();
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            this.SetAuditData();
+            return base.SaveChangesAsync(cancellationToken);
+        }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -70,7 +98,7 @@ namespace FSA.IncidentsManagementDb
             optionsBuilder.EnableSensitiveDataLogging(true);
 #endif
             base.OnConfiguring(optionsBuilder);
-            
+
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

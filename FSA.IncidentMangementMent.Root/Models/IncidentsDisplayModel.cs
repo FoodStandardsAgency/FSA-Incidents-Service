@@ -11,7 +11,7 @@ namespace FSA.IncidentsManagement.Root.Models
                                     int productTypeId, string leadOfficer, string leadOffice, int adminLeadId, string fieldOfficer, int? leadLocalAuthorityId, 
                                     bool lAAdvised, int deathIllnessId, DateTime? receivedOn, DateTime incidentCreated, DateTime? incidentClosed, 
                                     string lastChangedBy, DateTime lastChangedDate, string category, string signalStatus, string incidentStatus, string notifier, 
-                                    string priority, string classification, string dataSource, string productType, string leadLocalAuthority, string deathIllness, string principalFBO, string fBOEmail, string fBOPhone, string fBOAddressLine1, string fBOAddressLine2, string fBOAddressTown, string fBOAddressPostcode) 
+                                    string priority, string classification, string dataSource, string productType, string leadLocalAuthority, string deathIllness, string principalFBO, string fBOEmail, string fBOPhone, string fBOAddressLine1, string fBOAddressLine2, string fBOAddressTown, string fBOAddressPostcode, string adminLead) 
              : base(id, mostUniqueId, incidentTitle, incidentDescription, incidentTypeId, contactMethodId, statusId, signalStatusId, notifierId, principalFBOId, priorityId, classificationId, dataSourceId, productTypeId, leadOfficer, leadOffice, adminLeadId, fieldOfficer, leadLocalAuthorityId, lAAdvised, deathIllnessId, receivedOn, incidentCreated, incidentClosed, lastChangedBy, lastChangedDate)
         {
             Category = category;
@@ -31,6 +31,7 @@ namespace FSA.IncidentsManagement.Root.Models
             ProductType = productType;
             LeadLocalAuthority = leadLocalAuthority;
             DeathIllness = deathIllness;
+            AdminLead = adminLead;
         }
 
         public string Category { get;  }
@@ -51,6 +52,6 @@ namespace FSA.IncidentsManagement.Root.Models
         public string ProductType { get; }
         public string LeadLocalAuthority { get; }
         public string DeathIllness { get; }
-
+        public string AdminLead { get; }
     }
 }
