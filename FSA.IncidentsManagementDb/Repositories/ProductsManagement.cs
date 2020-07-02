@@ -9,10 +9,13 @@ using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagementDb.Repositories
 {
-    internal class ProductsManagement : CoreRepositoryActions, IProductsManagement
+    internal class ProductsManagement : IProductsManagement
     {
-        public ProductsManagement(FSADbContext ctx, string editor) : base(ctx, editor)
+        private FSADbContext ctx;
+
+        public ProductsManagement(FSADbContext ctx, string editor)
         {
+            this.ctx = ctx;
         }
 
         public async Task<Product> AddProduct(int incidentId, Product newProduct)

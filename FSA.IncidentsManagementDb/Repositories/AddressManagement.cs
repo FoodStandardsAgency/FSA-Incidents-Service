@@ -10,10 +10,13 @@ using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagementDb.Repositories
 {
-    public class AddressManagement : CoreRepositoryActions, IIAddressManagement
+    public class AddressManagement : IIAddressManagement
     {
-        public AddressManagement(FSADbContext ctx, string editor) : base(ctx, editor)
+        private FSADbContext ctx;
+
+        public AddressManagement(FSADbContext ctx, string editor)
         {
+            this.ctx = ctx;
         }
 
         public async Task<int> AddFBOAddress(FboTypes addressType, string companyName, string MainContact, string AddressLine1, string AddressLine2, string TownCity)
@@ -27,7 +30,7 @@ namespace FSA.IncidentsManagementDb.Repositories
                 Title = companyName,
                 ContactMethodId = 4
             };
-            this.SetAuditInfo(orgAddress);
+            //this.SetAuditInfo(orgAddress);
             var fboAddress = new FBODb
             {
                 FBOTypeId = addressType,

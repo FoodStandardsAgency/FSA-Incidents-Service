@@ -19,13 +19,14 @@ using IncidentStatus = FSA.IncidentsManagementDb.Entities.Helpers.IncidentStatus
 
 namespace FSA.IncidentsManagementDb.Repositories
 {
-    public class IncidentsManagement : CoreRepositoryActions, IIncidentsManagement
+    public class IncidentsManagement : IIncidentsManagement
     {
-        
+        private FSADbContext ctx;
 
-        public IncidentsManagement(FSADbContext ctx, string editor) : base(ctx, editor)
+        public IncidentsManagement(FSADbContext ctx, string editor)
         {
             //this.orgLookups = lkups.Organisations as OrganisationLookupManager;
+            this.ctx = ctx;
         }
 
         public async Task<BaseIncident> Add(BaseIncident incident)
@@ -129,7 +130,7 @@ namespace FSA.IncidentsManagementDb.Repositories
                     {
                         
                         var newLink = new Entities.IncidentLinkDb { FromIncidentId = from, ToIncidentId = to };
-                        SetAuditInfo(newLink);
+                        //SetAuditInfo(newLink);
                         if (!isReasonPresent)
                         {
                             var newFromComment = new IncidentCommentDb { Comment = reason, IncidentId = from };
@@ -140,7 +141,7 @@ namespace FSA.IncidentsManagementDb.Repositories
                             ctx.IncidentComments.Add(newToComment);
                         }
                         var toIncident = ctx.Incidents.Find(to);
-                        UpdateAuditInfo(toIncident);
+                        //UpdateAuditInfo(toIncident);
                         updatesOccured = true;
                         ctx.IncidentLinks.Add(newLink);
                     }
@@ -290,7 +291,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         {
             var newComment = new IncidentCommentDb { Comment = note, IncidentId = incidentId };
             
-            SetAuditInfo(newComment );
+            //SetAuditInfo(newComment );
             ctx.IncidentComments.Add(newComment);
             //await ctx.SaveChangesAsync();
             var incident = ctx.Incidents.FirstOrDefault(p=>p.Id == incidentId);

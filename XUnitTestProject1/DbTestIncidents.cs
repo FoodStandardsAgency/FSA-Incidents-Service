@@ -6,6 +6,7 @@ using FSA.IncidentsManagementDb.Entities;
 using FSA.IncidentsManagementDb.Entities.Helpers;
 using FSA.IncidentsManagementDb.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using NuGet.Frameworks;
 using System;
 using System.Collections.Generic;
@@ -115,35 +116,6 @@ namespace FSA.UnitTests.Db
         public async Task UpdateIncidentsFakeGuid()
         {
             var fakeId = Guid.Parse("00000000-0000-0000-0000-000000000001");
-           // var incident = new BaseIncident(
-           //id: 5,
-           //mostUniqueId: fakeId,
-           //incidentTitle: "Peanuts",
-           //incidentDescription: "Stolen peanutes",
-           //incidentTypeId: 1,
-           //contactMethodId: 3,
-           //statusId: (int)IncidentStatus.Unassigned,
-           //priorityId: 1,
-           //classificationId: 1,
-           //dataSourceId: 1,
-           //productTypeId: 3,
-           //leadOfficer: userId,
-           //adminLeadId: 1,
-           //leadOffice: "",
-           //fieldOfficer: "",
-           //lAAdvised: false,
-           //deathIllnessId: 3,
-           //receivedOn: null,
-           //incidentCreated: DateTime.Now,
-           //lastChangedBy: "Paul",
-           //lastChangedDate: DateTime.Now,
-           //signalStatusId: null,
-           //notifierId: null,
-           //principalFBOId: null,
-           //leadLocalAuthorityId: null,
-           //incidentClosed: null
-           // );
-
             IFSAIncidentsData incidents = new FSAIncidentsManagement(ctx, userId);
 
             var incident  = await incidents.Incidents.Get(93);
@@ -199,13 +171,17 @@ namespace FSA.UnitTests.Db
         public async Task DashboardSearchLastPage()
         {
             IFSAIncidentsData incidents = new FSAIncidentsManagement(ctx, userId);
-            var finalPage = (await incidents.Incidents.DashboardSearch(pageSize:10, startPage:519)).ToList();
-            var finalPageM1 = (await incidents.Incidents.DashboardSearch(pageSize:10, startPage:518)).ToList();
-            var pages = (await incidents.Incidents.DashboardSearch(pageSize:10, startPage:516)).ToList();
-            var mpage1 = (await incidents.Incidents.DashboardSearch(pageSize:10, startPage:514)).ToList();
-            var finalPageP1 = (await incidents.Incidents.DashboardSearch(pageSize:10, startPage:521)).ToList();
+            var data = (await incidents.Incidents.DashboardSearch(pageSize: 10, startPage: 519));
+            var allPages = (data.TotalResults / 10);
+            var mod = data.TotalResults % 10;
+
+            var finalPage = (await incidents.Incidents.DashboardSearch(pageSize:10, startPage:allPages)).ToList();
+            var finalPageM1 = (await incidents.Incidents.DashboardSearch(pageSize:10, startPage: allPages-1)).ToList();
+            var pages = (await incidents.Incidents.DashboardSearch(pageSize:10, startPage: allPages-2)).ToList();
+            var mpage1 = (await incidents.Incidents.DashboardSearch(pageSize:10, startPage:allPages-3)).ToList();
+            var finalPageP1 = (await incidents.Incidents.DashboardSearch(pageSize:10, startPage:allPages+ ((mod!=0)? 2:1))).ToList();
             Assert.True(finalPage.Count() > 0 && finalPageM1.Count()==10 && finalPageP1.Count()==0);
-        }
+        } 
 
 
 
