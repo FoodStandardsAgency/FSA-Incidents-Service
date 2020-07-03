@@ -61,7 +61,7 @@ namespace FSA.UnitTests.Db
                    deathIllnessId: 3,
                    receivedOn: null,
                    incidentCreated: DateTime.Now,
-                   lastChangedBy: "Paul",
+                   lastChangedBy: this.userId,
                    lastChangedDate: DateTime.Now,
                    signalStatusId: null,
                    notifierId: null,

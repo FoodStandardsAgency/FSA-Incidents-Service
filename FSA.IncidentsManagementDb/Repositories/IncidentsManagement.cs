@@ -8,12 +8,15 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.Design;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using IncidentStatus = FSA.IncidentsManagementDb.Entities.Helpers.IncidentStatus;
 
@@ -330,27 +333,24 @@ namespace FSA.IncidentsManagementDb.Repositories
             {
                 // Split out all the terms
 
-                (var searchTerms, var person) = this.ParseSearchTerms(search);
+                (var searchTerms, var person, var incidentIds) = this.ParseSearchTerms(search);
                 // This is what we actually pass to the qry.
                 // There are several paths to execution
                 // 1. Search + Person
                 // 2. Search
                 // 3. Person
-                Expression<Func<IncidentDb, bool>> expression = null;
-                if (searchTerms.Count > 0 && !String.IsNullOrEmpty(person))
-                {
-                    expression = this.CreateDashboardSearch(searchTerms);
-                    qry = qry.Where(expression).Where(o => o.LeadOfficer == person);
-                }
-                else if (searchTerms.Count > 0 && String.IsNullOrEmpty(person))
-                {
-                    expression = this.CreateDashboardSearch(searchTerms);
-                    qry = qry.Where(expression);
-                }
-                else if (searchTerms.Count == 0 && !string.IsNullOrEmpty(person))
-                {
+                Expression<Func<IncidentDb, bool>> searchExpression = null;
+                searchExpression = this.DashboardGeneralSearch(searchTerms, incidentIds);
+
+                Expression<Func<IncidentDb, bool>> idExpressions = null;
+                //idExpressions = this.DashboardIdSearch(incidentIds);
+                if (searchExpression != null)
+                    qry = qry.Where(searchExpression);
+                if (!string.IsNullOrEmpty(person))
                     qry = qry.Where(o => o.LeadOfficer == person);
-                }
+                //if (idExpressions != null)
+                //    qry = qry.Where(idExpressions);
+
 
             }
 
@@ -358,22 +358,52 @@ namespace FSA.IncidentsManagementDb.Repositories
             var totalRecords = await qry.CountAsync();
             // Find the start record
             var startRecord = (startPage - 1) * PageSize;
-            var results = await qry.Skip(startRecord)
+            var results = await qry.OrderByDescending(i => i.IncidentStatus.SortOrder).ThenBy(i => i.IncidentCreated)
+                                   .Skip(startRecord)
                                    .Take(PageSize)
-                                   .OrderByDescending(i => i.IncidentStatus.SortOrder).ThenBy(i => i.IncidentCreated)
                                    .Select(i => i.ToDashboard()).ToListAsync();
             return new PagedResult<IncidentDashboardView>(results, totalRecords);
         }
 
-        private (List<string> search, string person) ParseSearchTerms(string search)
+        private (List<string> search, string person, List<int> ids) ParseSearchTerms(string search)
         {
             var personClause = "person:";
-            var allTerms = search.ToLowerInvariant().Split(" ", StringSplitOptions.RemoveEmptyEntries);
-            var person = allTerms.Where(o => o.ToLowerInvariant().StartsWith(personClause)).FirstOrDefault();
-            return (allTerms.Where(o => o.ToLowerInvariant().StartsWith(personClause) == false).ToList(), person != null ? person.Substring(personClause.Length) : person);
+            // 1. I-000-000
+            // 2. i-000-000
+            // 3. 000-000   
+            // 4. 0002000
+            // 5. 000-00000 etc
+            //number
+            // 
+           var reg = new Regex("(^|-)(?<number>[0-9]+)");// [I-i]?(?<number>[0-9]{1,})");
+            
+            // We build the final search terms from this
+            var allTerms = new List<string>();
+            // any and all matching ids
+            var idTerms = new List<int>();
+            var totalTerms = search.ToLowerInvariant().Split(" ", StringSplitOptions.RemoveEmptyEntries).ToList();
+            // Get the person out of the way first, as it can trip up the idmatches 
+            var person = totalTerms.Where(o => o.ToLowerInvariant().StartsWith(personClause)).FirstOrDefault();
+            if(!string.IsNullOrEmpty(person)) totalTerms.Remove(person);
+            // Any matches for the reg ex are added to the idterms
+            // Non matches are added to the total terms
+            foreach(var term in totalTerms)
+            {
+                var matches = reg.Matches(term);
+                if (matches.Count == 0)
+                    allTerms.Add(term);
+                else
+                {
+                    int id = 0;
+                    if (int.TryParse(String.Join("", matches.Select(o => o.Groups["number"].Value)), out id))
+                        idTerms.Add(id);
+                }
+            }
+
+            return (allTerms.Where(o => o.ToLowerInvariant().StartsWith(personClause) == false).ToList(), person != null ? person.Substring(personClause.Length) : person, idTerms);
         }
 
-        private Expression<Func<IncidentDb, bool>> CreateDashboardSearch(IEnumerable<string> allWords)
+        private Expression<Func<IncidentDb, bool>> DashboardGeneralSearch(IEnumerable<string> allWords, IEnumerable<int> allIds)
         {
             List<Expression<Func<IncidentDb, bool>>> allClauses = new List<Expression<Func<IncidentDb, bool>>>();
             // The Full list of searches per word
@@ -385,6 +415,12 @@ namespace FSA.IncidentsManagementDb.Repositories
                 allClauses.Add(i => EF.Functions.Like(i.Notifier.Organisation.Title, wrd));
                 allClauses.Add(i => EF.Functions.Like(i.IncidentStatus.Title, wrd));
             }
+            // full list of serches on id
+            foreach(var id in allIds)
+            {
+                var capturedId = id;
+                allClauses.Add(i => i.Id == capturedId);
+            }
 
             var wordStack = new Stack<Expression<Func<IncidentDb, bool>>>(allClauses);
             // we are going to OR all the clauses together.
@@ -395,6 +431,29 @@ namespace FSA.IncidentsManagementDb.Repositories
                     completeSearch = wordStack.Pop();
                 else
                     completeSearch = completeSearch.Or(wordStack.Pop());
+            }
+            return completeSearch;
+        }
+
+        private Expression<Func<IncidentDb, bool>> DashboardIdSearch(IEnumerable<int> ids)
+        {
+            List<Expression<Func<IncidentDb, bool>>> idClause = new List<Expression<Func<IncidentDb, bool>>>();
+
+            foreach (var id in ids)
+            {
+                idClause.Add(i => i.Id == id);
+            }
+
+            var idStack = new Stack<Expression<Func<IncidentDb, bool>>>(idClause);
+            Expression<Func<IncidentDb, bool>> completeSearch = null;
+            // we are going to OR all the clauses together.
+
+            while (idStack.Count > 0)
+            {
+                if (completeSearch == null)
+                    completeSearch = idStack.Pop();
+                else
+                    completeSearch = completeSearch.Or(idStack.Pop());
             }
             return completeSearch;
         }

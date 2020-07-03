@@ -22,16 +22,6 @@ namespace FSA.IncidentsManagementDb.Repositories
         {
             if (newProduct.Id != 0) throw new ArgumentOutOfRangeException("This product appears to already exist.");
             var dbProduct = newProduct.ToDb();
-            //// Ensure we are setting Audit info
-            //foreach(var paket in dbProduct.PackSizes)
-            //{
-            //    SetAuditInfo(paket);
-            //}
-            //foreach (var paket in dbProduct.ProductDates)
-            //{
-            //    SetAuditInfo(paket);
-            //}
-            
 
             //SetAuditInfo(dbProduct);
             ctx.Products.Add(dbProduct);
