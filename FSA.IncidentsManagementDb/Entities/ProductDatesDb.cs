@@ -7,6 +7,8 @@ namespace FSA.IncidentsManagementDb.Entities
     internal class ProductDateDb : BaseEntityDb
     {
         public int Id { get; set; }
+        public int ProductId { get; set; }
+        public ProductDb Product { get; set; }
         public int DateTypeId { get; set; }
         public DateTypeDb DateType { get; set; }
         public DateTime Date { get; set; }

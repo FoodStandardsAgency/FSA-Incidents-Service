@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FSA.IncidentsManagementDb.Migrations
 {
     [DbContext(typeof(FSADbContext))]
-    [Migration("20200702140833_Frdericak")]
-    partial class Frdericak
+    [Migration("20200704130509_BasicCreate")]
+    partial class BasicCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -4182,14 +4182,14 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasColumnType("nvarchar(70)")
                         .HasMaxLength(70);
 
-                    b.Property<int?>("ProductDbId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("DateTypeId");
 
-                    b.HasIndex("ProductDbId");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("ProductDates");
                 });
@@ -5248,9 +5248,11 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FSA.IncidentsManagementDb.Entities.ProductDb", null)
+                    b.HasOne("FSA.IncidentsManagementDb.Entities.ProductDb", "Product")
                         .WithMany("ProductDates")
-                        .HasForeignKey("ProductDbId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.ProductDb", b =>

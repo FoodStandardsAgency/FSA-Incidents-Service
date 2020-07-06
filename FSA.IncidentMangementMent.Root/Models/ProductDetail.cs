@@ -15,5 +15,8 @@ namespace FSA.IncidentsManagement.Root.Models
         public IEnumerable<ProductPackSize> PackSizes { get; set; }
         public IEnumerable<ProductDate> ProductDates { get; set; }
         public string SignalUrl { get; set; }
+        public string Amount { get; set; }
+        public string AdditionalInfo { get; set; }
+        public int AmountTypeId { get; set; }
     }
 }

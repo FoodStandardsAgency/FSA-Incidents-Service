@@ -6,6 +6,11 @@ namespace FSA.IncidentsManagement.Root.Models
 {
     public class OrganisationAddress
     {
+        public OrganisationAddress()
+        {
+            ContactMethodId = 1;
+        }
+
         public int Id { get; set; }
         public string Title { get; set; }
         public string MainContact { get; set; }
@@ -18,6 +23,6 @@ namespace FSA.IncidentsManagement.Root.Models
         public string PostCode { get; set; }
         public string TelephoneNumber { get; set; }
         public string EmailAddress { get; set; }
-        public int? ContactMethodId { get; set; }
+        public int ContactMethodId { get; set; }
     }
 }

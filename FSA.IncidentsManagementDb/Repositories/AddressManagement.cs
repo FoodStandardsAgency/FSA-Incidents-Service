@@ -2,9 +2,14 @@
 using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagementDb.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,35 +24,56 @@ namespace FSA.IncidentsManagementDb.Repositories
             this.ctx = ctx;
         }
 
-        public async Task<int> AddFBOAddress(FboTypes addressType, string companyName, string MainContact, string AddressLine1, string AddressLine2, string TownCity)
+        public async Task<OrganisationAddress> Add(OrganisationAddress address)
         {
-            var orgAddress = new OrganisationDb
-            {
-                AddressLine1 = AddressLine1,
-                AddressLine2 = AddressLine2,
-                TownCity = TownCity,
-                MainContact = MainContact,
-                Title = companyName,
-                ContactMethodId = 4
-            };
-            //this.SetAuditInfo(orgAddress);
-            var fboAddress = new FBODb
+            var newDbItem = address.ToDb();
+            this.ctx.Organisations.Add(newDbItem);
+            await this.ctx.SaveChangesAsync();
+            return newDbItem.ToClient();
+        }
+
+        public async Task Add(IEnumerable<OrganisationAddress> addresses)
+        {
+            var newDbItems = new List<OrganisationDb>(addresses.ToDb());
+            this.ctx.Organisations.AddRange(newDbItems);
+            await this.ctx.SaveChangesAsync();
+        }
+
+        public async Task<int> AddFbo(FboTypes addressType, OrganisationAddress newAddress)
+        {
+            // create a new db Address
+            var dbAddress = newAddress.ToDb();
+            var dbFBO = new FBODb
             {
                 FBOTypeId = addressType,
-                Organisation = orgAddress
+                Organisation = dbAddress
             };
-            //this.SetAuditInfo(fboAddress);
-            ctx.FBOs.Add(fboAddress);
+            this.ctx.FBOs.Add(dbFBO);
             await ctx.SaveChangesAsync();
-            return fboAddress.Id;
+            return dbFBO.Id;
         }
 
-        public Task<OrganisationAddress> GetAddress(int OrganisationId)
+        public async Task<int> AddNotifier(NotifierTypes notifier, OrganisationAddress newAddress)
         {
-            throw new NotImplementedException();
+            var dbAddress = newAddress.ToDb();
+            var dbNotifier = new NotifierDb
+            {
+                NotifierTypeId = (int)notifier,
+                Organisation = dbAddress,
+            };
+
+            this.ctx.Notifiers.Add(dbNotifier);
+            await ctx.SaveChangesAsync();
+            return dbNotifier.Id;
         }
 
-        public async Task<FboAddress> GetFBOAddress(int FboId)
+        public async Task<OrganisationAddress> Get(int OrganisationId)
+        {
+            var addr = await ctx.Organisations.AsNoTracking().FirstAsync(a => a.Id == OrganisationId);
+            return addr.ToClient();
+        }
+
+        public async Task<FboAddress> GetFbo(int FboId)
         {
             var fboOrg = await this.ctx.FBOs
                     .Include(o => o.Organisation)
@@ -56,7 +82,7 @@ namespace FSA.IncidentsManagementDb.Repositories
             return fboOrg.ToClient();
         }
 
-        public async Task<NotifierAddress> GetNotifierAddress(int NotifierId)
+        public async Task<NotifierAddress> GetNotifier(int NotifierId)
         {
             var notifer = await this.ctx.Notifiers
                     .Include(o => o.Organisation)
@@ -65,5 +91,50 @@ namespace FSA.IncidentsManagementDb.Repositories
                 .FirstAsync(o => o.Id == NotifierId);
             return notifer.ToClient();
         }
+
+        public async Task<int> AssignNotifier(NotifierTypes notifier, int addressId)
+        {
+           var ent =  ctx.Notifiers.Add(new NotifierDb
+            {
+                NotifierTypeId  = (int) notifier,
+                OrganisationId = addressId
+            });
+
+            await ctx.SaveChangesAsync();
+             return ent.Entity.Id;
+        }
+
+        public async Task AssignNotifiers(NotifierTypes notifier, IEnumerable<int> addressesId)
+        {
+            var ents = addressesId.Select(o => new NotifierDb
+            {
+                NotifierTypeId = (int)notifier,
+                OrganisationId = o
+            });
+            await ctx.Notifiers.AddRangeAsync(ents);
+            await ctx.SaveChangesAsync();
+        }
+        public async Task AssignFbos(FboTypes fboTypes, IEnumerable<int> addressesId)
+        {
+            var ents = addressesId.Select(o =>new FBODb
+            {
+                FBOTypeId = fboTypes,
+                OrganisationId = o
+            });
+            await ctx.FBOs.AddRangeAsync(ents);
+            await ctx.SaveChangesAsync();
+        }
+
+        public async Task<int> AssignFbo(FboTypes fboTypes, int addressId)
+        {
+            var ent = ctx.FBOs.Add(new FBODb
+            {
+                FBOTypeId = fboTypes,
+                OrganisationId = addressId
+            });
+            await ctx.SaveChangesAsync();
+            return ent.Entity.Id;
+        }
+
     }
 }

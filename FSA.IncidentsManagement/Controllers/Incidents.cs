@@ -23,9 +23,9 @@ namespace FSA.IncidentsManagement.Controllers
     public class IncidentsController : ControllerBase
     {
         private readonly ILogger<IncidentsController> log;
-        private readonly IFSAIncidentsData fsaData;
+        private readonly ISIMSManager fsaData;
 
-        public IncidentsController(ILogger<IncidentsController> log, IFSAIncidentsData fsaData)
+        public IncidentsController(ILogger<IncidentsController> log, ISIMSManager fsaData)
         {
             this.log = log;
             this.fsaData = fsaData;
@@ -123,7 +123,7 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(500)]
         public async Task<IActionResult> AddIncidentLink([FromBody] LinkIncidents addIncident)
         {
-            await this.fsaData.Incidents.AddLink(addIncident.FromIncidentId, addIncident.ToIncidentIds, addIncident.Comment);
+            await this.fsaData.Incidents.AddLinks(addIncident.FromIncidentId, addIncident.ToIncidentIds, addIncident.Comment);
             return new OkResult();
         }
 

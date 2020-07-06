@@ -94,7 +94,7 @@ namespace FSA.IncidentsManagement
 
             services.AddScoped<UserInfo>();
             services.AddScoped<ILookupDataHost, LookupDataHost>();
-            services.AddScoped<IFSAIncidentsData, FSAIncidentsManagement>(ids => new FSAIncidentsManagement(ids.GetRequiredService<FSADbContext>(), ids.GetRequiredService<UserInfo>().GetUserId()));
+            services.AddScoped<ISIMSManager, SIMSDataManager>(ids => new SIMSDataManager(ids.GetRequiredService<FSADbContext>(), ids.GetRequiredService<UserInfo>().GetUserId()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

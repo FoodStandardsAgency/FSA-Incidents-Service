@@ -8,12 +8,12 @@ using System.Text;
 
 namespace FSA.IncidentsManagementDb.Repositories
 {
-    public class FSAIncidentsManagement : IFSAIncidentsData
+    public class SIMSDataManager : ISIMSManager
     {
         private readonly FSADbContext ctx;
         private readonly string editor;
 
-        public FSAIncidentsManagement(FSADbContext ctx, string editor)
+        public SIMSDataManager(FSADbContext ctx, string editor)
         {
             this.ctx = ctx;
             this.editor = editor;

@@ -13,7 +13,7 @@ using Xunit;
 
 namespace FSA.UnitTests.Db
 {
-   public class DbTestAddress
+    public class DbTestAddress
     {
         private string userId = "2f65582c-5970-4848-9020-d65b6df2dc04";
         private string anotherId = "9a8dda39-78ec-496d-8625-f8b24d83aa57";
@@ -23,26 +23,41 @@ namespace FSA.UnitTests.Db
         private ConfigFile Config { get; }
 
         private FSADbContext dbContext;
-        private FSAIncidentsManagement incidentsManagment;
+        private SIMSDataManager incidentsManagment;
         public DbTestAddress()
         {
             this.Config = System.Text.Json.JsonSerializer.Deserialize<ConfigFile>(File.OpenText("./config.json").ReadToEnd());
             dbContext = new FSADbContext(new DbContextOptionsBuilder().UseSqlServer(Config.dbConn).Options);
-            incidentsManagment = new FSAIncidentsManagement(dbContext, userId);
+            incidentsManagment = new SIMSDataManager(dbContext, userId);
         }
 
         [Fact]
         public async Task AddFBOWithNewAddress()
         {
+            var orga = new OrganisationAddress
+            {
+                EmailAddress = "Terry@amil.com",
+                MainContact = "Terry the data",
+                AddressLine1 = "Address line 1",
+                AddressLine2 = "Address line 2",
+                PostCode = "Postoce",
+                TownCity = "Town City",
+                Title = "Terrys messageing",
+                CountryId = 103,
+                County = "Counry",
+                TelephoneNumber = ""
+            };
+
+
             FboTypes d = FboTypes.Consignor | FboTypes.E_trader;
-            var newaddress = await incidentsManagment.Addresses.AddFBOAddress(d, "Company One", "Terry Giffordes", "Address Line 1", "Address Line2", "TownCity");
+            var newaddress = await incidentsManagment.Addresses.AddFbo(d, orga);
             Assert.IsType<int>(newaddress);
         }
 
         [Fact]
         public async Task GetFBOAddress()
         {
-            var itme = await incidentsManagment.Addresses.GetFBOAddress(1);
+            var itme = await incidentsManagment.Addresses.Get(1);
 
             Assert.NotNull(itme);
         }

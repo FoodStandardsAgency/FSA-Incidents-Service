@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace FSA.IncidentsManagement.Root.Models
+namespace FSA.IncidentsManagement.Models
 {
-    public class ProductDate
+    public class ProductDateModel
     {
-        public int Id { get; set; }
-        public int ProductId { get; set; }
+        public int? Id { get; set; }
+        public int? ProductId { get; set; }
         public int DateTypeId { get; set; }
         public DateTime Date { get; set; }
+
         public override string ToString()
         {
             return Date.ToString();

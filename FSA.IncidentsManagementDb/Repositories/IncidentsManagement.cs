@@ -44,6 +44,28 @@ namespace FSA.IncidentsManagementDb.Repositories
             await this.ctx.SaveChangesAsync();
             return dbPonder.Entity.ToClient();
         }
+        /// <summary>
+        /// This is not really for day to day use
+        /// Mainly for testinf and seeing
+        /// </summary>
+        /// <param name="incidents"></param>
+        /// <returns></returns>
+        public async Task Add(IEnumerable<BaseIncident> incidents)
+        {
+
+            foreach (var incident in incidents)
+            {
+                if (incident.CommonId != 0) throw new ArgumentOutOfRangeException("This item has already been added.");
+
+                var dbItem = incident.ToDb();
+                dbItem.IncidentCreated = dbItem.Created;
+                dbItem.IncidentClosed = null; // Ensure lack of shenanigans
+                var dbPonder = this.ctx.Incidents.Add(dbItem);
+            }
+
+            await this.ctx.SaveChangesAsync();
+
+        }
 
         /// <summary>
         /// Assigns a lead officer to a case.
@@ -112,7 +134,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         /// </summary>
         /// <param name="from"></param>
         /// <param name="to"></param>
-        public async Task AddLink(int from, IEnumerable<int> tos, string reason)
+        public async Task AddLinks(int from, IEnumerable<int> tos, string reason)
         {
             try
             {
@@ -144,7 +166,14 @@ namespace FSA.IncidentsManagementDb.Repositories
                             ctx.IncidentComments.Add(newToComment);
                         }
                         var toIncident = ctx.Incidents.Find(to);
-                        //UpdateAuditInfo(toIncident);
+                        
+                        // Update the destination incident, if the incident has not been closed.
+                        // This is not a sensible option.
+                        if(toIncident.IncidentStatusId != (int)IncidentStatus.Closed)
+                        {
+                            ctx.Incidents.Update(toIncident);
+                        }
+
                         updatesOccured = true;
                         ctx.IncidentLinks.Add(newLink);
                     }
@@ -191,19 +220,30 @@ namespace FSA.IncidentsManagementDb.Repositories
         public async Task<BaseIncident> Update(BaseIncident incident)
         {
             var dbItem = this.ctx.Incidents.Find(incident.CommonId);
+            
             if (dbItem == null) throw new ArgumentNullException("No incident was found");
+            if (dbItem.IncidentClosed != null) throw new ArgumentOutOfRangeException("Cannot update a closed incident!");
+            
             // Logical changes.
             // Mark some differences since last update
             // We are using simpleFlags
+            // Have we changed to unassigned, if so ensure we remove the lead officer.
             var unassignLeadOfficer = false;
-            if (dbItem.IncidentStatusId == (int)IncidentStatus.Open && incident.StatusId == (int)IncidentStatus.Closed)
+            if (dbItem.IncidentStatusId == (int)IncidentStatus.Open && incident.StatusId == (int)IncidentStatus.Unassigned)
                 unassignLeadOfficer = true;
+            
             //Transfer our updates into the existing incident
             incident.ToUpdateDb(dbItem);
             if (unassignLeadOfficer) dbItem.LeadOfficer = "";
-            // Finally update the basic audit data.
-            //UpdateAuditInfo(dbItem);
+
+            // Are we closed?
+            // Then ensure we update the closed date.
+            if (dbItem.IncidentStatusId == (int)IncidentStatus.Closed)
+                dbItem.IncidentClosed = DateTime.UtcNow;
+
+
             var updatedDbItem = this.ctx.Incidents.Update(dbItem);
+            
             await this.ctx.SaveChangesAsync();
             return updatedDbItem.Entity.ToClient();
         }
@@ -219,15 +259,17 @@ namespace FSA.IncidentsManagementDb.Repositories
         /// <exception cref="NullReferenceException" />
         public async Task<BaseIncident> UpdateStatus(int id, int statusId)
         {
-            var itm = await ctx.Incidents.FindAsync(id);
-            itm.IncidentStatusId = statusId;
+            var dbItem = await ctx.Incidents.FindAsync(id);
+            if (dbItem.IncidentClosed != null) throw new ArgumentOutOfRangeException("Cannot update a closed incident!");
+
+            dbItem.IncidentStatusId = statusId;
             if (statusId == (int)IncidentStatus.Unassigned)
-                itm.LeadOfficer = "";
+                dbItem.LeadOfficer = "";
             //UpdateAuditInfo(itm);
             //ctx.Incidents.Update(incident);
 
             await ctx.SaveChangesAsync();
-            return itm.ToClient();
+            return dbItem.ToClient();
         }
 
         /// <summary>
@@ -293,14 +335,12 @@ namespace FSA.IncidentsManagementDb.Repositories
         public async Task<IncidentNote> AddNote(int incidentId, string note)
         {
             var newComment = new IncidentCommentDb { Comment = note, IncidentId = incidentId };
-            
-            //SetAuditInfo(newComment );
             ctx.IncidentComments.Add(newComment);
-            //await ctx.SaveChangesAsync();
+
             var incident = ctx.Incidents.FirstOrDefault(p=>p.Id == incidentId);
-            //UpdateAuditInfo(incident);
-            ctx.Incidents.Update(incident); //.State = EntityState.Modified;
-            //ent.State = EntityState.Modified;
+            if(incident.IncidentClosed==null)
+                ctx.Incidents.Update(incident);
+
             await ctx.SaveChangesAsync();
             return newComment.ToClient();
         }

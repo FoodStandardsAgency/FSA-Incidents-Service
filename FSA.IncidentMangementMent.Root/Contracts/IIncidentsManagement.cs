@@ -22,7 +22,7 @@ namespace FSA.IncidentsManagement.Root.Contracts
 
         Task<BaseIncident> UpdateClassification(int id, int ClassificationId);
 
-        Task AddLink(int from, IEnumerable<int> to, string reason);
+        Task AddLinks(int from, IEnumerable<int> to, string reason);
 
         Task<IncidentNote> AddNote(int incidentId, string note);
 

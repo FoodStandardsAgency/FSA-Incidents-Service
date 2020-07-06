@@ -80,6 +80,48 @@ namespace FSA.IncidentsManagementDb
             Title = @this.Title,
         };
 
+        public static IEnumerable<OrganisationDb> ToDb(this IEnumerable<OrganisationAddress> @this)
+        {
+            foreach (var itm in @this)
+            {
+                yield return itm.ToDb();
+            }
+        }
+
+        public static OrganisationAddress ToClient(this OrganisationDb @this) => new OrganisationAddress
+        {
+            Id = @this.Id,
+            Title = @this.Title,
+            MainContact = @this.MainContact,
+            AddressLine1 = @this.AddressLine1,
+            AddressLine2 = @this.AddressLine2,
+            TownCity = @this.TownCity,
+            County = @this.County,
+            CountryId = @this.CountryId,
+            PostCode = @this.PostCode,
+            TelephoneNumber = @this.TelephoneNumber,
+            EmailAddress = @this.EmailAddress,
+            ContactMethodId = @this.ContactMethodId
+        };
+
+
+
+        public static OrganisationDb ToDb(this OrganisationAddress @this) => new OrganisationDb
+        {
+            Id = @this.Id,
+            Title = @this.Title,
+            MainContact = @this.MainContact,
+            AddressLine1 = @this.AddressLine1,
+            AddressLine2 = @this.AddressLine2,
+            TownCity = @this.TownCity,
+            County = @this.County,
+            CountryId = @this.CountryId,
+            PostCode = @this.PostCode,
+            TelephoneNumber = @this.TelephoneNumber,
+            EmailAddress = @this.EmailAddress,
+            ContactMethodId = @this.ContactMethodId
+        };
+
         public static OrganisationRole ToClient(this OrganisationRoleDb @this) => new OrganisationRole
         {
             Id = @this.Id,
@@ -206,7 +248,7 @@ namespace FSA.IncidentsManagementDb
                 dataSource: @this.DataSource?.Title ?? "",
                 productType: @this.ProductType?.Title ?? "",
                 leadLocalAuthority: @this.LeadLocalAuthorityId.HasValue ? @this.LeadLocalAuthority.Organisation.Title : "Unassigned",
-                adminLead: @this.AdminLeadId.HasValue && @this.AdminLeadId!=0 ?@this.AdminLead.Title : "Unassigned",
+                adminLead: @this.AdminLeadId.HasValue && @this.AdminLeadId != 0 ? @this.AdminLead.Title : "Unassigned",
                 deathIllness: @this.DeathIllness?.Title ?? "",
                 principalFBO: @this.PrincipalFBO?.Organisation.Title ?? "",
                 fBOEmail: @this.PrincipalFBO?.Organisation.EmailAddress ?? "",
@@ -296,26 +338,45 @@ namespace FSA.IncidentsManagementDb
             };
         }
 
-        public static Product ToClient(this ProductDb @this)
+        public static Product ToClient(this ProductDb @this) => new Product
         {
-            return new Product
-            {
-                Id = @this.Id,
-                IncidentId = @this.IncidentId,
-                AdditionalInfo = @this.AdditionalInfo ?? "",
-                AmountUnitTypeId = @this.AmountUnitTypeId,
-                Amount = @this.Amount,
-                BatchCodes = @this.BatchCodes,
-                Brand = @this.Brand,
-                CountryOfOriginId = @this.CountryOfOriginId,
-                DataSourceId = @this.DataSourceId,
-                Name = @this.Name,
-                PackDescription = @this.PackDescription,
-                PackSizes = @this.PackSizes?.ToClient().ToList() ?? new List<ProductPackSize>(),
-                ProductDates = @this.ProductDates?.ToClient().ToList() ?? new List<ProductDate>(),
-                ProductTypeId = @this.ProductTypeId,
-                SignalUrl = @this.SignalUrl
-            };
+            Id = @this.Id,
+            IncidentId = @this.IncidentId,
+            AdditionalInfo = @this.AdditionalInfo ?? "",
+            AmountUnitTypeId = @this.AmountUnitTypeId,
+            Amount = @this.Amount,
+            BatchCodes = @this.BatchCodes,
+            Brand = @this.Brand,
+            CountryOfOriginId = @this.CountryOfOriginId,
+            DataSourceId = @this.DataSourceId,
+            Name = @this.Name,
+            PackDescription = @this.PackDescription,
+            PackSizes = @this.PackSizes?.ToClient().ToList() ?? new List<ProductPackSize>(),
+            ProductDates = @this.ProductDates?.ToClient().ToList() ?? new List<ProductDate>(),
+            ProductTypeId = @this.ProductTypeId,
+            SignalUrl = @this.SignalUrl,
+            Added = @this.Created,
+            LastUpdated = @this.Modified,
+            LastUpdatedBy = @this.ModifiedBy
+        };
+
+        public static void ToUpdateDb(this Product @this, ProductDb product)
+        {
+            product.Id = @this.Id;
+            product.IncidentId = @this.IncidentId;
+            product.AdditionalInfo = @this.AdditionalInfo ?? "";
+            product.AmountUnitTypeId = @this.AmountUnitTypeId;
+            product.Amount = @this.Amount;
+            product.BatchCodes = @this.BatchCodes;
+            product.Brand = @this.Brand;
+            product.CountryOfOriginId = @this.CountryOfOriginId;
+            product.DataSourceId = @this.DataSourceId;
+            product.Name = @this.Name;
+            product.PackDescription = @this.PackDescription;
+            product.PackSizes = @this.PackSizes.ToDb(product.PackSizes.ToList()).ToList();
+            product.ProductDates = @this.ProductDates.ToDb(product.ProductDates.ToList()).ToList();
+            product.ProductTypeId = @this.ProductTypeId;
+            product.SignalUrl = @this.SignalUrl;
         }
 
         public static ProductDetail ToDetail(this ProductDb @this) => new ProductDetail
@@ -325,26 +386,57 @@ namespace FSA.IncidentsManagementDb
             Brand = @this.Brand,
             PackDescription = @this.PackDescription,
             BatchCodes = @this.BatchCodes,
+            Amount = @this.Amount,
+            AmountTypeId = @this.AmountUnitTypeId,
+            AdditionalInfo = @this.AdditionalInfo,
             CountryOfOriginId = @this.CountryOfOriginId,
-            PackSizes = @this.PackSizes.ToClient().ToList(),
-            ProductDates = @this.ProductDates.ToClient().ToList()
+            PackSizes = @this.PackSizes?.ToClient().ToList() ?? new List<ProductPackSize>(),
+            ProductDates = @this.ProductDates?.ToClient().ToList() ?? new List<ProductDate>(),
         };
 
-      
-        public static IEnumerable<ProductPackSizeDb> ToDb(this IEnumerable<ProductPackSize> @this)
+        public static IEnumerable<ProductPackSizeDb> ToDb(this IEnumerable<ProductPackSize> @this, List<ProductPackSizeDb> sourceItems = null)
         {
-            foreach (var item in @this)
+
+            if (sourceItems != null)
             {
-                yield return item.ToDb();
+                foreach (var item in @this)
+                {
+                    var sourceItem = sourceItems.Find(o => o.Id == item.Id);
+                    if (sourceItem != null)
+                        yield return item.ToDb(sourceItem);
+                    else
+                        yield return item.ToDb();
+                }
+            }
+            else
+            {
+                foreach (var item in @this)
+                {
+                    yield return item.ToDb();
+                }
             }
         }
 
-
-        public static IEnumerable<ProductDateDb> ToDb(this IEnumerable<ProductDate> @this)
+        public static IEnumerable<ProductDateDb> ToDb(this IEnumerable<ProductDate> @this, List<ProductDateDb> sourceItems = null)
         {
-            foreach (var item in @this)
+
+            if (sourceItems != null)
             {
-                yield return item.ToDb();
+                foreach (var item in @this)
+                {
+                    var sourceItem = sourceItems.Find(o => o.Id == item.Id);
+                    if (sourceItem != null)
+                        yield return item.ToDb(sourceItem);
+                    else
+                        yield return item.ToDb();
+                }
+            }
+            else
+            {
+                foreach (var item in @this)
+                {
+                    yield return item.ToDb();
+                }
             }
         }
 
@@ -366,6 +458,7 @@ namespace FSA.IncidentsManagementDb
 
         public static ProductDate ToClient(this ProductDateDb @this) => new ProductDate
         {
+            Id = @this.Id,
             DateTypeId = @this.DateTypeId,
             Date = @this.Date
         };
@@ -384,6 +477,15 @@ namespace FSA.IncidentsManagementDb
             Date = @this.Date
         };
 
+        public static ProductDateDb ToDb(this ProductDate @this, ProductDateDb sourceItem)
+        {
+            sourceItem.DateTypeId = @this.DateTypeId;
+            sourceItem.Date = @this.Date;
+            return sourceItem;
+        }
+
+
+
         public static ProductPackSizeDb ToDb(this ProductPackSize @this) => new ProductPackSizeDb
         {
             Id = @this.Id,
@@ -391,6 +493,13 @@ namespace FSA.IncidentsManagementDb
             Size = @this.Size,
             UnitId = @this.UnitId
         };
+
+        public static ProductPackSizeDb ToDb(this ProductPackSize @this, ProductPackSizeDb sourceItem)
+        {
+            sourceItem.Size = @this.Size;
+            sourceItem.UnitId = @this.UnitId;
+            return sourceItem;
+        }
 
         public static IncidentNote ToClient(this IncidentCommentDb @this) => new IncidentNote
         {
@@ -408,7 +517,7 @@ namespace FSA.IncidentsManagementDb
                 CommonId = @this.Id,
                 Priority = @this.Priority?.Title ?? "TBC",
                 Title = @this.IncidentTitle,
-                Notifier = @this.Notifier?.Organisation ==null ? "Unassigned" : @this.Notifier?.Organisation.Title,
+                Notifier = @this.Notifier?.Organisation == null ? "Unassigned" : @this.Notifier?.Organisation.Title,
                 LeadOfficer = @this.LeadOfficer ?? "Unassigned",
                 Status = @this.IncidentStatus?.Title ?? "UNK",
                 Updated = @this.Modified,

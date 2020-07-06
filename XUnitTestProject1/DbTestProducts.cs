@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
@@ -38,6 +39,7 @@ namespace FSA.UnitTests.Db
         {
             var product = new Product
             {
+                Name = "Product no collections",
                 BatchCodes = "BC1234 BC59867",
                 Brand = "New Brand",
                 IncidentId = 21,
@@ -46,12 +48,11 @@ namespace FSA.UnitTests.Db
                 ProductTypeId = 2,
                 AmountUnitTypeId = 1,
                 AdditionalInfo = "More Data needed",
-                Name = "Product no collections",
                 PackDescription = "This is descirption",
             };
 
-            IFSAIncidentsData fsaData = new FSAIncidentsManagement(this.dbContext, userId3);
-            var updatedProduct = await fsaData.Products.AddProduct(product.IncidentId, product);
+            ISIMSManager fsaData = new SIMSDataManager(this.dbContext, userId3);
+            var updatedProduct = await fsaData.Products.Add(product.IncidentId, product);
         }
 
         [Fact]
@@ -59,6 +60,7 @@ namespace FSA.UnitTests.Db
         {
             var product = new Product
             {
+                Name = "Product PackDates no sizes with dates",
                 BatchCodes = "BC1234 BC59867",
                 Brand = "New Brand",
                 IncidentId = 21,
@@ -67,7 +69,6 @@ namespace FSA.UnitTests.Db
                 ProductTypeId = 2,
                 AmountUnitTypeId = 1,
                 AdditionalInfo = "More Data needed",
-                Name = "Product no collections",
                 PackDescription = "This is description",
                 ProductDates = new List<ProductDate>() { 
                         new ProductDate { Date = DateTime.Now, DateTypeId = 2 },
@@ -75,8 +76,8 @@ namespace FSA.UnitTests.Db
                     }
             };
 
-            IFSAIncidentsData fsaData = new FSAIncidentsManagement(this.dbContext, userId3);
-            var updatedProduct = await fsaData.Products.AddProduct(product.IncidentId, product);
+            ISIMSManager fsaData = new SIMSDataManager(this.dbContext, userId3);
+            var updatedProduct = await fsaData.Products.Add(product.IncidentId, product);
         }
 
         [Fact]
@@ -84,15 +85,15 @@ namespace FSA.UnitTests.Db
         {
             var product = new Product
             {
+                Name = "Product Pack Sizes no dates with sizes",
                 BatchCodes = "BC New packers BNA2324",
                 Brand = "A Brand",
                 IncidentId = 17,
-                CountryOfOriginId = 89,
+                CountryOfOriginId = 47,
                 ProductTypeId = 2,
                 Amount="0.0",
-                AmountUnitTypeId = 1,
+                AmountUnitTypeId = 3,
                 AdditionalInfo = "More Data needed",
-                Name = "Product no collections",
                 PackDescription = "This is description",
                 PackSizes = new List<ProductPackSize>
                 {
@@ -101,9 +102,23 @@ namespace FSA.UnitTests.Db
                 }
             };
 
-            IFSAIncidentsData fsaData = new FSAIncidentsManagement(this.dbContext, userId3);
-            var updatedProduct = await fsaData.Products.AddProduct(product.IncidentId, product);
+            ISIMSManager fsaData = new SIMSDataManager(this.dbContext, userId3);
+            var updatedProduct = await fsaData.Products.Add(product.IncidentId, product);
             Assert.True(updatedProduct.PackSizes.Count() == 2 && updatedProduct.Amount == "0.0");
+        }
+
+        [Fact]
+        public async Task UpdateProduct()
+        {
+            ISIMSManager fsaData = new SIMSDataManager(this.dbContext, userId3);
+            var product = await fsaData.Products.Get(1);
+            product.Name = "Updated Producted";
+            var pDates = product.ProductDates.ToList();
+            pDates.Add(new ProductDate { Date = DateTime.Parse("30/09/1978").ToUniversalTime(), DateTypeId = 2, });
+            product.ProductDates = pDates;
+            var updatedProduct = await fsaData.Products.Update(product);
+            var date = updatedProduct.ProductDates.FirstOrDefault(o => o.Date.Equals(DateTime.Parse("30/09/1978").ToUniversalTime()));
+            Assert.True(updatedProduct.Name == "Updated Producted" && date != null);
         }
     }
 }

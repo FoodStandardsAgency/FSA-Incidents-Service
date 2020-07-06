@@ -51,6 +51,11 @@ namespace FSA.IncidentsManagement.Root.Models
 
         }
 
+        // Friendly new record
+        public BaseIncident(string incidentTitle, string incidentDescription, int incidentTypeId, int contactMethodId, int statusId, int? signalStatusId, int? notifierId, int? principalFBOId, int priorityId, int classificationId, int dataSourceId, int productTypeId, string leadOfficer, string leadOffice, int adminLeadId, string fieldOfficer, int? leadLocalAuthorityId, bool lAAdvised, int deathIllnessId, DateTime? receivedOn, DateTime? incidentClosed) : this(0, Guid.Empty, incidentTitle, incidentDescription, incidentTypeId, contactMethodId, statusId, signalStatusId, notifierId, principalFBOId, priorityId, classificationId, dataSourceId, productTypeId, leadOfficer, leadOffice, adminLeadId, fieldOfficer, leadLocalAuthorityId, lAAdvised, deathIllnessId, receivedOn, DateTime.MinValue, incidentClosed, "" , DateTime.MinValue)
+        {
+
+        }
 
         public string Id => this.FormatId();
         public int CommonId => this._Id;
@@ -86,9 +91,7 @@ namespace FSA.IncidentsManagement.Root.Models
         {
             return GeneralExtensions.GenerateIncidentId(this._Id);
         }
-
         //public ICollection<IncidentCommentDb> Comments {get;}
-
     }
 
     public static class BaseIncidentExtensions
@@ -208,6 +211,122 @@ namespace FSA.IncidentsManagement.Root.Models
                lastChangedBy: @this.LastChangedBy,
                 lastChangedDate: @this.LastChangedDate
                 );
+
+        public static BaseIncident WithLocalAuthority(this BaseIncident @this, int? localAuthorityId) => new BaseIncident(
+                                @this.CommonId,
+                               mostUniqueId: @this.MostUniqueId,
+                               incidentTitle: @this.IncidentTitle,
+                               incidentDescription: @this.IncidentDescription,
+                               incidentTypeId: @this.IncidentTypeId,
+                               contactMethodId: @this.ContactMethodId,
+                               statusId: @this.StatusId,
+                               signalStatusId: @this.SignalStatusId,
+                               notifierId: @this.NotifierId,
+                               principalFBOId: @this.PrincipalFBOId,
+                               priorityId: @this.PriorityId,
+                               classificationId: @this.ClassificationId,
+                               dataSourceId: @this.DataSourceId,
+                               productTypeId: @this.ProductTypeId,
+                               leadOfficer: @this.LeadOfficer,
+                               leadOffice: @this.LeadOffice,
+                               adminLeadId: @this.AdminLeadId,
+                               fieldOfficer: @this.FieldOfficer,
+                               leadLocalAuthorityId: localAuthorityId,
+                               lAAdvised: @this.LAAdvised,
+                               deathIllnessId: @this.DeathIllnessId,
+                               receivedOn: @this.ReceivedOn,
+                               incidentCreated: @this.IncidentCreated,
+                               incidentClosed: @this.IncidentClosed,
+                               lastChangedBy: @this.LastChangedBy,
+                                lastChangedDate: @this.LastChangedDate
+                                );
+
+        public static BaseIncident WithNotifier(this BaseIncident @this, int? notifierId) => new BaseIncident(
+                        @this.CommonId,
+                       mostUniqueId: @this.MostUniqueId,
+                       incidentTitle: @this.IncidentTitle,
+                       incidentDescription: @this.IncidentDescription,
+                       incidentTypeId: @this.IncidentTypeId,
+                       contactMethodId: @this.ContactMethodId,
+                       statusId: @this.StatusId,
+                       signalStatusId: @this.SignalStatusId,
+                       notifierId: notifierId,
+                       principalFBOId: @this.PrincipalFBOId,
+                       priorityId: @this.PriorityId,
+                       classificationId: @this.ClassificationId,
+                       dataSourceId: @this.DataSourceId,
+                       productTypeId: @this.ProductTypeId,
+                       leadOfficer: @this.LeadOfficer,
+                       leadOffice: @this.LeadOffice,
+                       adminLeadId: @this.AdminLeadId,
+                       fieldOfficer: @this.FieldOfficer,
+                       leadLocalAuthorityId: @this.LeadLocalAuthorityId,
+                       lAAdvised: @this.LAAdvised,
+                       deathIllnessId: @this.DeathIllnessId,
+                       receivedOn: @this.ReceivedOn,
+                       incidentCreated: @this.IncidentCreated,
+                       incidentClosed: @this.IncidentClosed,
+                       lastChangedBy: @this.LastChangedBy,
+                        lastChangedDate: @this.LastChangedDate
+                        );
+    
+        public static BaseIncident WithTitle(this BaseIncident @this, string title) => new BaseIncident(
+                   @this.CommonId,
+                  mostUniqueId: @this.MostUniqueId,
+                  incidentTitle: title,
+                  incidentDescription: @this.IncidentDescription,
+                  incidentTypeId: @this.IncidentTypeId,
+                  contactMethodId: @this.ContactMethodId,
+                  statusId: @this.StatusId,
+                  signalStatusId: @this.SignalStatusId,
+                  notifierId: @this.NotifierId,
+                  principalFBOId: @this.PrincipalFBOId,
+                  priorityId: @this.PriorityId,
+                  classificationId: @this.ClassificationId,
+                  dataSourceId: @this.DataSourceId,
+                  productTypeId: @this.ProductTypeId,
+                  leadOfficer: @this.LeadOfficer,
+                  leadOffice: @this.LeadOffice,
+                  adminLeadId: @this.AdminLeadId,
+                  fieldOfficer: @this.FieldOfficer,
+                  leadLocalAuthorityId: @this.LeadLocalAuthorityId,
+                  lAAdvised: @this.LAAdvised,
+                  deathIllnessId: @this.DeathIllnessId,
+                  receivedOn: @this.ReceivedOn,
+                  incidentCreated: @this.IncidentCreated,
+                  incidentClosed: @this.IncidentClosed,
+                  lastChangedBy: @this.LastChangedBy,
+                   lastChangedDate: @this.LastChangedDate
+                   );
+
+        public static BaseIncident WithIncidentStatus(this BaseIncident @this, int incidentStatus) => new BaseIncident(
+           @this.CommonId,
+          mostUniqueId: @this.MostUniqueId,
+          incidentTitle: @this.IncidentTitle,
+          incidentDescription: @this.IncidentDescription,
+          incidentTypeId: @this.IncidentTypeId,
+          contactMethodId: @this.ContactMethodId,
+          statusId: incidentStatus,
+          signalStatusId: @this.SignalStatusId,
+          notifierId: @this.NotifierId,
+          principalFBOId: @this.PrincipalFBOId,
+          priorityId: @this.PriorityId,
+          classificationId: @this.ClassificationId,
+          dataSourceId: @this.DataSourceId,
+          productTypeId: @this.ProductTypeId,
+          leadOfficer: @this.LeadOfficer,
+          leadOffice: @this.LeadOffice,
+          adminLeadId: @this.AdminLeadId,
+          fieldOfficer: @this.FieldOfficer,
+          leadLocalAuthorityId: @this.LeadLocalAuthorityId,
+          lAAdvised: @this.LAAdvised,
+          deathIllnessId: @this.DeathIllnessId,
+          receivedOn: @this.ReceivedOn,
+          incidentCreated: @this.IncidentCreated,
+          incidentClosed: @this.IncidentClosed,
+          lastChangedBy: @this.LastChangedBy,
+           lastChangedDate: @this.LastChangedDate
+           );
 
     }
 }

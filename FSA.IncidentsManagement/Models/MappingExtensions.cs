@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FSA.IncidentsManagement.ModelValidators
+namespace FSA.IncidentsManagement.Models
 {
     public static class MappingExtensions
     {
@@ -14,14 +14,14 @@ namespace FSA.IncidentsManagement.ModelValidators
             return new BaseIncident(
                 id: @this.Id,
                 incidentTitle: @this.IncidentTitle,
-                incidentDescription: @this.IncidentDescription,
+                incidentDescription: "", 
                 incidentTypeId: @this.IncidentTypeId,
                 contactMethodId: @this.ContactMethodId,
                 statusId: @this.StatusId,
                 signalStatusId: @this.SignalStatusId,
-                notifierId: @this.NotifierId,
+                notifierId: @this.NotifierId == 0 ? new Nullable<int>() : @this.NotifierId,
                 priorityId: @this.PriorityId,
-                principalFBOId: @this.PrincipalFBOId,
+                principalFBOId: @this.PrincipalFBOId == 0 ? new Nullable<int>() : @this.PrincipalFBOId,
                 classificationId: @this.ClassificationId,
                 dataSourceId: @this.DataSourceId,
                 productTypeId: @this.ProductTypeId,
@@ -29,14 +29,14 @@ namespace FSA.IncidentsManagement.ModelValidators
                 leadOffice: @this.LeadOffice,
                 adminLeadId: @this.AdminLeadId,
                 fieldOfficer: @this.FieldOfficer,
-                leadLocalAuthorityId: @this.LeadLocalAuthorityId,
+                leadLocalAuthorityId: @this.LeadLocalAuthorityId == 0? new Nullable<int>() : @this.LeadLocalAuthorityId,
                 lAAdvised: @this.LAAdvised,
                 deathIllnessId: @this.DeathIllnessId,
-                mostUniqueId:Guid.Empty,
+                mostUniqueId: Guid.Empty,
                 incidentClosed: null,
                 lastChangedBy: null,
                 lastChangedDate: DateTime.Now,
-                receivedOn:null,
+                receivedOn: null,
                 incidentCreated: DateTime.Now
                 );
         }
@@ -65,9 +65,63 @@ namespace FSA.IncidentsManagement.ModelValidators
                 deathIllnessId: @this.DeathIllnessId,
                 receivedOn: @this.ReceivedOn,
                 incidentCreated: @this.IncidentCreated,
-                incidentClosed:null,
-                lastChangedBy:null,
-                lastChangedDate:DateTime.Now
+                incidentClosed: null,
+                lastChangedBy: null,
+                lastChangedDate: DateTime.Now
             );
+
+        public static Product ToClient(this NewProductModel @this) => new Product
+        {
+            Id = @this.Id,
+            IncidentId = @this.IncidentId,
+            AdditionalInfo = @this.AdditionalInfo ?? "",
+            AmountUnitTypeId = @this.AmountUnitTypeId,
+            Amount = @this.Amount,
+            BatchCodes = @this.BatchCodes,
+            Brand = @this.Brand,
+            CountryOfOriginId = @this.CountryOfOriginId,
+            DataSourceId = @this.DataSourceId,
+            Name = @this.Name,
+            PackDescription = @this.PackDescription,
+            PackSizes = @this.PackSizes.ToClient().ToList(),
+            ProductDates = @this.ProductDates.ToClient().ToList(),
+            ProductTypeId = @this.ProductTypeId,
+            SignalUrl = @this.SignalUrl
+        };
+
+        public static ProductDate ToClient(this ProductDateModel @this) => new ProductDate
+        {
+            Id = @this.Id ?? 0,
+            ProductId = @this.ProductId ?? 0,
+            DateTypeId = @this.DateTypeId,
+            Date = @this.Date
+        };
+
+        public static ProductPackSize ToClient(this ProductPackSizeModel @this) => new ProductPackSize
+        {
+            Id = @this.Id ?? 0,
+            ProductId = @this.ProductId ?? 0,
+            Size = @this.Size,
+            UnitId = @this.UnitId
+        };
+
+
+
+        public static IEnumerable<ProductPackSize> ToClient(this IEnumerable<ProductPackSizeModel> @this)
+        {
+            foreach (var item in @this)
+            {
+                yield return item.ToClient();
+            }
+        }
+
+        public static IEnumerable<ProductDate> ToClient(this IEnumerable<ProductDateModel> @this)
+        {
+            foreach (var item in @this)
+            {
+                yield return item.ToClient();
+            }
+        }
+
     }
 }

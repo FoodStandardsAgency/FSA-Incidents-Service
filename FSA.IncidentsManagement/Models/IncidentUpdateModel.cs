@@ -15,8 +15,9 @@ namespace FSA.IncidentsManagement.Models
         public int StatusId { get; set; }   // Not signal status
         public int PriorityId { get; set; }
         public int? SignalStatusId { get; set; }   // Not signal status
-        public int? NotifierId { get; set; }     // organisations
-        public int? PrincipalFBOId { get; set; } // Organisations
+        public int NotifierId { get; set; }     // organisations
+        public int PrincipalFBOId { get; set; } // Organisations
+        public int LeadLocalAuthorityId { get; set; } // organisations
         public int ClassificationId { get; set; }
         public int DataSourceId { get; set; }
         public int ProductTypeId { get; set; }
@@ -24,7 +25,6 @@ namespace FSA.IncidentsManagement.Models
         public string LeadOffice { get; set; }
         public int AdminLeadId { get; set; }
         public string FieldOfficer { get; set; }
-        public int LeadLocalAuthorityId { get; set; } // organisations
         public bool LAAdvised { get; set; }
         public int DeathIllnessId { get; set; }
         //public Guid MostUniqueId { get; set; }

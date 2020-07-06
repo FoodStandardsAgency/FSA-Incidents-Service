@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FSA.IncidentsManagement.Root.Contracts
 {
-    public interface IFSAIncidentsData
+    public interface ISIMSManager
     {
         IIncidentsManagement Incidents {get;}
         IProductsManagement Products { get;  }

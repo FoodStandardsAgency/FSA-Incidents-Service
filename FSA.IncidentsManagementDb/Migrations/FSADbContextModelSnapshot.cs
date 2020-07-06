@@ -3532,7 +3532,9 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("IncidentCreated")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
 
                     b.Property<string>("IncidentDescription")
                         .HasColumnType("nvarchar(max)");
@@ -4180,14 +4182,14 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasColumnType("nvarchar(70)")
                         .HasMaxLength(70);
 
-                    b.Property<int?>("ProductDbId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("DateTypeId");
 
-                    b.HasIndex("ProductDbId");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("ProductDates");
                 });
@@ -5246,9 +5248,11 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FSA.IncidentsManagementDb.Entities.ProductDb", null)
+                    b.HasOne("FSA.IncidentsManagementDb.Entities.ProductDb", "Product")
                         .WithMany("ProductDates")
-                        .HasForeignKey("ProductDbId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.ProductDb", b =>
