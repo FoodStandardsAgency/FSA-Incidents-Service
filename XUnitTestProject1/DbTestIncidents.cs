@@ -207,8 +207,8 @@ namespace FSA.UnitTests.Db
             {
                 ISIMSManager incidents = new SIMSDataManager(ctx, userId);
                 var data = (await incidents.Incidents.DashboardSearch(pageSize: 10, startPage: 519));
-                var allPages = (data.TotalResults / 10);
                 var mod = data.TotalResults % 10;
+                var allPages = (data.TotalResults / 10) + ((mod != 0) ? 1 : 0);
 
                 var finalPage = (await incidents.Incidents.DashboardSearch(pageSize: 10, startPage: allPages)).ToList();
                 var finalPageM1 = (await incidents.Incidents.DashboardSearch(pageSize: 10, startPage: allPages - 1)).ToList();

@@ -311,16 +311,6 @@ namespace FSA.IncidentsManagementDb.Repositories
                         .Include(i => i.PrincipalFBO).ThenInclude(o => o.Organisation)
                         .Include(i => i.ContactMethod)
                         .Include(i => i.IncidentStatus).First(p => p.Id == id);
-            //// now get the fbo organisations data
-            //var fboOrg = await this.ctx.Organisations.FindAsync(dbIncident.PrincipalFBOId);
-
-            //// Ensure we only add the same id once.
-            //var allOrgIds = new HashSet<int> { dbIncident.NotifierId ?? 0, dbIncident.LeadLocalAuthorityId ?? 0 };
-            //// remove empty elements
-            //allOrgIds.RemoveWhere(o => o == 0); ;
-
-            // Now fetch all the organisations that match this query.
-            //var allOrgs = await this.orgLookups.FindAllLookups(allOrgIds);
 
             // Finally we can now build our tower of wonder
             return dbIncident.ToClientDisplay();
@@ -398,7 +388,8 @@ namespace FSA.IncidentsManagementDb.Repositories
             var totalRecords = await qry.CountAsync();
             // Find the start record
             var startRecord = (startPage - 1) * PageSize;
-            var results = await qry.OrderByDescending(i => i.IncidentStatus.SortOrder).ThenBy(i => i.IncidentCreated)
+            var results = await qry.OrderByDescending(i => i.IncidentStatus.SortOrder)
+                                    .ThenBy(i => i.IncidentCreated)
                                    .Skip(startRecord)
                                    .Take(PageSize)
                                    .Select(i => i.ToDashboard()).ToListAsync();

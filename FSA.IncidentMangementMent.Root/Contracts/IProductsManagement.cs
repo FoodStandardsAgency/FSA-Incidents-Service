@@ -1,4 +1,5 @@
 ﻿using FSA.IncidentsManagement.Root.Models;
+using FSA.IncidentsManagement.Root.Shared;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,6 +12,9 @@ namespace FSA.IncidentsManagement.Root.Contracts
         Task<Product> Add(int incidentId, Product newProduct);
         Task<Product> Update(Product product);
         Task<Product> Get(int productId);
-        Task<IEnumerable<Product>> AllProducts(int incidentId);
+        Task<IEnumerable<Product>> IncidentProducts(int incidentId);
+        Task<IEnumerable<FboAddress>> GetProductAddresses(int productId);
+        Task<IPaging<ProductDashboard>> DashboardItems(int incidentId, int pageSize = 10, int startPage = 1);
+        Task AddAddress(int v1, int v2);
     }
 }

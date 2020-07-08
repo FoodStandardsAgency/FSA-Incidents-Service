@@ -39,18 +39,44 @@ namespace FSA.IncidentsManagementDb.Repositories
             await this.ctx.SaveChangesAsync();
         }
 
-        public async Task<int> AddFbo(FboTypes addressType, OrganisationAddress newAddress)
+        public async Task<int> AddFbo(FboAddress newAddress)
         {
             // create a new db Address
             var dbAddress = newAddress.ToDb();
             var dbFBO = new FBODb
             {
-                FBOTypeId = addressType,
+                FBOTypeId = newAddress.FboTypes,
                 Organisation = dbAddress
             };
             this.ctx.FBOs.Add(dbFBO);
             await ctx.SaveChangesAsync();
             return dbFBO.Id;
+        }
+
+        public async Task<FboAddress> GetFbo(int FboId)
+        {
+            var fboOrg = await this.ctx.FBOs
+                    .Include(o => o.Organisation)
+                .AsNoTracking()
+                .FirstAsync(o => o.Id == FboId);
+            return fboOrg.ToClient();
+        }
+
+        public async Task<FboAddress> UpdateFbo(FboAddress address)
+        {
+            // update the types
+            var fbo = ctx.FBOs.Find(address.FboId);
+            fbo.FBOTypeId = address.FboTypes;
+            var org = ctx.Organisations.Find(fbo.OrganisationId);
+            // update the address
+            address.ToDb(org);
+
+            ctx.Organisations.Update(org);
+            ctx.FBOs.Update(fbo);
+            await ctx.SaveChangesAsync();
+            return (await ctx.FBOs
+                    .Include(o => o.Organisation)
+                    .AsNoTracking().FirstAsync(f => f.Id == address.FboId)).ToClient();
         }
 
         public async Task<int> AddNotifier(NotifierTypes notifier, OrganisationAddress newAddress)
@@ -73,13 +99,12 @@ namespace FSA.IncidentsManagementDb.Repositories
             return addr.ToClient();
         }
 
-        public async Task<FboAddress> GetFbo(int FboId)
+        public async Task<OrganisationAddress> Update(OrganisationAddress address)
         {
-            var fboOrg = await this.ctx.FBOs
-                    .Include(o => o.Organisation)
-                .AsNoTracking()
-                .FirstAsync(o => o.Id == FboId);
-            return fboOrg.ToClient();
+            var dbItem = await ctx.Organisations.FindAsync(address.Id);
+            address.ToDb(dbItem);
+            ctx.Organisations.Update(dbItem);
+            return dbItem.ToClient();
         }
 
         public async Task<NotifierAddress> GetNotifier(int NotifierId)
@@ -114,6 +139,7 @@ namespace FSA.IncidentsManagementDb.Repositories
             await ctx.Notifiers.AddRangeAsync(ents);
             await ctx.SaveChangesAsync();
         }
+        
         public async Task AssignFbos(FboTypes fboTypes, IEnumerable<int> addressesId)
         {
             var ents = addressesId.Select(o =>new FBODb
@@ -135,6 +161,7 @@ namespace FSA.IncidentsManagementDb.Repositories
             await ctx.SaveChangesAsync();
             return ent.Entity.Id;
         }
+
 
     }
 }

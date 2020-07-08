@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace FSA.UnitTests.Db
 {
@@ -22,20 +23,21 @@ namespace FSA.UnitTests.Db
 
         private ConfigFile Config { get; }
 
-        private FSADbContext dbContext;
-        private SIMSDataManager incidentsManagment;
+        private FSADbContext ctx;
+        private SIMSDataManager simsData;
         public DbTestAddress()
         {
             this.Config = System.Text.Json.JsonSerializer.Deserialize<ConfigFile>(File.OpenText("./config.json").ReadToEnd());
-            dbContext = new FSADbContext(new DbContextOptionsBuilder().UseSqlServer(Config.dbConn).Options);
-            incidentsManagment = new SIMSDataManager(dbContext, userId);
+            ctx = new FSADbContext(new DbContextOptionsBuilder().UseSqlServer(Config.dbConn).Options);
+            simsData = new SIMSDataManager(ctx, userId);
         }
 
         [Fact]
         public async Task AddFBOWithNewAddress()
         {
-            var orga = new OrganisationAddress
+            var orga = new FboAddress
             {
+                FboTypes = FboTypes.Consignor | FboTypes.E_trader,
                 EmailAddress = "Terry@amil.com",
                 MainContact = "Terry the data",
                 AddressLine1 = "Address line 1",
@@ -47,17 +49,34 @@ namespace FSA.UnitTests.Db
                 County = "Counry",
                 TelephoneNumber = ""
             };
-
-
-            FboTypes d = FboTypes.Consignor | FboTypes.E_trader;
-            var newaddress = await incidentsManagment.Addresses.AddFbo(d, orga);
+            var newaddress = await simsData.Addresses.AddFbo(orga);
             Assert.IsType<int>(newaddress);
+        }
+
+        [Fact]
+        public async Task UpdateFbo()
+        {
+            var address = await simsData.Addresses.GetFbo(3);
+            address.EmailAddress = "Updated@email.com";
+            address.FboTypes = FboTypes.Consignor;
+            var item  = await simsData.Addresses.UpdateFbo(address);
+            Assert.True(item.EmailAddress == "Updated@email.com" && item.FboTypes == FboTypes.Consignor);
+        }
+
+        [Fact]
+        public async Task AssignFbo()
+        {
+            var address = await simsData.Addresses.Get(22);
+            var fbo = FboTypes.Importer | FboTypes.Supplier | FboTypes.Trader_Broker;
+            var fboId = await simsData.Addresses.AssignFbo(fbo, address.Id);
+            var fboAdd = await simsData.Addresses.GetFbo(fboId);
+            Assert.True(fboAdd.FboTypes == fbo);
         }
 
         [Fact]
         public async Task GetFBOAddress()
         {
-            var itme = await incidentsManagment.Addresses.Get(1);
+            var itme = await simsData.Addresses.Get(1);
 
             Assert.NotNull(itme);
         }

@@ -1,4 +1,5 @@
-﻿using FSA.IncidentsManagement.Models;
+﻿using FSA.IncidentsManagement.Misc;
+using FSA.IncidentsManagement.Models;
 using FSA.IncidentsManagement.Root.Models;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace FSA.IncidentsManagement.Models
             return new BaseIncident(
                 id: @this.Id,
                 incidentTitle: @this.IncidentTitle,
-                incidentDescription: "", 
+                incidentDescription: "",
                 incidentTypeId: @this.IncidentTypeId,
                 contactMethodId: @this.ContactMethodId,
                 statusId: @this.StatusId,
@@ -29,7 +30,7 @@ namespace FSA.IncidentsManagement.Models
                 leadOffice: @this.LeadOffice,
                 adminLeadId: @this.AdminLeadId,
                 fieldOfficer: @this.FieldOfficer,
-                leadLocalAuthorityId: @this.LeadLocalAuthorityId == 0? new Nullable<int>() : @this.LeadLocalAuthorityId,
+                leadLocalAuthorityId: @this.LeadLocalAuthorityId == 0 ? new Nullable<int>() : @this.LeadLocalAuthorityId,
                 lAAdvised: @this.LAAdvised,
                 deathIllnessId: @this.DeathIllnessId,
                 mostUniqueId: Guid.Empty,
@@ -105,7 +106,45 @@ namespace FSA.IncidentsManagement.Models
             UnitId = @this.UnitId
         };
 
+        public static FboAddress ToClient(this FboAddressModel @this) => new FboAddress
+        {
+            Id = @this.Address.Id,
+            AddressLine1 = @this.Address.AddressLine1,
+            AddressLine2 = @this.Address.AddressLine2,
+            TownCity = @this.Address.TownCity,
+            PostCode = @this.Address.PostCode,
+            CountryId = @this.Address.CountryId,
+            County = @this.Address.County,
+            EmailAddress = @this.Address.EmailAddress,
+            MainContact = @this.Address.MainContact,
+            TelephoneNumber = @this.Address.TelephoneNumber,
+            ContactMethodId = @this.Address.ContactMethodId,
+            OrganisationRoleId = @this.Address.OrganisationRoleId ?? 0,
+            Title = @this.Address.Title,
 
+            FboId = @this.Id,
+            FboTypes = (FboTypes)@this.FboTypes.ToList().Sum()
+        };
+
+        public static FboAddressWebModel ToWeb(this FboAddress @this) => new FboAddressWebModel
+        {
+            Address = new OrganisationAddress
+            {
+                AddressLine1 = @this.AddressLine1,
+                AddressLine2 = @this.AddressLine2,
+                TownCity = @this.TownCity,
+                PostCode = @this.PostCode,
+                CountryId = @this.CountryId,
+                County = @this.County,
+                EmailAddress = @this.EmailAddress,
+                MainContact = @this.MainContact,
+                TelephoneNumber = @this.TelephoneNumber,
+                ContactMethodId = @this.ContactMethodId,
+                OrganisationRoleId = @this.OrganisationRoleId ?? 0,
+                Title = @this.Title,
+            },
+            FboTypes = Utilities.SelectedFlags(@this.FboTypes)
+        };
 
         public static IEnumerable<ProductPackSize> ToClient(this IEnumerable<ProductPackSizeModel> @this)
         {

@@ -16,6 +16,11 @@ namespace FSA.UnitTests.WebApi
         public IncidentT()
         {
             this.Config = System.Text.Json.JsonSerializer.Deserialize<ConfigFile>(File.OpenText("./config.json").ReadToEnd());
+            _server = new TestServer(new WebHostBuilder()
+                   .UseStartup<Startup>());
+            _client = _server.CreateClient();
+
+
         }
 
 

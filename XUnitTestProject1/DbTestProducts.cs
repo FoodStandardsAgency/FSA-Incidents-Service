@@ -11,6 +11,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -119,6 +120,37 @@ namespace FSA.UnitTests.Db
             var updatedProduct = await fsaData.Products.Update(product);
             var date = updatedProduct.ProductDates.FirstOrDefault(o => o.Date.Equals(DateTime.Parse("30/09/1978").ToUniversalTime()));
             Assert.True(updatedProduct.Name == "Updated Producted" && date != null);
+        }
+
+        [Fact]
+        public async Task GetProductAddresses()
+        {
+            ISIMSManager fsaData = new SIMSDataManager(this.dbContext, userId3);
+            var addresses = await fsaData.Products.GetProductAddresses(1); 
+        }
+
+        [Fact]
+        public async Task AddressesToProduct()
+        {
+            ISIMSManager fsaData = new SIMSDataManager(this.dbContext, userId3);
+            await fsaData.Products.AddAddress(1, 2);
+            await fsaData.Products.AddAddress(1, 1);
+            await fsaData.Products.AddAddress(2, 3);
+            await fsaData.Products.AddAddress(3, 1);
+            await fsaData.Products.AddAddress(3, 2);
+            await fsaData.Products.AddAddress(3, 4);
+
+            var p1a = (await fsaData.Products.GetProductAddresses(1)).ToList();
+            var p2a = (await fsaData.Products.GetProductAddresses(2)).ToList();
+            Assert.True(p1a.Count == 2 && p2a.Count ==1);
+        }
+
+        [Fact]
+        public async Task DashboardItems()
+        {
+            ISIMSManager fsaData = new SIMSDataManager(this.dbContext, userId3);
+            var rawDash = await fsaData.Products.DashboardItems(17);
+
         }
     }
 }

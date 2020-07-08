@@ -48,6 +48,8 @@ namespace FSA.IncidentsManagement.Controllers
         [Produces("application/json")]
         public async Task<IActionResult> GetIncidentDashboard(string search, int pageNo, int? pageSize)
         {
+            log.LogInformation($"search terms : {search} {pageNo} {pageSize}", "GetIncidentsDashboard");
+
             if (pageNo < 1 || pageSize<1  )
                 return new OkObjectResult(new PagedResult<IncidentDashboardView>(Enumerable.Empty<IncidentDashboardView>(), 0));
             

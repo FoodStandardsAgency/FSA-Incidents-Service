@@ -88,6 +88,23 @@ namespace FSA.IncidentsManagementDb
             }
         }
 
+        public static IEnumerable<OrganisationAddress> ToDb(this IEnumerable<OrganisationDb> @this)
+        {
+            foreach (var itm in @this)
+            {
+                yield return itm.ToClient();
+            }
+        }
+
+        public static IEnumerable<FboAddress> ToClient(this IEnumerable<FBODb> @this)
+        {
+            foreach (var itm in @this)
+            {
+                yield return itm.ToClient();
+            }
+        }
+
+  
         public static OrganisationAddress ToClient(this OrganisationDb @this) => new OrganisationAddress
         {
             Id = @this.Id,
@@ -105,7 +122,6 @@ namespace FSA.IncidentsManagementDb
         };
 
 
-
         public static OrganisationDb ToDb(this OrganisationAddress @this) => new OrganisationDb
         {
             Id = @this.Id,
@@ -121,6 +137,25 @@ namespace FSA.IncidentsManagementDb
             EmailAddress = @this.EmailAddress,
             ContactMethodId = @this.ContactMethodId
         };
+
+
+
+        public static void ToDb(this OrganisationAddress @this, OrganisationDb entity)
+        {
+            entity.Title = @this.Title;
+            entity.MainContact = @this.MainContact;
+            entity.AddressLine1 = @this.AddressLine1;
+            entity.AddressLine2 = @this.AddressLine2;
+            entity.TownCity = @this.TownCity;
+            entity.County = @this.County;
+            entity.CountryId = @this.CountryId;
+            entity.PostCode = @this.PostCode;
+            entity.TelephoneNumber = @this.TelephoneNumber;
+            entity.EmailAddress = @this.EmailAddress;
+            entity.ContactMethodId = @this.ContactMethodId;
+        }
+
+
 
         public static OrganisationRole ToClient(this OrganisationRoleDb @this) => new OrganisationRole
         {
@@ -341,6 +376,7 @@ namespace FSA.IncidentsManagementDb
         public static Product ToClient(this ProductDb @this) => new Product
         {
             Id = @this.Id,
+            Name = @this.Name,
             IncidentId = @this.IncidentId,
             AdditionalInfo = @this.AdditionalInfo ?? "",
             AmountUnitTypeId = @this.AmountUnitTypeId,
@@ -349,7 +385,6 @@ namespace FSA.IncidentsManagementDb
             Brand = @this.Brand,
             CountryOfOriginId = @this.CountryOfOriginId,
             DataSourceId = @this.DataSourceId,
-            Name = @this.Name,
             PackDescription = @this.PackDescription,
             PackSizes = @this.PackSizes?.ToClient().ToList() ?? new List<ProductPackSize>(),
             ProductDates = @this.ProductDates?.ToClient().ToList() ?? new List<ProductDate>(),
@@ -358,6 +393,24 @@ namespace FSA.IncidentsManagementDb
             Added = @this.Created,
             LastUpdated = @this.Modified,
             LastUpdatedBy = @this.ModifiedBy
+        };
+
+        public static IEnumerable<ProductDashboard> ToDashboard(this IEnumerable<ProductDb> @this)
+        {
+            foreach (var itm in @this)
+            {
+                yield return itm.ToDashboard();
+            }
+        }
+
+        public static ProductDashboard ToDashboard(this ProductDb @this) => new ProductDashboard
+        {
+            Id = @this.Id,
+            Name = @this.Name,
+            ProductType = @this.ProductType.Title,
+            LastUpdated = @this.Modified,
+            BatchCodes = @this.BatchCodes,
+            AddressNames = @this.RelatedFBOs?.Select(p => p.FBO.Organisation.Title).ToList() ?? new List<string>()
         };
 
         public static void ToUpdateDb(this Product @this, ProductDb product)

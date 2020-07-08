@@ -113,5 +113,59 @@ namespace FSA.UnitTests.Misc
                    incidentClosed: null)
         };
 
+        public IEnumerable<Product> GetNewProducts() => new List<Product>
+        {
+            new Product
+            {
+                Name = "Bourbon biscuits",
+                Brand = "McBiscuits",
+                Amount = "5.53",
+                AmountUnitTypeId = 1,
+                PackDescription = "This is a new packet",
+                IncidentId = 17,
+                CountryOfOriginId = 28,
+                ProductTypeId =8,
+                BatchCodes = "bb1, bb2, bb3",
+                DataSourceId = 2,
+                AdditionalInfo = "Some more info",
+                PackSizes = new List<ProductPackSize> { new ProductPackSize { Size = "12", UnitId = 9 } },
+                ProductDates = new List<ProductDate> { new ProductDate { DateTypeId = 1, Date = DateTime.Now } }
+            },
+            new Product
+            {
+                Name = "Sticky biscuits",
+                Brand = "McBiscuits",
+                Amount = "8",
+                AmountUnitTypeId = 4,
+                PackDescription = "mmmm sticky biscuits",
+                IncidentId = 17,
+                CountryOfOriginId = 47,
+                BatchCodes = "sb1, sb2, sb14",
+                ProductTypeId =12,
+                //DataSourceId = 2,
+                AdditionalInfo = "Some more info",
+                PackSizes = new List<ProductPackSize> { new ProductPackSize { Size = "1", UnitId = 14 } },
+                ProductDates = new List<ProductDate> { new ProductDate { DateTypeId = 1, Date = DateTime.Now } }
+            },
+            new Product
+            {
+                Name = "Chocolate biscuits",
+                Brand = "McBiscuits",
+                Amount = "120",
+                AmountUnitTypeId = 10,
+                PackDescription = "yucky",
+                IncidentId = 17,
+                ProductTypeId =14,
+                CountryOfOriginId = 28,
+                BatchCodes = "cbasdasd-1212, cb-2332423324-1231212",
+                AdditionalInfo = "eomthing",
+                PackSizes = new List<ProductPackSize> { new ProductPackSize { Size = "12", UnitId = 7 },new ProductPackSize { Size = "8", UnitId = 19 },new ProductPackSize { Size = "0.1", UnitId = 5 } },
+                ProductDates = new List<ProductDate> { 
+                        new ProductDate { DateTypeId = 1, Date = DateTime.Now }
+                        ,new ProductDate { DateTypeId = 2, Date = DateTime.Now }
+                        ,new ProductDate { DateTypeId = 3, Date = DateTime.Now }
+                }
+            }
+        };
     }
 }

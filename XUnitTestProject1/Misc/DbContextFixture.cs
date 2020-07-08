@@ -8,10 +8,14 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,7 +35,7 @@ namespace FSA.UnitTests.Misc
             this.Config = System.Text.Json.JsonSerializer.Deserialize<ConfigFile>(File.OpenText("./config.json").ReadToEnd());
             this.titleList = File.ReadAllLines("./ListOfTitles.txt");
             this.dbConn = new SqlConnection(Config.dbConn);
-             Seed();
+            Seed();
 
             dbConn.Open();
         }
@@ -46,15 +50,41 @@ namespace FSA.UnitTests.Misc
         {
             var addresses = System.Text.Json.JsonSerializer.Deserialize<List<OrganisationAddress>>(File.OpenText("./orgs.json").ReadToEnd());
             await sims.Addresses.Add(addresses);
-            List<Task<int>> vs = new List<Task<int>>();
-            await sims.Addresses.AssignNotifiers(NotifierTypes.LocalAuthority, Enumerable.Range(1, 407));
-            
+            await sims.Addresses.AssignNotifiers(NotifierTypes.LocalAuthority, Enumerable.Range(1, 407).ToList());
+
 
             await sims.Addresses.AssignFbo(FboTypes.Consignor | FboTypes.Exporter, 408);
             await sims.Addresses.AssignFbo(FboTypes.Exporter | FboTypes.Farmer, 409);
             await sims.Addresses.AssignFbo(FboTypes.Manufacturer | FboTypes.Exporter | FboTypes.Consignor, 410);
-            await sims.Addresses.AssignFbo(FboTypes.E_platform_Market | FboTypes.Storage | FboTypes.Wholesaler , 411);
+            await sims.Addresses.AssignFbo(FboTypes.E_platform_Market | FboTypes.Storage | FboTypes.Wholesaler, 411);
 
+        }
+
+        private async Task CreateIncidents(ISIMSManager sims, FSADbContext ctx, SeedIncidents seeder)
+        {
+            var iManager = new FSA.IncidentsManagementDb.Repositories.IncidentsManagement(ctx, Config.username);
+            List<Task<BaseIncident>> TaskList = new List<Task<BaseIncident>>();
+            await iManager.Add(seeder.GetNewIncidents());
+            var coreIncident = seeder.GetNewIncidents().ElementAt(0);
+            var newBatch = new List<BaseIncident>();
+            for (var x = 0; x < 9000 / 20; ++x)
+            {
+                foreach (var title in this.titleList)
+                {
+                    var newIncident = coreIncident.WithTitle($"{title}-{x}")
+                                                  .WithStatus((int)IncidentStatus.Unassigned)
+                                                  .WithLeadOfficer("");
+                    newBatch.Add(newIncident);
+                }
+            }
+
+            await iManager.Add(newBatch);
+        }
+        private async Task CreateProducts(ISIMSManager sims, SeedIncidents seeder)
+        {
+            var products = seeder.GetNewProducts();
+            var tasks = products.Select(p => sims.Products.Add(p.IncidentId,p ));
+            await Task.WhenAll(tasks);
         }
 
         private void Seed()
@@ -63,53 +93,53 @@ namespace FSA.UnitTests.Misc
             {
                 if (!_databaseInit)
                 {
-                    using(var ctx = this.CreateContext())
+                    using (var ctx = this.CreateContext())
                     {
                         ctx.Database.EnsureDeleted();
                         ctx.Database.Migrate();
 
-
                         var seeder = new SeedIncidents();
-                        ISIMSManager SIMS = new SIMSDataManager(ctx, "00000000-0000-0000-0000-000000000001");
-                        var iManager = new FSA.IncidentsManagementDb.Repositories.IncidentsManagement(ctx, "00000000-0000-0000-0000-000000000001");
-                        List<Task<BaseIncident>> TaskList = new List<Task<BaseIncident>>();
-                        var task = iManager.Add(seeder.GetNewIncidents());
-                        //TaskList.AddRange(seeder.GetNewIncidents().Select(a => SIMS.Incidents.Add(a)).ToList());
-                        var coreIncident = seeder.GetNewIncidents().ElementAt(0);
-                        var newBatch = new List<BaseIncident>();
-                        for (var x=0;x<9000/20;++x)
-                        {
-                            foreach(var title in this.titleList )
-                            {
-                                var newIncident = coreIncident.WithTitle($"{title}-{x}")
-                                                              .WithStatus((int)IncidentStatus.Open)
-                                                              .WithLeadOfficer("");
-                                newBatch.Add(newIncident);
-                            }
-                        }
+                        ISIMSManager SIMS = new SIMSDataManager(ctx, Config.username);
+                        var t2 = CreateIncidents(SIMS, ctx, seeder);
 
-                        var t2 = iManager.Add(newBatch);
                         try
                         {
-                            task.Wait();
                             t2.Wait();
+
                             //Task.WhenAll(TaskList.ToArray());
 
                         }
-                        catch (Exception ex)
+                        catch (AggregateException ex)
                         {
-                            Debug.WriteLine(ex);
+                            var res = ex.Flatten();
+                            Debug.WriteLine(res);
                         }
                         var t3 = CreateAddress(SIMS);
                         try
                         {
                             t3.Wait();
+
                             //Task.WhenAll(TaskList.ToArray());
 
                         }
-                        catch (Exception ex)
+                        catch (AggregateException ex)
                         {
-                            Debug.WriteLine(ex);
+                            var res = ex.Flatten();
+                            Debug.WriteLine(res);
+                        }
+                        var t4 = CreateProducts(SIMS, seeder);
+
+                        try
+                        {
+                            t4.Wait();
+
+                            //Task.WhenAll(TaskList.ToArray());
+
+                        }
+                        catch (AggregateException ex)
+                        {
+                            var res = ex.Flatten();
+                            Debug.WriteLine(res);
                         }
 
                     }

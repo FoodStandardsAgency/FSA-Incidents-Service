@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="3.1.5" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
@@ -30,6 +31,7 @@
   <ItemGroup>
     <ProjectReference Include="..\FSA.IncidentMangementMent.Root\FSA.IncidentsManagement.Root.csproj" />
     <ProjectReference Include="..\FSA.IncidentsManagementDb\FSA.IncidentsManagementDb.csproj" />
+    <ProjectReference Include="..\FSA.IncidentsManagement\FSA.IncidentsManagement.csproj" />
   </ItemGroup>
 
   <ItemGroup>
