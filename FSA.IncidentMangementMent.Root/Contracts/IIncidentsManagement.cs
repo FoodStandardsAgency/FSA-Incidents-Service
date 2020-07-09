@@ -34,6 +34,9 @@ namespace FSA.IncidentsManagement.Root.Contracts
 
         Task<BaseIncident> Update(BaseIncident incident);
         Task<IEnumerable<IncidentDashboardView>> DashboardIncidentLinks(int incidentId);
+
         Task BulkClose(IEnumerable<int> incidentIds);
+
+        Task RemoveLink(int fromIncidentId, int toIncidentId);
     }
 }

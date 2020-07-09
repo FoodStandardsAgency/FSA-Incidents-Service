@@ -143,7 +143,8 @@ namespace FSA.IncidentsManagement.Models
                 OrganisationRoleId = @this.OrganisationRoleId ?? 0,
                 Title = @this.Title,
             },
-            FboTypes = Utilities.SelectedFlags(@this.FboTypes)
+            FboTypes = Utilities.SelectedFlags(@this.FboTypes),
+            Id = @this.FboId
         };
 
         public static IEnumerable<ProductPackSize> ToClient(this IEnumerable<ProductPackSizeModel> @this)

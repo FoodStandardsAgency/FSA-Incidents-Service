@@ -2,6 +2,7 @@
 using FSA.IncidentsManagement.Root.Contracts;
 using FSA.IncidentsManagement.Root.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
@@ -29,7 +30,7 @@ namespace FSA.IncidentsManagement.Controllers
 
 
         [HttpPost("")]
-        [SwaggerOperation(Summary = "Create new Product.")]
+        [SwaggerOperation(Description =  "Create new Product.")]
         [ProducesResponseType(typeof(Product), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> AddProduct([FromBody] NewProductModel newProduct)
@@ -40,7 +41,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPut("")]
-        [SwaggerOperation(Summary = "Update Product.")]
+        [SwaggerOperation(Description =  "Update Product.")]
         [ProducesResponseType(typeof(Product), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> UpdateProduct([FromBody] NewProductModel product)
@@ -49,18 +50,21 @@ namespace FSA.IncidentsManagement.Controllers
             return new OkObjectResult(updatedProduct);
         }
 
-        [HttpGet("Incident/{incidentId}")]
-        [SwaggerOperation(Summary = "Fetch products.")]
+        [HttpGet("")]
+        [SwaggerOperation(Description =  "get product")]
         [ProducesResponseType(typeof(List<Product>), 200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> GetProducts(int incidentId)
+        public async Task<IActionResult> GetProduct([FromQuery]int productId)
         {
-            var products = await this.simsManager.Products.IncidentProducts(incidentId);
-            return new OkObjectResult(products);
+            if (productId == 0)
+                return new StatusCodeResult(500);
+
+            var product = await this.simsManager.Products.Get(productId);
+            return new OkObjectResult(product);
         }
 
         [HttpGet("Addresses/{productId}")]
-        [SwaggerOperation(Summary = "Fetch product addresses.")]
+        [SwaggerOperation(Description =  "Fetch product addresses.")]
         [ProducesResponseType(typeof(List<FboAddress>), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetProductAddresses(int productId)
@@ -70,7 +74,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpGet("Dashboard")]
-        [SwaggerOperation(Summary = "Fetch product addresses.")]
+        [SwaggerOperation(Description =  "Fetch product addresses.")]
         [ProducesResponseType(typeof(PagedResult<FboAddress>), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetProductDashboard([FromQuery]int incidentId, [FromQuery] int pageSize=10, [FromQuery]int pageNo=1)

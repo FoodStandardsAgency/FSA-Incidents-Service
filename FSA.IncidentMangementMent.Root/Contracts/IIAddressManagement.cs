@@ -8,7 +8,7 @@ namespace FSA.IncidentsManagement.Root.Contracts
 {
     public interface IIAddressManagement
     {
-        Task<int> AddFbo(FboAddress newAddress);
+        Task<FboAddress> AddFbo(FboAddress newAddress);
         Task<FboAddress> UpdateFbo(FboAddress address);
         Task<FboAddress> GetFbo(int FboId);
         Task<int> AddNotifier(NotifierTypes notifier, OrganisationAddress newAddress);

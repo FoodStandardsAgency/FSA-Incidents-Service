@@ -44,7 +44,8 @@ namespace FSA.IncidentsManagement
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            
+               services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddMicrosoftWebApi(Configuration, subscribeToJwtBearerMiddlewareDiagnosticsEvents: true);
 
             services.Configure<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme, options =>

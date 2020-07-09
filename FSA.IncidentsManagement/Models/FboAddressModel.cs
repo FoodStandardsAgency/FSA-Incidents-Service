@@ -8,6 +8,7 @@ namespace FSA.IncidentsManagement.Models
 {
     public class FboAddressWebModel
     {
+        public int Id { get; set; }
         public IEnumerable<FboTypes> FboTypes { get; set; }
         public OrganisationAddress Address { get; set; }
     }

@@ -1,15 +1,24 @@
-﻿using FSA.IncidentsManagement;
+﻿using FluentValidation.Validators;
+using FSA.IncidentsManagement;
+using FSA.IncidentsManagement.Misc;
+using FSA.IncidentsManagement.Models;
+using FSA.IncidentsManagement.Root.Models;
+using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace FSA.UnitTests 
+namespace FSA.IntegrationTesting 
 {
     public class WebIntegration : IDisposable
     {
@@ -19,19 +28,41 @@ namespace FSA.UnitTests
         public WebIntegration()
         {
             _server = new TestServer(new WebHostBuilder()
+                    .ConfigureAppConfiguration(c => {
+                        c.AddJsonFile("appsettings.Development.json");
+                    })
+                   .ConfigureServices(i=>i.AddSingleton<IPolicyEvaluator, FakeUserPolicy>())
                    .UseStartup<Startup>());
             _client = _server.CreateClient();
 
         }
 
         [Fact]
-        public async Task Test1()
+        public async Task RetrieveLookups()
         {
-            //var tken = await this.GetAccessToken();
+            var response = await _client.GetAsync("/api/lookups/Classifications");
+            var allClass = await response.Content.ReadFromJsonAsync<IEnumerable<Classification>>();
 
-            //var s = new Incident("New Title", "New Description", 1, 4, 2, null, 1, 1, 1, 2, 4, 2, Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), null, false, 1, null, DateTime.Now, null, Guid.NewGuid().ToString(), DateTime.Now);
-            //var j = System.Text.Json.JsonSerializer.Serialize(s);
-            //Console.WriteLine(j);
+        }
+
+        [Fact]
+        public async Task GetFboAddress()
+        {
+            var response = await _client.GetAsync("/api/Addresses/Fbo/1");
+            var address = await response.Content.ReadFromJsonAsync<FboAddressModel>();
+            Assert.True(address.Id == 1);
+        }
+
+        [Fact]
+        public async Task GetProduct()
+        {
+            _client.DefaultRequestHeaders
+                    .Accept
+                    .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            var response = await _client.GetAsync("/api/Products?productId=1");
+            var product = await response.Content.ReadFromJsonAsync<Product>();
+            Assert.True(product.Id == 1);
+
         }
 
         public void Dispose()

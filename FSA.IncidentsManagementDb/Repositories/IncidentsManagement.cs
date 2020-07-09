@@ -12,6 +12,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.Design;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Security.Cryptography;
@@ -127,6 +128,39 @@ namespace FSA.IncidentsManagementDb.Repositories
             return (await this.ctx.Incidents.AsNoTracking().ToListAsync()).ToClient().ToList();
         }
 
+        public async Task RemoveLink(int from, int to)
+        {
+            // LOcal functions fancy.
+            async Task DeleteLink(IncidentLinkDb link)
+            {
+                ctx.IncidentLinks.Remove(link);
+                var fromIncident = ctx.Incidents.Find(link.FromIncidentId);
+                var toincident = ctx.Incidents.Find(link.ToIncidentId);
+
+                if (fromIncident.IncidentStatusId != (int)IncidentStatus.Closed)
+                    ctx.Incidents.Update(fromIncident);
+                if (toincident.IncidentStatusId != (int)IncidentStatus.Closed)
+                    ctx.Incidents.Update(fromIncident);
+
+                await ctx.SaveChangesAsync();
+            }
+           
+            var fromTo  = ctx.IncidentLinks.Find(new { FromIncidentId = from, ToIncidentId = to });
+            if (fromTo != null)
+            {
+                await DeleteLink(fromTo);
+            }
+            else
+            {
+                var toFrom = ctx.IncidentLinks.Find(new { ToIncidentId = from, FromIncidentId = to });
+                if (toFrom != null)
+                {
+                    await DeleteLink(toFrom);
+                }
+
+            }
+        }
+
         /// <summary>
         /// Joins two incidents
         /// As long as they have not already been joined.
@@ -150,25 +184,19 @@ namespace FSA.IncidentsManagementDb.Repositories
                 {
                     var fromTo = ctx.IncidentLinks.AsNoTracking().FirstOrDefault(a => a.FromIncidentId == from && a.ToIncidentId == to);
                     var toFrom = ctx.IncidentLinks.AsNoTracking().FirstOrDefault(a => a.FromIncidentId == to && a.ToIncidentId == from);
-                    
+                    // There is no match either side.
                     if (fromTo == null && toFrom == null)
                     {
-                        
                         var newLink = new Entities.IncidentLinkDb { FromIncidentId = from, ToIncidentId = to };
-                        //SetAuditInfo(newLink);
                         if (!isReasonPresent)
                         {
-                            var newFromComment = new IncidentCommentDb { Comment = reason, IncidentId = from };
                             var newToComment = new IncidentCommentDb { Comment = reason, IncidentId = to };
-                            //SetAuditInfo(newFromComment);
-                            //SetAuditInfo(newToComment);
-                            ctx.IncidentComments.Add(newFromComment);
                             ctx.IncidentComments.Add(newToComment);
                         }
-                        var toIncident = ctx.Incidents.Find(to);
-                        
-                        // Update the destination incident, if the incident has not been closed.
+
+                        // Update the destination incident, if the incident has NOT been closed.
                         // This is not a sensible option.
+                        var toIncident = ctx.Incidents.Find(to);
                         if(toIncident.IncidentStatusId != (int)IncidentStatus.Closed)
                         {
                             ctx.Incidents.Update(toIncident);
@@ -179,10 +207,12 @@ namespace FSA.IncidentsManagementDb.Repositories
                     }
                 }
                 // We musht have updated something
+                // So ensure the from is updated too.
                 if (allTo.Count > 0 && updatesOccured)
                 {
                     var fromIncident = ctx.Incidents.Find(from);
-                    //UpdateAuditInfo(fromIncident);
+                    var newFromComment = new IncidentCommentDb { Comment = reason, IncidentId = from };
+                    this.ctx.IncidentComments.Add(newFromComment);
                     this.ctx.Incidents.Update(fromIncident);
                 }
 

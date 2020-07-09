@@ -39,7 +39,7 @@ namespace FSA.IncidentsManagementDb.Repositories
             await this.ctx.SaveChangesAsync();
         }
 
-        public async Task<int> AddFbo(FboAddress newAddress)
+        public async Task<FboAddress> AddFbo(FboAddress newAddress)
         {
             // create a new db Address
             var dbAddress = newAddress.ToDb();
@@ -50,7 +50,7 @@ namespace FSA.IncidentsManagementDb.Repositories
             };
             this.ctx.FBOs.Add(dbFBO);
             await ctx.SaveChangesAsync();
-            return dbFBO.Id;
+            return dbFBO.ToClient();
         }
 
         public async Task<FboAddress> GetFbo(int FboId)

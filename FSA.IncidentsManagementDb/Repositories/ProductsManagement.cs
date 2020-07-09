@@ -35,11 +35,14 @@ namespace FSA.IncidentsManagementDb.Repositories
 
         public async Task<Product> Get(int productId)
         {
-            var productDb = await ctx.Products.AsNoTracking()
-                       .Include(o => o.ProductDates)
-                       .Include(o => o.ProductType)
-                       .Include(o => o.PackSizes)
-                       .FirstAsync(p => p.Id == productId);
+            var productDb = await this.ctx.Products.AsNoTracking()
+                              .Include(o => o.ProductDates)
+                              .Include(o => o.ProductType)
+                              .Include(o => o.AmountUnitType)
+                              .Include(o => o.PackSizes)
+                              .Include(o => o.RelatedFBOs)
+                              //.ThenInclude(o => o.FBO).ThenInclude(o => o.Organisation)
+                              .FirstOrDefaultAsync(p => p.Id == productId);
 
             return productDb.ToClient();
         }
@@ -99,7 +102,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         {
             if (pageSize < 1 || startPage < 1) return new PagedResult<ProductDashboard>(Enumerable.Empty<ProductDashboard>(), 0);
 
-            var startRecord = pageSize * (startPage-1);
+            var startRecord = pageSize * (startPage - 1);
 
             var totalRecords = ctx.Products.AsNoTracking()
                     .Include(o => o.RelatedFBOs).ThenInclude(o => o.FBO).ThenInclude(o => o.Organisation)
@@ -107,9 +110,9 @@ namespace FSA.IncidentsManagementDb.Repositories
 
             var items = await ctx.Products.AsNoTracking()
                     .Include(o => o.RelatedFBOs).ThenInclude(o => o.FBO).ThenInclude(o => o.Organisation)
-                    .Include(o => o.ProductType).Where(o=>o.IncidentId == incidentId)
+                    .Include(o => o.ProductType).Where(o => o.IncidentId == incidentId)
                     .Skip(startRecord).Take(pageSize).ToListAsync();
-            
+
             return new PagedResult<ProductDashboard>(items.ToDashboard(), totalRecords);
         }
 
