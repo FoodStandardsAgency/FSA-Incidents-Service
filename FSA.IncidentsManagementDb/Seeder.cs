@@ -2566,27 +2566,20 @@ namespace FSA.IncidentsManagementDb
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
-                    new ContactMethodDb
-                    {
-                        Id = 2,
-                        Title = "Telephone",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new ContactMethodDb
-                    {
-                        Id = 3,
-                        Title = "Fax",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new ContactMethodDb
-                    {
-                        Id = 4,
-                        Title = "No Preference",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    });
+                new ContactMethodDb
+                {
+                    Id = 2,
+                    Title = "Telephone",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new ContactMethodDb
+                {
+                    Id = 4,
+                    Title = "No Preference",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                });
 
         }
 

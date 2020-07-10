@@ -27,9 +27,7 @@ namespace FSA.IncidentsManagement.Root.Models
         public string BatchCodes { get; set; }
         public string PackDescription { get; set; }
         public string AdditionalInfo { get; set; }
-        public int? DataSourceId { get; set; }
         
-        public string SignalUrl { get; set; }
         public DateTime Added { get; set; }
         public DateTime LastUpdated { get; set; }
         public string LastUpdatedBy { get; set; }

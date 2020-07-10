@@ -1,0 +1,2729 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "fsa incident management",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/Addresses": {
+      "get": {
+        "tags": [
+          "Addresses"
+        ],
+        "operationId": "FindAddress",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "addressSearch",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/FboAddressModel"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Addresses/Fbo": {
+      "post": {
+        "tags": [
+          "Addresses"
+        ],
+        "operationId": "AddFboAddress",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/FboAddressModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/FboAddressModel"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Addresses"
+        ],
+        "operationId": "UpdatedFboAddress",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/FboAddressModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/FboAddressModel"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Addresses/Fbo/{fboId}": {
+      "get": {
+        "tags": [
+          "Addresses"
+        ],
+        "operationId": "GetFboAddress",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "fboId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/FboAddressModel"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Incidents": {
+      "get": {
+        "tags": [
+          "Incidents"
+        ],
+        "operationId": "GetIncident",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/IncidentsDisplayModel"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Incidents"
+        ],
+        "operationId": "UpdateIncident",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/IncidentUpdateModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/BaseIncident"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Incidents"
+        ],
+        "operationId": "CreateIncident",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/IncidentCreateModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/BaseIncident"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Incidents/Dashboard": {
+      "get": {
+        "tags": [
+          "Incidents"
+        ],
+        "operationId": "GetIncidentDashboard",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "search",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "pageNo",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "pageSize",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/IncidentDashboardView"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Incidents/Classification": {
+      "post": {
+        "tags": [
+          "Incidents"
+        ],
+        "operationId": "UpdateClassification",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "incidentId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "classificationId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/BaseIncident"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Incidents/Status": {
+      "post": {
+        "tags": [
+          "Incidents"
+        ],
+        "operationId": "UpdateStatus",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "incidentId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "statusId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/BaseIncident"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Incidents/CloseAll": {
+      "post": {
+        "tags": [
+          "Incidents"
+        ],
+        "operationId": "CloseAll",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "format": "int32",
+                "type": "integer"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Incidents/LeadOfficer": {
+      "post": {
+        "tags": [
+          "Incidents"
+        ],
+        "operationId": "UpdateLeadOfficer",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdateLeadOfficer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Incidents/AddLinks": {
+      "post": {
+        "tags": [
+          "Incidents"
+        ],
+        "operationId": "AddIncidentLink",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/LinkIncidents"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Incidents/RemoveLink": {
+      "post": {
+        "tags": [
+          "Incidents"
+        ],
+        "operationId": "RemoveIncidentLink",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/UnlinkIncident"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Incidents/GetIncidentLinks": {
+      "get": {
+        "tags": [
+          "Incidents"
+        ],
+        "operationId": "GetIncidentLinks",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "incidentId",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/IncidentDashboardView"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Incidents/AddNote": {
+      "post": {
+        "tags": [
+          "Incidents"
+        ],
+        "operationId": "AddNote",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/IncidentComment"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Incidents/GetNotes": {
+      "get": {
+        "tags": [
+          "Incidents"
+        ],
+        "operationId": "GetNotes",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "incidentId",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/IncidentNote"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Lookups/Categories": {
+      "get": {
+        "tags": [
+          "Lookups"
+        ],
+        "operationId": "Categories",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Category"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Lookups/Classifications": {
+      "get": {
+        "tags": [
+          "Lookups"
+        ],
+        "operationId": "Classifications",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Classification"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Lookups/Countries": {
+      "get": {
+        "tags": [
+          "Lookups"
+        ],
+        "operationId": "Countries",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Country"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Lookups/ContactMethod": {
+      "get": {
+        "tags": [
+          "Lookups"
+        ],
+        "operationId": "ContactMethod",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ContactMethod"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Lookups/DataSources": {
+      "get": {
+        "tags": [
+          "Lookups"
+        ],
+        "operationId": "DataSource",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/DataSource"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Lookups/DeathIllnesses": {
+      "get": {
+        "tags": [
+          "Lookups"
+        ],
+        "operationId": "DeathIllness",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/DeathIllness"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Lookups/OMITGroups": {
+      "get": {
+        "tags": [
+          "Lookups"
+        ],
+        "operationId": "OMITGroup",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/OMITGroup"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Lookups/OrganisationRoles": {
+      "get": {
+        "tags": [
+          "Lookups"
+        ],
+        "operationId": "OrganisationRole",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/OrganisationRole"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Lookups/PersonaRoles": {
+      "get": {
+        "tags": [
+          "Lookups"
+        ],
+        "operationId": "PersonaRole",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PersonaRole"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Lookups/ProductTypes": {
+      "get": {
+        "tags": [
+          "Lookups"
+        ],
+        "operationId": "ProductTypes",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ProductType"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Lookups/FBOTypes": {
+      "get": {
+        "tags": [
+          "Lookups"
+        ],
+        "operationId": "FBOTypes",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/FBOType"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Lookups/ProductDateTypes": {
+      "get": {
+        "tags": [
+          "Lookups"
+        ],
+        "operationId": "ProductDateTypes",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ProductDateType"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Lookups/AdminLeads": {
+      "get": {
+        "tags": [
+          "Lookups"
+        ],
+        "operationId": "AdminLeads",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AdminLead"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Lookups/SignalStatus": {
+      "get": {
+        "tags": [
+          "Lookups"
+        ],
+        "operationId": "SignalStatus",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SignalStatus"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Lookups/Units": {
+      "get": {
+        "tags": [
+          "Lookups"
+        ],
+        "operationId": "UnitQuantities",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UnitQuantity"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Lookups/Organisations": {
+      "get": {
+        "tags": [
+          "Lookups"
+        ],
+        "operationId": "Organisations",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/OrganisationLookup"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Lookups/FBOLookups": {
+      "get": {
+        "tags": [
+          "Lookups"
+        ],
+        "operationId": "FboLookup",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/OrganisationLookup"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Lookups/NotifierLookups": {
+      "get": {
+        "tags": [
+          "Lookups"
+        ],
+        "operationId": "NotfierLookup",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/OrganisationLookup"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Lookups/LocalAuthorityLookups": {
+      "get": {
+        "tags": [
+          "Lookups"
+        ],
+        "operationId": "LocalAuthorityLookups",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/OrganisationLookup"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Lookups/Priorities": {
+      "get": {
+        "tags": [
+          "Lookups"
+        ],
+        "operationId": "Priorities",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Priority"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Lookups/Status": {
+      "get": {
+        "tags": [
+          "Lookups"
+        ],
+        "operationId": "IncidentStatus",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/IncidentStatusLkUp"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Products": {
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "operationId": "AddProduct",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/NewProductModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Products"
+        ],
+        "operationId": "UpdateProduct",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/NewProductModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "operationId": "GetProduct",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "productId",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ProductDisplayModel"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Products/Incident/{incidentId}": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "operationId": "GetIncidentProducts",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "incidentId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Product"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Products/Addresses/{productId}": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "operationId": "GetProductAddresses",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "productId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/FboAddress"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Products/Dashboard": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "operationId": "GetProductDashboard",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "incidentId",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "pageSize",
+            "type": "integer",
+            "format": "int32",
+            "default": 10
+          },
+          {
+            "in": "query",
+            "name": "pageNo",
+            "type": "integer",
+            "format": "int32",
+            "default": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/FboAddress"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Products/AssignFbo": {
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "operationId": "AssignFbo",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AssignItemToFbo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/FboAddress"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Products/RemoveFbo": {
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "operationId": "RemoveFbo",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AssignItemToFbo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/FboAddress"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "OrganisationAddress": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "mainContact": {
+          "type": "string"
+        },
+        "organisationRoleId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "addressLine1": {
+          "type": "string"
+        },
+        "addressLine2": {
+          "type": "string"
+        },
+        "townCity": {
+          "type": "string"
+        },
+        "county": {
+          "type": "string"
+        },
+        "countryId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "postCode": {
+          "type": "string"
+        },
+        "telephoneNumber": {
+          "type": "string"
+        },
+        "emailAddress": {
+          "type": "string"
+        },
+        "contactMethodId": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "FboAddressModel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "fboTypes": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "address": {
+          "$ref": "#/definitions/OrganisationAddress"
+        }
+      }
+    },
+    "IncidentsDisplayModel": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string",
+          "readOnly": true
+        },
+        "signalStatus": {
+          "type": "string",
+          "readOnly": true
+        },
+        "incidentStatus": {
+          "type": "string",
+          "readOnly": true
+        },
+        "notifier": {
+          "type": "string",
+          "readOnly": true
+        },
+        "principalFBO": {
+          "type": "string",
+          "readOnly": true
+        },
+        "fboEmail": {
+          "type": "string",
+          "readOnly": true
+        },
+        "fboPhone": {
+          "type": "string",
+          "readOnly": true
+        },
+        "fboAddressLine1": {
+          "type": "string",
+          "readOnly": true
+        },
+        "fboAddressLine2": {
+          "type": "string",
+          "readOnly": true
+        },
+        "fboAddressTown": {
+          "type": "string",
+          "readOnly": true
+        },
+        "fboAddressPostcode": {
+          "type": "string",
+          "readOnly": true
+        },
+        "priority": {
+          "type": "string",
+          "readOnly": true
+        },
+        "classification": {
+          "type": "string",
+          "readOnly": true
+        },
+        "dataSource": {
+          "type": "string",
+          "readOnly": true
+        },
+        "productType": {
+          "type": "string",
+          "readOnly": true
+        },
+        "leadLocalAuthority": {
+          "type": "string",
+          "readOnly": true
+        },
+        "deathIllness": {
+          "type": "string",
+          "readOnly": true
+        },
+        "adminLead": {
+          "type": "string",
+          "readOnly": true
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "commonId": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "mostUniqueId": {
+          "format": "uuid",
+          "type": "string",
+          "readOnly": true
+        },
+        "incidentTitle": {
+          "type": "string",
+          "readOnly": true
+        },
+        "incidentDescription": {
+          "type": "string",
+          "readOnly": true
+        },
+        "incidentTypeId": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "contactMethodId": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "statusId": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "signalStatusId": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "notifierId": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "principalFBOId": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "priorityId": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "classificationId": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "dataSourceId": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "productTypeId": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "leadOfficer": {
+          "type": "string",
+          "readOnly": true
+        },
+        "leadOffice": {
+          "type": "string",
+          "readOnly": true
+        },
+        "adminLeadId": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "fieldOfficer": {
+          "type": "string",
+          "readOnly": true
+        },
+        "leadLocalAuthorityId": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "laAdvised": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "deathIllnessId": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "receivedOn": {
+          "format": "date-time",
+          "type": "string",
+          "readOnly": true
+        },
+        "incidentCreated": {
+          "format": "date-time",
+          "type": "string",
+          "readOnly": true
+        },
+        "incidentClosed": {
+          "format": "date-time",
+          "type": "string",
+          "readOnly": true
+        },
+        "lastChangedBy": {
+          "type": "string",
+          "readOnly": true
+        },
+        "lastChangedDate": {
+          "format": "date-time",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "IncidentUpdateModel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "incidentTitle": {
+          "type": "string"
+        },
+        "incidentDescription": {
+          "type": "string"
+        },
+        "incidentTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "contactMethodId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "statusId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "priorityId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "signalStatusId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "notifierId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "principalFBOId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "leadLocalAuthorityId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "classificationId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "dataSourceId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "productTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "leadOfficer": {
+          "type": "string"
+        },
+        "leadOffice": {
+          "type": "string"
+        },
+        "adminLeadId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "fieldOfficer": {
+          "type": "string"
+        },
+        "laAdvised": {
+          "type": "boolean"
+        },
+        "deathIllnessId": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "BaseIncident": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "commonId": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "mostUniqueId": {
+          "format": "uuid",
+          "type": "string",
+          "readOnly": true
+        },
+        "incidentTitle": {
+          "type": "string",
+          "readOnly": true
+        },
+        "incidentDescription": {
+          "type": "string",
+          "readOnly": true
+        },
+        "incidentTypeId": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "contactMethodId": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "statusId": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "signalStatusId": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "notifierId": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "principalFBOId": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "priorityId": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "classificationId": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "dataSourceId": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "productTypeId": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "leadOfficer": {
+          "type": "string",
+          "readOnly": true
+        },
+        "leadOffice": {
+          "type": "string",
+          "readOnly": true
+        },
+        "adminLeadId": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "fieldOfficer": {
+          "type": "string",
+          "readOnly": true
+        },
+        "leadLocalAuthorityId": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "laAdvised": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "deathIllnessId": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "receivedOn": {
+          "format": "date-time",
+          "type": "string",
+          "readOnly": true
+        },
+        "incidentCreated": {
+          "format": "date-time",
+          "type": "string",
+          "readOnly": true
+        },
+        "incidentClosed": {
+          "format": "date-time",
+          "type": "string",
+          "readOnly": true
+        },
+        "lastChangedBy": {
+          "type": "string",
+          "readOnly": true
+        },
+        "lastChangedDate": {
+          "format": "date-time",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "IncidentCreateModel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "incidentTitle": {
+          "type": "string"
+        },
+        "incidentDescription": {
+          "type": "string"
+        },
+        "incidentTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "contactMethodId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "statusId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "signalStatusId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "notifierId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "principalFBOId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "classificationId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "priorityId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "dataSourceId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "productTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "leadOfficer": {
+          "type": "string"
+        },
+        "leadOffice": {
+          "type": "string"
+        },
+        "adminLeadId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "fieldOfficer": {
+          "type": "string"
+        },
+        "leadLocalAuthorityId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "laAdvised": {
+          "type": "boolean"
+        },
+        "deathIllnessId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "receivedOn": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "incidentCreated": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "IncidentDashboardView": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "commonId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "priority": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "notifier": {
+          "type": "string"
+        },
+        "leadOfficer": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "updated": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "UpdateLeadOfficer": {
+      "required": [
+        "incidentIds",
+        "officer"
+      ],
+      "type": "object",
+      "properties": {
+        "incidentIds": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "officer": {
+          "type": "string"
+        }
+      }
+    },
+    "LinkIncidents": {
+      "required": [
+        "fromIncidentId",
+        "toIncidentIds"
+      ],
+      "type": "object",
+      "properties": {
+        "fromIncidentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "toIncidentIds": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "comment": {
+          "type": "string"
+        }
+      }
+    },
+    "UnlinkIncident": {
+      "required": [
+        "fromIncidentId",
+        "toIncidentId"
+      ],
+      "type": "object",
+      "properties": {
+        "fromIncidentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "toIncidentId": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "IncidentComment": {
+      "type": "object",
+      "properties": {
+        "incidentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    },
+    "IncidentNote": {
+      "type": "object",
+      "properties": {
+        "incidentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "note": {
+          "type": "string"
+        },
+        "created": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        }
+      }
+    },
+    "Category": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "Classification": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "Country": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "ContactMethod": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "DataSource": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "DeathIllness": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "OMITGroup": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "OrganisationRole": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "canBeNotifier": {
+          "type": "boolean"
+        },
+        "canBeFBO": {
+          "type": "boolean"
+        },
+        "canBeLocalAuthority": {
+          "type": "boolean"
+        }
+      }
+    },
+    "PersonaRole": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "canBeAdminLead": {
+          "type": "boolean"
+        },
+        "canBeIncidentLead": {
+          "type": "boolean"
+        },
+        "canBeFieldOfficer": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ProductType": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "FBOType": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "ProductDateType": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "AdminLead": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "SignalStatus": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "parentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "isOpen": {
+          "type": "boolean"
+        },
+        "isUnassigned": {
+          "type": "boolean"
+        }
+      }
+    },
+    "UnitQuantity": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "OrganisationLookup": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "Priority": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "IncidentStatusLkUp": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "ProductPackSizeModel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "size": {
+          "type": "string"
+        },
+        "unitId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "productId": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "ProductDateModel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "productId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "dateTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "date": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "NewProductModel": {
+      "type": "object",
+      "properties": {
+        "incidentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "brand": {
+          "type": "string"
+        },
+        "productTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "countryOfOriginId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "amount": {
+          "type": "string"
+        },
+        "amountUnitTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "packSizes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProductPackSizeModel"
+          }
+        },
+        "productDates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProductDateModel"
+          }
+        },
+        "batchCodes": {
+          "type": "string"
+        },
+        "packDescription": {
+          "type": "string"
+        },
+        "additionalInfo": {
+          "type": "string"
+        },
+        "dataSourceId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "signalUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "ProductPackSize": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "size": {
+          "type": "string"
+        },
+        "unitId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "productId": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "ProductDate": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "productId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "dateTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "date": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "Product": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "incidentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "brand": {
+          "type": "string"
+        },
+        "productTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "countryOfOriginId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "amount": {
+          "type": "string"
+        },
+        "amountUnitTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "packSizes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProductPackSize"
+          }
+        },
+        "productDates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProductDate"
+          }
+        },
+        "batchCodes": {
+          "type": "string"
+        },
+        "packDescription": {
+          "type": "string"
+        },
+        "additionalInfo": {
+          "type": "string"
+        },
+        "dataSourceId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "signalUrl": {
+          "type": "string"
+        },
+        "added": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "lastUpdated": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "lastUpdatedBy": {
+          "type": "string"
+        }
+      }
+    },
+    "ProductDisplayModel": {
+      "type": "object",
+      "properties": {
+        "dataSource": {
+          "type": "string"
+        },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "incidentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "brand": {
+          "type": "string"
+        },
+        "productTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "countryOfOriginId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "amount": {
+          "type": "string"
+        },
+        "amountUnitTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "packSizes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProductPackSize"
+          }
+        },
+        "productDates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProductDate"
+          }
+        },
+        "batchCodes": {
+          "type": "string"
+        },
+        "packDescription": {
+          "type": "string"
+        },
+        "additionalInfo": {
+          "type": "string"
+        },
+        "dataSourceId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "signalUrl": {
+          "type": "string"
+        },
+        "added": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "lastUpdated": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "lastUpdatedBy": {
+          "type": "string"
+        }
+      }
+    },
+    "FboTypes": {
+      "format": "int32",
+      "enum": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        32,
+        64,
+        128,
+        256,
+        512,
+        1024,
+        2048,
+        4096,
+        8192,
+        16384,
+        32768,
+        65536
+      ],
+      "type": "integer"
+    },
+    "FboAddress": {
+      "type": "object",
+      "properties": {
+        "fboTypes": {
+          "$ref": "#/definitions/FboTypes"
+        },
+        "fboId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "mainContact": {
+          "type": "string"
+        },
+        "organisationRoleId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "addressLine1": {
+          "type": "string"
+        },
+        "addressLine2": {
+          "type": "string"
+        },
+        "townCity": {
+          "type": "string"
+        },
+        "county": {
+          "type": "string"
+        },
+        "countryId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "postCode": {
+          "type": "string"
+        },
+        "telephoneNumber": {
+          "type": "string"
+        },
+        "emailAddress": {
+          "type": "string"
+        },
+        "contactMethodId": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "AssignItemToFbo": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "fboId": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

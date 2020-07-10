@@ -34,7 +34,9 @@ namespace FSA.IntegrationTesting
                    .ConfigureServices(i=>i.AddSingleton<IPolicyEvaluator, FakeUserPolicy>())
                    .UseStartup<Startup>());
             _client = _server.CreateClient();
-
+            _client.DefaultRequestHeaders
+        .Accept
+        .Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         [Fact]
@@ -56,13 +58,27 @@ namespace FSA.IntegrationTesting
         [Fact]
         public async Task GetProduct()
         {
-            _client.DefaultRequestHeaders
-                    .Accept
-                    .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
             var response = await _client.GetAsync("/api/Products?productId=1");
             var product = await response.Content.ReadFromJsonAsync<Product>();
             Assert.True(product.Id == 1);
 
+        }
+
+        [Fact]
+        public async Task AssignProductFbo()
+        {
+            var response = await _client.PostAsJsonAsync<AssignItemToFbo>("/api/Products/AssignFbo", new AssignItemToFbo { FboId = 6, Id = 3 });
+            var product = await response.Content.ReadAsStringAsync();
+            Assert.True(product!=null);
+        }
+
+        [Fact]
+        public async Task RemoveProductFbo()
+        {
+            var response = await _client.PostAsJsonAsync<AssignItemToFbo>("/api/Products/RemoveFbo", new AssignItemToFbo { FboId = 6, Id = 3 });
+            var product = await response.Content.ReadAsStringAsync();
+            Assert.True(product != null);
         }
 
         public void Dispose()

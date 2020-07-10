@@ -117,6 +117,8 @@ namespace FSA.UnitTests.Db
             var pDates = product.ProductDates.ToList();
             pDates.Add(new ProductDate { Date = DateTime.Parse("30/09/1978").ToUniversalTime(), DateTypeId = 2, });
             product.ProductDates = pDates;
+            // product this is annoying
+
             var updatedProduct = await fsaData.Products.Update(product);
             var date = updatedProduct.ProductDates.FirstOrDefault(o => o.Date.Equals(DateTime.Parse("30/09/1978").ToUniversalTime()));
             Assert.True(updatedProduct.Name == "Updated Producted" && date != null);
@@ -133,12 +135,12 @@ namespace FSA.UnitTests.Db
         public async Task AddressesToProduct()
         {
             ISIMSManager fsaData = new SIMSDataManager(this.dbContext, userId3);
-            await fsaData.Products.AddAddress(1, 2);
-            await fsaData.Products.AddAddress(1, 1);
-            await fsaData.Products.AddAddress(2, 3);
-            await fsaData.Products.AddAddress(3, 1);
-            await fsaData.Products.AddAddress(3, 2);
-            await fsaData.Products.AddAddress(3, 4);
+            await fsaData.Products.AssignFbo(1, 2);
+            await fsaData.Products.AssignFbo(1, 1);
+            await fsaData.Products.AssignFbo(2, 3);
+            await fsaData.Products.AssignFbo(3, 1);
+            await fsaData.Products.AssignFbo(3, 2);
+            await fsaData.Products.AssignFbo(3, 4);
 
             var p1a = (await fsaData.Products.GetProductAddresses(1)).ToList();
             var p2a = (await fsaData.Products.GetProductAddresses(2)).ToList();

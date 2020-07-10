@@ -27,9 +27,6 @@ namespace FSA.IncidentsManagementDb.Entities
         public string PackDescription { get; set; }
         public string AdditionalInfo { get; set; }
         //public ICollection<BatchCodeDb> BatchCodes { get; set; }
-        public int? DataSourceId { get; set; }
-        public DataSourceDb DataSource { get; set; }
-        public string SignalUrl { get; set; }
         public ICollection<ProductFBODb> RelatedFBOs { get; set; }
     }
 }

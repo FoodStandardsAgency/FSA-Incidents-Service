@@ -2,12 +2,12 @@
 using FSA.IncidentsManagement.Root.Contracts;
 using FSA.IncidentsManagement.Root.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -51,16 +51,26 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpGet("")]
-        [SwaggerOperation(Description =  "get product")]
-        [ProducesResponseType(typeof(List<Product>), 200)]
+        [SwaggerOperation(Description = "get product")]
+        [ProducesResponseType(typeof(ProductDisplayModel), 200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> GetProduct([FromQuery]int productId)
+        public async Task<IActionResult> GetProduct([FromQuery] int productId)
         {
             if (productId == 0)
                 return new StatusCodeResult(500);
 
             var product = await this.simsManager.Products.Get(productId);
             return new OkObjectResult(product);
+        }
+
+        [HttpGet("Incident/{incidentId}")]
+        [SwaggerOperation(Description =  "Fetch products.")]
+        [ProducesResponseType(typeof(List<Product>), 200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> GetIncidentProducts(int incidentId)
+        {
+            var products = await this.simsManager.Products.IncidentProducts(incidentId);
+            return new OkObjectResult(products);
         }
 
         [HttpGet("Addresses/{productId}")]
@@ -84,7 +94,25 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
 
+        [HttpPost("AssignFbo")]
+        [SwaggerOperation(Description = "Assigns fbo to product.")]
+        [ProducesResponseType(typeof(PagedResult<FboAddress>), 200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> AssignFbo([Required] AssignItemToFbo assignObj )
+        {
+            await this.simsManager.Products.AssignFbo(assignObj.Id, assignObj.FboId);
+            return new OkResult();
+        }
 
+        [HttpPost("RemoveFbo")]
+        [SwaggerOperation(Description = "Removes fbo from product.")]
+        [ProducesResponseType(typeof(PagedResult<FboAddress>), 200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> RemoveFbo([Required] AssignItemToFbo assignObj)
+        {
+            await this.simsManager.Products.RemoveFbo(assignObj.Id, assignObj.FboId);
+            return new OkResult();
+        }
 
     }
 }

@@ -229,6 +229,7 @@ namespace FSA.IncidentsManagementDb
                 priorityId: @this.PriorityId,
                 classificationId: @this.ClassificationId,
                 dataSourceId: @this.DataSourceId,
+                signalUrl:@this.SignalUrl,
                 productTypeId: @this.ProductTypeId,
                 leadOfficer: @this.LeadOfficer,
                 leadOffice: @this.LeadOffice,
@@ -261,6 +262,7 @@ namespace FSA.IncidentsManagementDb
                 priorityId: @this.PriorityId,
                 classificationId: @this.ClassificationId,
                 dataSourceId: @this.DataSourceId,
+                signalUrl: @this.SignalUrl,
                 productTypeId: @this.ProductTypeId,
                 leadOfficer: @this.LeadOfficer,
                 leadOffice: @this.LeadOffice,
@@ -366,7 +368,6 @@ namespace FSA.IncidentsManagementDb
                 AdditionalInfo = @this.AdditionalInfo ?? "",
                 AmountUnitTypeId = @this.AmountUnitTypeId,
                 BatchCodes = @this.BatchCodes,
-                DataSourceId = @this.DataSourceId,
                 PackDescription = @this.PackDescription,
                 ProductDates = @this.ProductDates.ToDb().ToList(),
                 PackSizes = @this.PackSizes.ToDb().ToList(),
@@ -384,12 +385,32 @@ namespace FSA.IncidentsManagementDb
             BatchCodes = @this.BatchCodes,
             Brand = @this.Brand,
             CountryOfOriginId = @this.CountryOfOriginId,
-            DataSourceId = @this.DataSourceId,
             PackDescription = @this.PackDescription,
             PackSizes = @this.PackSizes?.ToClient().ToList() ?? new List<ProductPackSize>(),
             ProductDates = @this.ProductDates?.ToClient().ToList() ?? new List<ProductDate>(),
             ProductTypeId = @this.ProductTypeId,
-            SignalUrl = @this.SignalUrl,
+            Added = @this.Created,
+            LastUpdated = @this.Modified,
+            LastUpdatedBy = @this.ModifiedBy
+        };
+
+        public static ProductDisplayModel ToClientDisplay(this ProductDb @this) => new ProductDisplayModel
+        {
+            Id = @this.Id,
+            Name = @this.Name,
+            IncidentId = @this.IncidentId,
+            AdditionalInfo = @this.AdditionalInfo ?? "",
+            AmountUnitTypeId = @this.AmountUnitTypeId,
+            Amount = @this.Amount,
+            DataSource = @this.Incident.DataSource?.Title?? "",
+            BatchCodes = @this.BatchCodes,
+            Brand = @this.Brand,
+            CountryOfOriginId = @this.CountryOfOriginId,
+            PackDescription = @this.PackDescription,
+            PackSizes = @this.PackSizes?.ToClient().ToList() ?? new List<ProductPackSize>(),
+            ProductDates = @this.ProductDates?.ToClient().ToList() ?? new List<ProductDate>(),
+            ProductTypeId = @this.ProductTypeId,
+            SignalUrl = @this.Incident.SignalUrl ?? "",
             Added = @this.Created,
             LastUpdated = @this.Modified,
             LastUpdatedBy = @this.ModifiedBy
@@ -423,13 +444,11 @@ namespace FSA.IncidentsManagementDb
             product.BatchCodes = @this.BatchCodes;
             product.Brand = @this.Brand;
             product.CountryOfOriginId = @this.CountryOfOriginId;
-            product.DataSourceId = @this.DataSourceId;
             product.Name = @this.Name;
             product.PackDescription = @this.PackDescription;
             product.PackSizes = @this.PackSizes.ToDb(product.PackSizes.ToList()).ToList();
             product.ProductDates = @this.ProductDates.ToDb(product.ProductDates.ToList()).ToList();
             product.ProductTypeId = @this.ProductTypeId;
-            product.SignalUrl = @this.SignalUrl;
         }
 
         public static ProductDetail ToDetail(this ProductDb @this) => new ProductDetail

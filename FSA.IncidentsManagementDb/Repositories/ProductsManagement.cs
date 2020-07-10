@@ -33,18 +33,19 @@ namespace FSA.IncidentsManagementDb.Repositories
             return dbProduct.ToClient();
         }
 
-        public async Task<Product> Get(int productId)
+        public async Task<ProductDisplayModel> Get(int productId)
         {
             var productDb = await this.ctx.Products.AsNoTracking()
                               .Include(o => o.ProductDates)
                               .Include(o => o.ProductType)
+                              .Include(o=>o.Incident).ThenInclude(o=>o.DataSource)
                               .Include(o => o.AmountUnitType)
                               .Include(o => o.PackSizes)
                               .Include(o => o.RelatedFBOs)
                               //.ThenInclude(o => o.FBO).ThenInclude(o => o.Organisation)
                               .FirstOrDefaultAsync(p => p.Id == productId);
 
-            return productDb.ToClient();
+            return productDb.ToClientDisplay();
         }
 
         public async Task<IEnumerable<FboAddress>> GetProductAddresses(int productId)
@@ -116,13 +117,20 @@ namespace FSA.IncidentsManagementDb.Repositories
             return new PagedResult<ProductDashboard>(items.ToDashboard(), totalRecords);
         }
 
-        public async Task AddAddress(int productId, int FboId)
+        public async Task AssignFbo(int productId, int FboId)
         {
             ctx.ProductFBOItems.Add(new Entities.ProductFBODb
             {
                 FBOId = FboId,
                 ProductId = productId
             });
+            await ctx.SaveChangesAsync();
+        }
+
+        public async Task RemoveFbo(int productId, int fboId)
+        {
+            var item = ctx.ProductFBOItems.Find(productId,fboId);
+            ctx.ProductFBOItems.Remove(item);
             await ctx.SaveChangesAsync();
         }
     }

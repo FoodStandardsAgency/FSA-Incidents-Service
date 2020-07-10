@@ -13,7 +13,6 @@ namespace FSA.IncidentsManagement.Models
         {
             this.PackSizes = new List<ProductPackSizeModel>();
             this.ProductDates = new List<ProductDateModel>();
-            SignalUrl = "";
         }
 
         public int IncidentId { get; set; }
@@ -31,8 +30,5 @@ namespace FSA.IncidentsManagement.Models
         public string BatchCodes { get; set; }
         public string PackDescription { get; set; }
         public string AdditionalInfo { get; set; }
-        public int? DataSourceId { get; set; }
-
-        public string SignalUrl { get; set; }
     }
 }

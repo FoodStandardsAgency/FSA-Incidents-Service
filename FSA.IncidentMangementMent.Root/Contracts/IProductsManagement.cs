@@ -11,10 +11,11 @@ namespace FSA.IncidentsManagement.Root.Contracts
     {
         Task<Product> Add(int incidentId, Product newProduct);
         Task<Product> Update(Product product);
-        Task<Product> Get(int productId);
+        Task<ProductDisplayModel> Get(int productId);
         Task<IEnumerable<Product>> IncidentProducts(int incidentId);
         Task<IEnumerable<FboAddress>> GetProductAddresses(int productId);
         Task<IPaging<ProductDashboard>> DashboardItems(int incidentId, int pageSize = 10, int startPage = 1);
-        Task AddAddress(int v1, int v2);
+        Task AssignFbo(int id, int fboId);
+        Task RemoveFbo(int id, int fboId);
     }
 }

@@ -8,10 +8,15 @@ namespace FSA.IncidentsManagement.Root.Contracts
 {
     public interface IIAddressManagement
     {
+        Task<FboAddress> GetFbo(int FboId);
         Task<FboAddress> AddFbo(FboAddress newAddress);
         Task<FboAddress> UpdateFbo(FboAddress address);
-        Task<FboAddress> GetFbo(int FboId);
+        Task AssignFbos(FboTypes fboTypes, IEnumerable<int> addressesId);
+
+        Task<int> AssignFbo(FboTypes notifier, int addressId);
         Task<int> AddNotifier(NotifierTypes notifier, OrganisationAddress newAddress);
+        Task<int> AssignNotifier(NotifierTypes notifier, int addressId);
+        Task AssignNotifiers(NotifierTypes fboTypes, IEnumerable<int> addressesId);
         Task<NotifierAddress> GetNotifier(int NotifierId);
 
         Task<OrganisationAddress> Get(int OrganisationId);
@@ -21,10 +26,6 @@ namespace FSA.IncidentsManagement.Root.Contracts
         Task Add(IEnumerable<OrganisationAddress> addresses);
 
         
-        Task<int> AssignNotifier(NotifierTypes notifier, int addressId);
 
-        Task<int> AssignFbo(FboTypes notifier, int addressId);
-        Task AssignNotifiers(NotifierTypes fboTypes, IEnumerable<int> addressesId);
-        Task AssignFbos(FboTypes fboTypes, IEnumerable<int> addressesId);
     }
 }

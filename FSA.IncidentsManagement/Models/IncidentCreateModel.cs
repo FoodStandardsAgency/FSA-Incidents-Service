@@ -19,6 +19,7 @@ namespace FSA.IncidentsManagement.Models
         public int ClassificationId { get; set; }
         public int PriorityId { get; set; }
         public int DataSourceId { get; set; }
+        public string SignalUrl { get;  set; }
         public int ProductTypeId { get; set; }
         public string LeadOfficer { get; set; }
         public string LeadOffice { get; set; }

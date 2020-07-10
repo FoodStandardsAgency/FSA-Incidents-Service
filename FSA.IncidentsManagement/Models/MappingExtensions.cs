@@ -25,6 +25,7 @@ namespace FSA.IncidentsManagement.Models
                 principalFBOId: @this.PrincipalFBOId == 0 ? new Nullable<int>() : @this.PrincipalFBOId,
                 classificationId: @this.ClassificationId,
                 dataSourceId: @this.DataSourceId,
+                signalUrl: @this.SignalUrl,
                 productTypeId: @this.ProductTypeId,
                 leadOfficer: @this.LeadOfficer,
                 leadOffice: @this.LeadOffice,
@@ -56,6 +57,7 @@ namespace FSA.IncidentsManagement.Models
                 principalFBOId: @this.PrincipalFBOId,
                 classificationId: @this.ClassificationId,
                 dataSourceId: @this.DataSourceId,
+                signalUrl: @this.SignalUrl,
                 productTypeId: @this.ProductTypeId,
                 leadOfficer: @this.LeadOfficer,
                 leadOffice: @this.LeadOffice,
@@ -81,13 +83,11 @@ namespace FSA.IncidentsManagement.Models
             BatchCodes = @this.BatchCodes,
             Brand = @this.Brand,
             CountryOfOriginId = @this.CountryOfOriginId,
-            DataSourceId = @this.DataSourceId,
             Name = @this.Name,
             PackDescription = @this.PackDescription,
             PackSizes = @this.PackSizes.ToClient().ToList(),
             ProductDates = @this.ProductDates.ToClient().ToList(),
-            ProductTypeId = @this.ProductTypeId,
-            SignalUrl = @this.SignalUrl
+            ProductTypeId = @this.ProductTypeId
         };
 
         public static ProductDate ToClient(this ProductDateModel @this) => new ProductDate
