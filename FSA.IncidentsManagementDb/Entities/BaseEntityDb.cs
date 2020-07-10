@@ -15,6 +15,7 @@ namespace FSA.IncidentsManagementDb.Entities
         public string CreatedBy { get; set; }
         public DateTime Created { get; set; }
 
+        public byte[] Timestamp { get; set; }
     }
 
 }

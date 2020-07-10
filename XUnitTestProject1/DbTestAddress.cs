@@ -45,6 +45,7 @@ namespace FSA.UnitTests.Db
         {
             var orga = new FboAddress
             {
+                Title = "Testing address ",
                 FboTypes = FboTypes.Consignor | FboTypes.E_trader,
                 EmailAddress = "Terry@amil.com",
                 MainContact = "Terry the data",
@@ -52,11 +53,11 @@ namespace FSA.UnitTests.Db
                 AddressLine2 = "Address line 2",
                 PostCode = "Postoce",
                 TownCity = "Town City",
-                Title = "Terrys messageing",
                 CountryId = 103,
                 County = "Counry",
                 TelephoneNumber = ""
             };
+
             var newaddress = await simsData.Addresses.AddFbo(orga);
             Assert.IsType<FboAddress>(newaddress);
         }

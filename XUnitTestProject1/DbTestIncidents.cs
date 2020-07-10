@@ -45,7 +45,7 @@ namespace FSA.UnitTests.Db
                    incidentTitle: "New Incident",
                    incidentDescription: "New incidentDescription",
                    incidentTypeId: 1,
-                   contactMethodId: 4,
+                   contactMethodId: 2,
                    statusId: (int)IncidentStatus.Unassigned,
                    priorityId: 2,
                    classificationId: 1,
