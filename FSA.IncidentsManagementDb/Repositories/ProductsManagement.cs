@@ -25,6 +25,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         {
             if (incidentId == 0) throw new ArgumentNullException("No incident provided.");
             if (newProduct.Id != 0) throw new ArgumentOutOfRangeException("This product appears to already exist.");
+
             var dbProduct = newProduct.ToDb();
             dbProduct.IncidentId = incidentId;
 
