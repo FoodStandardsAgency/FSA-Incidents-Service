@@ -20,12 +20,12 @@ using Xunit;
 
 namespace FSA.IntegrationTesting 
 {
-    public class WebIntegration : IDisposable
+    public class FboIntegration : IDisposable
     {
         private readonly TestServer _server;
         private readonly HttpClient _client;
 
-        public WebIntegration()
+        public FboIntegration()
         {
             _server = new TestServer(new WebHostBuilder()
                     .ConfigureAppConfiguration(c => {
@@ -37,14 +37,6 @@ namespace FSA.IntegrationTesting
             _client.DefaultRequestHeaders
         .Accept
         .Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        }
-
-        [Fact]
-        public async Task RetrieveLookups()
-        {
-            var response = await _client.GetAsync("/api/lookups/Classifications");
-            var allClass = await response.Content.ReadFromJsonAsync<IEnumerable<Classification>>();
-
         }
 
         [Fact]

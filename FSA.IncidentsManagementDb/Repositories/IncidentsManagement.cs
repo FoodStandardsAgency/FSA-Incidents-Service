@@ -4,21 +4,13 @@ using FSA.IncidentsManagement.Root.Shared;
 using FSA.IncidentsManagementDb.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.Design;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Net.Sockets;
-using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.ComTypes;
-using System.Security.Cryptography;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+
 using IncidentStatus = FSA.IncidentsManagementDb.Entities.Helpers.IncidentStatus;
 
 namespace FSA.IncidentsManagementDb.Repositories
@@ -77,22 +69,16 @@ namespace FSA.IncidentsManagementDb.Repositories
         /// <returns></returns>
         public async Task AssignLeadOfficer(IEnumerable<int> ids, string user)
         {
-
-            // We are updating the lead officer.
-            // If so we can change the incidentStatus to open
+            // If we can assign an officer, so we change the incidentStatus to open
             var openStatus = (int)IncidentStatus.Open;
             var closeStatus = (int)IncidentStatus.Closed;
 
-            foreach (var id in ids)
-            {
-                // Fiind the incident only if its not closed.
-                var incidentDb = await this.ctx.Incidents.Include(i => i.IncidentStatus).FirstOrDefaultAsync(o => o.Id == id && o.IncidentStatusId != closeStatus);
-
-                // Don't touch closed entries.
-                if (incidentDb.IncidentStatusId != openStatus && incidentDb.IncidentStatusId != closeStatus && user != null)
-                    incidentDb.IncidentStatusId = openStatus;
-                incidentDb.LeadOfficer = user;
-                //UpdateAuditInfo(incidentDb);
+            var WhereClause = String.Join(" OR ", ids.Select(o => $"Id={o}"));
+            // Grab the incidents, as long as they are not closed.
+            var incidents = ctx.Incidents.FromSqlRaw($"SELECT * from Incidents where ({WhereClause}) AND IncidentStatusId <> {closeStatus}");
+            foreach (var incident in incidents){
+                incident.IncidentStatusId = openStatus;
+                incident.LeadOfficer = user;
             }
 
             await this.ctx.SaveChangesAsync();
@@ -140,12 +126,12 @@ namespace FSA.IncidentsManagementDb.Repositories
                 if (fromIncident.IncidentStatusId != (int)IncidentStatus.Closed)
                     ctx.Incidents.Update(fromIncident);
                 if (toincident.IncidentStatusId != (int)IncidentStatus.Closed)
-                    ctx.Incidents.Update(fromIncident);
+                    ctx.Incidents.Update(toincident);
 
                 await ctx.SaveChangesAsync();
             }
-           
-            var fromTo  = ctx.IncidentLinks.Find(new { FromIncidentId = from, ToIncidentId = to });
+
+            var fromTo = ctx.IncidentLinks.Find(from, to);
             if (fromTo != null)
             {
                 await DeleteLink(fromTo);
@@ -197,7 +183,7 @@ namespace FSA.IncidentsManagementDb.Repositories
                         // Update the destination incident, if the incident has NOT been closed.
                         // This is not a sensible option.
                         var toIncident = ctx.Incidents.Find(to);
-                        if(toIncident.IncidentStatusId != (int)IncidentStatus.Closed)
+                        if (toIncident.IncidentStatusId != (int)IncidentStatus.Closed)
                         {
                             ctx.Incidents.Update(toIncident);
                         }
@@ -237,7 +223,6 @@ namespace FSA.IncidentsManagementDb.Repositories
         {
             var dbItem = await ctx.Incidents.FindAsync(id);
             dbItem.ClassificationId = ClassificationId;
-            //UpdateAuditInfo(dbItem);
             await ctx.SaveChangesAsync();
             return dbItem.ToClient();
         }
@@ -250,10 +235,10 @@ namespace FSA.IncidentsManagementDb.Repositories
         public async Task<BaseIncident> Update(BaseIncident incident)
         {
             var dbItem = this.ctx.Incidents.Find(incident.CommonId);
-            
+
             if (dbItem == null) throw new ArgumentNullException("No incident was found");
             if (dbItem.IncidentClosed != null) throw new ArgumentOutOfRangeException("Cannot update a closed incident!");
-            
+
             // Logical changes.
             // Mark some differences since last update
             // We are using simpleFlags
@@ -261,7 +246,7 @@ namespace FSA.IncidentsManagementDb.Repositories
             var unassignLeadOfficer = false;
             if (dbItem.IncidentStatusId == (int)IncidentStatus.Open && incident.StatusId == (int)IncidentStatus.Unassigned)
                 unassignLeadOfficer = true;
-            
+
             //Transfer our updates into the existing incident
             incident.ToUpdateDb(dbItem);
             if (unassignLeadOfficer) dbItem.LeadOfficer = "";
@@ -273,7 +258,6 @@ namespace FSA.IncidentsManagementDb.Repositories
 
 
             var updatedDbItem = this.ctx.Incidents.Update(dbItem);
-            
             await this.ctx.SaveChangesAsync();
             return updatedDbItem.Entity.ToClient();
         }
@@ -295,8 +279,6 @@ namespace FSA.IncidentsManagementDb.Repositories
             dbItem.IncidentStatusId = statusId;
             if (statusId == (int)IncidentStatus.Unassigned)
                 dbItem.LeadOfficer = "";
-            //UpdateAuditInfo(itm);
-            //ctx.Incidents.Update(incident);
 
             await ctx.SaveChangesAsync();
             return dbItem.ToClient();
@@ -310,15 +292,14 @@ namespace FSA.IncidentsManagementDb.Repositories
         /// <returns></returns>
         public async Task BulkClose(IEnumerable<int> incidentIds)
         {
-            var WhereClause = String.Join(" OR ", incidentIds.Select(o => $"Id={0}"));
+            var WhereClause = String.Join(" OR ", incidentIds.Select(o => $"Id={o}"));
             var items = ctx.Incidents.FromSqlRaw($"SELECT * from Incidents where {WhereClause}");
             var closeStatus = (int)IncidentStatus.Closed;
 
             foreach (var incident in items)
             {
                 incident.IncidentStatusId = closeStatus;
-                //UpdateAuditInfo(incident);
-                ctx.Incidents.Update(incident);
+                incident.IncidentClosed = DateTime.UtcNow;
             }
 
             await this.ctx.SaveChangesAsync();
@@ -328,19 +309,19 @@ namespace FSA.IncidentsManagementDb.Repositories
         {
             // get the db version.
             // with most lookups (excluding organisations)
-            var dbIncident = this.ctx.Incidents.AsNoTracking()
+            var dbIncident = await this.ctx.Incidents.AsNoTracking()
                         .Include(p => p.Priority)
                         .Include(i => i.Classification)
                         .Include(i => i.DataSource)
                         .Include(i => i.DeathIllness)
                         .Include(i => i.IncidentType)
                         .Include(i => i.ProductType)
-                        .Include(i=>i.AdminLead)
-                        .Include(i=>i.Notifier).ThenInclude(o=>o.Organisation)
-                        .Include(i=>i.LeadLocalAuthority).ThenInclude(o=>o.Organisation)
+                        .Include(i => i.AdminLead)
+                        .Include(i => i.Notifier).ThenInclude(o => o.Organisation)
+                        .Include(i => i.LeadLocalAuthority).ThenInclude(o => o.Organisation)
                         .Include(i => i.PrincipalFBO).ThenInclude(o => o.Organisation)
                         .Include(i => i.ContactMethod)
-                        .Include(i => i.IncidentStatus).First(p => p.Id == id);
+                        .Include(i => i.IncidentStatus).SingleAsync(p => p.Id == id);
 
             // Finally we can now build our tower of wonder
             return dbIncident.ToClientDisplay();
@@ -357,8 +338,8 @@ namespace FSA.IncidentsManagementDb.Repositories
             var newComment = new IncidentCommentDb { Comment = note, IncidentId = incidentId };
             ctx.IncidentComments.Add(newComment);
 
-            var incident = ctx.Incidents.FirstOrDefault(p=>p.Id == incidentId);
-            if(incident.IncidentClosed==null)
+            var incident = ctx.Incidents.SingleOrDefault(p => p.Id == incidentId);
+            if (incident.IncidentClosed == null)
                 ctx.Incidents.Update(incident);
 
             await ctx.SaveChangesAsync();
@@ -435,9 +416,8 @@ namespace FSA.IncidentsManagementDb.Repositories
             // 4. 0002000
             // 5. 000-00000 etc
             //number
-            // 
-           var reg = new Regex("(^|-)(?<number>[0-9]+)");// [I-i]?(?<number>[0-9]{1,})");
-            
+            var reg = new Regex("(^|-)(?<number>[0-9]+)");// [I-i]?(?<number>[0-9]{1,})");
+
             // We build the final search terms from this
             var allTerms = new List<string>();
             // any and all matching ids
@@ -445,10 +425,10 @@ namespace FSA.IncidentsManagementDb.Repositories
             var totalTerms = search.ToLowerInvariant().Split(" ", StringSplitOptions.RemoveEmptyEntries).ToList();
             // Get the person out of the way first, as it can trip up the idmatches 
             var person = totalTerms.Where(o => o.ToLowerInvariant().StartsWith(personClause)).FirstOrDefault();
-            if(!string.IsNullOrEmpty(person)) totalTerms.Remove(person);
+            if (!string.IsNullOrEmpty(person)) totalTerms.Remove(person);
             // Any matches for the reg ex are added to the idterms
             // Non matches are added to the total terms
-            foreach(var term in totalTerms)
+            foreach (var term in totalTerms)
             {
                 var matches = reg.Matches(term);
                 if (matches.Count == 0)
@@ -477,7 +457,7 @@ namespace FSA.IncidentsManagementDb.Repositories
                 allClauses.Add(i => EF.Functions.Like(i.IncidentStatus.Title, wrd));
             }
             // full list of serches on id
-            foreach(var id in allIds)
+            foreach (var id in allIds)
             {
                 var capturedId = id;
                 allClauses.Add(i => i.Id == capturedId);
@@ -585,6 +565,17 @@ namespace FSA.IncidentsManagementDb.Repositories
         {
             var allNotes = await ctx.IncidentComments.Where(o => o.IncidentId == incidentId).Select(s => s.ToClient()).ToListAsync();
             return allNotes;
+        }
+
+        /// <summary>
+        /// Checkts to see if a particulr incident is closed
+        /// </summary>
+        /// <param name="incidentId"></param>
+        /// <returns>false if not closed</returns>
+        public async Task<bool> IsClosed(int incidentId)
+        {
+            return (await ctx.Incidents.AsNoTracking().SingleAsync(i => i.Id == incidentId))
+                           .IncidentStatusId == (int)IncidentStatus.Closed;
         }
     }
 }

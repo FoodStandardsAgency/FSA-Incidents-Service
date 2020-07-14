@@ -82,7 +82,7 @@ namespace FSA.IncidentsManagementDb.Repositories
                    .Include(o => o.RelatedFBOs)
                    .ThenInclude(o => o.FBO).ThenInclude(o => o.Organisation)
                     .Where(p => p.IncidentId == incidentId);
-            var allProducts = items.Select(o => o.ToClient());
+            var allProducts = await items.Select(o => o.ToClient()).ToListAsync();
             return allProducts.ToList();
         }
 

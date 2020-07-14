@@ -11,6 +11,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
@@ -54,6 +55,14 @@ namespace FSA.UnitTests.Db
 
             ISIMSManager fsaData = new SIMSDataManager(this.dbContext, userId3);
             var updatedProduct = await fsaData.Products.Add(product.IncidentId, product);
+        }
+
+        [Fact]
+        public async Task GetDisplayProduct()
+        {
+            ISIMSManager fsaData = new SIMSDataManager(this.dbContext, userId3);
+            var prodDisplay = await fsaData.Products.Get(2);
+            Assert.True(String.IsNullOrEmpty(prodDisplay.SignalUrl) != false);
         }
 
         [Fact]

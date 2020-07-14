@@ -2,6 +2,7 @@
 using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagementDb;
 using FSA.IncidentsManagementDb.Repositories;
+using FSA.UnitTests.Misc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,10 +17,10 @@ namespace FSA.UnitTests.Db
 {
     public class DbTestAddress
     {
-        private string userId = "2f65582c-5970-4848-9020-d65b6df2dc04";
-        private string anotherId = "9a8dda39-78ec-496d-8625-f8b24d83aa57";
-        private string userId3 = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"; // FSA.Test
-        private string miller = "8cc321a9-fea4-4689-a127-c5e141e2810c";
+        private string userId = "";
+        private string anotherId = "";
+        private string userId3 = "";
+        private string miller = "";
 
         private ConfigFile Config { get; }
 
@@ -27,6 +28,13 @@ namespace FSA.UnitTests.Db
         private SIMSDataManager simsData;
         public DbTestAddress()
         {
+            var seedIn = new SeedIncidents();
+
+            userId = seedIn.userIds[0];
+            anotherId = seedIn.userIds[1];
+            userId3 = seedIn.userIds[2];
+            miller = seedIn.userIds[3];
+
             this.Config = System.Text.Json.JsonSerializer.Deserialize<ConfigFile>(File.OpenText("./config.json").ReadToEnd());
             ctx = new FSADbContext(new DbContextOptionsBuilder().UseSqlServer(Config.dbConn).Options);
             simsData = new SIMSDataManager(ctx, userId);

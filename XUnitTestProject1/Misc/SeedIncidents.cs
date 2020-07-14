@@ -10,7 +10,7 @@ namespace FSA.UnitTests.Misc
 {
     class SeedIncidents
     {
-        protected string[] userIds => new string[]
+        internal string[] userIds => new string[]
         {
             "2f65582c-5970-4848-9020-d65b6df2dc04", //me
             "9a8dda39-78ec-496d-8625-f8b24d83aa57",
@@ -55,9 +55,9 @@ namespace FSA.UnitTests.Misc
                    dataSourceId: 1,
                    signalUrl:"https://signalUrl.com",
                    productTypeId: 3,
-                   leadOfficer: "",
+                   leadOfficer: this.userIds[1],
                    adminLeadId: 1,
-                   leadOffice: this.userIds[1],
+                   leadOffice: "",
                    fieldOfficer: "",
                    lAAdvised: false,
                    deathIllnessId: 3,
@@ -79,9 +79,9 @@ namespace FSA.UnitTests.Misc
                    signalUrl:"",
                    dataSourceId: 1,
                    productTypeId: 3,
-                   leadOfficer: "",
+                   leadOffice: "",
                    adminLeadId: 1,
-                   leadOffice: this.userIds[2],
+                   leadOfficer: this.userIds[2],
                    fieldOfficer: "",
                    lAAdvised: false,
                    deathIllnessId: 2,
@@ -103,9 +103,9 @@ namespace FSA.UnitTests.Misc
                    dataSourceId: 1,
                    signalUrl:"https://signalUrl.com",
                    productTypeId: 3,
-                   leadOfficer: "",
+                   leadOffice: "",
                    adminLeadId: 2,
-                   leadOffice: this.userIds[3],
+                   leadOfficer: this.userIds[3],
                    fieldOfficer: "",
                    lAAdvised: false,
                    deathIllnessId: 2,
@@ -169,6 +169,7 @@ namespace FSA.UnitTests.Misc
                         ,new ProductDate { DateTypeId = 3, Date = DateTime.Now }
                 }
             }
+
         };
     }
 }

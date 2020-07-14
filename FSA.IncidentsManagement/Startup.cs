@@ -58,8 +58,6 @@ namespace FSA.IncidentsManagement
                 {
                         options.Audience, $"api://{options.Audience}", $"https://{options.Audience}"
                 };
-                // D-d-d-delegate
-                //options.TokenValidationParameters.IssuerValidator = Microsoft.IdentityModel.Tokens.Validators.ValidateIssuer;
             });
 
             // grabbing current userInfo
