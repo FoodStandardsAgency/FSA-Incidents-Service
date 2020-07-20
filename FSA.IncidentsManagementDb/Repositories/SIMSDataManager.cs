@@ -20,8 +20,8 @@ namespace FSA.IncidentsManagementDb.Repositories
             ctx.SetEditor(editor);
         }
         
-        public IIncidentsManagement Incidents => new IncidentsManagement(ctx, editor);
-        public IIAddressManagement Addresses => new AddressManagement(ctx, editor);
-        public IProductsManagement Products => new ProductsManagement(ctx, editor);
+        public IIncidentsManagement Incidents => new IncidentsManagement(ctx);
+        public IIAddressManagement Addresses => new AddressManagement(ctx);
+        public IProductsManagement Products => new ProductsManagement(ctx);
     }
 }

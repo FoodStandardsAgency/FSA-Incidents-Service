@@ -19,9 +19,8 @@ namespace FSA.IncidentsManagementDb.Repositories
     {
         private FSADbContext ctx;
 
-        public IncidentsManagement(FSADbContext ctx, string editor)
+        public IncidentsManagement(FSADbContext ctx)
         {
-            //this.orgLookups = lkups.Organisations as OrganisationLookupManager;
             this.ctx = ctx;
         }
 
@@ -131,20 +130,14 @@ namespace FSA.IncidentsManagementDb.Repositories
                 await ctx.SaveChangesAsync();
             }
 
-            var fromTo = ctx.IncidentLinks.Find(from, to);
-            if (fromTo != null)
+            var linkData = ctx.IncidentLinks.Find(from, to);
+            if (linkData == null)
             {
-                await DeleteLink(fromTo);
+                // try the other way instead to-from
+                 linkData = ctx.IncidentLinks.Find(new { ToIncidentId = from, FromIncidentId = to });
             }
-            else
-            {
-                var toFrom = ctx.IncidentLinks.Find(new { ToIncidentId = from, FromIncidentId = to });
-                if (toFrom != null)
-                {
-                    await DeleteLink(toFrom);
-                }
-
-            }
+            if (linkData != null)
+                await DeleteLink(linkData);
         }
 
         /// <summary>
@@ -179,7 +172,6 @@ namespace FSA.IncidentsManagementDb.Repositories
                             var newToComment = new IncidentCommentDb { Comment = reason, IncidentId = to };
                             ctx.IncidentComments.Add(newToComment);
                         }
-
                         // Update the destination incident, if the incident has NOT been closed.
                         // This is not a sensible option.
                         var toIncident = ctx.Incidents.Find(to);

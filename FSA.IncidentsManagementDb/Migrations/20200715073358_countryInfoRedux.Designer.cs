@@ -4,14 +4,16 @@ using FSA.IncidentsManagementDb;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FSA.IncidentsManagementDb.Migrations
 {
     [DbContext(typeof(FSADbContext))]
-    partial class FSADbContextModelSnapshot : ModelSnapshot
+    [Migration("20200715073358_countryInfoRedux")]
+    partial class countryInfoRedux
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -4661,7 +4663,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         },
                         new
                         {
-                            Id = 4,
+                            Id = 3,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -4670,7 +4672,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         },
                         new
                         {
-                            Id = 8,
+                            Id = 4,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -4679,7 +4681,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         },
                         new
                         {
-                            Id = 16,
+                            Id = 5,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -4688,7 +4690,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         },
                         new
                         {
-                            Id = 32,
+                            Id = 6,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -4697,7 +4699,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         },
                         new
                         {
-                            Id = 64,
+                            Id = 7,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -4706,7 +4708,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         },
                         new
                         {
-                            Id = 128,
+                            Id = 8,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -4715,7 +4717,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         },
                         new
                         {
-                            Id = 256,
+                            Id = 9,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -4724,7 +4726,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         },
                         new
                         {
-                            Id = 512,
+                            Id = 10,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -4733,7 +4735,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         },
                         new
                         {
-                            Id = 1024,
+                            Id = 11,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -4742,7 +4744,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         },
                         new
                         {
-                            Id = 2048,
+                            Id = 12,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -4751,7 +4753,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         },
                         new
                         {
-                            Id = 4096,
+                            Id = 13,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -4760,7 +4762,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         },
                         new
                         {
-                            Id = 8192,
+                            Id = 14,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -4769,7 +4771,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         },
                         new
                         {
-                            Id = 16384,
+                            Id = 15,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -4778,7 +4780,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         },
                         new
                         {
-                            Id = 32768,
+                            Id = 16,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -4787,7 +4789,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         },
                         new
                         {
-                            Id = 65536,
+                            Id = 17,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),

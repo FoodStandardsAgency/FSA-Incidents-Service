@@ -14,9 +14,9 @@ namespace FSA.IncidentsManagementDb.Repositories
 {
     internal class ProductsManagement : IProductsManagement
     {
-        private FSADbContext ctx;
+        private readonly FSADbContext ctx;
 
-        public ProductsManagement(FSADbContext ctx, string editor)
+        public ProductsManagement(FSADbContext ctx)
         {
             this.ctx = ctx;
         }
@@ -38,7 +38,7 @@ namespace FSA.IncidentsManagementDb.Repositories
             var productDb = await this.ctx.Products.AsNoTracking()
                               .Include(o => o.ProductDates)
                               .Include(o => o.ProductType)
-                              .Include(o=>o.Incident).ThenInclude(o=>o.DataSource)
+                              .Include(o => o.Incident).ThenInclude(o => o.DataSource)
                               .Include(o => o.AmountUnitType)
                               .Include(o => o.PackSizes)
                               .Include(o => o.RelatedFBOs)
@@ -88,15 +88,28 @@ namespace FSA.IncidentsManagementDb.Repositories
 
         public async Task<Product> Update(Product product)
         {
-            var productDb = ctx.Products
-                    .Include(o => o.ProductDates)
-                    .Include(o => o.ProductType)
-                    .Include(o => o.PackSizes)
-                    .First(p => p.Id == product.Id);
-            product.ToUpdateDb(productDb);
-            ctx.Products.Update(productDb);
-            await ctx.SaveChangesAsync();
-            return productDb.ToClient();
+            // ensure we can update the incident.
+            // need to check to see if the incident has already been closed.
+            var isClosed = ctx.Products.AsNoTracking()
+                    .Include(o => o.Incident)
+                    .Single(p => p.Id == product.Id).Incident.IncidentClosed != null;
+            if (!isClosed)
+            {
+                var productDb = ctx.Products
+                        .Include(o => o.ProductDates)
+                        .Include(o => o.ProductType)
+                        .Include(o => o.PackSizes)
+                        .First(p => p.Id == product.Id);
+                product.ToUpdateDb(productDb);
+                ctx.Products.Update(productDb);
+                await ctx.SaveChangesAsync();
+                return productDb.ToClient();
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException("This incident is closed.");
+            }
+
         }
 
         public async Task<IPaging<ProductDashboard>> DashboardItems(int incidentId, int pageSize = 10, int startPage = 1)
@@ -119,17 +132,29 @@ namespace FSA.IncidentsManagementDb.Repositories
 
         public async Task AssignFbo(int productId, int FboId)
         {
-            ctx.ProductFBOItems.Add(new Entities.ProductFBODb
+            // need to check to see if the incident has already been closed.
+            var isClosed = ctx.Products.AsNoTracking()
+                    .Include(o => o.Incident)
+                    .Single(p => p.Id == productId).Incident.IncidentClosed != null;
+
+            if (!isClosed)
             {
-                FBOId = FboId,
-                ProductId = productId
-            });
-            await ctx.SaveChangesAsync();
+                ctx.ProductFBOItems.Add(new Entities.ProductFBODb
+                {
+                    FBOId = FboId,
+                    ProductId = productId
+                });
+                await ctx.SaveChangesAsync();
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException("This incident is closed.");
+            }
         }
 
         public async Task RemoveFbo(int productId, int fboId)
         {
-            var item = ctx.ProductFBOItems.Find(productId,fboId);
+            var item = ctx.ProductFBOItems.Find(productId, fboId);
             ctx.ProductFBOItems.Remove(item);
             await ctx.SaveChangesAsync();
         }

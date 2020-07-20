@@ -19,7 +19,7 @@ namespace FSA.IncidentsManagementDb.Repositories
     {
         private FSADbContext ctx;
 
-        public AddressManagement(FSADbContext ctx, string editor)
+        public AddressManagement(FSADbContext ctx)
         {
             this.ctx = ctx;
         }
@@ -162,6 +162,54 @@ namespace FSA.IncidentsManagementDb.Repositories
             return ent.Entity.Id;
         }
 
+        public async Task<IEnumerable<FboAddress>> FindFbo(string search)
+        {
+            var qryAddr = this.ctx
+                                .FBOs.Include(o => o.Organisation)
+                                .AsNoTracking()
+                                .Where(o => EF.Functions.Like(o.Organisation.Title, $"%{search}%")
+                                           || EF.Functions.Like(o.Organisation.AddressLine1, $"%{search}%")
+                                           || EF.Functions.Like(o.Organisation.PostCode, $"%{search}%")
+                                           || EF.Functions.Like(o.Organisation.MainContact, $"%{search}%"));
+            var items = await qryAddr.ToListAsync();
+            return items.ToClient();
+        }
 
+        public async Task<IEnumerable<NotifierAddress>> FindNotifier(string search)
+        {
+            var qryAddr = this.ctx
+                     .Notifiers.Include(o => o.Organisation)
+                     .AsNoTracking()
+                     .Where(o => EF.Functions.Like(o.Organisation.Title, $"%{search}%")
+                                || EF.Functions.Like(o.Organisation.AddressLine1, $"%{search}%")
+                                || EF.Functions.Like(o.Organisation.PostCode, $"%{search}%")
+                                || EF.Functions.Like(o.Organisation.MainContact, $"%{search}%"));
+            return await qryAddr.Select(o => o.ToClient()).ToListAsync();
+        }
+
+        public async Task<IEnumerable<NotifierAddress>> FindLocalAuthority(string search)
+        {
+            var qryAddr = this.ctx
+                     .Notifiers.Include(o => o.Organisation)
+                     .AsNoTracking()
+                     .Where(o => o.NotifierTypeId == (int)NotifierTypes.LocalAuthority &&( EF.Functions.Like(o.Organisation.Title, $"%{search}%")
+                                || EF.Functions.Like(o.Organisation.AddressLine1, $"%{search}%")
+                                || EF.Functions.Like(o.Organisation.PostCode, $"%{search}%")
+                                || EF.Functions.Like(o.Organisation.MainContact, $"%{search}%")));
+            return await qryAddr.Select(o => o.ToClient()).ToListAsync();
+        }
+
+        public async Task<IEnumerable<OrganisationAddress>> FindAddress(string search)
+        {
+            var qryAddr = this.ctx
+                     .Organisations
+                     .AsNoTracking()
+                     .Where(o => EF.Functions.Like(o.Title, $"%{search}%")
+                                || EF.Functions.Like(o.AddressLine1, $"%{search}%")
+                                || EF.Functions.Like(o.PostCode, $"%{search}%")
+                                || EF.Functions.Like(o.MainContact, $"%{search}%"));
+
+            return await qryAddr.Select(o => o.ToClient()).ToListAsync();
+        }
     }
 }

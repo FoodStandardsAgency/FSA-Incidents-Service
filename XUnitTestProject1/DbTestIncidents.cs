@@ -285,7 +285,7 @@ namespace FSA.UnitTests.Db
         [Fact]
         public async Task LinkToClosed()
         {
-            // record Id 82should be closed
+            //  record Id 82should be closed
             //  crash the test otherwise
             var incidentId = 82;
             using (var ctx = this.Fixture.CreateContext())
@@ -306,6 +306,21 @@ namespace FSA.UnitTests.Db
                 Assert.True(matchedItem!=null); 
             }
         }
+
+        [Fact]
+        public async Task RemoveAlink()
+        {
+            //  record Id 82should be closed
+            //  crash the test otherwise
+            var incidentId = 82;
+            using (var ctx = this.Fixture.CreateContext())
+            {
+                ISIMSManager sims = new SIMSDataManager(ctx, userId);
+                await sims.Incidents.RemoveLink(13, 79);
+                Assert.True(true);
+            }
+        }
+
 
         [Fact]
         public async Task AssignLeadOfficer()

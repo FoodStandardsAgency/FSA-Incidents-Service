@@ -58,7 +58,7 @@ namespace FSA.UnitTests.Db
                 TelephoneNumber = ""
             };
             var newaddress = await simsData.Addresses.AddFbo(orga);
-            Assert.IsType<int>(newaddress);
+            Assert.IsType<FboAddress>(newaddress);
         }
 
         [Fact]
@@ -87,6 +87,20 @@ namespace FSA.UnitTests.Db
             var itme = await simsData.Addresses.Get(1);
 
             Assert.NotNull(itme);
+        }
+
+        [Fact]
+        public async Task SearchFBOAddress()
+        {
+            //var addr = await simsData.Addresses.FindFbo("Council");
+            //// Many
+            //Assert.True(addr.ToList().Count > 1);
+            //// One
+            //addr = await simsData.Addresses.FindFbo("Redcar");
+            //Assert.True(addr.ToList().Count ==1);
+            //post code match
+            var addr = await simsData.Addresses.FindFbo("PostCode");
+            Assert.True(addr.ToList().Count == 1);
         }
     }
 }

@@ -79,7 +79,9 @@ namespace FSA.IncidentsManagement
                 {
                     return apiDesc.TryGetMethodInfo(out MethodInfo methodInfo) ? methodInfo.Name : null;
                 });
+               
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "fsa incident management", Version = "v1" });
+                c.EnableAnnotations();
             });
 
             var fsaConn = Configuration.GetConnectionString("FSADbConn");

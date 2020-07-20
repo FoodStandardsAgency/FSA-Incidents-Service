@@ -35,7 +35,7 @@ namespace FSA.UnitTests.Misc
             this.Config = System.Text.Json.JsonSerializer.Deserialize<ConfigFile>(File.OpenText("./config.json").ReadToEnd());
             this.titleList = File.ReadAllLines("./ListOfTitles.txt");
             this.dbConn = new SqlConnection(Config.dbConn);
-            Seed();
+            //Seed();
 
             dbConn.Open();
         }
@@ -62,7 +62,7 @@ namespace FSA.UnitTests.Misc
 
         private async Task CreateIncidents(ISIMSManager sims, FSADbContext ctx, SeedIncidents seeder)
         {
-            var iManager = new FSA.IncidentsManagementDb.Repositories.IncidentsManagement(ctx, Config.username);
+            var iManager = new FSA.IncidentsManagementDb.Repositories.IncidentsManagement(ctx);
             List<Task<BaseIncident>> TaskList = new List<Task<BaseIncident>>();
             await iManager.Add(seeder.GetNewIncidents());
             var coreIncident = seeder.GetNewIncidents().ElementAt(0);

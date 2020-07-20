@@ -42,6 +42,8 @@
     <Compile Remove="Migrations\20200630073914_nomorescore.Designer.cs" />
     <Compile Remove="Migrations\20200630074232_bellyUp.cs" />
     <Compile Remove="Migrations\20200630074232_bellyUp.Designer.cs" />
+    <Compile Remove="Migrations\20200715072335_countryInfoRedux.cs" />
+    <Compile Remove="Migrations\20200715072335_countryInfoRedux.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

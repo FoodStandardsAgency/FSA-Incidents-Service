@@ -1,4 +1,4 @@
-﻿ using FSA.IncidentsManagement.Root.Models;
+﻿using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagementDb.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -591,105 +591,105 @@ namespace FSA.IncidentsManagementDb
                     },
                     new FBOTypeDb
                     {
-                        Id = 3,
+                        Id = 4,
                         Title = "e-trader",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
                     new FBOTypeDb
                     {
-                        Id = 4,
+                        Id = 8,
                         Title = "Exporter",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
                     new FBOTypeDb
                     {
-                        Id = 5,
+                        Id = 16,
                         Title = "Farmer",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
                     new FBOTypeDb
                     {
-                        Id = 6,
+                        Id = 32,
                         Title = "Hospitality/Food service",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
                     new FBOTypeDb
                     {
-                        Id = 7,
+                        Id = 64,
                         Title = "Importer",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
                     new FBOTypeDb
                     {
-                        Id = 8,
+                        Id = 128,
                         Title = "Manufacturer",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
                     new FBOTypeDb
                     {
-                        Id = 9,
+                        Id = 256,
                         Title = "Packer/filler",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
                     new FBOTypeDb
                     {
-                        Id = 10,
+                        Id = 512,
                         Title = "Processor",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
                     new FBOTypeDb
                     {
-                        Id = 11,
+                        Id = 1024,
                         Title = "Producer",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
                     new FBOTypeDb
                     {
-                        Id = 12,
+                        Id = 2048,
                         Title = "Retailer",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
                     new FBOTypeDb
                     {
-                        Id = 13,
+                        Id = 4096,
                         Title = "Storage",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
                     new FBOTypeDb
                     {
-                        Id = 14,
+                        Id = 8192,
                         Title = "Supplier",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
                     new FBOTypeDb
                     {
-                        Id = 15,
+                        Id = 16384,
                         Title = "Trader/Broker",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
                     new FBOTypeDb
                     {
-                        Id = 16,
+                        Id = 32768,
                         Title = "Transporter",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
                     new FBOTypeDb
                     {
-                        Id = 17,
+                        Id = 65536,
                         Title = "Wholesaler",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
@@ -1164,1393 +1164,2825 @@ namespace FSA.IncidentsManagementDb
                 .HasData(new CountryDb
                 {
                     Id = 1,
-                    Title = "Afganistan (AF)",
+                    Title = "Georgia",
+                    KeyField = "GE",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
+
                     new CountryDb
                     {
                         Id = 2,
-                        Title = "Aland Islands (AX)",
+                        Title = "French Guiana",
+                        KeyField = "GF",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 3,
-                        Title = "Albania (AL)",
+                        Title = "Guernsey",
+                        KeyField = "GG",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 4,
-                        Title = "Algeria (DZ)",
+                        Title = "Ghana",
+                        KeyField = "GH",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 5,
-                        Title = "America Samoa (AS)",
+                        Title = "Gibraltar",
+                        KeyField = "GI",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 6,
-                        Title = "Andorra (AD)",
+                        Title = "Greenland",
+                        KeyField = "GL",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 7,
-                        Title = "Angola (AO)",
+                        Title = "The Gambia",
+                        KeyField = "GM",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 8,
-                        Title = "Anguilla (AI)",
+                        Title = "Guinea",
+                        KeyField = "GN",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 9,
-                        Title = "Antarctica (AQ)",
+                        Title = "Guadeloupe",
+                        KeyField = "GP",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 10,
-                        Title = "Antigua & Barbuda (AG)",
+                        Title = "Equatorial Guinea",
+                        KeyField = "GQ",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 11,
-                        Title = "Argentina (AR)",
+                        Title = "Greece",
+                        KeyField = "GR",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 12,
-                        Title = "Armenia (AM)",
+                        Title = "South Georgia and South Sandwich Islands",
+                        KeyField = "GS",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 13,
-                        Title = "Aruba (AW)",
+                        Title = "Guatemala",
+                        KeyField = "GT",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 14,
-                        Title = "Australia (AU)",
+                        Title = "Guam",
+                        KeyField = "GU",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 15,
-                        Title = "Austria (AT)",
+                        Title = "Guinea-Bissau",
+                        KeyField = "GW",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 16,
-                        Title = "Azerbaijan (AZ)",
+                        Title = "Guyana",
+                        KeyField = "GY",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 17,
-                        Title = "Bahamas (BS)",
+                        Title = "Hong Kong",
+                        KeyField = "HK",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 18,
-                        Title = "Bahrain (BH)",
+                        Title = "Heard Island and McDonald Islands",
+                        KeyField = "HM",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 19,
-                        Title = "Bangladesh (BD)",
+                        Title = "Honduras",
+                        KeyField = "HN",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 20,
-                        Title = "Barbados (BB)",
+                        Title = "Croatia",
+                        KeyField = "HR",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 21,
-                        Title = "Belarus (BY)",
+                        Title = "Haiti",
+                        KeyField = "HT",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 22,
-                        Title = "Belgium (BE)",
+                        Title = "Hungary",
+                        KeyField = "HU",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 23,
-                        Title = "Belize (BZ)",
+                        Title = "Indonesia",
+                        KeyField = "ID",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 24,
-                        Title = "Benin (BJ)",
+                        Title = "Ireland",
+                        KeyField = "IE",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 25,
-                        Title = "Bermuda (BM)",
+                        Title = "Israel",
+                        KeyField = "IL",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 26,
-                        Title = "Bhutan (BT)",
+                        Title = "Isle of Man",
+                        KeyField = "IM",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 27,
-                        Title = "Bolivia (BO)",
+                        Title = "India",
+                        KeyField = "IN",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 28,
-                        Title = "Bosnia & Herzegovina (BA)",
+                        Title = "British Indian Ocean Territory",
+                        KeyField = "IO",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 29,
-                        Title = "Botswana (BW)",
+                        Title = "Iraq",
+                        KeyField = "IQ",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 30,
-                        Title = "Bouvet Island (BV)",
+                        Title = "Iran",
+                        KeyField = "IR",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 31,
-                        Title = "Brazil (BR)",
+                        Title = "Andorra",
+                        KeyField = "AD",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 32,
-                        Title = "British Indian Ocean Territory (IO)",
+                        Title = "United Arab Emirates",
+                        KeyField = "AE",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 33,
-                        Title = "Brunei Darussalam (BN)",
+                        Title = "Ajman",
+                        KeyField = "AE-AJ",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 34,
-                        Title = "Bulgaria (BG)",
+                        Title = "Abu Dhabi",
+                        KeyField = "AE-AZ",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 35,
-                        Title = "Burkina Faso (BF)",
+                        Title = "Dubai",
+                        KeyField = "AE-DU",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 36,
-                        Title = "Burundi (BI)",
+                        Title = "Fujairah",
+                        KeyField = "AE-FU",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 37,
-                        Title = "Cambodia (KH)",
+                        Title = "Ras al-Khaimah",
+                        KeyField = "AE-RK",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 38,
-                        Title = "Cameroon (CM)",
+                        Title = "Sharjah",
+                        KeyField = "AE-SH",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 39,
-                        Title = "Canada (CA)",
+                        Title = "Umm al-Quwain",
+                        KeyField = "AE-UQ",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 40,
-                        Title = "Cape Verde (CV)",
+                        Title = "Afghanistan",
+                        KeyField = "AF",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 41,
-                        Title = "Cayman Islands (KY)",
+                        Title = "Antigua and Barbuda",
+                        KeyField = "AG",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 42,
-                        Title = "Central African Republic (CF)",
+                        Title = "Anguilla",
+                        KeyField = "AI",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 43,
-                        Title = "Chad (TD)",
+                        Title = "Albania",
+                        KeyField = "AL",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 44,
-                        Title = "Chile (CL)",
+                        Title = "Armenia",
+                        KeyField = "AM",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 45,
-                        Title = "China (CX)",
+                        Title = "Angola",
+                        KeyField = "AO",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 46,
-                        Title = "Christmas Island (CX)",
+                        Title = "Antarctica",
+                        KeyField = "AQ",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 47,
-                        Title = "Cocos (Keeling) Islands (CC)",
+                        Title = "Argentina",
+                        KeyField = "AR",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 48,
-                        Title = "Columbia (CO)",
+                        Title = "American Samoa",
+                        KeyField = "AS",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 49,
-                        Title = "Commission Services (CS)",
+                        Title = "Austria",
+                        KeyField = "AT",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 50,
-                        Title = "Comoros (KM)",
+                        Title = "Australia",
+                        KeyField = "AU",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 51,
-                        Title = "Congo The Democratic Rebulic of the (CD)",
+                        Title = "Aruba",
+                        KeyField = "AW",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 52,
-                        Title = "Congo-Brazzaville (CG)",
+                        Title = "Aland Islands",
+                        KeyField = "AX",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 53,
-                        Title = "Cook Islands (CK)",
+                        Title = "Azerbaijan",
+                        KeyField = "AZ",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 54,
-                        Title = "Costa Rica (CR)",
+                        Title = "Bosnia and Herzegovina",
+                        KeyField = "BA",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 55,
-                        Title = "Cote D`Ivoire (CI)",
+                        Title = "British Antarctic Territory",
+                        KeyField = "BAT",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 56,
-                        Title = "Country Not mentioned (NM)",
+                        Title = "Barbados",
+                        KeyField = "BB",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 57,
-                        Title = "Croatia (HR)",
+                        Title = "Bangladesh",
+                        KeyField = "BD",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 58,
-                        Title = "Cuba (CU)",
+                        Title = "Belgium",
+                        KeyField = "BE",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 59,
-                        Title = "Cyprus (CY)",
+                        Title = "Burkina Faso",
+                        KeyField = "BF",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 60,
-                        Title = "Czech Republic (DO)",
+                        Title = "Bulgaria",
+                        KeyField = "BG",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 61,
-                        Title = "Denmark (DK)",
+                        Title = "Bahrain",
+                        KeyField = "BH",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 62,
-                        Title = "Djibouti (DJ)",
+                        Title = "Burundi",
+                        KeyField = "BI",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 63,
-                        Title = "Dominica (DM)",
+                        Title = "Benin",
+                        KeyField = "BJ",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 64,
-                        Title = "Dominican Republic (DO)",
+                        Title = "Saint Barthelemy",
+                        KeyField = "BL",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 65,
-                        Title = "Eathiopia (ET)",
+                        Title = "Bermuda",
+                        KeyField = "BM",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 66,
-                        Title = "Ecuador (EC)",
+                        Title = "Brunei",
+                        KeyField = "BN",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 67,
-                        Title = "EFSA (FS)",
+                        Title = "Bolivia",
+                        KeyField = "BO",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 68,
-                        Title = "El Salvador (SV)",
+                        Title = "Bonaire",
+                        KeyField = "BQ-BO",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 69,
-                        Title = "Equatorial Guinea (GQ)",
+                        Title = "Saba",
+                        KeyField = "BQ-SA",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 70,
-                        Title = "Eritrea (ER)",
+                        Title = "Sint Eustatius",
+                        KeyField = "BQ-SE",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 71,
-                        Title = "ESA (EF)",
+                        Title = "Brazil",
+                        KeyField = "BR",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 72,
-                        Title = "Estonia (EE)",
+                        Title = "The Bahamas",
+                        KeyField = "BS",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 73,
-                        Title = "Eygypt (EG)",
+                        Title = "Bhutan",
+                        KeyField = "BT",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 74,
-                        Title = "Falkland Islands (Malvinas) (FK)",
+                        Title = "Bouvet Island",
+                        KeyField = "BV",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 75,
-                        Title = "Faroe Islands (FO)",
+                        Title = "Botswana",
+                        KeyField = "BW",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 76,
-                        Title = "Fiji (FJ)",
+                        Title = "Belarus",
+                        KeyField = "BY",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 77,
-                        Title = "Finland (FI)",
+                        Title = "Belize",
+                        KeyField = "BZ",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 78,
-                        Title = "France (FR)",
+                        Title = "Canada",
+                        KeyField = "CA",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 79,
-                        Title = "French Guiana (GF)",
+                        Title = "Cocos (Keeling) Islands",
+                        KeyField = "CC",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 80,
-                        Title = "French Polynesia (PF)",
+                        Title = "Congo (Democratic Republic)",
+                        KeyField = "CD",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 81,
-                        Title = "French Southern Territories (TF)",
+                        Title = "Central African Republic",
+                        KeyField = "CF",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 82,
-                        Title = "Gabon (GA)",
+                        Title = "Congo",
+                        KeyField = "CG",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 83,
-                        Title = "Gambia (GM)",
+                        Title = "Switzerland",
+                        KeyField = "CH",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 84,
-                        Title = "Georgia (GE)",
+                        Title = "Ivory Coast",
+                        KeyField = "CI",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 85,
-                        Title = "Germany (DE)",
+                        Title = "Cook Islands",
+                        KeyField = "CK",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 86,
-                        Title = "Ghana GH)",
+                        Title = "Chile",
+                        KeyField = "CL",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 87,
-                        Title = "Gibraltar (GI)",
+                        Title = "Cameroon",
+                        KeyField = "CM",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 88,
-                        Title = "Greece (GR)",
+                        Title = "China",
+                        KeyField = "CN",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 89,
-                        Title = "Greenland (GL)",
+                        Title = "Colombia",
+                        KeyField = "CO",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 90,
-                        Title = "Grenada (GD)",
+                        Title = "Costa Rica",
+                        KeyField = "CR",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 91,
-                        Title = "Guadeloupe (GP)",
+                        Title = "Cuba",
+                        KeyField = "CU",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 92,
-                        Title = "Guam (GU)",
+                        Title = "Cape Verde",
+                        KeyField = "CV",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 93,
-                        Title = "Guatemala (GT)",
+                        Title = "Curacao",
+                        KeyField = "CW",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 94,
-                        Title = "Guernsey (GG)",
+                        Title = "Christmas Island",
+                        KeyField = "CX",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 95,
-                        Title = "Guinea-Bissau (GW)",
+                        Title = "Cyprus",
+                        KeyField = "CY",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 96,
-                        Title = "Guyana (GY)",
+                        Title = "Czechia",
+                        KeyField = "CZ",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 97,
-                        Title = "Haiti (HT)",
+                        Title = "Germany",
+                        KeyField = "DE",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 98,
-                        Title = "Heatrd Island & McDonald Islands (HM)",
+                        Title = "Djibouti",
+                        KeyField = "DJ",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 99,
-                        Title = "Holy See (Vatican City State) (VA)",
+                        Title = "Denmark",
+                        KeyField = "DK",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 100,
-                        Title = "Honduras (HN)",
+                        Title = "Dominica",
+                        KeyField = "DM",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 101,
-                        Title = "Hong Kong (HK)",
+                        Title = "Dominican Republic",
+                        KeyField = "DO",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 102,
-                        Title = "Hungary (HU)",
+                        Title = "Algeria",
+                        KeyField = "DZ",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 103,
-                        Title = "Iceland (IS)",
+                        Title = "Ecuador",
+                        KeyField = "EC",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 104,
-                        Title = "Ilse of Man (IM)",
+                        Title = "Estonia",
+                        KeyField = "EE",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 105,
-                        Title = "India (IN)",
+                        Title = "Egypt",
+                        KeyField = "EG",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 106,
-                        Title = "Indonesia (ID)",
+                        Title = "Western Sahara",
+                        KeyField = "EH",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 107,
-                        Title = "Iran Islamic Republic of (IR)",
+                        Title = "Eritrea",
+                        KeyField = "ER",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 108,
-                        Title = "Iraq (IQ)",
+                        Title = "Spain",
+                        KeyField = "ES",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 109,
-                        Title = "Ireland (IE)",
+                        Title = "Ceuta",
+                        KeyField = "ES-CE",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 110,
-                        Title = "Israel (IL)",
+                        Title = "Melilla",
+                        KeyField = "ES-ML",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 111,
-                        Title = "Italy (IT)",
+                        Title = "Ethiopia",
+                        KeyField = "ET",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 112,
-                        Title = "Jamacia (JM)",
+                        Title = "European Union",
+                        KeyField = "EU",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 113,
-                        Title = "Japan (JP)",
+                        Title = "Finland",
+                        KeyField = "FI",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 114,
-                        Title = "Jersey (JE)",
+                        Title = "Fiji",
+                        KeyField = "FJ",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 115,
-                        Title = "Jordan (JO)",
+                        Title = "Falkland Islands",
+                        KeyField = "FK",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 116,
-                        Title = "Kiribati (KI)",
+                        Title = "Micronesia",
+                        KeyField = "FM",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 117,
-                        Title = "Korea Democratic People`s Republic of (KP)",
+                        Title = "Faroe Islands",
+                        KeyField = "FO",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 118,
-                        Title = "Korea Republic of (KR)",
+                        Title = "France",
+                        KeyField = "FR",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 119,
-                        Title = "Kosovo Autonomous Region of (KS)",
+                        Title = "Gabon",
+                        KeyField = "GA",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 120,
-                        Title = "Kuwait (KW)",
+                        Title = "United Kingdom",
+                        KeyField = "GB",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 121,
-                        Title = "Kyrgyzstan (KG)",
+                        Title = "England",
+                        KeyField = "GB-ENG",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 122,
-                        Title = "Lao People`s Democratic Republic (LA)",
+                        Title = "Northern Ireland",
+                        KeyField = "GB-NIR",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 123,
-                        Title = "Latvia (LV)",
+                        Title = "Scotland",
+                        KeyField = "GB-SCT",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 124,
-                        Title = "Lebanon (LB)",
+                        Title = "Wales",
+                        KeyField = "GB-WLS",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 125,
-                        Title = "Lesotho (LS)",
+                        Title = "Grenada",
+                        KeyField = "GD",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 126,
-                        Title = "Liberia (LR)",
+                        Title = "Georgia",
+                        KeyField = "GE",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 127,
-                        Title = "Libyan Arab Jamahirya (LY)",
+                        Title = "French Guiana",
+                        KeyField = "GF",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 128,
-                        Title = "Liechtenstien (LI)",
+                        Title = "Guernsey",
+                        KeyField = "GG",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 129,
-                        Title = "Lithuania (LT)",
+                        Title = "Ghana",
+                        KeyField = "GH",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 130,
-                        Title = "Luxembourg (LU)",
+                        Title = "Gibraltar",
+                        KeyField = "GI",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 131,
-                        Title = "Macao (MO)",
+                        Title = "Greenland",
+                        KeyField = "GL",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 132,
-                        Title = "Macedonia The Former Yugoslav Republic of (MK)",
+                        Title = "The Gambia",
+                        KeyField = "GM",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 133,
-                        Title = "Madagascar (MG)",
+                        Title = "Guinea",
+                        KeyField = "GN",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 134,
-                        Title = "Malawi (MW)",
+                        Title = "Guadeloupe",
+                        KeyField = "GP",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 135,
-                        Title = "Malaysia (MY)",
+                        Title = "Equatorial Guinea",
+                        KeyField = "GQ",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 136,
-                        Title = "Maldives (MV)",
+                        Title = "Greece",
+                        KeyField = "GR",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 137,
-                        Title = "Mali (ML)",
+                        Title = "South Georgia and South Sandwich Islands",
+                        KeyField = "GS",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 138,
-                        Title = "Malta (ML)",
+                        Title = "Guatemala",
+                        KeyField = "GT",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 139,
-                        Title = "Marshall Islands (MH)",
+                        Title = "Guam",
+                        KeyField = "GU",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 140,
-                        Title = "Martinique (MQ)",
+                        Title = "Guinea-Bissau",
+                        KeyField = "GW",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 141,
-                        Title = "Mauritania (MR)",
+                        Title = "Guyana",
+                        KeyField = "GY",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 142,
-                        Title = "Mauritius (MU)",
+                        Title = "Hong Kong",
+                        KeyField = "HK",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 143,
-                        Title = "Mayotte (YT)",
+                        Title = "Heard Island and McDonald Islands",
+                        KeyField = "HM",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 144,
-                        Title = "Mexico (MX)",
+                        Title = "Honduras",
+                        KeyField = "HN",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 145,
-                        Title = "Micronesia Federated States of (FM)",
+                        Title = "Croatia",
+                        KeyField = "HR",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 146,
-                        Title = "Moldova Republic of (MD)",
+                        Title = "Haiti",
+                        KeyField = "HT",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 147,
-                        Title = "Monaco (MC)",
+                        Title = "Hungary",
+                        KeyField = "HU",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 148,
-                        Title = "Mongolia (MN)",
+                        Title = "Indonesia",
+                        KeyField = "ID",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 149,
-                        Title = "Montenegro (ME)",
+                        Title = "Ireland",
+                        KeyField = "IE",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 150,
-                        Title = "Montserrat (MS)",
+                        Title = "Israel",
+                        KeyField = "IL",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 151,
-                        Title = "Morocco (MA)",
+                        Title = "Isle of Man",
+                        KeyField = "IM",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 152,
-                        Title = "Mozambique (MZ)",
+                        Title = "India",
+                        KeyField = "IN",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 153,
-                        Title = "Myanimar (MM)",
+                        Title = "British Indian Ocean Territory",
+                        KeyField = "IO",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 154,
-                        Title = "Nambia (NA)",
+                        Title = "Iraq",
+                        KeyField = "IQ",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 155,
-                        Title = "Nauru (NR)",
+                        Title = "Iran",
+                        KeyField = "IR",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 156,
-                        Title = "Nepal (NP)",
+                        Title = "Iceland",
+                        KeyField = "IS",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 157,
-                        Title = "Netherlands (NL)",
+                        Title = "Italy",
+                        KeyField = "IT",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 158,
-                        Title = "Netherlands Antilles (AN)",
+                        Title = "Jersey",
+                        KeyField = "JE",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 159,
-                        Title = "New Caledonia (NC)",
+                        Title = "Jamaica",
+                        KeyField = "JM",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 160,
-                        Title = "New Zealand (NZ)",
+                        Title = "Jordan",
+                        KeyField = "JO",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 161,
-                        Title = "Nicaragua ((NI)",
+                        Title = "Japan",
+                        KeyField = "JP",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 162,
-                        Title = "Niger (NE)",
+                        Title = "Kenya",
+                        KeyField = "KE",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 163,
-                        Title = "Nigeria (NG)",
+                        Title = "Kyrgyzstan",
+                        KeyField = "KG",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 164,
-                        Title = "Niue (NU)",
+                        Title = "Cambodia",
+                        KeyField = "KH",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 165,
-                        Title = "Norfolk Island (NF)",
+                        Title = "Kiribati",
+                        KeyField = "KI",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 166,
-                        Title = "Northern Mariana Islands (MP)",
+                        Title = "Comoros",
+                        KeyField = "KM",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 167,
-                        Title = "Norway (NO)",
+                        Title = "St Kitts and Nevis",
+                        KeyField = "KN",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 168,
-                        Title = "Oman (OM)",
+                        Title = "North Korea",
+                        KeyField = "KP",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 169,
-                        Title = "Pakistan (PK)",
+                        Title = "South Korea",
+                        KeyField = "KR",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 170,
-                        Title = "Palau (PW)",
+                        Title = "Kuwait",
+                        KeyField = "KW",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 171,
-                        Title = "Palestinian Territory Occupied (PS)",
+                        Title = "Cayman Islands",
+                        KeyField = "KY",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 172,
-                        Title = "Panama (PA)",
+                        Title = "Kazakhstan",
+                        KeyField = "KZ",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 173,
-                        Title = "Papua New Guinea (PG)",
+                        Title = "Laos",
+                        KeyField = "LA",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 174,
-                        Title = "Paraguay (PY)",
+                        Title = "Lebanon",
+                        KeyField = "LB",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 175,
-                        Title = "Peru (PE)",
+                        Title = "St Lucia",
+                        KeyField = "LC",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 176,
-                        Title = "Philippines (PH)",
+                        Title = "Liechtenstein",
+                        KeyField = "LI",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 177,
-                        Title = "Pitcairn (PN)",
+                        Title = "Sri Lanka",
+                        KeyField = "LK",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 178,
-                        Title = "Poland (PL)",
+                        Title = "Liberia",
+                        KeyField = "LR",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 179,
-                        Title = "Portugal (PT)",
+                        Title = "Lesotho",
+                        KeyField = "LS",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 180,
-                        Title = "Puerto Rico (PR)",
+                        Title = "Lithuania",
+                        KeyField = "LT",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 181,
-                        Title = "Qatar (QA)",
+                        Title = "Luxembourg",
+                        KeyField = "LU",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 182,
-                        Title = "Reunion (RE)",
+                        Title = "Latvia",
+                        KeyField = "LV",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 183,
-                        Title = "Romania (RO)",
+                        Title = "Libya",
+                        KeyField = "LY",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 184,
-                        Title = "Russian Federation (RU)",
+                        Title = "Morocco",
+                        KeyField = "MA",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 185,
-                        Title = "Rwanda (RO)",
+                        Title = "Monaco",
+                        KeyField = "MC",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 186,
-                        Title = "Saint Barthelemy (BL)",
+                        Title = "Moldova",
+                        KeyField = "MD",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 187,
-                        Title = "Saint Helena (SH)",
+                        Title = "Montenegro",
+                        KeyField = "ME",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 188,
-                        Title = "Saint Kitts & Nevis (KN)",
+                        Title = "Saint-Martin (French part)",
+                        KeyField = "MF",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 189,
-                        Title = "Saint Lucia (LC)",
+                        Title = "Madagascar",
+                        KeyField = "MG",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 190,
-                        Title = "Saint Martin (MF)",
+                        Title = "Marshall Islands",
+                        KeyField = "MH",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 191,
-                        Title = "Saint Pierre & Miquelon (PM)",
+                        Title = "Macedonia",
+                        KeyField = "MK",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 192,
-                        Title = "Saint Vincent & the Grenadines (VC)",
+                        Title = "Mali",
+                        KeyField = "ML",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 193,
-                        Title = "Samoa (WS)",
+                        Title = "Burma",
+                        KeyField = "MM",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 194,
-                        Title = "San Marino (SM)",
+                        Title = "Mongolia",
+                        KeyField = "MN",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 195,
-                        Title = "Sao Tome & Principe (ST)",
+                        Title = "Macao",
+                        KeyField = "MO",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 196,
-                        Title = "Saudi Arabia (SA)",
+                        Title = "Northern Mariana Islands",
+                        KeyField = "MP",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 197,
-                        Title = "Senegal (SN)",
+                        Title = "Martinique",
+                        KeyField = "MQ",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 198,
-                        Title = "Serbia (RS)",
+                        Title = "Mauritania",
+                        KeyField = "MR",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
+
                     new CountryDb
                     {
                         Id = 199,
-                        Title = "Seychelles (SC)",
+                        Title = "Montserrat",
+                        KeyField = "MS",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 200,
+                        Title = "Malta",
+                        KeyField = "MT",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 201,
+                        Title = "Mauritius",
+                        KeyField = "MU",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 202,
+                        Title = "Maldives",
+                        KeyField = "MV",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 203,
+                        Title = "Malawi",
+                        KeyField = "MW",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 204,
+                        Title = "Mexico",
+                        KeyField = "MX",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 205,
+                        Title = "Malaysia",
+                        KeyField = "MY",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 206,
+                        Title = "Mozambique",
+                        KeyField = "MZ",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 207,
+                        Title = "Namibia",
+                        KeyField = "NA",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 208,
+                        Title = "New Caledonia",
+                        KeyField = "NC",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 209,
+                        Title = "Niger",
+                        KeyField = "NE",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 210,
+                        Title = "Norfolk Island",
+                        KeyField = "NF",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 211,
+                        Title = "Nigeria",
+                        KeyField = "NG",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 212,
+                        Title = "Nicaragua",
+                        KeyField = "NI",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 213,
+                        Title = "Netherlands",
+                        KeyField = "NL",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 214,
+                        Title = "Norway",
+                        KeyField = "NO",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 215,
+                        Title = "Nepal",
+                        KeyField = "NP",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 216,
+                        Title = "Nauru",
+                        KeyField = "NR",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 217,
+                        Title = "Niue",
+                        KeyField = "NU",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 218,
+                        Title = "New Zealand",
+                        KeyField = "NZ",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 219,
+                        Title = "Oman",
+                        KeyField = "OM",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 220,
+                        Title = "Panama",
+                        KeyField = "PA",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 221,
+                        Title = "Peru",
+                        KeyField = "PE",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 222,
+                        Title = "French Polynesia",
+                        KeyField = "PF",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 223,
+                        Title = "Papua New Guinea",
+                        KeyField = "PG",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 224,
+                        Title = "Philippines",
+                        KeyField = "PH",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 225,
+                        Title = "Pakistan",
+                        KeyField = "PK",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 226,
+                        Title = "Poland",
+                        KeyField = "PL",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 227,
+                        Title = "Saint Pierre and Miquelon",
+                        KeyField = "PM",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 228,
+                        Title = "Pitcairn, Henderson, Ducie and Oeno Islands",
+                        KeyField = "PN",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 229,
+                        Title = "Puerto Rico",
+                        KeyField = "PR",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 230,
+                        Title = "Occupied Palestinian Territories",
+                        KeyField = "PS",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 231,
+                        Title = "Portugal",
+                        KeyField = "PT",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 232,
+                        Title = "Palau",
+                        KeyField = "PW",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 233,
+                        Title = "Paraguay",
+                        KeyField = "PY",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 234,
+                        Title = "Qatar",
+                        KeyField = "QA",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 235,
+                        Title = "Reunion",
+                        KeyField = "RE",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 236,
+                        Title = "Romania",
+                        KeyField = "RO",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 237,
+                        Title = "Serbia",
+                        KeyField = "RS",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 238,
+                        Title = "Russia",
+                        KeyField = "RU",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 239,
+                        Title = "Rwanda",
+                        KeyField = "RW",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 240,
+                        Title = "Saudi Arabia",
+                        KeyField = "SA",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 241,
+                        Title = "Solomon Islands",
+                        KeyField = "SB",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 242,
+                        Title = "Seychelles",
+                        KeyField = "SC",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 243,
+                        Title = "Sudan",
+                        KeyField = "SD",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 244,
+                        Title = "Sweden",
+                        KeyField = "SE",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 245,
+                        Title = "Singapore",
+                        KeyField = "SG",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 246,
+                        Title = "Ascension",
+                        KeyField = "SH-AC",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 247,
+                        Title = "Saint Helena",
+                        KeyField = "SH-HL",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 248,
+                        Title = "Tristan da Cunha",
+                        KeyField = "SH-TA",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 249,
+                        Title = "Slovenia",
+                        KeyField = "SI",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 250,
+                        Title = "Svalbard and Jan Mayen",
+                        KeyField = "SJ",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 251,
+                        Title = "Slovakia",
+                        KeyField = "SK",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 252,
+                        Title = "Sierra Leone",
+                        KeyField = "SL",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 253,
+                        Title = "San Marino",
+                        KeyField = "SM",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 254,
+                        Title = "Senegal",
+                        KeyField = "SN",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 255,
+                        Title = "Somalia",
+                        KeyField = "SO",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 256,
+                        Title = "Suriname",
+                        KeyField = "SR",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 257,
+                        Title = "South Sudan",
+                        KeyField = "SS",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 258,
+                        Title = "Sao Tome and Principe",
+                        KeyField = "ST",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 259,
+                        Title = "El Salvador",
+                        KeyField = "SV",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 260,
+                        Title = "Sint Maarten (Dutch part)",
+                        KeyField = "SX",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 261,
+                        Title = "Syria",
+                        KeyField = "SY",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 262,
+                        Title = "Swaziland",
+                        KeyField = "SZ",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 263,
+                        Title = "Turks and Caicos Islands",
+                        KeyField = "TC",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 264,
+                        Title = "Chad",
+                        KeyField = "TD",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 265,
+                        Title = "French Southern Territories",
+                        KeyField = "TF",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 266,
+                        Title = "Togo",
+                        KeyField = "TG",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 267,
+                        Title = "Thailand",
+                        KeyField = "TH",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 268,
+                        Title = "Tajikistan",
+                        KeyField = "TJ",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 269,
+                        Title = "Tokelau",
+                        KeyField = "TK",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 270,
+                        Title = "East Timor",
+                        KeyField = "TL",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 271,
+                        Title = "Turkmenistan",
+                        KeyField = "TM",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 272,
+                        Title = "Tunisia",
+                        KeyField = "TN",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 273,
+                        Title = "Tonga",
+                        KeyField = "TO",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 274,
+                        Title = "Turkey",
+                        KeyField = "TR",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 275,
+                        Title = "Trinidad and Tobago",
+                        KeyField = "TT",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 276,
+                        Title = "Tuvalu",
+                        KeyField = "TV",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 277,
+                        Title = "Taiwan",
+                        KeyField = "TW",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 278,
+                        Title = "Tanzania",
+                        KeyField = "TZ",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 279,
+                        Title = "Ukraine",
+                        KeyField = "UA",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 280,
+                        Title = "Uganda",
+                        KeyField = "UG",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 281,
+                        Title = "Johnston Atoll",
+                        KeyField = "UM-67",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 282,
+                        Title = "Midway Islands",
+                        KeyField = "UM-71",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 283,
+                        Title = "Navassa Island",
+                        KeyField = "UM-76",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 284,
+                        Title = "Wake Island",
+                        KeyField = "UM-79",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 285,
+                        Title = "Baker Island",
+                        KeyField = "UM-81",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 286,
+                        Title = "Howland Island",
+                        KeyField = "UM-84",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 287,
+                        Title = "Jarvis Island",
+                        KeyField = "UM-86",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 288,
+                        Title = "Kingman Reef",
+                        KeyField = "UM-89",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 289,
+                        Title = "Palmyra Atoll",
+                        KeyField = "UM-95",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 290,
+                        Title = "United States",
+                        KeyField = "US",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 291,
+                        Title = "Uruguay",
+                        KeyField = "UY",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 292,
+                        Title = "Uzbekistan",
+                        KeyField = "UZ",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 293,
+                        Title = "Vatican City",
+                        KeyField = "VA",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 294,
+                        Title = "St Vincent",
+                        KeyField = "VC",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 295,
+                        Title = "Venezuela",
+                        KeyField = "VE",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 296,
+                        Title = "British Virgin Islands",
+                        KeyField = "VG",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 297,
+                        Title = "United States Virgin Islands",
+                        KeyField = "VI",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 298,
+                        Title = "Vietnam",
+                        KeyField = "VN",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 299,
+                        Title = "Vanuatu",
+                        KeyField = "VU",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 300,
+                        Title = "Wallis and Futuna",
+                        KeyField = "WF",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 301,
+                        Title = "Samoa",
+                        KeyField = "WS",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 302,
+                        Title = "Kosovo",
+                        KeyField = "XK",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 303,
+                        Title = "Akrotiri",
+                        KeyField = "XQZ",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 304,
+                        Title = "Dhekelia",
+                        KeyField = "XXD",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 305,
+                        Title = "Yemen",
+                        KeyField = "YE",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 306,
+                        Title = "Mayotte",
+                        KeyField = "YT",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 307,
+                        Title = "South Africa",
+                        KeyField = "ZA",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 308,
+                        Title = "Zambia",
+                        KeyField = "ZM",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 309,
+                        Title = "Zimbabwe",
+                        KeyField = "ZW",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 310,
+                        Title = "Country",
+                        KeyField = "country",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 311,
+                        Title = "non-EU",
+                        KeyField = "non-EU",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 312,
+                        Title = "Not Easily Identified",
+                        KeyField = "not-easily-identified",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 313,
+                        Title = "Other",
+                        KeyField = "other",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+
+                    new CountryDb
+                    {
+                        Id = 314,
+                        Title = "Territory",
+                        KeyField = "territory",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     });
