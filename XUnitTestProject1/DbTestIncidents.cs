@@ -6,6 +6,7 @@ using FSA.IncidentsManagementDb.Entities;
 using FSA.IncidentsManagementDb.Entities.Helpers;
 using FSA.IncidentsManagementDb.Repositories;
 using FSA.UnitTests.Misc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using NuGet.Frameworks;
@@ -75,20 +76,20 @@ namespace FSA.UnitTests.Db
             }
         }
 
-        [Fact]
+        [Fact(DisplayName ="Add incindet with lead officer")]
         public async Task AddIncidentLeadOfficer()
         {
             var incident = new BaseIncident(
                    incidentTitle: "Peanuts",
                    incidentDescription: "Stolen peanutes",
                    incidentTypeId: 1,
-                   contactMethodId: 4,
+                   contactMethodId: 2,
                    statusId: (int)IncidentStatus.Unassigned,
                    priorityId: 2,
                    classificationId: 1,
                    dataSourceId: 1,
-                    signalUrl: "",
-                productTypeId: 3,
+                   signalUrl: "",
+                   productTypeId: 3,
                    leadOfficer: userId,
                    adminLeadId: 1,
                    leadOffice: "",
@@ -284,7 +285,7 @@ namespace FSA.UnitTests.Db
         [Fact]
         public async Task LinkToClosed()
         {
-            // record Id 82should be closed
+            //  record Id 82should be closed
             //  crash the test otherwise
             var incidentId = 82;
             using (var ctx = this.Fixture.CreateContext())
@@ -303,6 +304,45 @@ namespace FSA.UnitTests.Db
                 var displayBox = await sims.Incidents.DashboardIncidentLinks(incidentId);
                 var matchedItem = displayBox.FirstOrDefault(o => o.CommonId == 19);
                 Assert.True(matchedItem!=null); 
+            }
+        }
+
+        [Fact]
+        public async Task RemoveAlink()
+        {
+            //  record Id 82should be closed
+            //  crash the test otherwise
+            var incidentId = 82;
+            using (var ctx = this.Fixture.CreateContext())
+            {
+                ISIMSManager sims = new SIMSDataManager(ctx, userId);
+                await sims.Incidents.RemoveLink(13, 79);
+                Assert.True(true);
+            }
+        }
+
+
+        [Fact]
+        public async Task AssignLeadOfficer()
+        {
+            // assign a user to a collection of incidents.
+            // one of them (82) is known to be closed. It should NOT be assigned, and should be closed.
+            using (var ctx = this.Fixture.CreateContext())
+            {
+                var simsApp = new SIMSDataManager(ctx, userId3);
+
+                await simsApp.Incidents.BulkClose(new int[] { 82 });
+
+                await simsApp.Incidents.AssignLeadOfficer(new int[] { 39, 82, 102, 55 }, userId3);
+
+                var Officer39 = (await simsApp.Incidents.Get(39)).LeadOfficer;
+                var Officer102 = (await simsApp.Incidents.Get(102)).LeadOfficer;
+                var Officer55 = (await simsApp.Incidents.Get(55)).LeadOfficer;
+                var i82 = (await simsApp.Incidents.Get(82));
+                var Officer82 = i82.LeadOfficer;
+
+                Assert.True(Officer39 == userId3 && Officer102 == userId3 && Officer55 == userId3 && Officer82 != userId3);
+                Assert.True(i82.StatusId== (int)IncidentStatus.Closed);
             }
         }
     }

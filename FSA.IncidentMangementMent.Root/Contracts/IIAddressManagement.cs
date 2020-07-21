@@ -25,7 +25,12 @@ namespace FSA.IncidentsManagement.Root.Contracts
 
         Task Add(IEnumerable<OrganisationAddress> addresses);
 
-        
+        Task<IEnumerable<FboAddress>> FindFbo(string search);
+        Task<IEnumerable<NotifierAddress>> FindNotifier(string search);
+        Task<IEnumerable<NotifierAddress>> FindLocalAuthority(string search);
+        Task<IEnumerable<OrganisationAddress>> FindAddress(string search);
+
+
 
     }
 }

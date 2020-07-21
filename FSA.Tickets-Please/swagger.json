@@ -6,26 +6,37 @@
   },
   "paths": {
     "/api/Addresses": {
-      "get": {
+      "post": {
         "tags": [
           "Addresses"
         ],
+        "description": "Find address.",
         "operationId": "FindAddress",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "in": "query",
-            "name": "addressSearch",
-            "type": "string"
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/AddressSearchModel"
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/FboAddressModel"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/FboAddressModel"
+              }
             }
           },
           "500": {
@@ -39,6 +50,7 @@
         "tags": [
           "Addresses"
         ],
+        "description": "Add new Address and new fbo.",
         "operationId": "AddFboAddress",
         "consumes": [
           "application/json",
@@ -73,6 +85,7 @@
         "tags": [
           "Addresses"
         ],
+        "description": "Update Address and fbo types.",
         "operationId": "UpdatedFboAddress",
         "consumes": [
           "application/json",
@@ -109,6 +122,7 @@
         "tags": [
           "Addresses"
         ],
+        "description": "Fetch fbo address.",
         "operationId": "GetFboAddress",
         "produces": [
           "application/json"
@@ -140,6 +154,7 @@
         "tags": [
           "Incidents"
         ],
+        "description": "Get incident by id",
         "operationId": "GetIncident",
         "produces": [
           "application/json"
@@ -168,6 +183,7 @@
         "tags": [
           "Incidents"
         ],
+        "description": "Replace an existing incident",
         "operationId": "UpdateIncident",
         "consumes": [
           "application/json",
@@ -202,6 +218,7 @@
         "tags": [
           "Incidents"
         ],
+        "description": "Create an existing incident",
         "operationId": "CreateIncident",
         "consumes": [
           "application/json",
@@ -238,6 +255,7 @@
         "tags": [
           "Incidents"
         ],
+        "description": "Incident dashboard search",
         "operationId": "GetIncidentDashboard",
         "produces": [
           "application/json"
@@ -279,6 +297,7 @@
         "tags": [
           "Incidents"
         ],
+        "description": "Update classification of an incident",
         "operationId": "UpdateClassification",
         "produces": [
           "application/json"
@@ -317,6 +336,7 @@
         "tags": [
           "Incidents"
         ],
+        "description": "Update status of an incident",
         "operationId": "UpdateStatus",
         "produces": [
           "application/json"
@@ -355,6 +375,7 @@
         "tags": [
           "Incidents"
         ],
+        "description": "Update status of an incident",
         "operationId": "CloseAll",
         "consumes": [
           "application/json",
@@ -390,6 +411,7 @@
         "tags": [
           "Incidents"
         ],
+        "description": "Assign lead officer.",
         "operationId": "UpdateLeadOfficer",
         "consumes": [
           "application/json",
@@ -420,6 +442,7 @@
         "tags": [
           "Incidents"
         ],
+        "description": "Link two or moreincidents.",
         "operationId": "AddIncidentLink",
         "consumes": [
           "application/json",
@@ -450,6 +473,7 @@
         "tags": [
           "Incidents"
         ],
+        "description": "Remove link between two incidents.",
         "operationId": "RemoveIncidentLink",
         "consumes": [
           "application/json",
@@ -480,6 +504,7 @@
         "tags": [
           "Incidents"
         ],
+        "description": "Dashboard info for an incidents links",
         "operationId": "GetIncidentLinks",
         "produces": [
           "text/plain",
@@ -515,6 +540,7 @@
         "tags": [
           "Incidents"
         ],
+        "description": "Add note to an incident.",
         "operationId": "AddNote",
         "consumes": [
           "application/json",
@@ -545,6 +571,7 @@
         "tags": [
           "Incidents"
         ],
+        "description": "Get notes for an incident",
         "operationId": "GetNotes",
         "produces": [
           "text/plain",
@@ -580,6 +607,7 @@
         "tags": [
           "Lookups"
         ],
+        "description": "Get all categories",
         "operationId": "Categories",
         "produces": [
           "application/json"
@@ -605,6 +633,7 @@
         "tags": [
           "Lookups"
         ],
+        "description": "Get all classifications",
         "operationId": "Classifications",
         "produces": [
           "application/json"
@@ -630,6 +659,7 @@
         "tags": [
           "Lookups"
         ],
+        "description": "Get all countries",
         "operationId": "Countries",
         "produces": [
           "application/json"
@@ -655,6 +685,7 @@
         "tags": [
           "Lookups"
         ],
+        "description": "Get all Contact methods",
         "operationId": "ContactMethod",
         "produces": [
           "application/json"
@@ -680,6 +711,7 @@
         "tags": [
           "Lookups"
         ],
+        "description": "Data sources",
         "operationId": "DataSource",
         "produces": [
           "application/json"
@@ -705,6 +737,7 @@
         "tags": [
           "Lookups"
         ],
+        "description": "Get all Death/Illnes",
         "operationId": "DeathIllness",
         "produces": [
           "application/json"
@@ -730,6 +763,7 @@
         "tags": [
           "Lookups"
         ],
+        "description": "Get all OMIT groups",
         "operationId": "OMITGroup",
         "produces": [
           "application/json"
@@ -755,6 +789,7 @@
         "tags": [
           "Lookups"
         ],
+        "description": "Get all organisational roles",
         "operationId": "OrganisationRole",
         "produces": [
           "application/json"
@@ -780,6 +815,7 @@
         "tags": [
           "Lookups"
         ],
+        "description": "Get all Persona Roiles",
         "operationId": "PersonaRole",
         "produces": [
           "application/json"
@@ -805,6 +841,7 @@
         "tags": [
           "Lookups"
         ],
+        "description": "list all Product types",
         "operationId": "ProductTypes",
         "produces": [
           "application/json"
@@ -830,6 +867,7 @@
         "tags": [
           "Lookups"
         ],
+        "description": "list all FBO types",
         "operationId": "FBOTypes",
         "produces": [
           "application/json"
@@ -855,6 +893,7 @@
         "tags": [
           "Lookups"
         ],
+        "description": "Product Date types",
         "operationId": "ProductDateTypes",
         "produces": [
           "application/json"
@@ -880,6 +919,7 @@
         "tags": [
           "Lookups"
         ],
+        "description": "Incident office list",
         "operationId": "AdminLeads",
         "produces": [
           "application/json"
@@ -905,6 +945,7 @@
         "tags": [
           "Lookups"
         ],
+        "description": "Divine all SignalStatus values",
         "operationId": "SignalStatus",
         "produces": [
           "application/json"
@@ -930,6 +971,7 @@
         "tags": [
           "Lookups"
         ],
+        "description": "unit information",
         "operationId": "UnitQuantities",
         "produces": [
           "application/json"
@@ -955,6 +997,7 @@
         "tags": [
           "Lookups"
         ],
+        "description": "Organisation pick list",
         "operationId": "Organisations",
         "produces": [
           "application/json"
@@ -980,6 +1023,7 @@
         "tags": [
           "Lookups"
         ],
+        "description": "FBO temporary pick list",
         "operationId": "FboLookup",
         "produces": [
           "application/json"
@@ -1005,6 +1049,7 @@
         "tags": [
           "Lookups"
         ],
+        "description": "Notifier temporary pick list",
         "operationId": "NotfierLookup",
         "produces": [
           "application/json"
@@ -1030,6 +1075,7 @@
         "tags": [
           "Lookups"
         ],
+        "description": "LocalAuth temporary pick list",
         "operationId": "LocalAuthorityLookups",
         "produces": [
           "application/json"
@@ -1055,6 +1101,7 @@
         "tags": [
           "Lookups"
         ],
+        "description": "Priorities values",
         "operationId": "Priorities",
         "produces": [
           "application/json"
@@ -1080,6 +1127,7 @@
         "tags": [
           "Lookups"
         ],
+        "description": "Incident Status values",
         "operationId": "IncidentStatus",
         "produces": [
           "application/json"
@@ -1105,6 +1153,7 @@
         "tags": [
           "Products"
         ],
+        "description": "Create new Product.",
         "operationId": "AddProduct",
         "consumes": [
           "application/json",
@@ -1139,6 +1188,7 @@
         "tags": [
           "Products"
         ],
+        "description": "Update Product.",
         "operationId": "UpdateProduct",
         "consumes": [
           "application/json",
@@ -1173,6 +1223,7 @@
         "tags": [
           "Products"
         ],
+        "description": "get product",
         "operationId": "GetProduct",
         "produces": [
           "application/json"
@@ -1203,6 +1254,7 @@
         "tags": [
           "Products"
         ],
+        "description": "Fetch products.",
         "operationId": "GetIncidentProducts",
         "produces": [
           "application/json"
@@ -1237,6 +1289,7 @@
         "tags": [
           "Products"
         ],
+        "description": "Fetch product addresses.",
         "operationId": "GetProductAddresses",
         "produces": [
           "application/json"
@@ -1271,6 +1324,7 @@
         "tags": [
           "Products"
         ],
+        "description": "Fetch product addresses.",
         "operationId": "GetProductDashboard",
         "produces": [
           "application/json"
@@ -1318,6 +1372,7 @@
         "tags": [
           "Products"
         ],
+        "description": "Assigns fbo to product.",
         "operationId": "AssignFbo",
         "consumes": [
           "application/json",
@@ -1358,6 +1413,7 @@
         "tags": [
           "Products"
         ],
+        "description": "Removes fbo from product.",
         "operationId": "RemoveFbo",
         "consumes": [
           "application/json",
@@ -1395,6 +1451,28 @@
     }
   },
   "definitions": {
+    "SearchAddressType": {
+      "format": "int32",
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "integer"
+    },
+    "AddressSearchModel": {
+      "type": "object",
+      "properties": {
+        "search": {
+          "type": "string"
+        },
+        "addressType": {
+          "$ref": "#/definitions/SearchAddressType"
+        }
+      }
+    },
     "OrganisationAddress": {
       "type": "object",
       "properties": {
@@ -1604,6 +1682,10 @@
           "type": "integer",
           "readOnly": true
         },
+        "signalUrl": {
+          "type": "string",
+          "readOnly": true
+        },
         "productTypeId": {
           "format": "int32",
           "type": "integer",
@@ -1719,6 +1801,9 @@
           "format": "int32",
           "type": "integer"
         },
+        "signalUrl": {
+          "type": "string"
+        },
         "productTypeId": {
           "format": "int32",
           "type": "integer"
@@ -1813,6 +1898,10 @@
         "dataSourceId": {
           "format": "int32",
           "type": "integer",
+          "readOnly": true
+        },
+        "signalUrl": {
+          "type": "string",
           "readOnly": true
         },
         "productTypeId": {
@@ -1925,6 +2014,9 @@
         "dataSourceId": {
           "format": "int32",
           "type": "integer"
+        },
+        "signalUrl": {
+          "type": "string"
         },
         "productTypeId": {
           "format": "int32",
@@ -2434,13 +2526,6 @@
         },
         "additionalInfo": {
           "type": "string"
-        },
-        "dataSourceId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "signalUrl": {
-          "type": "string"
         }
       }
     },
@@ -2538,13 +2623,6 @@
         "additionalInfo": {
           "type": "string"
         },
-        "dataSourceId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "signalUrl": {
-          "type": "string"
-        },
         "added": {
           "format": "date-time",
           "type": "string"
@@ -2562,6 +2640,9 @@
       "type": "object",
       "properties": {
         "dataSource": {
+          "type": "string"
+        },
+        "signalUrl": {
           "type": "string"
         },
         "id": {
@@ -2612,13 +2693,6 @@
           "type": "string"
         },
         "additionalInfo": {
-          "type": "string"
-        },
-        "dataSourceId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "signalUrl": {
           "type": "string"
         },
         "added": {

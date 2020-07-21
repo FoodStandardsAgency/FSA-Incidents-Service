@@ -54,7 +54,8 @@ namespace FSA.IncidentsManagement.Controllers
                 return new OkObjectResult(new PagedResult<IncidentDashboardView>(Enumerable.Empty<IncidentDashboardView>(), 0));
             
             var dashBoard = pageSize.HasValue ? await this.fsaData.Incidents.DashboardSearch(search: search ?? "", startPage: pageNo, pageSize: pageSize.Value) :await this.fsaData.Incidents.DashboardSearch(search: search?? "", startPage: pageNo);
-            return new OkObjectResult(new { Results=dashBoard, TotalRecords =dashBoard.TotalResults});
+            return new OkObjectResult(new { Results=dashBoard, 
+                                            TotalRecords =dashBoard.TotalResults});
         }
 
         [HttpPut()]

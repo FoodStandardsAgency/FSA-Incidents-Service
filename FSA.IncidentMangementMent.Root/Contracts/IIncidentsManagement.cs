@@ -38,5 +38,7 @@ namespace FSA.IncidentsManagement.Root.Contracts
         Task BulkClose(IEnumerable<int> incidentIds);
 
         Task RemoveLink(int fromIncidentId, int toIncidentId);
+
+        Task<bool> IsClosed(int incidentId);
     }
 }

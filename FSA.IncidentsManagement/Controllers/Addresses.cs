@@ -30,14 +30,22 @@ namespace FSA.IncidentsManagement.Controllers
             this.fsaData = fsaData;
         }
 
-        [HttpGet()]
+        [HttpPost()]
         [SwaggerOperation(Description = "Find address.")]
-        [ProducesResponseType(typeof(FboAddressModel), 200)]
+        [ProducesResponseType(typeof(List<FboAddressModel>), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
-        public async Task<IActionResult> FindAddress(string addressSearch)
+        public async Task<IActionResult> FindAddress([FromBody]AddressSearchModel addressSearch)
         {
-            return new OkObjectResult(new List<FboAddressModel>());
+            return addressSearch.AddressType switch
+            {
+                SearchAddressType.FBO => new OkObjectResult(await fsaData.Addresses.FindFbo(addressSearch.Search)),
+                SearchAddressType.Notifiers => new OkObjectResult(await fsaData.Addresses.FindNotifier(addressSearch.Search)),
+                SearchAddressType.LocalAuthority => new OkObjectResult(await fsaData.Addresses.FindLocalAuthority(addressSearch.Search)),
+                SearchAddressType.BasicAddress => new OkObjectResult(await fsaData.Addresses.FindAddress(addressSearch.Search)),
+                SearchAddressType.Unknown => BadRequest("Unknown address type."),
+                _=>BadRequest("Unknown address issues.")
+            };   
         }
 
         [HttpPost("Fbo")]
@@ -53,7 +61,7 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpPut("Fbo")]
         [ProducesResponseType(typeof(FboAddressModel), 200)]
-        [SwaggerOperation(Description = "update Address and fbo types.")]
+        [SwaggerOperation(Description = "Update Address and fbo types.")]
         [ProducesResponseType(500)]
         [Produces("application/json")]
         public async Task<IActionResult> UpdatedFboAddress([FromBody]FboAddressModel updtedFbo)

@@ -15,9 +15,9 @@ namespace FSA.IncidentsManagement.Models
         public int StatusId { get; set; }   // Not signal status
         public int PriorityId { get; set; }
         public int? SignalStatusId { get; set; }   // Not signal status
-        public int NotifierId { get; set; }     // organisations
-        public int PrincipalFBOId { get; set; } // Organisations
-        public int LeadLocalAuthorityId { get; set; } // organisations
+        public int? NotifierId { get; set; }     // organisations
+        public int? PrincipalFBOId { get; set; } // Organisations
+        public int? LeadLocalAuthorityId { get; set; } // organisations
         public int ClassificationId { get; set; }
         public int DataSourceId { get; set; }
         public string SignalUrl { get; set; }
