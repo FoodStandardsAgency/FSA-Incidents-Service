@@ -85,7 +85,7 @@
         "tags": [
           "Addresses"
         ],
-        "description": "update Address and fbo types.",
+        "description": "Update Address and fbo types.",
         "operationId": "UpdatedFboAddress",
         "consumes": [
           "application/json",
@@ -1457,7 +1457,8 @@
         0,
         1,
         2,
-        3
+        3,
+        4
       ],
       "type": "integer"
     },
