@@ -1,4 +1,5 @@
-﻿using FSA.IncidentsManagement.Root.Models;
+﻿using EntityFrameworkCore.TemporalTables.Extensions;
+using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagementDb.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -12,7 +13,9 @@ namespace FSA.IncidentsManagementDb.Builders
         public override void Configure(EntityTypeBuilder<FBODb> builder)
         {
             base.Configure(builder);
-
+            
+            builder.UseTemporalTable();
+            // This field is a flags binary field so no relationship becaredul.
             builder.Property(o => o.FBOTypeId)
                 .HasConversion(o => o, o=>(FboTypes)o);
         }

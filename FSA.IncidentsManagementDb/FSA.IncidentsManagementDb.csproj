@@ -6,51 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200618093948_Country-Roads.cs" />
-    <Compile Remove="Migrations\20200618093948_Country-Roads.Designer.cs" />
-    <Compile Remove="Migrations\20200620145818_Willond.cs" />
-    <Compile Remove="Migrations\20200620145818_Willond.Designer.cs" />
-    <Compile Remove="Migrations\20200620151932_Tabel.cs" />
-    <Compile Remove="Migrations\20200620151932_Tabel.Designer.cs" />
-    <Compile Remove="Migrations\20200625084208_sonow.cs" />
-    <Compile Remove="Migrations\20200625084208_sonow.Designer.cs" />
-    <Compile Remove="Migrations\20200625084926_sonow.cs" />
-    <Compile Remove="Migrations\20200625084926_sonow.Designer.cs" />
-    <Compile Remove="Migrations\20200625125753_ForStrongTeeth.cs" />
-    <Compile Remove="Migrations\20200625125753_ForStrongTeeth.Designer.cs" />
-    <Compile Remove="Migrations\20200625142352_AllTheDates.cs" />
-    <Compile Remove="Migrations\20200625142352_AllTheDates.Designer.cs" />
-    <Compile Remove="Migrations\20200625144402_AllTheDatesData.cs" />
-    <Compile Remove="Migrations\20200625144402_AllTheDatesData.Designer.cs" />
-    <Compile Remove="Migrations\20200626071529_MaryJane.cs" />
-    <Compile Remove="Migrations\20200626071529_MaryJane.Designer.cs" />
-    <Compile Remove="Migrations\20200626201218_Seeed.cs" />
-    <Compile Remove="Migrations\20200626201218_Seeed.Designer.cs" />
-    <Compile Remove="Migrations\20200629074744_wishy.cs" />
-    <Compile Remove="Migrations\20200629074744_wishy.Designer.cs" />
-    <Compile Remove="Migrations\20200629114628_William.cs" />
-    <Compile Remove="Migrations\20200629114628_William.Designer.cs" />
-    <Compile Remove="Migrations\20200630071719_nomorescore.cs" />
-    <Compile Remove="Migrations\20200630071719_nomorescore.Designer.cs" />
-    <Compile Remove="Migrations\20200630072119_nomorescore.cs" />
-    <Compile Remove="Migrations\20200630072119_nomorescore.Designer.cs" />
-    <Compile Remove="Migrations\20200630072427_nomorescore.cs" />
-    <Compile Remove="Migrations\20200630072427_nomorescore.Designer.cs" />
-    <Compile Remove="Migrations\20200630072945_nomorescore.cs" />
-    <Compile Remove="Migrations\20200630072945_nomorescore.Designer.cs" />
-    <Compile Remove="Migrations\20200630073914_nomorescore.cs" />
-    <Compile Remove="Migrations\20200630073914_nomorescore.Designer.cs" />
-    <Compile Remove="Migrations\20200630074232_bellyUp.cs" />
-    <Compile Remove="Migrations\20200630074232_bellyUp.Designer.cs" />
-    <Compile Remove="Migrations\20200715072335_countryInfoRedux.cs" />
-    <Compile Remove="Migrations\20200715072335_countryInfoRedux.Designer.cs" />
-    <Compile Remove="Migrations\20200721103904_missing parts.cs" />
-    <Compile Remove="Migrations\20200721103904_missing parts.Designer.cs" />
-    <Compile Remove="Migrations\20200721104006_missing parts.cs" />
-    <Compile Remove="Migrations\20200721104006_missing parts.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.5">
@@ -60,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EntityFrameworkCore.TemporalTables\EntityFrameworkCore.TemporalTables\EntityFrameworkCore.TemporalTables.csproj" />
     <ProjectReference Include="..\FSA.IncidentMangementMent.Root\FSA.IncidentsManagement.Root.csproj" />
   </ItemGroup>
 

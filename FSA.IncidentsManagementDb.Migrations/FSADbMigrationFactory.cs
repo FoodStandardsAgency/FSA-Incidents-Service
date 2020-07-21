@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EntityFrameworkCore.TemporalTables.Extensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,12 +16,28 @@ namespace FSA.IncidentsManagementDb.Migrations
     {
         public FSADbContext CreateDbContext(string[] args)
         {
-            var builder = new ConfigurationBuilder()
+            IConfiguration configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-            IConfiguration configuration = builder.Build();
-            var conString = configuration.GetConnectionString("migrate");
-            return new FSADbContext(new DbContextOptionsBuilder().UseSqlServer(conString).Options);
+                .AddJsonFile("appsettings.json").Build();
+            IServiceCollection services = new ServiceCollection();
+
+            var dbContextBuilder = new DbContextOptionsBuilder<FSADbContext>();
+            var connection= configuration.GetConnectionString("migrate");
+
+            services.AddDbContext<FSADbContext>((provider, options) =>
+            {
+                options.UseSqlServer(configuration.GetConnectionString("migrate"));
+                options.UseInternalServiceProvider(provider);
+            });
+
+            services.AddEntityFrameworkSqlServer();
+            services.RegisterTemporalTablesForDatabase<FSADbContext>();
+
+            var provider = services.BuildServiceProvider();
+            
+            dbContextBuilder.UseSqlServer(connection);
+            dbContextBuilder.UseInternalServiceProvider(provider);
+            return provider.GetService<FSADbContext>();
         }
     }
 }

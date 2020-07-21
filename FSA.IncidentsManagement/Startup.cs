@@ -27,6 +27,7 @@ using System.Reflection;
 using FSA.IncidentsManagement.ModelValidators;
 using FluentValidation.AspNetCore;
 using FSA.IncidentsManagement.Misc;
+using EntityFrameworkCore.TemporalTables.Extensions;
 
 namespace FSA.IncidentsManagement
 {
@@ -84,14 +85,20 @@ namespace FSA.IncidentsManagement
                 c.EnableAnnotations();
             });
 
+
             var fsaConn = Configuration.GetConnectionString("FSADbConn");
-            services.AddDbContext<FSADbContext>((opts) => opts
+            services.AddDbContext<FSADbContext>((provider,opts) => opts
                         .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddDebug()))
                         .UseSqlServer(fsaConn, (d) =>
                         {
                             d.EnableRetryOnFailure(15);
                             d.CommandTimeout(100);
-                        }));
+                        }).UseInternalServiceProvider(provider));
+            services.AddEntityFrameworkSqlServer();
+
+            services.RegisterTemporalTablesForDatabase<FSADbContext>();
+
+
 
             services.AddScoped<UserInfo>();
             services.AddScoped<ILookupDataHost, LookupDataHost>();

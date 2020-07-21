@@ -1,4 +1,5 @@
 ﻿using _UnitTests;
+using EntityFrameworkCore.TemporalTables.Extensions;
 using FSA.IncidentsManagement.Root.Contracts;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagementDb;
@@ -6,19 +7,13 @@ using FSA.IncidentsManagementDb.Entities.Helpers;
 using FSA.IncidentsManagementDb.Repositories;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
 using System.Threading.Tasks;
-using System.Transactions;
 
 namespace FSA.UnitTests.Misc
 {
@@ -28,23 +23,62 @@ namespace FSA.UnitTests.Misc
 
         private string[] titleList;
         private SqlConnection dbConn;
+        private ServiceCollection services;
         private object _lock = new object();
         private bool _databaseInit;
+        private ServiceProvider provider;
+        private IServiceScopeFactory scopeFactory;
 
         public DbContextFixture()
         {
             this.Config = System.Text.Json.JsonSerializer.Deserialize<ConfigFile>(File.OpenText("./config.json").ReadToEnd());
             this.titleList = File.ReadAllLines("./ListOfTitles.txt");
             this.dbConn = new SqlConnection(Config.dbConn);
-            Seed();
+            this.services = new ServiceCollection();
 
-            dbConn.Open();
+            SetUpDbContext(Config.dbConn);
+            this.scopeFactory = provider.GetRequiredService<IServiceScopeFactory>();
+            Seed();
+            //dbConn.Open();
         }
+
+        private void SetUpDbContext(string conn)
+        {
+
+            var dbContextBuilder = new DbContextOptionsBuilder<FSADbContext>();
+
+            services.AddDbContext<FSADbContext>((provider, options) =>
+            {
+                options.UseSqlServer(conn);
+                options.UseInternalServiceProvider(provider);
+            });
+
+            services.AddEntityFrameworkSqlServer();
+            services.RegisterTemporalTablesForDatabase<FSADbContext>();
+
+            this.provider = services.BuildServiceProvider();
+            //dbContextBuilder.UseSqlServer(conn);
+            //dbContextBuilder.UseInternalServiceProvider(provider);
+
+        }
+
         // Called in our tests
         public FSADbContext CreateContext()
         {
-            var ctx = new FSADbContext(new DbContextOptionsBuilder().UseSqlServer(this.dbConn).Options);
-            return ctx;
+            // var ctx = new FSADbContext(new DbContextOptionsBuilder().UseSqlServer(this.dbConn).Options);
+            //using (var p = this.scopeFactory.CreateScope())
+            //{
+            //    return p.ServiceProvider.GetService<FSADbContext>();
+            //}
+            
+
+            var dbContextBuilder = new DbContextOptionsBuilder<FSADbContext>();
+            dbContextBuilder.UseSqlServer(Config.dbConn);
+            dbContextBuilder.UseInternalServiceProvider(provider);
+
+            return new FSADbContext(dbContextBuilder.Options);
+            // return provider.GetService<FSADbContext>();
+
         }
 
         private async Task CreateAddress(ISIMSManager sims)
@@ -95,6 +129,7 @@ namespace FSA.UnitTests.Misc
 
             await iManager.Add(newBatch);
         }
+
         private async Task CreateProducts(ISIMSManager sims, SeedIncidents seeder)
         {
             var products = seeder.GetNewProducts();
