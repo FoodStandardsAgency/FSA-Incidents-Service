@@ -93,14 +93,14 @@ namespace FSA.UnitTests.Db
         [Fact]
         public async Task SearchFBOAddress()
         {
-            //var addr = await simsData.Addresses.FindFbo("Council");
-            //// Many
-            //Assert.True(addr.ToList().Count > 1);
-            //// One
-            //addr = await simsData.Addresses.FindFbo("Redcar");
-            //Assert.True(addr.ToList().Count ==1);
-            //post code match
-            var addr = await simsData.Addresses.FindFbo("PostCode");
+            var addr = await simsData.Addresses.FindFbo("Council");
+            // None (No councils in test Data)
+            Assert.True(addr.ToList().Count == 0);
+            // Many
+            addr = await simsData.Addresses.FindFbo("PostCode");
+            Assert.True(addr.ToList().Count > 1);
+            // one post code match
+            addr = await simsData.Addresses.FindFbo("P1 C10DE");
             Assert.True(addr.ToList().Count == 1);
         }
     }

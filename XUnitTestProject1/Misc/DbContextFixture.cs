@@ -18,6 +18,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace FSA.UnitTests.Misc
 {
@@ -35,7 +36,7 @@ namespace FSA.UnitTests.Misc
             this.Config = System.Text.Json.JsonSerializer.Deserialize<ConfigFile>(File.OpenText("./config.json").ReadToEnd());
             this.titleList = File.ReadAllLines("./ListOfTitles.txt");
             this.dbConn = new SqlConnection(Config.dbConn);
-            //Seed();
+            Seed();
 
             dbConn.Open();
         }
@@ -49,14 +50,28 @@ namespace FSA.UnitTests.Misc
         private async Task CreateAddress(ISIMSManager sims)
         {
             var addresses = System.Text.Json.JsonSerializer.Deserialize<List<OrganisationAddress>>(File.OpenText("./orgs.json").ReadToEnd());
-            await sims.Addresses.Add(addresses);
+
+            await sims.Addresses.Add(addresses.GetRange(0, addresses.Count - 8));
+            var Not1 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 6));
+            var Not2 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 5));
+            var Not3 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 7));
+            var add1 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 4));
+            var add2 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 3));
+            var add3 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 2));
+            var add4 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 1));
+
+
+
+
+
             await sims.Addresses.AssignNotifiers(NotifierTypes.LocalAuthority, Enumerable.Range(1, 407).ToList());
-
-
-            await sims.Addresses.AssignFbo(FboTypes.Consignor | FboTypes.Exporter, 408);
-            await sims.Addresses.AssignFbo(FboTypes.Exporter | FboTypes.Farmer, 409);
-            await sims.Addresses.AssignFbo(FboTypes.Manufacturer | FboTypes.Exporter | FboTypes.Consignor, 410);
-            await sims.Addresses.AssignFbo(FboTypes.E_platform_Market | FboTypes.Storage | FboTypes.Wholesaler, 411);
+            await sims.Addresses.AssignNotifier(NotifierTypes.PublicIndividual, Not2.Id);
+            await sims.Addresses.AssignNotifier(NotifierTypes.Manufacturer, Not3.Id);
+            await sims.Addresses.AssignNotifier(NotifierTypes.Retailer, Not1.Id);
+            await sims.Addresses.AssignFbo(FboTypes.Consignor | FboTypes.Exporter, add1.Id);
+            await sims.Addresses.AssignFbo(FboTypes.Exporter | FboTypes.Farmer, add2.Id);
+            await sims.Addresses.AssignFbo(FboTypes.Manufacturer | FboTypes.Exporter | FboTypes.Consignor, add3.Id);
+            await sims.Addresses.AssignFbo(FboTypes.E_platform_Market | FboTypes.Storage | FboTypes.Wholesaler, add4.Id);
 
         }
 
@@ -83,7 +98,7 @@ namespace FSA.UnitTests.Misc
         private async Task CreateProducts(ISIMSManager sims, SeedIncidents seeder)
         {
             var products = seeder.GetNewProducts();
-            var tasks = products.Select(p => sims.Products.Add(p.IncidentId,p ));
+            var tasks = products.Select(p => sims.Products.Add(p.IncidentId, p));
             await Task.WhenAll(tasks);
         }
 
@@ -106,20 +121,17 @@ namespace FSA.UnitTests.Misc
                         {
                             t2.Wait();
 
-                            //Task.WhenAll(TaskList.ToArray());
-
                         }
                         catch (AggregateException ex)
                         {
                             var res = ex.Flatten();
                             Debug.WriteLine(res);
                         }
+                        
                         var t3 = CreateAddress(SIMS);
                         try
                         {
                             t3.Wait();
-
-                            //Task.WhenAll(TaskList.ToArray());
 
                         }
                         catch (AggregateException ex)

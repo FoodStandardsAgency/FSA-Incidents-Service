@@ -44,6 +44,10 @@
     <Compile Remove="Migrations\20200630074232_bellyUp.Designer.cs" />
     <Compile Remove="Migrations\20200715072335_countryInfoRedux.cs" />
     <Compile Remove="Migrations\20200715072335_countryInfoRedux.Designer.cs" />
+    <Compile Remove="Migrations\20200721103904_missing parts.cs" />
+    <Compile Remove="Migrations\20200721103904_missing parts.Designer.cs" />
+    <Compile Remove="Migrations\20200721104006_missing parts.cs" />
+    <Compile Remove="Migrations\20200721104006_missing parts.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

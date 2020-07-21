@@ -172,7 +172,7 @@ namespace FSA.IncidentsManagementDb.Repositories
                                            || EF.Functions.Like(o.Organisation.PostCode, $"%{search}%")
                                            || EF.Functions.Like(o.Organisation.MainContact, $"%{search}%"));
             var items = await qryAddr.ToListAsync();
-            return items.ToClient();
+            return items.ToClient().ToList();
         }
 
         public async Task<IEnumerable<NotifierAddress>> FindNotifier(string search)
