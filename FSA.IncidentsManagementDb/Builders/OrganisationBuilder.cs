@@ -7,16 +7,15 @@ using System.Text;
 
 namespace FSA.IncidentsManagementDb.Builders
 {
-    internal class NotifierBuilder : AuditInfoBuilderConfiguration<NotifierDb>
+    internal class OrganisationBuilder : AuditInfoBuilderConfiguration<OrganisationDb>
     {
-        public override void Configure(EntityTypeBuilder<NotifierDb> builder)
+        public override void Configure(EntityTypeBuilder<OrganisationDb> builder)
         {
             base.Configure(builder);
 
             builder.UseTemporalTable();
 
-            builder.HasKey(p => p.Id);
-
         }
     }
+
 }

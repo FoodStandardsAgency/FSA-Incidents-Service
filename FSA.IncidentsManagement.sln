@@ -23,6 +23,8 @@ Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "FSA.Tickets-Please", "FSA.T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Identity.Web", "Prmieur\microsoft-identity-web\src\Microsoft.Identity.Web\Microsoft.Identity.Web.csproj", "{5A0AA435-B6A5-4D83-BFBA-0B689EC094D7}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFrameworkCore.TemporalTables", "EntityFrameworkCore.TemporalTables\EntityFrameworkCore.TemporalTables\EntityFrameworkCore.TemporalTables.csproj", "{203051F0-F7A2-42D5-AA71-4CA13EB6B8BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{5A0AA435-B6A5-4D83-BFBA-0B689EC094D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A0AA435-B6A5-4D83-BFBA-0B689EC094D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A0AA435-B6A5-4D83-BFBA-0B689EC094D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{203051F0-F7A2-42D5-AA71-4CA13EB6B8BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{203051F0-F7A2-42D5-AA71-4CA13EB6B8BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{203051F0-F7A2-42D5-AA71-4CA13EB6B8BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{203051F0-F7A2-42D5-AA71-4CA13EB6B8BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{A32C417F-DE26-40BB-BD3D-57953C475D82} = {53D3120B-C2D3-4DC2-8666-7160351F132D}
 		{0A03EE98-12FD-4A67-B8A5-F417C17FD380} = {53D3120B-C2D3-4DC2-8666-7160351F132D}
 		{5A0AA435-B6A5-4D83-BFBA-0B689EC094D7} = {03E79987-70E8-4B1A-95CE-5CFBD4B81E30}
+		{203051F0-F7A2-42D5-AA71-4CA13EB6B8BB} = {2501445C-C0D2-4DB6-AB9E-F2541CC37D18}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9EC979DB-8487-475E-B344-E40B524D64A2}

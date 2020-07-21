@@ -1,4 +1,5 @@
-﻿using FSA.IncidentsManagement.Root.Models;
+﻿using EntityFrameworkCore.TemporalTables.Extensions;
+using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagementDb.Builders;
 using FSA.IncidentsManagementDb.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -25,7 +26,7 @@ namespace FSA.IncidentsManagementDb
         internal DbSet<IncidentOMITGroupDb> IncidentOMITGroups { get; set; }
 
         internal DbSet<OrganisationDb> Organisations { get; set; }
-        internal DbSet<OrganisationRoleDb> OrganisationRoles { get; set; }
+        //internal DbSet<OrganisationRoleDb> OrganisationRoles { get; set; }
         internal DbSet<NotifierTypeDb> NotifierTypes { get; set; }
 
         internal DbSet<CategoryDb> Categories { get; set; }
@@ -36,7 +37,7 @@ namespace FSA.IncidentsManagementDb
         internal DbSet<DataSourceDb> DataSources { get; set; }
         internal DbSet<DeathIllnessDb> DeathIllnesss { get; set; }
         internal DbSet<OMITGroupDb> OMITGroups { get; set; }
-        internal DbSet<PersonaRoleDb> PersonaRoles { get; set; }
+        //internal DbSet<PersonaRoleDb> PersonaRoles { get; set; }
 
         internal DbSet<AdminLeadDb> AdminLeads { get; set; }
 
@@ -49,7 +50,6 @@ namespace FSA.IncidentsManagementDb
         internal DbSet<SignalStatusDb> SignalStatus { get; set; }
         internal DbSet<UnitQuantityDb> UnitQuantities { get; set; }
         internal DbSet<ProductPackSizeDb> ProductPackSizes { get; set; }
-        internal DbSet<BatchCodeDb> BatchCodes { get; set; }
 
         internal DbSet<FBODb> FBOs { get; set; }
         internal DbSet<FBOTypeDb> FBOTypes { get; set; }
@@ -94,14 +94,21 @@ namespace FSA.IncidentsManagementDb
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-#if DEBUG
-            optionsBuilder.EnableSensitiveDataLogging(true);
-#endif
+//#if DEBUG
+//            optionsBuilder.EnableSensitiveDataLogging(true);
+//#endif
             base.OnConfiguring(optionsBuilder);
 
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // We are only applying temporal tables explictly
+            modelBuilder.PreventTemporalTables();
+
+            //modelBuilder.Entity<OrganisationDb>().UseTemporalTable();
+            //modelBuilder.Entity<FBODb>().UseTemporalTable();
+            //modelBuilder.Entity<NotifierDb>().UseTemporalTable();
+
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<ClassificationDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<CategoryDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<ContactMethodDb>());
@@ -117,7 +124,7 @@ namespace FSA.IncidentsManagementDb
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<PriorityDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<DateTypeDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<NotifierTypeDb>());
-            modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<FBOTypeDb>());
+            //modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<FBOTypeDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<AdminLeadDb>());
 
 
@@ -127,6 +134,8 @@ namespace FSA.IncidentsManagementDb
             modelBuilder.ApplyConfiguration(new IncidentOMITGroupDbBuilder());
             modelBuilder.ApplyConfiguration(new FBOBuilder());
             modelBuilder.ApplyConfiguration(new NotifierBuilder());
+            modelBuilder.ApplyConfiguration(new OrganisationBuilder());
+
             modelBuilder.ApplyConfiguration(new ProductBuilder());
             modelBuilder.ApplyConfiguration(new ProductDatesBuilder());
             modelBuilder.ApplyConfiguration(new ProductPackSizeBuilder());
