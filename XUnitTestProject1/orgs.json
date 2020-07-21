@@ -5667,13 +5667,15 @@
     "EmailAddress": "Contact@wyreforestdc.email",
     "ContactMethodId": 1
   },
+
   {
     "Id": 0,
-    "Title": "Company One",
+    "Title": "Manufacturing Company",
     "MainContact": "Terry Giffordes",
     "AddressLine1": "Address Line 1",
     "AddressLine2": "Address Line2",
     "TownCity": "TownCity",
+    "PostCode": "Postode",
     "ContactMethodId": 4
   },
   {
@@ -5697,7 +5699,7 @@
     "TownCity": "TownCity",
     "County": "County",
     "CountryId": 105,
-    "PostCode": "PostCode",
+    "PostCode": "P1 C10DE",
     "TelephoneNumber": "01234 567890",
     "EmailAddress": "Concered@email.com",
     "ContactMethodId": 1
@@ -5705,12 +5707,54 @@
   {
     "Id": 0,
     "Title": "New Notifier",
+    "MainContact": "Penelope Contact",
     "AddressLine1": "AddressLine1",
     "AddressLine2": "AddressLine2",
     "TownCity": "TownCity",
     "County": "County",
     "CountryId": 105,
     "PostCode": "PostCode",
+    "TelephoneNumber": "01234 567890",
+    "EmailAddress": "NewNotes@email.com",
+    "ContactMethodId": 1
+  },
+  {
+    "Id": 0,
+    "Title": "Animal Feed Ltd",
+    "MainContact":"Animal feed email",
+    "AddressLine1": "AddressLine1",
+    "AddressLine2": "AddressLine2",
+    "TownCity": "TownCity",
+    "County": "County",
+    "CountryId": 105,
+    "PostCode": "PostCode",
+    "TelephoneNumber": "01234 567890",
+    "EmailAddress": "AnimalFeed@email.com",
+    "ContactMethodId": 1
+  },
+  {
+    "Id": 0,
+    "Title": "Equine Processors",
+    "AddressLine1": "AddressLine1",
+    "AddressLine2": "AddressLine2",
+    "TownCity": "TownCity",
+    "County": "County",
+    "CountryId": 105,
+    "PostCode": "PostCode",
+    "TelephoneNumber": "01234 567890",
+    "EmailAddress": "Equus@email.com",
+    "ContactMethodId": 1
+  },
+  {
+    "Id": 0,
+    "Title": "Barrys basic butchery and cheeese",
+    "MainContact": "Barry The Butcher",
+    "AddressLine1": "AddressLine1",
+    "AddressLine2": "AddressLine2",
+    "TownCity": "TownCity",
+    "County": "County",
+    "CountryId": 105,
+    "PostCode": "P1 C10DE",
     "TelephoneNumber": "01234 567890",
     "EmailAddress": "NewNotes@email.com",
     "ContactMethodId": 1
