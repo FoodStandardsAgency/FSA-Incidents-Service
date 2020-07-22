@@ -3,6 +3,7 @@ using FSA.IncidentsManagement;
 using FSA.IncidentsManagement.Misc;
 using FSA.IncidentsManagement.Models;
 using FSA.IncidentsManagement.Root.Models;
+using FSA.UnitTests.Misc;
 using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
@@ -72,6 +73,29 @@ namespace FSA.IntegrationTesting
             var product = await response.Content.ReadAsStringAsync();
             Assert.True(product != null);
         }
+
+        [Fact]
+        public async Task GetIncidentMissingId()
+        {
+            try
+            {
+                var response = await _client.GetFromJsonAsync<WebIncidentDisplayModel>("/api/incidents?incidentId=21");
+                //Assert.IsType<IncidentsDisplayModel>(response);
+            }
+            catch(Exception ex)
+            {
+                Assert.IsType<HttpRequestException>(ex);
+                
+            }
+        }
+        [Fact]
+        public async Task GetIncident()
+        {
+            var response = await _client.GetFromJsonAsync<WebIncidentDisplayModel>("/api/incidents?id=21");
+            Assert.IsType<WebIncidentDisplayModel>(response);
+        }
+
+
 
         public void Dispose()
         {

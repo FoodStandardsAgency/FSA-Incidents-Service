@@ -15,7 +15,7 @@ using Xunit.Abstractions;
 
 namespace FSA.UnitTests.Db
 {
-    public class DbTestAddress
+    public class DbAddress
     {
         private string userId = "";
         private string anotherId = "";
@@ -26,7 +26,7 @@ namespace FSA.UnitTests.Db
 
         private FSADbContext ctx;
         private SIMSDataManager simsData;
-        public DbTestAddress()
+        public DbAddress()
         {
             var seedIn = new SeedIncidents();
 
@@ -45,7 +45,7 @@ namespace FSA.UnitTests.Db
         {
             var orga = new FboAddress
             {
-                Title = "Testing address ",
+                Title = "Test - New FBO COnsignor Etrader ",
                 FboTypes = FboTypes.Consignor | FboTypes.E_trader,
                 EmailAddress = "Terry@amil.com",
                 MainContact = "Terry the data",
@@ -53,13 +53,32 @@ namespace FSA.UnitTests.Db
                 AddressLine2 = "Address line 2",
                 PostCode = "Postoce",
                 TownCity = "Town City",
-                CountryId = 103,
+                CountryId = 201,
                 County = "Counry",
                 TelephoneNumber = ""
             };
 
             var newaddress = await simsData.Addresses.AddFbo(orga);
             Assert.IsType<FboAddress>(newaddress);
+        }
+
+        [Fact]
+        public async Task AddOrgnisation()
+        {
+            var org = new OrganisationAddress
+            {
+                            
+                Title = "Test - New orgnaisations",
+                EmailAddress = "organisation@amil.com",
+                MainContact = "New-Org Smity",
+                AddressLine1 = "Address line 1",
+                AddressLine2 = "Address line 2",
+                PostCode = "Test post",
+                TownCity = "Test Town City",
+                CountryId = 201,
+                County = "Country",
+                TelephoneNumber = "01234567890"
+            };
         }
 
         [Fact]

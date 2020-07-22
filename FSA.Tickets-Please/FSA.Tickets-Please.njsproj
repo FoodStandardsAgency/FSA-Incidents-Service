@@ -33,9 +33,11 @@
     <None Include="app.ts" />
     <None Include="routes\index.ts" />
     <None Include="routes\user.ts" />
+    <Content Include="ColumnOrdering.txt" />
     <Content Include="client\tsconfig.json">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="getswagger.bat" />
     <Content Include="public\Index.html">
       <SubType>Code</SubType>
     </Content>

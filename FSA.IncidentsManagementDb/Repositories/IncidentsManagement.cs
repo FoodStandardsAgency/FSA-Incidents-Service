@@ -134,7 +134,7 @@ namespace FSA.IncidentsManagementDb.Repositories
             if (linkData == null)
             {
                 // try the other way instead to-from
-                 linkData = ctx.IncidentLinks.Find(new { ToIncidentId = from, FromIncidentId = to });
+                 linkData = ctx.IncidentLinks.Find(to, from);
             }
             if (linkData != null)
                 await DeleteLink(linkData);
@@ -313,7 +313,8 @@ namespace FSA.IncidentsManagementDb.Repositories
                         .Include(i => i.LeadLocalAuthority).ThenInclude(o => o.Organisation)
                         .Include(i => i.PrincipalFBO).ThenInclude(o => o.Organisation)
                         .Include(i => i.ContactMethod)
-                        .Include(i => i.IncidentStatus).SingleAsync(p => p.Id == id);
+                        .Include(i => i.IncidentStatus)
+                        .SingleAsync(p => p.Id == id);
 
             // Finally we can now build our tower of wonder
             return dbIncident.ToClientDisplay();

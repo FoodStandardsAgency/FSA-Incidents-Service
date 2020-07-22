@@ -87,13 +87,15 @@ namespace FSA.IncidentsManagement
 
 
             var fsaConn = Configuration.GetConnectionString("FSADbConn");
-            services.AddDbContext<FSADbContext>((provider,opts) => opts
-                        .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddDebug()))
+            services.AddDbContext<FSADbContext>((provider, opts) => opts
+                        //.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddDebug()))
                         .UseSqlServer(fsaConn, (d) =>
                         {
                             d.EnableRetryOnFailure(15);
                             d.CommandTimeout(100);
-                        }).UseInternalServiceProvider(provider));
+                        })
+                        .UseInternalServiceProvider(provider));
+
             services.AddEntityFrameworkSqlServer();
 
             services.RegisterTemporalTablesForDatabase<FSADbContext>();

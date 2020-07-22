@@ -38,6 +38,7 @@ namespace FSA.IncidentsManagement.Controllers
         [Produces("application/json")]
         public async Task<IActionResult> GetIncident(int id)
         {
+            if (id == 0) return BadRequest("No Incident Id was passed.");
             return new OkObjectResult(await this.fsaData.Incidents.GetDisplayItem(id));
         }
 

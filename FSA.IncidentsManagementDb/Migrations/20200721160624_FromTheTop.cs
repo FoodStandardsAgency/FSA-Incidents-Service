@@ -13,12 +13,12 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(nullable: false),
                     ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Modified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     CreatedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Created = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Title = table.Column<string>(nullable: false)
+                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -31,12 +31,12 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(nullable: false),
                     ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Modified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     CreatedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Created = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Title = table.Column<string>(nullable: false)
+                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -49,12 +49,12 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(nullable: false),
                     ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Modified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     CreatedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Created = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Title = table.Column<string>(nullable: false)
+                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -67,12 +67,12 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(nullable: false),
                     ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Modified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     CreatedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Created = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Title = table.Column<string>(nullable: false)
+                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -85,13 +85,13 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(nullable: false),
+                    KeyField = table.Column<string>(nullable: true),
                     ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Modified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     CreatedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Created = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Title = table.Column<string>(nullable: false),
-                    KeyField = table.Column<string>(nullable: true)
+                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -104,12 +104,12 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(nullable: false),
                     ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Modified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     CreatedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Created = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Title = table.Column<string>(nullable: false)
+                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -122,12 +122,12 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(nullable: false),
                     ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Modified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     CreatedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Created = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Title = table.Column<string>(nullable: false)
+                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -139,12 +139,12 @@ namespace FSA.IncidentsManagementDb.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
                     ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Modified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     CreatedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Created = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Title = table.Column<string>(nullable: true)
+                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -157,13 +157,13 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(nullable: false),
+                    SortOrder = table.Column<int>(nullable: false),
                     ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Modified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     CreatedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Created = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Title = table.Column<string>(nullable: false),
-                    SortOrder = table.Column<int>(nullable: false)
+                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -176,12 +176,12 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(nullable: false),
                     ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Modified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     CreatedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Created = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Title = table.Column<string>(nullable: false)
+                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -194,12 +194,12 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(nullable: false),
                     ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Modified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     CreatedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Created = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Title = table.Column<string>(nullable: false)
+                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -212,12 +212,12 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(nullable: false),
                     ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Modified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     CreatedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Created = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Title = table.Column<string>(nullable: false)
+                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -230,12 +230,12 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(nullable: false),
                     ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Modified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     CreatedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Created = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Title = table.Column<string>(nullable: false)
+                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -248,12 +248,12 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(nullable: false),
                     ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Modified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     CreatedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Created = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Title = table.Column<string>(nullable: false)
+                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -266,15 +266,15 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(nullable: false),
+                    ParentId = table.Column<int>(nullable: true),
+                    IsOpen = table.Column<bool>(nullable: false),
+                    IsUnassigned = table.Column<bool>(nullable: false),
                     ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Modified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     CreatedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Created = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Title = table.Column<string>(nullable: false),
-                    ParentId = table.Column<int>(nullable: true),
-                    IsOpen = table.Column<bool>(nullable: false),
-                    IsUnassigned = table.Column<bool>(nullable: false)
+                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -293,12 +293,12 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(nullable: false),
                     ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Modified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     CreatedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Created = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Title = table.Column<string>(nullable: false)
+                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -311,11 +311,6 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),
-                    Modified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    CreatedBy = table.Column<string>(maxLength: 70, nullable: false),
-                    Created = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true),
                     Title = table.Column<string>(nullable: false),
                     MainContact = table.Column<string>(nullable: true),
                     AddressLine1 = table.Column<string>(nullable: true),
@@ -326,7 +321,12 @@ namespace FSA.IncidentsManagementDb.Migrations
                     PostCode = table.Column<string>(nullable: true),
                     TelephoneNumber = table.Column<string>(nullable: true),
                     EmailAddress = table.Column<string>(nullable: true),
-                    ContactMethodId = table.Column<int>(nullable: false)
+                    ContactMethodId = table.Column<int>(nullable: false),
+                    ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),
+                    Modified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
+                    CreatedBy = table.Column<string>(maxLength: 70, nullable: false),
+                    Created = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
+                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -351,13 +351,13 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    FBOTypeId = table.Column<int>(nullable: false),
+                    OrganisationId = table.Column<int>(nullable: false),
                     ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Modified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     CreatedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Created = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    FBOTypeId = table.Column<int>(nullable: false),
-                    OrganisationId = table.Column<int>(nullable: false)
+                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -376,13 +376,13 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    NotifierTypeId = table.Column<int>(nullable: false),
+                    OrganisationId = table.Column<int>(nullable: false),
                     ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Modified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     CreatedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Created = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    NotifierTypeId = table.Column<int>(nullable: false),
-                    OrganisationId = table.Column<int>(nullable: false)
+                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -407,11 +407,6 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),
-                    Modified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    CreatedBy = table.Column<string>(maxLength: 70, nullable: false),
-                    Created = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true),
                     MostUniqueId = table.Column<Guid>(nullable: false, defaultValueSql: "newid()"),
                     IncidentTitle = table.Column<string>(nullable: true),
                     IncidentDescription = table.Column<string>(nullable: true),
@@ -435,7 +430,12 @@ namespace FSA.IncidentsManagementDb.Migrations
                     DeathIllnessId = table.Column<int>(nullable: false),
                     ReceivedOn = table.Column<DateTime>(nullable: true),
                     IncidentCreated = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    IncidentClosed = table.Column<DateTime>(nullable: true)
+                    IncidentClosed = table.Column<DateTime>(nullable: true),
+                    ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),
+                    Modified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
+                    CreatedBy = table.Column<string>(maxLength: 70, nullable: false),
+                    Created = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
+                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -527,13 +527,13 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    IncidentId = table.Column<int>(nullable: false),
+                    Comment = table.Column<string>(nullable: true),
                     ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Modified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     CreatedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Created = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    IncidentId = table.Column<int>(nullable: false),
-                    Comment = table.Column<string>(nullable: true)
+                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -579,14 +579,14 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    OMITGroupId = table.Column<int>(nullable: false),
+                    IncidentId = table.Column<int>(nullable: false),
+                    IncidentDbId = table.Column<int>(nullable: true),
                     ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Modified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     CreatedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Created = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    OMITGroupId = table.Column<int>(nullable: false),
-                    IncidentId = table.Column<int>(nullable: false),
-                    IncidentDbId = table.Column<int>(nullable: true)
+                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -611,11 +611,6 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),
-                    Modified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    CreatedBy = table.Column<string>(maxLength: 70, nullable: false),
-                    Created = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true),
                     IncidentId = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: false),
                     Brand = table.Column<string>(nullable: true),
@@ -625,7 +620,12 @@ namespace FSA.IncidentsManagementDb.Migrations
                     AmountUnitTypeId = table.Column<int>(nullable: false),
                     BatchCodes = table.Column<string>(nullable: true),
                     PackDescription = table.Column<string>(nullable: true),
-                    AdditionalInfo = table.Column<string>(nullable: true)
+                    AdditionalInfo = table.Column<string>(nullable: true),
+                    ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),
+                    Modified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
+                    CreatedBy = table.Column<string>(maxLength: 70, nullable: false),
+                    Created = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
+                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -659,14 +659,14 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductId = table.Column<int>(nullable: false),
+                    DateTypeId = table.Column<int>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false),
                     ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Modified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     CreatedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Created = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    ProductId = table.Column<int>(nullable: false),
-                    DateTypeId = table.Column<int>(nullable: false),
-                    Date = table.Column<DateTime>(nullable: false)
+                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -718,14 +718,14 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Size = table.Column<string>(nullable: false),
+                    UnitId = table.Column<int>(nullable: false),
+                    ProductId = table.Column<int>(nullable: false),
                     ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Modified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     CreatedBy = table.Column<string>(maxLength: 70, nullable: false),
                     Created = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Size = table.Column<string>(nullable: false),
-                    UnitId = table.Column<int>(nullable: false),
-                    ProductId = table.Column<int>(nullable: false)
+                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {

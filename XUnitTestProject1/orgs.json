@@ -5758,5 +5758,34 @@
     "TelephoneNumber": "01234 567890",
     "EmailAddress": "NewNotes@email.com",
     "ContactMethodId": 1
+  },
+  {
+    "Id": 0,
+    "Title": "Online food",
+    "MainContact": "Farriers",
+    "AddressLine1": "AddressLine1",
+    "AddressLine2": "AddressLine2",
+    "TownCity": "TownCity",
+    "County": "County",
+    "CountryId": 201,
+    "PostCode": "PostCode",
+    "TelephoneNumber": "01234 567890",
+    "EmailAddress": "online@food.com",
+    "ContactMethodId": 1
+  },
+  {
+    "Id": 0,
+    "Title": "Pretty little foods things",
+    "MainContact": "Mary food",
+    "AddressLine1": "AddressLine1",
+    "AddressLine2": "AddressLine2",
+    "TownCity": "TownCity",
+    "County": "County",
+    "CountryId": 201,
+    "PostCode": "MA1 F00d",
+    "TelephoneNumber": "01234 567890",
+    "EmailAddress": "Mary@LittleFood.com",
+    "ContactMethodId": 1
   }
+
 ]
