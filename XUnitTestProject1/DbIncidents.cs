@@ -24,7 +24,7 @@ using Xunit;
 
 namespace FSA.UnitTests.Db
 {
-    public class DbTestIncidents : IClassFixture<DbContextFixture>
+    public class DbIncidents : IClassFixture<DbContextFixture>
     {
         private string userId = "2f65582c-5970-4848-9020-d65b6df2dc04";
         private string anotherId = "9a8dda39-78ec-496d-8625-f8b24d83aa57";
@@ -34,7 +34,7 @@ namespace FSA.UnitTests.Db
         internal DbContextFixture Fixture { get; }
 
 
-        public DbTestIncidents(DbContextFixture fixture) => Fixture = fixture;
+        public DbIncidents(DbContextFixture fixture) => Fixture = fixture;
 
 
 
@@ -106,89 +106,94 @@ namespace FSA.UnitTests.Db
                    leadLocalAuthorityId: null,
                    incidentClosed: null
        );
-            var ctx = this.Fixture.CreateContext();
-            ISIMSManager incidents = new SIMSDataManager(ctx, userId);
-            var savedIncident = await incidents.Incidents.Add(incident);
+            using (var ctx = this.Fixture.CreateContext())
+            {
+                ISIMSManager incidents = new SIMSDataManager(ctx, userId);
+                var savedIncident = await incidents.Incidents.Add(incident);
 
-            Assert.True(savedIncident.MostUniqueId != Guid.Empty);
+                Assert.True(savedIncident.MostUniqueId != Guid.Empty);
+            }
 
         }
 
         [Fact(DisplayName = "Can't change most unique")]
         public async Task UpdateIncidentsFakeGuid()
         {
-            var ctx = this.Fixture.CreateContext();
 
-            var fakeId = Guid.Parse("00000000-0000-0000-0000-000000000001");
-            ISIMSManager incidents = new SIMSDataManager(ctx, userId);
+            using (var ctx = this.Fixture.CreateContext())
+            {
 
-            var incident = await incidents.Incidents.Get(1);
-            var updated = incident
-                    .WithMostUnique(Guid.Parse("00000000-0000-0000-0000-000000000001"))
-                    .WithPriority((int)PrioritiesStatus.Medium);
+                var fakeId = Guid.Parse("00000000-0000-0000-0000-000000000001");
+                ISIMSManager incidents = new SIMSDataManager(ctx, userId);
 
-            var savedIncident = await incidents.Incidents.Update(updated);
-            Assert.False(savedIncident.MostUniqueId == fakeId && savedIncident.PriorityId == (int)PrioritiesStatus.Medium);
+                var incident = await incidents.Incidents.Get(1);
+                var updated = incident
+                        .WithMostUnique(Guid.Parse("00000000-0000-0000-0000-000000000001"))
+                        .WithPriority((int)PrioritiesStatus.Medium);
 
+                var savedIncident = await incidents.Incidents.Update(updated);
+                Assert.False(savedIncident.MostUniqueId == fakeId && savedIncident.PriorityId == (int)PrioritiesStatus.Medium);
+            }
         }
 
 
         [Fact]
         public async Task RetrieveUpdateSaveLeadOfficer()
         {
-            var ctx = this.Fixture.CreateContext();
+            using (var ctx = this.Fixture.CreateContext())
+            {
+                ISIMSManager incidents = new SIMSDataManager(ctx, userId);
+                var incidentId = await incidents.Incidents.Get(1);
 
+                var incident = await incidents.Incidents.Get(incidentId.MostUniqueId);
 
-            ISIMSManager incidents = new SIMSDataManager(ctx, userId);
-            var incidentId = await incidents.Incidents.Get(1);
+                // Ensure we have a lead officer and we are open
+                var changedIncident = incident
+                                        .WithStatus((int)IncidentStatus.Open)
+                                        .WithLeadOfficer(this.userId3);
 
-            var incident = await incidents.Incidents.Get(incidentId.MostUniqueId);
-
-            // Ensure we have a lead officer and we are open
-            var changedIncident = incident
-                                    .WithStatus((int)IncidentStatus.Open)
-                                    .WithLeadOfficer(this.userId3);
-
-            var updateIncident = await incidents.Incidents.Update(changedIncident);
-            Assert.True(updateIncident.LeadOfficer == userId3 && updateIncident.StatusId == (int)IncidentStatus.Open);
+                var updateIncident = await incidents.Incidents.Update(changedIncident);
+                Assert.True(updateIncident.LeadOfficer == userId3 && updateIncident.StatusId == (int)IncidentStatus.Open);
+            }
         }
 
         [Fact]
         public async Task RetrieveUpdateBlankNotifier()
         {
+            using (var ctx = this.Fixture.CreateContext())
+            {
 
-            var ctx = this.Fixture.CreateContext();
+                ISIMSManager incidents = new SIMSDataManager(ctx, userId);
+                var incidentId = await incidents.Incidents.Get(3);
 
-            ISIMSManager incidents = new SIMSDataManager(ctx, userId);
-            var incidentId = await incidents.Incidents.Get(3);
+                var incident = await incidents.Incidents.Get(incidentId.MostUniqueId);
 
-            var incident = await incidents.Incidents.Get(incidentId.MostUniqueId);
+                // Ensure we have a lead officer and we are open
+                var changedIncident = incident
+                                        .WithNotifier(null);
 
-            // Ensure we have a lead officer and we are open
-            var changedIncident = incident
-                                    .WithNotifier(null);
-
-            var updateIncident = await incidents.Incidents.Update(changedIncident);
-            Assert.False(updateIncident.NotifierId.HasValue);
-
+                var updateIncident = await incidents.Incidents.Update(changedIncident);
+                Assert.False(updateIncident.NotifierId.HasValue);
+            }
         }
 
         [Fact]
         public async Task RetrieveUpdateCloseStatus()
         {
-            var ctx = this.Fixture.CreateContext();
+            using (var ctx = this.Fixture.CreateContext())
+            {
 
-            ISIMSManager incidents = new SIMSDataManager(ctx, userId);
-            var incident = await incidents.Incidents.Get(2);
+                ISIMSManager incidents = new SIMSDataManager(ctx, userId);
+                var incident = await incidents.Incidents.Get(2);
 
-            // Closing shall replace the leadOfficer
-            var changedIncident = incident
-                                    .WithStatus((int)IncidentStatus.Closed);
-            //.WithLeadOfficer(this.userId3);
+                // Closing shall replace the leadOfficer
+                var changedIncident = incident
+                                        .WithStatus((int)IncidentStatus.Closed);
+                //.WithLeadOfficer(this.userId3);
 
-            var updateIncident = await incidents.Incidents.Update(changedIncident);
-            Assert.True(String.IsNullOrEmpty(updateIncident.LeadOfficer) && updateIncident.StatusId == (int)IncidentStatus.Closed);
-
+                var updateIncident = await incidents.Incidents.Update(changedIncident);
+                Assert.True(updateIncident.StatusId == (int)IncidentStatus.Closed);
+            }
         }
 
         [Fact]
@@ -259,9 +264,7 @@ namespace FSA.UnitTests.Db
             {
                 ISIMSManager incidents = new SIMSDataManager(ctx, userId);
                 var data = await incidents.Incidents.Get(59);
-
                 var updated = data.WithIncidentStatus((int)IncidentStatus.Closed);
-
                 var item = await incidents.Incidents.Update(updated);
                 Assert.True(item.IncidentClosed != null && item.StatusId == (int)IncidentStatus.Closed);
             }
@@ -274,9 +277,7 @@ namespace FSA.UnitTests.Db
             {
                 ISIMSManager incidents = new SIMSDataManager(ctx, userId);
                 var data = await incidents.Incidents.Get(59);
-
                 var updated = data.WithTitle("New Title after closing");
-
                 await Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await incidents.Incidents.Update(updated));
             }
         }
@@ -284,25 +285,29 @@ namespace FSA.UnitTests.Db
         [Fact]
         public async Task LinkToClosed()
         {
-            //  record Id 82should be closed
-            //  crash the test otherwise
-            var incidentId = 82;
-            using (var ctx = this.Fixture.CreateContext())
+            try
             {
-                ISIMSManager sims = new SIMSDataManager(ctx, userId);
-                var data = await sims.Incidents.Get(incidentId);
-                var itm = await sims.Incidents.Update(data.WithIncidentStatus(2));
-
-                if (itm.StatusId != (int)IncidentStatus.Closed)
+                //  record Id 82should be closed
+                //  crash the test otherwise
+                var incidentId = 82;
+                using (var ctx = this.Fixture.CreateContext())
                 {
-                    throw new ArgumentException("This record is not closed!");
+                    ISIMSManager sims = new SIMSDataManager(ctx, userId);
+                    var data = await sims.Incidents.Get(incidentId);
+                    var itm = await sims.Incidents.Update(data.WithIncidentStatus(2));
+                    if (itm.StatusId != (int)IncidentStatus.Closed)
+                    {
+                        throw new ArgumentException("This record is not closed!");
+                    }
+                    await sims.Incidents.AddLinks(45, new int[] { 19, 100, incidentId, 55 }, "No reason to take the bait");
+                    var displayBox = await sims.Incidents.DashboardIncidentLinks(incidentId);
+                    var matchedItem = displayBox.FirstOrDefault(o => o.CommonId == 19);
+                    Assert.True(matchedItem != null);
                 }
-
-                await sims.Incidents.AddLinks(45, new int[] { 19, 100, incidentId, 55 }, "No reason to take the bait");
-
-                var displayBox = await sims.Incidents.DashboardIncidentLinks(incidentId);
-                var matchedItem = displayBox.FirstOrDefault(o => o.CommonId == 19);
-                Assert.True(matchedItem != null);
+            }
+            catch(ArgumentOutOfRangeException ex)
+            {
+                Assert.IsType<ArgumentOutOfRangeException>(ex);
             }
         }
 
@@ -329,17 +334,13 @@ namespace FSA.UnitTests.Db
             using (var ctx = this.Fixture.CreateContext())
             {
                 var simsApp = new SIMSDataManager(ctx, userId3);
-
                 await simsApp.Incidents.BulkClose(new int[] { 82 });
-
                 await simsApp.Incidents.AssignLeadOfficer(new int[] { 39, 82, 102, 55 }, userId3);
-
                 var Officer39 = (await simsApp.Incidents.Get(39)).LeadOfficer;
                 var Officer102 = (await simsApp.Incidents.Get(102)).LeadOfficer;
                 var Officer55 = (await simsApp.Incidents.Get(55)).LeadOfficer;
                 var i82 = (await simsApp.Incidents.Get(82));
                 var Officer82 = i82.LeadOfficer;
-
                 Assert.True(Officer39 == userId3 && Officer102 == userId3 && Officer55 == userId3 && Officer82 != userId3);
                 Assert.True(i82.StatusId == (int)IncidentStatus.Closed);
             }

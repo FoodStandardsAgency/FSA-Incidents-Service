@@ -27,7 +27,6 @@ namespace FSA.UnitTests.Misc
         private object _lock = new object();
         private bool _databaseInit;
         private ServiceProvider provider;
-        private IServiceScopeFactory scopeFactory;
 
         public DbContextFixture()
         {
@@ -37,9 +36,7 @@ namespace FSA.UnitTests.Misc
             this.services = new ServiceCollection();
 
             SetUpDbContext(Config.dbConn);
-            this.scopeFactory = provider.GetRequiredService<IServiceScopeFactory>();
             Seed();
-            //dbConn.Open();
         }
 
         private void SetUpDbContext(string conn)
@@ -57,55 +54,51 @@ namespace FSA.UnitTests.Misc
             services.RegisterTemporalTablesForDatabase<FSADbContext>();
 
             this.provider = services.BuildServiceProvider();
-            //dbContextBuilder.UseSqlServer(conn);
-            //dbContextBuilder.UseInternalServiceProvider(provider);
 
         }
 
         // Called in our tests
         public FSADbContext CreateContext()
         {
-            // var ctx = new FSADbContext(new DbContextOptionsBuilder().UseSqlServer(this.dbConn).Options);
-            //using (var p = this.scopeFactory.CreateScope())
-            //{
-            //    return p.ServiceProvider.GetService<FSADbContext>();
-            //}
-            
-
             var dbContextBuilder = new DbContextOptionsBuilder<FSADbContext>();
             dbContextBuilder.UseSqlServer(Config.dbConn);
             dbContextBuilder.UseInternalServiceProvider(provider);
 
             return new FSADbContext(dbContextBuilder.Options);
-            // return provider.GetService<FSADbContext>();
-
         }
 
         private async Task CreateAddress(ISIMSManager sims)
         {
             var addresses = System.Text.Json.JsonSerializer.Deserialize<List<OrganisationAddress>>(File.OpenText("./orgs.json").ReadToEnd());
 
-            await sims.Addresses.Add(addresses.GetRange(0, addresses.Count - 8));
-            var Not1 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 6));
-            var Not2 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 5));
+            await sims.Addresses.Add(addresses.GetRange(0, addresses.Count - 9));
+
+            var Not1 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 9));
+            var Not2 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 8));
             var Not3 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 7));
-            var add1 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 4));
-            var add2 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 3));
-            var add3 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 2));
-            var add4 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 1));
+
+            var add1 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 6));
+            var add2 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 5));
+            var add3 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 4));
+            var add4 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 3));
+            var add5 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 2));
+            var add6 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 1));
 
 
 
 
 
             await sims.Addresses.AssignNotifiers(NotifierTypes.LocalAuthority, Enumerable.Range(1, 407).ToList());
-            await sims.Addresses.AssignNotifier(NotifierTypes.PublicIndividual, Not2.Id);
-            await sims.Addresses.AssignNotifier(NotifierTypes.Manufacturer, Not3.Id);
             await sims.Addresses.AssignNotifier(NotifierTypes.Retailer, Not1.Id);
+            await sims.Addresses.AssignNotifier(NotifierTypes.Manufacturer, Not2.Id);
+            await sims.Addresses.AssignNotifier(NotifierTypes.PublicIndividual, Not3.Id);
+
             await sims.Addresses.AssignFbo(FboTypes.Consignor | FboTypes.Exporter, add1.Id);
             await sims.Addresses.AssignFbo(FboTypes.Exporter | FboTypes.Farmer, add2.Id);
             await sims.Addresses.AssignFbo(FboTypes.Manufacturer | FboTypes.Exporter | FboTypes.Consignor, add3.Id);
             await sims.Addresses.AssignFbo(FboTypes.E_platform_Market | FboTypes.Storage | FboTypes.Wholesaler, add4.Id);
+            await sims.Addresses.AssignFbo(FboTypes.Processor | FboTypes.Wholesaler, add5.Id);
+            await sims.Addresses.AssignFbo(FboTypes.Supplier | FboTypes.Transporter | FboTypes.Retailer, add6.Id);
 
         }
 
@@ -162,7 +155,7 @@ namespace FSA.UnitTests.Misc
                             var res = ex.Flatten();
                             Debug.WriteLine(res);
                         }
-                        
+
                         var t3 = CreateAddress(SIMS);
                         try
                         {

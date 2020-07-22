@@ -19,7 +19,7 @@ using Xunit;
 
 namespace FSA.UnitTests.Db
 {
-    public class DbTestProducts
+    public class DbProducts
     {
         private string userId = "2f65582c-5970-4848-9020-d65b6df2dc04";
         private string anotherId = "9a8dda39-78ec-496d-8625-f8b24d83aa57";
@@ -30,7 +30,7 @@ namespace FSA.UnitTests.Db
 
         private FSADbContext dbContext;
 
-        public DbTestProducts()
+        public DbProducts()
         {
             this.Config = System.Text.Json.JsonSerializer.Deserialize<ConfigFile>(File.OpenText("./config.json").ReadToEnd());
             dbContext = new FSADbContext(new DbContextOptionsBuilder().UseSqlServer(Config.dbConn).Options);
