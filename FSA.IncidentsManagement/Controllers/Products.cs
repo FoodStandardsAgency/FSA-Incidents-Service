@@ -75,12 +75,12 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpGet("Addresses/{productId}")]
         [SwaggerOperation(Description =  "Fetch product addresses.")]
-        [ProducesResponseType(typeof(List<FboAddress>), 200)]
+        [ProducesResponseType(typeof(List<FboAddressModel>), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetProductAddresses(int productId)
         {
             var addresses = await this.simsManager.Products.GetProductAddresses(productId);
-            return new OkObjectResult(addresses);
+            return new OkObjectResult(addresses.ToWeb().ToList());
         }
 
         [HttpGet("Dashboard")]

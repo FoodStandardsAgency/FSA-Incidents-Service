@@ -1309,7 +1309,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/FboAddress"
+                "$ref": "#/definitions/FboAddressModel"
               }
             }
           },

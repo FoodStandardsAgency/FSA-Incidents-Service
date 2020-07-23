@@ -85,9 +85,6 @@ namespace FSA.UnitTests.Misc
             var add6 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 1));
 
 
-
-
-
             await sims.Addresses.AssignNotifiers(NotifierTypes.LocalAuthority, Enumerable.Range(1, 407).ToList());
             await sims.Addresses.AssignNotifier(NotifierTypes.Retailer, Not1.Id);
             await sims.Addresses.AssignNotifier(NotifierTypes.Manufacturer, Not2.Id);
@@ -128,6 +125,14 @@ namespace FSA.UnitTests.Misc
             var products = seeder.GetNewProducts();
             var tasks = products.Select(p => sims.Products.Add(p.IncidentId, p));
             await Task.WhenAll(tasks);
+
+            await sims.Products.AssignFbo(1, 1);
+            await sims.Products.AssignFbo(1, 2);
+            await sims.Products.AssignFbo(1, 3);
+
+            await sims.Products.AssignFbo(2, 4);
+            await sims.Products.AssignFbo(2, 5);
+            await sims.Products.AssignFbo(2, 6);
         }
 
         private void Seed()

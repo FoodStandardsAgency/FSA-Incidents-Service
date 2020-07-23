@@ -147,6 +147,12 @@ namespace FSA.IncidentsManagement.Models
             Id = @this.FboId
         };
 
+        public static IEnumerable<FboAddressWebModel> ToWeb(this IEnumerable<FboAddress> @this)
+        {
+            foreach (var item in @this)
+                yield return item.ToWeb();
+        }
+
         public static IEnumerable<ProductPackSize> ToClient(this IEnumerable<ProductPackSizeModel> @this)
         {
             foreach (var item in @this)

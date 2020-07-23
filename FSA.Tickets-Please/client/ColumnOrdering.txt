@@ -1,0 +1,11 @@
+
+
+(\)),?.\n.+(},.+\n.+constraints)
+                   $1,\n ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),\nModified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),\nCreatedBy = table.Column<string>(maxLength: 70, nullable: false),\nCreated = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),\nTimestamp = table.Column<byte[]>(rowVersion: true, nullable: true)$2
+
+                   INcidentLinks
+                   ProductFBOItems
+
+.+ModifiedBy = table.Column<string>\(maxLength: 70, nullable: false\),.+\n.+Modified = table.Column<DateTime>\(nullable: false, defaultValueSql: "getutcdate\(\)"\),.+\n.+CreatedBy = table.Column<string>\(maxLength: 70, nullable: false\),.+\n.+Created = table.Column<DateTime>\(nullable: false, defaultValueSql: "getutcdate\(\)"\),.+\n.+Timestamp = table.Column<byte\[\]>\(rowVersion: true, nullable: true\),?.+\n
+
+Data Source=tcp:devfsadbdbserver.database.windows.net,1433;Initial Catalog=FSA.ConcurrencyToken;User Id=fsaadmin@devfsadbdbserver;Password=12Fingers34
