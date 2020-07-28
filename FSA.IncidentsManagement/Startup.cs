@@ -28,14 +28,21 @@ using FSA.IncidentsManagement.ModelValidators;
 using FluentValidation.AspNetCore;
 using FSA.IncidentsManagement.Misc;
 using EntityFrameworkCore.TemporalTables.Extensions;
+using FSA.Attachments;
+using Microsoft.Graph;
+using System.Security.Cryptography.X509Certificates;
+using Microsoft.Extensions.Hosting.Internal;
 
 namespace FSA.IncidentsManagement
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IWebHostEnvironment env;
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            this.env = env;
         }
 
         public IConfiguration Configuration { get; }
@@ -85,6 +92,10 @@ namespace FSA.IncidentsManagement
                 c.EnableAnnotations();
             });
 
+            
+
+            services.AddScoped<X509Certificate2>((o)=> new X509Certificate2(System.IO.Path.Combine(Environment.CurrentDirectory, "SharepointAccess.pfx")));
+           
 
             var fsaConn = Configuration.GetConnectionString("FSADbConn");
             services.AddDbContext<FSADbContext>((provider, opts) => opts
@@ -104,7 +115,20 @@ namespace FSA.IncidentsManagement
 
             services.AddScoped<UserInfo>();
             services.AddScoped<ILookupDataHost, LookupDataHost>();
+
+
             services.AddScoped<ISIMSManager, SIMSDataManager>(ids => new SIMSDataManager(ids.GetRequiredService<FSADbContext>(), ids.GetRequiredService<UserInfo>().GetUserId()));
+
+            services.AddScoped<IFSAAttachments, SPIncidentAttachments>((o) => {
+                var user = o.GetRequiredService<UserInfo>();
+                var conf = o.GetRequiredService<IConfiguration>();
+                var section = conf.GetSection("AzureAd");
+                var cert = o.GetRequiredService<X509Certificate2>();
+
+
+                return new SPIncidentAttachments(section["ClientId"], user.GetTenantId(), cert, "65F37FA2302BCD278886172AA2220249A0FF92D0", $"https://{conf["HostSiteCol"]}/{conf["DocSiteUrl"]}", conf["IncidentDocCType"]);
+                //return new GrIncidentAttachments(section["ClientId"], section["GraphClientSecret"], user.GetTenantId(), conf["HostSiteCol"], conf["DocSiteUrl"], conf["IncidentDocCType"]);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

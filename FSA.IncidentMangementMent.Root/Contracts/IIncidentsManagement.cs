@@ -12,6 +12,7 @@ namespace FSA.IncidentsManagement.Root.Contracts
     {
         Task<BaseIncident> Get(int Id);
         Task<BaseIncident> Get(Guid guid);
+
         Task<IEnumerable<BaseIncident>> GetAll();
 
         Task<IncidentsDisplayModel> GetDisplayItem(int id);
@@ -33,6 +34,7 @@ namespace FSA.IncidentsManagement.Root.Contracts
         Task<BaseIncident> Add(BaseIncident incident);
 
         Task<BaseIncident> Update(BaseIncident incident);
+
         Task<IEnumerable<IncidentDashboardView>> DashboardIncidentLinks(int incidentId);
 
         Task BulkClose(IEnumerable<int> incidentIds);

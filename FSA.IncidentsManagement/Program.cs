@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Azure.Identity;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Graph;
 
 namespace FSA.IncidentsManagement
 {
@@ -21,13 +22,24 @@ namespace FSA.IncidentsManagement
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((context, config) =>
                 {
-                    if(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") !="Development")
+                    string vaultDeets = Environment.GetEnvironmentVariable("VaultUri");
+                    var keyVaultEndpoint = new Uri(vaultDeets);
+                    if (context.HostingEnvironment.IsDevelopment())
                     {
-                        var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("VaultUri"));
+                        Func<string, string> blarg = (v) => Environment.GetEnvironmentVariable(v);
+                       config.AddUserSecrets<Startup>();
+                       config.AddAzureKeyVault(vaultDeets,
+                       Environment.GetEnvironmentVariable("SillyRabbit"),
+                       Environment.GetEnvironmentVariable("SillyRabbitKey"));
+                    }
+                    else
+                    {
                         config.AddAzureKeyVault(
                         keyVaultEndpoint,
                         new DefaultAzureCredential());
+
                     }
+
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

@@ -19,7 +19,7 @@ namespace FSA.IncidentsManagementDb.Entities
         public string EmailAddress { get; set; }
         public int ContactMethodId { get; set; }
         public ContactMethodDb ContactMethod { get; set; }
-        public string Uprn { get; set; }
+        public long Uprn { get; set; }
     }
     // not actual a storage representation so no need to inherit from baseEntitry
     internal class OrganisationLookupDb : IIDbLookup

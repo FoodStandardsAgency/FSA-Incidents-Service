@@ -5404,8 +5404,8 @@ namespace FSA.IncidentsManagementDb.Migrations
                     b.Property<string>("TownCity")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Uprn")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long>("Uprn")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 

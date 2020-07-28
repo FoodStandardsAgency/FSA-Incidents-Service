@@ -29,5 +29,14 @@ namespace FSA.IncidentsManagement.Misc
 #endif
             return this.httpContextAccess.HttpContext.User.GetObjectId();
         }
+
+        public string GetTenantId()
+        {
+#if DEBUG
+            return this.httpContextAccess.HttpContext.User.GetTenantId() ??Guid.Empty.ToString();
+#endif
+            return this.httpContextAccess.HttpContext.User.GetTenantId();
+        }
+
     }
 }

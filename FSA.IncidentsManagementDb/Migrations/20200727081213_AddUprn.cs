@@ -2,14 +2,15 @@
 
 namespace FSA.IncidentsManagementDb.Migrations
 {
-    public partial class adduprn : Migration
+    public partial class AddUprn : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
+            migrationBuilder.AddColumn<long>(
                 name: "Uprn",
                 table: "Organisations",
-                nullable: true);
+                nullable: false,
+                defaultValue: 0L);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

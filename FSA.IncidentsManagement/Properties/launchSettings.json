@@ -13,15 +13,18 @@
       "commandName": "IISExpress",
       "launchUrl": "api/lookups/categories",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "VaultUri": "https://devfsa-dv.vault.azure.net",
+        "SillyRabbit": "9aff1d72-f4d9-4bb4-b223-21e45c6657ea",
+        "SillyRabbitKey": "kvW_~4Cr1UE_C_1F4GeLV.~p33kRVYirZy"
       }
     },
     "FSA.IncidentsManagement": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "weatherforecast",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "VaultUri": "https://devfsa-dv.vault.azure.net"
       },
       "applicationUrl": "https://localhost:5001;http://localhost:5000"
     }

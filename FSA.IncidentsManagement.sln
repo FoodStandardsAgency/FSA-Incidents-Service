@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Identity.Web", "P
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFrameworkCore.TemporalTables", "EntityFrameworkCore.TemporalTables\EntityFrameworkCore.TemporalTables\EntityFrameworkCore.TemporalTables.csproj", "{203051F0-F7A2-42D5-AA71-4CA13EB6B8BB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSA.Attachments", "FSA.Attachments\FSA.Attachments.csproj", "{04344EF2-4CCE-4729-B5FA-C6F26143A900}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{203051F0-F7A2-42D5-AA71-4CA13EB6B8BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{203051F0-F7A2-42D5-AA71-4CA13EB6B8BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{203051F0-F7A2-42D5-AA71-4CA13EB6B8BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04344EF2-4CCE-4729-B5FA-C6F26143A900}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04344EF2-4CCE-4729-B5FA-C6F26143A900}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04344EF2-4CCE-4729-B5FA-C6F26143A900}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04344EF2-4CCE-4729-B5FA-C6F26143A900}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

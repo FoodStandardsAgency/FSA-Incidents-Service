@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FSA.IncidentsManagementDb.Migrations
 {
     [DbContext(typeof(FSADbContext))]
-    [Migration("20200722150658_adduprn")]
-    partial class adduprn
+    [Migration("20200727081213_AddUprn")]
+    partial class AddUprn
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -5406,8 +5406,8 @@ namespace FSA.IncidentsManagementDb.Migrations
                     b.Property<string>("TownCity")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Uprn")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long>("Uprn")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
