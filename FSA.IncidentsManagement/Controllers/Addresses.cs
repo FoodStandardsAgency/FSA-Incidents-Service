@@ -27,7 +27,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPost()]
-        [SwaggerOperation(Description = "Find address.")]
+        [SwaggerOperation(Summary = "Find address.")]
         [ProducesResponseType(typeof(List<FboAddressModel>), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
@@ -45,7 +45,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPost("Fbo")]
-        [SwaggerOperation(Description ="Add new Address and new fbo.")]
+        [SwaggerOperation(Summary = "Add new Address and new fbo.")]
         [ProducesResponseType(typeof(FboAddressModel), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
@@ -57,7 +57,7 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpPut("Fbo")]
         [ProducesResponseType(typeof(FboAddressModel), 200)]
-        [SwaggerOperation(Description = "Update Address and fbo types.")]
+        [SwaggerOperation(Summary = "Update Address and fbo types.")]
         [ProducesResponseType(500)]
         [Produces("application/json")]
         public async Task<IActionResult> UpdatedFboAddress([FromBody]FboAddressModel updtedFbo)
@@ -68,7 +68,7 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpGet("Fbo/{fboId}")]
         [ProducesResponseType(typeof(FboAddressModel), 200)]
-        [SwaggerOperation(Description = "Fetch fbo address.")]
+        [SwaggerOperation(Summary = "Fetch fbo address.")]
         [ProducesResponseType(500)]
         [Produces("application/json")]
         public async Task<IActionResult> GetFboAddress(int fboId)

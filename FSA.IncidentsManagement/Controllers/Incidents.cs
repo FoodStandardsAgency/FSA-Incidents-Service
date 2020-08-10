@@ -32,7 +32,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpGet()]
-        [SwaggerOperation(Description = "Get incident by id")]
+        [SwaggerOperation(Summary = "Get incident by id")]
         [ProducesResponseType(typeof(IncidentsDisplayModel), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
@@ -43,7 +43,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpGet("Dashboard")]
-        [SwaggerOperation(Description = "Incident dashboard search")]
+        [SwaggerOperation(Summary = "Incident dashboard search")]
         [ProducesResponseType(typeof(IncidentDashboardView), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
@@ -60,7 +60,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPut()]
-        [SwaggerOperation(Description = "Replace an existing incident")]
+        [SwaggerOperation(Summary = "Replace an existing incident")]
         [ProducesResponseType(typeof(BaseIncident), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
@@ -71,7 +71,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPost()]
-        [SwaggerOperation(Description = "Create an existing incident")]
+        [SwaggerOperation(Summary = "Create an existing incident")]
         [ProducesResponseType(typeof(BaseIncident), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
@@ -81,7 +81,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPost("Classification")]
-        [SwaggerOperation(Description = "Update classification of an incident")]
+        [SwaggerOperation(Summary = "Update classification of an incident")]
         [ProducesResponseType(typeof(BaseIncident), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
@@ -92,7 +92,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPost("Status")]
-        [SwaggerOperation(Description = "Update status of an incident")]
+        [SwaggerOperation(Summary = "Update status of an incident")]
         [ProducesResponseType(typeof(BaseIncident), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
@@ -102,7 +102,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPost("CloseAll")]
-        [SwaggerOperation(Description = "Update status of an incident")]
+        [SwaggerOperation(Summary = "Update status of an incident")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> CloseAll([Required] int[] incidentIds)
@@ -112,7 +112,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPost("LeadOfficer")]
-        [SwaggerOperation(Description = "Assign lead officer.")]
+        [SwaggerOperation(Summary = "Assign lead officer.")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> UpdateLeadOfficer([FromBody, SwaggerParameter("Update Lead officer entries", Required =true)] UpdateLeadOfficer officer)
@@ -122,7 +122,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPost("AddLinks")]
-        [SwaggerOperation(Description = "Link two or moreincidents.")]
+        [SwaggerOperation(Summary = "Link two or moreincidents.")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> AddIncidentLink([FromBody] LinkIncidents addIncident)
@@ -132,7 +132,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPost("RemoveLink")]
-        [SwaggerOperation(Description = "Remove link between two incidents.")]
+        [SwaggerOperation(Summary = "Remove link between two incidents.")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> RemoveIncidentLink([FromBody] UnlinkIncident removeIncident)
@@ -144,7 +144,7 @@ namespace FSA.IncidentsManagement.Controllers
 
 
         [HttpGet("GetIncidentLinks")]
-        [SwaggerOperation(Description = "Dashboard info for an incidents links")]
+        [SwaggerOperation(Summary = "Dashboard info for an incidents links")]
         [ProducesResponseType(typeof(IEnumerable<IncidentDashboardView>), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetIncidentLinks([FromQuery] int incidentId)
@@ -153,7 +153,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPost("AddNote")]
-        [SwaggerOperation(Description = "Add note to an incident.")]
+        [SwaggerOperation(Summary = "Add note to an incident.")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> AddNote([FromBody, SwaggerParameter(Required=true)] IncidentComment addIncident)
@@ -163,7 +163,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpGet("GetNotes")]
-        [SwaggerOperation(Description = "Get notes for an incident")]
+        [SwaggerOperation(Summary = "Get notes for an incident")]
         [ProducesResponseType(typeof(IEnumerable<IncidentNote>), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetNotes([FromQuery] int incidentId)

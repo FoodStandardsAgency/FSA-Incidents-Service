@@ -1,37 +1,27 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using EntityFrameworkCore.TemporalTables.Extensions;
+using FluentValidation.AspNetCore;
+using FSA.Attachments;
+using FSA.IncidentsManagement.Misc;
+using FSA.IncidentsManagement.ModelValidators;
+using FSA.IncidentsManagement.Root.Contracts;
+using FSA.IncidentsManagementDb;
+using FSA.IncidentsManagementDb.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.Identity.Client;
 using Microsoft.Identity.Web;
-using Microsoft.AspNetCore.Authentication.AzureAD.UI;
-using FSA.IncidentsManagementDb;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
-using FSA.IncidentsManagement.Root.Contracts;
-using FSA.IncidentsManagementDb.Repositories;
+using Microsoft.Identity.Web.TokenCacheProviders.InMemory;
 using Microsoft.OpenApi.Models;
-
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System;
+using System.Net.Http;
 using System.Reflection;
-using FSA.IncidentsManagement.ModelValidators;
-using FluentValidation.AspNetCore;
-using FSA.IncidentsManagement.Misc;
-using EntityFrameworkCore.TemporalTables.Extensions;
-using FSA.Attachments;
-using Microsoft.Graph;
 using System.Security.Cryptography.X509Certificates;
-using Microsoft.Extensions.Hosting.Internal;
 
 namespace FSA.IncidentsManagement
 {
@@ -52,14 +42,13 @@ namespace FSA.IncidentsManagement
 
         public void ConfigureServices(IServiceCollection services)
         {
-            
-               services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddMicrosoftWebApi(Configuration, subscribeToJwtBearerMiddlewareDiagnosticsEvents: true);
+
+            services.AddMicrosoftWebApiAuthentication(Configuration, subscribeToJwtBearerMiddlewareDiagnosticsEvents:true)
+                    .AddMicrosoftWebApiCallsWebApi(Configuration)
+                    .AddInMemoryTokenCaches();
 
             services.Configure<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme, options =>
             {
-                // This is an Microsoft identity platform Web API
-                //options.Authority += "/v2.0";
 
                 // The valid audiences are both the Client ID (options.Audience) and api://{ClientID}
                 options.TokenValidationParameters.ValidAudiences = new string[]
@@ -67,7 +56,17 @@ namespace FSA.IncidentsManagement
                         options.Audience, $"api://{options.Audience}", $"https://{options.Audience}"
                 };
             });
+            services.AddScoped<UserInfo>();
 
+            services.AddHttpClient();
+            services.AddScoped<IFSATermStore, AttachmentTerms>((o) =>
+            {
+                var conf = o.GetRequiredService<IConfiguration>();
+                var azureAd = conf.GetSection("AzureAd");
+                var sharepointSec = conf.GetSection("SharePoint");
+                var user = o.GetRequiredService<UserInfo>();
+              return  new AttachmentTerms(o.GetRequiredService<IHttpClientFactory>().CreateClient("taxonomy"), sharepointSec["SimsTermSetId"], sharepointSec["TagsTermSetId"]);
+            });
             // grabbing current userInfo
             services.AddHttpContextAccessor();
             // outside api calls [OBO]
@@ -92,10 +91,20 @@ namespace FSA.IncidentsManagement
                 c.EnableAnnotations();
             });
 
-            
+            services.Configure<IISServerOptions>(options =>
+            {
+                options.MaxRequestBodySize = int.MaxValue;
+            });
 
-            services.AddScoped<X509Certificate2>((o)=> new X509Certificate2(System.IO.Path.Combine(Environment.CurrentDirectory, "SharepointAccess.pfx")));
-           
+            services.Configure<FormOptions>(x =>
+            {
+                x.ValueLengthLimit = int.MaxValue;
+                x.MultipartBodyLengthLimit = int.MaxValue; // if don't set default value is: 128 MB
+                x.MultipartHeadersLengthLimit = int.MaxValue;
+            });
+
+            services.AddScoped<X509Certificate2>((o)=> new X509Certificate2(Convert.FromBase64String(Configuration["SharePointAccess"])));
+
 
             var fsaConn = Configuration.GetConnectionString("FSADbConn");
             services.AddDbContext<FSADbContext>((provider, opts) => opts
@@ -112,8 +121,6 @@ namespace FSA.IncidentsManagement
             services.RegisterTemporalTablesForDatabase<FSADbContext>();
 
 
-
-            services.AddScoped<UserInfo>();
             services.AddScoped<ILookupDataHost, LookupDataHost>();
 
 
@@ -123,10 +130,10 @@ namespace FSA.IncidentsManagement
                 var user = o.GetRequiredService<UserInfo>();
                 var conf = o.GetRequiredService<IConfiguration>();
                 var section = conf.GetSection("AzureAd");
+                var sharePoint = conf.GetSection("SharePoint");
                 var cert = o.GetRequiredService<X509Certificate2>();
 
-
-                return new SPIncidentAttachments(section["ClientId"], user.GetTenantId(), cert, "65F37FA2302BCD278886172AA2220249A0FF92D0", $"https://{conf["HostSiteCol"]}/{conf["DocSiteUrl"]}", conf["IncidentDocCType"]);
+                return new SPIncidentAttachments(section["ClientId"], user.GetTenantId(), cert, sharePoint["HostSiteCol"], $"https://{sharePoint["HostSiteCol"]}/{sharePoint["DocSiteUrl"]}", sharePoint["SimsDocCType"], Guid.Parse(sharePoint["SimsTermSetId"]));
                 //return new GrIncidentAttachments(section["ClientId"], section["GraphClientSecret"], user.GetTenantId(), conf["HostSiteCol"], conf["DocSiteUrl"], conf["IncidentDocCType"]);
             });
         }
@@ -139,17 +146,18 @@ namespace FSA.IncidentsManagement
                 app.UseDeveloperExceptionPage();
 
             }
+#if DEBUG 
             Microsoft.IdentityModel.Logging.IdentityModelEventSource.ShowPII = true;
+#endif
             app.UseSwagger(opts => opts.SerializeAsV2 = true);
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "FSA Incident Management v1");
             });
-
+            app.UseDefaultFiles();
             app.UseStaticFiles();
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
 
 

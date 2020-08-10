@@ -50,6 +50,16 @@ function getCode() {
 
     window.location.assign(url);
 
+    var url2 = "https://login.microsoftonline.com/" + tenantId 
+             + "/oauth2/v2.0/authorize?client_id=" + clientId 
+             + "&response_type=id_token&redirect_uri=" + window.encodeURIComponent(redirectUri) 
+             + "&response_mode=fragment&scope=" + scopes + "&state=12345&nonce=678910";
+    console.log(url2);
+
+    window.localStorage.setItem("pcl1", url2);
+    window.location.assign(url);
+
+
 }
 
 

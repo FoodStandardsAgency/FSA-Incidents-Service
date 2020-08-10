@@ -1,0 +1,14 @@
+// Service
+https://login.microsoftonline.com/aac34e6c-7ad5-4ef6-b592-96ca17cebd94/v2.0/adminconsent?
+client_id=7be2c147-f9da-4a43-8024-9928b12157f4
+&state=12345
+&redirect_uri=https://localhost:44359
+&scope=https://graph.microsoft.com/User.Read+User.ReadBasic.All+TermStore.ReadWrite.All
+
+// Client 
+https://login.microsoftonline.com/aac34e6c-7ad5-4ef6-b592-96ca17cebd94/v2.0/adminconsent?
+client_id=d3b8ffd6-7813-4ac7-a6ff-c85d623e8778
+&state=12345
+&redirect_uri=http://localhost:8080
+&scope=.default
+

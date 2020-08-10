@@ -10,7 +10,7 @@
         "tags": [
           "Addresses"
         ],
-        "description": "Find address.",
+        "summary": "Find address.",
         "operationId": "FindAddress",
         "consumes": [
           "application/json",
@@ -50,7 +50,7 @@
         "tags": [
           "Addresses"
         ],
-        "description": "Add new Address and new fbo.",
+        "summary": "Add new Address and new fbo.",
         "operationId": "AddFboAddress",
         "consumes": [
           "application/json",
@@ -85,7 +85,7 @@
         "tags": [
           "Addresses"
         ],
-        "description": "Update Address and fbo types.",
+        "summary": "Update Address and fbo types.",
         "operationId": "UpdatedFboAddress",
         "consumes": [
           "application/json",
@@ -122,7 +122,7 @@
         "tags": [
           "Addresses"
         ],
-        "description": "Fetch fbo address.",
+        "summary": "Fetch fbo address.",
         "operationId": "GetFboAddress",
         "produces": [
           "application/json"
@@ -149,12 +149,166 @@
         }
       }
     },
+    "/api/Attachments/Incident": {
+      "post": {
+        "tags": [
+          "Attachments"
+        ],
+        "summary": "Add new Attachement to incident",
+        "operationId": "AddAttachment",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "incidentId",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/StringStringValueTuple"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
+    "/api/Attachments/FetchAll": {
+      "get": {
+        "tags": [
+          "Attachments"
+        ],
+        "summary": "Download incident attachments info",
+        "operationId": "FetchAttachmentsForIncident",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "incidentId",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AttachmentItem"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Attachments/Fetch": {
+      "get": {
+        "tags": [
+          "Attachments"
+        ],
+        "summary": "Download an a file.",
+        "operationId": "FetchAttachment",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "linkUrl",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/Attachments/Rename": {
+      "post": {
+        "tags": [
+          "Attachments"
+        ],
+        "summary": "Renames an attachment.",
+        "operationId": "RenameAttachment",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/RenameFile"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/StringStringValueTuple"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
     "/api/Incidents": {
       "get": {
         "tags": [
           "Incidents"
         ],
-        "description": "Get incident by id",
+        "summary": "Get incident by id",
         "operationId": "GetIncident",
         "produces": [
           "application/json"
@@ -183,7 +337,7 @@
         "tags": [
           "Incidents"
         ],
-        "description": "Replace an existing incident",
+        "summary": "Replace an existing incident",
         "operationId": "UpdateIncident",
         "consumes": [
           "application/json",
@@ -218,7 +372,7 @@
         "tags": [
           "Incidents"
         ],
-        "description": "Create an existing incident",
+        "summary": "Create an existing incident",
         "operationId": "CreateIncident",
         "consumes": [
           "application/json",
@@ -255,7 +409,7 @@
         "tags": [
           "Incidents"
         ],
-        "description": "Incident dashboard search",
+        "summary": "Incident dashboard search",
         "operationId": "GetIncidentDashboard",
         "produces": [
           "application/json"
@@ -297,7 +451,7 @@
         "tags": [
           "Incidents"
         ],
-        "description": "Update classification of an incident",
+        "summary": "Update classification of an incident",
         "operationId": "UpdateClassification",
         "produces": [
           "application/json"
@@ -336,7 +490,7 @@
         "tags": [
           "Incidents"
         ],
-        "description": "Update status of an incident",
+        "summary": "Update status of an incident",
         "operationId": "UpdateStatus",
         "produces": [
           "application/json"
@@ -375,7 +529,7 @@
         "tags": [
           "Incidents"
         ],
-        "description": "Update status of an incident",
+        "summary": "Update status of an incident",
         "operationId": "CloseAll",
         "consumes": [
           "application/json",
@@ -411,7 +565,7 @@
         "tags": [
           "Incidents"
         ],
-        "description": "Assign lead officer.",
+        "summary": "Assign lead officer.",
         "operationId": "UpdateLeadOfficer",
         "consumes": [
           "application/json",
@@ -442,7 +596,7 @@
         "tags": [
           "Incidents"
         ],
-        "description": "Link two or moreincidents.",
+        "summary": "Link two or moreincidents.",
         "operationId": "AddIncidentLink",
         "consumes": [
           "application/json",
@@ -473,7 +627,7 @@
         "tags": [
           "Incidents"
         ],
-        "description": "Remove link between two incidents.",
+        "summary": "Remove link between two incidents.",
         "operationId": "RemoveIncidentLink",
         "consumes": [
           "application/json",
@@ -504,7 +658,7 @@
         "tags": [
           "Incidents"
         ],
-        "description": "Dashboard info for an incidents links",
+        "summary": "Dashboard info for an incidents links",
         "operationId": "GetIncidentLinks",
         "produces": [
           "text/plain",
@@ -540,7 +694,7 @@
         "tags": [
           "Incidents"
         ],
-        "description": "Add note to an incident.",
+        "summary": "Add note to an incident.",
         "operationId": "AddNote",
         "consumes": [
           "application/json",
@@ -571,7 +725,7 @@
         "tags": [
           "Incidents"
         ],
-        "description": "Get notes for an incident",
+        "summary": "Get notes for an incident",
         "operationId": "GetNotes",
         "produces": [
           "text/plain",
@@ -607,7 +761,7 @@
         "tags": [
           "Lookups"
         ],
-        "description": "Get all categories",
+        "summary": "Get all categories",
         "operationId": "Categories",
         "produces": [
           "application/json"
@@ -633,7 +787,7 @@
         "tags": [
           "Lookups"
         ],
-        "description": "Get all classifications",
+        "summary": "Get all classifications",
         "operationId": "Classifications",
         "produces": [
           "application/json"
@@ -659,7 +813,7 @@
         "tags": [
           "Lookups"
         ],
-        "description": "Get all countries",
+        "summary": "Get all countries",
         "operationId": "Countries",
         "produces": [
           "application/json"
@@ -685,7 +839,7 @@
         "tags": [
           "Lookups"
         ],
-        "description": "Get all Contact methods",
+        "summary": "Get all Contact methods",
         "operationId": "ContactMethod",
         "produces": [
           "application/json"
@@ -711,7 +865,7 @@
         "tags": [
           "Lookups"
         ],
-        "description": "Data sources",
+        "summary": "Data sources",
         "operationId": "DataSource",
         "produces": [
           "application/json"
@@ -737,7 +891,7 @@
         "tags": [
           "Lookups"
         ],
-        "description": "Get all Death/Illnes",
+        "summary": "Get all Death/Illnes",
         "operationId": "DeathIllness",
         "produces": [
           "application/json"
@@ -763,7 +917,7 @@
         "tags": [
           "Lookups"
         ],
-        "description": "Get all OMIT groups",
+        "summary": "Get all OMIT groups",
         "operationId": "OMITGroup",
         "produces": [
           "application/json"
@@ -789,7 +943,7 @@
         "tags": [
           "Lookups"
         ],
-        "description": "Get all organisational roles",
+        "summary": "Get all organisational roles",
         "operationId": "OrganisationRole",
         "produces": [
           "application/json"
@@ -815,7 +969,7 @@
         "tags": [
           "Lookups"
         ],
-        "description": "Get all Persona Roiles",
+        "summary": "Get all Persona Roiles",
         "operationId": "PersonaRole",
         "produces": [
           "application/json"
@@ -841,7 +995,7 @@
         "tags": [
           "Lookups"
         ],
-        "description": "list all Product types",
+        "summary": "list all Product types",
         "operationId": "ProductTypes",
         "produces": [
           "application/json"
@@ -867,7 +1021,7 @@
         "tags": [
           "Lookups"
         ],
-        "description": "list all FBO types",
+        "summary": "list all FBO types",
         "operationId": "FBOTypes",
         "produces": [
           "application/json"
@@ -893,7 +1047,7 @@
         "tags": [
           "Lookups"
         ],
-        "description": "Product Date types",
+        "summary": "Product Date types",
         "operationId": "ProductDateTypes",
         "produces": [
           "application/json"
@@ -919,7 +1073,7 @@
         "tags": [
           "Lookups"
         ],
-        "description": "Incident office list",
+        "summary": "Incident office list",
         "operationId": "AdminLeads",
         "produces": [
           "application/json"
@@ -945,7 +1099,7 @@
         "tags": [
           "Lookups"
         ],
-        "description": "Divine all SignalStatus values",
+        "summary": "Divine all SignalStatus values",
         "operationId": "SignalStatus",
         "produces": [
           "application/json"
@@ -971,7 +1125,7 @@
         "tags": [
           "Lookups"
         ],
-        "description": "unit information",
+        "summary": "unit information",
         "operationId": "UnitQuantities",
         "produces": [
           "application/json"
@@ -997,7 +1151,7 @@
         "tags": [
           "Lookups"
         ],
-        "description": "Organisation pick list",
+        "summary": "Organisation pick list",
         "operationId": "Organisations",
         "produces": [
           "application/json"
@@ -1023,7 +1177,7 @@
         "tags": [
           "Lookups"
         ],
-        "description": "FBO temporary pick list",
+        "summary": "FBO temporary pick list",
         "operationId": "FboLookup",
         "produces": [
           "application/json"
@@ -1049,7 +1203,7 @@
         "tags": [
           "Lookups"
         ],
-        "description": "Notifier temporary pick list",
+        "summary": "Notifier temporary pick list",
         "operationId": "NotfierLookup",
         "produces": [
           "application/json"
@@ -1075,7 +1229,7 @@
         "tags": [
           "Lookups"
         ],
-        "description": "LocalAuth temporary pick list",
+        "summary": "LocalAuth temporary pick list",
         "operationId": "LocalAuthorityLookups",
         "produces": [
           "application/json"
@@ -1101,7 +1255,7 @@
         "tags": [
           "Lookups"
         ],
-        "description": "Priorities values",
+        "summary": "Priorities values",
         "operationId": "Priorities",
         "produces": [
           "application/json"
@@ -1127,7 +1281,7 @@
         "tags": [
           "Lookups"
         ],
-        "description": "Incident Status values",
+        "summary": "Incident Status values",
         "operationId": "IncidentStatus",
         "produces": [
           "application/json"
@@ -1537,6 +1691,83 @@
         },
         "address": {
           "$ref": "#/definitions/OrganisationAddress"
+        }
+      }
+    },
+    "StringStringValueTuple": {
+      "type": "object"
+    },
+    "ProblemDetails": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "status": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "detail": {
+          "type": "string"
+        },
+        "instance": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {
+        "type": "object"
+      }
+    },
+    "AttachmentType": {
+      "format": "int32",
+      "enum": [
+        0,
+        1,
+        2
+      ],
+      "type": "integer"
+    },
+    "AttachmentItem": {
+      "type": "object",
+      "properties": {
+        "attachmentType": {
+          "$ref": "#/definitions/AttachmentType"
+        },
+        "name": {
+          "type": "string"
+        },
+        "size": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "contentType": {
+          "type": "string"
+        },
+        "isInline": {
+          "type": "boolean"
+        },
+        "additionalData": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
+        "oDataType": {
+          "type": "string"
+        }
+      }
+    },
+    "RenameFile": {
+      "type": "object",
+      "properties": {
+        "fileName": {
+          "type": "string"
+        },
+        "existingUrl": {
+          "type": "string"
         }
       }
     },

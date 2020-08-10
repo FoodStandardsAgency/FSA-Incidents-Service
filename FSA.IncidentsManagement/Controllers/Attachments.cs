@@ -1,11 +1,17 @@
-﻿using FSA.IncidentsManagement.Root;
+﻿using FSA.Attachments;
+using FSA.IncidentsManagement.Models;
+using FSA.IncidentsManagement.Root;
 using FSA.IncidentsManagement.Root.Contracts;
+using FSA.IncidentsManagement.Root.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Microsoft.Graph;
+using Microsoft.Identity.Web;
+using Microsoft.Identity.Web.Resource;
 using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.Client.Taxonomy;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
@@ -22,14 +28,18 @@ namespace FSA.IncidentsManagement.Controllers
     public class AttachmentsController : ControllerBase
     {
         private readonly ILogger<AttachmentsController> log;
+        private readonly ITokenAcquisition tkns;
         private readonly ISIMSManager sims;
         private readonly IFSAAttachments attachments;
+        private readonly IFSATermStore termStore;
 
-        public AttachmentsController(ILogger<AttachmentsController> log, ISIMSManager sims, IFSAAttachments attachments)
+        public AttachmentsController(ILogger<AttachmentsController> log, ITokenAcquisition tkns, ISIMSManager sims, IFSAAttachments attachments, IFSATermStore termStore )
         {
             this.log = log;
+            this.tkns = tkns;
             this.sims = sims;
             this.attachments = attachments;
+            this.termStore = termStore;
         }
 
         [HttpPost("Incident")]
@@ -49,8 +59,10 @@ namespace FSA.IncidentsManagement.Controllers
             // Ensure the incident is not already closed.
             if (!await sims.Incidents.IsClosed(incidentId))
             {
-                // Should also be the id of the document library
                 var stringId = GeneralExtensions.GenerateIncidentId(incidentId);
+                string[] scopes = new string[] { ".default" };
+
+                // Should also be the id of the document library
                 var fileTempPath = Path.GetTempFileName();
                 var fileName = file.FileName;
                 try
@@ -88,12 +100,12 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(typeof(List<AttachmentItem>), 200)]
         public async Task<IActionResult> FetchAttachmentsForIncident([FromQuery]int incidentId)
         {
-
+            string[] scopes = new string[] { "https://graph.microsoft.com/TermStore.ReadWrite.All" };
+            var termStoreAccessToken = await tkns.GetAccessTokenForUserAsync(scopes);
             var stringId = GeneralExtensions.GenerateIncidentId(incidentId);
             var fileInfo = await this.attachments.FetchAllAttchmentsLinks(stringId);
             return new OkObjectResult(fileInfo.Select(o => new { FileName = o.filename, Url = o.url }).ToList());
         }
-
 
         [HttpGet("Fetch")]
         [SwaggerOperation(Summary = "Download an a file.")]
@@ -106,6 +118,19 @@ namespace FSA.IncidentsManagement.Controllers
                 FileDownloadName = fileInfo.FileName
             };
             return new OkObjectResult(fileInfo);
+        }
+
+        [HttpPost("Rename")]
+        [SwaggerOperation(Summary = "Renames an attachment.")]
+        [ProducesResponseType(typeof((string fileName, string url)), 200)]
+        [ProducesResponseType(500)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(403)]
+        [Produces("application/json")]
+        public async Task<IActionResult> RenameAttachment([FromBody] RenameFile renameFile)
+        {
+            var fileInfo = await this.attachments.RenameAttachment(renameFile.fileName, renameFile.existingUrl);
+            return new OkObjectResult(new { FileName = fileInfo.fileName, Url = fileInfo.url });
         }
 
     }

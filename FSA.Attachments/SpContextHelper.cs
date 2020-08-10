@@ -11,9 +11,8 @@ namespace FSA.Attachments
     internal static class SpContextHelper
     {
 
-        internal static async Task<string> GetApplicationAuthenticatedClient(string clientId, X509Certificate2 cert, string certThumprint, string[] scopes, string tenantId)
+        internal static async Task<string> GetApplicationAuthenticatedClient(string clientId, X509Certificate2 cert, string[] scopes, string tenantId)
         {
-            X509Certificate2 certificate = GetAppOnlyCertificate(certThumprint);
             IConfidentialClientApplication clientApp = ConfidentialClientApplicationBuilder
                                             .Create(clientId)
                                             .WithCertificate(cert)

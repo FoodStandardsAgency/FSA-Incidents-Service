@@ -11,12 +11,34 @@
 Data Source=tcp:devfsadbdbserver.database.windows.net,1433;Initial Catalog=FSA.ConcurrencyToken;User Id=fsaadmin@devfsadbdbserver;Password=12Fingers34
 
 
-https://login.microsoftonline.com/common/oauth2/v2.0/authorize?
-client_id=6731de76-14a6-49ae-97bc-6eba6914391e
+https://login.microsoftonline.com/07a873a5-a97e-4071-ae81-f811731ff691/oauth2/v2.0/authorize?
+client_id=78085c96-db80-49fc-b3a2-229671cb7f8e
 &response_type=code
-&redirect_uri=http%3A%2F%2Flocalhost%2Fmyapp%2F
+&redirect_uri=http%3A%2F%2Flocalhost%3A8080
 &response_mode=query
-&scope=
-https%3A%2F%2Fgraph.microsoft.com%2Fcalendars.read%20
-https%3A%2F%2Fgraph.microsoft.com%2Fmail.send
+&scope=/.default
 &state=12345
+
+https://techcommunity.microsoft.com/t5/sharepoint-developer/send-an-interactive-authorization-request-for-this-user-and/m-p/1091867
+
+https://login.microsoftonline.com/aac34e6c-7ad5-4ef6-b592-96ca17cebd94/oauth2/v2.0/authorize?
+client_id=d3b8ffd6-7813-4ac7-a6ff-c85d623e8778
+&response_type=code
+&redirect_uri=http://localhost:8080
+&response_mode=query
+&scope=api://7be2c147-f9da-4a43-8024-9928b12157f4/user_impersonation+https://graph.microsoft.com/TermStore.ReadWrite.All
+&state=12345
+
+
+https://login.microsoftonline.com/aac34e6c-7ad5-4ef6-b592-96ca17cebd94/oauth2/v2.0/authorize?
+client_id=7be2c147-f9da-4a43-8024-9928b12157f4
+&response_type=code
+&redirect_uri=http://localhost:8080
+&response_mode=query
+&scope=https://graph.microsoft.com/Sites.ReadWrite.All+User.Read
+&state=12345
+
+// Line breaks are for legibility only.
+
+https://graph.microsoft.com/calendars.read
+https://graph.microsoft.com/mail.send
