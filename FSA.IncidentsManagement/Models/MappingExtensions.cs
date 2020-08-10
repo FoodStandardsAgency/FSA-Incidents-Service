@@ -52,18 +52,18 @@ namespace FSA.IncidentsManagement.Models
                 contactMethodId: @this.ContactMethodId,
                 statusId: @this.StatusId,
                 signalStatusId: @this.SignalStatusId,
-                notifierId: @this.NotifierId,
+                notifierId: @this.NotifierId.HasValue && @this.NotifierId!=0 ? @this.NotifierId : null, // 0 used as an ordinal due to powerapp limitiaion
                 priorityId: @this.PriorityId,
-                principalFBOId: @this.PrincipalFBOId,
+                principalFBOId: @this.PrincipalFBOId.HasValue && @this.PrincipalFBOId!=0 ? @this.PrincipalFBOId : null, // 0 used as an ordinal due to powerapp limitiaion
                 classificationId: @this.ClassificationId,
                 dataSourceId: @this.DataSourceId,
                 signalUrl: @this.SignalUrl,
                 productTypeId: @this.ProductTypeId,
                 leadOfficer: @this.LeadOfficer,
                 leadOffice: @this.LeadOffice,
-                adminLeadId: @this.AdminLeadId,
+                adminLeadId: @this.AdminLeadId.HasValue && @this.AdminLeadId.Value!=0? @this.AdminLeadId : null, // 0 used as an ordinal due to powerapp limitiaion
                 fieldOfficer: @this.FieldOfficer,
-                leadLocalAuthorityId: @this.LeadLocalAuthorityId,
+                leadLocalAuthorityId: @this.LeadLocalAuthorityId.HasValue && @this.LeadLocalAuthorityId.Value!=0 ? @this.LeadLocalAuthorityId: null, // 0 used as an ordinal due to powerapp limitiaion
                 lAAdvised: @this.LAAdvised,
                 deathIllnessId: @this.DeathIllnessId,
                 receivedOn: @this.ReceivedOn,
