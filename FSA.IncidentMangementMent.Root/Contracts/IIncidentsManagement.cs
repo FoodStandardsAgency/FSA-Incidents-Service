@@ -10,6 +10,9 @@ namespace FSA.IncidentsManagement.Root.Contracts
 {
     public interface IIncidentsManagement
     {
+
+        Task<bool> Exists(int incidentId);
+
         Task<BaseIncident> Get(int Id);
         Task<BaseIncident> Get(Guid guid);
 

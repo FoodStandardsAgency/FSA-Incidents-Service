@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using FSA.IncidentsManagement.Misc;
 using FSA.IncidentsManagement.Models;
 using FSA.IncidentsManagement.ModelValidators;
+using FSA.IncidentsManagement.Root;
 using FSA.IncidentsManagement.Root.Contracts;
 using FSA.IncidentsManagement.Root.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -24,11 +26,13 @@ namespace FSA.IncidentsManagement.Controllers
     {
         private readonly ILogger<IncidentsController> log;
         private readonly ISIMSManager fsaData;
+        private readonly IFSAAttachments attachments;
 
-        public IncidentsController(ILogger<IncidentsController> log, ISIMSManager fsaData)
+        public IncidentsController(ILogger<IncidentsController> log, ISIMSManager fsaData, IFSAAttachments attachments)
         {
             this.log = log;
             this.fsaData = fsaData;
+            this.attachments = attachments;
         }
 
         [HttpGet()]
@@ -141,8 +145,6 @@ namespace FSA.IncidentsManagement.Controllers
             return new OkResult();
         }
 
-
-
         [HttpGet("GetIncidentLinks")]
         [SwaggerOperation(Summary = "Dashboard info for an incidents links")]
         [ProducesResponseType(typeof(IEnumerable<IncidentDashboardView>), 200)]
@@ -171,5 +173,19 @@ namespace FSA.IncidentsManagement.Controllers
             return new OkObjectResult(await this.fsaData.Incidents.GetNotes(incidentId));
         }
 
+        [HttpPost("EnsureLibrary")]
+        [SwaggerOperation(Summary = "Ensure library exists for incident.")]
+        [ProducesResponseType(typeof(IncidentLibraryInfo), 200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> EnsureLibrary([FromQuery]int Id)
+        {
+            var stringId = GeneralExtensions.GenerateIncidentId(Id);
+            if (await this.fsaData.Incidents.Exists(Id)){
+                var listInfo = await this.attachments.EnsureLibrary(stringId);
+                return new OkObjectResult(listInfo);
+            }
+            return new OkObjectResult(null);
+
+        }
     }
 }

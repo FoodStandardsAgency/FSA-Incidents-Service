@@ -339,7 +339,10 @@ namespace FSA.IncidentsManagementDb.Repositories
             return newComment.ToClient();
         }
 
-
+        public async Task<bool> Exists(int incidentId)
+        {
+            return await this.ctx.Incidents.AsNoTracking().FirstOrDefaultAsync(f => f.Id == incidentId) == null;
+        }
         /// <summary>
         /// return 1 PageSize of data from the incidents table for the dashboard.
         /// returns an empty setother wise.

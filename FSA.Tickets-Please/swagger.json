@@ -756,6 +756,31 @@
         }
       }
     },
+    "/api/Incidents/EnsureLibrary": {
+      "post": {
+        "tags": [
+          "Incidents"
+        ],
+        "summary": "Ensure library exists for incident.",
+        "operationId": "EnsureLibrary",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "Id",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
     "/api/Lookups/Categories": {
       "get": {
         "tags": [

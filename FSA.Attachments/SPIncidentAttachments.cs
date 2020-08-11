@@ -20,11 +20,11 @@ namespace FSA.Attachments
     /// </summary>
     public class SPIncidentAttachments : IFSAAttachments
     {
-        
+
         private readonly X509Certificate2 cert;
         private readonly string siteUrl;
         private readonly string contentTypeId;
-        
+
         private readonly Func<Task<string>> fetchAccessToken;
         private readonly Guid SimsIdTermSet;
         private readonly string[] scopes;
@@ -67,12 +67,11 @@ namespace FSA.Attachments
             await ctx.ExecuteQueryAsync();
             var count = matchedLists.Count();
             // Creat the termset Entry
-      //      await this.EnureIncidentTerm(incidentId, ctx);
+            //      await this.EnureIncidentTerm(incidentId, ctx);
             if (count < 1)
             {
                 // Create a new list and applies the content type.
                 return await this.Createlist(incidentId, ctx);
-
             }
             else
             {
@@ -149,13 +148,13 @@ namespace FSA.Attachments
                     throw new ArgumentNullException("No file has been uploaded");
                 }
                 //may be manage the duplicates here
-                catch (ServerException ex)  when(ex.ServerErrorCode == -2130575257)
+                catch (ServerException ex) when (ex.ServerErrorCode == -2130575257)
                 {
                     throw ex;
                 }
-                catch(ServerException ex)
+                catch (ServerException ex)
                 {
-                    throw new ArgumentException($"Microsoft 365 error : {ex.ServerErrorValue}");;
+                    throw new ArgumentException($"Microsoft 365 error : {ex.ServerErrorValue}"); ;
                 }
             }
         }
@@ -179,7 +178,7 @@ namespace FSA.Attachments
             // Use large file upload approach.
             ClientResult<long> bytesUploaded = null;
             FileStream fs = null;
-            
+
             try
             {
                 fs = System.IO.File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
@@ -254,7 +253,7 @@ namespace FSA.Attachments
                                 {
                                     // Continue sliced upload.
                                     bytesUploaded = uploadFile.ContinueUpload(uploadId, fileoffset, s);
-                                    await  ctx.ExecuteQueryAsync();
+                                    await ctx.ExecuteQueryAsync();
                                     // Update fileoffset for the next slice.
                                     fileoffset = bytesUploaded.Value;
                                 }
@@ -356,7 +355,27 @@ namespace FSA.Attachments
             throw new NotImplementedException();
         }
 
-
-
+        public async Task<IncidentLibraryInfo> EnsureLibrary(string incidentId)
+        {
+            var accessToken = await fetchAccessToken();
+            using (var ctx = SpContextHelper.GetClientContextWithAccessToken(this.siteUrl, accessToken))
+            {
+                var list = await this.EnsureList(incidentId, ctx);
+                ctx.Load(list.RootFolder);
+                ctx.Load(ctx.Web);
+                await ctx.ExecuteQueryAsync();
+                // need the full site collection url
+                //https blah/sites/blah
+                var webUrl = ctx.Web.Url;
+                // /sites/blah/folder
+                var rootFolderUrl = list.RootFolder.ServerRelativeUrl;
+                //var startOverlap webUrl.Contains()
+                return new IncidentLibraryInfo
+                {
+                    WebUrl = webUrl,
+                    ServerRelativeFolderUrl = rootFolderUrl
+                };
+            }
+        }
     }
 }
