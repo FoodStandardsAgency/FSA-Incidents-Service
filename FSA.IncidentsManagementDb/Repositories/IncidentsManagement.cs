@@ -341,7 +341,9 @@ namespace FSA.IncidentsManagementDb.Repositories
 
         public async Task<bool> Exists(int incidentId)
         {
-            return await this.ctx.Incidents.AsNoTracking().FirstOrDefaultAsync(f => f.Id == incidentId) == null;
+            var isReal  = await this.ctx.Incidents.AsNoTracking().FirstOrDefaultAsync(f => f.Id == incidentId) == null;
+
+            return !isReal;
         }
         /// <summary>
         /// return 1 PageSize of data from the incidents table for the dashboard.

@@ -134,7 +134,6 @@ namespace FSA.IncidentsManagement
                 var cert = o.GetRequiredService<X509Certificate2>();
 
                 return new SPIncidentAttachments(section["ClientId"], user.GetTenantId(), cert, sharePoint["HostSiteCol"], $"https://{sharePoint["HostSiteCol"]}/{sharePoint["DocSiteUrl"]}", sharePoint["SimsDocCType"], Guid.Parse(sharePoint["SimsTermSetId"]));
-                //return new GrIncidentAttachments(section["ClientId"], section["GraphClientSecret"], user.GetTenantId(), conf["HostSiteCol"], conf["DocSiteUrl"], conf["IncidentDocCType"]);
             });
         }
 

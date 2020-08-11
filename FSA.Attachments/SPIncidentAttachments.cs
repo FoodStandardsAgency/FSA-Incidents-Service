@@ -298,10 +298,10 @@ namespace FSA.Attachments
             {
                 var theLib = await EnsureList(incidentId, ctx);
                 var files = theLib.RootFolder.Files;
-                ctx.Load(files);
+                ctx.Load(files, o=>o.Include(p=>p.ListItemAllFields["EncodedAbsUrl"], p=>p.Name));
                 await ctx.ExecuteQueryAsync();
 
-                return files.Select(p => new { p.Name, p.LinkingUrl }).ToList().Select(p => (p.Name, p.LinkingUrl));
+                return files.Select(p => new { p.Name, LinkingUrl = p.ListItemAllFields["EncodedAbsUrl"] as string }).ToList().Select(p => (p.Name, p.LinkingUrl));
             }
         }
 
@@ -336,15 +336,17 @@ namespace FSA.Attachments
             var accessToken = await fetchAccessToken();
             using (var ctx = SpContextHelper.GetClientContextWithAccessToken(this.siteUrl, accessToken))
             {
-                var file = ctx.Web.GetFileByLinkingUrl(url);
+                var file = ctx.Web.GetFileByUrl(url);
 
                 ctx.Load(file, f => f.ListItemAllFields);
                 await ctx.ExecuteQueryAsync();
                 if (file != null)
                 {
                     file.MoveTo(file.ListItemAllFields["FileDirRef"] + "/" + fileName, MoveOperations.RetainEditorAndModifiedOnMove);
+                    ctx.Load(file, f => f.ListItemAllFields["EncodedAbsUrl"]);
                     await ctx.ExecuteQueryAsync();
-                    return (fileName, file.LinkingUrl);
+
+                    return (fileName, file.ListItemAllFields["EncodedAbsUrl"] as string);
                 }
             }
             return ("", "");

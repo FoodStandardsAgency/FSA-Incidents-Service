@@ -763,6 +763,11 @@
         ],
         "summary": "Ensure library exists for incident.",
         "operationId": "EnsureLibrary",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "parameters": [
           {
             "in": "query",
@@ -773,7 +778,10 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/IncidentLibraryInfo"
+            }
           },
           "500": {
             "description": "Server Error"
@@ -2441,6 +2449,17 @@
           "type": "string"
         },
         "createdBy": {
+          "type": "string"
+        }
+      }
+    },
+    "IncidentLibraryInfo": {
+      "type": "object",
+      "properties": {
+        "webUrl": {
+          "type": "string"
+        },
+        "serverRelativeFolderUrl": {
           "type": "string"
         }
       }

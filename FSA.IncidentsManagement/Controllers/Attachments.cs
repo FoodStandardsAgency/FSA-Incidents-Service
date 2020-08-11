@@ -100,8 +100,8 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(typeof(List<AttachmentItem>), 200)]
         public async Task<IActionResult> FetchAttachmentsForIncident([FromQuery]int incidentId)
         {
-            string[] scopes = new string[] { "https://graph.microsoft.com/TermStore.ReadWrite.All" };
-            var termStoreAccessToken = await tkns.GetAccessTokenForUserAsync(scopes);
+            //string[] scopes = new string[] { "https://graph.microsoft.com/TermStore.ReadWrite.All" };
+            //var termStoreAccessToken = await tkns.GetAccessTokenForUserAsync(scopes);
             var stringId = GeneralExtensions.GenerateIncidentId(incidentId);
             var fileInfo = await this.attachments.FetchAllAttchmentsLinks(stringId);
             return new OkObjectResult(fileInfo.Select(o => new { FileName = o.filename, Url = o.url }).ToList());
@@ -109,7 +109,7 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpGet("Fetch")]
         [SwaggerOperation(Summary = "Download an a file.")]
-        [ProducesResponseType(typeof(object), 200)]
+        [ProducesResponseType(typeof(IncidentAttachment), 200)]
         public async Task<IActionResult> FetchAttachment([FromQuery] string linkUrl)
         {
             var fileInfo = await this.attachments.FetchAttachment(linkUrl);
