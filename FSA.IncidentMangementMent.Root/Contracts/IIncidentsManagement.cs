@@ -44,5 +44,7 @@ namespace FSA.IncidentsManagement.Root.Contracts
         /// <param name="incidentId"></param>
         /// <returns></returns>
         Task<bool> Exists(int incidentId);
+
+        Task<IEnumerable<(string fileName, DocumentTagTypes tags)>> GetAttachmentTags(int incidentId);
     }
 }

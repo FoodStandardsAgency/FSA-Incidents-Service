@@ -345,6 +345,7 @@ namespace FSA.IncidentsManagementDb.Repositories
 
             return !isReal;
         }
+
         /// <summary>
         /// return 1 PageSize of data from the incidents table for the dashboard.
         /// returns an empty setother wise.
@@ -570,8 +571,23 @@ namespace FSA.IncidentsManagementDb.Repositories
             // tHE DOCUment is taken on faith alas.
             var exists = await this.Exists(id);
             if (!exists) throw new ArgumentNullException("Incident does not exist");
-            this.ctx.TaggedAttachements.Update(new TaggedDocumentDb { IncidentId = id, DocUrl = docUrl, TagFlags = tags });
+
+            var existing  = ctx.TaggedAttachements.Find(id, docUrl);
+            if(existing!=null)
+            {
+                existing.TagFlags = tags;
+            }
+            else
+            {
+                ctx.TaggedAttachements.Add(new TaggedDocumentDb { IncidentId = id, DocUrl = docUrl, TagFlags = tags });
+            }
             await ctx.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<(string fileName, DocumentTagTypes tags)>> GetAttachmentTags(int incidentId)
+        {
+            var attachments =  await ctx.TaggedAttachements.Where(o => o.IncidentId == incidentId).ToListAsync();
+            return attachments.Select(s => (s.DocUrl, s.TagFlags)).ToList();
         }
     }
 }

@@ -33,7 +33,7 @@ namespace FSA.IncidentsManagement.Controllers
         private readonly IFSAAttachments attachments;
         private readonly IFSATermStore termStore;
 
-        public AttachmentsController(ILogger<AttachmentsController> log, ITokenAcquisition tkns, ISIMSManager sims, IFSAAttachments attachments, IFSATermStore termStore )
+        public AttachmentsController(ILogger<AttachmentsController> log, ITokenAcquisition tkns, ISIMSManager sims, IFSAAttachments attachments, IFSATermStore termStore)
         {
             this.log = log;
             this.tkns = tkns;
@@ -73,15 +73,15 @@ namespace FSA.IncidentsManagement.Controllers
                     }
                     var attachedFile = await attachments.AddAttachment(fileTempPath, fileName, stringId);
                     System.IO.File.Delete(fileTempPath);
-                    return new OkObjectResult(new { FileName = attachedFile.filename, Url=attachedFile.url });
+                    return new OkObjectResult(new { FileName = attachedFile.filename, Url = attachedFile.url });
                 }
                 catch (System.IO.IOException ex)
                 {
                     System.IO.File.Delete(fileTempPath);
-                    this.log.LogWarning(ex,"error during Attachment upload.");
-                   return this.StatusCode(500, "Error during upload.");
+                    this.log.LogWarning(ex, "error during Attachment upload.");
+                    return this.StatusCode(500, "Error during upload.");
                 }
-                catch(ServerException ex)
+                catch (ServerException ex)
                 {
                     System.IO.File.Delete(fileTempPath);
                     this.log.LogWarning("Duplicate file attempt");
@@ -97,20 +97,21 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpGet("FetchAll")]
         [SwaggerOperation(Summary = "Download incident attachments info")]
-        [ProducesResponseType(typeof(List<AttachmentItem>), 200)]
-        public async Task<IActionResult> FetchAttachmentsForIncident([FromQuery]int incidentId)
+        [ProducesResponseType(typeof(List<AttachmentFileInfo>), 200)]
+        public async Task<IActionResult> FetchAllAttachmentInfo([FromQuery] int incidentId)
         {
-            //string[] scopes = new string[] { "https://graph.microsoft.com/TermStore.ReadWrite.All" };
-            //var termStoreAccessToken = await tkns.GetAccessTokenForUserAsync(scopes);
             var stringId = GeneralExtensions.GenerateIncidentId(incidentId);
             var fileInfo = await this.attachments.FetchAllAttchmentsLinks(stringId);
-            return new OkObjectResult(fileInfo.Select(o => new { FileName = o.filename, Url = o.url }).ToList());
+            var tags = await sims.Incidents.GetAttachmentTags(incidentId);
+
+            return new OkObjectResult(fileInfo.ToList());
         }
 
         [HttpGet("Fetch")]
         [SwaggerOperation(Summary = "Download an a file.")]
         [ProducesResponseType(typeof(IncidentAttachment), 200)]
-        public async Task<IActionResult> FetchAttachment([FromQuery] string linkUrl)
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> FetchFile([FromQuery] string linkUrl)
         {
             var fileInfo = await this.attachments.FetchAttachment(linkUrl);
             var fileContentResult = new FileContentResult(fileInfo.Document.ToArray(), "application/octet-stream")
@@ -133,5 +134,15 @@ namespace FSA.IncidentsManagement.Controllers
             return new OkObjectResult(new { FileName = fileInfo.fileName, Url = fileInfo.url });
         }
 
+        [HttpPost("UpdateDocumentTags")]
+        [SwaggerOperation(Summary = "Ensure library exists for incident.")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> UpdateAttachmentTags([FromBody] UpdateDocumentTagsModel updateTags)
+        {
+            var docTags = (DocumentTagTypes)updateTags.Tags.ToList().Sum();
+            await sims.Incidents.UpdateAttachmentTags(updateTags.IncidentId, updateTags.DocUrl, docTags);
+            return new OkResult();
+        }
     }
 }

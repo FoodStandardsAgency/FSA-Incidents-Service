@@ -158,6 +158,7 @@ namespace FSA.Attachments
                 }
             }
         }
+       
         /// <summary>
         /// Based on docs
         /// https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/upload-large-files-sample-app-for-sharepoint
@@ -291,7 +292,7 @@ namespace FSA.Attachments
             return newFile;
         }
 
-        public async Task<IEnumerable<(string filename, string url)>> FetchAllAttchmentsLinks(string incidentId)
+        public async Task<IEnumerable<AttachmentFileInfo>> FetchAllAttchmentsLinks(string incidentId)
         {
             var accessToken = await fetchAccessToken();
             using (var ctx = SpContextHelper.GetClientContextWithAccessToken(this.siteUrl, accessToken))
@@ -300,8 +301,7 @@ namespace FSA.Attachments
                 var files = theLib.RootFolder.Files;
                 ctx.Load(files, o=>o.Include(p=>p.ListItemAllFields["EncodedAbsUrl"], p=>p.Name));
                 await ctx.ExecuteQueryAsync();
-
-                return files.Select(p => new { p.Name, LinkingUrl = p.ListItemAllFields["EncodedAbsUrl"] as string }).ToList().Select(p => (p.Name, p.LinkingUrl));
+                return files.Select(p => new AttachmentFileInfo { FileName = p.Name, Url = p.ListItemAllFields["EncodedAbsUrl"] as string }).ToList();
             }
         }
 
