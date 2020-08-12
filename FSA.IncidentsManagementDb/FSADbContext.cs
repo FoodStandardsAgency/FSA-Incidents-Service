@@ -22,6 +22,8 @@ namespace FSA.IncidentsManagementDb
 
         internal DbSet<IncidentCommentDb> IncidentComments { get; set; }
         internal DbSet<IncidentDb> Incidents { get; set; }
+        internal DbSet<StakeholderDb> Stakeholders { get; set; }
+
         internal DbSet<IncidentLinkDb> IncidentLinks { get; set; }
         internal DbSet<IncidentOMITGroupDb> IncidentOMITGroups { get; set; }
 
@@ -61,7 +63,7 @@ namespace FSA.IncidentsManagementDb
 
         internal void SetEditor(string editor)
         {
-            this._Editor = editor ?? throw new ArgumentNullException("Must have an editor name");
+            this._Editor = editor ?? throw new ArgumentNullException("Must have an editor name.");
         }
 
         private void SetAuditData()
@@ -108,10 +110,6 @@ namespace FSA.IncidentsManagementDb
             // We are only applying temporal tables explictly
             modelBuilder.PreventTemporalTables();
 
-            //modelBuilder.Entity<OrganisationDb>().UseTemporalTable();
-            //modelBuilder.Entity<FBODb>().UseTemporalTable();
-            //modelBuilder.Entity<NotifierDb>().UseTemporalTable();
-
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<ClassificationDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<CategoryDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<ContactMethodDb>());
@@ -146,6 +144,8 @@ namespace FSA.IncidentsManagementDb
             modelBuilder.ApplyConfiguration(new FBOTypesBuilder());
             modelBuilder.ApplyConfiguration(new DocumentTagBuilder());
             modelBuilder.ApplyConfiguration(new TaggedDocumentBuilder());
+
+            modelBuilder.ApplyConfiguration(new StakeholdersBuilder());
 
             var seeds= new Seeder();
             seeds.SeedLookups(modelBuilder);

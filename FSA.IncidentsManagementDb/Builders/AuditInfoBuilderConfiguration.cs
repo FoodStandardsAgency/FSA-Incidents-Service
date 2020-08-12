@@ -24,7 +24,6 @@ namespace FSA.IncidentsManagementDb.Builders
                                                  .ValueGeneratedOnAdd()
                                                  .HasConversion(b => b, b => DateTime.SpecifyKind(b, DateTimeKind.Utc));
             builder.Property(aud => aud.ModifiedBy).IsRequired();
-
             builder.Property(aud => aud.Timestamp).IsRowVersion();
         }
     }
