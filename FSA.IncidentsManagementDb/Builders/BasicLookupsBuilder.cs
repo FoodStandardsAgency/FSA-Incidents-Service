@@ -7,7 +7,6 @@ using System.Text;
 namespace FSA.IncidentsManagementDb.Builders
 {
     internal class BasicLookupsBuilder<T> : AuditInfoBuilderConfiguration<T> where T : BaseEntityDb, IIDbLookup
-
     {
         public override void Configure(EntityTypeBuilder<T> builder)
         {

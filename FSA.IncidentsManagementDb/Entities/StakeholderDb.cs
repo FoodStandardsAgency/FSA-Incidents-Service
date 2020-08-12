@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FSA.IncidentsManagementDb.Entities
+﻿namespace FSA.IncidentsManagementDb.Entities
 {
     internal class StakeholderDb : BaseEntityDb
     {
@@ -14,6 +10,7 @@ namespace FSA.IncidentsManagementDb.Entities
         public string Role { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
-        public int StakeholderDiscriminator { get; set; }
+        public int StakeholderDiscriminatorId { get; set; }
+        public StakeholderDiscriminatorDb StakeholderDiscriminator { get; set; }
     }
 }
