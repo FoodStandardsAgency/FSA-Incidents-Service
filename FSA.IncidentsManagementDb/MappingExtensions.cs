@@ -104,7 +104,7 @@ namespace FSA.IncidentsManagementDb
             }
         }
 
-  
+
         public static OrganisationAddress ToClient(this OrganisationDb @this) => new OrganisationAddress
         {
             Id = @this.Id,
@@ -194,6 +194,12 @@ namespace FSA.IncidentsManagementDb
             Title = @this.Title,
         };
 
+        public static AttachmentTagLkup ToClient(this DocumentTagDb @this) => new AttachmentTagLkup
+        {
+            Id = @this.Id,
+            Title = @this.Title,
+        };
+
         public static SignalStatus ToClient(this SignalStatusDb @this) => new SignalStatus
         {
             Id = @this.Id,
@@ -229,7 +235,7 @@ namespace FSA.IncidentsManagementDb
                 priorityId: @this.PriorityId,
                 classificationId: @this.ClassificationId,
                 dataSourceId: @this.DataSourceId,
-                signalUrl:@this.SignalUrl,
+                signalUrl: @this.SignalUrl,
                 productTypeId: @this.ProductTypeId,
                 leadOfficer: @this.LeadOfficer,
                 leadOffice: @this.LeadOffice,
@@ -402,7 +408,7 @@ namespace FSA.IncidentsManagementDb
             AdditionalInfo = @this.AdditionalInfo ?? "",
             AmountUnitTypeId = @this.AmountUnitTypeId,
             Amount = @this.Amount,
-            DataSource = @this.Incident.DataSource?.Title?? "",
+            DataSource = @this.Incident.DataSource?.Title ?? "",
             BatchCodes = @this.BatchCodes,
             Brand = @this.Brand,
             CountryOfOriginId = @this.CountryOfOriginId,

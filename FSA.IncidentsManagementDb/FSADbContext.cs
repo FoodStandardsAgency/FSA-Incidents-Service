@@ -56,6 +56,9 @@ namespace FSA.IncidentsManagementDb
 
         internal DbSet<NotifierDb> Notifiers { get; set; }
 
+        internal DbSet<DocumentTagDb> DocumentTags { get; set; }
+        internal DbSet<TaggedDocumentDb> TaggedAttachements { get; set; }
+
         internal void SetEditor(string editor)
         {
             this._Editor = editor ?? throw new ArgumentNullException("Must have an editor name");
@@ -141,15 +144,13 @@ namespace FSA.IncidentsManagementDb
             modelBuilder.ApplyConfiguration(new ProductPackSizeBuilder());
             modelBuilder.ApplyConfiguration(new ProductFBOBuilder());
             modelBuilder.ApplyConfiguration(new FBOTypesBuilder());
+            modelBuilder.ApplyConfiguration(new DocumentTagBuilder());
+            modelBuilder.ApplyConfiguration(new TaggedDocumentBuilder());
 
+            var seeds= new Seeder();
+            seeds.SeedLookups(modelBuilder);
 
-            var duncan = new Seeder();
-            duncan.SeedLookups(modelBuilder);
-
-            //modelBuilder.Entity<GatewayErrorCodeDb>().HasKey(p => p.ReturnCode);
-            //modelBuilder.Entity<GatewayRequestDetailDb>().HasKey(p => p.RequestId);
-
-            //modelBuilder.Entity<OrganisationDb>().HasOne(p=>p.OrganisationRole).WithOne().OnDelete(DeleteBehavior.NoAction);
+            
         }
     }
 }

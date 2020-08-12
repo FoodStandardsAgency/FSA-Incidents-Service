@@ -27,7 +27,7 @@ namespace FSA.IncidentsManagement.Root.Contracts
         IReferenceDataRepo<OrganisationLookup> FBOs{get;}
         IReferenceDataRepo<OrganisationLookup> Notifiers { get; }
         IReferenceDataRepo<OrganisationLookup> LocalAuthorities { get; }
-
+        IReferenceDataRepo<AttachmentTagLkup> AttachmentTags { get; }
         IReferenceDataRepo<FBOType> FBOTypes { get; }
         IReferenceDataRepo<NotifierType> NotifierTypes { get; }
         IReferenceDataRepo<AdminLead> AdminLeads { get; }

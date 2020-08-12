@@ -536,18 +536,6 @@ namespace FSA.IncidentsManagementDb.Repositories
                        select iq);
 
 
-
-            // ALl `from` incidents where parent is in then to Column
-            //var fromQ = (from iq in incidentsQry
-            //             join fromLink in ctx.IncidentLinks
-            //                 on iq.Id equals fromLink.FromIncidentId
-            //             where fromLink.ToIncidentId == incidentId
-            //             select iq);
-            // Now get *all* the entries for a from.
-
-
-
-
             var allItems = toQ.Concat(fromIncidentList)
                               .Concat(fromIncidents).Where(o => o.Id != incidentId);
 
@@ -574,6 +562,16 @@ namespace FSA.IncidentsManagementDb.Repositories
         {
             return (await ctx.Incidents.AsNoTracking().SingleAsync(i => i.Id == incidentId))
                            .IncidentStatusId == (int)IncidentStatus.Closed;
+        }
+
+        public async Task UpdateAttachmentTags(int id, string docUrl, DocumentTagTypes tags)
+        {
+            // Ensure we have a an incident
+            // tHE DOCUment is taken on faith alas.
+            var exists = await this.Exists(id);
+            if (!exists) throw new ArgumentNullException("Incident does not exist");
+            this.ctx.TaggedAttachements.Update(new TaggedDocumentDb { IncidentId = id, DocUrl = docUrl, TagFlags = tags });
+            await ctx.SaveChangesAsync();
         }
     }
 }

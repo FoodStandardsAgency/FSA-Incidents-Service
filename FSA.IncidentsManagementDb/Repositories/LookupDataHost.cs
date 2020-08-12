@@ -35,6 +35,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         public IReferenceDataRepo<ProductType> ProductTypes => new ReferenceDataRepo<ProductType, ProductTypeDb>(ctx, (itm) => itm.ToClient());
         public IReferenceDataRepo<SignalStatus> SignalStatus => new ReferenceDataRepo<SignalStatus, SignalStatusDb>(ctx, (itm) => itm.ToClient());
         public IReferenceDataRepo<UnitQuantity> Units => new ReferenceDataRepo<UnitQuantity, UnitQuantityDb>(ctx, (itm) => itm.ToClient());
+        public IReferenceDataRepo<AttachmentTagLkup> AttachmentTags => new ReferenceDataRepo<AttachmentTagLkup, DocumentTagDb>(ctx, (itm) => itm.ToClient());
 
         public IReferenceDataRepo<PersonaRole> PersonaRoles => new ReferenceDataRepo<PersonaRole, PersonaRoleDb>(ctx, (itm) => itm.ToClient());
         // These are here temporairly

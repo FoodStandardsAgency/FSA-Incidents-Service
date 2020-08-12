@@ -6,6 +6,8 @@ using System.Text;
 namespace FSA.IncidentsManagementDb
 {
     // https://stackoverflow.com/questions/5595338/add-the-where-clause-dynamically-in-entity-framework
+    // Used to build where statements in IQuerable
+    // It looks like magic, but click through the .Visit() to see where how the Vistior pattern is applied.
     internal static class ExpressionExtensions
     {
         public static Expression<Func<T, bool>> And<T>(this Expression<Func<T, bool>> leftExpression, Expression<Func<T, bool>> rightExpression)

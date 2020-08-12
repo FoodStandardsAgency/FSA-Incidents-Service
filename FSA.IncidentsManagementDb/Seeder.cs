@@ -3,6 +3,7 @@ using FSA.IncidentsManagementDb.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Reflection.Emit;
 using System.Text;
 
 namespace FSA.IncidentsManagementDb
@@ -26,6 +27,7 @@ namespace FSA.IncidentsManagementDb
             ProductTypes(modelBuilder);
             SignalStatus(modelBuilder);
             UnitQuants(modelBuilder);
+            DocumentTag(modelBuilder);
         }
 
         private void UnitQuants(ModelBuilder modelBuilder)
@@ -691,6 +693,108 @@ namespace FSA.IncidentsManagementDb
                     {
                         Id = 65536,
                         Title = "Wholesaler",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    });
+        }
+
+        private void DocumentTag(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<DocumentTagDb>()
+                .HasData(new DocumentTagDb
+                {
+                    Id = 1,
+                    Title = "CVED/CED",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                    new DocumentTagDb
+                    {
+                        Id = 2,
+                        Title = "Analytical report",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+                    new DocumentTagDb
+                    {
+                        Id = 4,
+                        Title = "Bill / Delivery Document",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+                    new DocumentTagDb
+                    {
+                        Id = 8,
+                        Title = "Follow up notification",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+                    new DocumentTagDb
+                    {
+                        Id = 16,
+                        Title = "Health certifiacte",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+                    new DocumentTagDb
+                    {
+                        Id = 32,
+                        Title = "Phytosanitary Certifcate",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+                    new DocumentTagDb
+                    {
+                        Id = 64,
+                        Title = "Picture",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+                    new DocumentTagDb
+                    {
+                        Id = 128,
+                        Title = "Public warning / Press release",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+                    new DocumentTagDb
+                    {
+                        Id = 256,
+                        Title = "Recipients List",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+                    new DocumentTagDb
+                    {
+                        Id = 512,
+                        Title = "Risk assessment",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+                    new DocumentTagDb
+                    {
+                        Id = 1024,
+                        Title = "Screenshot",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+                    new DocumentTagDb
+                    {
+                        Id = 2048,
+                        Title = "Translation",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+                    new DocumentTagDb
+                    {
+                        Id = 4096,
+                        Title = "Video File",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    }, new DocumentTagDb
+                    {
+                        Id = 8192,
+                        Title = "Other",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     });
