@@ -54,9 +54,14 @@ namespace FSA.Attachments
             ctx.Load(ctype);
             await ctx.ExecuteQueryAsync();
             newList.ContentTypesEnabled = true;
-            newList.ContentTypes.AddExistingContentType(ctype);
+            var docType = newList.ContentTypes.AddExistingContentType(ctype);
+            ctx.Load(docType);
             newList.Update();
             await ctx.ExecuteQueryAsync();
+
+            newList.RootFolder.UniqueContentTypeOrder = new List<ContentTypeId> { docType.Id, };
+            await ctx.ExecuteQueryAsync();
+
             return newList;
         }
 
