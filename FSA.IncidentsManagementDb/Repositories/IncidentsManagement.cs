@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text.RegularExpressions;
@@ -556,6 +557,7 @@ namespace FSA.IncidentsManagementDb.Repositories
 
         /// <summary>
         /// Checkts to see if a particulr incident is closed
+        /// Does not check if it exists
         /// </summary>
         /// <param name="incidentId"></param>
         /// <returns>false if not closed</returns>
@@ -584,10 +586,60 @@ namespace FSA.IncidentsManagementDb.Repositories
             await ctx.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<(string fileName, DocumentTagTypes tags)>> GetAttachmentTags(int incidentId)
+        public async Task<IEnumerable<(string fileUrl, DocumentTagTypes tags)>> GetAttachmentTags(int incidentId)
         {
             var attachments =  await ctx.TaggedAttachements.Where(o => o.IncidentId == incidentId).ToListAsync();
             return attachments.Select(s => (s.DocUrl, s.TagFlags)).ToList();
+        }
+
+        public async Task<IEnumerable<Stakeholder>> GetStakeholders(int incidentId)
+        {
+            if (incidentId == 0) throw new ArgumentOutOfRangeException("Incident must exist.");
+            return await this.ctx.Stakeholders
+                                .Where(o => o.IncidentId == incidentId)
+                                .Select(o => o.ToClient()).ToListAsync();
+        }
+
+        public async Task<Stakeholder> AddStakeholder(Stakeholder stakeholder)
+        {
+            var isClosed = await this.IsClosed(stakeholder.IncidentId);
+            if (isClosed) throw new AccessViolationException("Incident is closed");
+            if (stakeholder.Id > 0) throw new ArgumentOutOfRangeException("Stakeholder already exists.");
+
+            var dbItem = ctx.Stakeholders.Add(stakeholder.ToDb());
+
+            await ctx.SaveChangesAsync();
+            return dbItem.Entity.ToClient();
+        }
+
+        public async Task RemoveStakeholder(Stakeholder stakeholder)
+        {
+            var isClosed = await this.IsClosed(stakeholder.IncidentId);
+            if (isClosed) throw new AccessViolationException("Incident is closed");
+            if (stakeholder.Id == 0) throw new ArgumentOutOfRangeException("Stakeholder must exist.");
+
+            var dbItem = ctx.Stakeholders.Find(stakeholder.Id);
+            ctx.Remove(dbItem);
+            await ctx.SaveChangesAsync();
+        }
+
+        public async Task<Stakeholder> UpdateStakeholder(Stakeholder stakeholder)
+        {
+            var isClosed = await this.IsClosed(stakeholder.IncidentId);
+            if (isClosed) throw new AccessViolationException("Incident is closed");
+
+            if (stakeholder.Id == 0) throw new ArgumentOutOfRangeException("Stakeholder must exist.");
+            
+            var dbItem = ctx.Stakeholders.Find(stakeholder.Id);
+            dbItem.FirstName = stakeholder.FirstName;
+            dbItem.Surname = stakeholder.Surname;
+            dbItem.Role = stakeholder.Role;
+            dbItem.Email = stakeholder.Email;
+            dbItem.Phone = stakeholder.Phone;
+
+            var dbEnt = ctx.Stakeholders.Update(dbItem);
+            await ctx.SaveChangesAsync();
+            return dbEnt.Entity.ToClient();
         }
     }
 }

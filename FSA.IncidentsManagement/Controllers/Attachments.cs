@@ -1,23 +1,18 @@
-﻿using FSA.Attachments;
+﻿using FSA.IncidentsManagement.Misc;
 using FSA.IncidentsManagement.Models;
 using FSA.IncidentsManagement.Root;
 using FSA.IncidentsManagement.Root.Contracts;
 using FSA.IncidentsManagement.Root.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
-using Microsoft.Graph;
 using Microsoft.Identity.Web;
-using Microsoft.Identity.Web.Resource;
 using Microsoft.SharePoint.Client;
-using Microsoft.SharePoint.Client.Taxonomy;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Controllers
@@ -103,8 +98,15 @@ namespace FSA.IncidentsManagement.Controllers
             var stringId = GeneralExtensions.GenerateIncidentId(incidentId);
             var fileInfo = await this.attachments.FetchAllAttchmentsLinks(stringId);
             var tags = await sims.Incidents.GetAttachmentTags(incidentId);
+            // This may be the worst code I've written this year.
+            var completeFileInfo = fileInfo.Select(o =>
+            {
+                var itm = tags.SingleOrDefault(p => p.fileUrl == o.Url);
+                o.Tags = itm.Equals(default(ValueTuple<string, string>)) ? o.Tags : Utilities.SelectedFlags<DocumentTagTypes>(itm.tags).Select(o => (int)o).ToList();
+                return o;
+            });
 
-            return new OkObjectResult(fileInfo.ToList());
+            return new OkObjectResult(completeFileInfo.ToList());
         }
 
         [HttpGet("Fetch")]

@@ -23,17 +23,25 @@ namespace FSA.IncidentsManagement.Root.Contracts
         /// <returns></returns>
         Task<IncidentsDisplayModel> GetDisplayItem(int id);
         Task<BaseIncident> UpdateStatus(int Id, int statusId);
+        Task<BaseIncident> UpdateClassification(int id, int ClassificationId);
 
         Task AssignLeadOfficer(IEnumerable<int> id, string user);
-        Task<BaseIncident> UpdateClassification(int id, int ClassificationId);
+        
         Task AddLinks(int from, IEnumerable<int> to, string reason);
+        Task RemoveLink(int fromIncidentId, int toIncidentId);
+        
         Task<IncidentNote> AddNote(int incidentId, string note);
         Task<IEnumerable<IncidentNote>>GetNotes(int incidentId);
-        Task<IPaging<IncidentDashboardView>> DashboardSearch(string search = null, int pageSize = 500, int startPage = 1);
 
+        Task<IPaging<IncidentDashboardView>> DashboardSearch(string search = null, int pageSize = 500, int startPage = 1);
         Task<IEnumerable<IncidentDashboardView>> DashboardIncidentLinks(int incidentId);
+
+        Task<IEnumerable<Stakeholder>> GetStakeholders(int incidentId);
+        Task<Stakeholder> AddStakeholder(Stakeholder stakeholder);
+        Task RemoveStakeholder(Stakeholder stakeholder);
+        Task<Stakeholder> UpdateStakeholder(Stakeholder stakeholder);
+
         Task BulkClose(IEnumerable<int> incidentIds);
-        Task RemoveLink(int fromIncidentId, int toIncidentId);
 
         Task UpdateAttachmentTags(int id, string docUrl, DocumentTagTypes tags);
 
@@ -45,6 +53,6 @@ namespace FSA.IncidentsManagement.Root.Contracts
         /// <returns></returns>
         Task<bool> Exists(int incidentId);
 
-        Task<IEnumerable<(string fileName, DocumentTagTypes tags)>> GetAttachmentTags(int incidentId);
+        Task<IEnumerable<(string fileUrl, DocumentTagTypes tags)>> GetAttachmentTags(int incidentId);
     }
 }

@@ -198,7 +198,7 @@
           "Attachments"
         ],
         "summary": "Download incident attachments info",
-        "operationId": "FetchAttachmentsForIncident",
+        "operationId": "FetchAllAttachmentInfo",
         "produces": [
           "text/plain",
           "application/json",
@@ -218,7 +218,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/AttachmentItem"
+                "$ref": "#/definitions/AttachmentFileInfo"
               }
             }
           }
@@ -231,7 +231,7 @@
           "Attachments"
         ],
         "summary": "Download an a file.",
-        "operationId": "FetchAttachment",
+        "operationId": "FetchFile",
         "produces": [
           "text/plain",
           "application/json",
@@ -248,8 +248,11 @@
           "200": {
             "description": "Success",
             "schema": {
-              "type": "object"
+              "$ref": "#/definitions/IncidentAttachment"
             }
+          },
+          "500": {
+            "description": "Server Error"
           }
         }
       }
@@ -299,6 +302,37 @@
             "schema": {
               "$ref": "#/definitions/ProblemDetails"
             }
+          }
+        }
+      }
+    },
+    "/api/Attachments/UpdateDocumentTags": {
+      "post": {
+        "tags": [
+          "Attachments"
+        ],
+        "summary": "Ensure library exists for incident.",
+        "operationId": "UpdateAttachmentTags",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdateDocumentTagsModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Server Error"
           }
         }
       }
@@ -782,6 +816,107 @@
             "schema": {
               "$ref": "#/definitions/IncidentLibraryInfo"
             }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Incidents/Stakeholders": {
+      "post": {
+        "tags": [
+          "Incidents"
+        ],
+        "summary": "Add a new stakeholder to an incident",
+        "operationId": "AddStakeholder",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Stakeholder"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Stakeholder"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Incidents"
+        ],
+        "summary": "Add a new stakeholder to an incident",
+        "operationId": "UpdateStakeholder",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Stakeholder"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Stakeholder"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Incidents"
+        ],
+        "summary": "Add a new stakeholder to an incident",
+        "operationId": "DeleteStakeholder",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Stakeholder"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
           },
           "500": {
             "description": "Server Error"
@@ -1335,6 +1470,32 @@
         }
       }
     },
+    "/api/Lookups/AttachmentTags": {
+      "get": {
+        "tags": [
+          "Lookups"
+        ],
+        "summary": "Incident Status values",
+        "operationId": "AttachmentTags",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AttachmentTagLkup"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
     "/api/Products": {
       "post": {
         "tags": [
@@ -1754,42 +1915,81 @@
         "type": "object"
       }
     },
-    "AttachmentType": {
-      "format": "int32",
-      "enum": [
-        0,
-        1,
-        2
-      ],
-      "type": "integer"
-    },
-    "AttachmentItem": {
+    "AttachmentFileInfo": {
       "type": "object",
       "properties": {
-        "attachmentType": {
-          "$ref": "#/definitions/AttachmentType"
-        },
-        "name": {
+        "fileName": {
           "type": "string"
         },
-        "size": {
+        "url": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "MemoryStream": {
+      "type": "object",
+      "properties": {
+        "canRead": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "canSeek": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "canWrite": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "capacity": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "length": {
+          "format": "int64",
+          "type": "integer",
+          "readOnly": true
+        },
+        "position": {
           "format": "int64",
           "type": "integer"
         },
-        "contentType": {
+        "canTimeout": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "readTimeout": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "writeTimeout": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "IncidentAttachment": {
+      "type": "object",
+      "properties": {
+        "incidentId": {
           "type": "string"
         },
-        "isInline": {
-          "type": "boolean"
-        },
-        "additionalData": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "object"
-          }
-        },
-        "oDataType": {
+        "incident": {
+          "format": "uuid",
           "type": "string"
+        },
+        "fileName": {
+          "type": "string"
+        },
+        "document": {
+          "$ref": "#/definitions/MemoryStream"
         }
       }
     },
@@ -1801,6 +2001,25 @@
         },
         "existingUrl": {
           "type": "string"
+        }
+      }
+    },
+    "UpdateDocumentTagsModel": {
+      "type": "object",
+      "properties": {
+        "incidentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "docUrl": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
         }
       }
     },
@@ -2464,6 +2683,38 @@
         }
       }
     },
+    "Stakeholder": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "incidentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "surname": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "discriminatorId": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
     "Category": {
       "type": "object",
       "properties": {
@@ -2697,6 +2948,18 @@
       }
     },
     "IncidentStatusLkUp": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "AttachmentTagLkup": {
       "type": "object",
       "properties": {
         "id": {

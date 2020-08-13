@@ -6,8 +6,9 @@ namespace FSA.IncidentsManagement.Root.Models
 {
     public class AttachmentFileInfo
     {
+       
        public string FileName { get; set; }
        public string Url { get; set; }
-       public int[] Tags { get; set; }
+        public List<int> Tags { get; set; } = new List<int>();
     }
 }

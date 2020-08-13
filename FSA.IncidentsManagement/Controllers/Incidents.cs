@@ -188,5 +188,49 @@ namespace FSA.IncidentsManagement.Controllers
 
         }
 
+        [HttpGet("Stakeholders")]
+        [SwaggerOperation(Summary = "Get all  stakeholder for an incident")]
+        [ProducesResponseType(typeof(List<Stakeholder>), 200)]
+        [ProducesResponseType(500)]
+        [Produces("application/json")]
+        public async Task<IActionResult> AddStakeholder([FromQuery] int incidentId)
+        {
+            var stakeholders = await this.fsaData.Incidents.GetStakeholders(incidentId);
+            return new OkObjectResult(stakeholders.ToList());
+        }
+
+        [HttpPost("Stakeholders")]
+        [SwaggerOperation(Summary = "Add a new stakeholder to an incident")]
+        [ProducesResponseType(typeof(Stakeholder), 200)]
+        [ProducesResponseType(500)]
+        [Produces("application/json")]
+        public async Task<IActionResult> AddStakeholder([FromBody] Stakeholder stakeholder)
+        {
+            var newStakeholder = await this.fsaData.Incidents.AddStakeholder(stakeholder);
+            return new OkObjectResult(newStakeholder);
+        }
+
+        [HttpPut("Stakeholders")]
+        [SwaggerOperation(Summary = "Add a new stakeholder to an incident")]
+        [ProducesResponseType(typeof(Stakeholder), 200)]
+        [ProducesResponseType(500)]
+        [Produces("application/json")]
+        public async Task<IActionResult> UpdateStakeholder([FromBody] Stakeholder stakeholder)
+        {
+            var updatedStakeholder = await this.fsaData.Incidents.UpdateStakeholder(stakeholder);
+            return new OkObjectResult(updatedStakeholder);
+        }
+
+        [HttpDelete("Stakeholders")]
+        [SwaggerOperation(Summary = "Add a new stakeholder to an incident")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        [Produces("application/json")]
+        public async Task<IActionResult> DeleteStakeholder([FromBody] Stakeholder stakeholder)
+        {
+            await this.fsaData.Incidents.RemoveStakeholder(stakeholder);
+            return new OkResult();
+        }
+
     }
 }

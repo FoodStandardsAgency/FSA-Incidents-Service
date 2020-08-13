@@ -644,5 +644,28 @@ namespace FSA.IncidentsManagementDb
             NotifierType = @this.NotifierType.Title
         };
 
+        public static Stakeholder ToClient(this StakeholderDb @this) => new Stakeholder
+        {
+            DiscriminatorId = @this.StakeholderDiscriminatorId,
+            Email = @this.Email,
+            Phone = @this.Phone,
+            FirstName = @this.FirstName,
+            Surname = @this.Surname,
+            IncidentId = @this.IncidentId,
+            Role = @this.Role,
+            Id = @this.Id
+        };
+
+        public static StakeholderDb ToDb(this Stakeholder @this) => new StakeholderDb
+        {
+            StakeholderDiscriminatorId = @this.DiscriminatorId,
+            Email = @this.Email,
+            Phone = @this.Phone,
+            FirstName = @this.FirstName,
+            Surname = @this.Surname,
+            IncidentId = @this.IncidentId,
+            Role = @this.Role,
+            Id = @this.Id
+        };
     }
 }

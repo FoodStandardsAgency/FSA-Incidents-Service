@@ -28,6 +28,7 @@ namespace FSA.IncidentsManagementDb
             SignalStatus(modelBuilder);
             UnitQuants(modelBuilder);
             DocumentTag(modelBuilder);
+            StakeholderDiscrimatior(modelBuilder);
         }
 
         private void UnitQuants(ModelBuilder modelBuilder)
@@ -798,6 +799,39 @@ namespace FSA.IncidentsManagementDb
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     });
+        }
+
+        private void StakeholderDiscrimatior(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<StakeholderDiscriminatorDb>()
+               .HasData(new StakeholderDiscriminatorDb
+               {
+                   Id = 1,
+                   Title = "FSA",
+                   CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                   ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+               },
+               new StakeholderDiscriminatorDb
+               {
+                   Id = 2,
+                   Title = "Local Authority",
+                   CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                   ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+               },
+               new StakeholderDiscriminatorDb
+               {
+                   Id = 3,
+                   Title = "Other government department",
+                   CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                   ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+               },
+               new StakeholderDiscriminatorDb
+               {
+                   Id = 4,
+                   Title = "FBO/FeBO",
+                   CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                   ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+               });
         }
 
         private void NotifierType(ModelBuilder modelBuilder)

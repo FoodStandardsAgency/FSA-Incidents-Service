@@ -1,5 +1,4 @@
-﻿using FluentValidation.Validators;
-using FSA.IncidentsManagement;
+﻿using FSA.IncidentsManagement;
 using FSA.IncidentsManagement.Misc;
 using FSA.IncidentsManagement.Models;
 using FSA.IncidentsManagement.Root.Models;
@@ -10,16 +9,13 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace FSA.IntegrationTesting 
+namespace FSA.IntegrationTesting
 {
     public class FboIntegration : IDisposable
     {
