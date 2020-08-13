@@ -193,7 +193,7 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(typeof(List<Stakeholder>), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
-        public async Task<IActionResult> AddStakeholder([FromQuery] int incidentId)
+        public async Task<IActionResult> GetStakeholder([FromQuery] int incidentId)
         {
             var stakeholders = await this.fsaData.Incidents.GetStakeholders(incidentId);
             return new OkObjectResult(stakeholders.ToList());

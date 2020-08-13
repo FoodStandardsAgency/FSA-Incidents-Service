@@ -824,6 +824,38 @@
       }
     },
     "/api/Incidents/Stakeholders": {
+      "get": {
+        "tags": [
+          "Incidents"
+        ],
+        "summary": "Get all  stakeholder for an incident",
+        "operationId": "GetStakeholder",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "incidentId",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Stakeholder"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
       "post": {
         "tags": [
           "Incidents"
