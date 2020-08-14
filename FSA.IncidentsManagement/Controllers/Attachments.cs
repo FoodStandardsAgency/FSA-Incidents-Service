@@ -132,12 +132,19 @@ namespace FSA.IncidentsManagement.Controllers
         [Produces("application/json")]
         public async Task<IActionResult> RenameAttachment([FromBody] RenameFile renameFile)
         {
-            var fileInfo = await this.attachments.RenameAttachment(renameFile.fileName, renameFile.existingUrl);
-            return new OkObjectResult(new { FileName = fileInfo.fileName, Url = fileInfo.url });
+            try
+            {
+                var fileInfo = await this.attachments.RenameAttachment(renameFile.fileName, renameFile.existingUrl);
+                return new OkObjectResult(new { FileName = fileInfo.fileName, Url = fileInfo.url });
+            }
+            catch(ArgumentOutOfRangeException ex) // new filename already exitst
+            {
+                return new ConflictResult();
+            }
         }
 
         [HttpPost("UpdateDocumentTags")]
-        [SwaggerOperation(Summary = "Ensure library exists for incident.")]
+        [SwaggerOperation(Summary = "Update tags for for an attachment.")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> UpdateAttachmentTags([FromBody] UpdateDocumentTagsModel updateTags)

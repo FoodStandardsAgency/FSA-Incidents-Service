@@ -311,7 +311,7 @@
         "tags": [
           "Attachments"
         ],
-        "summary": "Ensure library exists for incident.",
+        "summary": "Update tags for for an attachment.",
         "operationId": "UpdateAttachmentTags",
         "consumes": [
           "application/json",
@@ -599,7 +599,7 @@
         "tags": [
           "Incidents"
         ],
-        "summary": "Assign lead officer.",
+        "summary": "Assign lead officer",
         "operationId": "UpdateLeadOfficer",
         "consumes": [
           "application/json",
@@ -630,7 +630,7 @@
         "tags": [
           "Incidents"
         ],
-        "summary": "Link two or moreincidents.",
+        "summary": "Link two or moreincidents",
         "operationId": "AddIncidentLink",
         "consumes": [
           "application/json",
@@ -661,7 +661,7 @@
         "tags": [
           "Incidents"
         ],
-        "summary": "Remove link between two incidents.",
+        "summary": "Remove link between two incidents",
         "operationId": "RemoveIncidentLink",
         "consumes": [
           "application/json",
@@ -728,7 +728,7 @@
         "tags": [
           "Incidents"
         ],
-        "summary": "Add note to an incident.",
+        "summary": "Add note to an incident",
         "operationId": "AddNote",
         "consumes": [
           "application/json",
@@ -795,7 +795,7 @@
         "tags": [
           "Incidents"
         ],
-        "summary": "Ensure library exists for incident.",
+        "summary": "Ensure library exists for incident",
         "operationId": "EnsureLibrary",
         "produces": [
           "text/plain",

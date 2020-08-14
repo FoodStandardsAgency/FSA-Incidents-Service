@@ -12,5 +12,6 @@
         public string Email { get; set; }
         public int StakeholderDiscriminatorId { get; set; }
         public StakeholderDiscriminatorDb StakeholderDiscriminator { get; set; }
+        public int? AddressId { get; set; }
     }
 }

@@ -23,6 +23,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration.AzureKeyVault" Version="3.1.6" />
+    <PackageReference Include="Microsoft.Identity.Web" Version="0.2.3-preview" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.4.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="5.4.1" />
   </ItemGroup>
@@ -32,7 +33,6 @@
     <ProjectReference Include="..\FSA.Attachments\FSA.Attachments.csproj" />
     <ProjectReference Include="..\FSA.IncidentMangementMent.Root\FSA.IncidentsManagement.Root.csproj" />
     <ProjectReference Include="..\FSA.IncidentsManagementDb\FSA.IncidentsManagementDb.csproj" />
-    <ProjectReference Include="..\IdentiWeb\microsoft-identity-web\src\Microsoft.Identity.Web\Microsoft.Identity.Web.csproj" />
   </ItemGroup>
 
   <ItemGroup>

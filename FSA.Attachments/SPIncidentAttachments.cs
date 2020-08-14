@@ -336,17 +336,29 @@ namespace FSA.Attachments
             var accessToken = await fetchAccessToken();
             using (var ctx = SpContextHelper.GetClientContextWithAccessToken(this.siteUrl, accessToken))
             {
+                // Load the file, but then we need to check to make sure the new file name does not already exist.
                 var file = ctx.Web.GetFileByUrl(url);
-
-                ctx.Load(file, f => f.ListItemAllFields);
+                ctx.Load(file, f => f.ListItemAllFields["FileDirRef"]);
                 await ctx.ExecuteQueryAsync();
                 if (file != null)
                 {
-                    file.MoveTo(file.ListItemAllFields["FileDirRef"] + "/" + fileName, MoveOperations.RetainEditorAndModifiedOnMove);
-                    ctx.Load(file, f => f.ListItemAllFields["EncodedAbsUrl"]);
-                    await ctx.ExecuteQueryAsync();
-
-                    return (fileName, file.ListItemAllFields["EncodedAbsUrl"] as string);
+                    // Check to see if there is already a file with the new file file.
+                    var newFilename = file.ListItemAllFields["FileDirRef"] + "/" + fileName;
+                    try
+                    {
+                        var existingFile = ctx.Web.GetFileByServerRelativeUrl(newFilename);
+                        ctx.Load(existingFile);
+                        await ctx.ExecuteQueryAsync();
+                        if (existingFile.ServerObjectIsNull.HasValue? !existingFile.ServerObjectIsNull.Value: false ) 
+                            { throw new ArgumentOutOfRangeException("File already exists"); };
+                    }
+                    catch(ServerException e) when (e.Message.Contains("File Not Found."))
+                    {
+                        file.MoveTo(newFilename, MoveOperations.RetainEditorAndModifiedOnMove);
+                        ctx.Load(file, f => f.ListItemAllFields["EncodedAbsUrl"]);
+                        await ctx.ExecuteQueryAsync();
+                        return (fileName, file.ListItemAllFields["EncodedAbsUrl"] as string);
+                    }
                 }
             }
             return ("", "");

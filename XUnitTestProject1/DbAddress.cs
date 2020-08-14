@@ -4,14 +4,10 @@ using FSA.IncidentsManagementDb;
 using FSA.IncidentsManagementDb.Repositories;
 using FSA.UnitTests.Misc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace FSA.UnitTests.Db
 {

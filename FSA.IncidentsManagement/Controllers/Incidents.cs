@@ -42,7 +42,7 @@ namespace FSA.IncidentsManagement.Controllers
         [Produces("application/json")]
         public async Task<IActionResult> GetIncident(int id)
         {
-            if (id == 0) return BadRequest("No Incident Id was passed.");
+            if (id == 0) return BadRequest("No Incident Id was passed");
             return new OkObjectResult(await this.fsaData.Incidents.GetDisplayItem(id));
         }
 
@@ -116,7 +116,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPost("LeadOfficer")]
-        [SwaggerOperation(Summary = "Assign lead officer.")]
+        [SwaggerOperation(Summary = "Assign lead officer")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> UpdateLeadOfficer([FromBody, SwaggerParameter("Update Lead officer entries", Required =true)] UpdateLeadOfficer officer)
@@ -126,7 +126,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPost("AddLinks")]
-        [SwaggerOperation(Summary = "Link two or moreincidents.")]
+        [SwaggerOperation(Summary = "Link two or moreincidents")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> AddIncidentLink([FromBody] LinkIncidents addIncident)
@@ -136,7 +136,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPost("RemoveLink")]
-        [SwaggerOperation(Summary = "Remove link between two incidents.")]
+        [SwaggerOperation(Summary = "Remove link between two incidents")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> RemoveIncidentLink([FromBody] UnlinkIncident removeIncident)
@@ -155,7 +155,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPost("AddNote")]
-        [SwaggerOperation(Summary = "Add note to an incident.")]
+        [SwaggerOperation(Summary = "Add note to an incident")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> AddNote([FromBody, SwaggerParameter(Required=true)] IncidentComment addIncident)
@@ -174,7 +174,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPost("EnsureLibrary")]
-        [SwaggerOperation(Summary = "Ensure library exists for incident.")]
+        [SwaggerOperation(Summary = "Ensure library exists for incident")]
         [ProducesResponseType(typeof(IncidentLibraryInfo), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> EnsureLibrary([FromQuery]int Id)
