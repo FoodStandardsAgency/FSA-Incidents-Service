@@ -27,7 +27,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPost()]
-        [SwaggerOperation(Summary = "Find address.")]
+        [SwaggerOperation(Summary = "Find address")]
         [ProducesResponseType(typeof(List<FboAddressModel>), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
@@ -39,13 +39,13 @@ namespace FSA.IncidentsManagement.Controllers
                 SearchAddressType.Notifiers => new OkObjectResult(await fsaData.Addresses.FindNotifier(addressSearch.Search)),
                 SearchAddressType.LocalAuthority => new OkObjectResult(await fsaData.Addresses.FindLocalAuthority(addressSearch.Search)),
                 SearchAddressType.BasicAddress => new OkObjectResult(await fsaData.Addresses.FindAddress(addressSearch.Search)),
-                SearchAddressType.Unknown => BadRequest("Unknown address type."),
-                _=>BadRequest("Unknown address issues.")
+                SearchAddressType.Unknown => BadRequest("Unknown address type"),
+                _=>BadRequest("Unknown address issues")
             };   
         }
 
         [HttpPost("Fbo")]
-        [SwaggerOperation(Summary = "Add new Address and new fbo.")]
+        [SwaggerOperation(Summary = "Add new Address and new fbo")]
         [ProducesResponseType(typeof(FboAddressModel), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
@@ -57,7 +57,7 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpPut("Fbo")]
         [ProducesResponseType(typeof(FboAddressModel), 200)]
-        [SwaggerOperation(Summary = "Update Address and fbo types.")]
+        [SwaggerOperation(Summary = "Update Address and fbo types")]
         [ProducesResponseType(500)]
         [Produces("application/json")]
         public async Task<IActionResult> UpdatedFboAddress([FromBody]FboAddressModel updtedFbo)
@@ -68,7 +68,7 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpGet("Fbo/{fboId}")]
         [ProducesResponseType(typeof(FboAddressModel), 200)]
-        [SwaggerOperation(Summary = "Fetch fbo address.")]
+        [SwaggerOperation(Summary = "Fetch fbo address")]
         [ProducesResponseType(500)]
         [Produces("application/json")]
         public async Task<IActionResult> GetFboAddress(int fboId)

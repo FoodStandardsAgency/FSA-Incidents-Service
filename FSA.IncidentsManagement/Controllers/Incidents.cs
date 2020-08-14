@@ -211,7 +211,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPut("Stakeholders")]
-        [SwaggerOperation(Summary = "Add a new stakeholder to an incident")]
+        [SwaggerOperation(Summary = "Update a  stakeholder to an incident")]
         [ProducesResponseType(typeof(Stakeholder), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
@@ -222,7 +222,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpDelete("Stakeholders")]
-        [SwaggerOperation(Summary = "Add a new stakeholder to an incident")]
+        [SwaggerOperation(Summary = "Remove a stakeholder to an incident")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]

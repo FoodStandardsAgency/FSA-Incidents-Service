@@ -10,7 +10,7 @@
         "tags": [
           "Addresses"
         ],
-        "summary": "Find address.",
+        "summary": "Find address",
         "operationId": "FindAddress",
         "consumes": [
           "application/json",
@@ -50,7 +50,7 @@
         "tags": [
           "Addresses"
         ],
-        "summary": "Add new Address and new fbo.",
+        "summary": "Add new Address and new fbo",
         "operationId": "AddFboAddress",
         "consumes": [
           "application/json",
@@ -85,7 +85,7 @@
         "tags": [
           "Addresses"
         ],
-        "summary": "Update Address and fbo types.",
+        "summary": "Update Address and fbo types",
         "operationId": "UpdatedFboAddress",
         "consumes": [
           "application/json",
@@ -122,7 +122,7 @@
         "tags": [
           "Addresses"
         ],
-        "summary": "Fetch fbo address.",
+        "summary": "Fetch fbo address",
         "operationId": "GetFboAddress",
         "produces": [
           "application/json"
@@ -895,7 +895,7 @@
         "tags": [
           "Incidents"
         ],
-        "summary": "Add a new stakeholder to an incident",
+        "summary": "Update a  stakeholder to an incident",
         "operationId": "UpdateStakeholder",
         "consumes": [
           "application/json",
@@ -930,7 +930,7 @@
         "tags": [
           "Incidents"
         ],
-        "summary": "Add a new stakeholder to an incident",
+        "summary": "Remove a stakeholder to an incident",
         "operationId": "DeleteStakeholder",
         "consumes": [
           "application/json",
@@ -1507,7 +1507,7 @@
         "tags": [
           "Lookups"
         ],
-        "summary": "Incident Status values",
+        "summary": "Attachment tag list",
         "operationId": "AttachmentTags",
         "produces": [
           "application/json"
@@ -2742,6 +2742,10 @@
           "type": "string"
         },
         "discriminatorId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "addressId": {
           "format": "int32",
           "type": "integer"
         }

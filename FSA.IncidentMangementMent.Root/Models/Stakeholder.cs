@@ -14,5 +14,6 @@ namespace FSA.IncidentsManagement.Root.Models
         public string Phone { get; set; }
         public string Email { get; set; }
         public int DiscriminatorId { get; set; }
+        public int? AddressId { get; set; }
     }
 }

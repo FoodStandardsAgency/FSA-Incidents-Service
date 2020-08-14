@@ -251,7 +251,7 @@ namespace FSA.IncidentsManagement.Controllers
         [HttpGet("AttachmentTags")]
         [ProducesResponseType(typeof(IEnumerable<AttachmentTagLkup>), 200)]
         [ProducesResponseType(500)]
-        [SwaggerOperation(Summary = "Incident Status values")]
+        [SwaggerOperation(Summary = "Attachment tag list")]
         public async Task<IActionResult> AttachmentTags()
         {
             return new OkObjectResult((await this.lookupdata.AttachmentTags
