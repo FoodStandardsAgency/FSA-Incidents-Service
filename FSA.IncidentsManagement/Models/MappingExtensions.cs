@@ -171,6 +171,9 @@ namespace FSA.IncidentsManagement.Models
 
         public static Stakeholder ToClient(this StakeholderModel @this) => new Stakeholder
         {
+            Id=@this.Id,
+            IncidentId = @this.IncidentId,
+            DiscriminatorId = @this.DiscriminatorId,
             FirstName = @this.FirstName,
             Surname = @this.Surname,
             Role = @this.Role,

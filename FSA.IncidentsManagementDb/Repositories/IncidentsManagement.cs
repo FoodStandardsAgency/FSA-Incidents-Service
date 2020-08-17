@@ -602,6 +602,8 @@ namespace FSA.IncidentsManagementDb.Repositories
 
         public async Task<Stakeholder> AddStakeholder(Stakeholder stakeholder)
         {
+            if(stakeholder.IncidentId==0) throw new ArgumentOutOfRangeException("Incident Id Missing");
+
             var isClosed = await this.IsClosed(stakeholder.IncidentId);
             if (isClosed) throw new AccessViolationException("Incident is closed");
             if (stakeholder.Id > 0) throw new ArgumentOutOfRangeException("Stakeholder already exists.");
@@ -617,6 +619,7 @@ namespace FSA.IncidentsManagementDb.Repositories
 
         public async Task RemoveStakeholder(Stakeholder stakeholder)
         {
+            if (stakeholder.IncidentId == 0) throw new ArgumentOutOfRangeException("Incident Id Missing");
             var isClosed = await this.IsClosed(stakeholder.IncidentId);
             if (isClosed) throw new AccessViolationException("Incident is closed");
             if (stakeholder.Id == 0) throw new ArgumentOutOfRangeException("Stakeholder must exist.");
@@ -628,6 +631,7 @@ namespace FSA.IncidentsManagementDb.Repositories
 
         public async Task<Stakeholder> UpdateStakeholder(Stakeholder stakeholder)
         {
+            if(stakeholder.IncidentId==0) throw new ArgumentOutOfRangeException("Incident Id Missing");
             var isClosed = await this.IsClosed(stakeholder.IncidentId);
             if (isClosed) throw new AccessViolationException("Incident is closed");
             if (stakeholder.Id == 0) throw new ArgumentOutOfRangeException("Stakeholder must exist.");
