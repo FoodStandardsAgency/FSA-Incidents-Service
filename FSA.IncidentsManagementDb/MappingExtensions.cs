@@ -656,6 +656,17 @@ namespace FSA.IncidentsManagementDb
             Id = @this.Id
         };
 
+        public static void ToUpdateDb(this Stakeholder @this, StakeholderDb entity){
+            entity.StakeholderDiscriminatorId = @this.DiscriminatorId;
+            entity.Email = @this.Email;
+            entity.Phone = @this.Phone;
+            entity.FirstName = @this.FirstName;
+            entity.Surname = @this.Surname;
+            entity.IncidentId = @this.IncidentId;
+            entity.Role = @this.Role;
+            entity.Id = @this.Id;
+        }
+
         public static StakeholderDb ToDb(this Stakeholder @this) => new StakeholderDb
         {
             StakeholderDiscriminatorId = @this.DiscriminatorId,

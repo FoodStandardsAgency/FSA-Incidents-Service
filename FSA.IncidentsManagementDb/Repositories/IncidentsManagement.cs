@@ -605,6 +605,9 @@ namespace FSA.IncidentsManagementDb.Repositories
             var isClosed = await this.IsClosed(stakeholder.IncidentId);
             if (isClosed) throw new AccessViolationException("Incident is closed");
             if (stakeholder.Id > 0) throw new ArgumentOutOfRangeException("Stakeholder already exists.");
+            // Cannot add an FSA member with an address, this is an application error.
+            if (stakeholder.AddressId.HasValue && stakeholder.DiscriminatorId == (int)StakeholderTypes.FSA)
+                throw new ArgumentOutOfRangeException("FSA Stakeholder must not have an address");
 
             var dbItem = ctx.Stakeholders.Add(stakeholder.ToDb());
 
@@ -627,15 +630,13 @@ namespace FSA.IncidentsManagementDb.Repositories
         {
             var isClosed = await this.IsClosed(stakeholder.IncidentId);
             if (isClosed) throw new AccessViolationException("Incident is closed");
-
             if (stakeholder.Id == 0) throw new ArgumentOutOfRangeException("Stakeholder must exist.");
-            
+
+            if (stakeholder.AddressId.HasValue && stakeholder.DiscriminatorId == (int)StakeholderTypes.FSA)
+                throw new ArgumentOutOfRangeException("FSA Stakeholder must not have an address");
+
             var dbItem = ctx.Stakeholders.Find(stakeholder.Id);
-            dbItem.FirstName = stakeholder.FirstName;
-            dbItem.Surname = stakeholder.Surname;
-            dbItem.Role = stakeholder.Role;
-            dbItem.Email = stakeholder.Email;
-            dbItem.Phone = stakeholder.Phone;
+            stakeholder.ToUpdateDb(dbItem);
 
             var dbEnt = ctx.Stakeholders.Update(dbItem);
             await ctx.SaveChangesAsync();

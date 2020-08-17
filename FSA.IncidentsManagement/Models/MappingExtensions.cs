@@ -169,5 +169,14 @@ namespace FSA.IncidentsManagement.Models
             }
         }
 
+        public static Stakeholder ToClient(this StakeholderModel @this) => new Stakeholder
+        {
+            FirstName = @this.FirstName,
+            Surname = @this.Surname,
+            Role = @this.Role,
+            Email = @this.Email,
+            Phone = @this.Phone,
+            AddressId = @this.AddressId ==0 ? new Nullable<int>(): @this.AddressId
+        };
     }
 }
