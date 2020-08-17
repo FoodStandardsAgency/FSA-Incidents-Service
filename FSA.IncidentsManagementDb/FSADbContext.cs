@@ -61,7 +61,7 @@ namespace FSA.IncidentsManagementDb
         internal DbSet<NotifierDb> Notifiers { get; set; }
 
         internal DbSet<DocumentTagDb> DocumentTags { get; set; }
-        internal DbSet<TaggedDocumentDb> TaggedAttachements { get; set; }
+        internal DbSet<IncidentTaggedAttachmentDb> TaggedAttachements { get; set; }
 
         internal void SetEditor(string editor)
         {
@@ -146,7 +146,7 @@ namespace FSA.IncidentsManagementDb
             modelBuilder.ApplyConfiguration(new ProductFBOBuilder());
             modelBuilder.ApplyConfiguration(new FBOTypesBuilder());
             modelBuilder.ApplyConfiguration(new DocumentTagBuilder());
-            modelBuilder.ApplyConfiguration(new TaggedDocumentBuilder());
+            modelBuilder.ApplyConfiguration(new IncidentTaggedAttachmentBuilder());
 
             modelBuilder.ApplyConfiguration(new StakeholdersBuilder());
 

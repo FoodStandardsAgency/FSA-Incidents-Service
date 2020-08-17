@@ -222,7 +222,7 @@ namespace FSA.IncidentsManagementDb
                 @this.Id,
                 mostUniqueId: @this.MostUniqueId,
                 incidentTitle: @this.IncidentTitle,
-                incidentDescription: @this.IncidentDescription,
+
                 incidentTypeId: @this.IncidentTypeId,
                 contactMethodId: @this.ContactMethodId,
                 statusId: @this.IncidentStatusId,
@@ -255,7 +255,6 @@ namespace FSA.IncidentsManagementDb
                      @this.Id,
                 mostUniqueId: @this.MostUniqueId,
                 incidentTitle: @this.IncidentTitle,
-                incidentDescription: @this.IncidentDescription,
                 incidentTypeId: @this.IncidentTypeId,
                 contactMethodId: @this.ContactMethodId,
                 statusId: @this.IncidentStatusId,
@@ -304,7 +303,6 @@ namespace FSA.IncidentsManagementDb
         {
             entity.IncidentTitle = @this.IncidentTitle;
             //entity.MostUniqueId = @this.MostUniqueId;
-            entity.IncidentDescription = @this.IncidentDescription;
             entity.IncidentTypeId = @this.IncidentTypeId;
             entity.ContactMethodId = @this.ContactMethodId;
             entity.IncidentStatusId = @this.StatusId;
@@ -333,7 +331,6 @@ namespace FSA.IncidentsManagementDb
             {
                 Id = @this.CommonId,
                 IncidentTitle = @this.IncidentTitle,
-                IncidentDescription = @this.IncidentDescription,
                 IncidentTypeId = @this.IncidentTypeId,
                 ContactMethodId = @this.ContactMethodId,
                 IncidentStatusId = @this.StatusId,

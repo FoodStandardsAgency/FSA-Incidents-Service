@@ -581,7 +581,7 @@ namespace FSA.IncidentsManagementDb.Repositories
             }
             else
             {
-                ctx.TaggedAttachements.Add(new TaggedDocumentDb { IncidentId = id, DocUrl = docUrl, TagFlags = tags });
+                ctx.TaggedAttachements.Add(new IncidentTaggedAttachmentDb { IncidentId = id, DocUrl = docUrl, TagFlags = tags });
             }
             await ctx.SaveChangesAsync();
         }

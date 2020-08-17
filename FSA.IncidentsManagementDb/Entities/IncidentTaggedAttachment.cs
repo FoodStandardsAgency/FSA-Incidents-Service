@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FSA.IncidentsManagementDb.Entities
 {
-    internal class TaggedDocumentDb : BaseEntityDb
+    internal class IncidentTaggedAttachmentDb : BaseEntityDb
     {
         public int IncidentId { get; set; }
         public IncidentDb Incident { get; set; }

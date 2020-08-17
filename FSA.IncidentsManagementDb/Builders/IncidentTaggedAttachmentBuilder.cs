@@ -7,10 +7,10 @@ using System.Text;
 
 namespace FSA.IncidentsManagementDb.Builders
 {
-    class TaggedDocumentBuilder : AuditInfoBuilderConfiguration<TaggedDocumentDb>
+    class IncidentTaggedAttachmentBuilder : AuditInfoBuilderConfiguration<IncidentTaggedAttachmentDb>
     {
 
-        public override void Configure(EntityTypeBuilder<TaggedDocumentDb> builder)
+        public override void Configure(EntityTypeBuilder<IncidentTaggedAttachmentDb> builder)
         {
             base.Configure(builder);
 

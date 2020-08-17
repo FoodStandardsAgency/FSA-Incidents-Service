@@ -43,7 +43,6 @@ namespace FSA.UnitTests.Db
         {
             var incident = new BaseIncident(
                    incidentTitle: "New Incident",
-                   incidentDescription: "New incidentDescription",
                    incidentTypeId: 1,
                    contactMethodId: 2,
                    statusId: (int)IncidentStatus.Unassigned,
@@ -81,7 +80,6 @@ namespace FSA.UnitTests.Db
         {
             var incident = new BaseIncident(
                    incidentTitle: "Peanuts",
-                   incidentDescription: "Stolen peanutes",
                    incidentTypeId: 1,
                    contactMethodId: 2,
                    statusId: (int)IncidentStatus.Unassigned,

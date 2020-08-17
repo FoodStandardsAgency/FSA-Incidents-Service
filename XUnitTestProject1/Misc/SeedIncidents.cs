@@ -22,7 +22,6 @@ namespace FSA.UnitTests.Misc
         {
                  new BaseIncident(
                    incidentTitle: "New Incident",
-                   incidentDescription: String.Empty,
                    incidentTypeId: 1,
                    contactMethodId: 2,
                    statusId: (int)IncidentStatus.Unassigned,
@@ -46,7 +45,6 @@ namespace FSA.UnitTests.Misc
 
                 new BaseIncident(
                    incidentTitle: "Mislabelled ingredients omit peanuts",
-                   incidentDescription: String.Empty,
                    incidentTypeId: 1,
                    contactMethodId: 4,
                    statusId: (int)IncidentStatus.Open,
@@ -70,7 +68,6 @@ namespace FSA.UnitTests.Misc
 
                 new BaseIncident(
                    incidentTitle: "Salmonella poisoning cases at local GP",
-                   incidentDescription: String.Empty,
                    incidentTypeId: 1,
                    contactMethodId: 1,
                    statusId: (int)IncidentStatus.Open,
@@ -94,7 +91,6 @@ namespace FSA.UnitTests.Misc
 
                 new BaseIncident(
                    incidentTitle: "Chinese Restaurant takeaway pinpointed as likely source for salmonella poisoning (unverified)",
-                   incidentDescription: String.Empty,
                    incidentTypeId: 1,
                    contactMethodId: 2,
                    statusId: (int)IncidentStatus.Open,

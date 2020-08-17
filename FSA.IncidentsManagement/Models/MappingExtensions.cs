@@ -15,7 +15,6 @@ namespace FSA.IncidentsManagement.Models
             return new BaseIncident(
                 id: @this.Id,
                 incidentTitle: @this.IncidentTitle,
-                incidentDescription: "",
                 incidentTypeId: @this.IncidentTypeId,
                 contactMethodId: @this.ContactMethodId,
                 statusId: @this.StatusId,
@@ -47,7 +46,6 @@ namespace FSA.IncidentsManagement.Models
             id: @this.Id,
                 mostUniqueId: Guid.Empty,
                 incidentTitle: @this.IncidentTitle,
-                incidentDescription: @this.IncidentDescription,
                 incidentTypeId: @this.IncidentTypeId,
                 contactMethodId: @this.ContactMethodId,
                 statusId: @this.StatusId,
