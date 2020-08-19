@@ -675,5 +675,11 @@ namespace FSA.IncidentsManagementDb
             Role = @this.Role,
             Id = @this.Id
         };
+
+        public static StakeholderType ToClient(this StakeholderDiscriminatorDb @this) => new StakeholderType
+        {
+            Id = @this.Id,
+            Title = @this.Title
+        };
     }
 }

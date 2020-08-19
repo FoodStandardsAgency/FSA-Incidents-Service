@@ -49,5 +49,6 @@ namespace FSA.IncidentsManagementDb.Repositories
         public IReferenceDataRepo<NotifierType> NotifierTypes => new ReferenceDataRepo<NotifierType, NotifierTypeDb> (ctx, (itm)=>itm.ToClient());
         public IReferenceDataRepo<AdminLead> AdminLeads => new ReferenceDataRepo<AdminLead, AdminLeadDb> (ctx, (itm)=>itm.ToClient());
         public IReferenceDataRepo<ProductDateType> ProductDateTypes => new ReferenceDataRepo<ProductDateType, DateTypeDb>(ctx, (itm) => itm.ToClient());
+        public IReferenceDataRepo<StakeholderType> StakeholderTypes => new ReferenceDataRepo<StakeholderType, StakeholderDiscriminatorDb>(ctx, (itm) => itm.ToClient());
     }
 }

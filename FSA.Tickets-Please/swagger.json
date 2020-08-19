@@ -1528,6 +1528,32 @@
         }
       }
     },
+    "/api/Lookups/StakeholderTypes": {
+      "get": {
+        "tags": [
+          "Lookups"
+        ],
+        "summary": "Stakeholder types",
+        "operationId": "StakeholdersTypes",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/StakeholderType"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
     "/api/Products": {
       "post": {
         "tags": [
@@ -2148,10 +2174,6 @@
           "type": "string",
           "readOnly": true
         },
-        "incidentDescription": {
-          "type": "string",
-          "readOnly": true
-        },
         "incidentTypeId": {
           "format": "int32",
           "type": "integer",
@@ -2363,10 +2385,6 @@
           "readOnly": true
         },
         "incidentTitle": {
-          "type": "string",
-          "readOnly": true
-        },
-        "incidentDescription": {
           "type": "string",
           "readOnly": true
         },
@@ -3032,6 +3050,18 @@
       }
     },
     "AttachmentTagLkup": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "StakeholderType": {
       "type": "object",
       "properties": {
         "id": {
