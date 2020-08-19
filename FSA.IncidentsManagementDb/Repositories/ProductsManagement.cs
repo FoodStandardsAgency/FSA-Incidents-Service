@@ -1,6 +1,8 @@
 ﻿using FSA.IncidentsManagement.Root.Contracts;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagement.Root.Shared;
+using FSA.IncidentsManagementDb.Entities.Helpers;
+using FSA.IncidentsManagementDb.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
@@ -8,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagementDb.Repositories
@@ -23,8 +26,10 @@ namespace FSA.IncidentsManagementDb.Repositories
 
         public async Task<Product> Add(int incidentId, Product newProduct)
         {
-            if (incidentId == 0) throw new ArgumentNullException("No incident provided.");
-            if (newProduct.Id != 0) throw new ArgumentOutOfRangeException("This product appears to already exist.");
+            if (incidentId == 0) throw new IncidentMissingException("No incident provided.");
+            if (newProduct.Id != 0) throw new ProductExistsException("This product appears to already exist.");
+
+            if (this.IsIncidentClosed(incidentId)) { throw new IncidentClosedException("Incident is closed"); }
 
             var dbProduct = newProduct.ToDb();
             dbProduct.IncidentId = incidentId;
@@ -91,9 +96,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         {
             // ensure we can update the incident.
             // need to check to see if the incident has already been closed.
-            var isClosed = ctx.Products.AsNoTracking()
-                    .Include(o => o.Incident)
-                    .Single(p => p.Id == product.Id).Incident.IncidentClosed != null;
+            var isClosed = IsIncidentClosed(product.IncidentId);
             if (!isClosed)
             {
                 var productDb = ctx.Products
@@ -108,7 +111,7 @@ namespace FSA.IncidentsManagementDb.Repositories
             }
             else
             {
-                throw new ArgumentOutOfRangeException("This incident is closed.");
+                throw new IncidentClosedException("This incident is closed.");
             }
 
         }
@@ -134,30 +137,43 @@ namespace FSA.IncidentsManagementDb.Repositories
         public async Task AssignFbo(int productId, int FboId)
         {
             // need to check to see if the incident has already been closed.
-            var isClosed = ctx.Products.AsNoTracking()
-                    .Include(o => o.Incident)
-                    .Single(p => p.Id == productId).Incident.IncidentClosed != null;
+            if (IsProductIncidentClosed(productId)) throw new IncidentClosedException("This incident is closed.");
 
-            if (!isClosed)
+            ctx.ProductFBOItems.Add(new Entities.ProductFBODb
             {
-                ctx.ProductFBOItems.Add(new Entities.ProductFBODb
-                {
-                    FBOId = FboId,
-                    ProductId = productId
-                });
-                await ctx.SaveChangesAsync();
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException("This incident is closed.");
-            }
+                FBOId = FboId,
+                ProductId = productId
+            });
+            await ctx.SaveChangesAsync();
+
         }
 
         public async Task RemoveFbo(int productId, int fboId)
         {
+            if (IsProductIncidentClosed(productId)) throw new IncidentClosedException("Incident is closed");
+
             var item = ctx.ProductFBOItems.Find(productId, fboId);
             ctx.ProductFBOItems.Remove(item);
             await ctx.SaveChangesAsync();
+        }
+        /// <summary>
+        /// Cannot update an incident that is currently closed.
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        private bool IsProductIncidentClosed(int productId)
+        {
+            return ctx.Products.AsNoTracking()
+                    .Include(o => o.Incident)
+                    .Single(p => p.Id == productId)
+                    .Incident.IncidentStatusId == (int)IncidentStatus.Closed;
+        }
+
+        private bool IsIncidentClosed(int incidentId)
+        {
+            return ctx.Incidents
+                      .Single(i => i.Id == incidentId)
+                      .IncidentStatusId == (int)IncidentStatus.Closed;
         }
     }
 }

@@ -8,6 +8,7 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200722150658_adduprn.cs" />
     <Compile Remove="Migrations\20200722150658_adduprn.Designer.cs" />
+    <Compile Remove="Repositories\CoreRepositoryActions.cs" />
   </ItemGroup>
 
   <ItemGroup>

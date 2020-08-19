@@ -247,5 +247,15 @@ namespace FSA.IncidentsManagement.Controllers
             return new OkObjectResult((await this.lookupdata.Status
                             .GetAll()).ToList());
         }
+
+        [HttpGet("AttachmentTags")]
+        [ProducesResponseType(typeof(IEnumerable<AttachmentTagLkup>), 200)]
+        [ProducesResponseType(500)]
+        [SwaggerOperation(Summary = "Attachment tag list")]
+        public async Task<IActionResult> AttachmentTags()
+        {
+            return new OkObjectResult((await this.lookupdata.AttachmentTags
+                            .GetAll()).ToList());
+        }
     }
 }

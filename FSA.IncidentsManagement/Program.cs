@@ -27,10 +27,10 @@ namespace FSA.IncidentsManagement
                     if (context.HostingEnvironment.IsDevelopment())
                     {
                         Func<string, string> blarg = (v) => Environment.GetEnvironmentVariable(v);
-                       config.AddUserSecrets<Startup>();
                        config.AddAzureKeyVault(vaultDeets,
                        Environment.GetEnvironmentVariable("SillyRabbit"),
                        Environment.GetEnvironmentVariable("SillyRabbitKey"));
+                       config.AddUserSecrets<Startup>();
                     }
                     else
                     {

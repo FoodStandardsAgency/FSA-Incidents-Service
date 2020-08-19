@@ -1,10 +1,7 @@
 ﻿using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagementDb.Entities;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading;
 
 namespace FSA.IncidentsManagementDb
 {
@@ -104,7 +101,7 @@ namespace FSA.IncidentsManagementDb
             }
         }
 
-  
+
         public static OrganisationAddress ToClient(this OrganisationDb @this) => new OrganisationAddress
         {
             Id = @this.Id,
@@ -194,6 +191,12 @@ namespace FSA.IncidentsManagementDb
             Title = @this.Title,
         };
 
+        public static AttachmentTagLkup ToClient(this DocumentTagDb @this) => new AttachmentTagLkup
+        {
+            Id = @this.Id,
+            Title = @this.Title,
+        };
+
         public static SignalStatus ToClient(this SignalStatusDb @this) => new SignalStatus
         {
             Id = @this.Id,
@@ -219,7 +222,7 @@ namespace FSA.IncidentsManagementDb
                 @this.Id,
                 mostUniqueId: @this.MostUniqueId,
                 incidentTitle: @this.IncidentTitle,
-                incidentDescription: @this.IncidentDescription,
+
                 incidentTypeId: @this.IncidentTypeId,
                 contactMethodId: @this.ContactMethodId,
                 statusId: @this.IncidentStatusId,
@@ -229,7 +232,7 @@ namespace FSA.IncidentsManagementDb
                 priorityId: @this.PriorityId,
                 classificationId: @this.ClassificationId,
                 dataSourceId: @this.DataSourceId,
-                signalUrl:@this.SignalUrl,
+                signalUrl: @this.SignalUrl,
                 productTypeId: @this.ProductTypeId,
                 leadOfficer: @this.LeadOfficer,
                 leadOffice: @this.LeadOffice,
@@ -252,7 +255,6 @@ namespace FSA.IncidentsManagementDb
                      @this.Id,
                 mostUniqueId: @this.MostUniqueId,
                 incidentTitle: @this.IncidentTitle,
-                incidentDescription: @this.IncidentDescription,
                 incidentTypeId: @this.IncidentTypeId,
                 contactMethodId: @this.ContactMethodId,
                 statusId: @this.IncidentStatusId,
@@ -301,7 +303,6 @@ namespace FSA.IncidentsManagementDb
         {
             entity.IncidentTitle = @this.IncidentTitle;
             //entity.MostUniqueId = @this.MostUniqueId;
-            entity.IncidentDescription = @this.IncidentDescription;
             entity.IncidentTypeId = @this.IncidentTypeId;
             entity.ContactMethodId = @this.ContactMethodId;
             entity.IncidentStatusId = @this.StatusId;
@@ -330,7 +331,6 @@ namespace FSA.IncidentsManagementDb
             {
                 Id = @this.CommonId,
                 IncidentTitle = @this.IncidentTitle,
-                IncidentDescription = @this.IncidentDescription,
                 IncidentTypeId = @this.IncidentTypeId,
                 ContactMethodId = @this.ContactMethodId,
                 IncidentStatusId = @this.StatusId,
@@ -402,7 +402,7 @@ namespace FSA.IncidentsManagementDb
             AdditionalInfo = @this.AdditionalInfo ?? "",
             AmountUnitTypeId = @this.AmountUnitTypeId,
             Amount = @this.Amount,
-            DataSource = @this.Incident.DataSource?.Title?? "",
+            DataSource = @this.Incident.DataSource?.Title ?? "",
             BatchCodes = @this.BatchCodes,
             Brand = @this.Brand,
             CountryOfOriginId = @this.CountryOfOriginId,
@@ -641,5 +641,39 @@ namespace FSA.IncidentsManagementDb
             NotifierType = @this.NotifierType.Title
         };
 
+        public static Stakeholder ToClient(this StakeholderDb @this) => new Stakeholder
+        {
+            DiscriminatorId = @this.StakeholderDiscriminatorId,
+            Email = @this.Email,
+            Phone = @this.Phone,
+            FirstName = @this.FirstName,
+            Surname = @this.Surname,
+            IncidentId = @this.IncidentId,
+            Role = @this.Role,
+            Id = @this.Id
+        };
+
+        public static void ToUpdateDb(this Stakeholder @this, StakeholderDb entity){
+            entity.StakeholderDiscriminatorId = @this.DiscriminatorId;
+            entity.Email = @this.Email;
+            entity.Phone = @this.Phone;
+            entity.FirstName = @this.FirstName;
+            entity.Surname = @this.Surname;
+            entity.IncidentId = @this.IncidentId;
+            entity.Role = @this.Role;
+            entity.Id = @this.Id;
+        }
+
+        public static StakeholderDb ToDb(this Stakeholder @this) => new StakeholderDb
+        {
+            StakeholderDiscriminatorId = @this.DiscriminatorId,
+            Email = @this.Email,
+            Phone = @this.Phone,
+            FirstName = @this.FirstName,
+            Surname = @this.Surname,
+            IncidentId = @this.IncidentId,
+            Role = @this.Role,
+            Id = @this.Id
+        };
     }
 }

@@ -57,8 +57,8 @@ namespace FSA.IncidentsManagementDb.Repositories
         {
             var fboOrg = await this.ctx.FBOs
                     .Include(o => o.Organisation)
-                .AsNoTracking()
-                .FirstAsync(o => o.Id == FboId);
+                    .AsNoTracking()
+                    .FirstAsync(o => o.Id == FboId);
             return fboOrg.ToClient();
         }
 

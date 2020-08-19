@@ -42,7 +42,7 @@ namespace FSA.IncidentsManagement.Controllers
         [Produces("application/json")]
         public async Task<IActionResult> GetIncident(int id)
         {
-            if (id == 0) return BadRequest("No Incident Id was passed.");
+            if (id == 0) return BadRequest("No Incident Id was passed");
             return new OkObjectResult(await this.fsaData.Incidents.GetDisplayItem(id));
         }
 
@@ -55,12 +55,15 @@ namespace FSA.IncidentsManagement.Controllers
         {
             log.LogInformation($"search terms : {search} {pageNo} {pageSize}", "GetIncidentsDashboard");
 
-            if (pageNo < 1 || pageSize<1  )
+            if (pageNo < 1 || pageSize < 1)
                 return new OkObjectResult(new PagedResult<IncidentDashboardView>(Enumerable.Empty<IncidentDashboardView>(), 0));
-            
-            var dashBoard = pageSize.HasValue ? await this.fsaData.Incidents.DashboardSearch(search: search ?? "", startPage: pageNo, pageSize: pageSize.Value) :await this.fsaData.Incidents.DashboardSearch(search: search?? "", startPage: pageNo);
-            return new OkObjectResult(new { Results=dashBoard, 
-                                            TotalRecords =dashBoard.TotalResults});
+
+            var dashBoard = pageSize.HasValue ? await this.fsaData.Incidents.DashboardSearch(search: search ?? "", startPage: pageNo, pageSize: pageSize.Value) : await this.fsaData.Incidents.DashboardSearch(search: search ?? "", startPage: pageNo);
+            return new OkObjectResult(new
+            {
+                Results = dashBoard,
+                TotalRecords = dashBoard.TotalResults
+            });
         }
 
         [HttpPut()]
@@ -116,17 +119,17 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPost("LeadOfficer")]
-        [SwaggerOperation(Summary = "Assign lead officer.")]
+        [SwaggerOperation(Summary = "Assign lead officer")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> UpdateLeadOfficer([FromBody, SwaggerParameter("Update Lead officer entries", Required =true)] UpdateLeadOfficer officer)
+        public async Task<IActionResult> UpdateLeadOfficer([FromBody, SwaggerParameter("Update Lead officer entries", Required = true)] UpdateLeadOfficer officer)
         {
             await this.fsaData.Incidents.AssignLeadOfficer(officer.IncidentIds, officer.Officer);
             return new OkResult();
         }
 
         [HttpPost("AddLinks")]
-        [SwaggerOperation(Summary = "Link two or moreincidents.")]
+        [SwaggerOperation(Summary = "Link two or moreincidents")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> AddIncidentLink([FromBody] LinkIncidents addIncident)
@@ -136,7 +139,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPost("RemoveLink")]
-        [SwaggerOperation(Summary = "Remove link between two incidents.")]
+        [SwaggerOperation(Summary = "Remove link between two incidents")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> RemoveIncidentLink([FromBody] UnlinkIncident removeIncident)
@@ -155,10 +158,10 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPost("AddNote")]
-        [SwaggerOperation(Summary = "Add note to an incident.")]
+        [SwaggerOperation(Summary = "Add note to an incident")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> AddNote([FromBody, SwaggerParameter(Required=true)] IncidentComment addIncident)
+        public async Task<IActionResult> AddNote([FromBody, SwaggerParameter(Required = true)] IncidentComment addIncident)
         {
             await this.fsaData.Incidents.AddNote(addIncident.IncidentId, addIncident.Note);
             return new OkResult();
@@ -174,18 +177,86 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPost("EnsureLibrary")]
-        [SwaggerOperation(Summary = "Ensure library exists for incident.")]
+        [SwaggerOperation(Summary = "Ensure library exists for incident")]
         [ProducesResponseType(typeof(IncidentLibraryInfo), 200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> EnsureLibrary([FromQuery]int Id)
+        public async Task<IActionResult> EnsureLibrary([FromQuery] int Id)
         {
             var stringId = GeneralExtensions.GenerateIncidentId(Id);
-            if (await this.fsaData.Incidents.Exists(Id)){
+            if (await this.fsaData.Incidents.Exists(Id))
+            {
                 var listInfo = await this.attachments.EnsureLibrary(stringId);
                 return new OkObjectResult(listInfo);
             }
             return new OkObjectResult(null);
 
         }
+
+        [HttpGet("Stakeholders")]
+        [SwaggerOperation(Summary = "Get all  stakeholder for an incident")]
+        [ProducesResponseType(typeof(List<Stakeholder>), 200)]
+        [ProducesResponseType(500)]
+        [Produces("application/json")]
+        public async Task<IActionResult> GetStakeholder([FromQuery] int incidentId)
+        {
+            var stakeholders = await this.fsaData.Incidents.GetStakeholders(incidentId);
+            return new OkObjectResult(stakeholders.ToList());
+        }
+
+        [HttpPost("Stakeholders")]
+        [SwaggerOperation(Summary = "Add a new stakeholder to an incident")]
+        [ProducesResponseType(typeof(StakeholderModel), 200)]
+        [ProducesResponseType(500)]
+        [Produces("application/json")]
+        public async Task<IActionResult> AddStakeholder([FromBody] StakeholderModel stakeholder)
+        {
+            try
+            {
+                var newStakeholder = await this.fsaData.Incidents.AddStakeholder(stakeholder.ToClient());
+                return new OkObjectResult(newStakeholder);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                return new BadRequestObjectResult(ex.Message);
+            }
+        }
+
+        [HttpPut("Stakeholders")]
+        [SwaggerOperation(Summary = "Update a  stakeholder to an incident")]
+        [ProducesResponseType(typeof(StakeholderModel), 200)]
+        [ProducesResponseType(500)]
+        [Produces("application/json")]
+        public async Task<IActionResult> UpdateStakeholder([FromBody] StakeholderModel stakeholder)
+        {
+            try
+            {
+                var updatedStakeholder = await this.fsaData.Incidents.UpdateStakeholder(stakeholder.ToClient());
+                return new OkObjectResult(updatedStakeholder);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                return new BadRequestObjectResult(ex.Message);
+            }
+        }
+
+
+        [HttpDelete("Stakeholders")]
+        [SwaggerOperation(Summary = "Remove a stakeholder to an incident")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        [Produces("application/json")]
+        public async Task<IActionResult> DeleteStakeholder([FromBody] StakeholderModel stakeholder)
+        {
+            try
+            {
+                await this.fsaData.Incidents.RemoveStakeholder(stakeholder.ToClient());
+                return new OkResult();
+            }
+            catch(ArgumentOutOfRangeException ex)
+            {
+                return new BadRequestObjectResult(ex.Message);
+            }
+        }
+
     }
 }

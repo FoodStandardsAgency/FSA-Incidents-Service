@@ -22,6 +22,9 @@ namespace FSA.IncidentsManagementDb
 
         internal DbSet<IncidentCommentDb> IncidentComments { get; set; }
         internal DbSet<IncidentDb> Incidents { get; set; }
+        internal DbSet<StakeholderDb> Stakeholders { get; set; }
+        internal DbSet<StakeholderDiscriminatorDb> StakeholderDiscriminators{get;set;}
+
         internal DbSet<IncidentLinkDb> IncidentLinks { get; set; }
         internal DbSet<IncidentOMITGroupDb> IncidentOMITGroups { get; set; }
 
@@ -37,6 +40,7 @@ namespace FSA.IncidentsManagementDb
         internal DbSet<DataSourceDb> DataSources { get; set; }
         internal DbSet<DeathIllnessDb> DeathIllnesss { get; set; }
         internal DbSet<OMITGroupDb> OMITGroups { get; set; }
+
         //internal DbSet<PersonaRoleDb> PersonaRoles { get; set; }
 
         internal DbSet<AdminLeadDb> AdminLeads { get; set; }
@@ -56,9 +60,12 @@ namespace FSA.IncidentsManagementDb
 
         internal DbSet<NotifierDb> Notifiers { get; set; }
 
+        internal DbSet<DocumentTagDb> DocumentTags { get; set; }
+        internal DbSet<IncidentTaggedAttachmentDb> TaggedAttachements { get; set; }
+
         internal void SetEditor(string editor)
         {
-            this._Editor = editor ?? throw new ArgumentNullException("Must have an editor name");
+            this._Editor = editor ?? throw new ArgumentNullException("Must have an editor name.");
         }
 
         private void SetAuditData()
@@ -105,10 +112,6 @@ namespace FSA.IncidentsManagementDb
             // We are only applying temporal tables explictly
             modelBuilder.PreventTemporalTables();
 
-            //modelBuilder.Entity<OrganisationDb>().UseTemporalTable();
-            //modelBuilder.Entity<FBODb>().UseTemporalTable();
-            //modelBuilder.Entity<NotifierDb>().UseTemporalTable();
-
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<ClassificationDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<CategoryDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<ContactMethodDb>());
@@ -126,6 +129,7 @@ namespace FSA.IncidentsManagementDb
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<NotifierTypeDb>());
             //modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<FBOTypeDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<AdminLeadDb>());
+            modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<StakeholderDiscriminatorDb>());
 
 
             modelBuilder.ApplyConfiguration(new IncidentBuilder());
@@ -141,15 +145,15 @@ namespace FSA.IncidentsManagementDb
             modelBuilder.ApplyConfiguration(new ProductPackSizeBuilder());
             modelBuilder.ApplyConfiguration(new ProductFBOBuilder());
             modelBuilder.ApplyConfiguration(new FBOTypesBuilder());
+            modelBuilder.ApplyConfiguration(new DocumentTagBuilder());
+            modelBuilder.ApplyConfiguration(new IncidentTaggedAttachmentBuilder());
 
+            modelBuilder.ApplyConfiguration(new StakeholdersBuilder());
 
-            var duncan = new Seeder();
-            duncan.SeedLookups(modelBuilder);
+            var seeds= new Seeder();
+            seeds.SeedLookups(modelBuilder);
 
-            //modelBuilder.Entity<GatewayErrorCodeDb>().HasKey(p => p.ReturnCode);
-            //modelBuilder.Entity<GatewayRequestDetailDb>().HasKey(p => p.RequestId);
-
-            //modelBuilder.Entity<OrganisationDb>().HasOne(p=>p.OrganisationRole).WithOne().OnDelete(DeleteBehavior.NoAction);
+            
         }
     }
 }

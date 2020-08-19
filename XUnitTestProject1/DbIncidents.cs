@@ -43,7 +43,6 @@ namespace FSA.UnitTests.Db
         {
             var incident = new BaseIncident(
                    incidentTitle: "New Incident",
-                   incidentDescription: "New incidentDescription",
                    incidentTypeId: 1,
                    contactMethodId: 2,
                    statusId: (int)IncidentStatus.Unassigned,
@@ -81,7 +80,6 @@ namespace FSA.UnitTests.Db
         {
             var incident = new BaseIncident(
                    incidentTitle: "Peanuts",
-                   incidentDescription: "Stolen peanutes",
                    incidentTypeId: 1,
                    contactMethodId: 2,
                    statusId: (int)IncidentStatus.Unassigned,
@@ -305,7 +303,7 @@ namespace FSA.UnitTests.Db
                     Assert.True(matchedItem != null);
                 }
             }
-            catch(ArgumentOutOfRangeException ex)
+            catch (ArgumentOutOfRangeException ex)
             {
                 Assert.IsType<ArgumentOutOfRangeException>(ex);
             }
@@ -344,6 +342,50 @@ namespace FSA.UnitTests.Db
                 Assert.True(Officer39 == userId3 && Officer102 == userId3 && Officer55 == userId3 && Officer82 != userId3);
                 Assert.True(i82.StatusId == (int)IncidentStatus.Closed);
             }
+        }
+
+        [Fact]
+        public async Task AddStakeholder()
+        {
+            var newStakeHolder = new Stakeholder
+            {
+                DiscriminatorId = 3,
+                IncidentId = 5517,
+                FirstName = "Pickle pie",
+                Surname = "Crusty",
+                Phone = "012345 789",
+                Role = "Dancing instructor"
+            };
+            using (var ctx = this.Fixture.CreateContext())
+            {
+                var simsApp = new SIMSDataManager(ctx, userId3);
+                var createdStakeHolder =await simsApp.Incidents.AddStakeholder(newStakeHolder);
+                Assert.True(createdStakeHolder.FirstName == newStakeHolder.FirstName && createdStakeHolder.IncidentId ==5517);
+            }
+        }
+        [Fact]
+        public async Task AddStakeholderNoIncident()
+        {
+            try
+            {
+                var newStakeHolder = new Stakeholder
+                {
+                    DiscriminatorId = 3,
+                    FirstName = "Pickle pie",
+                    Surname = "Crusty",
+                    Phone = "012345 789",
+                    Role = "Dancing instructor"
+                };
+                using (var ctx = this.Fixture.CreateContext())
+                {
+                    var simsApp = new SIMSDataManager(ctx, userId3);
+                    var createdStakeHolder = await simsApp.Incidents.AddStakeholder(newStakeHolder);
+                }
+            }catch(Exception ex)
+            {
+                var s = ex;
+            }
+
         }
     }
 }

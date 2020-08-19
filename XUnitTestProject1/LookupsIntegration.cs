@@ -1,20 +1,19 @@
 ﻿using FSA.IncidentsManagement;
+using FSA.IncidentsManagement.Misc;
+using FSA.IncidentsManagement.Root.Models;
 using Microsoft.AspNetCore.Authorization.Policy;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
-using FSA.IncidentsManagement.Misc;
-using Xunit;
 using System.Net.Http.Json;
-using FSA.IncidentsManagement.Root.Models;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace FSA.IntegrationTesting
 {

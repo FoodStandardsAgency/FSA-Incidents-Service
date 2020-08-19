@@ -2,10 +2,12 @@
 using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagement.Root.Shared;
 using FSA.IncidentsManagementDb.Entities;
+using FSA.IncidentsManagementDb.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text.RegularExpressions;
@@ -27,7 +29,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         public async Task<BaseIncident> Add(BaseIncident incident)
         {
 
-            if (incident.CommonId != 0) throw new ArgumentOutOfRangeException("This item has already been added.");
+            if (incident.CommonId != 0) throw new IncidentExistsException("This item has already been added.");
 
             var dbItem = incident.ToDb();
             dbItem.IncidentCreated = dbItem.Created;
@@ -47,7 +49,7 @@ namespace FSA.IncidentsManagementDb.Repositories
 
             foreach (var incident in incidents)
             {
-                if (incident.CommonId != 0) throw new ArgumentOutOfRangeException("This item has already been added.");
+                if (incident.CommonId != 0) throw new IncidentExistsException("This item has already been added.");
 
                 var dbItem = incident.ToDb();
                 dbItem.IncidentCreated = dbItem.Created;
@@ -68,7 +70,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         /// <returns></returns>
         public async Task AssignLeadOfficer(IEnumerable<int> ids, string user)
         {
-            // If we can assign an officer, so we change the incidentStatus to open
+            // I dislike plus 4!
             var openStatus = (int)IncidentStatus.Open;
             var closeStatus = (int)IncidentStatus.Closed;
 
@@ -213,6 +215,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         /// <exception cref="NullReferenceException" />
         public async Task<BaseIncident> UpdateClassification(int id, int ClassificationId)
         {
+            if (await this.IsClosed(id)) throw new IncidentClosedException("Incident is closed.");
             var dbItem = await ctx.Incidents.FindAsync(id);
             dbItem.ClassificationId = ClassificationId;
             await ctx.SaveChangesAsync();
@@ -228,8 +231,8 @@ namespace FSA.IncidentsManagementDb.Repositories
         {
             var dbItem = this.ctx.Incidents.Find(incident.CommonId);
 
-            if (dbItem == null) throw new ArgumentNullException("No incident was found");
-            if (dbItem.IncidentClosed != null) throw new ArgumentOutOfRangeException("Cannot update a closed incident!");
+            if (dbItem == null) throw new SIMSException("No incident was found");
+            if (dbItem.IncidentStatusId == (int)IncidentStatus.Closed) throw new IncidentClosedException("Cannot update a closed incident!");
 
             // Logical changes.
             // Mark some differences since last update
@@ -266,7 +269,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         public async Task<BaseIncident> UpdateStatus(int id, int statusId)
         {
             var dbItem = await ctx.Incidents.FindAsync(id);
-            if (dbItem.IncidentClosed != null) throw new ArgumentOutOfRangeException("Cannot update a closed incident!");
+            if (dbItem.IncidentClosed != null) throw new IncidentClosedException("Cannot update a closed incident!");
 
             dbItem.IncidentStatusId = statusId;
             if (statusId == (int)IncidentStatus.Unassigned)
@@ -345,6 +348,7 @@ namespace FSA.IncidentsManagementDb.Repositories
 
             return !isReal;
         }
+
         /// <summary>
         /// return 1 PageSize of data from the incidents table for the dashboard.
         /// returns an empty setother wise.
@@ -536,18 +540,6 @@ namespace FSA.IncidentsManagementDb.Repositories
                        select iq);
 
 
-
-            // ALl `from` incidents where parent is in then to Column
-            //var fromQ = (from iq in incidentsQry
-            //             join fromLink in ctx.IncidentLinks
-            //                 on iq.Id equals fromLink.FromIncidentId
-            //             where fromLink.ToIncidentId == incidentId
-            //             select iq);
-            // Now get *all* the entries for a from.
-
-
-
-
             var allItems = toQ.Concat(fromIncidentList)
                               .Concat(fromIncidents).Where(o => o.Id != incidentId);
 
@@ -567,6 +559,7 @@ namespace FSA.IncidentsManagementDb.Repositories
 
         /// <summary>
         /// Checkts to see if a particulr incident is closed
+        /// Does not check if it exists
         /// </summary>
         /// <param name="incidentId"></param>
         /// <returns>false if not closed</returns>
@@ -574,6 +567,86 @@ namespace FSA.IncidentsManagementDb.Repositories
         {
             return (await ctx.Incidents.AsNoTracking().SingleAsync(i => i.Id == incidentId))
                            .IncidentStatusId == (int)IncidentStatus.Closed;
+        }
+
+        public async Task UpdateAttachmentTags(int id, string docUrl, DocumentTagTypes tags)
+        {
+            // Ensure we have a an incident
+            // tHE DOCUment is taken on faith alas.
+            var existing = this.ctx.Incidents.Find(id);
+            if (existing==null) throw new IncidentMissingException("Incident does not exist");
+            if (existing.IncidentStatusId == (int)IncidentStatus.Closed) throw new IncidentClosedException("Incident is closed.");
+            var existingAttachment  = ctx.TaggedAttachements.Find(id, docUrl);
+            if(existingAttachment != null)
+            {
+                existingAttachment.TagFlags = tags;
+            }
+            else
+            {
+                ctx.TaggedAttachements.Add(new IncidentTaggedAttachmentDb { IncidentId = id, DocUrl = docUrl, TagFlags = tags });
+            }
+            await ctx.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<(string fileUrl, DocumentTagTypes tags)>> GetAttachmentTags(int incidentId)
+        {
+            var attachments =  await ctx.TaggedAttachements.Where(o => o.IncidentId == incidentId).ToListAsync();
+            return attachments.Select(s => (s.DocUrl, s.TagFlags)).ToList();
+        }
+
+        public async Task<IEnumerable<Stakeholder>> GetStakeholders(int incidentId)
+        {
+            if (incidentId == 0) throw new IncidentMissingException("Incident must exist.");
+            return await this.ctx.Stakeholders
+                                .Where(o => o.IncidentId == incidentId)
+                                .Select(o => o.ToClient()).ToListAsync();
+        }
+
+        public async Task<Stakeholder> AddStakeholder(Stakeholder stakeholder)
+        {
+            if(stakeholder.IncidentId==0) throw new IncidentMissingException("Incident Id Missing");
+
+            var isClosed = await this.IsClosed(stakeholder.IncidentId);
+            if (isClosed) throw new IncidentClosedException("Incident is closed");
+            if (stakeholder.Id > 0) throw new ArgumentOutOfRangeException("Stakeholder already exists.");
+            // Cannot add an FSA member with an address, this is an application error.
+            if (stakeholder.AddressId.HasValue && stakeholder.DiscriminatorId == (int)StakeholderTypes.FSA)
+                throw new SIMSException("FSA Stakeholder must not have an address");
+
+            var dbItem = ctx.Stakeholders.Add(stakeholder.ToDb());
+
+            await ctx.SaveChangesAsync();
+            return dbItem.Entity.ToClient();
+        }
+
+        public async Task RemoveStakeholder(Stakeholder stakeholder)
+        {
+            if (stakeholder.IncidentId == 0) throw new IncidentMissingException("Incident Id Missing");
+            var isClosed = await this.IsClosed(stakeholder.IncidentId);
+            if (isClosed) throw new IncidentClosedException("Incident is closed");
+            if (stakeholder.Id == 0) throw new SIMSException("Stakeholder must exist.");
+
+            var dbItem = ctx.Stakeholders.Find(stakeholder.Id);
+            ctx.Remove(dbItem);
+            await ctx.SaveChangesAsync();
+        }
+
+        public async Task<Stakeholder> UpdateStakeholder(Stakeholder stakeholder)
+        {
+            if(stakeholder.IncidentId==0) throw new IncidentMissingException("Incident Id Missing");
+            var isClosed = await this.IsClosed(stakeholder.IncidentId);
+            if (isClosed) throw new IncidentClosedException("Incident is closed");
+            if (stakeholder.Id == 0) throw new SIMSException("Stakeholder must exist.");
+
+            if (stakeholder.AddressId.HasValue && stakeholder.DiscriminatorId == (int)StakeholderTypes.FSA)
+                throw new SIMSException("FSA Stakeholder must not have an address");
+
+            var dbItem = ctx.Stakeholders.Find(stakeholder.Id);
+            stakeholder.ToUpdateDb(dbItem);
+
+            var dbEnt = ctx.Stakeholders.Update(dbItem);
+            await ctx.SaveChangesAsync();
+            return dbEnt.Entity.ToClient();
         }
     }
 }

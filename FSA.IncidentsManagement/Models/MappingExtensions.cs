@@ -15,7 +15,6 @@ namespace FSA.IncidentsManagement.Models
             return new BaseIncident(
                 id: @this.Id,
                 incidentTitle: @this.IncidentTitle,
-                incidentDescription: "",
                 incidentTypeId: @this.IncidentTypeId,
                 contactMethodId: @this.ContactMethodId,
                 statusId: @this.StatusId,
@@ -47,7 +46,6 @@ namespace FSA.IncidentsManagement.Models
             id: @this.Id,
                 mostUniqueId: Guid.Empty,
                 incidentTitle: @this.IncidentTitle,
-                incidentDescription: @this.IncidentDescription,
                 incidentTypeId: @this.IncidentTypeId,
                 contactMethodId: @this.ContactMethodId,
                 statusId: @this.StatusId,
@@ -169,5 +167,17 @@ namespace FSA.IncidentsManagement.Models
             }
         }
 
+        public static Stakeholder ToClient(this StakeholderModel @this) => new Stakeholder
+        {
+            Id=@this.Id,
+            IncidentId = @this.IncidentId,
+            DiscriminatorId = @this.DiscriminatorId,
+            FirstName = @this.FirstName,
+            Surname = @this.Surname,
+            Role = @this.Role,
+            Email = @this.Email,
+            Phone = @this.Phone,
+            AddressId = @this.AddressId ==0 ? new Nullable<int>(): @this.AddressId
+        };
     }
 }

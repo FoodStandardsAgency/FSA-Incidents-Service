@@ -4577,6 +4577,172 @@ namespace FSA.IncidentsManagementDb.Migrations
                         });
                 });
 
+            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.DocumentTagDb", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DocumentTags");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Title = "CVED/CED"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Title = "Analytical report"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Title = "Bill / Delivery Document"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Title = "Follow up notification"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Title = "Health certifiacte"
+                        },
+                        new
+                        {
+                            Id = 32,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Title = "Phytosanitary Certifcate"
+                        },
+                        new
+                        {
+                            Id = 64,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Title = "Picture"
+                        },
+                        new
+                        {
+                            Id = 128,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Title = "Public warning / Press release"
+                        },
+                        new
+                        {
+                            Id = 256,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Title = "Recipients List"
+                        },
+                        new
+                        {
+                            Id = 512,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Title = "Risk assessment"
+                        },
+                        new
+                        {
+                            Id = 1024,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Title = "Screenshot"
+                        },
+                        new
+                        {
+                            Id = 2048,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Title = "Translation"
+                        },
+                        new
+                        {
+                            Id = 4096,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Title = "Video File"
+                        },
+                        new
+                        {
+                            Id = 8192,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Title = "Other"
+                        });
+                });
+
             modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.FBODb", b =>
                 {
                     b.Property<int>("Id")
@@ -4902,9 +5068,6 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("IncidentDescription")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("IncidentStatusId")
                         .ValueGeneratedOnAdd()
@@ -6254,6 +6417,192 @@ namespace FSA.IncidentsManagementDb.Migrations
                         });
                 });
 
+            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.StakeholderDb", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AddressId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IncidentId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StakeholderDiscriminatorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Surname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IncidentId");
+
+                    b.HasIndex("StakeholderDiscriminatorId");
+
+                    b.ToTable("Stakeholders");
+                });
+
+            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.StakeholderDiscriminatorDb", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StakeholderDiscriminators");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Title = "FSA"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Title = "Local Authority"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Title = "Other government department"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Title = "FBO/FeBO"
+                        });
+                });
+
+            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.TaggedDocumentDb", b =>
+                {
+                    b.Property<int>("IncidentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DocUrl")
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<int>("TagFlags")
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("IncidentId", "DocUrl");
+
+                    b.ToTable("TaggedAttachements");
+                });
+
             modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.UnitQuantityDb", b =>
                 {
                     b.Property<int>("Id")
@@ -6690,6 +7039,30 @@ namespace FSA.IncidentsManagementDb.Migrations
                     b.HasOne("FSA.IncidentsManagementDb.Entities.SignalStatusDb", "Parent")
                         .WithMany()
                         .HasForeignKey("ParentId");
+                });
+
+            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.StakeholderDb", b =>
+                {
+                    b.HasOne("FSA.IncidentsManagementDb.Entities.IncidentDb", "Incident")
+                        .WithMany()
+                        .HasForeignKey("IncidentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FSA.IncidentsManagementDb.Entities.StakeholderDiscriminatorDb", "StakeholderDiscriminator")
+                        .WithMany("Stakeholders")
+                        .HasForeignKey("StakeholderDiscriminatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.TaggedDocumentDb", b =>
+                {
+                    b.HasOne("FSA.IncidentsManagementDb.Entities.IncidentDb", "Incident")
+                        .WithMany()
+                        .HasForeignKey("IncidentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

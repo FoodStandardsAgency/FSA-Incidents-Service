@@ -10,7 +10,7 @@
         "tags": [
           "Addresses"
         ],
-        "summary": "Find address.",
+        "summary": "Find address",
         "operationId": "FindAddress",
         "consumes": [
           "application/json",
@@ -50,7 +50,7 @@
         "tags": [
           "Addresses"
         ],
-        "summary": "Add new Address and new fbo.",
+        "summary": "Add new Address and new fbo",
         "operationId": "AddFboAddress",
         "consumes": [
           "application/json",
@@ -85,7 +85,7 @@
         "tags": [
           "Addresses"
         ],
-        "summary": "Update Address and fbo types.",
+        "summary": "Update Address and fbo types",
         "operationId": "UpdatedFboAddress",
         "consumes": [
           "application/json",
@@ -122,7 +122,7 @@
         "tags": [
           "Addresses"
         ],
-        "summary": "Fetch fbo address.",
+        "summary": "Fetch fbo address",
         "operationId": "GetFboAddress",
         "produces": [
           "application/json"
@@ -198,7 +198,7 @@
           "Attachments"
         ],
         "summary": "Download incident attachments info",
-        "operationId": "FetchAttachmentsForIncident",
+        "operationId": "FetchAllAttachmentInfo",
         "produces": [
           "text/plain",
           "application/json",
@@ -218,7 +218,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/AttachmentItem"
+                "$ref": "#/definitions/AttachmentFileInfo"
               }
             }
           }
@@ -231,7 +231,7 @@
           "Attachments"
         ],
         "summary": "Download an a file.",
-        "operationId": "FetchAttachment",
+        "operationId": "FetchFile",
         "produces": [
           "text/plain",
           "application/json",
@@ -248,8 +248,11 @@
           "200": {
             "description": "Success",
             "schema": {
-              "type": "object"
+              "$ref": "#/definitions/IncidentAttachment"
             }
+          },
+          "500": {
+            "description": "Server Error"
           }
         }
       }
@@ -299,6 +302,37 @@
             "schema": {
               "$ref": "#/definitions/ProblemDetails"
             }
+          }
+        }
+      }
+    },
+    "/api/Attachments/UpdateDocumentTags": {
+      "post": {
+        "tags": [
+          "Attachments"
+        ],
+        "summary": "Update tags for for an attachment.",
+        "operationId": "UpdateAttachmentTags",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdateDocumentTagsModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Server Error"
           }
         }
       }
@@ -565,7 +599,7 @@
         "tags": [
           "Incidents"
         ],
-        "summary": "Assign lead officer.",
+        "summary": "Assign lead officer",
         "operationId": "UpdateLeadOfficer",
         "consumes": [
           "application/json",
@@ -596,7 +630,7 @@
         "tags": [
           "Incidents"
         ],
-        "summary": "Link two or moreincidents.",
+        "summary": "Link two or moreincidents",
         "operationId": "AddIncidentLink",
         "consumes": [
           "application/json",
@@ -627,7 +661,7 @@
         "tags": [
           "Incidents"
         ],
-        "summary": "Remove link between two incidents.",
+        "summary": "Remove link between two incidents",
         "operationId": "RemoveIncidentLink",
         "consumes": [
           "application/json",
@@ -694,7 +728,7 @@
         "tags": [
           "Incidents"
         ],
-        "summary": "Add note to an incident.",
+        "summary": "Add note to an incident",
         "operationId": "AddNote",
         "consumes": [
           "application/json",
@@ -761,7 +795,7 @@
         "tags": [
           "Incidents"
         ],
-        "summary": "Ensure library exists for incident.",
+        "summary": "Ensure library exists for incident",
         "operationId": "EnsureLibrary",
         "produces": [
           "text/plain",
@@ -782,6 +816,139 @@
             "schema": {
               "$ref": "#/definitions/IncidentLibraryInfo"
             }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Incidents/Stakeholders": {
+      "get": {
+        "tags": [
+          "Incidents"
+        ],
+        "summary": "Get all  stakeholder for an incident",
+        "operationId": "GetStakeholder",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "incidentId",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Stakeholder"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Incidents"
+        ],
+        "summary": "Add a new stakeholder to an incident",
+        "operationId": "AddStakeholder",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/StakeholderModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/StakeholderModel"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Incidents"
+        ],
+        "summary": "Update a  stakeholder to an incident",
+        "operationId": "UpdateStakeholder",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/StakeholderModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/StakeholderModel"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Incidents"
+        ],
+        "summary": "Remove a stakeholder to an incident",
+        "operationId": "DeleteStakeholder",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/StakeholderModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
           },
           "500": {
             "description": "Server Error"
@@ -1335,6 +1502,32 @@
         }
       }
     },
+    "/api/Lookups/AttachmentTags": {
+      "get": {
+        "tags": [
+          "Lookups"
+        ],
+        "summary": "Attachment tag list",
+        "operationId": "AttachmentTags",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AttachmentTagLkup"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
     "/api/Products": {
       "post": {
         "tags": [
@@ -1754,42 +1947,81 @@
         "type": "object"
       }
     },
-    "AttachmentType": {
-      "format": "int32",
-      "enum": [
-        0,
-        1,
-        2
-      ],
-      "type": "integer"
-    },
-    "AttachmentItem": {
+    "AttachmentFileInfo": {
       "type": "object",
       "properties": {
-        "attachmentType": {
-          "$ref": "#/definitions/AttachmentType"
-        },
-        "name": {
+        "fileName": {
           "type": "string"
         },
-        "size": {
+        "url": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "MemoryStream": {
+      "type": "object",
+      "properties": {
+        "canRead": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "canSeek": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "canWrite": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "capacity": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "length": {
+          "format": "int64",
+          "type": "integer",
+          "readOnly": true
+        },
+        "position": {
           "format": "int64",
           "type": "integer"
         },
-        "contentType": {
+        "canTimeout": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "readTimeout": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "writeTimeout": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "IncidentAttachment": {
+      "type": "object",
+      "properties": {
+        "incidentId": {
           "type": "string"
         },
-        "isInline": {
-          "type": "boolean"
-        },
-        "additionalData": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "object"
-          }
-        },
-        "oDataType": {
+        "incident": {
+          "format": "uuid",
           "type": "string"
+        },
+        "fileName": {
+          "type": "string"
+        },
+        "document": {
+          "$ref": "#/definitions/MemoryStream"
         }
       }
     },
@@ -1801,6 +2033,25 @@
         },
         "existingUrl": {
           "type": "string"
+        }
+      }
+    },
+    "UpdateDocumentTagsModel": {
+      "type": "object",
+      "properties": {
+        "incidentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "docUrl": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
         }
       }
     },
@@ -2464,6 +2715,78 @@
         }
       }
     },
+    "Stakeholder": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "incidentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "surname": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "discriminatorId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "addressId": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "StakeholderModel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "incidentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "surname": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "discriminatorId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "addressId": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
     "Category": {
       "type": "object",
       "properties": {
@@ -2697,6 +3020,18 @@
       }
     },
     "IncidentStatusLkUp": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "AttachmentTagLkup": {
       "type": "object",
       "properties": {
         "id": {

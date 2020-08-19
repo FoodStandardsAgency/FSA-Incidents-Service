@@ -6,13 +6,13 @@ namespace FSA.IncidentsManagement.Root.Models
 {
     public class IncidentsDisplayModel : BaseIncident
     {
-        public IncidentsDisplayModel(int id, Guid mostUniqueId, string incidentTitle, string incidentDescription, int incidentTypeId, int contactMethodId, int statusId, 
+        public IncidentsDisplayModel(int id, Guid mostUniqueId, string incidentTitle, int incidentTypeId, int contactMethodId, int statusId, 
                                     int? signalStatusId, int? notifierId, int? principalFBOId, int priorityId, int classificationId, int dataSourceId, string signalUrl,
                                     int productTypeId, string leadOfficer, string leadOffice, int adminLeadId, string fieldOfficer, int? leadLocalAuthorityId, 
                                     bool lAAdvised, int deathIllnessId, DateTime? receivedOn, DateTime incidentCreated, DateTime? incidentClosed, 
                                     string lastChangedBy, DateTime lastChangedDate, string category, string signalStatus, string incidentStatus, string notifier, 
                                     string priority, string classification, string dataSource, string productType, string leadLocalAuthority, string deathIllness, string principalFBO, string fBOEmail, string fBOPhone, string fBOAddressLine1, string fBOAddressLine2, string fBOAddressTown, string fBOAddressPostcode, string adminLead) 
-             : base(id, mostUniqueId, incidentTitle, incidentDescription, incidentTypeId, contactMethodId, statusId, signalStatusId, notifierId, principalFBOId, priorityId, classificationId, dataSourceId, signalUrl, productTypeId, leadOfficer, leadOffice, adminLeadId, fieldOfficer, leadLocalAuthorityId, lAAdvised, deathIllnessId, receivedOn, incidentCreated, incidentClosed, lastChangedBy, lastChangedDate)
+             : base(id, mostUniqueId, incidentTitle, incidentTypeId, contactMethodId, statusId, signalStatusId, notifierId, principalFBOId, priorityId, classificationId, dataSourceId, signalUrl, productTypeId, leadOfficer, leadOffice, adminLeadId, fieldOfficer, leadLocalAuthorityId, lAAdvised, deathIllnessId, receivedOn, incidentCreated, incidentClosed, lastChangedBy, lastChangedDate)
         {
             Category = category;
             SignalStatus = signalStatus;
