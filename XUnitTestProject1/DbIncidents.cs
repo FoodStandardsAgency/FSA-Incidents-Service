@@ -4,6 +4,7 @@ using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagementDb;
 using FSA.IncidentsManagementDb.Entities;
 using FSA.IncidentsManagementDb.Entities.Helpers;
+using FSA.IncidentsManagementDb.Exceptions;
 using FSA.IncidentsManagementDb.Repositories;
 using FSA.UnitTests.Misc;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -276,15 +277,14 @@ namespace FSA.UnitTests.Db
                 ISIMSManager incidents = new SIMSDataManager(ctx, userId);
                 var data = await incidents.Incidents.Get(59);
                 var updated = data.WithTitle("New Title after closing");
-                await Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await incidents.Incidents.Update(updated));
+                await Assert.ThrowsAsync<IncidentClosedException>(async () => await incidents.Incidents.Update(updated));
             }
         }
 
         [Fact]
         public async Task LinkToClosed()
         {
-            try
-            {
+          
                 //  record Id 82should be closed
                 //  crash the test otherwise
                 var incidentId = 82;
@@ -297,16 +297,11 @@ namespace FSA.UnitTests.Db
                     {
                         throw new ArgumentException("This record is not closed!");
                     }
-                    await sims.Incidents.AddLinks(45, new int[] { 19, 100, incidentId, 55 }, "No reason to take the bait");
+                    await Assert.ThrowsAsync<IncidentClosedException>(async () => await sims.Incidents.AddLinks(45, new int[] { 19, 100, incidentId, 55 }, "No reason to take the bait"));
                     var displayBox = await sims.Incidents.DashboardIncidentLinks(incidentId);
                     var matchedItem = displayBox.FirstOrDefault(o => o.CommonId == 19);
-                    Assert.True(matchedItem != null);
                 }
-            }
-            catch (ArgumentOutOfRangeException ex)
-            {
-                Assert.IsType<ArgumentOutOfRangeException>(ex);
-            }
+
         }
 
         [Fact]

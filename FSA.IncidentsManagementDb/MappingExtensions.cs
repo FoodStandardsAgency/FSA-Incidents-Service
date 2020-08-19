@@ -77,7 +77,7 @@ namespace FSA.IncidentsManagementDb
             Title = @this.Title,
         };
 
-        public static IEnumerable<OrganisationDb> ToDb(this IEnumerable<OrganisationAddress> @this)
+        public static IEnumerable<AddressDb> ToDb(this IEnumerable<OrganisationAddress> @this)
         {
             foreach (var itm in @this)
             {
@@ -85,7 +85,7 @@ namespace FSA.IncidentsManagementDb
             }
         }
 
-        public static IEnumerable<OrganisationAddress> ToDb(this IEnumerable<OrganisationDb> @this)
+        public static IEnumerable<OrganisationAddress> ToDb(this IEnumerable<AddressDb> @this)
         {
             foreach (var itm in @this)
             {
@@ -102,7 +102,7 @@ namespace FSA.IncidentsManagementDb
         }
 
 
-        public static OrganisationAddress ToClient(this OrganisationDb @this) => new OrganisationAddress
+        public static OrganisationAddress ToClient(this AddressDb @this) => new OrganisationAddress
         {
             Id = @this.Id,
             Title = @this.Title,
@@ -119,7 +119,7 @@ namespace FSA.IncidentsManagementDb
         };
 
 
-        public static OrganisationDb ToDb(this OrganisationAddress @this) => new OrganisationDb
+        public static AddressDb ToDb(this OrganisationAddress @this) => new AddressDb
         {
             Id = @this.Id,
             Title = @this.Title,
@@ -137,7 +137,7 @@ namespace FSA.IncidentsManagementDb
 
 
 
-        public static void ToDb(this OrganisationAddress @this, OrganisationDb entity)
+        public static void ToDb(this OrganisationAddress @this, AddressDb entity)
         {
             entity.Title = @this.Title;
             entity.MainContact = @this.MainContact;
@@ -601,9 +601,9 @@ namespace FSA.IncidentsManagementDb
             };
         }
 
-        public static OrganisationLookup ToLookup(this OrganisationDb @this) => new OrganisationLookup { Id = @this.Id, Name = @this.Title };
+        public static OrganisationLookup ToLookup(this AddressDb @this) => new OrganisationLookup { Id = @this.Id, Name = @this.Title };
 
-        public static OrganisationLookup ToLookup(this OrganisationLookupDb @this) => new OrganisationLookup { Id = @this.Id, Name = @this.Title };
+        public static OrganisationLookup ToLookup(this AddressLookupDb @this) => new OrganisationLookup { Id = @this.Id, Name = @this.Title };
 
         public static FboAddress ToClient(this FBODb @this) => new FboAddress
         {

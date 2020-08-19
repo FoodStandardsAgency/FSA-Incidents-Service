@@ -7,9 +7,9 @@ using System.Text;
 
 namespace FSA.IncidentsManagementDb.Builders
 {
-    internal class OrganisationBuilder : AuditInfoBuilderConfiguration<OrganisationDb>
+    internal class OrganisationBuilder : AuditInfoBuilderConfiguration<AddressDb>
     {
-        public override void Configure(EntityTypeBuilder<OrganisationDb> builder)
+        public override void Configure(EntityTypeBuilder<AddressDb> builder)
         {
             base.Configure(builder);
 

@@ -16,10 +16,10 @@ namespace FSA.IncidentsManagementDb.Repositories
     /// This version of the look is being used in more than one location.
     /// So makes ense to create a specific class for it.
     /// </summary>
-    internal class OrganisationLookupManager : ReferenceDataRepo<OrganisationLookup, OrganisationLookupDb>
+    internal class OrganisationLookupManager : ReferenceDataRepo<OrganisationLookup, AddressLookupDb>
     {
         internal OrganisationLookupManager(FSADbContext ctx) : base(ctx,
-                (ctx) => ctx.Organisations.Select(o => new OrganisationLookupDb { Id = o.Id, Title = o.Title})
+                (ctx) => ctx.Addresses.Select(o => new AddressLookupDb { Id = o.Id, Title = o.Title})
                                             .ToListAsync(),
                 (itm) => itm.ToLookup())
         {
@@ -32,7 +32,7 @@ namespace FSA.IncidentsManagementDb.Repositories
 
             var whereClause = string.Join(" OR ", ids.ToList().Select(a => $"Id={a}"));
 
-            var allTheOrgs = await ctx.Organisations.FromSqlRaw($"Select * FROM dbo.Organisations WHERE {whereClause}")
+            var allTheOrgs = await ctx.Addresses.FromSqlRaw($"Select * FROM dbo.Organisations WHERE {whereClause}")
                             .AsNoTracking().ToDictionaryAsync(k => k.Id, v => new OrganisationLookup { Id = v.Id, Name = v.Title});
             return allTheOrgs;
         }

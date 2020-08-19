@@ -27,15 +27,15 @@ namespace FSA.IncidentsManagementDb.Repositories
         public async Task<OrganisationAddress> Add(OrganisationAddress address)
         {
             var newDbItem = address.ToDb();
-            this.ctx.Organisations.Add(newDbItem);
+            this.ctx.Addresses.Add(newDbItem);
             await this.ctx.SaveChangesAsync();
             return newDbItem.ToClient();
         }
 
         public async Task Add(IEnumerable<OrganisationAddress> addresses)
         {
-            var newDbItems = new List<OrganisationDb>(addresses.ToDb());
-            this.ctx.Organisations.AddRange(newDbItems);
+            var newDbItems = new List<AddressDb>(addresses.ToDb());
+            this.ctx.Addresses.AddRange(newDbItems);
             await this.ctx.SaveChangesAsync();
         }
 
@@ -67,11 +67,11 @@ namespace FSA.IncidentsManagementDb.Repositories
             // update the types
             var fbo = ctx.FBOs.Find(address.FboId);
             fbo.FBOTypeId = address.FboTypes;
-            var org = ctx.Organisations.Find(fbo.OrganisationId);
+            var org = ctx.Addresses.Find(fbo.OrganisationId);
             // update the address
             address.ToDb(org);
 
-            ctx.Organisations.Update(org);
+            ctx.Addresses.Update(org);
             ctx.FBOs.Update(fbo);
             await ctx.SaveChangesAsync();
             return (await ctx.FBOs
@@ -95,15 +95,15 @@ namespace FSA.IncidentsManagementDb.Repositories
 
         public async Task<OrganisationAddress> Get(int OrganisationId)
         {
-            var addr = await ctx.Organisations.AsNoTracking().FirstAsync(a => a.Id == OrganisationId);
+            var addr = await ctx.Addresses.AsNoTracking().FirstAsync(a => a.Id == OrganisationId);
             return addr.ToClient();
         }
 
         public async Task<OrganisationAddress> Update(OrganisationAddress address)
         {
-            var dbItem = await ctx.Organisations.FindAsync(address.Id);
+            var dbItem = await ctx.Addresses.FindAsync(address.Id);
             address.ToDb(dbItem);
-            ctx.Organisations.Update(dbItem);
+            ctx.Addresses.Update(dbItem);
             return dbItem.ToClient();
         }
 
@@ -202,7 +202,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         public async Task<IEnumerable<OrganisationAddress>> FindAddress(string search)
         {
             var qryAddr = this.ctx
-                     .Organisations
+                     .Addresses
                      .AsNoTracking()
                      .Where(o => EF.Functions.Like(o.Title, $"%{search}%")
                                 || EF.Functions.Like(o.AddressLine1, $"%{search}%")

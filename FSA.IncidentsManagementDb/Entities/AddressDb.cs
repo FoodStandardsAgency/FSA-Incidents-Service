@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace FSA.IncidentsManagementDb.Entities
 {
-    internal class OrganisationDb : BaseEntityDb, IIDbLookup
+    internal class AddressDb : BaseEntityDb, IIDbLookup
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -22,7 +22,7 @@ namespace FSA.IncidentsManagementDb.Entities
         public long Uprn { get; set; }
     }
     // not actual a stored object(table) so no need to inherit from baseEntitry
-    internal class OrganisationLookupDb : IIDbLookup
+    internal class AddressLookupDb : IIDbLookup
     {
         public int Id {get;set;}
         public string Title { get; set; }

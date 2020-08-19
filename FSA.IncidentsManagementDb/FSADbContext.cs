@@ -1,10 +1,7 @@
 ﻿using EntityFrameworkCore.TemporalTables.Extensions;
-using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagementDb.Builders;
 using FSA.IncidentsManagementDb.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Linq;
 using System.Threading;
@@ -28,7 +25,7 @@ namespace FSA.IncidentsManagementDb
         internal DbSet<IncidentLinkDb> IncidentLinks { get; set; }
         internal DbSet<IncidentOMITGroupDb> IncidentOMITGroups { get; set; }
 
-        internal DbSet<OrganisationDb> Organisations { get; set; }
+        internal DbSet<AddressDb> Addresses { get; set; }
         //internal DbSet<OrganisationRoleDb> OrganisationRoles { get; set; }
         internal DbSet<NotifierTypeDb> NotifierTypes { get; set; }
 
@@ -119,7 +116,7 @@ namespace FSA.IncidentsManagementDb
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<DataSourceDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<DeathIllnessDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<OMITGroupDb>());
-            modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<OrganisationDb>());
+            modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<AddressDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<ProductTypeDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<SignalStatusDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<UnitQuantityDb>());

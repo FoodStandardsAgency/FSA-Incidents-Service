@@ -10,6 +10,6 @@ namespace FSA.IncidentsManagementDb.Entities
         public int NotifierTypeId { get; set; }
         public NotifierTypeDb NotifierType { get; set; }
         public int OrganisationId { get; set; }
-        public OrganisationDb Organisation { get; set; }
+        public AddressDb Organisation { get; set; }
     }
 }
