@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using FSA.IncidentsManagement.Root.Contracts;
+﻿using FSA.IncidentsManagement.Root.Contracts;
 using FSA.IncidentsManagement.Root.Models;
-using FSA.IncidentsManagementDb.Entities;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Controllers
 {
@@ -255,6 +251,16 @@ namespace FSA.IncidentsManagement.Controllers
         public async Task<IActionResult> AttachmentTags()
         {
             return new OkObjectResult((await this.lookupdata.AttachmentTags
+                            .GetAll()).ToList());
+        }
+
+        [HttpGet("StakeholderTypes")]
+        [ProducesResponseType(typeof(IEnumerable<StakeholderType>), 200)]
+        [ProducesResponseType(500)]
+        [SwaggerOperation(Summary = "Stakeholder types")]
+        public async Task<IActionResult> StakeholdersTypes()
+        {
+            return new OkObjectResult((await this.lookupdata.StakeholderTypes
                             .GetAll()).ToList());
         }
     }

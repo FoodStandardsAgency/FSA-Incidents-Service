@@ -32,5 +32,6 @@ namespace FSA.IncidentsManagement.Root.Contracts
         IReferenceDataRepo<NotifierType> NotifierTypes { get; }
         IReferenceDataRepo<AdminLead> AdminLeads { get; }
         IReferenceDataRepo<ProductDateType> ProductDateTypes { get; }
+        IReferenceDataRepo<StakeholderType> StakeholderTypes { get; }
     }
 }

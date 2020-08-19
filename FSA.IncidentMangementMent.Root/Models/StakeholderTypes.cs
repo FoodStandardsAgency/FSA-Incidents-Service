@@ -16,4 +16,10 @@ namespace FSA.IncidentsManagement.Root.Models
         OtherGovDept=3,
         Fbo_Febo=4
     }
+
+    public class StakeholderType
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+    }
 }
