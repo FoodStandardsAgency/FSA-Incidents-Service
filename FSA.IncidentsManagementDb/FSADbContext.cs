@@ -135,7 +135,8 @@ namespace FSA.IncidentsManagementDb
             modelBuilder.ApplyConfiguration(new IncidentOMITGroupDbBuilder());
             modelBuilder.ApplyConfiguration(new FBOBuilder());
             modelBuilder.ApplyConfiguration(new NotifierBuilder());
-            modelBuilder.ApplyConfiguration(new OrganisationBuilder());
+            modelBuilder.ApplyConfiguration(new AddressBuilder());
+            modelBuilder.ApplyConfiguration(new AddressContactBuilder());
 
             modelBuilder.ApplyConfiguration(new ProductBuilder());
             modelBuilder.ApplyConfiguration(new ProductDatesBuilder());

@@ -77,7 +77,7 @@ namespace FSA.IncidentsManagementDb
             Title = @this.Title,
         };
 
-        public static IEnumerable<AddressDb> ToDb(this IEnumerable<OrganisationAddress> @this)
+        public static IEnumerable<AddressDb> ToDb(this IEnumerable<SimsAddress> @this)
         {
             foreach (var itm in @this)
             {
@@ -85,7 +85,7 @@ namespace FSA.IncidentsManagementDb
             }
         }
 
-        public static IEnumerable<OrganisationAddress> ToDb(this IEnumerable<AddressDb> @this)
+        public static IEnumerable<SimsAddress> ToDb(this IEnumerable<AddressDb> @this)
         {
             foreach (var itm in @this)
             {
@@ -102,7 +102,7 @@ namespace FSA.IncidentsManagementDb
         }
 
 
-        public static OrganisationAddress ToClient(this AddressDb @this) => new OrganisationAddress
+        public static SimsAddress ToClient(this AddressDb @this) => new SimsAddress
         {
             Id = @this.Id,
             Title = @this.Title,
@@ -114,12 +114,11 @@ namespace FSA.IncidentsManagementDb
             CountryId = @this.CountryId,
             PostCode = @this.PostCode,
             TelephoneNumber = @this.TelephoneNumber,
-            EmailAddress = @this.EmailAddress,
             ContactMethodId = @this.ContactMethodId
         };
 
 
-        public static AddressDb ToDb(this OrganisationAddress @this) => new AddressDb
+        public static AddressDb ToDb(this SimsAddress @this) => new AddressDb
         {
             Id = @this.Id,
             Title = @this.Title,
@@ -131,13 +130,12 @@ namespace FSA.IncidentsManagementDb
             CountryId = @this.CountryId,
             PostCode = @this.PostCode,
             TelephoneNumber = @this.TelephoneNumber,
-            EmailAddress = @this.EmailAddress,
             ContactMethodId = @this.ContactMethodId
         };
 
 
 
-        public static void ToDb(this OrganisationAddress @this, AddressDb entity)
+        public static void ToDb(this SimsAddress @this, AddressDb entity)
         {
             entity.Title = @this.Title;
             entity.MainContact = @this.MainContact;
@@ -148,7 +146,6 @@ namespace FSA.IncidentsManagementDb
             entity.CountryId = @this.CountryId;
             entity.PostCode = @this.PostCode;
             entity.TelephoneNumber = @this.TelephoneNumber;
-            entity.EmailAddress = @this.EmailAddress;
             entity.ContactMethodId = @this.ContactMethodId;
         }
 
@@ -290,7 +287,7 @@ namespace FSA.IncidentsManagementDb
                 adminLead: @this.AdminLeadId.HasValue && @this.AdminLeadId != 0 ? @this.AdminLead.Title : "Unassigned",
                 deathIllness: @this.DeathIllness?.Title ?? "",
                 principalFBO: @this.PrincipalFBO?.Organisation.Title ?? "",
-                fBOEmail: @this.PrincipalFBO?.Organisation.EmailAddress ?? "",
+                fBOEmail: "", //@this.PrincipalFBO?.Organisation.EmailAddress ?? "",
                 fBOPhone: @this.PrincipalFBO?.Organisation.TelephoneNumber ?? "",
                 fBOAddressLine1: @this.PrincipalFBO?.Organisation.AddressLine1 ?? "",
                 fBOAddressLine2: @this.PrincipalFBO?.Organisation.AddressLine2 ?? "",
@@ -617,7 +614,6 @@ namespace FSA.IncidentsManagementDb
             PostCode = @this.Organisation.PostCode,
             CountryId = @this.Organisation.CountryId,
             TelephoneNumber = @this.Organisation.TelephoneNumber,
-            EmailAddress = @this.Organisation.EmailAddress,
             ContactMethodId = @this.Organisation.ContactMethodId,
             FboId = @this.Id,
             FboTypes = @this.FBOTypeId
@@ -635,7 +631,6 @@ namespace FSA.IncidentsManagementDb
             PostCode = @this.Organisation.PostCode,
             CountryId = @this.Organisation.CountryId,
             TelephoneNumber = @this.Organisation.TelephoneNumber,
-            EmailAddress = @this.Organisation.EmailAddress,
             ContactMethodId = @this.Organisation.ContactMethodId,
             NotifierId = @this.Id,
             NotifierType = @this.NotifierType.Title

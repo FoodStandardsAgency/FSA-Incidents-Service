@@ -43,7 +43,6 @@ namespace FSA.UnitTests.Db
             {
                 Title = "Test - New FBO COnsignor Etrader ",
                 FboTypes = FboTypes.Consignor | FboTypes.E_trader,
-                EmailAddress = "Terry@amil.com",
                 MainContact = "Terry the data",
                 AddressLine1 = "Address line 1",
                 AddressLine2 = "Address line 2",
@@ -61,11 +60,10 @@ namespace FSA.UnitTests.Db
         [Fact]
         public async Task AddOrgnisation()
         {
-            var org = new OrganisationAddress
+            var org = new SimsAddress
             {
                             
                 Title = "Test - New orgnaisations",
-                EmailAddress = "organisation@amil.com",
                 MainContact = "New-Org Smity",
                 AddressLine1 = "Address line 1",
                 AddressLine2 = "Address line 2",
@@ -81,10 +79,9 @@ namespace FSA.UnitTests.Db
         public async Task UpdateFbo()
         {
             var address = await simsData.Addresses.GetFbo(3);
-            address.EmailAddress = "Updated@email.com";
             address.FboTypes = FboTypes.Consignor;
             var item  = await simsData.Addresses.UpdateFbo(address);
-            Assert.True(item.EmailAddress == "Updated@email.com" && item.FboTypes == FboTypes.Consignor);
+            Assert.True(item.FboTypes == FboTypes.Consignor);
         }
 
         [Fact]

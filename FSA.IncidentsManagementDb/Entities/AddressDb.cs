@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 
 namespace FSA.IncidentsManagementDb.Entities
@@ -16,10 +18,11 @@ namespace FSA.IncidentsManagementDb.Entities
         public CountryDb Country { get; set; }
         public string PostCode { get; set; }
         public string TelephoneNumber { get; set; }
-        public string EmailAddress { get; set; }
         public int ContactMethodId { get; set; }
         public ContactMethodDb ContactMethod { get; set; }
         public long Uprn { get; set; }
+
+        public ICollection<AddressContactDb> Contacts { get; set; }
     }
     // not actual a stored object(table) so no need to inherit from baseEntitry
     internal class AddressLookupDb : IIDbLookup

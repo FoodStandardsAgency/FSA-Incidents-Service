@@ -807,7 +807,7 @@ namespace FSA.IncidentsManagementDb
                .HasData(new StakeholderDiscriminatorDb
                {
                    Id = 1,
-                   Title = "FSA",
+                   Title = "Food Standards Agency (FSA)",
                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                },
@@ -828,7 +828,7 @@ namespace FSA.IncidentsManagementDb
                new StakeholderDiscriminatorDb
                {
                    Id = 4,
-                   Title = "FBO/FeBO",
+                   Title = "Food/Feed Business Operator (FBO/FeBO)",
                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                });

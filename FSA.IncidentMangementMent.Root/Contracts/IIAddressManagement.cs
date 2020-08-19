@@ -14,21 +14,21 @@ namespace FSA.IncidentsManagement.Root.Contracts
         Task AssignFbos(FboTypes fboTypes, IEnumerable<int> addressesId);
 
         Task<int> AssignFbo(FboTypes notifier, int addressId);
-        Task<int> AddNotifier(NotifierTypes notifier, OrganisationAddress newAddress);
+        Task<int> AddNotifier(NotifierTypes notifier, SimsAddress newAddress);
         Task<int> AssignNotifier(NotifierTypes notifier, int addressId);
         Task AssignNotifiers(NotifierTypes fboTypes, IEnumerable<int> addressesId);
         Task<NotifierAddress> GetNotifier(int NotifierId);
 
-        Task<OrganisationAddress> Get(int OrganisationId);
-        Task<OrganisationAddress> Add(OrganisationAddress address);
-        Task<OrganisationAddress> Update(OrganisationAddress address);
+        Task<SimsAddress> Get(int OrganisationId);
+        Task<SimsAddress> Add(SimsAddress address);
+        Task<SimsAddress> Update(SimsAddress address);
 
-        Task Add(IEnumerable<OrganisationAddress> addresses);
+        Task Add(IEnumerable<SimsAddress> addresses);
 
         Task<IEnumerable<FboAddress>> FindFbo(string search);
         Task<IEnumerable<NotifierAddress>> FindNotifier(string search);
         Task<IEnumerable<NotifierAddress>> FindLocalAuthority(string search);
-        Task<IEnumerable<OrganisationAddress>> FindAddress(string search);
+        Task<IEnumerable<SimsAddress>> FindAddress(string search);
 
 
 

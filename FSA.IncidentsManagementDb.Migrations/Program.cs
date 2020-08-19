@@ -12,7 +12,7 @@ namespace FSA.IncidentsManagementDb.Migrations
         static void Main(string[] args)
         {
             var stringData = File.OpenText("./orgs.json").ReadToEnd();
-            var addresses = System.Text.Json.JsonSerializer.Deserialize<List<OrganisationAddress>>(stringData);
+            var addresses = System.Text.Json.JsonSerializer.Deserialize<List<SimsAddress>>(stringData);
 
         }
 

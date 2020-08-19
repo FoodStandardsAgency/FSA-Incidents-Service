@@ -4,9 +4,9 @@ using System.Text;
 
 namespace FSA.IncidentsManagement.Root.Models
 {
-    public class OrganisationAddress
+    public class SimsAddress
     {
-        public OrganisationAddress()
+        public SimsAddress()
         {
             ContactMethodId = 1;
         }
@@ -22,7 +22,6 @@ namespace FSA.IncidentsManagement.Root.Models
         public int? CountryId { get; set; }
         public string PostCode { get; set; }
         public string TelephoneNumber { get; set; }
-        public string EmailAddress { get; set; }
         public int ContactMethodId { get; set; }
     }
 }

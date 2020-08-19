@@ -113,7 +113,6 @@ namespace FSA.IncidentsManagement.Models
             PostCode = @this.Address.PostCode,
             CountryId = @this.Address.CountryId,
             County = @this.Address.County,
-            EmailAddress = @this.Address.EmailAddress,
             MainContact = @this.Address.MainContact,
             TelephoneNumber = @this.Address.TelephoneNumber,
             ContactMethodId = @this.Address.ContactMethodId,
@@ -126,7 +125,7 @@ namespace FSA.IncidentsManagement.Models
 
         public static FboAddressWebModel ToWeb(this FboAddress @this) => new FboAddressWebModel
         {
-            Address = new OrganisationAddress
+            Address = new SimsAddress
             {
                 AddressLine1 = @this.AddressLine1,
                 AddressLine2 = @this.AddressLine2,
@@ -134,7 +133,6 @@ namespace FSA.IncidentsManagement.Models
                 PostCode = @this.PostCode,
                 CountryId = @this.CountryId,
                 County = @this.County,
-                EmailAddress = @this.EmailAddress,
                 MainContact = @this.MainContact,
                 TelephoneNumber = @this.TelephoneNumber,
                 ContactMethodId = @this.ContactMethodId,

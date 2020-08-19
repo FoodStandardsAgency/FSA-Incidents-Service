@@ -69,7 +69,7 @@ namespace FSA.UnitTests.Misc
 
         private async Task CreateAddress(ISIMSManager sims)
         {
-            var addresses = System.Text.Json.JsonSerializer.Deserialize<List<OrganisationAddress>>(File.OpenText("./orgs.json").ReadToEnd());
+            var addresses = System.Text.Json.JsonSerializer.Deserialize<List<SimsAddress>>(File.OpenText("./orgs.json").ReadToEnd());
 
             await sims.Addresses.Add(addresses.GetRange(0, addresses.Count - 9));
 
