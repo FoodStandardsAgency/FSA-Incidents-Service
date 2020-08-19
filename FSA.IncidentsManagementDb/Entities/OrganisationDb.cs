@@ -21,7 +21,7 @@ namespace FSA.IncidentsManagementDb.Entities
         public ContactMethodDb ContactMethod { get; set; }
         public long Uprn { get; set; }
     }
-    // not actual a storage representation so no need to inherit from baseEntitry
+    // not actual a stored object(table) so no need to inherit from baseEntitry
     internal class OrganisationLookupDb : IIDbLookup
     {
         public int Id {get;set;}
