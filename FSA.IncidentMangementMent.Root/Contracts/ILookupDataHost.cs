@@ -20,7 +20,7 @@ namespace FSA.IncidentsManagement.Root.Contracts
         IReferenceDataRepo<PersonaRole> PersonaRoles { get; }
         IReferenceDataRepo<ProductType> ProductTypes { get; }
         IReferenceDataRepo<SignalStatus> SignalStatus { get; }
-        IReferenceDataRepo<IncidentStatusLkUp> Status { get; }
+        IReferenceDataRepo<IncidentStatusLkUp> IncidentStatus { get; }
         IReferenceDataRepo<UnitQuantity> Units { get; }
         IReferenceDataRepo<OrganisationLookup> Organisations { get; }
 
@@ -33,5 +33,7 @@ namespace FSA.IncidentsManagement.Root.Contracts
         IReferenceDataRepo<AdminLead> AdminLeads { get; }
         IReferenceDataRepo<ProductDateType> ProductDateTypes { get; }
         IReferenceDataRepo<StakeholderType> StakeholderTypes { get; }
+
+        LookupsHost GetAll();
     }
 }

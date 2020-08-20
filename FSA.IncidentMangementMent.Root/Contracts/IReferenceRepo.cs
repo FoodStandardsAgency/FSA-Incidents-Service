@@ -7,8 +7,9 @@ namespace FSA.IncidentsManagement.Root.Contracts
 {
     public interface IReferenceDataRepo<T>
     {
-        Task<T> GetById(int id);
-        Task<IEnumerable<T>> GetAll();
+        Task<T> GetByIdAsync(int id);
+        Task<IEnumerable<T>> GetAllAsync();
+        IEnumerable<T> GetAll();
         Task<T> Find(string title);
     }
 }

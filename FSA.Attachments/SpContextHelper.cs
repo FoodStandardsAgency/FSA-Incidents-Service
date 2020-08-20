@@ -10,7 +10,6 @@ namespace FSA.Attachments
 {
     internal static class SpContextHelper
     {
-
         internal static async Task<string> GetApplicationAuthenticatedClient(string clientId, X509Certificate2 cert, string[] scopes, string tenantId)
         {
             IConfidentialClientApplication clientApp = ConfidentialClientApplicationBuilder

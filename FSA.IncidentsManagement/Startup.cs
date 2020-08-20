@@ -43,7 +43,7 @@ namespace FSA.IncidentsManagement
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddMicrosoftWebApiAuthentication(Configuration, subscribeToJwtBearerMiddlewareDiagnosticsEvents:true)
+            services.AddMicrosoftWebApiAuthentication(Configuration, subscribeToJwtBearerMiddlewareDiagnosticsEvents: true)
                     .AddMicrosoftWebApiCallsWebApi(Configuration)
                     .AddInMemoryTokenCaches();
 
@@ -59,14 +59,16 @@ namespace FSA.IncidentsManagement
             services.AddScoped<UserInfo>();
 
             services.AddHttpClient();
-            services.AddScoped<IFSATermStore, AttachmentTerms>((o) =>
-            {
-                var conf = o.GetRequiredService<IConfiguration>();
-                var azureAd = conf.GetSection("AzureAd");
-                var sharepointSec = conf.GetSection("SharePoint");
-                var user = o.GetRequiredService<UserInfo>();
-              return  new AttachmentTerms(o.GetRequiredService<IHttpClientFactory>().CreateClient("taxonomy"), sharepointSec["SimsTermSetId"], sharepointSec["TagsTermSetId"]);
-            });
+
+            //services.AddScoped<IFSATermStore, AttachmentTerms>((o) =>
+            //{
+            //    var conf = o.GetRequiredService<IConfiguration>();
+            //    var azureAd = conf.GetSection("AzureAd");
+            //    var sharepointSec = conf.GetSection("SharePoint");
+            //    var user = o.GetRequiredService<UserInfo>();
+            //  return  new AttachmentTerms(o.GetRequiredService<IHttpClientFactory>().CreateClient("taxonomy"), sharepointSec["SimsTermSetId"]); sharepointSec["TagsTermSetId"]);
+            //});
+
             // grabbing current userInfo
             services.AddHttpContextAccessor();
             // outside api calls [OBO]
@@ -86,7 +88,7 @@ namespace FSA.IncidentsManagement
                 {
                     return apiDesc.TryGetMethodInfo(out MethodInfo methodInfo) ? methodInfo.Name : null;
                 });
-               
+
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "fsa incident management", Version = "v1" });
                 c.EnableAnnotations();
             });
@@ -103,7 +105,7 @@ namespace FSA.IncidentsManagement
                 x.MultipartHeadersLengthLimit = int.MaxValue;
             });
 
-            services.AddScoped<X509Certificate2>((o)=> new X509Certificate2(Convert.FromBase64String(Configuration["SharePointAccess"])));
+            services.AddScoped<X509Certificate2>((o) => new X509Certificate2(Convert.FromBase64String(Configuration["SharePointAccess"])));
 
 
             var fsaConn = Configuration.GetConnectionString("FSADbConn");
@@ -120,20 +122,18 @@ namespace FSA.IncidentsManagement
 
             services.RegisterTemporalTablesForDatabase<FSADbContext>();
 
-
             services.AddScoped<ILookupDataHost, LookupDataHost>();
-
 
             services.AddScoped<ISIMSManager, SIMSDataManager>(ids => new SIMSDataManager(ids.GetRequiredService<FSADbContext>(), ids.GetRequiredService<UserInfo>().GetUserId()));
 
-            services.AddScoped<IFSAAttachments, SPIncidentAttachments>((o) => {
+            services.AddScoped<IFSAAttachments, SPIncidentAttachments>((o) =>
+            {
                 var user = o.GetRequiredService<UserInfo>();
                 var conf = o.GetRequiredService<IConfiguration>();
                 var section = conf.GetSection("AzureAd");
                 var sharePoint = conf.GetSection("SharePoint");
                 var cert = o.GetRequiredService<X509Certificate2>();
-
-                return new SPIncidentAttachments(section["ClientId"], user.GetTenantId(), cert, sharePoint["HostSiteCol"], $"https://{sharePoint["HostSiteCol"]}/{sharePoint["DocSiteUrl"]}", sharePoint["SimsDocCType"], Guid.Parse(sharePoint["SimsTermSetId"]));
+                return new SPIncidentAttachments(section["ClientId"], user.GetTenantId(), cert, sharePoint["HostSiteCol"], $"https://{sharePoint["HostSiteCol"]}/{sharePoint["DocSiteUrl"]}", sharePoint["SimsDocCType"]);// Guid.Parse(sharePoint["SimsTermSetId"]));
             });
         }
 

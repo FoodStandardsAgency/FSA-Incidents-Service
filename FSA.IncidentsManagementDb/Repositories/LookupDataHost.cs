@@ -24,7 +24,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         public IReferenceDataRepo<Category> Categories => new ReferenceDataRepo<Category, CategoryDb>(ctx, (itm) => itm.ToClient());
         public IReferenceDataRepo<Classification> Classifications => new ReferenceDataRepo<Classification, ClassificationDb>(ctx, (itm) => itm.ToClient());
         public IReferenceDataRepo<Priority> Priorities => new ReferenceDataRepo<Priority, PriorityDb>(ctx, (itm) => itm.ToClient());
-        public IReferenceDataRepo<IncidentStatusLkUp> Status => new ReferenceDataRepo<IncidentStatusLkUp, IncidentStatusDb>(ctx, (itm) => itm.ToClient());
+        public IReferenceDataRepo<IncidentStatusLkUp> IncidentStatus => new ReferenceDataRepo<IncidentStatusLkUp, IncidentStatusDb>(ctx, (itm) => itm.ToClient());
         public IReferenceDataRepo<ContactMethod> ContactMethods => new ReferenceDataRepo<ContactMethod, ContactMethodDb>(ctx, (itm) => itm.ToClient());
         public IReferenceDataRepo<Country> Countries => new ReferenceDataRepo<Country, CountryDb>(ctx, (itm) => itm.ToClient());
         public IReferenceDataRepo<DataSource> DataSources => new ReferenceDataRepo<DataSource, DataSourceDb>(ctx, (itm) => itm.ToClient());
@@ -50,5 +50,27 @@ namespace FSA.IncidentsManagementDb.Repositories
         public IReferenceDataRepo<AdminLead> AdminLeads => new ReferenceDataRepo<AdminLead, AdminLeadDb> (ctx, (itm)=>itm.ToClient());
         public IReferenceDataRepo<ProductDateType> ProductDateTypes => new ReferenceDataRepo<ProductDateType, DateTypeDb>(ctx, (itm) => itm.ToClient());
         public IReferenceDataRepo<StakeholderType> StakeholderTypes => new ReferenceDataRepo<StakeholderType, StakeholderDiscriminatorDb>(ctx, (itm) => itm.ToClient());
+
+        public LookupsHost GetAll() => new LookupsHost
+        {
+            Categories = this.Categories.GetAll(),
+            Classifications = this.Classifications.GetAll(),
+            Priorites = this.Priorities.GetAll(),
+            IncidentStatus = this.IncidentStatus.GetAll(),
+            ContactMethods = this.ContactMethods.GetAll(),
+            Countries = this.Countries.GetAll(),
+            DataSources = this.DataSources.GetAll(),
+            DeathIllnesses = this.DeathIllnesses.GetAll(),
+            OrganisationRoles = new List<OrganisationRole>(),// this.OrganisationsRoles.GetAll(),
+            ProductTypes = this.ProductTypes.GetAll(),
+            SignalStatus = SignalStatus.GetAll(),
+            Units = this.Units.GetAll(),
+            AttachmentTags = this.AttachmentTags.GetAll(),
+            FBOTypes = this.FBOTypes.GetAll(),
+            NotifierTypes = this.NotifierTypes.GetAll(),
+            AdminLeads = this.AdminLeads.GetAll(),
+            ProductDataTypes = this.ProductDateTypes.GetAll(),
+            StakeholderTypes = this.StakeholderTypes.GetAll()
+        };
     }
 }
