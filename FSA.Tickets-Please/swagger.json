@@ -1554,6 +1554,29 @@
         }
       }
     },
+    "/api/Lookups": {
+      "get": {
+        "tags": [
+          "Lookups"
+        ],
+        "summary": "All The lookups in the WORLD",
+        "operationId": "GetAll",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/LookupsHost"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
     "/api/Products": {
       "post": {
         "tags": [
@@ -3070,6 +3093,128 @@
         },
         "title": {
           "type": "string"
+        }
+      }
+    },
+    "NotifierType": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "LookupsHost": {
+      "type": "object",
+      "properties": {
+        "categories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Category"
+          }
+        },
+        "classifications": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Classification"
+          }
+        },
+        "priorites": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Priority"
+          }
+        },
+        "incidentStatus": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/IncidentStatusLkUp"
+          }
+        },
+        "contactMethods": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ContactMethod"
+          }
+        },
+        "countries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Country"
+          }
+        },
+        "deathIllnesses": {
+          "type": "object"
+        },
+        "dataSources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DataSource"
+          }
+        },
+        "organisationRoles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrganisationRole"
+          }
+        },
+        "units": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UnitQuantity"
+          }
+        },
+        "signalStatus": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SignalStatus"
+          }
+        },
+        "productTypes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProductType"
+          }
+        },
+        "attachmentTags": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AttachmentTagLkup"
+          }
+        },
+        "fboTypes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FBOType"
+          }
+        },
+        "notifierTypes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NotifierType"
+          }
+        },
+        "adminLeads": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AdminLead"
+          }
+        },
+        "productDataTypes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProductDateType"
+          }
+        },
+        "stakeholderTypes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StakeholderType"
+          }
         }
       }
     },
