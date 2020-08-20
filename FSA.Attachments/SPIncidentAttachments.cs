@@ -28,13 +28,13 @@ namespace FSA.Attachments
         private readonly Func<Task<string>> fetchAccessToken;
         private readonly Guid SimsIdTermSet;
         private readonly string[] scopes;
-        public SPIncidentAttachments(string clientId, string tenantId, X509Certificate2 cert, string hostUrl, string siteUrl, string contentTypeId, Guid simsIdTermSet)
+        public SPIncidentAttachments(string clientId, string tenantId, X509Certificate2 cert, string hostUrl, string siteUrl, string contentTypeId)
         {
             //this.clientId = clientId;
             this.cert = cert;
             this.siteUrl = siteUrl;
             this.contentTypeId = contentTypeId;
-            SimsIdTermSet = simsIdTermSet;
+            SimsIdTermSet = Guid.Empty;
             //this.tenantId = tenantId;
             this.scopes = new string[] { $"https://{hostUrl}/.default" }; // "https://{hostUrl}.com/TermStore.ReadWrite.All" };
             this.fetchAccessToken = () => SpContextHelper.GetApplicationAuthenticatedClient(clientId, this.cert, this.scopes, tenantId);
@@ -46,7 +46,6 @@ namespace FSA.Attachments
             {
                 TemplateType = (int)ListTemplateType.DocumentLibrary,
                 Title = incidentId,
-
             };
             var newList = ctx.Web.Lists.Add(newListDef);
             var ctype = ctx.Web.ContentTypes.GetById(contentTypeId);
@@ -92,28 +91,28 @@ namespace FSA.Attachments
 
         private async Task EnureIncidentTerm(string incidentId, ClientContext ctx)
         {
-            var taxonomySession = TaxonomySession.GetTaxonomySession(ctx);
-            var tStore = taxonomySession.GetDefaultKeywordsTermStore();
-            var simsIds = tStore.GetTermSet(this.SimsIdTermSet);
+            //var taxonomySession = TaxonomySession.GetTaxonomySession(ctx);
+            //var tStore = taxonomySession.GetDefaultKeywordsTermStore();
+            //var simsIds = tStore.GetTermSet(this.SimsIdTermSet);
 
-            var tCollection = taxonomySession.GetTermSetsByTermLabel(new string[] { incidentId }, 1033);
-            ctx.Load(tCollection);
-            await ctx.ExecuteQueryAsync();
-            var createNewTerm = true;
-            if (tCollection.Count > 0)
-            {
-                foreach (var termSet in tCollection)
-                {
-                    if (termSet.Id == this.SimsIdTermSet)
-                        createNewTerm = false;
-                }
-            }
-            if (createNewTerm)
-            {
-                //var newTerm = simsIds.CreateTerm(incidentId, 1033, Guid.NewGuid());
-                //ctx.Load(newTerm);
-                //await ctx.ExecuteQueryAsync();
-            }
+            //var tCollection = taxonomySession.GetTermSetsByTermLabel(new string[] { incidentId }, 1033);
+            //ctx.Load(tCollection);
+            //await ctx.ExecuteQueryAsync();
+            //var createNewTerm = true;
+            //if (tCollection.Count > 0)
+            //{
+            //    foreach (var termSet in tCollection)
+            //    {
+            //        if (termSet.Id == this.SimsIdTermSet)
+            //            createNewTerm = false;
+            //    }
+            //}
+            //if (createNewTerm)
+            //{
+            //    //var newTerm = simsIds.CreateTerm(incidentId, 1033, Guid.NewGuid());
+            //    //ctx.Load(newTerm);
+            //    //await ctx.ExecuteQueryAsync();
+            //}
 
         }
 

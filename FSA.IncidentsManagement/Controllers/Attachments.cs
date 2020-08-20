@@ -26,15 +26,13 @@ namespace FSA.IncidentsManagement.Controllers
         private readonly ITokenAcquisition tkns;
         private readonly ISIMSManager sims;
         private readonly IFSAAttachments attachments;
-        private readonly IFSATermStore termStore;
 
-        public AttachmentsController(ILogger<AttachmentsController> log, ITokenAcquisition tkns, ISIMSManager sims, IFSAAttachments attachments, IFSATermStore termStore)
+        public AttachmentsController(ILogger<AttachmentsController> log, ITokenAcquisition tkns, ISIMSManager sims, IFSAAttachments attachments)
         {
             this.log = log;
             this.tkns = tkns;
             this.sims = sims;
             this.attachments = attachments;
-            this.termStore = termStore;
         }
 
         [HttpPost("Incident")]

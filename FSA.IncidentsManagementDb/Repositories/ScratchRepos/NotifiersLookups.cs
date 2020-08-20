@@ -31,7 +31,7 @@ namespace FSA.IncidentsManagementDb.Repositories.ScratchRepos
             return null;
         }
 
-        public async Task<IEnumerable<OrganisationLookup>> GetAll()
+        public async Task<IEnumerable<OrganisationLookup>> GetAllAsync()
         {
             return await this.ctx.Notifiers.AsNoTracking()
                  .Include(o => o.Organisation)
@@ -43,7 +43,19 @@ namespace FSA.IncidentsManagementDb.Repositories.ScratchRepos
                  }).ToListAsync();
         }
 
-        public async Task<OrganisationLookup> GetById(int id)
+        public IEnumerable<OrganisationLookup> GetAll()
+        {
+            return this.ctx.Notifiers.AsNoTracking()
+                 .Include(o => o.Organisation)
+                 .Where(o => o.NotifierTypeId != 2)
+                 .Select(o => new OrganisationLookup
+                 {
+                     Id = o.Id,
+                     Name = o.Organisation.Title
+                 }).ToList();
+        }
+
+        public async Task<OrganisationLookup> GetByIdAsync(int id)
         {
             var itm = await this.ctx.Notifiers.AsNoTracking()
                .Include(o => o.Organisation)
