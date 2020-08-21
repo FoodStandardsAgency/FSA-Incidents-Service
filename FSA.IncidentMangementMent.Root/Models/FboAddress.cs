@@ -6,7 +6,7 @@ namespace FSA.IncidentsManagement.Root.Models
 {
     public class FboAddress : SimsAddress
     {
-        public FboTypes FboTypes { get; set; }
+        //public FboTypes FboTypes { get; set; }
         public int FboId{get;set;}
     }
 }

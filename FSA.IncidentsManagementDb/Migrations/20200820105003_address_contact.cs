@@ -17,17 +17,17 @@ namespace FSA.IncidentsManagementDb.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),
-                    Modified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    CreatedBy = table.Column<string>(maxLength: 70, nullable: false),
-                    Created = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true),
                     AddressId = table.Column<int>(nullable: false),
                     Firstname = table.Column<string>(maxLength: 100, nullable: false),
                     Surname = table.Column<string>(maxLength: 100, nullable: false),
                     TelephoneNumber = table.Column<string>(nullable: true),
                     EmailAddress = table.Column<string>(nullable: true),
-                    IsMain = table.Column<bool>(nullable: false)
+                    IsMain = table.Column<bool>(nullable: false),
+                    ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),
+                    Modified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
+                    CreatedBy = table.Column<string>(maxLength: 70, nullable: false),
+                    Created = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
+                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true),
                 },
                 constraints: table =>
                 {

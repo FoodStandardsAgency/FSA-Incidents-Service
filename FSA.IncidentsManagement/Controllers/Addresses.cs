@@ -1,6 +1,7 @@
 ﻿using FSA.IncidentsManagement.Misc;
 using FSA.IncidentsManagement.Models;
 using FSA.IncidentsManagement.Root.Contracts;
+using FSA.IncidentsManagement.Root.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Azure;
@@ -43,6 +44,19 @@ namespace FSA.IncidentsManagement.Controllers
                 _=>BadRequest("Unknown address issues")
             };   
         }
+
+        [HttpPost("Add")]
+        [SwaggerOperation(Summary = "Add new Address")]
+        [ProducesResponseType(typeof(SimsAddress), 200)]
+        [ProducesResponseType(500)]
+        [Produces("application/json")]
+        public async Task<IActionResult> AddFboAddress([FromBody] SimsAddress newAddress)
+        {
+            var createdAddress = await fsaData.Addresses.Add(newAddress);
+            return new OkObjectResult(createdAddress);
+        }
+
+
 
         [HttpPost("Fbo")]
         [SwaggerOperation(Summary = "Add new Address and new fbo")]

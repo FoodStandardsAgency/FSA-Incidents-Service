@@ -251,7 +251,6 @@ namespace FSA.IncidentsManagementDb.Repositories
             if (dbItem.IncidentStatusId == (int)IncidentStatus.Closed)
                 dbItem.IncidentClosed = DateTime.UtcNow;
 
-
             var updatedDbItem = this.ctx.Incidents.Update(dbItem);
             await this.ctx.SaveChangesAsync();
             return updatedDbItem.Entity.ToClient();
@@ -312,9 +311,9 @@ namespace FSA.IncidentsManagementDb.Repositories
                         .Include(i => i.IncidentType)
                         .Include(i => i.ProductType)
                         .Include(i => i.AdminLead)
-                        .Include(i => i.Notifier).ThenInclude(o => o.Organisation)
-                        .Include(i => i.LeadLocalAuthority).ThenInclude(o => o.Organisation)
-                        .Include(i => i.PrincipalFBO).ThenInclude(o => o.Organisation)
+                        .Include(i => i.Notifier) //.ThenInclude(o => o.Organisation)
+                        .Include(i => i.LeadLocalAuthority) //.ThenInclude(o => o.Organisation)
+                        .Include(i => i.PrincipalFBO)
                         .Include(i => i.ContactMethod)
                         .Include(i => i.IncidentStatus)
                         .SingleAsync(p => p.Id == id);
@@ -368,7 +367,7 @@ namespace FSA.IncidentsManagementDb.Repositories
             var qry = this.ctx.Incidents.AsNoTracking()
                        .Include(i => i.Priority)
                        .Include(i => i.IncidentStatus)
-                       .Include(i => i.Notifier).ThenInclude(o => o.Organisation)
+                       .Include(i => i.Notifier) // .ThenInclude(o => o.Organisation)
                        .Include(i => i.ToLinks)
                        .Include(i => i.FromLinks).AsQueryable();
 
@@ -403,9 +402,9 @@ namespace FSA.IncidentsManagementDb.Repositories
             var startRecord = (startPage - 1) * PageSize;
             var results = await qry.OrderByDescending(i => i.IncidentStatus.SortOrder)
                                     .ThenBy(i => i.IncidentCreated)
-                                   .Skip(startRecord)
-                                   .Take(PageSize)
-                                   .Select(i => i.ToDashboard()).ToListAsync();
+                                    .Skip(startRecord)
+                                    .Take(PageSize)
+                                    .Select(i => i.ToDashboard()).ToListAsync();
             return new PagedResult<IncidentDashboardView>(results, totalRecords);
         }
 
@@ -455,7 +454,7 @@ namespace FSA.IncidentsManagementDb.Repositories
                 var wrd = $"%{itm}%";
                 allClauses.Add(i => EF.Functions.Like(i.IncidentTitle, wrd));
                 allClauses.Add(i => EF.Functions.Like(i.Priority.Title, wrd));
-                allClauses.Add(i => EF.Functions.Like(i.Notifier.Organisation.Title, wrd));
+                allClauses.Add(i => EF.Functions.Like(i.Notifier.Title, wrd));
                 allClauses.Add(i => EF.Functions.Like(i.IncidentStatus.Title, wrd));
             }
             // full list of serches on id

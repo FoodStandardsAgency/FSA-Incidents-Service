@@ -11,6 +11,8 @@ namespace FSA.IncidentsManagementDb.Builders
         public override void Configure(EntityTypeBuilder<StakeholderDb> builder)
         {
             base.Configure(builder);
+            builder.Property(o => o.FirstNameDept).IsRequired().HasMaxLength(200);
+            builder.Property(o => o.Surname).HasMaxLength(140);
         }
     }
 }

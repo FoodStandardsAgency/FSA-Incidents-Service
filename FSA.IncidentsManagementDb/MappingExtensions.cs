@@ -278,21 +278,21 @@ namespace FSA.IncidentsManagementDb
                 category: @this.IncidentType.Title,
                 signalStatus: @this.SignalStatus?.Title ?? "",
                 incidentStatus: @this.IncidentStatus.Title,
-                notifier: @this.NotifierId.HasValue ? @this.Notifier.Organisation.Title : "Unassigned", // allOrgs.ContainsKey(@this.NotifierId ?? 0) ? allOrgs[@this.NotifierId ?? 0].Name : "",
+                notifier: @this.NotifierId.HasValue ? @this.Notifier.Title : "Unassigned", // allOrgs.ContainsKey(@this.NotifierId ?? 0) ? allOrgs[@this.NotifierId ?? 0].Name : "",
                 priority: @this.Priority?.Title ?? "",
                 classification: @this.Classification?.Title ?? "",
                 dataSource: @this.DataSource?.Title ?? "",
                 productType: @this.ProductType?.Title ?? "",
-                leadLocalAuthority: @this.LeadLocalAuthorityId.HasValue ? @this.LeadLocalAuthority.Organisation.Title : "Unassigned",
+                leadLocalAuthority: @this.LeadLocalAuthorityId.HasValue ? @this.LeadLocalAuthority.Title : "Unassigned",
                 adminLead: @this.AdminLeadId.HasValue && @this.AdminLeadId != 0 ? @this.AdminLead.Title : "Unassigned",
                 deathIllness: @this.DeathIllness?.Title ?? "",
-                principalFBO: @this.PrincipalFBO?.Organisation.Title ?? "",
+                principalFBO: @this.PrincipalFBO?.Title ?? "",
                 fBOEmail: "", //@this.PrincipalFBO?.Organisation.EmailAddress ?? "",
-                fBOPhone: @this.PrincipalFBO?.Organisation.TelephoneNumber ?? "",
-                fBOAddressLine1: @this.PrincipalFBO?.Organisation.AddressLine1 ?? "",
-                fBOAddressLine2: @this.PrincipalFBO?.Organisation.AddressLine2 ?? "",
-                fBOAddressTown: @this.PrincipalFBO?.Organisation.TownCity ?? "",
-                fBOAddressPostcode: @this.PrincipalFBO?.Organisation.PostCode ?? ""
+                fBOPhone: @this.PrincipalFBO?.TelephoneNumber ?? "",
+                fBOAddressLine1: @this.PrincipalFBO?.AddressLine1 ?? "",
+                fBOAddressLine2: @this.PrincipalFBO?.AddressLine2 ?? "",
+                fBOAddressTown: @this.PrincipalFBO?.TownCity ?? "",
+                fBOAddressPostcode: @this.PrincipalFBO?.PostCode ?? ""
                 );
         }
 
@@ -428,7 +428,7 @@ namespace FSA.IncidentsManagementDb
             ProductType = @this.ProductType.Title,
             LastUpdated = @this.Modified,
             BatchCodes = @this.BatchCodes,
-            AddressNames = @this.RelatedFBOs?.Select(p => p.FBO.Organisation.Title).ToList() ?? new List<string>()
+            AddressNames = @this.RelatedFBOs?.Select(p => p.Address.Title).ToList() ?? new List<string>()
         };
 
         public static void ToUpdateDb(this Product @this, ProductDb product)
@@ -586,7 +586,7 @@ namespace FSA.IncidentsManagementDb
                 CommonId = @this.Id,
                 Priority = @this.Priority?.Title ?? "TBC",
                 Title = @this.IncidentTitle,
-                Notifier = @this.Notifier?.Organisation == null ? "Unassigned" : @this.Notifier?.Organisation.Title,
+                Notifier = @this.Notifier == null ? "Unassigned" : @this.Notifier?.Title,
                 LeadOfficer = @this.LeadOfficer ?? "Unassigned",
                 Status = @this.IncidentStatus?.Title ?? "UNK",
                 Updated = @this.Modified,
@@ -616,7 +616,7 @@ namespace FSA.IncidentsManagementDb
             TelephoneNumber = @this.Organisation.TelephoneNumber,
             ContactMethodId = @this.Organisation.ContactMethodId,
             FboId = @this.Id,
-            FboTypes = @this.FBOTypeId
+            //FboTypes = @this.FBOTypeId
         };
 
         public static NotifierAddress ToClient(this NotifierDb @this) => new NotifierAddress
@@ -641,7 +641,7 @@ namespace FSA.IncidentsManagementDb
             DiscriminatorId = @this.StakeholderDiscriminatorId,
             Email = @this.Email,
             Phone = @this.Phone,
-            FirstName = @this.FirstName,
+            FirstName = @this.FirstNameDept,
             Surname = @this.Surname,
             IncidentId = @this.IncidentId,
             Role = @this.Role,
@@ -652,7 +652,7 @@ namespace FSA.IncidentsManagementDb
             entity.StakeholderDiscriminatorId = @this.DiscriminatorId;
             entity.Email = @this.Email;
             entity.Phone = @this.Phone;
-            entity.FirstName = @this.FirstName;
+            entity.FirstNameDept = @this.FirstName;
             entity.Surname = @this.Surname;
             entity.IncidentId = @this.IncidentId;
             entity.Role = @this.Role;
@@ -664,7 +664,7 @@ namespace FSA.IncidentsManagementDb
             StakeholderDiscriminatorId = @this.DiscriminatorId,
             Email = @this.Email,
             Phone = @this.Phone,
-            FirstName = @this.FirstName,
+            FirstNameDept = @this.FirstName,
             Surname = @this.Surname,
             IncidentId = @this.IncidentId,
             Role = @this.Role,

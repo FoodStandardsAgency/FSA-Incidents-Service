@@ -4,14 +4,16 @@ using FSA.IncidentsManagementDb;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FSA.IncidentsManagementDb.Migrations
 {
     [DbContext(typeof(FSADbContext))]
-    partial class FSADbContextModelSnapshot : ModelSnapshot
+    [Migration("20200820105003_address_contact")]
+    partial class address_contact
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,7 +79,7 @@ namespace FSA.IncidentsManagementDb.Migrations
 
                     b.HasIndex("AddressId");
 
-                    b.ToTable("AddressContacts");
+                    b.ToTable("AddressContactDb");
                 });
 
             modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.AddressDb", b =>
@@ -4896,6 +4898,9 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasColumnType("nvarchar(70)")
                         .HasMaxLength(70);
 
+                    b.Property<int>("FBOTypeId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Modified")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
@@ -5888,7 +5893,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("AddressId")
+                    b.Property<int>("FBOId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Created")
@@ -5900,12 +5905,6 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(70)")
                         .HasMaxLength(70);
-
-                    b.Property<int?>("FBODbId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FBOTypeId")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("Modified")
                         .ValueGeneratedOnAdd()
@@ -5922,11 +5921,9 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
-                    b.HasKey("ProductId", "AddressId");
+                    b.HasKey("ProductId", "FBOId");
 
-                    b.HasIndex("AddressId");
-
-                    b.HasIndex("FBODbId");
+                    b.HasIndex("FBOId");
 
                     b.ToTable("ProductFBOItems");
                 });
@@ -6545,10 +6542,8 @@ namespace FSA.IncidentsManagementDb.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FirstNameDept")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("IncidentId")
                         .HasColumnType("int");
@@ -6573,8 +6568,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Surname")
-                        .HasColumnType("nvarchar(140)")
-                        .HasMaxLength(140);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("Timestamp")
                         .IsConcurrencyToken()
@@ -6973,7 +6967,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .WithMany()
                         .HasForeignKey("NotifierId");
 
-                    b.HasOne("FSA.IncidentsManagementDb.Entities.AddressDb", "PrincipalFBO")
+                    b.HasOne("FSA.IncidentsManagementDb.Entities.FBODb", "PrincipalFBO")
                         .WithMany()
                         .HasForeignKey("PrincipalFBOId");
 
@@ -7090,15 +7084,11 @@ namespace FSA.IncidentsManagementDb.Migrations
 
             modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.ProductFBODb", b =>
                 {
-                    b.HasOne("FSA.IncidentsManagementDb.Entities.AddressDb", "Address")
-                        .WithMany()
-                        .HasForeignKey("AddressId")
+                    b.HasOne("FSA.IncidentsManagementDb.Entities.FBODb", "FBO")
+                        .WithMany("RelatedProducts")
+                        .HasForeignKey("FBOId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
-
-                    b.HasOne("FSA.IncidentsManagementDb.Entities.FBODb", null)
-                        .WithMany("RelatedProducts")
-                        .HasForeignKey("FBODbId");
 
                     b.HasOne("FSA.IncidentsManagementDb.Entities.ProductDb", "Product")
                         .WithMany("RelatedFBOs")

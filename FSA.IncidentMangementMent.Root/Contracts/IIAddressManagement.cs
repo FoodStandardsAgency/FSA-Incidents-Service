@@ -20,6 +20,7 @@ namespace FSA.IncidentsManagement.Root.Contracts
         Task<NotifierAddress> GetNotifier(int NotifierId);
 
         Task<SimsAddress> Get(int OrganisationId);
+
         Task<SimsAddress> Add(SimsAddress address);
         Task<SimsAddress> Update(SimsAddress address);
 

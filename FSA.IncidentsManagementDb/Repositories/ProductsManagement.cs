@@ -54,17 +54,16 @@ namespace FSA.IncidentsManagementDb.Repositories
             return productDb.ToClientDisplay();
         }
 
-        public async Task<IEnumerable<FboAddress>> GetProductAddresses(int productId)
+        public async Task<IEnumerable<SimsAddress>> GetProductAddresses(int productId)
         {
             var productDb = await ctx.Products.AsNoTracking()
                                     .Include(o => o.RelatedFBOs)
-                                    .ThenInclude(o => o.FBO)
-                                    .ThenInclude(o => o.Organisation)
+                                    .ThenInclude(o => o.Address)
                                     .FirstAsync(p => p.Id == productId);
 
             var fboData = productDb.RelatedFBOs.ToList();
             //  var organisations = fboData.Select(o => o.FBO.Organisation);
-            return fboData.Select(o => o.FBO.ToClient());
+            return fboData.Select(o => o.Address.ToClient());
         }
 
         public async Task<ProductDetail> GetProductDetail(int productId)
@@ -86,7 +85,7 @@ namespace FSA.IncidentsManagementDb.Repositories
                    .Include(o => o.AmountUnitType)
                    .Include(o => o.PackSizes)
                    .Include(o => o.RelatedFBOs)
-                   .ThenInclude(o => o.FBO).ThenInclude(o => o.Organisation)
+                   .ThenInclude(o => o.Address)
                     .Where(p => p.IncidentId == incidentId);
             var allProducts = await items.Select(o => o.ToClient()).ToListAsync();
             return allProducts.ToList();
@@ -123,25 +122,25 @@ namespace FSA.IncidentsManagementDb.Repositories
             var startRecord = pageSize * (startPage - 1);
 
             var totalRecords = ctx.Products.AsNoTracking()
-                    .Include(o => o.RelatedFBOs).ThenInclude(o => o.FBO).ThenInclude(o => o.Organisation)
+                    .Include(o => o.RelatedFBOs).ThenInclude(o => o.Address)
                     .Include(o => o.ProductType).Where(o => o.IncidentId == incidentId).Count();
 
             var items = await ctx.Products.AsNoTracking()
-                    .Include(o => o.RelatedFBOs).ThenInclude(o => o.FBO).ThenInclude(o => o.Organisation)
+                    .Include(o => o.RelatedFBOs).ThenInclude(o => o.Address)
                     .Include(o => o.ProductType).Where(o => o.IncidentId == incidentId)
                     .Skip(startRecord).Take(pageSize).ToListAsync();
 
             return new PagedResult<ProductDashboard>(items.ToDashboard(), totalRecords);
         }
 
-        public async Task AssignFbo(int productId, int FboId)
+        public async Task AssignFbo(int productId, int AddressId)
         {
             // need to check to see if the incident has already been closed.
             if (IsProductIncidentClosed(productId)) throw new IncidentClosedException("This incident is closed.");
 
             ctx.ProductFBOItems.Add(new Entities.ProductFBODb
             {
-                FBOId = FboId,
+                AddressId = AddressId,
                 ProductId = productId
             });
             await ctx.SaveChangesAsync();

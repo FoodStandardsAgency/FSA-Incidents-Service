@@ -75,17 +75,17 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpGet("Addresses/{productId}")]
         [SwaggerOperation(Description =  "Fetch product addresses.")]
-        [ProducesResponseType(typeof(List<FboAddressModel>), 200)]
+        [ProducesResponseType(typeof(List<SimsAddress>), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetProductAddresses(int productId)
         {
             var addresses = await this.simsManager.Products.GetProductAddresses(productId);
-            return new OkObjectResult(addresses.ToWeb().ToList());
+            return new OkObjectResult(addresses.ToList());
         }
 
         [HttpGet("Dashboard")]
         [SwaggerOperation(Description =  "Fetch product addresses.")]
-        [ProducesResponseType(typeof(PagedResult<FboAddress>), 200)]
+        [ProducesResponseType(typeof(PagedResult<ProductDashboard>), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetProductDashboard([FromQuery]int incidentId, [FromQuery] int pageSize=10, [FromQuery]int pageNo=1)
         {
@@ -96,7 +96,7 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpPost("AssignFbo")]
         [SwaggerOperation(Description = "Assigns fbo to product.")]
-        [ProducesResponseType(typeof(PagedResult<FboAddress>), 200)]
+        [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> AssignFbo([Required] AssignItemToFbo assignObj )
         {

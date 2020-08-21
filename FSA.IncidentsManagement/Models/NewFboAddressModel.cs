@@ -12,7 +12,7 @@ namespace FSA.IncidentsManagement.Models
     public class FboAddressModel
     {
         public int Id { get; set; }
-        public IEnumerable<int> FboTypes { get; set; }
+        //public IEnumerable<int> FboTypes { get; set; }
         public SimsAddress Address {get;set;}
     }
 }

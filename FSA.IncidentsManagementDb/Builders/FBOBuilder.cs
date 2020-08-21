@@ -15,9 +15,6 @@ namespace FSA.IncidentsManagementDb.Builders
             base.Configure(builder);
             
             builder.UseTemporalTable();
-            // This field is a flags binary field so no relationship becaredul.
-            builder.Property(o => o.FBOTypeId)
-                .HasConversion(o => o, o=>(FboTypes)o);
         }
     }
 }

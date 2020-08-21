@@ -135,6 +135,37 @@ namespace FSA.UnitTests.Db
             }
         }
 
+        [Fact(DisplayName = "Update incident, set FBO from existing address")]
+        public async Task UpdateIncidentSetFbo()
+        {
+            using (var ctx = this.Fixture.CreateContext())
+            {
+                ISIMSManager incidents = new SIMSDataManager(ctx, userId);
+                BaseIncident incident = await incidents.Incidents.Get(22);
+                // Ensure we have a lead officer and we are open
+                var changedIncident = incident
+                                        .WithPrincipalFbo(16);
+                var updateIncident = await incidents.Incidents.Update(changedIncident);
+                Assert.True(updateIncident.PrincipalFBOId == 16);
+            }
+        }
+
+        [Fact(DisplayName = "Update incident, Clear FBO from existing address")]
+        public async Task UpdateIncidentClearFbo()
+        {
+            using (var ctx = this.Fixture.CreateContext())
+            {
+                ISIMSManager incidents = new SIMSDataManager(ctx, userId);
+                BaseIncident incident = await incidents.Incidents.Get(22);
+                // Ensure we have a lead officer and we are open
+                var changedIncident = incident
+                                        .WithPrincipalFbo(16);
+                var updateIncident = await incidents.Incidents.Update(changedIncident);
+
+                var updatedUpdatedIncident = await incidents.Incidents.Update(updateIncident.WithPrincipalFbo(null));
+                Assert.True(updatedUpdatedIncident.PrincipalFBOId == null);
+            }
+        }
 
         [Fact]
         public async Task RetrieveUpdateSaveLeadOfficer()
@@ -292,14 +323,8 @@ namespace FSA.UnitTests.Db
                 {
                     ISIMSManager sims = new SIMSDataManager(ctx, userId);
                     var data = await sims.Incidents.Get(incidentId);
-                    var itm = await sims.Incidents.Update(data.WithIncidentStatus(2));
-                    if (itm.StatusId != (int)IncidentStatus.Closed)
-                    {
-                        throw new ArgumentException("This record is not closed!");
-                    }
-                    await Assert.ThrowsAsync<IncidentClosedException>(async () => await sims.Incidents.AddLinks(45, new int[] { 19, 100, incidentId, 55 }, "No reason to take the bait"));
-                    var displayBox = await sims.Incidents.DashboardIncidentLinks(incidentId);
-                    var matchedItem = displayBox.FirstOrDefault(o => o.CommonId == 19);
+                    await Assert.ThrowsAsync<IncidentClosedException>(async () => await sims.Incidents.Update(data.WithIncidentStatus(2)));
+
                 }
 
         }

@@ -26,6 +26,7 @@ namespace FSA.IncidentsManagementDb
         internal DbSet<IncidentOMITGroupDb> IncidentOMITGroups { get; set; }
 
         internal DbSet<AddressDb> Addresses { get; set; }
+        internal DbSet<AddressContactDb> AddressContacts { get; set; }
         //internal DbSet<OrganisationRoleDb> OrganisationRoles { get; set; }
         internal DbSet<NotifierTypeDb> NotifierTypes { get; set; }
 

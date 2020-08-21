@@ -29,10 +29,10 @@ namespace FSA.IncidentsManagementDb.Entities
         public int IncidentStatusId { get; set; }
         public IncidentStatusDb IncidentStatus { get; set; }
         public int? NotifierId { get; set; }
-        public NotifierDb Notifier { get; set; }
+        public AddressDb Notifier { get; set; }
 
         public int? PrincipalFBOId { get; set; }
-        public FBODb PrincipalFBO { get; set; }
+        public AddressDb PrincipalFBO { get; set; }
         public int PriorityId { get; set; }
         public PriorityDb Priority { get; set; }
         public int ClassificationId { get; set; }
@@ -50,7 +50,7 @@ namespace FSA.IncidentsManagementDb.Entities
         public string FieldOfficer { get; set; }
 
         public int? LeadLocalAuthorityId { get; set; }
-        public NotifierDb LeadLocalAuthority { get; set; }
+        public AddressDb LeadLocalAuthority { get; set; }
         public bool LAAdvised { get; set; }
         public int DeathIllnessId { get; set; }
         public DeathIllnessDb DeathIllness { get; set; }
@@ -62,7 +62,5 @@ namespace FSA.IncidentsManagementDb.Entities
         public ICollection<ProductDb> Products { get; set; }
         public ICollection<IncidentLinkDb> FromLinks { get; set; }
         public ICollection<IncidentLinkDb> ToLinks { get; set; }
-
-        
     }
 }

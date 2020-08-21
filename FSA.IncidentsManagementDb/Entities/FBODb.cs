@@ -8,7 +8,6 @@ namespace FSA.IncidentsManagementDb.Entities
     internal class FBODb : BaseEntityDb
     {
         public int Id { get; set; }
-        public FboTypes FBOTypeId { get; set; }
         //public FBOTypeDb FBOType { get; set; }
         public int OrganisationId { get; set; }
         public AddressDb Organisation { get; set; }

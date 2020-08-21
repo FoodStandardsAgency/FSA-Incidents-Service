@@ -45,7 +45,7 @@ namespace FSA.IncidentsManagementDb.Repositories
             var dbAddress = newAddress.ToDb();
             var dbFBO = new FBODb
             {
-                FBOTypeId = newAddress.FboTypes,
+                //FBOTypeId = newAddress.FboTypes,
                 Organisation = dbAddress
             };
             this.ctx.FBOs.Add(dbFBO);
@@ -64,19 +64,20 @@ namespace FSA.IncidentsManagementDb.Repositories
 
         public async Task<FboAddress> UpdateFbo(FboAddress address)
         {
-            // update the types
-            var fbo = ctx.FBOs.Find(address.FboId);
-            fbo.FBOTypeId = address.FboTypes;
-            var org = ctx.Addresses.Find(fbo.OrganisationId);
-            // update the address
-            address.ToDb(org);
+            //// update the types
+            //var fbo = ctx.FBOs.Find(address.FboId);
+            //fbo.FBOTypeId = address.FboTypes;
+            //var org = ctx.Addresses.Find(fbo.OrganisationId);
+            //// update the address
+            //address.ToDb(org);
 
-            ctx.Addresses.Update(org);
-            ctx.FBOs.Update(fbo);
-            await ctx.SaveChangesAsync();
-            return (await ctx.FBOs
-                    .Include(o => o.Organisation)
-                    .AsNoTracking().FirstAsync(f => f.Id == address.FboId)).ToClient();
+            //ctx.Addresses.Update(org);
+            //ctx.FBOs.Update(fbo);
+            //await ctx.SaveChangesAsync();
+            //return (await ctx.FBOs
+            //        .Include(o => o.Organisation)
+            //        .AsNoTracking().FirstAsync(f => f.Id == address.FboId)).ToClient();
+            throw new NotImplementedException();
         }
 
         public async Task<int> AddNotifier(NotifierTypes notifier, SimsAddress newAddress)
@@ -144,7 +145,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         {
             var ents = addressesId.Select(o =>new FBODb
             {
-                FBOTypeId = fboTypes,
+                //FBOTypeId = fboTypes,
                 OrganisationId = o
             });
             await ctx.FBOs.AddRangeAsync(ents);
@@ -155,7 +156,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         {
             var ent = ctx.FBOs.Add(new FBODb
             {
-                FBOTypeId = fboTypes,
+                // FBOTypeId = fboTypes,
                 OrganisationId = addressId
             });
             await ctx.SaveChangesAsync();

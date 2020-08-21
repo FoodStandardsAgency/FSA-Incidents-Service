@@ -120,7 +120,7 @@ namespace FSA.IncidentsManagement.Models
             Title = @this.Address.Title,
 
             FboId = @this.Id,
-            FboTypes = (FboTypes)@this.FboTypes.ToList().Sum()
+           // FboTypes = (FboTypes)@this.FboTypes.ToList().Sum()
         };
 
         public static FboAddressWebModel ToWeb(this FboAddress @this) => new FboAddressWebModel
@@ -139,7 +139,7 @@ namespace FSA.IncidentsManagement.Models
                 OrganisationRoleId = @this.OrganisationRoleId ?? 0,
                 Title = @this.Title,
             },
-            FboTypes = Utilities.SelectedFlags(@this.FboTypes),
+          //  FboTypes = Utilities.SelectedFlags(@this.FboTypes),
             Id = @this.FboId
         };
 
