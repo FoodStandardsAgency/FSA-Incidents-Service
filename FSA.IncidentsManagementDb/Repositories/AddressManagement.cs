@@ -27,11 +27,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         public async Task<SimsAddress> Add(SimsAddress address)
         {
             var newDbItem = address.ToDb();
-            newDbItem.Contacts.Add(new AddressContactDb
-            {
-                Name = address.MainContact,
-                EmailAddress = address.TelephoneNumber,
-            });
+            //newDbItem.Contacts = address.Contacts.ToDb().ToList();
             this.ctx.Addresses.Add(newDbItem);
             await this.ctx.SaveChangesAsync();
             return newDbItem.ToClient();
@@ -44,46 +40,7 @@ namespace FSA.IncidentsManagementDb.Repositories
             await this.ctx.SaveChangesAsync();
         }
 
-        public async Task<FboAddress> AddFbo(FboAddress newAddress)
-        {
-            // create a new db Address
-            var dbAddress = newAddress.ToDb();
-            var dbFBO = new FBODb
-            {
-                //FBOTypeId = newAddress.FboTypes,
-                Organisation = dbAddress
-            };
-            this.ctx.FBOs.Add(dbFBO);
-            await ctx.SaveChangesAsync();
-            return dbFBO.ToClient();
-        }
 
-        public async Task<FboAddress> GetFbo(int FboId)
-        {
-            var fboOrg = await this.ctx.FBOs
-                    .Include(o => o.Organisation)
-                    .AsNoTracking()
-                    .FirstAsync(o => o.Id == FboId);
-            return fboOrg.ToClient();
-        }
-
-        public async Task<FboAddress> UpdateFbo(FboAddress address)
-        {
-            //// update the types
-            //var fbo = ctx.FBOs.Find(address.FboId);
-            //fbo.FBOTypeId = address.FboTypes;
-            //var org = ctx.Addresses.Find(fbo.OrganisationId);
-            //// update the address
-            //address.ToDb(org);
-
-            //ctx.Addresses.Update(org);
-            //ctx.FBOs.Update(fbo);
-            //await ctx.SaveChangesAsync();
-            //return (await ctx.FBOs
-            //        .Include(o => o.Organisation)
-            //        .AsNoTracking().FirstAsync(f => f.Id == address.FboId)).ToClient();
-            throw new NotImplementedException();
-        }
 
         public async Task<int> AddNotifier(NotifierTypes notifier, SimsAddress newAddress)
         {
@@ -104,7 +61,11 @@ namespace FSA.IncidentsManagementDb.Repositories
             var addr = await ctx.Addresses.AsNoTracking().FirstAsync(a => a.Id == OrganisationId);
             return addr.ToClient();
         }
-
+        /// <summary>
+        /// TO DO !!!!
+        /// </summary>
+        /// <param name="address"></param>
+        /// <returns></returns>
         public async Task<SimsAddress> Update(SimsAddress address)
         {
             var dbItem = await ctx.Addresses.FindAsync(address.Id);
@@ -217,5 +178,47 @@ namespace FSA.IncidentsManagementDb.Repositories
 
             return await qryAddr.Select(o => o.ToClient()).ToListAsync();
         }
+
+        public async Task<FboAddress> AddFbo(FboAddress newAddress)
+        {
+            // create a new db Address
+            var dbAddress = newAddress.ToDb();
+            var dbFBO = new FBODb
+            {
+                //FBOTypeId = newAddress.FboTypes,
+                Organisation = dbAddress
+            };
+            this.ctx.FBOs.Add(dbFBO);
+            await ctx.SaveChangesAsync();
+            return dbFBO.ToClient();
+        }
+
+        public async Task<FboAddress> GetFbo(int FboId)
+        {
+            var fboOrg = await this.ctx.FBOs
+                    .Include(o => o.Organisation)
+                    .AsNoTracking()
+                    .FirstAsync(o => o.Id == FboId);
+            return fboOrg.ToClient();
+        }
+
+        public async Task<FboAddress> UpdateFbo(FboAddress address)
+        {
+            //// update the types
+            //var fbo = ctx.FBOs.Find(address.FboId);
+            //fbo.FBOTypeId = address.FboTypes;
+            //var org = ctx.Addresses.Find(fbo.OrganisationId);
+            //// update the address
+            //address.ToDb(org);
+
+            //ctx.Addresses.Update(org);
+            //ctx.FBOs.Update(fbo);
+            //await ctx.SaveChangesAsync();
+            //return (await ctx.FBOs
+            //        .Include(o => o.Organisation)
+            //        .AsNoTracking().FirstAsync(f => f.Id == address.FboId)).ToClient();
+            throw new NotImplementedException();
+        }
     }
+
 }

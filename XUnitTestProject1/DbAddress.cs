@@ -4,6 +4,8 @@ using FSA.IncidentsManagementDb;
 using FSA.IncidentsManagementDb.Repositories;
 using FSA.UnitTests.Misc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Graph;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,7 +33,7 @@ namespace FSA.UnitTests.Db
             userId3 = seedIn.userIds[2];
             miller = seedIn.userIds[3];
 
-            this.Config = System.Text.Json.JsonSerializer.Deserialize<ConfigFile>(File.OpenText("./config.json").ReadToEnd());
+            this.Config = System.Text.Json.JsonSerializer.Deserialize<ConfigFile>(System.IO.File.OpenText("./config.json").ReadToEnd());
             ctx = new FSADbContext(new DbContextOptionsBuilder().UseSqlServer(Config.dbConn).Options);
             simsData = new SIMSDataManager(ctx, userId);
         }
@@ -43,14 +45,15 @@ namespace FSA.UnitTests.Db
             {
                 Title = "Test - New FBO COnsignor Etrader ",
                 //FboTypes = FboTypes.Consignor | FboTypes.E_trader,
-                MainContact = "Terry the data",
                 AddressLine1 = "Address line 1",
                 AddressLine2 = "Address line 2",
                 PostCode = "Postoce",
                 TownCity = "Town City",
                 CountryId = 201,
                 County = "Counry",
-                TelephoneNumber = ""
+                TelephoneNumber = "",
+                Contacts = new List<SimsAddressContact> { new SimsAddressContact { EmailAddress = "terry@address", TelephoneNumber = "01234567890", Name = "Terry the data", IsMain = true } }
+
             };
 
             var newaddress = await simsData.Addresses.AddFbo(orga);
@@ -64,14 +67,15 @@ namespace FSA.UnitTests.Db
             {
                             
                 Title = "Test - New orgnaisations",
-                MainContact = "New-Org Smity",
+                //MainContact = "New-Org Smity",
                 AddressLine1 = "Address line 1",
                 AddressLine2 = "Address line 2",
                 PostCode = "Test post",
                 TownCity = "Test Town City",
                 CountryId = 201,
                 County = "Country",
-                TelephoneNumber = "01234567890"
+                TelephoneNumber = "01234567890",
+                Contacts = new List<SimsAddressContact> { new SimsAddressContact { EmailAddress = "email@address", TelephoneNumber ="01234567890", Name="New-Org Smity", IsMain=true }  }
             };
         }
 

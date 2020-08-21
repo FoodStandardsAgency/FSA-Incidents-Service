@@ -106,7 +106,7 @@ namespace FSA.IncidentsManagementDb
         {
             Id = @this.Id,
             Title = @this.Title,
-            MainContact = @this.MainContact,
+            //MainContact = @this.MainContact,
             AddressLine1 = @this.AddressLine1,
             AddressLine2 = @this.AddressLine2,
             TownCity = @this.TownCity,
@@ -130,15 +130,32 @@ namespace FSA.IncidentsManagementDb
             CountryId = @this.CountryId,
             PostCode = @this.PostCode,
             TelephoneNumber = @this.TelephoneNumber,
-            ContactMethodId = @this.ContactMethodId
+            ContactMethodId = @this.ContactMethodId,
+            Contacts = @this.Contacts.ToDb().ToList()
         };
 
+        public static AddressContactDb ToDb(this SimsAddressContact @this) => new AddressContactDb
+        {
+            Id = @this.Id,
+            AddressId = @this.AddressId,
+            EmailAddress = @this.EmailAddress,
+            TelephoneNumber = @this.TelephoneNumber,
+            Name = @this.Name,
+            IsMain = @this.IsMain
+        };
 
+        public static IEnumerable<AddressContactDb> ToDb(this IEnumerable<SimsAddressContact> @this)
+        {
+            foreach (var itm in @this)
+            {
+                yield return itm.ToDb();
+            }
+        }
 
         public static void ToDb(this SimsAddress @this, AddressDb entity)
         {
             entity.Title = @this.Title;
-            entity.MainContact = @this.MainContact;
+            //entity.MainContact = @this.MainContact;
             entity.AddressLine1 = @this.AddressLine1;
             entity.AddressLine2 = @this.AddressLine2;
             entity.TownCity = @this.TownCity;
@@ -606,7 +623,7 @@ namespace FSA.IncidentsManagementDb
         {
             Id = @this.Organisation.Id,
             Title = @this.Organisation.Title,
-            MainContact = @this.Organisation.MainContact,
+            //MainContact = @this.Organisation.MainContact,
             AddressLine1 = @this.Organisation.AddressLine1,
             AddressLine2 = @this.Organisation.AddressLine2,
             TownCity = @this.Organisation.TownCity,
@@ -623,7 +640,7 @@ namespace FSA.IncidentsManagementDb
         {
             Id = @this.Organisation.Id,
             Title = @this.Organisation.Title,
-            MainContact = @this.Organisation.MainContact,
+            //MainContact = @this.Organisation.MainContact,
             AddressLine1 = @this.Organisation.AddressLine1,
             AddressLine2 = @this.Organisation.AddressLine2,
             TownCity = @this.Organisation.TownCity,
@@ -649,7 +666,8 @@ namespace FSA.IncidentsManagementDb
             AddressId = @this.AddressId
         };
 
-        public static void ToUpdateDb(this Stakeholder @this, StakeholderDb entity){
+        public static void ToUpdateDb(this Stakeholder @this, StakeholderDb entity)
+        {
             entity.StakeholderDiscriminatorId = @this.DiscriminatorId;
             entity.Email = @this.Email;
             entity.Phone = @this.Phone;

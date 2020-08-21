@@ -203,7 +203,7 @@ namespace FSA.IncidentsManagement.Controllers
             var stakeholders = await this.fsaData.Incidents.GetStakeholders(incidentId);
             var addressItems = stakeholders.Where(o => o.AddressId.HasValue).Select(o => new { Id = o.Id, AddressId = o.AddressId.Value });
 
-            var addressList = new List<OrganisationAddress>();
+            var addressList = new List<SimsAddress>();
             foreach (var item in addressItems)
             {
                 var address = await fsaData.Addresses.Get(item.AddressId);
@@ -218,20 +218,6 @@ namespace FSA.IncidentsManagement.Controllers
                 return sHolder;
             }).ToList();
                 return new OkObjectResult(completedStakeholders);
-
-            //try
-            //{
-            //    var matchedAddress = await Task.WhenAll(taskList);
-                
-
-
-            //}
-            //catch (AggregateException ex)
-            //{
-            //    return new StatusCodeResult(StatusCodes.Status500InternalServerError);
-            //}
-
-
 
         }
 
