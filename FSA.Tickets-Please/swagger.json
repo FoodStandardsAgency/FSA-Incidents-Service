@@ -847,7 +847,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Stakeholder"
+                "$ref": "#/definitions/StakeholderModel"
               }
             }
           },
@@ -932,18 +932,12 @@
         ],
         "summary": "Remove a stakeholder to an incident",
         "operationId": "DeleteStakeholder",
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
         "parameters": [
           {
-            "in": "body",
-            "name": "body",
-            "schema": {
-              "$ref": "#/definitions/StakeholderModel"
-            }
+            "in": "query",
+            "name": "stakeholderId",
+            "type": "integer",
+            "format": "int32"
           }
         ],
         "responses": {
@@ -2756,42 +2750,6 @@
         }
       }
     },
-    "Stakeholder": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "incidentId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "firstName": {
-          "type": "string"
-        },
-        "surname": {
-          "type": "string"
-        },
-        "role": {
-          "type": "string"
-        },
-        "phone": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        },
-        "discriminatorId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "addressId": {
-          "format": "int32",
-          "type": "integer"
-        }
-      }
-    },
     "StakeholderModel": {
       "type": "object",
       "properties": {
@@ -2803,10 +2761,7 @@
           "format": "int32",
           "type": "integer"
         },
-        "firstName": {
-          "type": "string"
-        },
-        "surname": {
+        "name": {
           "type": "string"
         },
         "role": {
@@ -2816,6 +2771,9 @@
           "type": "string"
         },
         "email": {
+          "type": "string"
+        },
+        "govDept": {
           "type": "string"
         },
         "discriminatorId": {

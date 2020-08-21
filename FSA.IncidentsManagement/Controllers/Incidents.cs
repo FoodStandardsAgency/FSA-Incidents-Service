@@ -92,7 +92,6 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(typeof(BaseIncident), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
-
         public async Task<IActionResult> UpdateClassification([Required] int incidentId, [Required] int classificationId)
         {
             return new OkObjectResult(await this.fsaData.Incidents.UpdateClassification(incidentId, classificationId));
@@ -194,13 +193,13 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpGet("Stakeholders")]
         [SwaggerOperation(Summary = "Get all  stakeholder for an incident")]
-        [ProducesResponseType(typeof(List<Stakeholder>), 200)]
+        [ProducesResponseType(typeof(List<StakeholderModel>), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
         public async Task<IActionResult> GetStakeholder([FromQuery] int incidentId)
         {
             var stakeholders = await this.fsaData.Incidents.GetStakeholders(incidentId);
-            return new OkObjectResult(stakeholders.ToList());
+            return new OkObjectResult(stakeholders.ToWeb());
         }
 
         [HttpPost("Stakeholders")]
@@ -245,11 +244,11 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
-        public async Task<IActionResult> DeleteStakeholder([FromBody] StakeholderModel stakeholder)
+        public async Task<IActionResult> DeleteStakeholder([FromQuery] int stakeholderId)
         {
             try
             {
-                await this.fsaData.Incidents.RemoveStakeholder(stakeholder.ToClient());
+                await this.fsaData.Incidents.RemoveStakeholder(stakeholderId);
                 return new OkResult();
             }
             catch(ArgumentOutOfRangeException ex)

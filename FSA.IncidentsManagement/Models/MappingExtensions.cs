@@ -172,12 +172,33 @@ namespace FSA.IncidentsManagement.Models
             Id=@this.Id,
             IncidentId = @this.IncidentId,
             DiscriminatorId = @this.DiscriminatorId,
-            FirstName = @this.FirstName,
-            Surname = @this.Surname,
+            FirstName= @this.Name,
+            Surname = @this.GovDept,
             Role = @this.Role,
             Email = @this.Email,
             Phone = @this.Phone,
             AddressId = @this.AddressId ==0 ? new Nullable<int>(): @this.AddressId
         };
+
+        public static StakeholderModel ToWeb(this Stakeholder @this) => new StakeholderModel
+        {
+            Id = @this.Id,
+            IncidentId = @this.IncidentId,
+            DiscriminatorId = @this.DiscriminatorId,
+            Name= @this.FirstName,
+            GovDept= @this.Surname,
+            Role = @this.Role,
+            Email = @this.Email,
+            Phone = @this.Phone,
+            AddressId = @this.AddressId.HasValue ? @this.AddressId.Value : 0
+        };
+
+        public static IEnumerable<StakeholderModel> ToWeb(this IEnumerable<Stakeholder> @this)
+        {
+            foreach (var item in @this)
+            {
+                yield return item.ToWeb();
+            }
+        }
     }
 }
