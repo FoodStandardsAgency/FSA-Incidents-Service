@@ -43,6 +43,35 @@
             "description": "Server Error"
           }
         }
+      },
+      "get": {
+        "tags": [
+          "Addresses"
+        ],
+        "summary": "Fetch address",
+        "operationId": "GetAddress",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "addressId",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/OrganisationAddress"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
       }
     },
     "/api/Addresses/Fbo": {
@@ -828,7 +857,7 @@
         "tags": [
           "Incidents"
         ],
-        "summary": "Get all  stakeholder for an incident",
+        "summary": "Get all stakeholder for an incident",
         "operationId": "GetStakeholder",
         "produces": [
           "application/json"
@@ -2783,6 +2812,9 @@
         "addressId": {
           "format": "int32",
           "type": "integer"
+        },
+        "addressTitle": {
+          "type": "string"
         }
       }
     },

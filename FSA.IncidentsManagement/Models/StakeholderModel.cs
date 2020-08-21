@@ -16,5 +16,6 @@ namespace FSA.IncidentsManagement.Models
         public string GovDept { get; set; }
         public int DiscriminatorId { get; set; }
         public int? AddressId { get; set; }
+        public string AddressTitle { get; set; }
     }
 }

@@ -12,8 +12,10 @@ using FSA.IncidentsManagement.Root.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.IIS;
 using Microsoft.EntityFrameworkCore.Update;
 using Microsoft.Extensions.Logging;
+using Microsoft.Graph;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -192,14 +194,45 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpGet("Stakeholders")]
-        [SwaggerOperation(Summary = "Get all  stakeholder for an incident")]
+        [SwaggerOperation(Summary = "Get all stakeholder for an incident")]
         [ProducesResponseType(typeof(List<StakeholderModel>), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
         public async Task<IActionResult> GetStakeholder([FromQuery] int incidentId)
         {
             var stakeholders = await this.fsaData.Incidents.GetStakeholders(incidentId);
-            return new OkObjectResult(stakeholders.ToWeb());
+            var addressItems = stakeholders.Where(o => o.AddressId.HasValue).Select(o => new { Id = o.Id, AddressId = o.AddressId.Value });
+
+            var addressList = new List<OrganisationAddress>();
+            foreach (var item in addressItems)
+            {
+                var address = await fsaData.Addresses.Get(item.AddressId);
+                addressList.Add(address);
+            }
+
+            var completedStakeholders = stakeholders.Select(o =>
+            {
+                var sHolder = o.ToWeb();
+                if (sHolder.AddressId.HasValue)
+                    sHolder.AddressTitle = addressList.FirstOrDefault(o => o.Id == sHolder.AddressId)?.Title ?? "";
+                return sHolder;
+            }).ToList();
+                return new OkObjectResult(completedStakeholders);
+
+            //try
+            //{
+            //    var matchedAddress = await Task.WhenAll(taskList);
+                
+
+
+            //}
+            //catch (AggregateException ex)
+            //{
+            //    return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            //}
+
+
+
         }
 
         [HttpPost("Stakeholders")]
@@ -251,7 +284,7 @@ namespace FSA.IncidentsManagement.Controllers
                 await this.fsaData.Incidents.RemoveStakeholder(stakeholderId);
                 return new OkResult();
             }
-            catch(ArgumentOutOfRangeException ex)
+            catch (ArgumentOutOfRangeException ex)
             {
                 return new BadRequestObjectResult(ex.Message);
             }

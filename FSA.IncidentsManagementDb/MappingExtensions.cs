@@ -650,7 +650,8 @@ namespace FSA.IncidentsManagementDb
             Surname = @this.Surname,
             IncidentId = @this.IncidentId,
             Role = @this.Role,
-            Id = @this.Id
+            Id = @this.Id,
+            AddressId = @this.AddressId
         };
 
         public static void ToUpdateDb(this Stakeholder @this, StakeholderDb entity){
@@ -673,7 +674,8 @@ namespace FSA.IncidentsManagementDb
             Surname = @this.Surname,
             IncidentId = @this.IncidentId,
             Role = @this.Role,
-            Id = @this.Id
+            Id = @this.Id,
+            AddressId = @this.AddressId
         };
 
         public static StakeholderType ToClient(this StakeholderDiscriminatorDb @this) => new StakeholderType

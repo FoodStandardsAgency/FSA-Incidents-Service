@@ -1,6 +1,7 @@
 ﻿using FSA.IncidentsManagement.Misc;
 using FSA.IncidentsManagement.Models;
 using FSA.IncidentsManagement.Root.Contracts;
+using FSA.IncidentsManagement.Root.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Azure;
@@ -75,6 +76,18 @@ namespace FSA.IncidentsManagement.Controllers
         {
             var fboAddres = await fsaData.Addresses.GetFbo(fboId);
             return new OkObjectResult(fboAddres.ToWeb());
+        }
+
+
+        [HttpGet("")]
+        [ProducesResponseType(typeof(OrganisationAddress), 200)]
+        [SwaggerOperation(Summary = "Fetch address")]
+        [ProducesResponseType(500)]
+        [Produces("application/json")]
+        public async Task<IActionResult> GetAddress([FromQuery] int addressId)
+        {
+            var address = await fsaData.Addresses.Get(addressId);
+            return new OkObjectResult(address);
         }
     }
 }
