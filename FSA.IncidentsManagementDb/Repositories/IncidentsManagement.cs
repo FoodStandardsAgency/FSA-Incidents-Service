@@ -618,14 +618,14 @@ namespace FSA.IncidentsManagementDb.Repositories
             return dbItem.Entity.ToClient();
         }
 
-        public async Task RemoveStakeholder(Stakeholder stakeholder)
+        public async Task RemoveStakeholder(int stakeholderId)
         {
-            if (stakeholder.IncidentId == 0) throw new IncidentMissingException("Incident Id Missing");
-            var isClosed = await this.IsClosed(stakeholder.IncidentId);
-            if (isClosed) throw new IncidentClosedException("Incident is closed");
-            if (stakeholder.Id == 0) throw new SIMSException("Stakeholder must exist.");
+            var dbItem = ctx.Stakeholders.Include(o=>o.Incident).SingleOrDefault(s=>s.Id==stakeholderId);
+            if (dbItem== null) throw new SIMSException("Stakeholder must exist.");
 
-            var dbItem = ctx.Stakeholders.Find(stakeholder.Id);
+            //if (stakeholder.IncidentId == 0) throw new IncidentMissingException("Incident Id Missing");
+            var isClosed = (dbItem.Incident.IncidentStatusId == (int)IncidentStatus.Closed);
+            if (isClosed) throw new IncidentClosedException("Incident is closed. cannot remove stakeholder");
             ctx.Remove(dbItem);
             await ctx.SaveChangesAsync();
         }

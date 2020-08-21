@@ -40,7 +40,7 @@ namespace FSA.IncidentsManagement.Controllers
                 SearchAddressType.Notifiers => new OkObjectResult(await fsaData.Addresses.FindNotifier(addressSearch.Search)),
                 SearchAddressType.LocalAuthority => new OkObjectResult(await fsaData.Addresses.FindLocalAuthority(addressSearch.Search)),
                 SearchAddressType.BasicAddress => new OkObjectResult(await fsaData.Addresses.FindAddress(addressSearch.Search)),
-                SearchAddressType.Unknown => BadRequest("Unknown address type"),
+                SearchAddressType.Unknown => new OkObjectResult(await fsaData.Addresses.FindAddress(addressSearch.Search)),
                 _=>BadRequest("Unknown address issues")
             };   
         }

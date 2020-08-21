@@ -38,7 +38,7 @@ namespace FSA.IncidentsManagement.Root.Contracts
 
         Task<IEnumerable<Stakeholder>> GetStakeholders(int incidentId);
         Task<Stakeholder> AddStakeholder(Stakeholder stakeholder);
-        Task RemoveStakeholder(Stakeholder stakeholder);
+        Task RemoveStakeholder(int stakeholderId);
         Task<Stakeholder> UpdateStakeholder(Stakeholder stakeholder);
 
         Task BulkClose(IEnumerable<int> incidentIds);
