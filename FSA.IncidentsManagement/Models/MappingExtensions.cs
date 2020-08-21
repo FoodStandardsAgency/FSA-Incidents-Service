@@ -50,18 +50,18 @@ namespace FSA.IncidentsManagement.Models
                 contactMethodId: @this.ContactMethodId,
                 statusId: @this.StatusId,
                 signalStatusId: @this.SignalStatusId,
-                notifierId: @this.NotifierId.HasValue && @this.NotifierId!=0 ? @this.NotifierId : null, // 0 used as an ordinal due to powerapp limitiaion
+                notifierId: @this.NotifierId.HasValue && @this.NotifierId != 0 ? @this.NotifierId : null, // 0 used as an ordinal due to powerapp limitiaion
                 priorityId: @this.PriorityId,
-                principalFBOId: @this.PrincipalFBOId.HasValue && @this.PrincipalFBOId!=0 ? @this.PrincipalFBOId : null, // 0 used as an ordinal due to powerapp limitiaion
+                principalFBOId: @this.PrincipalFBOId.HasValue && @this.PrincipalFBOId != 0 ? @this.PrincipalFBOId : null, // 0 used as an ordinal due to powerapp limitiaion
                 classificationId: @this.ClassificationId,
                 dataSourceId: @this.DataSourceId,
                 signalUrl: @this.SignalUrl,
                 productTypeId: @this.ProductTypeId,
                 leadOfficer: @this.LeadOfficer,
                 leadOffice: @this.LeadOffice,
-                adminLeadId: @this.AdminLeadId.HasValue && @this.AdminLeadId.Value!=0? @this.AdminLeadId : null, // 0 used as an ordinal due to powerapp limitiaion
+                adminLeadId: @this.AdminLeadId.HasValue && @this.AdminLeadId.Value != 0 ? @this.AdminLeadId : null, // 0 used as an ordinal due to powerapp limitiaion
                 fieldOfficer: @this.FieldOfficer,
-                leadLocalAuthorityId: @this.LeadLocalAuthorityId.HasValue && @this.LeadLocalAuthorityId.Value!=0 ? @this.LeadLocalAuthorityId: null, // 0 used as an ordinal due to powerapp limitiaion
+                leadLocalAuthorityId: @this.LeadLocalAuthorityId.HasValue && @this.LeadLocalAuthorityId.Value != 0 ? @this.LeadLocalAuthorityId : null, // 0 used as an ordinal due to powerapp limitiaion
                 lAAdvised: @this.LAAdvised,
                 deathIllnessId: @this.DeathIllnessId,
                 receivedOn: @this.ReceivedOn,
@@ -120,7 +120,7 @@ namespace FSA.IncidentsManagement.Models
             Title = @this.Address.Title,
 
             FboId = @this.Id,
-           // FboTypes = (FboTypes)@this.FboTypes.ToList().Sum()
+            // FboTypes = (FboTypes)@this.FboTypes.ToList().Sum()
         };
 
         public static FboAddressWebModel ToWeb(this FboAddress @this) => new FboAddressWebModel
@@ -139,7 +139,7 @@ namespace FSA.IncidentsManagement.Models
                 OrganisationRoleId = @this.OrganisationRoleId ?? 0,
                 Title = @this.Title,
             },
-          //  FboTypes = Utilities.SelectedFlags(@this.FboTypes),
+            //  FboTypes = Utilities.SelectedFlags(@this.FboTypes),
             Id = @this.FboId
         };
 
@@ -167,15 +167,31 @@ namespace FSA.IncidentsManagement.Models
 
         public static Stakeholder ToClient(this StakeholderModel @this) => new Stakeholder
         {
-            Id=@this.Id,
+            Id = @this.Id,
             IncidentId = @this.IncidentId,
             DiscriminatorId = @this.DiscriminatorId,
-            FirstName = @this.FirstName,
-            Surname = @this.Surname,
+            Name = @this.FirstName,
+            GovDept = @this.Surname,
             Role = @this.Role,
             Email = @this.Email,
             Phone = @this.Phone,
-            AddressId = @this.AddressId ==0 ? new Nullable<int>(): @this.AddressId
+            AddressId = @this.AddressId == 0 ? new Nullable<int>() : @this.AddressId
+        };
+
+        public static SimsAddress ToClient(this NewSimsAddressViewModel @this) => new SimsAddress
+        {
+            Id = @this.Id,
+            Title = @this.Title,
+            AddressLine1 = @this.AddressLine1,
+            AddressLine2 = @this.AddressLine2,
+            TownCity = @this.TownCity,
+            County = @this.County,
+            PostCode = @this.PostCode,
+            CountryId = @this.CountryId,
+            ContactMethodId = @this.ContactMethodId,
+            OrganisationRoleId = @this.OrganisationRoleId,
+            TelephoneNumber = @this.TelephoneNumber,
+            Contacts = new List<SimsAddressContact> { new SimsAddressContact {  EmailAddress = @this.EmailAddress, Name =@this.MainContact, IsMain=true, TelephoneNumber =@this.TelephoneNumber} }
         };
     }
 }

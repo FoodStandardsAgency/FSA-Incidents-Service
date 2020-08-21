@@ -371,8 +371,8 @@ namespace FSA.UnitTests.Db
             {
                 DiscriminatorId = 3,
                 IncidentId = 5517,
-                FirstName = "Pickle pie",
-                Surname = "Crusty",
+                Name = "Pickle pie",
+                GovDept = "Crusty",
                 Phone = "012345 789",
                 Role = "Dancing instructor"
             };
@@ -380,7 +380,7 @@ namespace FSA.UnitTests.Db
             {
                 var simsApp = new SIMSDataManager(ctx, userId3);
                 var createdStakeHolder =await simsApp.Incidents.AddStakeholder(newStakeHolder);
-                Assert.True(createdStakeHolder.FirstName == newStakeHolder.FirstName && createdStakeHolder.IncidentId ==5517);
+                Assert.True(createdStakeHolder.Name == newStakeHolder.Name && createdStakeHolder.IncidentId ==5517);
             }
         }
         [Fact]
@@ -391,8 +391,8 @@ namespace FSA.UnitTests.Db
                 var newStakeHolder = new Stakeholder
                 {
                     DiscriminatorId = 3,
-                    FirstName = "Pickle pie",
-                    Surname = "Crusty",
+                    Name = "Pickle pie",
+                    GovDept = "Crusty",
                     Phone = "012345 789",
                     Role = "Dancing instructor"
                 };

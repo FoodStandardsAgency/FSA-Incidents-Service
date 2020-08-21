@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Text;
 
-namespace FSA.IncidentsManagementDb.Entities
+namespace FSA.IncidentsManagement.Root.Models
 {
-    internal class AddressContactDb : BaseEntityDb
+    public class SimsAddressContact
     {
         public int Id { get; set; }
         public int AddressId { get; set; }
-        public AddressDb Address { get; set; }
         public string Name { get; set; }
         public string TelephoneNumber { get; set; }
         public string EmailAddress { get; set; }

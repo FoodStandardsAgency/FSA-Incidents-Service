@@ -50,45 +50,47 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(typeof(SimsAddress), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
-        public async Task<IActionResult> AddFboAddress([FromBody] SimsAddress newAddress)
+        public async Task<IActionResult> AddFboAddress([FromBody] NewSimsAddressViewModel newAddress)
         {
-            var createdAddress = await fsaData.Addresses.Add(newAddress);
+            var newDbAddress = newAddress.ToClient();
+            var createdAddress = await fsaData.Addresses.Add(newDbAddress);
             return new OkObjectResult(createdAddress);
         }
 
 
 
-        [HttpPost("Fbo")]
-        [SwaggerOperation(Summary = "Add new Address and new fbo")]
-        [ProducesResponseType(typeof(FboAddressModel), 200)]
-        [ProducesResponseType(500)]
-        [Produces("application/json")]
-        public async Task<IActionResult> AddFboAddress([FromBody]FboAddressModel newFbo)
-        {
-            var fboADdress = await fsaData.Addresses.AddFbo(newFbo.ToClient());
-            return new OkObjectResult(fboADdress.ToWeb());
-        }
 
-        [HttpPut("Fbo")]
-        [ProducesResponseType(typeof(FboAddressModel), 200)]
-        [SwaggerOperation(Summary = "Update Address and fbo types")]
-        [ProducesResponseType(500)]
-        [Produces("application/json")]
-        public async Task<IActionResult> UpdatedFboAddress([FromBody]FboAddressModel updtedFbo)
-        {
-            var fboAddress = await fsaData.Addresses.UpdateFbo(updtedFbo.ToClient());
-            return new OkObjectResult(fboAddress.ToWeb());
-        }
+        //[HttpPost("Fbo")]
+        //[SwaggerOperation(Summary = "Add new Address and new fbo")]
+        //[ProducesResponseType(typeof(FboAddressModel), 200)]
+        //[ProducesResponseType(500)]
+        //[Produces("application/json")]
+        //public async Task<IActionResult> AddFboAddress([FromBody]FboAddressModel newFbo)
+        //{
+        //    var fboADdress = await fsaData.Addresses.AddFbo(newFbo.ToClient());
+        //    return new OkObjectResult(fboADdress.ToWeb());
+        //}
 
-        [HttpGet("Fbo/{fboId}")]
-        [ProducesResponseType(typeof(FboAddressModel), 200)]
-        [SwaggerOperation(Summary = "Fetch fbo address")]
-        [ProducesResponseType(500)]
-        [Produces("application/json")]
-        public async Task<IActionResult> GetFboAddress(int fboId)
-        {
-            var fboAddres = await fsaData.Addresses.GetFbo(fboId);
-            return new OkObjectResult(fboAddres.ToWeb());
-        }
+        //[HttpPut("Fbo")]
+        //[ProducesResponseType(typeof(FboAddressModel), 200)]
+        //[SwaggerOperation(Summary = "Update Address and fbo types")]
+        //[ProducesResponseType(500)]
+        //[Produces("application/json")]
+        //public async Task<IActionResult> UpdatedFboAddress([FromBody]FboAddressModel updtedFbo)
+        //{
+        //    var fboAddress = await fsaData.Addresses.UpdateFbo(updtedFbo.ToClient());
+        //    return new OkObjectResult(fboAddress.ToWeb());
+        //}
+
+        //[HttpGet("Fbo/{fboId}")]
+        //[ProducesResponseType(typeof(FboAddressModel), 200)]
+        //[SwaggerOperation(Summary = "Fetch fbo address")]
+        //[ProducesResponseType(500)]
+        //[Produces("application/json")]
+        //public async Task<IActionResult> GetFboAddress(int fboId)
+        //{
+        //    var fboAddres = await fsaData.Addresses.GetFbo(fboId);
+        //    return new OkObjectResult(fboAddres.ToWeb());
+        //}
     }
 }

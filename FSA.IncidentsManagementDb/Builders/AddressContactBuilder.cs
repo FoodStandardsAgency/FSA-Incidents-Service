@@ -10,9 +10,7 @@ namespace FSA.IncidentsManagementDb.Builders
         {
             base.Configure(builder);
 
-            builder.Property(p => p.Firstname).HasMaxLength(100).IsRequired();
-            builder.Property(p => p.Surname).HasMaxLength(100).IsRequired();
-
+            builder.Property(p => p.Name).HasMaxLength(255).IsRequired();
             builder.UseTemporalTable();
 
         }

@@ -122,7 +122,7 @@ namespace FSA.IncidentsManagementDb
         {
             Id = @this.Id,
             Title = @this.Title,
-            MainContact = @this.MainContact,
+            MainContact = "",
             AddressLine1 = @this.AddressLine1,
             AddressLine2 = @this.AddressLine2,
             TownCity = @this.TownCity,
@@ -641,8 +641,8 @@ namespace FSA.IncidentsManagementDb
             DiscriminatorId = @this.StakeholderDiscriminatorId,
             Email = @this.Email,
             Phone = @this.Phone,
-            FirstName = @this.FirstNameDept,
-            Surname = @this.Surname,
+            Name = @this.Name,
+            GovDept = @this.GovDept,
             IncidentId = @this.IncidentId,
             Role = @this.Role,
             Id = @this.Id
@@ -652,8 +652,8 @@ namespace FSA.IncidentsManagementDb
             entity.StakeholderDiscriminatorId = @this.DiscriminatorId;
             entity.Email = @this.Email;
             entity.Phone = @this.Phone;
-            entity.FirstNameDept = @this.FirstName;
-            entity.Surname = @this.Surname;
+            entity.Name = @this.Name;
+            entity.GovDept = @this.GovDept;
             entity.IncidentId = @this.IncidentId;
             entity.Role = @this.Role;
             entity.Id = @this.Id;
@@ -664,8 +664,8 @@ namespace FSA.IncidentsManagementDb
             StakeholderDiscriminatorId = @this.DiscriminatorId,
             Email = @this.Email,
             Phone = @this.Phone,
-            FirstNameDept = @this.FirstName,
-            Surname = @this.Surname,
+            Name = @this.Name,
+            GovDept = @this.GovDept,
             IncidentId = @this.IncidentId,
             Role = @this.Role,
             Id = @this.Id

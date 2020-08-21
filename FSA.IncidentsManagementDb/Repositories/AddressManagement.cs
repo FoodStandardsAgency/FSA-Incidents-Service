@@ -27,6 +27,11 @@ namespace FSA.IncidentsManagementDb.Repositories
         public async Task<SimsAddress> Add(SimsAddress address)
         {
             var newDbItem = address.ToDb();
+            newDbItem.Contacts.Add(new AddressContactDb
+            {
+                Name = address.MainContact,
+                EmailAddress = address.TelephoneNumber,
+            });
             this.ctx.Addresses.Add(newDbItem);
             await this.ctx.SaveChangesAsync();
             return newDbItem.ToClient();
