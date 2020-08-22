@@ -122,7 +122,6 @@ namespace FSA.IncidentsManagementDb
         {
             Id = @this.Id,
             Title = @this.Title,
-            MainContact = "",
             AddressLine1 = @this.AddressLine1,
             AddressLine2 = @this.AddressLine2,
             TownCity = @this.TownCity,

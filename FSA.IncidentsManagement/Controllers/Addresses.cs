@@ -29,17 +29,17 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpPost()]
         [SwaggerOperation(Summary = "Find address")]
-        [ProducesResponseType(typeof(List<FboAddressModel>), 200)]
+        [ProducesResponseType(typeof(List<SimsAddress>), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
         public async Task<IActionResult> FindAddress([FromBody]AddressSearchModel addressSearch)
         {
             return addressSearch.AddressType switch
             {
-                SearchAddressType.FBO => new OkObjectResult(await fsaData.Addresses.FindFbo(addressSearch.Search)),
-                SearchAddressType.Notifiers => new OkObjectResult(await fsaData.Addresses.FindNotifier(addressSearch.Search)),
-                SearchAddressType.LocalAuthority => new OkObjectResult(await fsaData.Addresses.FindLocalAuthority(addressSearch.Search)),
-                SearchAddressType.BasicAddress => new OkObjectResult(await fsaData.Addresses.FindAddress(addressSearch.Search)),
+                //SearchAddressType.FBO => new OkObjectResult(await fsaData.Addresses.FindFbo(addressSearch.Search)),
+                //SearchAddressType.Notifiers => new OkObjectResult(await fsaData.Addresses.FindNotifier(addressSearch.Search)),
+                //SearchAddressType.LocalAuthority => new OkObjectResult(await fsaData.Addresses.FindLocalAuthority(addressSearch.Search)),
+                //SearchAddressType.BasicAddress => new OkObjectResult(await fsaData.Addresses.FindAddress(addressSearch.Search)),
                 SearchAddressType.Unknown => new OkObjectResult(await fsaData.Addresses.FindAddress(addressSearch.Search)),
                 _=>BadRequest("Unknown address issues")
             };   
@@ -47,16 +47,26 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpPost("Add")]
         [SwaggerOperation(Summary = "Add new Address")]
-        [ProducesResponseType(typeof(SimsAddress), 200)]
+        [ProducesResponseType(typeof(SimsAddressViewModel), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
-        public async Task<IActionResult> AddFboAddress([FromBody] NewSimsAddressViewModel newAddress)
+        public async Task<IActionResult> AddAddress([FromBody] SimsAddressViewModel newAddress)
         {
             var newDbAddress = newAddress.ToClient();
             var createdAddress = await fsaData.Addresses.Add(newDbAddress);
             return new OkObjectResult(createdAddress);
         }
 
+        [HttpGet("")]
+        [ProducesResponseType(typeof(SimsAddressViewModel), 200)]
+        [SwaggerOperation(Summary = "Fetch address")]
+        [ProducesResponseType(500)]
+        [Produces("application/json")]
+        public async Task<IActionResult> GetAddress([FromQuery] int addressId)
+        {
+            var address = await fsaData.Addresses.Get(addressId);
+            return new OkObjectResult(address.ToWeb());
+        }
 
 
 

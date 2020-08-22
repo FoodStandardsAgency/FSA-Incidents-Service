@@ -1,10 +1,13 @@
 ﻿using _UnitTests;
+using FSA.IncidentsManagement.Models;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagementDb;
 using FSA.IncidentsManagementDb.Repositories;
 using FSA.UnitTests.Misc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Graph;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -37,33 +40,10 @@ namespace FSA.UnitTests.Db
         }
 
         [Fact]
-        public async Task AddFBOWithNewAddress()
-        {
-            var orga = new FboAddress
-            {
-                Title = "Test - New FBO COnsignor Etrader ",
-                //FboTypes = FboTypes.Consignor | FboTypes.E_trader,
-                AddressLine1 = "Address line 1",
-                AddressLine2 = "Address line 2",
-                PostCode = "Postoce",
-                TownCity = "Town City",
-                CountryId = 201,
-                County = "Counry",
-                TelephoneNumber = "",
-                Contacts = new List<SimsAddressContact> { new SimsAddressContact { EmailAddress = "terry@address", TelephoneNumber = "01234567890", Name = "Terry the data", IsMain = true } }
-
-            };
-
-            var newaddress = await simsData.Addresses.AddFbo(orga);
-            Assert.IsType<FboAddress>(newaddress);
-        }
-
-        [Fact]
-        public async Task AddOrgnisation()
+        public async Task AddAddress()
         {
             var org = new SimsAddress
             {
-                            
                 Title = "Test - New orgnaisations",
                 //MainContact = "New-Org Smity",
                 AddressLine1 = "Address line 1",
@@ -75,47 +55,16 @@ namespace FSA.UnitTests.Db
                 TelephoneNumber = "01234567890",
                 Contacts = new List<SimsAddressContact> { new SimsAddressContact { EmailAddress = "email@address", TelephoneNumber ="01234567890", Name="New-Org Smity", IsMain=true }  }
             };
+            await simsData.Addresses.Add(org);
         }
+
 
         [Fact]
-        public async Task UpdateFbo()
+        public async Task FindAddress()
         {
-            var address = await simsData.Addresses.GetFbo(3);
-            //address.FboTypes = FboTypes.Consignor;
-            //var item  = await simsData.Addresses.UpdateFbo(address);
-            //Assert.True(item.FboTypes == FboTypes.Consignor);
+            var results = await simsData.Addresses.FindAddress("black");
+            Assert.True(results.ToList().Count > 0);
         }
-
-        [Fact]
-        public async Task AssignFbo()
-        {
-            var address = await simsData.Addresses.Get(22);
-            var fbo = FboTypes.Importer | FboTypes.Supplier | FboTypes.Trader_Broker;
-            var fboId = await simsData.Addresses.AssignFbo(fbo, address.Id);
-            var fboAdd = await simsData.Addresses.GetFbo(fboId);
-            //Assert.True(fboAdd.FboTypes == fbo);
-        }
-
-        [Fact]
-        public async Task GetFBOAddress()
-        {
-            var itme = await simsData.Addresses.Get(1);
-
-            Assert.NotNull(itme);
-        }
-
-        [Fact]
-        public async Task SearchFBOAddress()
-        {
-            var addr = await simsData.Addresses.FindFbo("Council");
-            // None (No councils in test Data)
-            Assert.True(addr.ToList().Count == 0);
-            // Many
-            addr = await simsData.Addresses.FindFbo("PostCode");
-            Assert.True(addr.ToList().Count > 1);
-            // one post code match
-            addr = await simsData.Addresses.FindFbo("P1 C10DE");
-            Assert.True(addr.ToList().Count == 1);
-        }
+ 
     }
 }

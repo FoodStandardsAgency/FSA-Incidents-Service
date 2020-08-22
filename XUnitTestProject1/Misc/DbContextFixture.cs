@@ -1,5 +1,6 @@
 ﻿using _UnitTests;
 using EntityFrameworkCore.TemporalTables.Extensions;
+using FSA.IncidentsManagement.Models;
 using FSA.IncidentsManagement.Root.Contracts;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagementDb;
@@ -69,8 +70,8 @@ namespace FSA.UnitTests.Misc
 
         private async Task CreateAddress(ISIMSManager sims)
         {
-            var addresses = System.Text.Json.JsonSerializer.Deserialize<List<SimsAddress>>(File.OpenText("./orgs.json").ReadToEnd());
-
+            var viewAddressModels = System.Text.Json.JsonSerializer.Deserialize<List<SimsAddressViewModel>>(File.OpenText("./orgs.json").ReadToEnd());
+            var addresses = viewAddressModels.ToClient().ToList();
             await sims.Addresses.Add(addresses.GetRange(0, addresses.Count - 9));
 
             var Not1 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 9));
@@ -85,17 +86,17 @@ namespace FSA.UnitTests.Misc
             var add6 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 1));
 
 
-            await sims.Addresses.AssignNotifiers(NotifierTypes.LocalAuthority, Enumerable.Range(1, 407).ToList());
-            await sims.Addresses.AssignNotifier(NotifierTypes.Retailer, Not1.Id);
-            await sims.Addresses.AssignNotifier(NotifierTypes.Manufacturer, Not2.Id);
-            await sims.Addresses.AssignNotifier(NotifierTypes.PublicIndividual, Not3.Id);
+            //await sims.Addresses.AssignNotifiers(NotifierTypes.LocalAuthority, Enumerable.Range(1, 407).ToList());
+            //await sims.Addresses.AssignNotifier(NotifierTypes.Retailer, Not1.Id);
+            //await sims.Addresses.AssignNotifier(NotifierTypes.Manufacturer, Not2.Id);
+            //await sims.Addresses.AssignNotifier(NotifierTypes.PublicIndividual, Not3.Id);
 
-            await sims.Addresses.AssignFbo(FboTypes.Consignor | FboTypes.Exporter, add1.Id);
-            await sims.Addresses.AssignFbo(FboTypes.Exporter | FboTypes.Farmer, add2.Id);
-            await sims.Addresses.AssignFbo(FboTypes.Manufacturer | FboTypes.Exporter | FboTypes.Consignor, add3.Id);
-            await sims.Addresses.AssignFbo(FboTypes.E_platform_Market | FboTypes.Storage | FboTypes.Wholesaler, add4.Id);
-            await sims.Addresses.AssignFbo(FboTypes.Processor | FboTypes.Wholesaler, add5.Id);
-            await sims.Addresses.AssignFbo(FboTypes.Supplier | FboTypes.Transporter | FboTypes.Retailer, add6.Id);
+            //await sims.Addresses.AssignFbo(FboTypes.Consignor | FboTypes.Exporter, add1.Id);
+            //await sims.Addresses.AssignFbo(FboTypes.Exporter | FboTypes.Farmer, add2.Id);
+            //await sims.Addresses.AssignFbo(FboTypes.Manufacturer | FboTypes.Exporter | FboTypes.Consignor, add3.Id);
+            //await sims.Addresses.AssignFbo(FboTypes.E_platform_Market | FboTypes.Storage | FboTypes.Wholesaler, add4.Id);
+            //await sims.Addresses.AssignFbo(FboTypes.Processor | FboTypes.Wholesaler, add5.Id);
+            //await sims.Addresses.AssignFbo(FboTypes.Supplier | FboTypes.Transporter | FboTypes.Retailer, add6.Id);
 
         }
 

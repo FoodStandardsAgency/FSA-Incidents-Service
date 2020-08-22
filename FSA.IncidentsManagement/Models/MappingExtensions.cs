@@ -178,7 +178,7 @@ namespace FSA.IncidentsManagement.Models
             AddressId = @this.AddressId == 0 ? new Nullable<int>() : @this.AddressId
         };
 
-        public static SimsAddress ToClient(this NewSimsAddressViewModel @this) => new SimsAddress
+        public static SimsAddress ToClient(this SimsAddressViewModel @this) => new SimsAddress
         {
             Id = @this.Id,
             Title = @this.Title,
@@ -191,7 +191,32 @@ namespace FSA.IncidentsManagement.Models
             ContactMethodId = @this.ContactMethodId,
             OrganisationRoleId = @this.OrganisationRoleId,
             TelephoneNumber = @this.TelephoneNumber,
-            Contacts = new List<SimsAddressContact> { new SimsAddressContact {  EmailAddress = @this.EmailAddress, Name =@this.MainContact, IsMain=true, TelephoneNumber =@this.TelephoneNumber} }
+            Contacts =  string.IsNullOrEmpty( @this.MainContact) ? new List<SimsAddressContact>() :   new List<SimsAddressContact> { new SimsAddressContact {  EmailAddress = @this.EmailAddress, Name =@this.MainContact, IsMain=true, TelephoneNumber =@this.TelephoneNumber} }
+        };
+
+        public static IEnumerable<SimsAddress> ToClient(this IEnumerable<SimsAddressViewModel> @this)
+        {
+            foreach (var item in @this)
+            {
+                yield return item.ToClient();
+            }
+        }
+
+        public static SimsAddressViewModel ToWeb(this SimsAddress @this) => new SimsAddressViewModel
+        {
+            Id = @this.Id,
+            Title = @this.Title,
+            AddressLine1 = @this.AddressLine1,
+            AddressLine2 = @this.AddressLine2,
+            TownCity = @this.TownCity,
+            County = @this.County,
+            PostCode = @this.PostCode,
+            CountryId = @this.CountryId,
+            ContactMethodId = @this.ContactMethodId,
+            OrganisationRoleId = @this.OrganisationRoleId,
+            TelephoneNumber = @this.TelephoneNumber,
+            MainContact = @this.Contacts.ToList().Count>0?@this.Contacts.First().Name : "",
+            EmailAddress = @this.Contacts.ToList().Count > 0 ? @this.Contacts.First().EmailAddress : ""
         };
 
         public static StakeholderModel ToWeb(this Stakeholder @this) => new StakeholderModel

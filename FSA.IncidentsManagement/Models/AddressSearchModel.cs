@@ -7,8 +7,8 @@ namespace FSA.IncidentsManagement.Models
 {
     public enum SearchAddressType
     {
-        FBO = 1,
         Unknown = 0,
+        FBO = 1,
         Notifiers = 2,
         LocalAuthority = 3,
         BasicAddress=4

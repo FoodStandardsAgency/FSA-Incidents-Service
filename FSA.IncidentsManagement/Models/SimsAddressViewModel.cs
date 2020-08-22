@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Models
 {
-    public class NewSimsAddressViewModel
+    public class SimsAddressViewModel
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -20,5 +20,10 @@ namespace FSA.IncidentsManagement.Models
         public string TelephoneNumber { get; set; }
         public string EmailAddress { get; set; }
         public int ContactMethodId { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Title} {PostCode} {MainContact}";
+        }
     }
 }

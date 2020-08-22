@@ -10,6 +10,8 @@
     <Compile Remove="Migrations\20200722150658_adduprn.Designer.cs" />
     <Compile Remove="Migrations\20200819143315_address_contact.cs" />
     <Compile Remove="Migrations\20200819143315_address_contact.Designer.cs" />
+    <Compile Remove="Migrations\20200822110341_newTimes.cs" />
+    <Compile Remove="Migrations\20200822110341_newTimes.Designer.cs" />
     <Compile Remove="Repositories\CoreRepositoryActions.cs" />
   </ItemGroup>
 

@@ -315,17 +315,17 @@ namespace FSA.UnitTests.Db
         [Fact]
         public async Task LinkToClosed()
         {
-          
-                //  record Id 82should be closed
-                //  crash the test otherwise
-                var incidentId = 82;
-                using (var ctx = this.Fixture.CreateContext())
-                {
-                    ISIMSManager sims = new SIMSDataManager(ctx, userId);
-                    var data = await sims.Incidents.Get(incidentId);
-                    await Assert.ThrowsAsync<IncidentClosedException>(async () => await sims.Incidents.Update(data.WithIncidentStatus(2)));
 
-                }
+            //  record Id 82should be closed
+            //  crash the test otherwise
+            var incidentId = 82;
+            using (var ctx = this.Fixture.CreateContext())
+            {
+                ISIMSManager sims = new SIMSDataManager(ctx, userId);
+                var data = await sims.Incidents.Get(incidentId);
+                await Assert.ThrowsAsync<IncidentClosedException>(async () => await sims.Incidents.Update(data.WithIncidentStatus(2)));
+
+            }
 
         }
 
@@ -379,33 +379,27 @@ namespace FSA.UnitTests.Db
             using (var ctx = this.Fixture.CreateContext())
             {
                 var simsApp = new SIMSDataManager(ctx, userId3);
-                var createdStakeHolder =await simsApp.Incidents.AddStakeholder(newStakeHolder);
-                Assert.True(createdStakeHolder.Name == newStakeHolder.Name && createdStakeHolder.IncidentId ==5517);
+                var createdStakeHolder = await simsApp.Incidents.AddStakeholder(newStakeHolder);
+                Assert.True(createdStakeHolder.Name == newStakeHolder.Name && createdStakeHolder.IncidentId == 5517);
             }
         }
         [Fact]
         public async Task AddStakeholderNoIncident()
         {
-            try
+            var newStakeHolder = new Stakeholder
             {
-                var newStakeHolder = new Stakeholder
-                {
-                    DiscriminatorId = 3,
-                    Name = "Pickle pie",
-                    GovDept = "Crusty",
-                    Phone = "012345 789",
-                    Role = "Dancing instructor"
-                };
-                using (var ctx = this.Fixture.CreateContext())
-                {
-                    var simsApp = new SIMSDataManager(ctx, userId3);
-                    var createdStakeHolder = await simsApp.Incidents.AddStakeholder(newStakeHolder);
-                }
-            }catch(Exception ex)
+                DiscriminatorId = 3,
+                Name = "Pickle pie",
+                GovDept = "Crusty",
+                Phone = "012345 789",
+                Role = "Dancing instructor"
+            };
+            using (var ctx = this.Fixture.CreateContext())
             {
-                var s = ex;
-            }
+                var simsApp = new SIMSDataManager(ctx, userId3);
 
+                await Assert.ThrowsAsync<IncidentMissingException>(async () => await simsApp.Incidents.AddStakeholder(newStakeHolder));
+            }
         }
     }
 }
