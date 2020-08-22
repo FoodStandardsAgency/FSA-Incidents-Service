@@ -25,23 +25,16 @@ namespace FSA.IntegrationTesting
         public FboIntegration()
         {
             _server = new TestServer(new WebHostBuilder()
-                    .ConfigureAppConfiguration(c => {
+                    .ConfigureAppConfiguration(c =>
+                    {
                         c.AddJsonFile("appsettings.Development.json");
                     })
-                   .ConfigureServices(i=>i.AddSingleton<IPolicyEvaluator, FakeUserPolicy>())
+                   .ConfigureServices(i => i.AddSingleton<IPolicyEvaluator, FakeUserPolicy>())
                    .UseStartup<Startup>());
             _client = _server.CreateClient();
             _client.DefaultRequestHeaders
         .Accept
         .Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        }
-
-        [Fact]
-        public async Task GetFboAddress()
-        {
-            var response = await _client.GetAsync("/api/Addresses/Fbo/1");
-            var address = await response.Content.ReadFromJsonAsync<FboAddressModel>();
-            Assert.True(address.Id == 1);
         }
 
         [Fact]
@@ -55,11 +48,32 @@ namespace FSA.IntegrationTesting
         }
 
         [Fact]
+        public async Task AddAddress()
+        {
+            var newAddress = new SimsAddressViewModel
+            {
+                Title = "Integration Address",
+                AddressLine1 = "Addr 1",
+                AddressLine2 = "Addr 2",
+                CountryId = 118,
+                County = "Cleethrpes",
+                PostCode = "Cn1 PP2",
+                EmailAddress = "integration@emailAddress.com",
+                MainContact = "Sally Ride",
+                TelephoneNumber = "01234 567890",
+                ContactMethodId =1
+            };
+            var addedResponse = await _client.PostAsJsonAsync("/api/Addresses", newAddress);
+            var addedAddress = await addedResponse.Content.ReadFromJsonAsync<SimsAddressViewModel>();
+            Assert.True(addedAddress.Title == "Integration Address");
+        }
+
+        [Fact]
         public async Task AssignProductFbo()
         {
             var response = await _client.PostAsJsonAsync<AssignItemToFbo>("/api/Products/AssignFbo", new AssignItemToFbo { FboId = 6, Id = 3 });
             var product = await response.Content.ReadAsStringAsync();
-            Assert.True(product!=null);
+            Assert.True(product != null);
         }
 
         [Fact]
@@ -78,20 +92,19 @@ namespace FSA.IntegrationTesting
                 var response = await _client.GetFromJsonAsync<WebIncidentDisplayModel>("/api/incidents?incidentId=21");
                 //Assert.IsType<IncidentsDisplayModel>(response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Assert.IsType<HttpRequestException>(ex);
-                
+
             }
         }
+
         [Fact]
         public async Task GetIncident()
         {
             var response = await _client.GetFromJsonAsync<WebIncidentDisplayModel>("/api/incidents?id=21");
             Assert.IsType<WebIncidentDisplayModel>(response);
         }
-
-
 
         public void Dispose()
         {

@@ -27,7 +27,7 @@ namespace FSA.IncidentsManagement.Controllers
             this.fsaData = fsaData;
         }
 
-        [HttpPost()]
+        [HttpPost("Find")]
         [SwaggerOperation(Summary = "Find address")]
         [ProducesResponseType(typeof(List<SimsAddress>), 200)]
         [ProducesResponseType(500)]
@@ -45,7 +45,7 @@ namespace FSA.IncidentsManagement.Controllers
             };   
         }
 
-        [HttpPost("Add")]
+        [HttpPost()]
         [SwaggerOperation(Summary = "Add new Address")]
         [ProducesResponseType(typeof(SimsAddressViewModel), 200)]
         [ProducesResponseType(500)]
