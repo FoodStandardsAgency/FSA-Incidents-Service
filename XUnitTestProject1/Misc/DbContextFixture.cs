@@ -127,13 +127,14 @@ namespace FSA.UnitTests.Misc
             var tasks = products.Select(p => sims.Products.Add(p.IncidentId, p));
             await Task.WhenAll(tasks);
 
-            await sims.Products.AssignFbo(1, 1);
-            await sims.Products.AssignFbo(1, 2);
-            await sims.Products.AssignFbo(1, 3);
+            await sims.Products.AssignFbo(1, 1, FboTypes.Consignor | FboTypes.Exporter | FboTypes.Hospitality_service );
+            await sims.Products.AssignFbo(1, 2, FboTypes.Unknown);
+            await sims.Products.AssignFbo(1, 3, FboTypes.Importer | FboTypes.Manufacturer);
 
-            await sims.Products.AssignFbo(2, 4);
-            await sims.Products.AssignFbo(2, 5);
-            await sims.Products.AssignFbo(2, 6);
+            await sims.Products.AssignFbo(2, 4, FboTypes.Retailer | FboTypes.Manufacturer);
+            await sims.Products.AssignFbo(2, 5, FboTypes.Packer_filler | FboTypes.Storage );
+            await sims.Products.AssignFbo(2, 6, FboTypes.Unknown);
+
         }
 
         private void Seed()

@@ -164,6 +164,25 @@ namespace FSA.UnitTests.Misc
                         ,new ProductDate { DateTypeId = 2, Date = DateTime.Now }
                         ,new ProductDate { DateTypeId = 3, Date = DateTime.Now }
                 }
+            },
+                        new Product
+            {
+                Name = "Blue ham",
+                Brand = "Ham man",
+                Amount = "47",
+                AmountUnitTypeId = 2,
+                PackDescription = "Long john ham gone",
+                IncidentId = 23,
+                ProductTypeId =10,
+                CountryOfOriginId = 18,
+                BatchCodes = "Code 01, ode02",
+                AdditionalInfo = "",
+                PackSizes = new List<ProductPackSize> { new ProductPackSize { Size = "12", UnitId = 7 },new ProductPackSize { Size = "8", UnitId = 19 },new ProductPackSize { Size = "0.1", UnitId = 5 } },
+                ProductDates = new List<ProductDate> {
+                        new ProductDate { DateTypeId = 1, Date = DateTime.Now }
+                        ,new ProductDate { DateTypeId = 2, Date = DateTime.Now }
+                        ,new ProductDate { DateTypeId = 3, Date = DateTime.Now }
+                }
             }
 
         };

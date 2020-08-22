@@ -7,6 +7,7 @@ namespace FSA.IncidentsManagement.Root.Models
     [Flags]
     public enum FboTypes
     {
+        Unknown =0,
         Consignor = 1,
         E_platform_Market = 2,
         E_trader = 4,

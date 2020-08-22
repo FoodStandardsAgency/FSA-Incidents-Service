@@ -143,12 +143,12 @@ namespace FSA.UnitTests.Db
         public async Task AddressesToProduct()
         {
             ISIMSManager fsaData = new SIMSDataManager(this.dbContext, userId3);
-            await fsaData.Products.AssignFbo(1, 2);
-            await fsaData.Products.AssignFbo(1, 1);
-            await fsaData.Products.AssignFbo(2, 3);
-            await fsaData.Products.AssignFbo(3, 1);
-            await fsaData.Products.AssignFbo(3, 2);
-            await fsaData.Products.AssignFbo(3, 4);
+            await fsaData.Products.AssignFbo(1, 2, FboTypes.Trader_Broker | FboTypes.Transporter);
+            await fsaData.Products.AssignFbo(1, 1, FboTypes.Unknown);
+            await fsaData.Products.AssignFbo(2, 3, FboTypes.Transporter);
+            await fsaData.Products.AssignFbo(3, 1, FboTypes.Wholesaler);
+            await fsaData.Products.AssignFbo(3, 2, FboTypes.Exporter | FboTypes.E_trader);
+            await fsaData.Products.AssignFbo(3, 4, FboTypes.Farmer | FboTypes.Hospitality_service);
 
             var p1a = (await fsaData.Products.GetProductAddresses(1)).ToList();
             var p2a = (await fsaData.Products.GetProductAddresses(2)).ToList();
