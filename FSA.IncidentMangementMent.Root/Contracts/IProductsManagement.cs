@@ -13,9 +13,10 @@ namespace FSA.IncidentsManagement.Root.Contracts
         Task<Product> Update(Product product);
         Task<ProductDisplayModel> Get(int productId);
         Task<IEnumerable<Product>> IncidentProducts(int incidentId);
-        Task<IEnumerable<SimsAddress>> GetProductAddresses(int productId);
+        Task<IEnumerable<ProductFboAddress>> GetProductAddresses(int productId);
         Task<IPaging<ProductDashboard>> DashboardItems(int incidentId, int pageSize = 10, int startPage = 1);
-        Task AssignFbo(int id, int fboId);
+        Task AssignFbo(int id, int fboId, FboTypes types);
         Task RemoveFbo(int id, int fboId);
+        Task UpdateFbo(int id, int fboId, FboTypes fboTypes);
     }
 }

@@ -32,7 +32,7 @@ namespace FSA.IncidentsManagementDb.Repositories
 
             var whereClause = string.Join(" OR ", ids.ToList().Select(a => $"Id={a}"));
 
-            var allTheOrgs = await ctx.Addresses.FromSqlRaw($"Select * FROM dbo.Organisations WHERE {whereClause}")
+            var allTheOrgs = await ctx.Addresses.FromSqlRaw($"Select * FROM dbo.Addresses WHERE {whereClause}")
                             .AsNoTracking().ToDictionaryAsync(k => k.Id, v => new OrganisationLookup { Id = v.Id, Name = v.Title});
             return allTheOrgs;
         }

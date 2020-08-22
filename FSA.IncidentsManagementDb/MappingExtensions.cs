@@ -117,6 +117,31 @@ namespace FSA.IncidentsManagementDb
             ContactMethodId = @this.ContactMethodId
         };
 
+        public static ProductFboAddress ToClient(this ProductFBODb @this) => new ProductFboAddress
+        {
+            Id = @this.Address.Id,
+            Title = @this.Address.Title,
+            //MainContact = @this.Address.MainContact,
+            AddressLine1 = @this.Address.AddressLine1,
+            AddressLine2 = @this.Address.AddressLine2,
+            TownCity = @this.Address.TownCity,
+            County = @this.Address.County,
+            CountryId = @this.Address.CountryId,
+            PostCode = @this.Address.PostCode,
+            TelephoneNumber = @this.Address.TelephoneNumber,
+            ContactMethodId = @this.Address.ContactMethodId,
+            ProductId = @this.ProductId,
+            FboTypes = @this.FboTypes
+        };
+
+        public static IEnumerable<ProductFboAddress> ToClient(this IEnumerable<ProductFBODb> @this)
+        {
+            foreach (var itm in @this)
+            {
+                yield return itm.ToClient();
+            }
+        }
+
 
         public static AddressDb ToDb(this SimsAddress @this) => new AddressDb
         {

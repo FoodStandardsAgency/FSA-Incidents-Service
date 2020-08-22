@@ -184,15 +184,16 @@ namespace FSA.IncidentsManagement.Controllers
             return new OkObjectResult((await this.lookupdata.Units
                             .GetAllAsync()).ToList());
         }
-        [HttpGet("Organisations")]
-        [ProducesResponseType(typeof(IEnumerable<OrganisationLookup>), 200)]
-        [ProducesResponseType(500)]
-        [SwaggerOperation(Summary = "Organisation pick list")]
-        public async Task<IActionResult> Organisations()
-        {
-            return new OkObjectResult((await this.lookupdata.Organisations
-                            .GetAllAsync()).ToList());
-        }
+
+        //[HttpGet("Organisations")]
+        //[ProducesResponseType(typeof(IEnumerable<OrganisationLookup>), 200)]
+        //[ProducesResponseType(500)]
+        //[SwaggerOperation(Summary = "Organisation pick list")]
+        //public async Task<IActionResult> Organisations()
+        //{
+        //    return new OkObjectResult((await this.lookupdata.Organisations
+        //                    .GetAllAsync()).ToList());
+        //}
 
         [HttpGet("FBOLookups")]
         [ProducesResponseType(typeof(IEnumerable<OrganisationLookup>), 200)]

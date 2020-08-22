@@ -17,7 +17,7 @@ namespace FSA.IncidentsManagementDb.Builders
             builder.HasKey(o => new { o.ProductId, o.AddressId});
 
             // This field is a flags binary field so no relationship becaredul.
-            builder.Property(o => o.FBOTypeId)
+            builder.Property(o => o.FboTypes)
                 .HasConversion(o => o, o => (FboTypes)o);
 
             builder.HasOne(o => o.Product)

@@ -30,7 +30,7 @@ namespace FSA.IncidentsManagement.Controllers
 
 
         [HttpPost("")]
-        [SwaggerOperation(Description =  "Create new Product.")]
+        [SwaggerOperation(Summary = "Create new Product")]
         [ProducesResponseType(typeof(Product), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> AddProduct([FromBody] NewProductModel newProduct)
@@ -41,7 +41,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPut("")]
-        [SwaggerOperation(Description =  "Update Product.")]
+        [SwaggerOperation(Summary = "Update Product")]
         [ProducesResponseType(typeof(Product), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> UpdateProduct([FromBody] NewProductModel product)
@@ -51,7 +51,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpGet("")]
-        [SwaggerOperation(Description = "get product")]
+        [SwaggerOperation(Summary = "Fetch product")]
         [ProducesResponseType(typeof(ProductDisplayModel), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetProduct([FromQuery] int productId)
@@ -64,7 +64,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpGet("Incident/{incidentId}")]
-        [SwaggerOperation(Description =  "Fetch products.")]
+        [SwaggerOperation(Summary = "Fetch products")]
         [ProducesResponseType(typeof(List<Product>), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetIncidentProducts(int incidentId)
@@ -74,8 +74,8 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpGet("Addresses/{productId}")]
-        [SwaggerOperation(Description =  "Fetch product addresses.")]
-        [ProducesResponseType(typeof(List<SimsAddress>), 200)]
+        [SwaggerOperation(Summary = "Fetch product addresses")]
+        [ProducesResponseType(typeof(List<ProductFboAddress>), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetProductAddresses(int productId)
         {
@@ -84,10 +84,10 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpGet("Dashboard")]
-        [SwaggerOperation(Description =  "Fetch product addresses.")]
+        [SwaggerOperation(Summary = "Product dashboard")]
         [ProducesResponseType(typeof(PagedResult<ProductDashboard>), 200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> GetProductDashboard([FromQuery]int incidentId, [FromQuery] int pageSize=10, [FromQuery]int pageNo=1)
+        public async Task<IActionResult> GetProductDashboard([FromQuery] int incidentId, [FromQuery] int pageSize = 10, [FromQuery] int pageNo = 1)
         {
             var addresses = await this.simsManager.Products.DashboardItems(incidentId, pageSize, pageNo);
             return new OkObjectResult(new { Results = addresses, TotalRecords = addresses.TotalResults });
@@ -95,17 +95,27 @@ namespace FSA.IncidentsManagement.Controllers
 
 
         [HttpPost("AssignFbo")]
-        [SwaggerOperation(Description = "Assigns fbo to product.")]
+        [SwaggerOperation(Summary = "Assign fbo to product")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> AssignFbo([Required] AssignItemToFbo assignObj )
+        public async Task<IActionResult> AssignFbo([Required] AssignItemToFbo assignObj)
         {
-            await this.simsManager.Products.AssignFbo(assignObj.Id, assignObj.FboId);
+            await this.simsManager.Products.AssignFbo(assignObj.Id, assignObj.FboId, (FboTypes)assignObj.FboTypes.Sum());
+            return new OkResult();
+        }
+
+        [HttpPost("UpdateFbo")]
+        [SwaggerOperation(Summary = "Update fbo to product")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> UpdateFbo([Required] AssignItemToFbo assignObj)
+        {
+            await this.simsManager.Products.UpdateFbo(assignObj.Id, assignObj.FboId, (FboTypes)assignObj.FboTypes.Sum());
             return new OkResult();
         }
 
         [HttpPost("RemoveFbo")]
-        [SwaggerOperation(Description = "Removes fbo from product.")]
+        [SwaggerOperation(Summary = "Remove fbo from product")]
         [ProducesResponseType(typeof(PagedResult<FboAddress>), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> RemoveFbo([Required] AssignItemToFbo assignObj)
