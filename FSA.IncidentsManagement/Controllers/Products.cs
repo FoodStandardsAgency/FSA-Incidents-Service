@@ -33,7 +33,7 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "Create new Product")]
         [ProducesResponseType(typeof(Product), 200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> AddProduct([FromBody] NewProductModel newProduct)
+        public async Task<IActionResult> AddProduct([FromBody] ProductViewModel newProduct)
         {
             var item = newProduct.ToClient();
             var product = await this.simsManager.Products.Add(newProduct.IncidentId, item);
@@ -44,7 +44,7 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "Update Product")]
         [ProducesResponseType(typeof(Product), 200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> UpdateProduct([FromBody] NewProductModel product)
+        public async Task<IActionResult> UpdateProduct([FromBody] ProductViewModel product)
         {
             var updatedProduct = await this.simsManager.Products.Update(product.ToClient());
             return new OkObjectResult(updatedProduct);

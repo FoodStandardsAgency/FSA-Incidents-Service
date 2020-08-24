@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Models
 {
-    public class NewProductModel
+    public class ProductViewModel
     {
-        public NewProductModel()
+        public ProductViewModel()
         {
             this.PackSizes = new List<ProductPackSizeModel>();
             this.ProductDates = new List<ProductDateModel>();

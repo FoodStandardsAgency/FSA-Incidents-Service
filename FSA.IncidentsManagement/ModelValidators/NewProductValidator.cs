@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.ModelValidators
 {
-    public class NewProductValidator : AbstractValidator<NewProductModel>
+    public class NewProductValidator : AbstractValidator<ProductViewModel>
     {
         public NewProductValidator()
         {

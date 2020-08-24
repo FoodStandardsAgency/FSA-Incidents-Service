@@ -71,7 +71,7 @@ namespace FSA.IncidentsManagement.Models
                 lastChangedDate: DateTime.Now
             );
 
-        public static Product ToClient(this NewProductModel @this) => new Product
+        public static Product ToClient(this ProductViewModel @this) => new Product
         {
             Id = @this.Id,
             IncidentId = @this.IncidentId,
