@@ -23,7 +23,7 @@ namespace FSA.IncidentsManagement.Root.Contracts
         IReferenceDataRepo<IncidentStatusLkUp> IncidentStatus { get; }
         IReferenceDataRepo<UnitQuantity> Units { get; }
         IReferenceDataRepo<OrganisationLookup> Organisations { get; }
-
+        IReferenceDataRepo<StakeholderIncidentRole> StakeholderIncidentRoles { get; }
         IReferenceDataRepo<OrganisationLookup> FBOs{get;}
         IReferenceDataRepo<OrganisationLookup> Notifiers { get; }
         IReferenceDataRepo<OrganisationLookup> LocalAuthorities { get; }

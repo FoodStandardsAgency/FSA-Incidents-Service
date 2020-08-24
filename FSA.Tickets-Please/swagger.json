@@ -3138,7 +3138,10 @@
           }
         },
         "deathIllnesses": {
-          "type": "object"
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DeathIllness"
+          }
         },
         "dataSources": {
           "type": "array",

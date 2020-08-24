@@ -29,6 +29,7 @@ namespace FSA.IncidentsManagementDb
             UnitQuants(modelBuilder);
             DocumentTag(modelBuilder);
             StakeholderDiscrimatior(modelBuilder);
+            StakeholderIncidentRoles(modelBuilder);
         }
 
         private void UnitQuants(ModelBuilder modelBuilder)
@@ -4556,5 +4557,267 @@ namespace FSA.IncidentsManagementDb
                       ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                   });
         }
+
+        private void StakeholderIncidentRoles(ModelBuilder modelBuilder) =>
+            modelBuilder.Entity<StakeholderIncidentRoleDb>()
+                .HasData(new UnitQuantityDb
+                {
+                    Id = 1,
+                    Title = "Briefing Cell",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 2,
+                    Title = "Briefing Cell Manager",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 3,
+                    Title = "Situation Report (SITREP) Lead",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 4,
+                    Title = "Q&A lead",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 5,
+                    Title = "Official Note Taker",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 6,
+                    Title = "Communications Lead",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 7,
+                    Title = "Press Officer",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 8,
+                    Title = "Legal Advisior",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 9,
+                    Title = "Admin Support",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 10,
+                    Title = "Policy/Science Lead",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 11,
+                    Title = "Ministerial Submission Lead",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 12,
+                    Title = "FSS/FSA Liason",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 13,
+                    Title = "Risk Manager",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 14,
+                    Title = "Risk Assesor",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 15,
+                    Title = "Incident Manager",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 16,
+                    Title = "Incident Lead?",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 17,
+                    Title = "Incident Support?",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 18,
+                    Title = "Operational Incident Management Team (OIMT)",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 19,
+                    Title = "Incident Management Co-ordination Group (IMCG)",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 20,
+                    Title = "Chair, IMCG",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 21,
+                    Title = "Policy Lead - FSA",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 22,
+                    Title = "Policy Lead - Other Government Department",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 23,
+                    Title = "Strategic Incident Oversight Group (SIOG)",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 24,
+                    Title = "Chair, SIOG",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 25,
+                    Title = "Strategic Advisior",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 26,
+                    Title = "Strategic Director",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 27,
+                    Title = "Dairy Inspector",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 28,
+                    Title = "Field Operations - FVC",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 29,
+                    Title = "Field Operations - FVL",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 30,
+                    Title = "FSA Business Assurance Auditors",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 31,
+                    Title = "Meat Hygiene Inspector",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 32,
+                    Title = "Poultry Hygiene Inspector",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 33,
+                    Title = "Wine Inspector",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 34,
+                    Title = "Receipt & Management  (RAM) Lead",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 35,
+                    Title = "Stakeholder  Engagement  (SHE) Lead",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 36,
+                    Title = "Receipt & Management (RAM ) Officer",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 37,
+                    Title = "Stakeholder Engagement (SHE) Officer",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                });
     }
 }

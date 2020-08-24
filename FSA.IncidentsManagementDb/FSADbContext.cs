@@ -38,7 +38,7 @@ namespace FSA.IncidentsManagementDb
         internal DbSet<DataSourceDb> DataSources { get; set; }
         internal DbSet<DeathIllnessDb> DeathIllnesss { get; set; }
         internal DbSet<OMITGroupDb> OMITGroups { get; set; }
-
+        internal DbSet<StakeholderIncidentRoleDb> StakeholderIncidentRoles { get; set; }
         //internal DbSet<PersonaRoleDb> PersonaRoles { get; set; }
 
         internal DbSet<AdminLeadDb> AdminLeads { get; set; }
@@ -120,12 +120,12 @@ namespace FSA.IncidentsManagementDb
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<AddressDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<ProductTypeDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<SignalStatusDb>());
+            modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<StakeholderIncidentRoleDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<UnitQuantityDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<IncidentStatusDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<PriorityDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<DateTypeDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<NotifierTypeDb>());
-            //modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<FBOTypeDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<AdminLeadDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<StakeholderDiscriminatorDb>());
 
