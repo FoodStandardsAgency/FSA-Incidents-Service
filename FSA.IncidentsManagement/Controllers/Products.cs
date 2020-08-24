@@ -98,7 +98,7 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "Assign fbo to product")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> AssignFbo([Required] AssignItemToFbo assignObj)
+        public async Task<IActionResult> AssignFbo([Required] ProductAddress assignObj)
         {
             await this.simsManager.Products.AssignFbo(assignObj.Id, assignObj.FboId, (FboTypes)assignObj.FboTypes.Sum());
             return new OkResult();
@@ -108,7 +108,7 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "Update fbo to product")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> UpdateFbo([Required] AssignItemToFbo assignObj)
+        public async Task<IActionResult> UpdateFbo([Required] ProductAddress assignObj)
         {
             await this.simsManager.Products.UpdateFbo(assignObj.Id, assignObj.FboId, (FboTypes)assignObj.FboTypes.Sum());
             return new OkResult();
@@ -118,7 +118,7 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "Remove fbo from product")]
         [ProducesResponseType(typeof(PagedResult<FboAddress>), 200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> RemoveFbo([Required] AssignItemToFbo assignObj)
+        public async Task<IActionResult> RemoveFbo([Required] ProductAddress assignObj)
         {
             await this.simsManager.Products.RemoveFbo(assignObj.Id, assignObj.FboId);
             return new OkResult();

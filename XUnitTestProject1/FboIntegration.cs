@@ -71,7 +71,7 @@ namespace FSA.IntegrationTesting
         [Fact]
         public async Task AssignProductFbo()
         {
-            var response = await _client.PostAsJsonAsync<AssignItemToFbo>("/api/Products/AssignFbo", new AssignItemToFbo { FboId = 6, Id = 3 });
+            var response = await _client.PostAsJsonAsync<ProductAddress>("/api/Products/AssignFbo", new ProductAddress { FboId = 6, Id = 3 });
             var product = await response.Content.ReadAsStringAsync();
             Assert.True(product != null);
         }
@@ -79,7 +79,7 @@ namespace FSA.IntegrationTesting
         [Fact]
         public async Task RemoveProductFbo()
         {
-            var response = await _client.PostAsJsonAsync<AssignItemToFbo>("/api/Products/RemoveFbo", new AssignItemToFbo { FboId = 6, Id = 3 });
+            var response = await _client.PostAsJsonAsync<ProductAddress>("/api/Products/RemoveFbo", new ProductAddress { FboId = 6, Id = 3 });
             var product = await response.Content.ReadAsStringAsync();
             Assert.True(product != null);
         }
