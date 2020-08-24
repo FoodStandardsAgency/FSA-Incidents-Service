@@ -172,6 +172,11 @@ namespace FSA.IncidentsManagementDb
             CanBeFieldOfficer = @this.CanBeFieldOfficer
         };
 
+        public static StakeholderIncidentRole ToClient(this StakeholderIncidentRoleDb @this) => new StakeholderIncidentRole
+        {
+            Id = @this.Id,
+            Title = @this.Title,
+        };
 
         public static AdminLead ToClient(this AdminLeadDb @this) => new AdminLead
         {
@@ -196,6 +201,8 @@ namespace FSA.IncidentsManagementDb
             Id = @this.Id,
             Title = @this.Title,
         };
+
+        
 
         public static SignalStatus ToClient(this SignalStatusDb @this) => new SignalStatus
         {

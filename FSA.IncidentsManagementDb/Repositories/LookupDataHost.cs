@@ -31,6 +31,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         public IReferenceDataRepo<DeathIllness> DeathIllnesses => new ReferenceDataRepo<DeathIllness, DeathIllnessDb>(ctx, (itm) => itm.ToClient());
         public IReferenceDataRepo<OMITGroup> OMITGroups => new ReferenceDataRepo<OMITGroup, OMITGroupDb>(ctx, (itm) => itm.ToClient());
         public IReferenceDataRepo<OrganisationRole> OrganisationsRoles => new ReferenceDataRepo<OrganisationRole, OrganisationRoleDb>(ctx, (itm) => itm.ToClient());
+        public IReferenceDataRepo<StakeholderIncidentRole> StakeholderIncidentRoles => new ReferenceDataRepo<StakeholderIncidentRole, StakeholderIncidentRoleDb>(ctx, (itm) => itm.ToClient());
 
         public IReferenceDataRepo<ProductType> ProductTypes => new ReferenceDataRepo<ProductType, ProductTypeDb>(ctx, (itm) => itm.ToClient());
         public IReferenceDataRepo<SignalStatus> SignalStatus => new ReferenceDataRepo<SignalStatus, SignalStatusDb>(ctx, (itm) => itm.ToClient());
