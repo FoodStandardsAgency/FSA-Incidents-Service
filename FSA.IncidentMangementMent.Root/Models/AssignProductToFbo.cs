@@ -8,6 +8,15 @@ namespace FSA.IncidentsManagement.Root.Models
     {
         public int Id { get; set; }
         public int[] FboTypes { get; set; }
-        public int FboId { get; set; }
+        public int AddressId { get; set; }
     }
+
+    public class ProductAddressUpdate
+    {
+        public int Id { get; set; }
+        public int[] FboTypes { get; set; }
+        public int AddressId { get; set; }
+        public int OriginalAddressId { get; set; }
+    }
+
 }

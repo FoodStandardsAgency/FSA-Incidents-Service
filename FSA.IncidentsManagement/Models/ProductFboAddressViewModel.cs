@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Models
 {
-    public class FboAddressWebModel
+    public class ProductFboAddressViewModel : SimsAddress
     {
-        public int Id { get; set; }
+        public int ProductId { get; set; }
         public IEnumerable<FboTypes> FboTypes { get; set; }
-        public SimsAddress Address { get; set; }
+        public string MainContact { get; set; }
+        public string EmailAddress { get; set; }
     }
 }

@@ -27,5 +27,6 @@ namespace FSA.IncidentsManagement.Root.Models
         public IEnumerable<AdminLead> AdminLeads { get; set; }
         public IEnumerable<ProductDateType> ProductDataTypes { get; set; }
         public IEnumerable<StakeholderType> StakeholderTypes { get; set; }
+        public IEnumerable<StakeholderIncidentRole> StakeholderIncidentRoles { get; set; }
     }
 }

@@ -41,7 +41,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         public IReferenceDataRepo<PersonaRole> PersonaRoles => new ReferenceDataRepo<PersonaRole, PersonaRoleDb>(ctx, (itm) => itm.ToClient());
         // These are here temporairly
         public IReferenceDataRepo<OrganisationLookup> Organisations => new OrganisationLookupManager(ctx);
-        public IReferenceDataRepo<OrganisationLookup> FBOs => new FBOLookups(ctx);
+        //public IReferenceDataRepo<OrganisationLookup> FBOs => new FBOLookups(ctx);
         public IReferenceDataRepo<OrganisationLookup> Notifiers => new NotifiersLookups(ctx);
         public IReferenceDataRepo<OrganisationLookup> LocalAuthorities => new LocalAuthoritiesLookups(ctx);
         // These are here temporairly
@@ -71,7 +71,8 @@ namespace FSA.IncidentsManagementDb.Repositories
             NotifierTypes = this.NotifierTypes.GetAll(),
             AdminLeads = this.AdminLeads.GetAll(),
             ProductDataTypes = this.ProductDateTypes.GetAll(),
-            StakeholderTypes = this.StakeholderTypes.GetAll()
+            StakeholderTypes = this.StakeholderTypes.GetAll(),
+            StakeholderIncidentRoles = this.StakeholderIncidentRoles.GetAll()
         };
     }
 }

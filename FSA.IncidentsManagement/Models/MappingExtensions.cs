@@ -116,7 +116,7 @@ namespace FSA.IncidentsManagement.Models
             //MainContact = @this.Address.MainContact,
             TelephoneNumber = @this.Address.TelephoneNumber,
             ContactMethodId = @this.Address.ContactMethodId,
-            OrganisationRoleId = @this.Address.OrganisationRoleId ?? 0,
+            //OrganisationRoleId = @this.Address.OrganisationRoleId ?? 0,
             Title = @this.Address.Title,
 
             FboId = @this.Id,
@@ -136,12 +136,37 @@ namespace FSA.IncidentsManagement.Models
                 //MainContact = @this.MainContact,
                 TelephoneNumber = @this.TelephoneNumber,
                 ContactMethodId = @this.ContactMethodId,
-                OrganisationRoleId = @this.OrganisationRoleId ?? 0,
+                //OrganisationRoleId = @this.OrganisationRoleId ?? 0,
                 Title = @this.Title,
             },
             //  FboTypes = Utilities.SelectedFlags(@this.FboTypes),
             Id = @this.FboId
         };
+
+        public static ProductFboAddressViewModel ToWeb(this ProductFboAddress @this) => new ProductFboAddressViewModel
+        {
+            Id=@this.Id,
+            AddressLine1 = @this.AddressLine1,
+            AddressLine2 = @this.AddressLine2,
+            TownCity = @this.TownCity,
+            PostCode = @this.PostCode,
+            CountryId = @this.CountryId,
+            County = @this.County,
+            MainContact = @this.Contacts.Count()>0?@this.Contacts.First().Name: "",
+            TelephoneNumber = @this.TelephoneNumber,
+            ContactMethodId = @this.ContactMethodId,
+            EmailAddress = @this.Contacts.Count() > 0 ? @this.Contacts.First().EmailAddress : "",
+            Title = @this.Title,
+            Contacts = new List<SimsAddressContact>(),
+            ProductId = @this.ProductId,
+            FboTypes = Utilities.SelectedFlags(@this.FboTypes)
+        };
+
+        public static IEnumerable<ProductFboAddressViewModel> ToWeb(this IEnumerable<ProductFboAddress> @this)
+        {
+            foreach (var item in @this)
+                yield return item.ToWeb();
+        }
 
         public static IEnumerable<FboAddressWebModel> ToWeb(this IEnumerable<FboAddress> @this)
         {
@@ -189,9 +214,9 @@ namespace FSA.IncidentsManagement.Models
             PostCode = @this.PostCode,
             CountryId = @this.CountryId,
             ContactMethodId = @this.ContactMethodId,
-            OrganisationRoleId = @this.OrganisationRoleId,
+            //OrganisationRoleId = @this.OrganisationRoleId,
             TelephoneNumber = @this.TelephoneNumber,
-            Contacts =  string.IsNullOrEmpty( @this.MainContact) ? new List<SimsAddressContact>() :   new List<SimsAddressContact> { new SimsAddressContact {  EmailAddress = @this.EmailAddress, Name =@this.MainContact, IsMain=true, TelephoneNumber =@this.TelephoneNumber} }
+            Contacts =  string.IsNullOrEmpty( @this.MainContact) ? new List<SimsAddressContact>() :   new List<SimsAddressContact> { new SimsAddressContact { EmailAddress = @this.EmailAddress ?? "", Name =@this.MainContact, IsMain=true, TelephoneNumber =@this.TelephoneNumber ?? ""} }
         };
 
         public static IEnumerable<SimsAddress> ToClient(this IEnumerable<SimsAddressViewModel> @this)
@@ -213,11 +238,21 @@ namespace FSA.IncidentsManagement.Models
             PostCode = @this.PostCode,
             CountryId = @this.CountryId,
             ContactMethodId = @this.ContactMethodId,
-            OrganisationRoleId = @this.OrganisationRoleId,
+            //OrganisationRoleId = @this.OrganisationRoleId,
             TelephoneNumber = @this.TelephoneNumber,
             MainContact = @this.Contacts.ToList().Count>0?@this.Contacts.First().Name : "",
             EmailAddress = @this.Contacts.ToList().Count > 0 ? @this.Contacts.First().EmailAddress : ""
         };
+
+        public static IEnumerable<SimsAddressViewModel> ToWeb(this IEnumerable<SimsAddress> @this)
+        {
+            foreach (var item in @this)
+            {
+                yield return item.ToWeb();
+            }
+        }
+
+
 
         public static StakeholderModel ToWeb(this Stakeholder @this) => new StakeholderModel
         {
@@ -239,5 +274,6 @@ namespace FSA.IncidentsManagement.Models
                 yield return item.ToWeb();
             }
         }
+
     }
 }

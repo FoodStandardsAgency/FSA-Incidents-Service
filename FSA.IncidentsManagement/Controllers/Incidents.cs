@@ -1,23 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using FSA.IncidentsManagement.Misc;
-using FSA.IncidentsManagement.Models;
-using FSA.IncidentsManagement.ModelValidators;
+﻿using FSA.IncidentsManagement.Models;
 using FSA.IncidentsManagement.Root;
 using FSA.IncidentsManagement.Root.Contracts;
 using FSA.IncidentsManagement.Root.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Server.IIS;
-using Microsoft.EntityFrameworkCore.Update;
 using Microsoft.Extensions.Logging;
-using Microsoft.Graph;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Controllers
 {

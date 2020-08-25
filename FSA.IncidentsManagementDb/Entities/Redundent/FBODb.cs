@@ -10,7 +10,7 @@ namespace FSA.IncidentsManagementDb.Entities
         public int Id { get; set; }
         //public FBOTypeDb FBOType { get; set; }
         public int OrganisationId { get; set; }
-        public AddressDb Organisation { get; set; }
-        public ICollection<ProductFBODb> RelatedProducts { get; set; }
+     //   public AddressDb Organisation { get; set; }
+     //   public ICollection<ProductFBODb> RelatedProducts { get; set; }
     }
 }

@@ -8,7 +8,7 @@ using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Collections.Generic;
-
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Controllers
@@ -29,7 +29,7 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpPost("Find")]
         [SwaggerOperation(Summary = "Find address")]
-        [ProducesResponseType(typeof(List<SimsAddress>), 200)]
+        [ProducesResponseType(typeof(List<SimsAddressViewModel>), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
         public async Task<IActionResult> FindAddress([FromBody]AddressSearchModel addressSearch)
@@ -40,7 +40,7 @@ namespace FSA.IncidentsManagement.Controllers
                 //SearchAddressType.Notifiers => new OkObjectResult(await fsaData.Addresses.FindNotifier(addressSearch.Search)),
                 //SearchAddressType.LocalAuthority => new OkObjectResult(await fsaData.Addresses.FindLocalAuthority(addressSearch.Search)),
                 //SearchAddressType.BasicAddress => new OkObjectResult(await fsaData.Addresses.FindAddress(addressSearch.Search)),
-                SearchAddressType.Unknown => new OkObjectResult(await fsaData.Addresses.FindAddress(addressSearch.Search)),
+                SearchAddressType.Unknown => new OkObjectResult((await fsaData.Addresses.FindAddress(addressSearch.Search)).ToWeb().ToList()),
                 _=>BadRequest("Unknown address issues")
             };   
         }
@@ -57,6 +57,20 @@ namespace FSA.IncidentsManagement.Controllers
             return new OkObjectResult(createdAddress);
         }
 
+        [HttpPut()]
+        [SwaggerOperation(Summary = "Update Address")]
+        [ProducesResponseType(typeof(SimsAddressViewModel), 200)]
+        [ProducesResponseType(500)]
+        [Produces("application/json")]
+        public async Task<IActionResult> UpdateAddress([FromBody] SimsAddressViewModel newAddress)
+        {
+            var newDbAddress = newAddress.ToClient();
+            var createdAddress = await fsaData.Addresses.Update(newDbAddress);
+            return new OkObjectResult(createdAddress.ToWeb());
+        }
+
+
+
         [HttpGet("")]
         [ProducesResponseType(typeof(SimsAddressViewModel), 200)]
         [SwaggerOperation(Summary = "Fetch address")]
@@ -67,40 +81,5 @@ namespace FSA.IncidentsManagement.Controllers
             var address = await fsaData.Addresses.Get(addressId);
             return new OkObjectResult(address.ToWeb());
         }
-
-
-
-        //[HttpPost("Fbo")]
-        //[SwaggerOperation(Summary = "Add new Address and new fbo")]
-        //[ProducesResponseType(typeof(FboAddressModel), 200)]
-        //[ProducesResponseType(500)]
-        //[Produces("application/json")]
-        //public async Task<IActionResult> AddFboAddress([FromBody]FboAddressModel newFbo)
-        //{
-        //    var fboADdress = await fsaData.Addresses.AddFbo(newFbo.ToClient());
-        //    return new OkObjectResult(fboADdress.ToWeb());
-        //}
-
-        //[HttpPut("Fbo")]
-        //[ProducesResponseType(typeof(FboAddressModel), 200)]
-        //[SwaggerOperation(Summary = "Update Address and fbo types")]
-        //[ProducesResponseType(500)]
-        //[Produces("application/json")]
-        //public async Task<IActionResult> UpdatedFboAddress([FromBody]FboAddressModel updtedFbo)
-        //{
-        //    var fboAddress = await fsaData.Addresses.UpdateFbo(updtedFbo.ToClient());
-        //    return new OkObjectResult(fboAddress.ToWeb());
-        //}
-
-        //[HttpGet("Fbo/{fboId}")]
-        //[ProducesResponseType(typeof(FboAddressModel), 200)]
-        //[SwaggerOperation(Summary = "Fetch fbo address")]
-        //[ProducesResponseType(500)]
-        //[Produces("application/json")]
-        //public async Task<IActionResult> GetFboAddress(int fboId)
-        //{
-        //    var fboAddres = await fsaData.Addresses.GetFbo(fboId);
-        //    return new OkObjectResult(fboAddres.ToWeb());
-        //}
     }
 }

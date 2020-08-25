@@ -4908,8 +4908,6 @@ namespace FSA.IncidentsManagementDb.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrganisationId");
-
                     b.ToTable("FBOs");
                 });
 
@@ -5501,48 +5499,6 @@ namespace FSA.IncidentsManagementDb.Migrations
                     b.ToTable("TaggedAttachements");
                 });
 
-            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.IncidentTaggedAttachmentDb", b =>
-                {
-                    b.Property<int>("IncidentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("DocUrl")
-                        .HasColumnType("nvarchar(500)")
-                        .HasMaxLength(500);
-
-                    b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<int>("TagFlags")
-                        .HasColumnType("int");
-
-                    b.Property<byte[]>("Timestamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.HasKey("IncidentId", "DocUrl");
-
-                    b.ToTable("TaggedAttachements");
-                });
-
             modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.NotifierDb", b =>
                 {
                     b.Property<int>("Id")
@@ -5935,9 +5891,6 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasColumnType("nvarchar(70)")
                         .HasMaxLength(70);
 
-                    b.Property<int?>("FBODbId")
-                        .HasColumnType("int");
-
                     b.Property<int>("FboTypes")
                         .HasColumnType("int");
 
@@ -5959,8 +5912,6 @@ namespace FSA.IncidentsManagementDb.Migrations
                     b.HasKey("ProductId", "AddressId");
 
                     b.HasIndex("AddressId");
-
-                    b.HasIndex("FBODbId");
 
                     b.ToTable("ProductFBOItems");
                 });
@@ -6699,7 +6650,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "FBO/FeBO"
+                            Title = "Food/Feed Business Operator (FBO/FeBO)"
                         });
                 });
 
@@ -7077,8 +7028,6 @@ namespace FSA.IncidentsManagementDb.Migrations
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Title = "Stakeholder Engagement (SHE) Officer"
                         });
-                            Title = "Food/Feed Business Operator (FBO/FeBO)"
-                        });
                 });
 
             modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.UnitQuantityDb", b =>
@@ -7317,15 +7266,6 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasForeignKey("CountryId");
                 });
 
-            modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.FBODb", b =>
-                {
-                    b.HasOne("FSA.IncidentsManagementDb.Entities.AddressDb", "Organisation")
-                        .WithMany()
-                        .HasForeignKey("OrganisationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("FSA.IncidentsManagementDb.Entities.IncidentCommentDb", b =>
                 {
                     b.HasOne("FSA.IncidentsManagementDb.Entities.IncidentDb", "Incident")
@@ -7507,10 +7447,6 @@ namespace FSA.IncidentsManagementDb.Migrations
                         .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
-
-                    b.HasOne("FSA.IncidentsManagementDb.Entities.FBODb", null)
-                        .WithMany("RelatedProducts")
-                        .HasForeignKey("FBODbId");
 
                     b.HasOne("FSA.IncidentsManagementDb.Entities.ProductDb", "Product")
                         .WithMany("RelatedFBOs")

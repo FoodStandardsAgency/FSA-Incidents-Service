@@ -195,15 +195,15 @@ namespace FSA.IncidentsManagement.Controllers
         //                    .GetAllAsync()).ToList());
         //}
 
-        [HttpGet("FBOLookups")]
-        [ProducesResponseType(typeof(IEnumerable<OrganisationLookup>), 200)]
-        [ProducesResponseType(500)]
-        [SwaggerOperation(Summary = "FBO temporary pick list")]
-        public async Task<IActionResult> FboLookup()
-        {
-            return new OkObjectResult((await this.lookupdata.FBOs
-                            .GetAllAsync()).ToList());
-        }
+        //[HttpGet("FBOLookups")]
+        //[ProducesResponseType(typeof(IEnumerable<OrganisationLookup>), 200)]
+        //[ProducesResponseType(500)]
+        //[SwaggerOperation(Summary = "FBO temporary pick list")]
+        //public async Task<IActionResult> FboLookup()
+        //{
+        //    return new OkObjectResult((await this.lookupdata.FBOs
+        //                    .GetAllAsync()).ToList());
+        //}
 
         [HttpGet("NotifierLookups")]
         [ProducesResponseType(typeof(IEnumerable<OrganisationLookup>), 200)]

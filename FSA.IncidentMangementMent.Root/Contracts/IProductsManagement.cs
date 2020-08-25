@@ -15,7 +15,7 @@ namespace FSA.IncidentsManagement.Root.Contracts
         Task<IEnumerable<Product>> IncidentProducts(int incidentId);
         Task<IEnumerable<ProductFboAddress>> GetProductAddresses(int productId);
         Task<IPaging<ProductDashboard>> DashboardItems(int incidentId, int pageSize = 10, int startPage = 1);
-        Task AssignFbo(int productId, int addressId, FboTypes types);
+        Task AssignFbo(int productId,  int addressId,  FboTypes types);
         Task RemoveFbo(int productId, int addressId);
         Task UpdateFbo(int productId, int addressId, FboTypes fboTypes);
     }

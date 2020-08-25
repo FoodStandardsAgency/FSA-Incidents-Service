@@ -5,7 +5,7 @@
     "version": "v1"
   },
   "paths": {
-    "/api/Addresses": {
+    "/api/Addresses/Find": {
       "post": {
         "tags": [
           "Addresses"
@@ -35,8 +35,80 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/FboAddressModel"
+                "$ref": "#/definitions/SimsAddressViewModel"
               }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Addresses": {
+      "post": {
+        "tags": [
+          "Addresses"
+        ],
+        "summary": "Add new Address",
+        "operationId": "AddAddress",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/SimsAddressViewModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/SimsAddressViewModel"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Addresses"
+        ],
+        "summary": "Update Address",
+        "operationId": "UpdateAddress",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/SimsAddressViewModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/SimsAddressViewModel"
             }
           },
           "500": {
@@ -65,111 +137,7 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/OrganisationAddress"
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Addresses/Fbo": {
-      "post": {
-        "tags": [
-          "Addresses"
-        ],
-        "summary": "Add new Address and new fbo",
-        "operationId": "AddFboAddress",
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "schema": {
-              "$ref": "#/definitions/FboAddressModel"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/FboAddressModel"
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Addresses"
-        ],
-        "summary": "Update Address and fbo types",
-        "operationId": "UpdatedFboAddress",
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "schema": {
-              "$ref": "#/definitions/FboAddressModel"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/FboAddressModel"
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Addresses/Fbo/{fboId}": {
-      "get": {
-        "tags": [
-          "Addresses"
-        ],
-        "summary": "Fetch fbo address",
-        "operationId": "GetFboAddress",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "fboId",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/FboAddressModel"
+              "$ref": "#/definitions/SimsAddressViewModel"
             }
           },
           "500": {
@@ -1369,32 +1337,6 @@
         }
       }
     },
-    "/api/Lookups/Organisations": {
-      "get": {
-        "tags": [
-          "Lookups"
-        ],
-        "summary": "Organisation pick list",
-        "operationId": "Organisations",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/OrganisationLookup"
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
     "/api/Lookups/FBOLookups": {
       "get": {
         "tags": [
@@ -1605,7 +1547,7 @@
         "tags": [
           "Products"
         ],
-        "description": "Create new Product.",
+        "summary": "Create new Product",
         "operationId": "AddProduct",
         "consumes": [
           "application/json",
@@ -1620,7 +1562,7 @@
             "in": "body",
             "name": "body",
             "schema": {
-              "$ref": "#/definitions/NewProductModel"
+              "$ref": "#/definitions/ProductViewModel"
             }
           }
         ],
@@ -1640,7 +1582,7 @@
         "tags": [
           "Products"
         ],
-        "description": "Update Product.",
+        "summary": "Update Product",
         "operationId": "UpdateProduct",
         "consumes": [
           "application/json",
@@ -1655,7 +1597,7 @@
             "in": "body",
             "name": "body",
             "schema": {
-              "$ref": "#/definitions/NewProductModel"
+              "$ref": "#/definitions/ProductViewModel"
             }
           }
         ],
@@ -1675,7 +1617,7 @@
         "tags": [
           "Products"
         ],
-        "description": "get product",
+        "summary": "Fetch product",
         "operationId": "GetProduct",
         "produces": [
           "application/json"
@@ -1706,7 +1648,7 @@
         "tags": [
           "Products"
         ],
-        "description": "Fetch products.",
+        "summary": "Fetch products",
         "operationId": "GetIncidentProducts",
         "produces": [
           "application/json"
@@ -1741,7 +1683,7 @@
         "tags": [
           "Products"
         ],
-        "description": "Fetch product addresses.",
+        "summary": "Fetch product addresses",
         "operationId": "GetProductAddresses",
         "produces": [
           "application/json"
@@ -1761,7 +1703,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/FboAddressModel"
+                "$ref": "#/definitions/ProductFboAddressViewModel"
               }
             }
           },
@@ -1776,7 +1718,7 @@
         "tags": [
           "Products"
         ],
-        "description": "Fetch product addresses.",
+        "summary": "Product dashboard",
         "operationId": "GetProductDashboard",
         "produces": [
           "application/json"
@@ -1809,7 +1751,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/FboAddress"
+                "$ref": "#/definitions/ProductDashboard"
               }
             }
           },
@@ -1824,15 +1766,12 @@
         "tags": [
           "Products"
         ],
-        "description": "Assigns fbo to product.",
+        "summary": "Assign fbo to product",
         "operationId": "AssignFbo",
         "consumes": [
           "application/json",
           "text/json",
           "application/*+json"
-        ],
-        "produces": [
-          "application/json"
         ],
         "parameters": [
           {
@@ -1840,19 +1779,45 @@
             "name": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/AssignItemToFbo"
+              "$ref": "#/definitions/ProductAddress"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "Success"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Products/UpdateFbo": {
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Update fbo to product",
+        "operationId": "UpdateFbo",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/FboAddress"
-              }
+              "$ref": "#/definitions/ProductAddress"
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
           },
           "500": {
             "description": "Server Error"
@@ -1865,7 +1830,7 @@
         "tags": [
           "Products"
         ],
-        "description": "Removes fbo from product.",
+        "summary": "Remove fbo from product",
         "operationId": "RemoveFbo",
         "consumes": [
           "application/json",
@@ -1881,7 +1846,7 @@
             "name": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/AssignItemToFbo"
+              "$ref": "#/definitions/ProductAddress"
             }
           }
         ],
@@ -1925,7 +1890,7 @@
         }
       }
     },
-    "OrganisationAddress": {
+    "SimsAddressViewModel": {
       "type": "object",
       "properties": {
         "id": {
@@ -1937,10 +1902,6 @@
         },
         "mainContact": {
           "type": "string"
-        },
-        "organisationRoleId": {
-          "format": "int32",
-          "type": "integer"
         },
         "addressLine1": {
           "type": "string"
@@ -1970,25 +1931,6 @@
         "contactMethodId": {
           "format": "int32",
           "type": "integer"
-        }
-      }
-    },
-    "FboAddressModel": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "fboTypes": {
-          "type": "array",
-          "items": {
-            "format": "int32",
-            "type": "integer"
-          }
-        },
-        "address": {
-          "$ref": "#/definitions/OrganisationAddress"
         }
       }
     },
@@ -3098,6 +3040,18 @@
         }
       }
     },
+    "StakeholderIncidentRole": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
     "LookupsHost": {
       "type": "object",
       "properties": {
@@ -3208,6 +3162,12 @@
           "items": {
             "$ref": "#/definitions/StakeholderType"
           }
+        },
+        "stakeholderIncidentRoles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StakeholderIncidentRole"
+          }
         }
       }
     },
@@ -3252,7 +3212,7 @@
         }
       }
     },
-    "NewProductModel": {
+    "ProductViewModel": {
       "type": "object",
       "properties": {
         "incidentId": {
@@ -3489,6 +3449,7 @@
     "FboTypes": {
       "format": "int32",
       "enum": [
+        0,
         1,
         2,
         4,
@@ -3509,15 +3470,49 @@
       ],
       "type": "integer"
     },
-    "FboAddress": {
+    "SimsAddressContact": {
       "type": "object",
       "properties": {
-        "fboTypes": {
-          "$ref": "#/definitions/FboTypes"
-        },
-        "fboId": {
+        "id": {
           "format": "int32",
           "type": "integer"
+        },
+        "addressId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "telephoneNumber": {
+          "type": "string"
+        },
+        "emailAddress": {
+          "type": "string"
+        },
+        "isMain": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ProductFboAddressViewModel": {
+      "type": "object",
+      "properties": {
+        "productId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "fboTypes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FboTypes"
+          }
+        },
+        "mainContact": {
+          "type": "string"
+        },
+        "emailAddress": {
+          "type": "string"
         },
         "id": {
           "format": "int32",
@@ -3525,13 +3520,6 @@
         },
         "title": {
           "type": "string"
-        },
-        "mainContact": {
-          "type": "string"
-        },
-        "organisationRoleId": {
-          "format": "int32",
-          "type": "integer"
         },
         "addressLine1": {
           "type": "string"
@@ -3555,25 +3543,111 @@
         "telephoneNumber": {
           "type": "string"
         },
-        "emailAddress": {
-          "type": "string"
-        },
         "contactMethodId": {
           "format": "int32",
           "type": "integer"
+        },
+        "contacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SimsAddressContact"
+          }
         }
       }
     },
-    "AssignItemToFbo": {
+    "ProductDashboard": {
       "type": "object",
       "properties": {
         "id": {
           "format": "int32",
           "type": "integer"
         },
+        "name": {
+          "type": "string"
+        },
+        "productType": {
+          "type": "string"
+        },
+        "batchCodes": {
+          "type": "string"
+        },
+        "lastUpdated": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "addressNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ProductAddress": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "fboTypes": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "addressId": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "FboAddress": {
+      "type": "object",
+      "properties": {
         "fboId": {
           "format": "int32",
           "type": "integer"
+        },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "addressLine1": {
+          "type": "string"
+        },
+        "addressLine2": {
+          "type": "string"
+        },
+        "townCity": {
+          "type": "string"
+        },
+        "county": {
+          "type": "string"
+        },
+        "countryId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "postCode": {
+          "type": "string"
+        },
+        "telephoneNumber": {
+          "type": "string"
+        },
+        "contactMethodId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "contacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SimsAddressContact"
+          }
         }
       }
     }

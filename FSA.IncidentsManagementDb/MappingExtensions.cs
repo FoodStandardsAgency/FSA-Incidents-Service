@@ -93,13 +93,13 @@ namespace FSA.IncidentsManagementDb
             }
         }
 
-        public static IEnumerable<FboAddress> ToClient(this IEnumerable<FBODb> @this)
-        {
-            foreach (var itm in @this)
-            {
-                yield return itm.ToClient();
-            }
-        }
+        //public static IEnumerable<FboAddress> ToClient(this IEnumerable<FBODb> @this)
+        //{
+        //    foreach (var itm in @this)
+        //    {
+        //        yield return itm.ToClient();
+        //    }
+        //}
 
 
         public static SimsAddress ToClient(this AddressDb @this) => new SimsAddress
@@ -114,7 +114,8 @@ namespace FSA.IncidentsManagementDb
             CountryId = @this.CountryId,
             PostCode = @this.PostCode,
             TelephoneNumber = @this.TelephoneNumber,
-            ContactMethodId = @this.ContactMethodId
+            ContactMethodId = @this.ContactMethodId,
+            Contacts = @this.Contacts.ToClient(),
         };
 
         public static ProductFboAddress ToClient(this ProductFBODb @this) => new ProductFboAddress
@@ -131,8 +132,11 @@ namespace FSA.IncidentsManagementDb
             TelephoneNumber = @this.Address.TelephoneNumber,
             ContactMethodId = @this.Address.ContactMethodId,
             ProductId = @this.ProductId,
-            FboTypes = @this.FboTypes
+            FboTypes = @this.FboTypes,
+            Contacts = @this.Address.Contacts.Select(o => o.ToClient()).ToList()
         };
+
+
 
         public static IEnumerable<ProductFboAddress> ToClient(this IEnumerable<ProductFBODb> @this)
         {
@@ -158,6 +162,25 @@ namespace FSA.IncidentsManagementDb
             Contacts = @this.Contacts.ToDb().ToList()
         };
 
+        public static SimsAddressContact ToClient(this AddressContactDb @this) => new SimsAddressContact
+        {
+            Id = @this.Id,
+            AddressId = @this.AddressId,
+            EmailAddress = @this.EmailAddress,
+            TelephoneNumber = @this.TelephoneNumber,
+            Name = @this.Name,
+            IsMain = @this.IsMain
+        };
+
+
+        public static IEnumerable<SimsAddressContact> ToClient(this IEnumerable<AddressContactDb> @this)
+        {
+            foreach (var itm in @this)
+            {
+                yield return itm.ToClient();
+            }
+        }
+
         public static AddressContactDb ToDb(this SimsAddressContact @this) => new AddressContactDb
         {
             Id = @this.Id,
@@ -167,6 +190,20 @@ namespace FSA.IncidentsManagementDb
             Name = @this.Name,
             IsMain = @this.IsMain
         };
+        /// <summary>
+        ///  WE are updating an existing entity.
+        ///  keys are not replaced
+        /// </summary>
+        /// <param name="this"></param>
+        /// <param name="entity"></param>
+        public static void ToDb(this SimsAddressContact @this, AddressContactDb entity)
+        {
+            //entity.AddressId = @this.AddressId;
+            entity.EmailAddress = @this.EmailAddress;
+            entity.TelephoneNumber = @this.TelephoneNumber;
+            entity.Name = @this.Name;
+            entity.IsMain = @this.IsMain;
+        }
 
         public static IEnumerable<AddressContactDb> ToDb(this IEnumerable<SimsAddressContact> @this)
         {
@@ -240,7 +277,7 @@ namespace FSA.IncidentsManagementDb
             Title = @this.Title,
         };
 
-        
+
 
         public static SignalStatus ToClient(this SignalStatusDb @this) => new SignalStatus
         {
@@ -650,22 +687,22 @@ namespace FSA.IncidentsManagementDb
 
         public static OrganisationLookup ToLookup(this AddressLookupDb @this) => new OrganisationLookup { Id = @this.Id, Name = @this.Title };
 
-        public static FboAddress ToClient(this FBODb @this) => new FboAddress
-        {
-            Id = @this.Organisation.Id,
-            Title = @this.Organisation.Title,
-            //MainContact = @this.Organisation.MainContact,
-            AddressLine1 = @this.Organisation.AddressLine1,
-            AddressLine2 = @this.Organisation.AddressLine2,
-            TownCity = @this.Organisation.TownCity,
-            County = @this.Organisation.County,
-            PostCode = @this.Organisation.PostCode,
-            CountryId = @this.Organisation.CountryId,
-            TelephoneNumber = @this.Organisation.TelephoneNumber,
-            ContactMethodId = @this.Organisation.ContactMethodId,
-            FboId = @this.Id,
-            //FboTypes = @this.FBOTypeId
-        };
+        //public static FboAddress ToClient(this FBODb @this) => new FboAddress
+        //{
+        //    Id = @this.Organisation.Id,
+        //    Title = @this.Organisation.Title,
+        //    //MainContact = @this.Organisation.MainContact,
+        //    AddressLine1 = @this.Organisation.AddressLine1,
+        //    AddressLine2 = @this.Organisation.AddressLine2,
+        //    TownCity = @this.Organisation.TownCity,
+        //    County = @this.Organisation.County,
+        //    PostCode = @this.Organisation.PostCode,
+        //    CountryId = @this.Organisation.CountryId,
+        //    TelephoneNumber = @this.Organisation.TelephoneNumber,
+        //    ContactMethodId = @this.Organisation.ContactMethodId,
+        //    FboId = @this.Id,
+        //    //FboTypes = @this.FBOTypeId
+        //};
 
         public static NotifierAddress ToClient(this NotifierDb @this) => new NotifierAddress
         {

@@ -75,12 +75,12 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpGet("Addresses/{productId}")]
         [SwaggerOperation(Summary = "Fetch product addresses")]
-        [ProducesResponseType(typeof(List<ProductFboAddress>), 200)]
+        [ProducesResponseType(typeof(List<ProductFboAddressViewModel>), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetProductAddresses(int productId)
         {
             var addresses = await this.simsManager.Products.GetProductAddresses(productId);
-            return new OkObjectResult(addresses.ToList());
+            return new OkObjectResult(addresses.ToWeb().ToList());
         }
 
         [HttpGet("Dashboard")]
@@ -100,7 +100,7 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(500)]
         public async Task<IActionResult> AssignFbo([Required] ProductAddress assignObj)
         {
-            await this.simsManager.Products.AssignFbo(assignObj.Id, assignObj.FboId, (FboTypes)assignObj.FboTypes.Sum());
+            await this.simsManager.Products.AssignFbo(assignObj.Id, assignObj.AddressId, (FboTypes)assignObj.FboTypes.Sum());
             return new OkResult();
         }
 
@@ -110,7 +110,7 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(500)]
         public async Task<IActionResult> UpdateFbo([Required] ProductAddress assignObj)
         {
-            await this.simsManager.Products.UpdateFbo(assignObj.Id, assignObj.FboId, (FboTypes)assignObj.FboTypes.Sum());
+            await this.simsManager.Products.UpdateFbo(assignObj.Id, assignObj.AddressId, (FboTypes)assignObj.FboTypes.Sum());
             return new OkResult();
         }
 
@@ -120,7 +120,7 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(500)]
         public async Task<IActionResult> RemoveFbo([Required] ProductAddress assignObj)
         {
-            await this.simsManager.Products.RemoveFbo(assignObj.Id, assignObj.FboId);
+            await this.simsManager.Products.RemoveFbo(assignObj.Id, assignObj.AddressId);
             return new OkResult();
         }
 
