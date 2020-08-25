@@ -1337,32 +1337,6 @@
         }
       }
     },
-    "/api/Lookups/FBOLookups": {
-      "get": {
-        "tags": [
-          "Lookups"
-        ],
-        "summary": "FBO temporary pick list",
-        "operationId": "FboLookup",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/OrganisationLookup"
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
     "/api/Lookups/NotifierLookups": {
       "get": {
         "tags": [
