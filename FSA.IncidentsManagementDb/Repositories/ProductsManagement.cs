@@ -135,6 +135,9 @@ namespace FSA.IncidentsManagementDb.Repositories
 
         public async Task AssignFbo(int productId, int addressId, FboTypes types)
         {
+
+            if (productId == 0) throw new SIMSException("Product Id missing");
+            if (addressId == 0) throw new SIMSException("Address Id missing");
             // need to check to see if the incident has already been closed.
             if (IsProductIncidentClosed(productId)) throw new IncidentClosedException("This incident is closed.");
 
@@ -150,9 +153,9 @@ namespace FSA.IncidentsManagementDb.Repositories
 
         public async Task UpdateFbo(int productId, int addressId, FboTypes fboTypes)
         {
-            if (productId == 0 ) throw new SIMSException("Product Id missing");
+            if (productId == 0) throw new SIMSException("Product Id missing");
             if (addressId == 0) throw new SIMSException("Address Id missing");
-            if ((int)fboTypes == 0) throw new SIMSException("No Fbo types selected");
+            //if ((int)fboTypes == 0) throw new SIMSException("No Fbo types selected");
 
             // need to check to see if the incident has already been closed.
             if (IsProductIncidentClosed(productId)) throw new IncidentClosedException("This incident is closed.");

@@ -1,6 +1,7 @@
 ﻿using FSA.IncidentsManagement.Models;
 using FSA.IncidentsManagement.Root.Contracts;
 using FSA.IncidentsManagement.Root.Models;
+using FSA.IncidentsManagementDb.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -32,22 +33,49 @@ namespace FSA.IncidentsManagement.Controllers
         [HttpPost("")]
         [SwaggerOperation(Summary = "Create new Product")]
         [ProducesResponseType(typeof(Product), 200)]
+        [ProducesResponseType(403)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> AddProduct([FromBody] ProductViewModel newProduct)
         {
-            var item = newProduct.ToClient();
-            var product = await this.simsManager.Products.Add(newProduct.IncidentId, item);
-            return new OkObjectResult(product);
+            try
+            {
+                var item = newProduct.ToClient();
+                var product = await this.simsManager.Products.Add(newProduct.IncidentId, item);
+                return new OkObjectResult(product);
+            }catch(IncidentClosedException ex)
+            {
+                log.LogWarning(ex, ex.Message);
+                return new BadRequestObjectResult("Incident closed");
+            }
+            catch (IncidentMissingException ex)
+            {
+                log.LogWarning(ex, ex.Message);
+                return new BadRequestObjectResult("Incident Id missing");
+            }
+            catch(ProductExistsException ex)
+            {
+                log.LogWarning(ex, ex.Message);
+                return new BadRequestObjectResult("Product already exists");
+            }
         }
 
         [HttpPut("")]
         [SwaggerOperation(Summary = "Update Product")]
         [ProducesResponseType(typeof(Product), 200)]
         [ProducesResponseType(500)]
+        [ProducesResponseType(403)]
         public async Task<IActionResult> UpdateProduct([FromBody] ProductViewModel product)
         {
-            var updatedProduct = await this.simsManager.Products.Update(product.ToClient());
-            return new OkObjectResult(updatedProduct);
+            try
+            {
+                var updatedProduct = await this.simsManager.Products.Update(product.ToClient());
+                return new OkObjectResult(updatedProduct);
+            }
+            catch(IncidentClosedException ex)
+            {
+                log.LogWarning(ex, ex.Message);
+                return new BadRequestObjectResult("Incident was closed");
+            }
         }
 
         [HttpGet("")]
@@ -57,7 +85,7 @@ namespace FSA.IncidentsManagement.Controllers
         public async Task<IActionResult> GetProduct([FromQuery] int productId)
         {
             if (productId == 0)
-                return new StatusCodeResult(500);
+                return new BadRequestObjectResult("product id missing");
 
             var product = await this.simsManager.Products.Get(productId);
             return new OkObjectResult(product);
@@ -76,6 +104,7 @@ namespace FSA.IncidentsManagement.Controllers
         [HttpGet("Addresses/{productId}")]
         [SwaggerOperation(Summary = "Fetch product addresses")]
         [ProducesResponseType(typeof(List<ProductFboAddressViewModel>), 200)]
+        [ProducesResponseType(403)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetProductAddresses(int productId)
         {
@@ -89,19 +118,36 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetProductDashboard([FromQuery] int incidentId, [FromQuery] int pageSize = 10, [FromQuery] int pageNo = 1)
         {
-            var addresses = await this.simsManager.Products.DashboardItems(incidentId, pageSize, pageNo);
-            return new OkObjectResult(new { Results = addresses, TotalRecords = addresses.TotalResults });
+            try
+            {
+                var addresses = await this.simsManager.Products.DashboardItems(incidentId, pageSize, pageNo);
+                return new OkObjectResult(new { Results = addresses, TotalRecords = addresses.TotalResults });
+            }
+            catch (Exception ex)
+            {
+                this.log.LogError(ex, ex.Message);
+                return new StatusCodeResult(500);
+            }
         }
 
 
         [HttpPost("AssignFbo")]
         [SwaggerOperation(Summary = "Assign fbo to product")]
         [ProducesResponseType(200)]
+        [ProducesResponseType(403)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> AssignFbo([Required] ProductAddress assignObj)
         {
-            await this.simsManager.Products.AssignFbo(assignObj.Id, assignObj.AddressId, (FboTypes)assignObj.FboTypes.Sum());
-            return new OkResult();
+            try
+            {
+                await this.simsManager.Products.AssignFbo(assignObj.Id, assignObj.AddressId, (FboTypes)assignObj.FboTypes.Sum());
+                return new OkResult();
+            }
+            catch (SIMSException ex)
+            {
+                this.log.LogError(ex, ex.Message);
+                return new BadRequestObjectResult(ex.Message);
+            }
         }
 
         [HttpPost("UpdateFbo")]
@@ -110,18 +156,35 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(500)]
         public async Task<IActionResult> UpdateFbo([Required] ProductAddress assignObj)
         {
-            await this.simsManager.Products.UpdateFbo(assignObj.Id, assignObj.AddressId, (FboTypes)assignObj.FboTypes.Sum());
-            return new OkResult();
+            try
+            {
+                await this.simsManager.Products.UpdateFbo(assignObj.Id, assignObj.AddressId, (FboTypes)assignObj.FboTypes.Sum());
+                return new OkResult();
+            }
+            catch (SIMSException ex)
+            {
+                this.log.LogError(ex, ex.Message);
+                return new BadRequestObjectResult(ex.Message);
+            }
         }
 
         [HttpPost("RemoveFbo")]
         [SwaggerOperation(Summary = "Remove fbo from product")]
         [ProducesResponseType(typeof(PagedResult<FboAddress>), 200)]
+        [ProducesResponseType(403)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> RemoveFbo([Required] ProductAddress assignObj)
         {
-            await this.simsManager.Products.RemoveFbo(assignObj.Id, assignObj.AddressId);
-            return new OkResult();
+            try
+            {
+                await this.simsManager.Products.RemoveFbo(assignObj.Id, assignObj.AddressId);
+                return new OkResult();
+            }
+            catch (SIMSException ex)
+            {
+                this.log.LogError(ex, ex.Message);
+                return new BadRequestObjectResult(ex.Message);
+            }
         }
 
     }
