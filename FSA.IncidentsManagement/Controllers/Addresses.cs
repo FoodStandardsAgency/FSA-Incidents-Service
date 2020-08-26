@@ -32,18 +32,7 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(typeof(List<SimsAddressViewModel>), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
-        public async Task<IActionResult> FindAddress([FromBody]AddressSearchModel addressSearch)
-        {
-            return addressSearch.AddressType switch
-            {
-                //SearchAddressType.FBO => new OkObjectResult(await fsaData.Addresses.FindFbo(addressSearch.Search)),
-                //SearchAddressType.Notifiers => new OkObjectResult(await fsaData.Addresses.FindNotifier(addressSearch.Search)),
-                //SearchAddressType.LocalAuthority => new OkObjectResult(await fsaData.Addresses.FindLocalAuthority(addressSearch.Search)),
-                //SearchAddressType.BasicAddress => new OkObjectResult(await fsaData.Addresses.FindAddress(addressSearch.Search)),
-                SearchAddressType.Unknown => new OkObjectResult((await fsaData.Addresses.FindAddress(addressSearch.Search)).ToWeb().ToList()),
-                _=>BadRequest("Unknown address issues")
-            };   
-        }
+        public async Task<IActionResult> FindAddress([FromBody] AddressSearchModel addressSearch) => new OkObjectResult((await fsaData.Addresses.FindAddress(addressSearch.Search)).ToWeb().ToList());
 
         [HttpPost()]
         [SwaggerOperation(Summary = "Add new Address")]
