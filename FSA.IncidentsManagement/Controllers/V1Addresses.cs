@@ -1,7 +1,10 @@
-﻿using FSA.IncidentsManagement.Models;
+﻿using FSA.IncidentsManagement.Misc;
+using FSA.IncidentsManagement.Models;
 using FSA.IncidentsManagement.Root.Contracts;
+using FSA.IncidentsManagement.Root.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Collections.Generic;
@@ -10,17 +13,16 @@ using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Controllers
 {
-    [Route("api/[controller]")]
-    [Produces("application/json")]
+    [Route("api/v1/Addresses")]
     [ApiController]
     [Authorize]
-    public class AddressesController : ControllerBase
+    [ApiExplorerSettings(IgnoreApi = true)]
+    public class OldAddressesController : ControllerBase
     {
-
-        private readonly ILogger<AddressesController> log;
+        private readonly ILogger<OldAddressesController> log;
         private readonly ISIMSManager fsaData;
 
-        public AddressesController(ILogger<AddressesController> log, ISIMSManager fsaData)
+        public OldAddressesController(ILogger<OldAddressesController> log, ISIMSManager fsaData)
         {
             this.log = log;
             this.fsaData = fsaData;
@@ -58,12 +60,13 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
 
-        [HttpGet("{addressId}")]
+
+        [HttpGet("")]
         [ProducesResponseType(typeof(SimsAddressViewModel), 200)]
         [SwaggerOperation(Summary = "Fetch address")]
         [ProducesResponseType(500)]
         [Produces("application/json")]
-        public async Task<IActionResult> GetAddress([FromRoute] int addressId)
+        public async Task<IActionResult> GetAddress([FromQuery] int addressId)
         {
             var address = await fsaData.Addresses.Get(addressId);
             return new OkObjectResult(address.ToWeb());

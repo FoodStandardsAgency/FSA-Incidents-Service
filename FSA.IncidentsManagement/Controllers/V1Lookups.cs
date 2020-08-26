@@ -4,24 +4,20 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Controllers
 {
-
-    [Route("api/[controller]")]
+    [Route("api/v1/Lookups")]
     [Produces("application/json")]
     [ApiController]
     [Authorize]
-    public class LookupsController : ControllerBase
+    [ApiExplorerSettings(IgnoreApi = true)]
+    public class OLDLookupsController : ControllerBase
     {
-        private readonly ILogger<LookupsController> log;
+        private readonly ILogger<OLDLookupsController> log;
         private readonly ILookupDataHost lookupdata;
 
-        public LookupsController(ILogger<LookupsController> log, ILookupDataHost lookupdata)
+        public OLDLookupsController(ILogger<OLDLookupsController> log, ILookupDataHost lookupdata)
         {
             this.log = log;
             this.lookupdata = lookupdata;

@@ -115,7 +115,9 @@
             "description": "Server Error"
           }
         }
-      },
+      }
+    },
+    "/api/Addresses/{addressId}": {
       "get": {
         "tags": [
           "Addresses"
@@ -127,8 +129,9 @@
         ],
         "parameters": [
           {
-            "in": "query",
+            "in": "path",
             "name": "addressId",
+            "required": true,
             "type": "integer",
             "format": "int32"
           }
@@ -139,194 +142,6 @@
             "schema": {
               "$ref": "#/definitions/SimsAddressViewModel"
             }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Attachments/Incident": {
-      "post": {
-        "tags": [
-          "Attachments"
-        ],
-        "summary": "Add new Attachement to incident",
-        "operationId": "AddAttachment",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "incidentId",
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/StringStringValueTuple"
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/ProblemDetails"
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "schema": {
-              "$ref": "#/definitions/ProblemDetails"
-            }
-          }
-        }
-      }
-    },
-    "/api/Attachments/FetchAll": {
-      "get": {
-        "tags": [
-          "Attachments"
-        ],
-        "summary": "Download incident attachments info",
-        "operationId": "FetchAllAttachmentInfo",
-        "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "incidentId",
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/AttachmentFileInfo"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/Attachments/Fetch": {
-      "get": {
-        "tags": [
-          "Attachments"
-        ],
-        "summary": "Download an a file.",
-        "operationId": "FetchFile",
-        "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "linkUrl",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/IncidentAttachment"
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Attachments/Rename": {
-      "post": {
-        "tags": [
-          "Attachments"
-        ],
-        "summary": "Renames an attachment.",
-        "operationId": "RenameAttachment",
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "schema": {
-              "$ref": "#/definitions/RenameFile"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/StringStringValueTuple"
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/ProblemDetails"
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "schema": {
-              "$ref": "#/definitions/ProblemDetails"
-            }
-          }
-        }
-      }
-    },
-    "/api/Attachments/UpdateDocumentTags": {
-      "post": {
-        "tags": [
-          "Attachments"
-        ],
-        "summary": "Update tags for for an attachment.",
-        "operationId": "UpdateAttachmentTags",
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "schema": {
-              "$ref": "#/definitions/UpdateDocumentTagsModel"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
           },
           "500": {
             "description": "Server Error"
@@ -368,7 +183,7 @@
         "tags": [
           "Incidents"
         ],
-        "summary": "Replace an existing incident",
+        "summary": "Replace an incident",
         "operationId": "UpdateIncident",
         "consumes": [
           "application/json",
@@ -403,7 +218,7 @@
         "tags": [
           "Incidents"
         ],
-        "summary": "Create an existing incident",
+        "summary": "Create an incident",
         "operationId": "CreateIncident",
         "consumes": [
           "application/json",
@@ -435,49 +250,7 @@
         }
       }
     },
-    "/api/Incidents/Dashboard": {
-      "get": {
-        "tags": [
-          "Incidents"
-        ],
-        "summary": "Incident dashboard search",
-        "operationId": "GetIncidentDashboard",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "search",
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "pageNo",
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "in": "query",
-            "name": "pageSize",
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/IncidentDashboardView"
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Incidents/Classification": {
+    "/api/Incidents/Classification/{id}": {
       "post": {
         "tags": [
           "Incidents"
@@ -489,8 +262,8 @@
         ],
         "parameters": [
           {
-            "in": "query",
-            "name": "incidentId",
+            "in": "path",
+            "name": "id",
             "required": true,
             "type": "integer",
             "format": "int32"
@@ -516,7 +289,7 @@
         }
       }
     },
-    "/api/Incidents/Status": {
+    "/api/Incidents/Status/{id}": {
       "post": {
         "tags": [
           "Incidents"
@@ -528,8 +301,8 @@
         ],
         "parameters": [
           {
-            "in": "query",
-            "name": "incidentId",
+            "in": "path",
+            "name": "id",
             "required": true,
             "type": "integer",
             "format": "int32"
@@ -560,7 +333,7 @@
         "tags": [
           "Incidents"
         ],
-        "summary": "Update status of an incident",
+        "summary": "Close list of incidents",
         "operationId": "CloseAll",
         "consumes": [
           "application/json",
@@ -596,7 +369,7 @@
         "tags": [
           "Incidents"
         ],
-        "summary": "Assign lead officer",
+        "summary": "Update incident(s) lead officer",
         "operationId": "UpdateLeadOfficer",
         "consumes": [
           "application/json",
@@ -615,877 +388,6 @@
         "responses": {
           "200": {
             "description": "Success"
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Incidents/AddLinks": {
-      "post": {
-        "tags": [
-          "Incidents"
-        ],
-        "summary": "Link two or moreincidents",
-        "operationId": "AddIncidentLink",
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "schema": {
-              "$ref": "#/definitions/LinkIncidents"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Incidents/RemoveLink": {
-      "post": {
-        "tags": [
-          "Incidents"
-        ],
-        "summary": "Remove link between two incidents",
-        "operationId": "RemoveIncidentLink",
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "schema": {
-              "$ref": "#/definitions/UnlinkIncident"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Incidents/GetIncidentLinks": {
-      "get": {
-        "tags": [
-          "Incidents"
-        ],
-        "summary": "Dashboard info for an incidents links",
-        "operationId": "GetIncidentLinks",
-        "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "incidentId",
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/IncidentDashboardView"
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Incidents/AddNote": {
-      "post": {
-        "tags": [
-          "Incidents"
-        ],
-        "summary": "Add note to an incident",
-        "operationId": "AddNote",
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "schema": {
-              "$ref": "#/definitions/IncidentComment"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Incidents/GetNotes": {
-      "get": {
-        "tags": [
-          "Incidents"
-        ],
-        "summary": "Get notes for an incident",
-        "operationId": "GetNotes",
-        "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "incidentId",
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/IncidentNote"
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Incidents/EnsureLibrary": {
-      "post": {
-        "tags": [
-          "Incidents"
-        ],
-        "summary": "Ensure library exists for incident",
-        "operationId": "EnsureLibrary",
-        "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "Id",
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/IncidentLibraryInfo"
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Incidents/Stakeholders": {
-      "get": {
-        "tags": [
-          "Incidents"
-        ],
-        "summary": "Get all stakeholder for an incident",
-        "operationId": "GetStakeholder",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "incidentId",
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/StakeholderModel"
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Incidents"
-        ],
-        "summary": "Add a new stakeholder to an incident",
-        "operationId": "AddStakeholder",
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "schema": {
-              "$ref": "#/definitions/StakeholderModel"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/StakeholderModel"
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Incidents"
-        ],
-        "summary": "Update a  stakeholder to an incident",
-        "operationId": "UpdateStakeholder",
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "schema": {
-              "$ref": "#/definitions/StakeholderModel"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/StakeholderModel"
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Incidents"
-        ],
-        "summary": "Remove a stakeholder to an incident",
-        "operationId": "DeleteStakeholder",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "stakeholderId",
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Lookups/Categories": {
-      "get": {
-        "tags": [
-          "Lookups"
-        ],
-        "summary": "Get all categories",
-        "operationId": "Categories",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Category"
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Lookups/Classifications": {
-      "get": {
-        "tags": [
-          "Lookups"
-        ],
-        "summary": "Get all classifications",
-        "operationId": "Classifications",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Classification"
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Lookups/Countries": {
-      "get": {
-        "tags": [
-          "Lookups"
-        ],
-        "summary": "Get all countries",
-        "operationId": "Countries",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Country"
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Lookups/ContactMethod": {
-      "get": {
-        "tags": [
-          "Lookups"
-        ],
-        "summary": "Get all Contact methods",
-        "operationId": "ContactMethod",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/ContactMethod"
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Lookups/DataSources": {
-      "get": {
-        "tags": [
-          "Lookups"
-        ],
-        "summary": "Data sources",
-        "operationId": "DataSource",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/DataSource"
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Lookups/DeathIllnesses": {
-      "get": {
-        "tags": [
-          "Lookups"
-        ],
-        "summary": "Get all Death/Illnes",
-        "operationId": "DeathIllness",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/DeathIllness"
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Lookups/OMITGroups": {
-      "get": {
-        "tags": [
-          "Lookups"
-        ],
-        "summary": "Get all OMIT groups",
-        "operationId": "OMITGroup",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/OMITGroup"
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Lookups/OrganisationRoles": {
-      "get": {
-        "tags": [
-          "Lookups"
-        ],
-        "summary": "Get all organisational roles",
-        "operationId": "OrganisationRole",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/OrganisationRole"
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Lookups/PersonaRoles": {
-      "get": {
-        "tags": [
-          "Lookups"
-        ],
-        "summary": "Get all Persona Roiles",
-        "operationId": "PersonaRole",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/PersonaRole"
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Lookups/ProductTypes": {
-      "get": {
-        "tags": [
-          "Lookups"
-        ],
-        "summary": "list all Product types",
-        "operationId": "ProductTypes",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/ProductType"
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Lookups/FBOTypes": {
-      "get": {
-        "tags": [
-          "Lookups"
-        ],
-        "summary": "list all FBO types",
-        "operationId": "FBOTypes",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/FBOType"
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Lookups/ProductDateTypes": {
-      "get": {
-        "tags": [
-          "Lookups"
-        ],
-        "summary": "Product Date types",
-        "operationId": "ProductDateTypes",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/ProductDateType"
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Lookups/AdminLeads": {
-      "get": {
-        "tags": [
-          "Lookups"
-        ],
-        "summary": "Incident office list",
-        "operationId": "AdminLeads",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/AdminLead"
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Lookups/SignalStatus": {
-      "get": {
-        "tags": [
-          "Lookups"
-        ],
-        "summary": "Divine all SignalStatus values",
-        "operationId": "SignalStatus",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/SignalStatus"
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Lookups/Units": {
-      "get": {
-        "tags": [
-          "Lookups"
-        ],
-        "summary": "unit information",
-        "operationId": "UnitQuantities",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/UnitQuantity"
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Lookups/NotifierLookups": {
-      "get": {
-        "tags": [
-          "Lookups"
-        ],
-        "summary": "Notifier temporary pick list",
-        "operationId": "NotfierLookup",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/OrganisationLookup"
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Lookups/LocalAuthorityLookups": {
-      "get": {
-        "tags": [
-          "Lookups"
-        ],
-        "summary": "LocalAuth temporary pick list",
-        "operationId": "LocalAuthorityLookups",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/OrganisationLookup"
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Lookups/Priorities": {
-      "get": {
-        "tags": [
-          "Lookups"
-        ],
-        "summary": "Priorities values",
-        "operationId": "Priorities",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Priority"
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Lookups/Status": {
-      "get": {
-        "tags": [
-          "Lookups"
-        ],
-        "summary": "Incident Status values",
-        "operationId": "IncidentStatus",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/IncidentStatusLkUp"
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Lookups/AttachmentTags": {
-      "get": {
-        "tags": [
-          "Lookups"
-        ],
-        "summary": "Attachment tag list",
-        "operationId": "AttachmentTags",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/AttachmentTagLkup"
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Lookups/StakeholderTypes": {
-      "get": {
-        "tags": [
-          "Lookups"
-        ],
-        "summary": "Stakeholder types",
-        "operationId": "StakeholdersTypes",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/StakeholderType"
-              }
-            }
           },
           "500": {
             "description": "Server Error"
@@ -1516,13 +418,132 @@
         }
       }
     },
-    "/api/Products": {
+    "/api/Notes/{incidentSignal}": {
       "post": {
         "tags": [
-          "Products"
+          "Notes"
         ],
-        "summary": "Create new Product",
-        "operationId": "AddProduct",
+        "summary": "Add note to an incident",
+        "operationId": "AddNote",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "incidentSignal",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/IncidentComment"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Notes/{incidentSignal}/{id}": {
+      "get": {
+        "tags": [
+          "Notes"
+        ],
+        "summary": "Get notes for an incident",
+        "operationId": "GetNotes",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "incidentSignal",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/IncidentNote"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Stakeholders/{incidentSignal}/{id}": {
+      "get": {
+        "tags": [
+          "Stakeholders"
+        ],
+        "summary": "Get All Stakeholders",
+        "operationId": "GetStakeholder",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "incidentSignal",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/StakeholderModel"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Stakeholders/{incidentSignal}": {
+      "post": {
+        "tags": [
+          "Stakeholders"
+        ],
+        "summary": "Add a new stakeholder to an incident",
+        "operationId": "AddStakeholder",
         "consumes": [
           "application/json",
           "text/json",
@@ -1533,10 +554,16 @@
         ],
         "parameters": [
           {
+            "in": "path",
+            "name": "incidentSignal",
+            "required": true,
+            "type": "string"
+          },
+          {
             "in": "body",
             "name": "body",
             "schema": {
-              "$ref": "#/definitions/ProductViewModel"
+              "$ref": "#/definitions/StakeholderModel"
             }
           }
         ],
@@ -1544,7 +571,7 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/Product"
+              "$ref": "#/definitions/StakeholderModel"
             }
           },
           "500": {
@@ -1554,273 +581,30 @@
       },
       "put": {
         "tags": [
-          "Products"
+          "Stakeholders"
         ],
-        "summary": "Update Product",
-        "operationId": "UpdateProduct",
+        "summary": "Update a  stakeholder to an incident",
+        "operationId": "UpdateStakeholder",
         "consumes": [
           "application/json",
           "text/json",
           "application/*+json"
         ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "schema": {
-              "$ref": "#/definitions/ProductViewModel"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/Product"
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "Products"
-        ],
-        "summary": "Fetch product",
-        "operationId": "GetProduct",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "productId",
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/ProductDisplayModel"
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Products/Incident/{incidentId}": {
-      "get": {
-        "tags": [
-          "Products"
-        ],
-        "summary": "Fetch products",
-        "operationId": "GetIncidentProducts",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
             "in": "path",
-            "name": "incidentId",
+            "name": "incidentSignal",
             "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Product"
-              }
-            }
+            "type": "string"
           },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Products/Addresses/{productId}": {
-      "get": {
-        "tags": [
-          "Products"
-        ],
-        "summary": "Fetch product addresses",
-        "operationId": "GetProductAddresses",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "productId",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/ProductFboAddressViewModel"
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Products/Dashboard": {
-      "get": {
-        "tags": [
-          "Products"
-        ],
-        "summary": "Product dashboard",
-        "operationId": "GetProductDashboard",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "incidentId",
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "in": "query",
-            "name": "pageSize",
-            "type": "integer",
-            "format": "int32",
-            "default": 10
-          },
-          {
-            "in": "query",
-            "name": "pageNo",
-            "type": "integer",
-            "format": "int32",
-            "default": 1
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/ProductDashboard"
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Products/AssignFbo": {
-      "post": {
-        "tags": [
-          "Products"
-        ],
-        "summary": "Assign fbo to product",
-        "operationId": "AssignFbo",
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
-        "parameters": [
           {
             "in": "body",
             "name": "body",
-            "required": true,
             "schema": {
-              "$ref": "#/definitions/ProductAddress"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Products/UpdateFbo": {
-      "post": {
-        "tags": [
-          "Products"
-        ],
-        "summary": "Update fbo to product",
-        "operationId": "UpdateFbo",
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/ProductAddress"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Products/RemoveFbo": {
-      "post": {
-        "tags": [
-          "Products"
-        ],
-        "summary": "Remove fbo from product",
-        "operationId": "RemoveFbo",
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/ProductAddress"
+              "$ref": "#/definitions/StakeholderModel"
             }
           }
         ],
@@ -1828,10 +612,7 @@
           "200": {
             "description": "Success",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/FboAddress"
-              }
+              "$ref": "#/definitions/StakeholderModel"
             }
           },
           "500": {
@@ -1842,25 +623,11 @@
     }
   },
   "definitions": {
-    "SearchAddressType": {
-      "format": "int32",
-      "enum": [
-        0,
-        1,
-        2,
-        3,
-        4
-      ],
-      "type": "integer"
-    },
     "AddressSearchModel": {
       "type": "object",
       "properties": {
         "search": {
           "type": "string"
-        },
-        "addressType": {
-          "$ref": "#/definitions/SearchAddressType"
         }
       }
     },
@@ -1905,141 +672,6 @@
         "contactMethodId": {
           "format": "int32",
           "type": "integer"
-        }
-      }
-    },
-    "StringStringValueTuple": {
-      "type": "object"
-    },
-    "ProblemDetails": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string"
-        },
-        "status": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "detail": {
-          "type": "string"
-        },
-        "instance": {
-          "type": "string"
-        }
-      },
-      "additionalProperties": {
-        "type": "object"
-      }
-    },
-    "AttachmentFileInfo": {
-      "type": "object",
-      "properties": {
-        "fileName": {
-          "type": "string"
-        },
-        "url": {
-          "type": "string"
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "format": "int32",
-            "type": "integer"
-          }
-        }
-      }
-    },
-    "MemoryStream": {
-      "type": "object",
-      "properties": {
-        "canRead": {
-          "type": "boolean",
-          "readOnly": true
-        },
-        "canSeek": {
-          "type": "boolean",
-          "readOnly": true
-        },
-        "canWrite": {
-          "type": "boolean",
-          "readOnly": true
-        },
-        "capacity": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "length": {
-          "format": "int64",
-          "type": "integer",
-          "readOnly": true
-        },
-        "position": {
-          "format": "int64",
-          "type": "integer"
-        },
-        "canTimeout": {
-          "type": "boolean",
-          "readOnly": true
-        },
-        "readTimeout": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "writeTimeout": {
-          "format": "int32",
-          "type": "integer"
-        }
-      }
-    },
-    "IncidentAttachment": {
-      "type": "object",
-      "properties": {
-        "incidentId": {
-          "type": "string"
-        },
-        "incident": {
-          "format": "uuid",
-          "type": "string"
-        },
-        "fileName": {
-          "type": "string"
-        },
-        "document": {
-          "$ref": "#/definitions/MemoryStream"
-        }
-      }
-    },
-    "RenameFile": {
-      "type": "object",
-      "properties": {
-        "fileName": {
-          "type": "string"
-        },
-        "existingUrl": {
-          "type": "string"
-        }
-      }
-    },
-    "UpdateDocumentTagsModel": {
-      "type": "object",
-      "properties": {
-        "incidentId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "docUrl": {
-          "type": "string"
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "format": "int32",
-            "type": "integer"
-          }
         }
       }
     },
@@ -2551,45 +1183,6 @@
         }
       }
     },
-    "IncidentDashboardView": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "readOnly": true
-        },
-        "commonId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "priority": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string"
-        },
-        "notifier": {
-          "type": "string"
-        },
-        "leadOfficer": {
-          "type": "string"
-        },
-        "status": {
-          "type": "string"
-        },
-        "updated": {
-          "format": "date-time",
-          "type": "string"
-        },
-        "links": {
-          "type": "array",
-          "items": {
-            "format": "int32",
-            "type": "integer"
-          }
-        }
-      }
-    },
     "UpdateLeadOfficer": {
       "required": [
         "incidentIds",
@@ -2605,131 +1198,6 @@
           }
         },
         "officer": {
-          "type": "string"
-        }
-      }
-    },
-    "LinkIncidents": {
-      "required": [
-        "fromIncidentId",
-        "toIncidentIds"
-      ],
-      "type": "object",
-      "properties": {
-        "fromIncidentId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "toIncidentIds": {
-          "type": "array",
-          "items": {
-            "format": "int32",
-            "type": "integer"
-          }
-        },
-        "comment": {
-          "type": "string"
-        }
-      }
-    },
-    "UnlinkIncident": {
-      "required": [
-        "fromIncidentId",
-        "toIncidentId"
-      ],
-      "type": "object",
-      "properties": {
-        "fromIncidentId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "toIncidentId": {
-          "format": "int32",
-          "type": "integer"
-        }
-      }
-    },
-    "IncidentComment": {
-      "type": "object",
-      "properties": {
-        "incidentId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "note": {
-          "type": "string"
-        }
-      }
-    },
-    "IncidentNote": {
-      "type": "object",
-      "properties": {
-        "incidentId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "note": {
-          "type": "string"
-        },
-        "created": {
-          "format": "date-time",
-          "type": "string"
-        },
-        "createdBy": {
-          "type": "string"
-        }
-      }
-    },
-    "IncidentLibraryInfo": {
-      "type": "object",
-      "properties": {
-        "webUrl": {
-          "type": "string"
-        },
-        "serverRelativeFolderUrl": {
-          "type": "string"
-        }
-      }
-    },
-    "StakeholderModel": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "incidentId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "name": {
-          "type": "string"
-        },
-        "role": {
-          "type": "string"
-        },
-        "phone": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        },
-        "govDept": {
-          "type": "string"
-        },
-        "discriminatorId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "addressId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "addressTitle": {
           "type": "string"
         }
       }
@@ -2758,7 +1226,19 @@
         }
       }
     },
-    "Country": {
+    "Priority": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "IncidentStatusLkUp": {
       "type": "object",
       "properties": {
         "id": {
@@ -2782,7 +1262,7 @@
         }
       }
     },
-    "DataSource": {
+    "Country": {
       "type": "object",
       "properties": {
         "id": {
@@ -2806,7 +1286,7 @@
         }
       }
     },
-    "OMITGroup": {
+    "DataSource": {
       "type": "object",
       "properties": {
         "id": {
@@ -2839,64 +1319,7 @@
         }
       }
     },
-    "PersonaRole": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "title": {
-          "type": "string"
-        },
-        "canBeAdminLead": {
-          "type": "boolean"
-        },
-        "canBeIncidentLead": {
-          "type": "boolean"
-        },
-        "canBeFieldOfficer": {
-          "type": "boolean"
-        }
-      }
-    },
-    "ProductType": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "title": {
-          "type": "string"
-        }
-      }
-    },
-    "FBOType": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "title": {
-          "type": "string"
-        }
-      }
-    },
-    "ProductDateType": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "title": {
-          "type": "string"
-        }
-      }
-    },
-    "AdminLead": {
+    "UnitQuantity": {
       "type": "object",
       "properties": {
         "id": {
@@ -2930,43 +1353,7 @@
         }
       }
     },
-    "UnitQuantity": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "title": {
-          "type": "string"
-        }
-      }
-    },
-    "OrganisationLookup": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "name": {
-          "type": "string"
-        }
-      }
-    },
-    "Priority": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "title": {
-          "type": "string"
-        }
-      }
-    },
-    "IncidentStatusLkUp": {
+    "ProductType": {
       "type": "object",
       "properties": {
         "id": {
@@ -2990,7 +1377,7 @@
         }
       }
     },
-    "StakeholderType": {
+    "FBOType": {
       "type": "object",
       "properties": {
         "id": {
@@ -3003,6 +1390,42 @@
       }
     },
     "NotifierType": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "AdminLead": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "ProductDateType": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "StakeholderType": {
       "type": "object",
       "properties": {
         "id": {
@@ -3145,48 +1568,19 @@
         }
       }
     },
-    "ProductPackSizeModel": {
+    "IncidentComment": {
       "type": "object",
       "properties": {
-        "id": {
+        "incidentId": {
           "format": "int32",
           "type": "integer"
         },
-        "size": {
-          "type": "string"
-        },
-        "unitId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "productId": {
-          "format": "int32",
-          "type": "integer"
-        }
-      }
-    },
-    "ProductDateModel": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "productId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "dateTypeId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "date": {
-          "format": "date-time",
+        "note": {
           "type": "string"
         }
       }
     },
-    "ProductViewModel": {
+    "IncidentNote": {
       "type": "object",
       "properties": {
         "incidentId": {
@@ -3197,92 +1591,19 @@
           "format": "int32",
           "type": "integer"
         },
-        "name": {
+        "note": {
           "type": "string"
         },
-        "brand": {
-          "type": "string"
-        },
-        "productTypeId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "countryOfOriginId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "amount": {
-          "type": "string"
-        },
-        "amountUnitTypeId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "packSizes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ProductPackSizeModel"
-          }
-        },
-        "productDates": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ProductDateModel"
-          }
-        },
-        "batchCodes": {
-          "type": "string"
-        },
-        "packDescription": {
-          "type": "string"
-        },
-        "additionalInfo": {
-          "type": "string"
-        }
-      }
-    },
-    "ProductPackSize": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "size": {
-          "type": "string"
-        },
-        "unitId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "productId": {
-          "format": "int32",
-          "type": "integer"
-        }
-      }
-    },
-    "ProductDate": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "productId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "dateTypeId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "date": {
+        "created": {
           "format": "date-time",
           "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
         }
       }
     },
-    "Product": {
+    "StakeholderModel": {
       "type": "object",
       "properties": {
         "id": {
@@ -3296,158 +1617,19 @@
         "name": {
           "type": "string"
         },
-        "brand": {
+        "role": {
           "type": "string"
         },
-        "productTypeId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "countryOfOriginId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "amount": {
+        "phone": {
           "type": "string"
         },
-        "amountUnitTypeId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "packSizes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ProductPackSize"
-          }
-        },
-        "productDates": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ProductDate"
-          }
-        },
-        "batchCodes": {
+        "email": {
           "type": "string"
         },
-        "packDescription": {
+        "govDept": {
           "type": "string"
         },
-        "additionalInfo": {
-          "type": "string"
-        },
-        "added": {
-          "format": "date-time",
-          "type": "string"
-        },
-        "lastUpdated": {
-          "format": "date-time",
-          "type": "string"
-        },
-        "lastUpdatedBy": {
-          "type": "string"
-        }
-      }
-    },
-    "ProductDisplayModel": {
-      "type": "object",
-      "properties": {
-        "dataSource": {
-          "type": "string"
-        },
-        "signalUrl": {
-          "type": "string"
-        },
-        "id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "incidentId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "name": {
-          "type": "string"
-        },
-        "brand": {
-          "type": "string"
-        },
-        "productTypeId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "countryOfOriginId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "amount": {
-          "type": "string"
-        },
-        "amountUnitTypeId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "packSizes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ProductPackSize"
-          }
-        },
-        "productDates": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ProductDate"
-          }
-        },
-        "batchCodes": {
-          "type": "string"
-        },
-        "packDescription": {
-          "type": "string"
-        },
-        "additionalInfo": {
-          "type": "string"
-        },
-        "added": {
-          "format": "date-time",
-          "type": "string"
-        },
-        "lastUpdated": {
-          "format": "date-time",
-          "type": "string"
-        },
-        "lastUpdatedBy": {
-          "type": "string"
-        }
-      }
-    },
-    "FboTypes": {
-      "format": "int32",
-      "enum": [
-        0,
-        1,
-        2,
-        4,
-        8,
-        16,
-        32,
-        64,
-        128,
-        256,
-        512,
-        1024,
-        2048,
-        4096,
-        8192,
-        16384,
-        32768,
-        65536
-      ],
-      "type": "integer"
-    },
-    "SimsAddressContact": {
-      "type": "object",
-      "properties": {
-        "id": {
+        "discriminatorId": {
           "format": "int32",
           "type": "integer"
         },
@@ -3455,173 +1637,8 @@
           "format": "int32",
           "type": "integer"
         },
-        "name": {
+        "addressTitle": {
           "type": "string"
-        },
-        "telephoneNumber": {
-          "type": "string"
-        },
-        "emailAddress": {
-          "type": "string"
-        },
-        "isMain": {
-          "type": "boolean"
-        }
-      }
-    },
-    "ProductFboAddressViewModel": {
-      "type": "object",
-      "properties": {
-        "productId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "fboTypes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/FboTypes"
-          }
-        },
-        "mainContact": {
-          "type": "string"
-        },
-        "emailAddress": {
-          "type": "string"
-        },
-        "id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "title": {
-          "type": "string"
-        },
-        "addressLine1": {
-          "type": "string"
-        },
-        "addressLine2": {
-          "type": "string"
-        },
-        "townCity": {
-          "type": "string"
-        },
-        "county": {
-          "type": "string"
-        },
-        "countryId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "postCode": {
-          "type": "string"
-        },
-        "telephoneNumber": {
-          "type": "string"
-        },
-        "contactMethodId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "contacts": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/SimsAddressContact"
-          }
-        }
-      }
-    },
-    "ProductDashboard": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "name": {
-          "type": "string"
-        },
-        "productType": {
-          "type": "string"
-        },
-        "batchCodes": {
-          "type": "string"
-        },
-        "lastUpdated": {
-          "format": "date-time",
-          "type": "string"
-        },
-        "addressNames": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "ProductAddress": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "fboTypes": {
-          "type": "array",
-          "items": {
-            "format": "int32",
-            "type": "integer"
-          }
-        },
-        "addressId": {
-          "format": "int32",
-          "type": "integer"
-        }
-      }
-    },
-    "FboAddress": {
-      "type": "object",
-      "properties": {
-        "fboId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "title": {
-          "type": "string"
-        },
-        "addressLine1": {
-          "type": "string"
-        },
-        "addressLine2": {
-          "type": "string"
-        },
-        "townCity": {
-          "type": "string"
-        },
-        "county": {
-          "type": "string"
-        },
-        "countryId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "postCode": {
-          "type": "string"
-        },
-        "telephoneNumber": {
-          "type": "string"
-        },
-        "contactMethodId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "contacts": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/SimsAddressContact"
-          }
         }
       }
     }

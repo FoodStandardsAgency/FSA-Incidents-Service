@@ -15,16 +15,18 @@ using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/Incidents")]
+    [Produces("application/json")]
     [ApiController]
     [Authorize]
-    public class IncidentsController : ControllerBase
+    [ApiExplorerSettings(IgnoreApi = true)]
+    public class OldIncidentsController : ControllerBase
     {
-        private readonly ILogger<IncidentsController> log;
+        private readonly ILogger<OldIncidentsController> log;
         private readonly ISIMSManager fsaData;
         private readonly IFSAAttachments attachments;
 
-        public IncidentsController(ILogger<IncidentsController> log, ISIMSManager fsaData, IFSAAttachments attachments)
+        public OldIncidentsController(ILogger<OldIncidentsController> log, ISIMSManager fsaData, IFSAAttachments attachments)
         {
             this.log = log;
             this.fsaData = fsaData;

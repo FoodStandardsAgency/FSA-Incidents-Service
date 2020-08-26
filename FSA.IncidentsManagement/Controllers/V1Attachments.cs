@@ -17,17 +17,19 @@ using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/Attachments")]
+    [Produces("application/json")]
     [ApiController]
     [Authorize]
-    public class AttachmentsController : ControllerBase
+    [ApiExplorerSettings(IgnoreApi = true)]
+    public class V1AttachmentsController : ControllerBase
     {
-        private readonly ILogger<AttachmentsController> log;
+        private readonly ILogger<V1AttachmentsController> log;
         private readonly ITokenAcquisition tkns;
         private readonly ISIMSManager sims;
         private readonly IFSAAttachments attachments;
 
-        public AttachmentsController(ILogger<AttachmentsController> log, ITokenAcquisition tkns, ISIMSManager sims, IFSAAttachments attachments)
+        public V1AttachmentsController(ILogger<V1AttachmentsController> log, ITokenAcquisition tkns, ISIMSManager sims, IFSAAttachments attachments)
         {
             this.log = log;
             this.tkns = tkns;

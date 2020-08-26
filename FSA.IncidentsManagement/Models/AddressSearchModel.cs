@@ -18,7 +18,7 @@ namespace FSA.IncidentsManagement.Models
     public class AddressSearchModel
     {
         public string Search { get; set; }
-        public SearchAddressType AddressType { get; set; }
+      //  public SearchAddressType AddressType { get; set; }
     }
 }
 

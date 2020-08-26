@@ -14,16 +14,17 @@ using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/Products")]
     [Produces("application/json")]
     [ApiController]
     [Authorize]
-    public class ProductsController : ControllerBase
+    [ApiExplorerSettings(IgnoreApi = true)]
+    public class OldProductsController : ControllerBase
     {
-        private ILogger<LookupsController> log;
+        private ILogger<OLDLookupsController> log;
         private readonly ISIMSManager simsManager;
 
-        public ProductsController(ILogger<LookupsController> log, ISIMSManager simsManager)
+        public OldProductsController(ILogger<OLDLookupsController> log, ISIMSManager simsManager)
         {
             this.log = log;
             this.simsManager = simsManager;
