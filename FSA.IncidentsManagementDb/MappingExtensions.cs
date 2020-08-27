@@ -441,7 +441,7 @@ namespace FSA.IncidentsManagementDb
             return new ProductDb
             {
                 Id = @this.Id,
-                IncidentId = @this.IncidentId,
+                IncidentId = @this.HostId,
                 Brand = @this.Brand,
                 Name = @this.Name,
                 ProductTypeId = @this.ProductTypeId,
@@ -460,7 +460,7 @@ namespace FSA.IncidentsManagementDb
         {
             Id = @this.Id,
             Name = @this.Name,
-            IncidentId = @this.IncidentId,
+            HostId = @this.IncidentId,
             AdditionalInfo = @this.AdditionalInfo ?? "",
             AmountUnitTypeId = @this.AmountUnitTypeId,
             Amount = @this.Amount,
@@ -480,7 +480,7 @@ namespace FSA.IncidentsManagementDb
         {
             Id = @this.Id,
             Name = @this.Name,
-            IncidentId = @this.IncidentId,
+            HostId = @this.IncidentId,
             AdditionalInfo = @this.AdditionalInfo ?? "",
             AmountUnitTypeId = @this.AmountUnitTypeId,
             Amount = @this.Amount,
@@ -519,7 +519,7 @@ namespace FSA.IncidentsManagementDb
         public static void ToUpdateDb(this Product @this, ProductDb product)
         {
             product.Id = @this.Id;
-            product.IncidentId = @this.IncidentId;
+            product.IncidentId = @this.HostId;
             product.AdditionalInfo = @this.AdditionalInfo ?? "";
             product.AmountUnitTypeId = @this.AmountUnitTypeId;
             product.Amount = @this.Amount;
@@ -655,7 +655,7 @@ namespace FSA.IncidentsManagementDb
             return sourceItem;
         }
 
-        public static IncidentNote ToClient(this IncidentCommentDb @this) => new IncidentNote
+        public static SimsNote ToClient(this IncidentCommentDb @this) => new SimsNote
         {
             Id = @this.Id,
             Note = @this.Comment,

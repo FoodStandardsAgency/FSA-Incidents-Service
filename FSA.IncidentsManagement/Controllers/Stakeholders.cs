@@ -93,5 +93,23 @@ namespace FSA.IncidentsManagement.Controllers
             }
         }
 
+
+        [HttpDelete("{incidentSignal}/{id}")]
+        [SwaggerOperation(Summary = "Remove a stakeholder to an incident")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        [Produces("application/json")]
+        public async Task<IActionResult> RemoveStakeholder([FromRoute] string incidentSignal,[FromRoute] int id)
+        {
+            try
+            {
+                //await this.fsaData.Incidents.RemoveStakeholder(stakeholderId);
+                return new OkResult();
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                return new BadRequestObjectResult(ex.Message);
+            }
+        }
     }
 }

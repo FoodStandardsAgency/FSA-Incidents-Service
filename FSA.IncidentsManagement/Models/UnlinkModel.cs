@@ -7,12 +7,11 @@ using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Models
 {
-    public class UnlinkIncident
+    public class UnlinkModel
     {
         [Required]
-        public int FromIncidentId { get; set; }
+        public int FromId { get; set; }
         [Required]
-        public int ToIncidentId{ get; set; }
-
+        public int ToId{ get; set; }
     }
 }

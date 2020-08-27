@@ -6,7 +6,6 @@ using FSA.IncidentsManagement.Root.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Identity.Web;
 using Microsoft.SharePoint.Client;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
@@ -17,34 +16,47 @@ using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Controllers
 {
-    [Route("api/v1/Attachments")]
+
+    [Route("api/[controller]")]
     [Produces("application/json")]
     [ApiController]
     [Authorize]
-    [ApiExplorerSettings(IgnoreApi = true)]
-    public class V1AttachmentsController : ControllerBase
+    public class AttachmentsController : ControllerBase
     {
-        private readonly ILogger<V1AttachmentsController> log;
-        private readonly ITokenAcquisition tkns;
-        private readonly ISIMSManager sims;
+        private readonly ILogger<AttachmentsController> log;
         private readonly IFSAAttachments attachments;
+        private readonly ISIMSManager sims;
 
-        public V1AttachmentsController(ILogger<V1AttachmentsController> log, ITokenAcquisition tkns, ISIMSManager sims, IFSAAttachments attachments)
+        public AttachmentsController(ILogger<AttachmentsController> log, IFSAAttachments attachments, ISIMSManager sims)
         {
             this.log = log;
-            this.tkns = tkns;
-            this.sims = sims;
             this.attachments = attachments;
+            this.sims = sims;
         }
 
-        [HttpPost("Incident")]
+        [HttpPost("EnsureLibrary/{incidentSignal}/{id}")]
+        [SwaggerOperation(Summary = "Ensure library exists")]
+        [ProducesResponseType(typeof(AttachmentLibraryInfo), 200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> EnsureLibrary([FromRoute] string incidentSignal, [FromRoute] int id)
+        {
+            //var stringId = GeneralExtensions.GenerateIncidentId(Id);
+            //if (await this.fsaData.Incidents.Exists(Id))
+            //{
+            //    var listInfo = await this.attachments.EnsureLibrary(stringId);
+            //    return new OkObjectResult(listInfo);
+            //}
+            return new OkObjectResult(null);
+        }
+
+        [HttpPost("{incidentSignal/{id}")]
         [SwaggerOperation(Summary = "Add new Attachement to incident")]
         [ProducesResponseType(typeof((string fileName, string url)), 200)]
         [ProducesResponseType(500)]
         [ProducesResponseType(400)]
         [ProducesResponseType(403)]
         [Produces("application/json")]
-        public async Task<IActionResult> AddAttachment([FromQuery] int incidentId)
+        public async Task<IActionResult> AddAttachment([FromRoute] string incidentSignal, [FromRoute] int id)
         {
             // Ensure a file has been added
             var file = this.Request.Form.Files.Count > 0 ? this.Request.Form.Files[0] : null;
@@ -52,9 +64,9 @@ namespace FSA.IncidentsManagement.Controllers
                 return new OkObjectResult("No files uploaded : Successfully!");
 
             // Ensure the incident is not already closed.
-            if (!await sims.Incidents.IsClosed(incidentId))
+            if (!await sims.Incidents.IsClosed(id))
             {
-                var stringId = GeneralExtensions.GenerateIncidentId(incidentId);
+                var stringId = GeneralExtensions.GenerateIncidentId(id);
                 string[] scopes = new string[] { ".default" };
 
                 // Should also be the id of the document library
@@ -90,14 +102,14 @@ namespace FSA.IncidentsManagement.Controllers
             //attachments.AddAttachment(file)
         }
 
-        [HttpGet("FetchAll")]
+        [HttpGet("{incidentSignal}/{id}")]
         [SwaggerOperation(Summary = "Download incident attachments info")]
         [ProducesResponseType(typeof(List<AttachmentFileInfo>), 200)]
-        public async Task<IActionResult> FetchAllAttachmentInfo([FromQuery] int incidentId)
+        public async Task<IActionResult> FetchAllAttachmentInfo([FromRoute] string incidentSignal, [FromRoute] int id)
         {
-            var stringId = GeneralExtensions.GenerateIncidentId(incidentId);
+            var stringId = GeneralExtensions.GenerateIncidentId(id);
             var fileInfo = await this.attachments.FetchAllAttchmentsLinks(stringId);
-            var tags = await sims.Incidents.GetAttachmentTags(incidentId);
+            var tags = await sims.Incidents.GetAttachmentTags(id);
             // This may be the worst code I've written this year.
             var completeFileInfo = fileInfo.Select(o =>
             {
@@ -109,18 +121,15 @@ namespace FSA.IncidentsManagement.Controllers
             return new OkObjectResult(completeFileInfo.ToList());
         }
 
-        [HttpGet("Fetch")]
-        [SwaggerOperation(Summary = "Download an a file.")]
-        [ProducesResponseType(typeof(IncidentAttachment), 200)]
+        [HttpPost("Tags/{incidentSignal}")]
+        [SwaggerOperation(Summary = "Update tags for for an attachment.")]
+        [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> FetchFile([FromQuery] string linkUrl)
+        public async Task<IActionResult> UpdateAttachmentTags([FromRoute] string incidentSignal, [FromBody] UpdateDocumentTagsModel updateTags)
         {
-            var fileInfo = await this.attachments.FetchAttachment(linkUrl);
-            var fileContentResult = new FileContentResult(fileInfo.Document.ToArray(), "application/octet-stream")
-            {
-                FileDownloadName = fileInfo.FileName
-            };
-            return new OkObjectResult(fileInfo);
+            var docTags = (DocumentTagTypes)updateTags.Tags.ToList().Sum();
+            await sims.Incidents.UpdateAttachmentTags(updateTags.Id, updateTags.DocUrl, docTags);
+            return new OkResult();
         }
 
         [HttpPost("Rename")]
@@ -137,21 +146,11 @@ namespace FSA.IncidentsManagement.Controllers
                 var fileInfo = await this.attachments.RenameAttachment(renameFile.FileName, renameFile.ExistingUrl);
                 return new OkObjectResult(new { FileName = fileInfo.fileName, Url = fileInfo.url });
             }
-            catch(ArgumentOutOfRangeException ex) // new filename already exitst
+            catch (ArgumentOutOfRangeException ex) // new filename already exitst
             {
                 return new ConflictResult();
             }
         }
 
-        [HttpPost("UpdateDocumentTags")]
-        [SwaggerOperation(Summary = "Update tags for for an attachment.")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(500)]
-        public async Task<IActionResult> UpdateAttachmentTags([FromBody] UpdateDocumentTagsModel updateTags)
-        {
-            var docTags = (DocumentTagTypes)updateTags.Tags.ToList().Sum();
-            await sims.Incidents.UpdateAttachmentTags(updateTags.Id, updateTags.DocUrl, docTags);
-            return new OkResult();
-        }
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FSA.IncidentsManagement.Root.Models
 {
-    public class IncidentNote
+    public class SimsNote
     {
         public int IncidentId { get; set; }
         public int Id { get; set; }

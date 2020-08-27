@@ -27,7 +27,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPost("{incidentSignal}")]
-        [SwaggerOperation(Summary = "Add note to an incident.signal")]
+        [SwaggerOperation(Summary = "Add note to an incident/signal")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> AddNote([FromRoute] string incidentSignal, [FromBody, SwaggerParameter(Required = true)] IncidentComment addIncident)
@@ -38,7 +38,7 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpGet("{incidentSignal}/{id}")]
         [SwaggerOperation(Summary = "Get notes for an incident/signal")]
-        [ProducesResponseType(typeof(IEnumerable<IncidentNote>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<SimsNote>), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetNotes([FromRoute] string incidentSignal, [FromRoute] int id)
         {

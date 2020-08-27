@@ -373,7 +373,7 @@ namespace FSA.Attachments
             throw new NotImplementedException();
         }
 
-        public async Task<IncidentLibraryInfo> EnsureLibrary(string incidentId)
+        public async Task<AttachmentLibraryInfo> EnsureLibrary(string incidentId)
         {
             var accessToken = await fetchAccessToken();
             using (var ctx = SpContextHelper.GetClientContextWithAccessToken(this.siteUrl, accessToken))
@@ -388,7 +388,7 @@ namespace FSA.Attachments
                 // /sites/blah/folder
                 var rootFolderUrl = list.RootFolder.ServerRelativeUrl;
                 //var startOverlap webUrl.Contains()
-                return new IncidentLibraryInfo
+                return new AttachmentLibraryInfo
                 {
                     WebUrl = webUrl,
                     ServerRelativeFolderUrl = rootFolderUrl

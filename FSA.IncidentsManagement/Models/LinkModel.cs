@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Models
 {
-    public class LinkIncidents
+    public class LinkModel
     {
         [Required]
-        public int FromIncidentId { get; set; }
+        public int FromId { get; set; }
         [Required]
-        public IEnumerable<int> ToIncidentIds { get; set; }
+        public IEnumerable<int> ToIds { get; set; }
         public string Comment{ get; set; }
 
     }

@@ -30,8 +30,8 @@ namespace FSA.IncidentsManagement.Root.Contracts
         Task AddLinks(int from, IEnumerable<int> to, string reason);
         Task RemoveLink(int fromIncidentId, int toIncidentId);
         
-        Task<IncidentNote> AddNote(int incidentId, string note);
-        Task<IEnumerable<IncidentNote>>GetNotes(int incidentId);
+        Task<SimsNote> AddNote(int incidentId, string note);
+        Task<IEnumerable<SimsNote>>GetNotes(int incidentId);
 
         Task<IPaging<IncidentDashboardView>> DashboardSearch(string search = null, int pageSize = 500, int startPage = 1);
         Task<IEnumerable<IncidentDashboardView>> DashboardIncidentLinks(int incidentId);

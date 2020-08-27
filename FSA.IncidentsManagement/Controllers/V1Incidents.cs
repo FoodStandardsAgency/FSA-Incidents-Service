@@ -119,9 +119,9 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "Assign lead officer")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> UpdateLeadOfficer([FromBody, SwaggerParameter("Update Lead officer entries", Required = true)] UpdateLeadOfficer officer)
+        public async Task<IActionResult> UpdateLeadOfficer([FromBody, SwaggerParameter("Update Lead officer entries", Required = true)] UpdateLeadOfficerModel officer)
         {
-            await this.fsaData.Incidents.AssignLeadOfficer(officer.IncidentIds, officer.Officer);
+            await this.fsaData.Incidents.AssignLeadOfficer(officer.Ids, officer.Officer);
             return new OkResult();
         }
 
@@ -129,9 +129,9 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "Link two or moreincidents")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> AddIncidentLink([FromBody] LinkIncidents addIncident)
+        public async Task<IActionResult> AddIncidentLink([FromBody] LinkModel addIncident)
         {
-            await this.fsaData.Incidents.AddLinks(addIncident.FromIncidentId, addIncident.ToIncidentIds, addIncident.Comment);
+            await this.fsaData.Incidents.AddLinks(addIncident.FromId, addIncident.ToIds, addIncident.Comment);
             return new OkResult();
         }
 
@@ -139,9 +139,9 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "Remove link between two incidents")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> RemoveIncidentLink([FromBody] UnlinkIncident removeIncident)
+        public async Task<IActionResult> RemoveIncidentLink([FromBody] UnlinkModel removeIncident)
         {
-            await this.fsaData.Incidents.RemoveLink(removeIncident.FromIncidentId, removeIncident.ToIncidentId);
+            await this.fsaData.Incidents.RemoveLink(removeIncident.FromId, removeIncident.ToId);
             return new OkResult();
         }
 
@@ -166,7 +166,7 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpGet("GetNotes")]
         [SwaggerOperation(Summary = "Get notes for an incident")]
-        [ProducesResponseType(typeof(IEnumerable<IncidentNote>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<SimsNote>), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetNotes([FromQuery] int incidentId)
         {
@@ -175,7 +175,7 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpPost("EnsureLibrary")]
         [SwaggerOperation(Summary = "Ensure library exists for incident")]
-        [ProducesResponseType(typeof(IncidentLibraryInfo), 200)]
+        [ProducesResponseType(typeof(AttachmentLibraryInfo), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> EnsureLibrary([FromQuery] int Id)
         {

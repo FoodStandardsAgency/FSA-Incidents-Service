@@ -74,7 +74,7 @@ namespace FSA.IncidentsManagement.Models
         public static Product ToClient(this ProductViewModel @this) => new Product
         {
             Id = @this.Id,
-            IncidentId = @this.IncidentId,
+            HostId = @this.HostId,
             AdditionalInfo = @this.AdditionalInfo ?? "",
             AmountUnitTypeId = @this.AmountUnitTypeId,
             Amount = @this.Amount,

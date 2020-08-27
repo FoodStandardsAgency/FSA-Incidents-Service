@@ -15,7 +15,7 @@ namespace FSA.IncidentsManagement.Models
             this.ProductDates = new List<ProductDateModel>();
         }
 
-        public int IncidentId { get; set; }
+        public int HostId { get; set; }
         public int Id { get; set; }
         public string Name { get; set; }
         public string Brand { get; set; }

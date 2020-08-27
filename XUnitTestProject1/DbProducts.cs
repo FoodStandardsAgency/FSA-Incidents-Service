@@ -44,7 +44,7 @@ namespace FSA.UnitTests.Db
                 Name = "Product no collections",
                 BatchCodes = "BC1234 BC59867",
                 Brand = "New Brand",
-                IncidentId = 21,
+                HostId = 21,
                 CountryOfOriginId = 103,
                 Amount = "7",
                 ProductTypeId = 2,
@@ -54,7 +54,7 @@ namespace FSA.UnitTests.Db
             };
 
             ISIMSManager fsaData = new SIMSDataManager(this.dbContext, userId3);
-            var updatedProduct = await fsaData.Products.Add(product.IncidentId, product);
+            var updatedProduct = await fsaData.Products.Add(product.HostId, product);
         }
 
         [Fact]
@@ -73,7 +73,7 @@ namespace FSA.UnitTests.Db
                 Name = "Product PackDates no sizes with dates",
                 BatchCodes = "BC1234 BC59867",
                 Brand = "New Brand",
-                IncidentId = 21,
+                HostId = 21,
                 CountryOfOriginId = 103,
                 Amount = "7",
                 ProductTypeId = 2,
@@ -87,7 +87,7 @@ namespace FSA.UnitTests.Db
             };
 
             ISIMSManager fsaData = new SIMSDataManager(this.dbContext, userId3);
-            var updatedProduct = await fsaData.Products.Add(product.IncidentId, product);
+            var updatedProduct = await fsaData.Products.Add(product.HostId, product);
         }
 
         [Fact]
@@ -98,7 +98,7 @@ namespace FSA.UnitTests.Db
                 Name = "Product Pack Sizes no dates with sizes",
                 BatchCodes = "BC New packers BNA2324",
                 Brand = "A Brand",
-                IncidentId = 17,
+                HostId = 17,
                 CountryOfOriginId = 47,
                 ProductTypeId = 2,
                 Amount="0.0",
@@ -113,7 +113,7 @@ namespace FSA.UnitTests.Db
             };
 
             ISIMSManager fsaData = new SIMSDataManager(this.dbContext, userId3);
-            var updatedProduct = await fsaData.Products.Add(product.IncidentId, product);
+            var updatedProduct = await fsaData.Products.Add(product.HostId, product);
             Assert.True(updatedProduct.PackSizes.Count() == 2 && updatedProduct.Amount == "0.0");
         }
 

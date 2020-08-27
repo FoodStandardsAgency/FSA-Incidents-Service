@@ -95,7 +95,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         {
             // ensure we can update the incident.
             // need to check to see if the incident has already been closed.
-            var isClosed = IsIncidentClosed(product.IncidentId);
+            var isClosed = IsIncidentClosed(product.HostId);
             if (!isClosed)
             {
                 var productDb = ctx.Products
@@ -194,14 +194,14 @@ namespace FSA.IncidentsManagementDb.Repositories
             return ctx.Products.AsNoTracking()
                     .Include(o => o.Incident)
                     .Single(p => p.Id == productId)
-                    .Incident.IncidentStatusId == (int)IncidentStatus.Closed;
+                    .Incident.IncidentStatusId == (int)IncidentStatusTypes.Closed;
         }
 
         private bool IsIncidentClosed(int incidentId)
         {
             return ctx.Incidents
                       .Single(i => i.Id == incidentId)
-                      .IncidentStatusId == (int)IncidentStatus.Closed;
+                      .IncidentStatusId == (int)IncidentStatusTypes.Closed;
         }
     }
 }

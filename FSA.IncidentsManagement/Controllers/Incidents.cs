@@ -96,9 +96,9 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "Update incident(s) lead officer")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> UpdateLeadOfficer([FromBody, SwaggerParameter("Update Lead officer entries", Required = true)] UpdateLeadOfficer officer)
+        public async Task<IActionResult> UpdateLeadOfficer([FromBody, SwaggerParameter("Update Lead officer entries", Required = true)] UpdateLeadOfficerModel officer)
         {
-            await this.fsaData.Incidents.AssignLeadOfficer(officer.IncidentIds, officer.Officer);
+            await this.fsaData.Incidents.AssignLeadOfficer(officer.Ids, officer.Officer);
             return new OkResult();
         }
 

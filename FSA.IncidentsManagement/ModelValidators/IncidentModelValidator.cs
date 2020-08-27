@@ -22,9 +22,9 @@ namespace FSA.IncidentsManagement.ModelValidators
 
             RuleFor(incident => incident.IncidentTitle).NotNull().WithMessage("Cannot have a null title.");
             //RuleFor(incident => incident.LeadOfficer).NotNull().WithMessage("Must have a lead officer assigned.");
-            RuleFor(incident => incident.StatusId).NotEqual((int)IncidentStatus.Unassigned)
+            RuleFor(incident => incident.StatusId).NotEqual((int)IncidentStatusTypes.Unassigned)
                     .When(incident => !String.IsNullOrEmpty(incident.LeadOfficer)).WithMessage("You must assign a lead officer to an open/closed case.");
-            RuleFor(incident => incident.StatusId).NotEqual((int)IncidentStatus.Open)
+            RuleFor(incident => incident.StatusId).NotEqual((int)IncidentStatusTypes.Open)
                                                   .When(incident => String.IsNullOrEmpty(incident.LeadOfficer))
                                                   .WithMessage("You must assign a lead officer before you can open an incident.");
             //RuleFor(incident => incident.LeadOffice).NotNull().WithMessage("This field cannot null.");

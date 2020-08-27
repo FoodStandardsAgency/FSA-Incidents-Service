@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Models
 {
-    public class UpdateLeadOfficer
+    public class UpdateLeadOfficerModel
     {
         [Required]
-        public List<int> IncidentIds { get; set; }
+        public List<int> Ids { get; set; }
         [Required]
         public string Officer { get; set; }
     }

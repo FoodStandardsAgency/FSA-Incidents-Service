@@ -112,7 +112,7 @@ namespace FSA.UnitTests.Misc
                 foreach (var title in this.titleList)
                 {
                     var newIncident = coreIncident.WithTitle($"{title}-{x}")
-                                                  .WithStatus((int)IncidentStatus.Unassigned)
+                                                  .WithStatus((int)IncidentStatusTypes.Unassigned)
                                                   .WithLeadOfficer("");
                     newBatch.Add(newIncident);
                 }
@@ -124,7 +124,7 @@ namespace FSA.UnitTests.Misc
         private async Task CreateProducts(ISIMSManager sims, SeedIncidents seeder)
         {
             var products = seeder.GetNewProducts();
-            var tasks = products.Select(p => sims.Products.Add(p.IncidentId, p));
+            var tasks = products.Select(p => sims.Products.Add(p.HostId, p));
             await Task.WhenAll(tasks);
 
             await sims.Products.AssignFbo(1, 1, FboTypes.Consignor | FboTypes.Exporter | FboTypes.Hospitality_service );

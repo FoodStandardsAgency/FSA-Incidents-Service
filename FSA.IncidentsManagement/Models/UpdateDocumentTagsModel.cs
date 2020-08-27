@@ -7,7 +7,7 @@ namespace FSA.IncidentsManagement.Models
 {
     public class UpdateDocumentTagsModel
     {
-        public int IncidentId { get; set; }
+        public int Id { get; set; }
         public string DocUrl { get; set; }
         public int[] Tags { get; set; }
     }
