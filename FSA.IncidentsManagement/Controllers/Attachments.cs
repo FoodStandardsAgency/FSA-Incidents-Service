@@ -50,7 +50,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPost("{incidentSignal/{id}")]
-        [SwaggerOperation(Summary = "Add new Attachement to incident")]
+        [SwaggerOperation(Summary = "Add Attachment to incident/signal")]
         [ProducesResponseType(typeof((string fileName, string url)), 200)]
         [ProducesResponseType(500)]
         [ProducesResponseType(400)]

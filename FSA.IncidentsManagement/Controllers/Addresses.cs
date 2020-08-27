@@ -34,7 +34,7 @@ namespace FSA.IncidentsManagement.Controllers
         public async Task<IActionResult> FindAddress([FromBody] AddressSearchModel addressSearch) => new OkObjectResult((await fsaData.Addresses.FindAddress(addressSearch.Search)).ToWeb().ToList());
 
         [HttpPost()]
-        [SwaggerOperation(Summary = "Add new Address")]
+        [SwaggerOperation(Summary = "Add Address")]
         [ProducesResponseType(typeof(SimsAddressViewModel), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
