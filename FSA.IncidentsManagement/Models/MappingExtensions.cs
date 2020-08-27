@@ -193,7 +193,7 @@ namespace FSA.IncidentsManagement.Models
         public static Stakeholder ToClient(this StakeholderModel @this) => new Stakeholder
         {
             Id = @this.Id,
-            IncidentId = @this.HostId,
+            HostId = @this.HostId,
             DiscriminatorId = @this.DiscriminatorId,
             Name= @this.Name,
             GovDept = @this.GovDept,
@@ -257,7 +257,7 @@ namespace FSA.IncidentsManagement.Models
         public static StakeholderModel ToWeb(this Stakeholder @this) => new StakeholderModel
         {
             Id = @this.Id,
-            HostId = @this.IncidentId,
+            HostId = @this.HostId,
             DiscriminatorId = @this.DiscriminatorId,
             Name= @this.Name,
             GovDept= @this.GovDept,

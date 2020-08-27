@@ -370,7 +370,7 @@ namespace FSA.UnitTests.Db
             var newStakeHolder = new Stakeholder
             {
                 DiscriminatorId = 3,
-                IncidentId = 5517,
+                HostId = 5517,
                 Name = "Pickle pie",
                 GovDept = "Crusty",
                 Phone = "012345 789",
@@ -380,7 +380,7 @@ namespace FSA.UnitTests.Db
             {
                 var simsApp = new SIMSDataManager(ctx, userId3);
                 var createdStakeHolder = await simsApp.Incidents.AddStakeholder(newStakeHolder);
-                Assert.True(createdStakeHolder.Name == newStakeHolder.Name && createdStakeHolder.IncidentId == 5517);
+                Assert.True(createdStakeHolder.Name == newStakeHolder.Name && createdStakeHolder.HostId == 5517);
             }
         }
         [Fact]

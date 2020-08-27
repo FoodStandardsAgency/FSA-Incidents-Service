@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FSA.IncidentsManagement.Root.Contracts
+namespace FSA.IncidentsManagement.Root.Domain
 {
-    interface ISIMSIncidents
+    public interface ISIMSIncidents
     {
         Task<BaseIncident> Get(int Id);
         Task<BaseIncident> Get(Guid guid);
@@ -43,6 +43,12 @@ namespace FSA.IncidentsManagement.Root.Contracts
         /// <param name="incidentId"></param>
         /// <returns></returns>
         Task<bool> Exists(int incidentId);
+
+        ISIMSLinks Links { get; }
+        ISIMSNotes Notes { get; }
+        ISIMSProducts Products { get; }
+        ISIMSAttachments Attachments { get; }
+        ISIMSStakeholders Stakeholders { get; }
     }
 
 }

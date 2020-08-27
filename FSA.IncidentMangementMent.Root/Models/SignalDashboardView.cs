@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FSA.IncidentsManagement.Root.Models
 {
-    class SignalDashboardView
+    public class SignalDashboardView
     {
         public string Id { get => GeneralExtensions.GenerateSignalsId(CommonId); }
         public int CommonId { get; set; }

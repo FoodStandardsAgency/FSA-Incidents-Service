@@ -661,7 +661,7 @@ namespace FSA.IncidentsManagementDb
             Note = @this.Comment,
             Created = @this.Created,
             CreatedBy = @this.CreatedBy,
-            IncidentId = @this.IncidentId
+            HostId = @this.IncidentId
         };
 
         public static IncidentDashboardView ToDashboard(this IncidentDb @this)
@@ -728,7 +728,7 @@ namespace FSA.IncidentsManagementDb
             Phone = @this.Phone,
             Name = @this.Name,
             GovDept = @this.GovDept,
-            IncidentId = @this.IncidentId,
+            HostId = @this.IncidentId,
             Role = @this.Role,
             Id = @this.Id,
             AddressId = @this.AddressId
@@ -741,7 +741,7 @@ namespace FSA.IncidentsManagementDb
             entity.Phone = @this.Phone;
             entity.Name = @this.Name;
             entity.GovDept = @this.GovDept;
-            entity.IncidentId = @this.IncidentId;
+            entity.IncidentId = @this.HostId;
             entity.Role = @this.Role;
             entity.Id = @this.Id;
         }
@@ -753,7 +753,7 @@ namespace FSA.IncidentsManagementDb
             Phone = @this.Phone,
             Name = @this.Name,
             GovDept = @this.GovDept,
-            IncidentId = @this.IncidentId,
+            IncidentId = @this.HostId,
             Role = @this.Role,
             Id = @this.Id,
             AddressId = @this.AddressId

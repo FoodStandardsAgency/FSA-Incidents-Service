@@ -600,9 +600,9 @@ namespace FSA.IncidentsManagementDb.Repositories
 
         public async Task<Stakeholder> AddStakeholder(Stakeholder stakeholder)
         {
-            if(stakeholder.IncidentId==0) throw new IncidentMissingException("Incident Id Missing");
+            if(stakeholder.HostId==0) throw new IncidentMissingException("Incident Id Missing");
 
-            var isClosed = await this.IsClosed(stakeholder.IncidentId);
+            var isClosed = await this.IsClosed(stakeholder.HostId);
             if (isClosed) throw new IncidentClosedException("Incident is closed");
             if (stakeholder.Id > 0) throw new SIMSException("Stakeholder already exists.");
             // Cannot add an FSA member with an address, this is an application error.
@@ -629,8 +629,8 @@ namespace FSA.IncidentsManagementDb.Repositories
 
         public async Task<Stakeholder> UpdateStakeholder(Stakeholder stakeholder)
         {
-            if(stakeholder.IncidentId==0) throw new IncidentMissingException("Incident Id Missing");
-            var isClosed = await this.IsClosed(stakeholder.IncidentId);
+            if(stakeholder.HostId==0) throw new IncidentMissingException("Incident Id Missing");
+            var isClosed = await this.IsClosed(stakeholder.HostId);
             if (isClosed) throw new IncidentClosedException("Incident is closed");
             if (stakeholder.Id == 0) throw new SIMSException("Stakeholder must exist.");
 
