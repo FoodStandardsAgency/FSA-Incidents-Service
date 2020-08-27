@@ -59,8 +59,6 @@ namespace FSA.IncidentsManagement.Controllers
             return new OkObjectResult(createdAddress.ToWeb());
         }
 
-
-
         [HttpGet("")]
         [ProducesResponseType(typeof(SimsAddressViewModel), 200)]
         [SwaggerOperation(Summary = "Fetch address")]

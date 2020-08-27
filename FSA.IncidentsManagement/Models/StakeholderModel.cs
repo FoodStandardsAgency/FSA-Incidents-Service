@@ -8,7 +8,7 @@ namespace FSA.IncidentsManagement.Models
     public class StakeholderModel
     {
         public int Id { get; set; }
-        public int IncidentId { get; set; }
+        public int HostId { get; set; }
         public string Name { get; set; }
         public string Role { get; set; }
         public string Phone { get; set; }

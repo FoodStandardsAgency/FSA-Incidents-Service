@@ -8,5 +8,6 @@ namespace FSA.IncidentsManagement.Root.Models
     {
         public int CommonId { get; set; }
         public string Id => GeneralExtensions.GenerateSignalsId(CommonId);
+        public string Title { get; set; }
     }
 }

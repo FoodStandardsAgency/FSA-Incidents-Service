@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Root.Contracts
 {
+    /// <summary>
+    /// Simple interface for the lookup data
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface IReferenceDataRepo<T>
     {
         Task<T> GetByIdAsync(int id);

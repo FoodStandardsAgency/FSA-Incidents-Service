@@ -78,5 +78,16 @@ namespace FSA.IncidentsManagement.Controllers
            // await this.fsaData.Incidents.AssignLeadOfficer(officer.IncidentIds, officer.Officer);
             return new OkResult();
         }
+
+
+        [HttpPost("Promote/{id}")]
+        [SwaggerOperation(Summary = "Update incident(s) lead officer")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> PromoteToIncident([FromRoute] int id)
+        {
+            // await this.fsaData.Incidents.AssignLeadOfficer(officer.IncidentIds, officer.Officer);
+            return new OkResult();
+        }
     }
 }
