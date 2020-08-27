@@ -234,6 +234,12 @@ namespace FSA.IncidentsManagementDb.Repositories
             if (dbItem == null) throw new SIMSException("No incident was found");
             if (dbItem.IncidentStatusId == (int)IncidentStatus.Closed) throw new IncidentClosedException("Cannot update a closed incident!");
 
+            // If the incoming is unanassigned, but has a lead officer then we open the case (Close has already been taken care of)
+            if (incident.StatusId == (int)IncidentStatus.Unassigned && !String.IsNullOrEmpty(incident.LeadOfficer))
+            {
+                incident = incident.WithIncidentStatus((int)IncidentStatus.Open);
+            }
+
             // Logical changes.
             // Mark some differences since last update
             // We are using simpleFlags
@@ -241,6 +247,8 @@ namespace FSA.IncidentsManagementDb.Repositories
             var unassignLeadOfficer = false;
             if (dbItem.IncidentStatusId == (int)IncidentStatus.Open && incident.StatusId == (int)IncidentStatus.Unassigned)
                 unassignLeadOfficer = true;
+
+
 
             //Transfer our updates into the existing incident
             incident.ToUpdateDb(dbItem);
