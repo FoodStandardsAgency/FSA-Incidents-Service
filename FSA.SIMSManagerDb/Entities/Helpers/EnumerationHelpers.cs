@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FSA.IncidentsManagementDb.Entities.Helpers
+namespace FSA.SIMSManagerDbEntities.Helpers
 {
     /// <summary>
     /// This is a helper to stop having to do unwise lookups

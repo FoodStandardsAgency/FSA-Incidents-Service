@@ -58,7 +58,8 @@ namespace FSA.SIMSManagerDb.Entities
         public DateTime IncidentCreated { get; set; }
         public DateTime? IncidentClosed { get; set; }
 
-        public ICollection<IncidentNoteDb> Comments { get; set; }
+        public ICollection<IncidentAttachmentDb> Attachments { get; set; }
+        public ICollection<IncidentNoteDb> Notes { get; set; }
         public ICollection<IncidentProductDb> Products { get; set; }
         public ICollection<IncidentLinkDb> FromLinks { get; set; }
         public ICollection<IncidentLinkDb> ToLinks { get; set; }

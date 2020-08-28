@@ -2,7 +2,7 @@
 
 namespace FSA.SIMSManagerDb.Entities
 {
-    internal class IncidentProductPackSize : BaseProductPackSizeDb<IncidentProductDb>
+    internal class IncidentProductPackSizeDb : BaseProductPackSizeDb<IncidentProductDb>
     {
     }
 }

@@ -1,7 +1,7 @@
 ﻿using FSA.SIMSManagerDb.Entities.Core;
 using System;
 
-namespace FSA.IncidentsManagementDb.Entities
+namespace FSA.SIMSManagerDbEntities
 {
     internal abstract class BaseNoteDb<HostDb> : BaseEntityDb where HostDb : class, IDbId<int>
     {

@@ -9,7 +9,6 @@ namespace FSA.SIMSManagerDb.Entities.Core
         public int UnitId { get; set; }
         public UnitQuantityDb Unit { get; set; }
         public int ProductId { get; set; }
-        public ProductDb Product {get;set;}
+        public ProductDb Product { get; set; }
+    }
 }
-}
- 

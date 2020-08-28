@@ -1,12 +1,8 @@
-﻿
-using FSA.SIMSManagerDb.Entities.Core;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using FSA.SIMSManagerDb.Entities.Core;
 
 namespace FSA.SIMSManagerDb.Entities
 {
-    internal class IncidentProductDb : BaseProductDb<IncidentProductPackSize, IncidentProductDatesDb, IncidentProductFboDb, IncidentProductDb>
+    internal class IncidentProductDb : BaseProductDb<IncidentProductPackSizeDb, IncidentProductDateDb, IncidentProductFboDb, IncidentProductDb>
     {
         public int IncidentId { get; set; }
         public IncidentDb Incident {get;set;}

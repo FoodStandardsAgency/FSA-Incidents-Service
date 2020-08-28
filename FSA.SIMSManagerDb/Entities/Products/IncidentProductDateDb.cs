@@ -1,9 +1,10 @@
 ﻿using FSA.SIMSManagerDb.Entities.Core;
+using System;
 
 namespace FSA.SIMSManagerDb.Entities
 {
-    internal class SignalProductPackSize : BaseProductPackSizeDb<SignalProductDb>
+    internal class IncidentProductDateDb : BaseProductDateDb<IncidentProductDb>
     {
     }
 }
- 
+

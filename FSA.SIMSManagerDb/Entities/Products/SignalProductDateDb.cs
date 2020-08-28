@@ -3,7 +3,7 @@ using System;
 
 namespace FSA.SIMSManagerDb.Entities
 {
-    internal class IncidentProductDatesDb : BaseProductDateDb<IncidentProductDb>
+    internal class SignalProductDateDb : BaseProductDateDb<SignalProductDb>
     {
     }
 }

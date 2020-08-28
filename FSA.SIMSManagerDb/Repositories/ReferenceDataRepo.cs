@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace FSA.SIMSManagerDb.Repositories
 {
     /// <summary>
-    ///  This is a basic repo for pureley getting and transforming lookup data. Or data to qbe used as lookups.
+    ///  This is a basic repo for purely getting and transforming lookup data. Or data to qbe used as lookups.
     /// You will need to define a mapping operations.
     /// </summary>
     /// <typeparam name="T"></typeparam>
