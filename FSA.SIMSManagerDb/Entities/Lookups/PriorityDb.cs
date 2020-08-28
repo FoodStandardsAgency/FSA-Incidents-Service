@@ -1,5 +1,5 @@
 ﻿using FSA.SIMSManagerDb.Entities.Core;
-namespace FSA.SIMSManagerDb.Entities.Helpers
+namespace FSA.SIMSManagerDb.Entities.Lookups
 {
     internal class PriorityDb : BaseEntityDb, IIDbLookup
     {

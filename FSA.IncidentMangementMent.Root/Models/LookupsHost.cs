@@ -17,7 +17,7 @@ namespace FSA.IncidentsManagement.Root.Models
         public IEnumerable<Country> Countries { get; set; }
         public IEnumerable<DeathIllness> DeathIllnesses { get; set; }
         public IEnumerable<DataSource> DataSources { get; set; }
-        public IEnumerable<OrganisationRole> OrganisationRoles { get; set; }
+        //public IEnumerable<OrganisationRole> OrganisationRoles { get; set; }
         public IEnumerable<UnitQuantity> Units { get; set; }
         public IEnumerable<SignalStatus> SignalStatus { get; set; }
         public IEnumerable<ProductType> ProductTypes { get; set; }
@@ -25,7 +25,7 @@ namespace FSA.IncidentsManagement.Root.Models
         public IEnumerable<FBOType> FBOTypes { get; set; }
         public IEnumerable<NotifierType> NotifierTypes { get; set; }
         public IEnumerable<AdminLead> AdminLeads { get; set; }
-        public IEnumerable<ProductDateType> ProductDataTypes { get; set; }
+        public IEnumerable<ProductDateType> ProductDateTypes { get; set; }
         public IEnumerable<StakeholderType> StakeholderTypes { get; set; }
         public IEnumerable<StakeholderIncidentRole> StakeholderIncidentRoles { get; set; }
     }

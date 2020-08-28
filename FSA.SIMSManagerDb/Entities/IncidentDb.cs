@@ -1,5 +1,4 @@
 ﻿using FSA.SIMSManagerDb.Entities.Core;
-using FSA.SIMSManagerDb.Entities.Helpers;
 using FSA.SIMSManagerDb.Entities.Lookups;
 using System;
 using System.Collections.Generic;

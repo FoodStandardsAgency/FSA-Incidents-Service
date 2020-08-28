@@ -62,7 +62,7 @@ namespace FSA.IncidentsManagementDb.Repositories
             Countries = this.Countries.GetAll(),
             DataSources = this.DataSources.GetAll(),
             DeathIllnesses = this.DeathIllnesses.GetAll(),
-            OrganisationRoles = new List<OrganisationRole>(),// this.OrganisationsRoles.GetAll(),
+           // OrganisationRoles = new List<OrganisationRole>(),// this.OrganisationsRoles.GetAll(),
             ProductTypes = this.ProductTypes.GetAll(),
             SignalStatus = SignalStatus.GetAll(),
             Units = this.Units.GetAll(),
@@ -70,7 +70,7 @@ namespace FSA.IncidentsManagementDb.Repositories
             FBOTypes = this.FBOTypes.GetAll(),
             NotifierTypes = this.NotifierTypes.GetAll(),
             AdminLeads = this.AdminLeads.GetAll(),
-            ProductDataTypes = this.ProductDateTypes.GetAll(),
+            ProductDateTypes = this.ProductDateTypes.GetAll(),
             StakeholderTypes = this.StakeholderTypes.GetAll(),
             StakeholderIncidentRoles = this.StakeholderIncidentRoles.GetAll()
         };

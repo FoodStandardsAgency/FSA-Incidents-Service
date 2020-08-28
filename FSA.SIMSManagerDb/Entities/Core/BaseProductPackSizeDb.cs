@@ -1,5 +1,4 @@
-﻿using FSA.SIMSManagerDb.Entities.Helpers;
-using FSA.SIMSManagerDb.Entities.Lookups;
+﻿using FSA.SIMSManagerDb.Entities.Lookups;
 
 namespace FSA.SIMSManagerDb.Entities.Core
 {
