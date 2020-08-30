@@ -1,13 +1,9 @@
-﻿using FSA.SIMSManagerDbEntities;
-using FSA.SIMSManagerDb.Entities.Core;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using FSA.SIMSManagerDb.Entities.Core;
 
 namespace FSA.SIMSManagerDb.Entities
 {
-    internal class IncidentLinkDb : BaseLinkDb<IncidentDb> 
-    {
-
+    internal class IncidentLinkDb : BaseLinkDb    {
+        public IncidentDb From { get; set; }
+        public IncidentDb To { get; set; }
     }
 }

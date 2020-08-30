@@ -5,7 +5,8 @@ using System.Text;
 
 namespace FSA.SIMSManagerDb.Entities
 {
-    internal class SignalAttachmentDb : BaseAttachmentDb<SignalDb>
+    internal class SignalAttachmentDb : BaseAttachmentDb
     {
+        public SignalDb Signal { get; set; }
     }
 }

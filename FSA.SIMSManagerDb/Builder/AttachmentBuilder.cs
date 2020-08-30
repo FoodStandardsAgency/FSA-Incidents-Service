@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FSA.SIMSManagerDb.Builder
 {
-    internal class AttachmentBuilder<T> : AuditInfoBuilderConfiguration<BaseAttachmentDb<T>> where T : BaseEntityDb, IDbId<int>
+    internal class AttachmentBuilder<T> : AuditInfoBuilderConfiguration<T> where T : BaseAttachmentDb
     {
         private string hostname;
         private string tableName;
@@ -15,7 +15,7 @@ namespace FSA.SIMSManagerDb.Builder
             this.hostname = hostname;
             this.tableName = tableName;
         }
-        public override void Configure(EntityTypeBuilder<BaseAttachmentDb<T>> builder)
+        public override void Configure(EntityTypeBuilder<T> builder)
         {
             base.Configure(builder);
             builder.ToTable(tableName);

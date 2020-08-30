@@ -29,6 +29,17 @@ namespace FSA.SIMSManagerDb.Builders
             builder.HasMany(p => p.ToLinks)
                    .WithOne(o => o.To)
                     .HasForeignKey(o => o.ToId).OnDelete(DeleteBehavior.NoAction);
+            builder.HasMany(p => p.Notes)
+                    .WithOne(p => p.Incident)
+                    .HasForeignKey(k => k.HostId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(p => p.Stakeholders)
+                    .WithOne(p => p.Incident)
+                    .HasForeignKey(k => k.HostId).OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasMany(p => p.Attachments)
+                    .WithOne(p => p.Incident)
+                    .HasForeignKey(k => k.HostId).OnDelete(DeleteBehavior.NoAction);
+
         }
     }
 }

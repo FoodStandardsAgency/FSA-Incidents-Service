@@ -146,190 +146,6 @@ namespace FSA.SIMSManagerDb.Migrations
                     b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.Core.BaseAttachmentDb<FSA.SIMSManagerDb.Entities.IncidentDb>", b =>
-                {
-                    b.Property<string>("DocUrl")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("HostId")
-                        .HasColumnName("IncidentId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<int>("TagFlags")
-                        .HasColumnType("int");
-
-                    b.Property<byte[]>("Timestamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.HasKey("DocUrl");
-
-                    b.ToTable("IncidentAttachments");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("BaseAttachmentDb<IncidentDb>");
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.Core.BaseAttachmentDb<FSA.SIMSManagerDb.Entities.SignalDb>", b =>
-                {
-                    b.Property<string>("DocUrl")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("HostId")
-                        .HasColumnName("SignalId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<int>("TagFlags")
-                        .HasColumnType("int");
-
-                    b.Property<byte[]>("Timestamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.HasKey("DocUrl");
-
-                    b.ToTable("SignalAttachments");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("BaseAttachmentDb<SignalDb>");
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.Core.BaseLinkDb<FSA.SIMSManagerDb.Entities.IncidentDb>", b =>
-                {
-                    b.Property<int>("FromId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ToId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<byte[]>("Timestamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.HasKey("FromId", "ToId");
-
-                    b.ToTable("IncidentLinks");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("BaseLinkDb<IncidentDb>");
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.Core.BaseLinkDb<FSA.SIMSManagerDb.Entities.SignalDb>", b =>
-                {
-                    b.Property<int>("FromId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ToId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<byte[]>("Timestamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.HasKey("FromId", "ToId");
-
-                    b.ToTable("SignalLinks");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("BaseLinkDb<SignalDb>");
-                });
-
             modelBuilder.Entity("FSA.SIMSManagerDb.Entities.Core.BaseProductDateDb<FSA.SIMSManagerDb.Entities.IncidentProductDb>", b =>
                 {
                     b.Property<int>("Id")
@@ -652,6 +468,50 @@ namespace FSA.SIMSManagerDb.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("BaseProductPackSizeDb<SignalProductDb>");
                 });
 
+            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentAttachmentDb", b =>
+                {
+                    b.Property<string>("DocUrl")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<int>("HostId")
+                        .HasColumnName("IncidentId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<int>("TagFlags")
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("DocUrl");
+
+                    b.HasIndex("HostId");
+
+                    b.ToTable("IncidentAttachments");
+                });
+
             modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentDb", b =>
                 {
                     b.Property<int>("Id")
@@ -792,6 +652,92 @@ namespace FSA.SIMSManagerDb.Migrations
                     b.HasIndex("SignalStatusId");
 
                     b.ToTable("Incidents");
+                });
+
+            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentLinkDb", b =>
+                {
+                    b.Property<int>("FromId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ToId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("FromId", "ToId");
+
+                    b.HasIndex("ToId");
+
+                    b.ToTable("IncidentLinks");
+                });
+
+            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentNoteDb", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<int>("HostId")
+                        .HasColumnName("IncidentId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HostId");
+
+                    b.ToTable("IncidentNotes");
                 });
 
             modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentProductDb", b =>
@@ -7288,6 +7234,50 @@ namespace FSA.SIMSManagerDb.Migrations
                         });
                 });
 
+            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.SignalAttachmentDb", b =>
+                {
+                    b.Property<string>("DocUrl")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<int>("HostId")
+                        .HasColumnName("SignalId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<int>("TagFlags")
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("DocUrl");
+
+                    b.HasIndex("HostId");
+
+                    b.ToTable("SignalAttachments");
+                });
+
             modelBuilder.Entity("FSA.SIMSManagerDb.Entities.SignalDb", b =>
                 {
                     b.Property<int>("Id")
@@ -7386,6 +7376,92 @@ namespace FSA.SIMSManagerDb.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Signals");
+                });
+
+            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.SignalLinkDb", b =>
+                {
+                    b.Property<int>("FromId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ToId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("FromId", "ToId");
+
+                    b.HasIndex("ToId");
+
+                    b.ToTable("SignalLinks");
+                });
+
+            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.SignalNoteDb", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<int>("HostId")
+                        .HasColumnName("SignalId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HostId");
+
+                    b.ToTable("SignalNotes");
                 });
 
             modelBuilder.Entity("FSA.SIMSManagerDb.Entities.SignalProductDb", b =>
@@ -7534,142 +7610,6 @@ namespace FSA.SIMSManagerDb.Migrations
                     b.ToTable("SignalStakeholders");
                 });
 
-            modelBuilder.Entity("FSA.SIMSManagerDbEntities.BaseNoteDb<FSA.SIMSManagerDb.Entities.IncidentDb>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("HostId")
-                        .HasColumnName("IncidentId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("Timestamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("IncidentNotes");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("BaseNoteDb<IncidentDb>");
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDbEntities.BaseNoteDb<FSA.SIMSManagerDb.Entities.SignalDb>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("HostId")
-                        .HasColumnName("SignalId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("Timestamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SignalNotes");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("BaseNoteDb<SignalDb>");
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentAttachmentDb", b =>
-                {
-                    b.HasBaseType("FSA.SIMSManagerDb.Entities.Core.BaseAttachmentDb<FSA.SIMSManagerDb.Entities.IncidentDb>");
-
-                    b.HasIndex("HostId");
-
-                    b.HasDiscriminator().HasValue("IncidentAttachmentDb");
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.SignalAttachmentDb", b =>
-                {
-                    b.HasBaseType("FSA.SIMSManagerDb.Entities.Core.BaseAttachmentDb<FSA.SIMSManagerDb.Entities.SignalDb>");
-
-                    b.HasIndex("HostId");
-
-                    b.HasDiscriminator().HasValue("SignalAttachmentDb");
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentLinkDb", b =>
-                {
-                    b.HasBaseType("FSA.SIMSManagerDb.Entities.Core.BaseLinkDb<FSA.SIMSManagerDb.Entities.IncidentDb>");
-
-                    b.HasIndex("ToId");
-
-                    b.HasDiscriminator().HasValue("IncidentLinkDb");
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.SignalLinkDb", b =>
-                {
-                    b.HasBaseType("FSA.SIMSManagerDb.Entities.Core.BaseLinkDb<FSA.SIMSManagerDb.Entities.SignalDb>");
-
-                    b.HasIndex("ToId");
-
-                    b.HasDiscriminator().HasValue("SignalLinkDb");
-                });
-
             modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentProductDateDb", b =>
                 {
                     b.HasBaseType("FSA.SIMSManagerDb.Entities.Core.BaseProductDateDb<FSA.SIMSManagerDb.Entities.IncidentProductDb>");
@@ -7728,24 +7668,6 @@ namespace FSA.SIMSManagerDb.Migrations
                     b.HasIndex("ProductId");
 
                     b.HasDiscriminator().HasValue("SignalProductPackSizeDb");
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentNoteDb", b =>
-                {
-                    b.HasBaseType("FSA.SIMSManagerDbEntities.BaseNoteDb<FSA.SIMSManagerDb.Entities.IncidentDb>");
-
-                    b.HasIndex("HostId");
-
-                    b.HasDiscriminator().HasValue("IncidentNoteDb");
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.SignalNoteDb", b =>
-                {
-                    b.HasBaseType("FSA.SIMSManagerDbEntities.BaseNoteDb<FSA.SIMSManagerDb.Entities.SignalDb>");
-
-                    b.HasIndex("HostId");
-
-                    b.HasDiscriminator().HasValue("SignalNoteDb");
                 });
 
             modelBuilder.Entity("FSA.SIMSManagerDb.Entities.AddressContactDb", b =>
@@ -7824,6 +7746,15 @@ namespace FSA.SIMSManagerDb.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentAttachmentDb", b =>
+                {
+                    b.HasOne("FSA.SIMSManagerDb.Entities.IncidentDb", "Incident")
+                        .WithMany("Attachments")
+                        .HasForeignKey("HostId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentDb", b =>
                 {
                     b.HasOne("FSA.SIMSManagerDb.Entities.Lookups.AdminLeadDb", "AdminLead")
@@ -7895,6 +7826,30 @@ namespace FSA.SIMSManagerDb.Migrations
                         .HasForeignKey("SignalStatusId");
                 });
 
+            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentLinkDb", b =>
+                {
+                    b.HasOne("FSA.SIMSManagerDb.Entities.IncidentDb", "From")
+                        .WithMany("FromLinks")
+                        .HasForeignKey("FromId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("FSA.SIMSManagerDb.Entities.IncidentDb", "To")
+                        .WithMany("ToLinks")
+                        .HasForeignKey("ToId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentNoteDb", b =>
+                {
+                    b.HasOne("FSA.SIMSManagerDb.Entities.IncidentDb", "Incident")
+                        .WithMany("Notes")
+                        .HasForeignKey("HostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentProductDb", b =>
                 {
                     b.HasOne("FSA.SIMSManagerDb.Entities.Lookups.UnitQuantityDb", "AmountUnitType")
@@ -7928,10 +7883,10 @@ namespace FSA.SIMSManagerDb.Migrations
                         .WithMany()
                         .HasForeignKey("AddressId");
 
-                    b.HasOne("FSA.SIMSManagerDb.Entities.IncidentDb", "Host")
-                        .WithMany()
+                    b.HasOne("FSA.SIMSManagerDb.Entities.IncidentDb", "Incident")
+                        .WithMany("Stakeholders")
                         .HasForeignKey("HostId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("FSA.SIMSManagerDb.Entities.Lookups.StakeholderDiscriminatorDb", "StakeholderDiscriminator")
@@ -7946,6 +7901,39 @@ namespace FSA.SIMSManagerDb.Migrations
                     b.HasOne("FSA.SIMSManagerDb.Entities.Lookups.SignalStatusDb", "Parent")
                         .WithMany()
                         .HasForeignKey("ParentId");
+                });
+
+            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.SignalAttachmentDb", b =>
+                {
+                    b.HasOne("FSA.SIMSManagerDb.Entities.SignalDb", "Signal")
+                        .WithMany("Attachments")
+                        .HasForeignKey("HostId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.SignalLinkDb", b =>
+                {
+                    b.HasOne("FSA.SIMSManagerDb.Entities.SignalDb", "From")
+                        .WithMany("FromLinks")
+                        .HasForeignKey("FromId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("FSA.SIMSManagerDb.Entities.SignalDb", "To")
+                        .WithMany("ToLinks")
+                        .HasForeignKey("ToId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.SignalNoteDb", b =>
+                {
+                    b.HasOne("FSA.SIMSManagerDb.Entities.SignalDb", "Signal")
+                        .WithMany("Notes")
+                        .HasForeignKey("HostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("FSA.SIMSManagerDb.Entities.SignalProductDb", b =>
@@ -7981,64 +7969,16 @@ namespace FSA.SIMSManagerDb.Migrations
                         .WithMany()
                         .HasForeignKey("AddressId");
 
-                    b.HasOne("FSA.SIMSManagerDb.Entities.SignalDb", "Host")
-                        .WithMany()
+                    b.HasOne("FSA.SIMSManagerDb.Entities.SignalDb", "Signal")
+                        .WithMany("Stakeholders")
                         .HasForeignKey("HostId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("FSA.SIMSManagerDb.Entities.Lookups.StakeholderDiscriminatorDb", "StakeholderDiscriminator")
                         .WithMany()
                         .HasForeignKey("StakeholderDiscriminatorId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentAttachmentDb", b =>
-                {
-                    b.HasOne("FSA.SIMSManagerDb.Entities.IncidentDb", "Host")
-                        .WithMany("Attachments")
-                        .HasForeignKey("HostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.SignalAttachmentDb", b =>
-                {
-                    b.HasOne("FSA.SIMSManagerDb.Entities.SignalDb", "Host")
-                        .WithMany("Attachments")
-                        .HasForeignKey("HostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentLinkDb", b =>
-                {
-                    b.HasOne("FSA.SIMSManagerDb.Entities.IncidentDb", "From")
-                        .WithMany("FromLinks")
-                        .HasForeignKey("FromId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("FSA.SIMSManagerDb.Entities.IncidentDb", "To")
-                        .WithMany("ToLinks")
-                        .HasForeignKey("ToId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.SignalLinkDb", b =>
-                {
-                    b.HasOne("FSA.SIMSManagerDb.Entities.SignalDb", "From")
-                        .WithMany("FromLinks")
-                        .HasForeignKey("FromId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("FSA.SIMSManagerDb.Entities.SignalDb", "To")
-                        .WithMany("ToLinks")
-                        .HasForeignKey("ToId")
-                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
@@ -8088,24 +8028,6 @@ namespace FSA.SIMSManagerDb.Migrations
                     b.HasOne("FSA.SIMSManagerDb.Entities.SignalProductDb", "Product")
                         .WithMany("PackSizes")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentNoteDb", b =>
-                {
-                    b.HasOne("FSA.SIMSManagerDb.Entities.IncidentDb", "Host")
-                        .WithMany("Notes")
-                        .HasForeignKey("HostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.SignalNoteDb", b =>
-                {
-                    b.HasOne("FSA.SIMSManagerDb.Entities.SignalDb", "Host")
-                        .WithMany("Notes")
-                        .HasForeignKey("HostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

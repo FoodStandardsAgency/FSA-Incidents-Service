@@ -63,5 +63,6 @@ namespace FSA.SIMSManagerDb.Entities
         public ICollection<IncidentProductDb> Products { get; set; }
         public ICollection<IncidentLinkDb> FromLinks { get; set; }
         public ICollection<IncidentLinkDb> ToLinks { get; set; }
+        public ICollection<IncidentStakeholderDb> Stakeholders { get; set; }
     }
 }

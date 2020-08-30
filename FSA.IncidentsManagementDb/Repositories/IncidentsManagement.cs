@@ -590,7 +590,7 @@ namespace FSA.IncidentsManagementDb.Repositories
             return attachments.Select(s => (s.DocUrl, s.TagFlags)).ToList();
         }
 
-        public async Task<IEnumerable<Stakeholder>> GetStakeholders(int incidentId)
+        public async Task<IEnumerable<SimsStakeholder>> GetStakeholders(int incidentId)
         {
             if (incidentId == 0) throw new IncidentMissingException("Incident must exist.");
             return await this.ctx.Stakeholders
@@ -598,7 +598,7 @@ namespace FSA.IncidentsManagementDb.Repositories
                                 .Select(o => o.ToClient()).ToListAsync();
         }
 
-        public async Task<Stakeholder> AddStakeholder(Stakeholder stakeholder)
+        public async Task<SimsStakeholder> AddStakeholder(SimsStakeholder stakeholder)
         {
             if(stakeholder.HostId==0) throw new IncidentMissingException("Incident Id Missing");
 
@@ -627,7 +627,7 @@ namespace FSA.IncidentsManagementDb.Repositories
             await ctx.SaveChangesAsync();
         }
 
-        public async Task<Stakeholder> UpdateStakeholder(Stakeholder stakeholder)
+        public async Task<SimsStakeholder> UpdateStakeholder(SimsStakeholder stakeholder)
         {
             if(stakeholder.HostId==0) throw new IncidentMissingException("Incident Id Missing");
             var isClosed = await this.IsClosed(stakeholder.HostId);

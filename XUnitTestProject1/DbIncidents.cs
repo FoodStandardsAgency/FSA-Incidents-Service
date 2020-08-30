@@ -76,7 +76,7 @@ namespace FSA.UnitTests.Db
             }
         }
 
-        [Fact(DisplayName = "Add incindet with lead officer")]
+        [Fact(DisplayName = "Add incidnet with lead officer")]
         public async Task AddIncidentLeadOfficer()
         {
             var incident = new BaseIncident(
@@ -226,6 +226,7 @@ namespace FSA.UnitTests.Db
             }
         }
 
+
         [Fact]
         public async Task DashboardSearchPeanut()
         {
@@ -312,6 +313,7 @@ namespace FSA.UnitTests.Db
             }
         }
 
+
         [Fact]
         public async Task LinkToClosed()
         {
@@ -367,7 +369,7 @@ namespace FSA.UnitTests.Db
         [Fact]
         public async Task AddStakeholder()
         {
-            var newStakeHolder = new Stakeholder
+            var newStakeHolder = new SimsStakeholder
             {
                 DiscriminatorId = 3,
                 HostId = 5517,
@@ -386,7 +388,7 @@ namespace FSA.UnitTests.Db
         [Fact]
         public async Task AddStakeholderNoIncident()
         {
-            var newStakeHolder = new Stakeholder
+            var newStakeHolder = new SimsStakeholder
             {
                 DiscriminatorId = 3,
                 Name = "Pickle pie",

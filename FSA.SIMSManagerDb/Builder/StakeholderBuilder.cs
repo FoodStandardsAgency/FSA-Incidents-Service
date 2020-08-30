@@ -9,8 +9,7 @@ using System.Text;
 
 namespace FSA.SIMSManagerDb.Builder
 {
-    internal class StakeholderBuilder<T, U> : AuditInfoBuilderConfiguration<T> where U : class, IDbId<int>
-                                                                              where T : BaseStakeholderDb<U>
+    internal class StakeholderBuilder<T> : AuditInfoBuilderConfiguration<T>  where T : BaseStakeholderDb
     {
         private string hostcolumnName;
 

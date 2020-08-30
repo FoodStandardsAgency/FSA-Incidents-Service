@@ -5,8 +5,9 @@ using System.Text;
 
 namespace FSA.SIMSManagerDb.Entities
 {
-    internal class SignalLinkDb : BaseLinkDb<SignalDb>
+    internal class SignalLinkDb : BaseLinkDb
     {
-
+        public SignalDb From { get; set; }
+        public SignalDb To { get; set; }
     }
 }

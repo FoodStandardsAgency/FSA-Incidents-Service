@@ -21,6 +21,7 @@ namespace FSA.SIMSManagerDb.Entities
         public string FoodOrFeed { get; set; }
         public string BaseProduct { get; set; }
         public string Manufacturer { get; set; }
+        
         public string Hazard { get; set; }
         public string HazardGroup { get; set; }
         public string DataSource { get; set; }
@@ -29,11 +30,11 @@ namespace FSA.SIMSManagerDb.Entities
         public DateTime InsertedDate { get; set; }
         public string SourceLink { get; set; }
 
-        
         public ICollection<SignalAttachmentDb> Attachments { get; set; }
         public ICollection<SignalNoteDb> Notes { get; set; }
         public ICollection<SignalProductDb> Products { get; set; }
         public ICollection<SignalLinkDb> FromLinks { get; set; }
         public ICollection<SignalLinkDb> ToLinks { get; set; }
+        public ICollection<SignalStakeholderDb> Stakeholders { get; set; }
     }
 }

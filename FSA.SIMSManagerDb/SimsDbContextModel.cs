@@ -1,6 +1,7 @@
 ﻿using FSA.SIMSManagerDb.Builder;
 using FSA.SIMSManagerDb.Builders;
 using FSA.SIMSManagerDb.Entities;
+using FSA.SIMSManagerDb.Entities.Core;
 using FSA.SIMSManagerDb.Entities.Lookups;
 using FSA.SIMSManagerDb.Utilities;
 using Microsoft.EntityFrameworkCore;
@@ -64,16 +65,15 @@ namespace FSA.SIMSManagerDb
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-
+        {         
             modelBuilder.ApplyConfiguration(new AddressBuilder());
             modelBuilder.ApplyConfiguration(new AddressContactBuilder());
 
             modelBuilder.ApplyConfiguration(new IncidentBuilder());
-            modelBuilder.ApplyConfiguration(new LinksBuilder<IncidentDb>(nameof(this.IncidentLinks)));
-            modelBuilder.ApplyConfiguration(new AttachmentBuilder<IncidentDb>(nameof(this.IncidentAttachments), "IncidentId"));
-            modelBuilder.ApplyConfiguration(new StakeholderBuilder<IncidentStakeholderDb, IncidentDb>("IncidentId"));
-            modelBuilder.ApplyConfiguration(new NotesBuilder<IncidentDb>(nameof(this.IncidentNotes), "IncidentId"));
+            modelBuilder.ApplyConfiguration(new LinksBuilder<IncidentLinkDb>(nameof(this.IncidentLinks)));
+            modelBuilder.ApplyConfiguration(new AttachmentBuilder<IncidentAttachmentDb>(nameof(this.IncidentAttachments), "IncidentId"));
+            modelBuilder.ApplyConfiguration(new StakeholderBuilder<IncidentStakeholderDb>("IncidentId"));
+            modelBuilder.ApplyConfiguration(new NotesBuilder<IncidentNoteDb>(nameof(this.IncidentNotes), "IncidentId"));
 
             modelBuilder.ApplyConfiguration(new IncidentProductBuilder());
             modelBuilder.ApplyConfiguration(new ProductPackSizeBuilder<IncidentProductDb>(nameof(this.IncidentProductPackSizes), "IncidentId"));
@@ -81,10 +81,10 @@ namespace FSA.SIMSManagerDb
             modelBuilder.ApplyConfiguration(new ProductDateBuilder<IncidentProductDb>(nameof(this.IncidentProductDates), "IncidentId"));
 
             modelBuilder.ApplyConfiguration(new SignalBuilder());
-            modelBuilder.ApplyConfiguration(new LinksBuilder<SignalDb>(nameof(this.SignalLinks)));
-            modelBuilder.ApplyConfiguration(new AttachmentBuilder<SignalDb>(nameof(this.SignalAttachments), "SignalId"));
-            modelBuilder.ApplyConfiguration(new StakeholderBuilder<SignalStakeholderDb, SignalDb>("SignalId"));
-            modelBuilder.ApplyConfiguration(new NotesBuilder<SignalDb>(nameof(this.SignalNotes), "SignalId"));
+            modelBuilder.ApplyConfiguration(new LinksBuilder<SignalLinkDb>(nameof(this.SignalLinks)));
+            modelBuilder.ApplyConfiguration(new AttachmentBuilder<SignalAttachmentDb>(nameof(this.SignalAttachments), "SignalId"));
+            modelBuilder.ApplyConfiguration(new StakeholderBuilder<SignalStakeholderDb>("SignalId"));
+            modelBuilder.ApplyConfiguration(new NotesBuilder<SignalNoteDb>(nameof(this.SignalNotes), "SignalId"));
 
             modelBuilder.ApplyConfiguration(new SignalProductBuilder());
             modelBuilder.ApplyConfiguration(new ProductPackSizeBuilder<SignalProductDb>(nameof(this.SignalProductPackSizes), "SignalId"));

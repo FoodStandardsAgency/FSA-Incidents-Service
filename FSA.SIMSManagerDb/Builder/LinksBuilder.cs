@@ -2,16 +2,17 @@
 using FSA.SIMSManagerDb.Entities.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 
 namespace FSA.SIMSManagerDb.Builder
 {
-    internal class LinksBuilder<T> : AuditInfoBuilderConfiguration<BaseLinkDb<T>> where T : BaseEntityDb, IDbId<int>
+    internal class LinksBuilder<T> : AuditInfoBuilderConfiguration<T> where T : BaseLinkDb
     {
         private string tableName;
 
         public LinksBuilder(string tableName) => this.tableName = tableName;
 
-        public override void Configure(EntityTypeBuilder<BaseLinkDb<T>> builder)
+        public override void Configure(EntityTypeBuilder<T> builder)
         {
 
             // Required for audit

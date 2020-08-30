@@ -2,11 +2,11 @@
 
 namespace FSA.SIMSManagerDb.Entities.Core
 {
-    internal abstract class BaseStakeholderDb<HostDb> : BaseEntityDb where HostDb : class, IDbId<int>
+    internal abstract class BaseStakeholderDb : BaseEntityDb
     {
         public int Id { get; set; }
         public int HostId { get; set; }
-        public HostDb Host { get; set; }
+        //public HostDb Host { get; set; }
         public string Name { get; set; }
         public string GovDept { get; set; }
         public string Role { get; set; }

@@ -24,7 +24,7 @@ namespace FSA.SIMSManagerDb.Repositories
         protected readonly Func<SimsDbContext, Task<List<Db>>> _customAsyncFetch;
         private readonly Func<SimsDbContext, List<Db>> _customFetch;
 
-        internal ReferenceDataRepo(SimsDbContext ctx, Mapper mapper)
+        internal ReferenceDataRepo(SimsDbContext ctx, IMapper mapper)
         {
             this.ctx = ctx;
             this.toClient = (itm) => mapper.Map<Db, T>(itm);

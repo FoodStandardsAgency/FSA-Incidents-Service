@@ -721,7 +721,7 @@ namespace FSA.IncidentsManagementDb
             NotifierType = @this.NotifierType.Title
         };
 
-        public static Stakeholder ToClient(this StakeholderDb @this) => new Stakeholder
+        public static SimsStakeholder ToClient(this StakeholderDb @this) => new SimsStakeholder
         {
             DiscriminatorId = @this.StakeholderDiscriminatorId,
             Email = @this.Email,
@@ -734,7 +734,7 @@ namespace FSA.IncidentsManagementDb
             AddressId = @this.AddressId
         };
 
-        public static void ToUpdateDb(this Stakeholder @this, StakeholderDb entity)
+        public static void ToUpdateDb(this SimsStakeholder @this, StakeholderDb entity)
         {
             entity.StakeholderDiscriminatorId = @this.DiscriminatorId;
             entity.Email = @this.Email;
@@ -746,7 +746,7 @@ namespace FSA.IncidentsManagementDb
             entity.Id = @this.Id;
         }
 
-        public static StakeholderDb ToDb(this Stakeholder @this) => new StakeholderDb
+        public static StakeholderDb ToDb(this SimsStakeholder @this) => new StakeholderDb
         {
             StakeholderDiscriminatorId = @this.DiscriminatorId,
             Email = @this.Email,

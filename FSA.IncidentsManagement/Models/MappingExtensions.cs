@@ -190,7 +190,7 @@ namespace FSA.IncidentsManagement.Models
             }
         }
 
-        public static Stakeholder ToClient(this StakeholderModel @this) => new Stakeholder
+        public static SimsStakeholder ToClient(this StakeholderModel @this) => new SimsStakeholder
         {
             Id = @this.Id,
             HostId = @this.HostId,
@@ -254,7 +254,7 @@ namespace FSA.IncidentsManagement.Models
 
 
 
-        public static StakeholderModel ToWeb(this Stakeholder @this) => new StakeholderModel
+        public static StakeholderModel ToWeb(this SimsStakeholder @this) => new StakeholderModel
         {
             Id = @this.Id,
             HostId = @this.HostId,
@@ -267,7 +267,7 @@ namespace FSA.IncidentsManagement.Models
             AddressId = @this.AddressId.HasValue ? @this.AddressId.Value : 0
         };
 
-        public static IEnumerable<StakeholderModel> ToWeb(this IEnumerable<Stakeholder> @this)
+        public static IEnumerable<StakeholderModel> ToWeb(this IEnumerable<SimsStakeholder> @this)
         {
             foreach (var item in @this)
             {

@@ -5,8 +5,9 @@ using System.Text;
 
 namespace FSA.SIMSManagerDb.Entities
 {
-    internal class IncidentStakeholderDb : BaseStakeholderDb<IncidentDb>
+    internal class IncidentStakeholderDb : BaseStakeholderDb
     {
-       
+        public IncidentDb Incident { get; set; }
+
     }
 }
