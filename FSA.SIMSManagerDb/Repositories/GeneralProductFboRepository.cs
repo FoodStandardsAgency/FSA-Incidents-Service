@@ -23,7 +23,7 @@ namespace FSA.SIMSManagerDb.Repositories
             this.mapper = mapper;
         }
 
-        public async Task AssignFbo(int productId, int addressId, FboTypes types)
+        public async Task Add(int productId, int addressId, FboTypes types)
         {
 
             //if (productId == 0) throw new SIMSException("Product Id missing");
@@ -41,7 +41,7 @@ namespace FSA.SIMSManagerDb.Repositories
 
         }
 
-        public async Task UpdateFbo(int productId, int addressId, FboTypes fboTypes)
+        public async Task Update(int productId, int addressId, FboTypes fboTypes)
         {
             //if (productId == 0) throw new SIMSException("Product Id missing");
             //if (addressId == 0) throw new SIMSException("Address Id missing");
@@ -64,7 +64,7 @@ namespace FSA.SIMSManagerDb.Repositories
 
         }
 
-        public async Task RemoveFbo(int productId, int addressId)
+        public async Task Remove(int productId, int addressId)
         {
             //if (productId == 0) throw new SIMSException("Product Id missing");
             //if (addressId == 0) throw new SIMSException("Address Id missing");
@@ -75,7 +75,7 @@ namespace FSA.SIMSManagerDb.Repositories
             await ctx.SaveChangesAsync();
         }
 
-        public async Task<List<SimsProductFboAddress>> GetProductAddresses(int productId)
+        public async Task<List<SimsProductFboAddress>> GetAddresses(int productId)
         {
             var productDbItems = this.DbSet.AsNoTracking()
                                     .Include(o => o.Address)

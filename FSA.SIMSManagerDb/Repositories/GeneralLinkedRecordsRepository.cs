@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
 using FSA.IncidentsManagement.Root.DTOS;
+using FSA.SIMSManagerDb.Contracts;
 using FSA.SIMSManagerDb.Entities.Core;
 using FSA.SIMSManagerDbEntities;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace FSA.SIMSManagerDb.Repositories
 {
-    internal class GeneralLinkedRecordsRepository<LinkDb, NoteDb> : IDBLinkedRecordsRepository
+    internal class GeneralLinkedRecordsRepository<LinkDb, NoteDb> : IDbLinkedRecordsRepository
                         where LinkDb : BaseLinkDb, new()
                         where NoteDb : BaseNoteDb, new()
     {
@@ -30,7 +30,7 @@ namespace FSA.SIMSManagerDb.Repositories
         }
 
 
-        public async Task<SimsLinkedRecord> RemoveLink(int from, int to)
+        public async Task<SimsLinkedRecord> Remove(int from, int to)
         {
             // LOcal functions fancy.
             // Cos the logic is annoying and I'm not confident in it yet.
@@ -64,7 +64,7 @@ namespace FSA.SIMSManagerDb.Repositories
         /// </summary>
         /// <param name="from"></param>
         /// <param name="to"></param>
-        public async Task<IEnumerable<SimsLinkedRecord>> AddLinks(int from, IEnumerable<int> tos, string reason)
+        public async Task<IEnumerable<SimsLinkedRecord>> Add(int from, IEnumerable<int> tos, string reason)
         {
 
             var allTo = new HashSet<int>(tos);

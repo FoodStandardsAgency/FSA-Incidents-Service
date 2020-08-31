@@ -1,5 +1,6 @@
 ﻿using FSA.IncidentsManagement.Misc;
 using FSA.IncidentsManagement.Models;
+using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
 using System;
 using System.Collections.Generic;
@@ -218,6 +219,31 @@ namespace FSA.IncidentsManagement.Models
             TelephoneNumber = @this.TelephoneNumber,
             Contacts =  string.IsNullOrEmpty( @this.MainContact) ? new List<AddressContact>() :   new List<AddressContact> { new AddressContact { EmailAddress = @this.EmailAddress ?? "", Name =@this.MainContact, IsMain=true, TelephoneNumber =@this.TelephoneNumber ?? ""} }
         };
+
+
+        public static SimsAddress ToSimsClient(this SimsAddressViewModel @this) => new SimsAddress
+        {
+            Id = @this.Id,
+            Title = @this.Title,
+            AddressLine1 = @this.AddressLine1,
+            AddressLine2 = @this.AddressLine2,
+            TownCity = @this.TownCity,
+            County = @this.County,
+            PostCode = @this.PostCode,
+            CountryId = @this.CountryId,
+            ContactMethodId = @this.ContactMethodId,
+            //OrganisationRoleId = @this.OrganisationRoleId,
+            TelephoneNumber = @this.TelephoneNumber,
+            Contacts = string.IsNullOrEmpty(@this.MainContact) ? new List<SimsAddressContact>() : new List<SimsAddressContact> { new SimsAddressContact { EmailAddress = @this.EmailAddress ?? "", Name = @this.MainContact, IsMain = true, TelephoneNumber = @this.TelephoneNumber ?? "" } }
+        };
+
+        public static IEnumerable<SimsAddress> ToSimsClient(this IEnumerable<SimsAddressViewModel> @this)
+        {
+            foreach (var item in @this)
+            {
+                yield return item.ToSimsClient();
+            }
+        }
 
         public static IEnumerable<Address> ToClient(this IEnumerable<SimsAddressViewModel> @this)
         {

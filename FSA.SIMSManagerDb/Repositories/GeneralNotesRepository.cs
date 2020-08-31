@@ -26,7 +26,7 @@ namespace FSA.SIMSManagerDb.Repositories
         /// </summary>
         /// <param name="hostId"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<SimsNote>> GetNotes(int hostId)
+        public async Task<IEnumerable<SimsNote>> GetAll(int hostId)
         {
             var allNotes = await this.NoteSet.Where(o => o.HostId == hostId)
                                     .Select(a => this.mapper.Map<NoteDb, SimsNote>(a))
@@ -40,7 +40,7 @@ namespace FSA.SIMSManagerDb.Repositories
         /// <param name="hostId"></param>
         /// <param name="note"></param>
         /// <returns></returns>
-        public async Task<SimsNote> AddNote(int hostId, string note)
+        public async Task<SimsNote> Add(int hostId, string note)
         {
             var newComment = new NoteDb { Note = note, HostId = hostId };
             this.NoteSet.Add(newComment);

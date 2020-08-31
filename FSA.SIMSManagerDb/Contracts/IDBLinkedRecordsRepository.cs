@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace FSA.SIMSManagerDb.Repositories
+namespace FSA.SIMSManagerDb.Contracts
 {
-    internal interface IDBLinkedRecordsRepository
+    public interface IDbLinkedRecordsRepository
     {
-        Task<IEnumerable<SimsLinkedRecord>> AddLinks(int from, IEnumerable<int> tos, string reason);
-        Task<SimsLinkedRecord> RemoveLink(int from, int to);
+        Task<IEnumerable<SimsLinkedRecord>> Add(int from, IEnumerable<int> tos, string reason);
+        Task<SimsLinkedRecord> Remove(int from, int to);
     }
 }

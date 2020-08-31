@@ -24,9 +24,9 @@ namespace FSA.SIMSManagerDb.Repositories
             this.incidentNotes = new GeneralNotesRepository<IncidentNoteDb>(ctx, mapper);
         }
 
-        public async Task<SimsNote> AddNote(int incidentId, string note)
+        public async Task<SimsNote> Add(int incidentId, string note)
         {
-            var addedNote = await this.incidentNotes.AddNote(incidentId, note);
+            var addedNote = await this.incidentNotes.Add(incidentId, note);
             // If the incident is *not* closed we upate it.
             var dbItem = await this.ctx.Incidents.FirstOrDefaultAsync(o => o.Id == incidentId && o.IncidentStatusId != (int)IncidentStatusTypes.Closed);
             if (dbItem != null)
@@ -34,6 +34,6 @@ namespace FSA.SIMSManagerDb.Repositories
             return addedNote;
         }
 
-        public Task<IEnumerable<SimsNote>> GetNotes(int incidentId) => this.incidentNotes.GetNotes(incidentId);
+        public Task<IEnumerable<SimsNote>> GetAll(int incidentId) => this.incidentNotes.GetAll(incidentId);
     }
 }

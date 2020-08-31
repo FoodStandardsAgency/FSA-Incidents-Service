@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using AutoMapper.EquivalencyExpression;
 using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb.Entities;
 using FSA.SIMSManagerDb.Entities.Core;
+using FSA.SIMSManagerDb.Entities.Core.Product;
 using FSA.SIMSManagerDb.Entities.Lookups;
 using System;
 using System.Collections.Generic;
@@ -15,6 +17,7 @@ namespace FSA.SIMSManagerDb.MapperProfile
     {
         public SIMSMappingProfile()
         {
+            
             CreateMap<CategoryDb, Category>(MemberList.Destination);
             CreateMap<ClassificationDb, Classification>(MemberList.Destination);
             CreateMap<PriorityDb, Priority>(MemberList.Destination);
@@ -92,7 +95,76 @@ namespace FSA.SIMSManagerDb.MapperProfile
             CreateMap<SimsSignal, SignalDb>(MemberList.Source);
             CreateMap<SignalDb, SimsSignal>(MemberList.Destination);
 
+            CreateMap<IncidentProductDb, SimsProduct>(MemberList.Destination)
+                .ForMember(a => a.AdditionalInfo, m => m.MapFrom(a => String.IsNullOrEmpty(a.AdditionalInfo) ? "" : a.AdditionalInfo))
+                .ForMember(a => a.Added, m => m.MapFrom(a => a.Created))
+                .ForMember(a => a.LastUpdated, m => m.MapFrom(a => a.Host.Modified))
+                .ForMember(a => a.LastUpdatedBy, m => m.MapFrom(a => a.Host.ModifiedBy));
+            CreateMap<SignalProductDb, SimsProduct>(MemberList.Destination)
+                .ForMember(a => a.AdditionalInfo, m => m.MapFrom(a => String.IsNullOrEmpty(a.AdditionalInfo) ? "" : a.AdditionalInfo))
+                .ForMember(a => a.Added, m => m.MapFrom(a => a.Created))
+                .ForMember(a => a.LastUpdated, m => m.MapFrom(a => a.Host.Modified))
+                .ForMember(a => a.LastUpdatedBy, m => m.MapFrom(a => a.Host.ModifiedBy));
 
+            CreateMap<SimsProduct, IncidentProductDb>(MemberList.Source)
+                .ForMember(a => a.AdditionalInfo, m => m.MapFrom(a => String.IsNullOrEmpty(a.AdditionalInfo) ? "" : a.AdditionalInfo))
+                .IgnoreAuditData();
+                
+            CreateMap<SimsProduct, SignalProductDb>(MemberList.Source)
+                .ForMember(a => a.AdditionalInfo, m => m.MapFrom(a => String.IsNullOrEmpty(a.AdditionalInfo) ? "" : a.AdditionalInfo))
+                .IgnoreAuditData();
+
+            CreateMap<SimsProductPackSize, IncidentProductPackSizeDb>(MemberList.Source)
+                   .IgnoreAuditData();
+            CreateMap<SimsProductPackSize, SignalProductPackSizeDb>(MemberList.Source)
+                    .IgnoreAuditData();
+
+            CreateMap<IncidentProductPackSizeDb,SimsProductPackSize>(MemberList.Destination);
+            CreateMap<SignalProductPackSizeDb, SimsProductPackSize>(MemberList.Destination);
+
+            CreateMap<SimsProductDate, IncidentProductDateDb>(MemberList.Source)
+                .EqualityComparison((dto, o) => dto.Id == o.Id)
+                .ForMember(p => p.Created, p => p.UseDestinationValue())
+                .ForMember(p => p.CreatedBy, p => p.UseDestinationValue())
+                .ForMember(p => p.Modified, p => p.UseDestinationValue())
+                .ForMember(p => p.ModifiedBy, p => p.UseDestinationValue());
+            //.IgnoreAuditData();
+            CreateMap<SimsProductDate, SignalProductDateDb>(MemberList.Source)
+                .EqualityComparison((dto, o) => dto.Id == o.Id)
+                .ForMember(p => p.Created, p => p.UseDestinationValue())
+                .ForMember(p => p.CreatedBy, p => p.UseDestinationValue())
+                .ForMember(p => p.Modified, p => p.UseDestinationValue())
+                .ForMember(p => p.ModifiedBy, p => p.DoNotAllowNull());
+
+            CreateMap<IncidentProductDateDb,SimsProductDate>(MemberList.Destination);
+            CreateMap<SignalProductDateDb, SimsProductDate>(MemberList.Destination);
+
+            CreateMap<IncidentProductDb, SimsProductDisplayModel>(MemberList.Destination)
+                .ForMember(a => a.DataSource, m => m.MapFrom(a => a.Host.DataSource.Title))
+                .ForMember(a => a.SignalUrl, m => m.MapFrom(a => a.Host.SignalUrl))
+                .ForMember(a => a.LastUpdated, m => m.MapFrom(a => a.Host.Modified))
+                .ForMember(a => a.LastUpdatedBy, m => m.MapFrom(a => a.Host.ModifiedBy));
+
+            CreateMap<SignalProductDb, SimsProductDisplayModel>(MemberList.Destination)
+                .ForMember(a => a.DataSource, m => m.MapFrom(a => a.Host.DataSource))
+                .ForMember(a => a.SignalUrl, m => m.MapFrom(a => a.Host.SourceLink))
+                .ForMember(a => a.LastUpdated, m => m.MapFrom(a => a.Host.Modified))
+                .ForMember(a => a.LastUpdatedBy, m => m.MapFrom(a => a.Host.ModifiedBy));
+
+
+
+            CreateMap<IncidentProductDb, SimsProductDetail>(MemberList.Destination);
+            CreateMap<SignalProductDb, SimsProductDetail>(MemberList.Destination);
+
+            CreateMap<IncidentProductDb, SimsProductDashboard>(MemberList.Destination)
+                .ForMember(a => a.ProductType, m => m.MapFrom(a => a.ProductType.Title))
+                .ForMember(a => a.AddressNames, m => m.MapFrom(a => a.RelatedFBOs != null ? a.RelatedFBOs.Select(p => p.Address.Title).ToList() : new List<string>()));
+
+            CreateMap<SignalProductDb, SimsProductDashboard>(MemberList.Destination)
+                .ForMember(a => a.ProductType, m => m.MapFrom(a => a.ProductType.Title))
+                .ForMember(a => a.AddressNames, m => m.MapFrom(a => a.RelatedFBOs != null ? a.RelatedFBOs.Select(p => p.Address.Title).ToList() : new List<string>()));
+
+            
         }
 
 
@@ -103,10 +175,10 @@ namespace FSA.SIMSManagerDb.MapperProfile
         internal static IMappingExpression<T, U> IgnoreAuditData<T, U>(this IMappingExpression<T, U> @this) where U : BaseEntityDb
         {
             return @this.ForMember(a => a.Created, m => m.Ignore())
-            .ForMember(a => a.Modified, m => m.Ignore())
-            .ForMember(a => a.CreatedBy, m => m.Ignore())
-            .ForMember(a => a.ModifiedBy, m => m.Ignore())
-            .ForMember(a => a.Timestamp, m => m.Ignore());
+            .ForMember(a => a.Modified, m => m.UseDestinationValue())
+            .ForMember(a => a.CreatedBy, m => m.UseDestinationValue())
+            .ForMember(a => a.ModifiedBy, m => m.UseDestinationValue())
+            .ForMember(a => a.Timestamp, m => m.UseDestinationValue());
         }
     }
 

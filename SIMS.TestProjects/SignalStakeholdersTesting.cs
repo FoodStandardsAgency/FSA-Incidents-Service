@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb;
 using FSA.SIMSManagerDb.Repositories;
@@ -10,7 +11,7 @@ using Xunit;
 
 namespace SIMS.Database
 {
-    public class SignalStakeholdersTesting
+    public class SignalsStakeholdersTesting
     {
         private IMapper mapper;
         private string userId;
@@ -19,7 +20,7 @@ namespace SIMS.Database
         private string miller;
         private SimsDbContext ctx;
         private string conn;
-        public SignalStakeholdersTesting()
+        public SignalsStakeholdersTesting()
         {
 
             var seedInfo = new SeedingConfigData();
@@ -35,7 +36,7 @@ namespace SIMS.Database
         [Fact]
         public async Task AddStakeholder()
         {
-            var newStakeHolder = new Stakeholder
+            var newStakeHolder = new SimsStakeholder
             {
                 DiscriminatorId = 3,
                 HostId = 17,
@@ -47,14 +48,14 @@ namespace SIMS.Database
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
                 var simsApp = new SimsDbHost(ctx, mapper, this.userId);
-                var createdStakeHolder = await simsApp.SignalStakeholders.Add(newStakeHolder.HostId, newStakeHolder);
+                var createdStakeHolder = await simsApp.Signals.Stakeholders.Add(newStakeHolder.HostId, newStakeHolder);
                 Assert.True(createdStakeHolder.Name == newStakeHolder.Name && createdStakeHolder.HostId == 17);
             }
         }
         [Fact]
         public async Task AddStakeholderNoSignal()
         {
-            var newStakeHolder = new Stakeholder
+            var newStakeHolder = new SimsStakeholder
             {
                 DiscriminatorId = 3,
                 Name = "Pickle pie",
@@ -66,7 +67,7 @@ namespace SIMS.Database
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
                 var simsApp = new SimsDbHost(ctx, mapper, this.userId);
-                await Assert.ThrowsAnyAsync<Exception>(async () => await simsApp.SignalStakeholders.Add(0, newStakeHolder));
+                await Assert.ThrowsAnyAsync<Exception>(async () => await simsApp.Signals.Stakeholders.Add(0, newStakeHolder));
             }
         }
 
@@ -76,14 +77,14 @@ namespace SIMS.Database
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
                 var simsApp = new SimsDbHost(ctx, mapper, this.userId);
-                var allStakeholders = await simsApp.SignalStakeholders.GetAll(1);
+                var allStakeholders = await simsApp.Signals.Stakeholders.GetAll(1);
                 var totalStakeholders = allStakeholders.Count;
-                await simsApp.SignalStakeholders.Remove(2);
-                var lessStakeHolders = await simsApp.SignalStakeholders.GetAll(1);
+                await simsApp.Signals.Stakeholders.Remove(2);
+                var lessStakeHolders = await simsApp.Signals.Stakeholders.GetAll(1);
                 var s = (totalStakeholders - 1);
                 var x = (lessStakeHolders.Count == s);
                 Assert.True(x);
-                //await Assert.ThrowsAnyAsync<Exception>(async () => await simsApp.SignalStakeholders.Add(0, newStakeHolder));
+                //await Assert.ThrowsAnyAsync<Exception>(async () => await simsApp.Signals.Stakeholders.Add(0, newStakeHolder));
             }
         }
     }

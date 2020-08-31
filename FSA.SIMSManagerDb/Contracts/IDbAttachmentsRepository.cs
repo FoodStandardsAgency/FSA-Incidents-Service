@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace FSA.SIMSManagerDb.Repositories
+namespace FSA.SIMSManagerDb.Contracts
 {
     public interface IDbAttachmentsRepository
     {

@@ -42,7 +42,7 @@ namespace SIMS.Database
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
                 var simsHost = new SimsDbHost(ctx, this.mapper, this.userId);
-                var allLinks = (await simsHost.IncidentLinks.AddLinks(1, new int[] { 6, 100, 200 }, "Terry can")).ToList();
+                var allLinks = (await simsHost.Incidents.Links.Add(1, new int[] { 6, 100, 200 }, "Terry can")).ToList();
                 Assert.True(allLinks.Count == 4);
             }
         }
@@ -53,7 +53,7 @@ namespace SIMS.Database
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
                 var simsHost = new SimsDbHost(ctx, this.mapper, this.userId);
-                var removedLink = await simsHost.IncidentLinks.RemoveLink(1, 6);
+                var removedLink = await simsHost.Incidents.Links.Remove(1, 6);
                 Assert.True(removedLink.From == 1 && removedLink.To == 6);
             }
         }

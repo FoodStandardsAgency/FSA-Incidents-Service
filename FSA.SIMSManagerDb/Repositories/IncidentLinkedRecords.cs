@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FSA.IncidentsManagement.Root.Domain;
 using FSA.IncidentsManagement.Root.DTOS;
+using FSA.SIMSManagerDb.Contracts;
 using FSA.SIMSManagerDb.Entities;
 using FSA.SIMSManagerDbEntities.Helpers;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace FSA.SIMSManagerDb.Repositories
 {
-    public class IncidentLinkedRecords : IDBLinkedRecordsRepository, ISIMSLinks
+    public class IncidentLinkedRecords : IDbLinkedRecordsRepository
     {
         private readonly SimsDbContext ctx;
         private readonly IMapper mapper;
@@ -24,9 +25,9 @@ namespace FSA.SIMSManagerDb.Repositories
             this.LinksManager = new GeneralLinkedRecordsRepository<IncidentLinkDb, IncidentNoteDb>(ctx, mapper);
         }
 
-        public async Task<IEnumerable<SimsLinkedRecord>> AddLinks(int from, IEnumerable<int> tos, string reason)
+        public async Task<IEnumerable<SimsLinkedRecord>> Add(int from, IEnumerable<int> tos, string reason)
         {
-            var addedLinks = await LinksManager.AddLinks(from, tos, reason);
+            var addedLinks = await LinksManager.Add(from, tos, reason);
 
             var WhereFromClause = String.Join(" OR ", addedLinks.Select(o => $"Id={o.From}"));
             var WhereToClause = String.Join(" OR ", addedLinks.Select(o => $"Id={o.To}"));
@@ -48,11 +49,11 @@ namespace FSA.SIMSManagerDb.Repositories
             return addedLinks;
         }
 
-        public async Task<SimsLinkedRecord> RemoveLink(int from, int to)
+        public async Task<SimsLinkedRecord> Remove(int from, int to)
         {
             // Incidents that are linked must also be updated
             // unless they closed.
-            var removedLink = await LinksManager.RemoveLink(from, to);
+            var removedLink = await LinksManager.Remove(from, to);
             // Grab the incidents, as long as they are not closed.
             var fromIncident = ctx.Incidents.FirstOrDefault(i => i.Id == removedLink.From && i.IncidentStatusId != (int)IncidentStatusTypes.Closed);
             var toIncident = ctx.Incidents.FirstOrDefault(i => i.Id == removedLink.To && i.IncidentStatusId != (int)IncidentStatusTypes.Closed);

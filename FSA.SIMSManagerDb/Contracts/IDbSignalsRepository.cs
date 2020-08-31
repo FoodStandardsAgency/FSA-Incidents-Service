@@ -12,5 +12,11 @@ namespace FSA.SIMSManagerDb.Contracts
         Task<SimsSignal> Update(SimsSignal signal);
         Task<bool> IsClosed(int signalId);
         Task<bool> Exists(int signalId);
+
+        IDbNotesRepository Notes { get; }
+        IDbLinkedRecordsRepository Links { get; }
+        IDbProductRepository Products { get; }
+        IDbAttachmentsRepository Attachments { get; }
+        IDbStakeholdersRepository Stakeholders { get; }
     }
 }

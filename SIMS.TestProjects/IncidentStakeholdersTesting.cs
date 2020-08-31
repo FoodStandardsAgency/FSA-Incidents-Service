@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb;
 using FSA.SIMSManagerDb.Repositories;
@@ -35,7 +36,7 @@ namespace SIMS.Database
         [Fact]
         public async Task AddStakeholder()
         {
-            var newStakeHolder = new Stakeholder
+            var newStakeHolder = new SimsStakeholder
             {
                 DiscriminatorId = 3,
                 HostId = 17,
@@ -47,14 +48,14 @@ namespace SIMS.Database
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
                 var simsApp = new SimsDbHost(ctx, mapper, this.userId);
-                var createdStakeHolder = await simsApp.IncidentStakeholders.Add(newStakeHolder.HostId, newStakeHolder);
+                var createdStakeHolder = await simsApp.Incidents.Stakeholders.Add(newStakeHolder.HostId, newStakeHolder);
                 Assert.True(createdStakeHolder.Name == newStakeHolder.Name && createdStakeHolder.HostId == 17);
             }
         }
         [Fact]
         public async Task AddStakeholderNoIncident()
         {
-            var newStakeHolder = new Stakeholder
+            var newStakeHolder = new SimsStakeholder
             {
                 DiscriminatorId = 3,
                 Name = "Pickle pie",
@@ -66,7 +67,7 @@ namespace SIMS.Database
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
                 var simsApp = new SimsDbHost(ctx, mapper, this.userId);
-                await Assert.ThrowsAnyAsync<Exception>(async () => await simsApp.IncidentStakeholders.Add(0, newStakeHolder));
+                await Assert.ThrowsAnyAsync<Exception>(async () => await simsApp.Incidents.Stakeholders.Add(0, newStakeHolder));
             }
         }
 
@@ -76,10 +77,10 @@ namespace SIMS.Database
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
                 var simsApp = new SimsDbHost(ctx, mapper, this.userId);
-                var allStakeholders = await simsApp.IncidentStakeholders.GetAll(1);
+                var allStakeholders = await simsApp.Incidents.Stakeholders.GetAll(1);
                 var totalStakeholders = allStakeholders.Count;
-                await simsApp.IncidentStakeholders.Remove(2);
-                var lessStakeHolders = await simsApp.IncidentStakeholders.GetAll(1);
+                await simsApp.Incidents.Stakeholders.Remove(2);
+                var lessStakeHolders = await simsApp.Incidents.Stakeholders.GetAll(1);
                 var s = (totalStakeholders - 1);
                 var x = (lessStakeHolders.Count == s);
                 Assert.True(x);

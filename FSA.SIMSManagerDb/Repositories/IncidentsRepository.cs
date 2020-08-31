@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagement.Root.Shared;
+using FSA.SIMSManagerDb.Contracts;
 using FSA.SIMSManagerDb.Entities;
 using FSA.SIMSManagerDbEntities.Helpers;
 using Microsoft.EntityFrameworkCore;
@@ -14,10 +15,20 @@ using System.Threading.Tasks;
 
 namespace FSA.SIMSManagerDb.Repositories
 {
-    public class IncidentsRepository
+    public class IncidentsRepository : IDbIncidentsRepository
     {
         private SimsDbContext ctx;
         private readonly IMapper mapper;
+
+        public IDbNotesRepository Notes => new GeneralNotesRepository<IncidentNoteDb>(ctx, mapper);
+
+        public IDbLinkedRecordsRepository Links => new IncidentLinkedRecords(ctx, mapper);
+
+        public IDbProductRepository Products => new GeneralProductRepository<IncidentProductDb, IncidentProductFboDb, IncidentProductPackSizeDb, IncidentProductDateDb>(ctx, mapper);
+
+        public IDbAttachmentsRepository Attachments => new GeneralAttachmentsRepository<IncidentAttachmentDb>(ctx, mapper);
+
+        public IDbStakeholdersRepository Stakeholders => new GeneralStakeholdersRepository<IncidentStakeholderDb>(ctx, mapper);
 
         public IncidentsRepository(SimsDbContext ctx, IMapper mapper)
         {

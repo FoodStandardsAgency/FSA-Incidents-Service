@@ -79,7 +79,7 @@ namespace SIMS.TestProjects.Setup
         private async Task CreateAddress(SimsDbHost sims)
         {
             var viewAddressModels = System.Text.Json.JsonSerializer.Deserialize<List<SimsAddressViewModel>>(File.OpenText("./Setup/orgs.json").ReadToEnd());
-            var addresses = viewAddressModels.ToClient().ToList();
+            var addresses = viewAddressModels.ToSimsClient().ToList();
             await sims.Addresses.Add(addresses.GetRange(0, addresses.Count - 9));
 
             var Not1 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 9));
@@ -129,47 +129,47 @@ namespace SIMS.TestProjects.Setup
             await iManager.Add(newBatch);
         }
 
-        private async Task CreateProducts(SimsDbHost sims, SeedingConfigData seeder)
+        private async Task CreateIncidentProducts(SimsDbHost sims, SeedingConfigData seeder)
         {
             var products = seeder.GetNewProducts();
-            var tasks = products.Select(p => sims.Products.Add(p.HostId, p));
-            //await Task.WhenAll(tasks);
+            var tasks = products.Select(p => sims.Incidents.Products.Add(p.HostId, p));
+            await Task.WhenAll(tasks);
 
-            await sims.Products.AssignFbo(1, 1, FboTypes.Consignor | FboTypes.Exporter | FboTypes.Hospitality_service);
-            await sims.Products.AssignFbo(1, 2, FboTypes.Unknown);
-            await sims.Products.AssignFbo(1, 3, FboTypes.Importer | FboTypes.Manufacturer);
+            await sims.Incidents.Products.Fbos.Add(1, 1, FboTypes.Consignor | FboTypes.Exporter | FboTypes.Hospitality_service);
+            await sims.Incidents.Products.Fbos.Add(1, 2, FboTypes.Unknown);
+            await sims.Incidents.Products.Fbos.Add(1, 3, FboTypes.Importer | FboTypes.Manufacturer);
 
-            await sims.Products.AssignFbo(2, 4, FboTypes.Retailer | FboTypes.Manufacturer);
-            await sims.Products.AssignFbo(2, 5, FboTypes.Packer_filler | FboTypes.Storage);
-            await sims.Products.AssignFbo(2, 6, FboTypes.Unknown);
+            await sims.Incidents.Products.Fbos.Add(2, 4, FboTypes.Retailer | FboTypes.Manufacturer);
+            await sims.Incidents.Products.Fbos.Add(2, 5, FboTypes.Packer_filler | FboTypes.Storage);
+            await sims.Incidents.Products.Fbos.Add(2, 6, FboTypes.Unknown);
 
         }
 
         private async Task CreateSignals(SimsDbHost sims)
         {
-            var signals = SignalSeed.Signals.ToList();
-            await sims.Signals.AddBatch(signals);
-        }
-
-        private async Task CreateSignalStakeholders(SimsDbHost sims, SeedingConfigData seeder)
-        {
-            var stakeholders = seeder.GetIncidentStakeholder.ToList();
-
-            await sims.IncidentStakeholders.Add(stakeholders[0].HostId, stakeholders[0]);
-            await sims.IncidentStakeholders.Add(stakeholders[1].HostId, stakeholders[1]);
-            await sims.IncidentStakeholders.Add(stakeholders[2].HostId, stakeholders[2]);
-            await sims.IncidentStakeholders.Add(stakeholders[3].HostId, stakeholders[3]);
-
+            var signals = SignalSeed.Signals();
+            await sims.Signals.AddBatch(signals.Take(400).ToList());
         }
 
         private async Task CreateIncidentStakeholders(SimsDbHost sims, SeedingConfigData seeder)
         {
+            var stakeholders = seeder.GetIncidentStakeholder.ToList();
+
+            await sims.Incidents.Stakeholders.Add(stakeholders[0].HostId, stakeholders[0]);
+            await sims.Incidents.Stakeholders.Add(stakeholders[1].HostId, stakeholders[1]);
+            await sims.Incidents.Stakeholders.Add(stakeholders[2].HostId, stakeholders[2]);
+            await sims.Incidents.Stakeholders.Add(stakeholders[3].HostId, stakeholders[3]);
+
+        }
+
+        private async Task CreateSignalStakeholders(SimsDbHost sims, SeedingConfigData seeder)
+        {
             var stakeholders = seeder.GetSignalStakeholder.ToList();
 
-            await sims.SignalStakeholders.Add(stakeholders[0].HostId, stakeholders[0]);
-            await sims.SignalStakeholders.Add(stakeholders[1].HostId, stakeholders[1]);
-            await sims.SignalStakeholders.Add(stakeholders[2].HostId, stakeholders[2]);
-            await sims.SignalStakeholders.Add(stakeholders[3].HostId, stakeholders[3]);
+            await sims.Signals.Stakeholders.Add(stakeholders[0].HostId, stakeholders[0]);
+            await sims.Signals.Stakeholders.Add(stakeholders[1].HostId, stakeholders[1]);
+            await sims.Signals.Stakeholders.Add(stakeholders[2].HostId, stakeholders[2]);
+            await sims.Signals.Stakeholders.Add(stakeholders[3].HostId, stakeholders[3]);
         }
 
         private void Seed()
@@ -212,6 +212,7 @@ namespace SIMS.TestProjects.Setup
                         {
                             var res = ex.Flatten();
                             Debug.WriteLine(res);
+                            throw (ex);
                         }
 
                         var t5 = CreateSignals(SIMS);
@@ -225,6 +226,8 @@ namespace SIMS.TestProjects.Setup
                         {
                             var res = ex.Flatten();
                             Debug.WriteLine(res);
+                            throw (ex);
+
                         }
 
                         var t7 = CreateIncidentStakeholders(SIMS, seeder);
@@ -238,6 +241,7 @@ namespace SIMS.TestProjects.Setup
                         {
                             var res = ex.Flatten();
                             Debug.WriteLine(res);
+                            throw (ex);
                         }
 
                         var t8 = CreateSignalStakeholders(SIMS, seeder);
@@ -250,21 +254,24 @@ namespace SIMS.TestProjects.Setup
                         {
                             var res = ex.Flatten();
                             Debug.WriteLine(res);
+                            throw (ex);
+
                         }
-                        //var t4 = CreateProducts(SIMS, seeder);
+                        var t4 = CreateIncidentProducts(SIMS, seeder);
 
-                        //try
-                        //{
-                        //    t4.Wait();
+                        try
+                        {
+                            t4.Wait();
 
-                        //    //Task.WhenAll(TaskList.ToArray());
+                            //Task.WhenAll(TaskList.ToArray());
 
-                        //}
-                        //catch (AggregateException ex)
-                        //{
-                        //    var res = ex.Flatten();
-                        //    Debug.WriteLine(res);
-                        //}
+                        }
+                        catch (AggregateException ex)
+                        {
+                            var res = ex.Flatten();
+                            Debug.WriteLine(res);
+                            throw (ex);
+                        }
 
                     }
                     _databaseInit = true;

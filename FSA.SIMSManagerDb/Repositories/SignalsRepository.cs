@@ -14,6 +14,16 @@ namespace FSA.SIMSManagerDb.Repositories
         private readonly SimsDbContext ctx;
         private readonly IMapper mapper;
 
+        public IDbNotesRepository Notes => new GeneralNotesRepository<SignalNoteDb>(ctx, mapper);
+
+        public IDbLinkedRecordsRepository Links => new SignalsLinkedRecords(ctx, mapper);
+
+        public IDbProductRepository Products => new GeneralProductRepository<SignalProductDb, SignalProductFboDb, SignalProductPackSizeDb, SignalProductDateDb>(ctx, mapper);
+
+        public IDbAttachmentsRepository Attachments => new GeneralAttachmentsRepository<SignalAttachmentDb>(ctx, mapper);
+
+        public IDbStakeholdersRepository Stakeholders => new GeneralStakeholdersRepository<SignalStakeholderDb>(ctx, mapper);
+
         public SignalsRepository(SimsDbContext ctx, IMapper mapper)
         {
             this.ctx = ctx;

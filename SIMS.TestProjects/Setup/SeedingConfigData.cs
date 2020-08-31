@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using AutoMapper.Configuration;
+using AutoMapper.EquivalencyExpression;
+using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagementDb.Entities.Helpers;
-using FSA.IncidentsManagementDb.Repositories;
 using FSA.SIMSManagerDb;
 using FSA.SIMSManagerDb.MapperProfile;
 using Microsoft.EntityFrameworkCore;
@@ -10,10 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace SIMS.TestProjects.Setup
 {
@@ -38,6 +36,7 @@ namespace SIMS.TestProjects.Setup
         {
             var cfg = new MapperConfigurationExpression();
             cfg.AddProfile<SIMSMappingProfile>();
+            cfg.AddCollectionMappers();
             var mapperConfig = new MapperConfiguration(cfg);
             return new Mapper(mapperConfig);
         }
@@ -145,9 +144,9 @@ namespace SIMS.TestProjects.Setup
                    incidentClosed: null)
         };
 
-        public IEnumerable<Product> GetNewProducts() => new List<Product>
+        public IEnumerable<SimsProduct> GetNewProducts() => new List<SimsProduct>
         {
-            new Product
+            new SimsProduct
             {
                 Name = "Bourbon biscuits",
                 Brand = "McBiscuits",
@@ -159,10 +158,10 @@ namespace SIMS.TestProjects.Setup
                 ProductTypeId =8,
                 BatchCodes = "bb1, bb2, bb3",
                 AdditionalInfo = "Some more info",
-                PackSizes = new List<ProductPackSize> { new ProductPackSize { Size = "12", UnitId = 9 } },
-                ProductDates = new List<ProductDate> { new ProductDate { DateTypeId = 1, Date = DateTime.Now } }
+                PackSizes = new List<SimsProductPackSize> { new SimsProductPackSize { Size = "12", UnitId = 9 } },
+                ProductDates = new List<SimsProductDate> { new SimsProductDate { DateTypeId = 1, Date = DateTime.Now } }
             },
-            new Product
+            new SimsProduct
             {
                 Name = "Sticky biscuits",
                 Brand = "McBiscuits",
@@ -175,10 +174,10 @@ namespace SIMS.TestProjects.Setup
                 ProductTypeId =12,
                 //DataSourceId = 2,
                 AdditionalInfo = "Some more info",
-                PackSizes = new List<ProductPackSize> { new ProductPackSize { Size = "1", UnitId = 14 } },
-                ProductDates = new List<ProductDate> { new ProductDate { DateTypeId = 1, Date = DateTime.Now } }
+                PackSizes = new List<SimsProductPackSize> { new SimsProductPackSize { Size = "1", UnitId = 14 } },
+                ProductDates = new List<SimsProductDate> { new SimsProductDate { DateTypeId = 1, Date = DateTime.Now } }
             },
-            new Product
+            new SimsProduct
             {
                 Name = "Chocolate biscuits",
                 Brand = "McBiscuits",
@@ -190,14 +189,14 @@ namespace SIMS.TestProjects.Setup
                 CountryOfOriginId = 28,
                 BatchCodes = "cbasdasd-1212, cb-2332423324-1231212",
                 AdditionalInfo = "eomthing",
-                PackSizes = new List<ProductPackSize> { new ProductPackSize { Size = "12", UnitId = 7 },new ProductPackSize { Size = "8", UnitId = 19 },new ProductPackSize { Size = "0.1", UnitId = 5 } },
-                ProductDates = new List<ProductDate> {
-                        new ProductDate { DateTypeId = 1, Date = DateTime.Now }
-                        ,new ProductDate { DateTypeId = 2, Date = DateTime.Now }
-                        ,new ProductDate { DateTypeId = 3, Date = DateTime.Now }
+                PackSizes = new List<SimsProductPackSize> { new SimsProductPackSize { Size = "12", UnitId = 7 },new SimsProductPackSize { Size = "8", UnitId = 19 },new SimsProductPackSize { Size = "0.1", UnitId = 5 } },
+                ProductDates = new List<SimsProductDate> {
+                        new SimsProductDate { DateTypeId = 1, Date = DateTime.Now }
+                        ,new SimsProductDate { DateTypeId = 2, Date = DateTime.Now }
+                        ,new SimsProductDate { DateTypeId = 3, Date = DateTime.Now }
                 }
             },
-                        new Product
+            new SimsProduct
             {
                 Name = "Blue ham",
                 Brand = "Ham man",
@@ -209,19 +208,19 @@ namespace SIMS.TestProjects.Setup
                 CountryOfOriginId = 18,
                 BatchCodes = "Code 01, ode02",
                 AdditionalInfo = "",
-                PackSizes = new List<ProductPackSize> { new ProductPackSize { Size = "12", UnitId = 7 },new ProductPackSize { Size = "8", UnitId = 19 },new ProductPackSize { Size = "0.1", UnitId = 5 } },
-                ProductDates = new List<ProductDate> {
-                        new ProductDate { DateTypeId = 1, Date = DateTime.Now }
-                        ,new ProductDate { DateTypeId = 2, Date = DateTime.Now }
-                        ,new ProductDate { DateTypeId = 3, Date = DateTime.Now }
+                PackSizes = new List<SimsProductPackSize> { new SimsProductPackSize { Size = "12", UnitId = 7 },new SimsProductPackSize { Size = "8", UnitId = 19 },new SimsProductPackSize { Size = "0.1", UnitId = 5 } },
+                ProductDates = new List<SimsProductDate> {
+                        new SimsProductDate { DateTypeId = 1, Date = DateTime.Now }
+                        ,new SimsProductDate { DateTypeId = 2, Date = DateTime.Now }
+                        ,new SimsProductDate { DateTypeId = 3, Date = DateTime.Now }
                 }
             }
 
         };
 
-        public IEnumerable<Stakeholder> GetIncidentStakeholder => new List<Stakeholder>
+        public IEnumerable<SimsStakeholder> GetIncidentStakeholder => new List<SimsStakeholder>
         {
-           new Stakeholder
+           new SimsStakeholder
             {
                 DiscriminatorId = 3,
                 HostId = 17,
@@ -231,7 +230,7 @@ namespace SIMS.TestProjects.Setup
                 Role = "Dancing instructor",
                AddressId=92
             },
-           new Stakeholder
+           new SimsStakeholder
             {
                 DiscriminatorId = 4,
                 HostId = 17,
@@ -241,7 +240,7 @@ namespace SIMS.TestProjects.Setup
                 Role = "Admin",
                 AddressId=18
             },
-           new Stakeholder
+           new SimsStakeholder
             {
                 DiscriminatorId = 2,
                 HostId = 17,
@@ -251,12 +250,23 @@ namespace SIMS.TestProjects.Setup
                 Email = "Email@1",
                 Role = "Admin",
                 AddressId=17
+            },
+                      new SimsStakeholder
+            {
+                DiscriminatorId = 4,
+                HostId = 23,
+                Name = "Kathy Soaker",
+                GovDept = "",
+                Phone = "012345 789",
+                Email = "Email@1",
+                Role = "Smeel",
+                AddressId=17
             }
         };
 
-        public IEnumerable<Stakeholder> GetSignalStakeholder => new List<Stakeholder>
+        public IEnumerable<SimsStakeholder> GetSignalStakeholder => new List<SimsStakeholder>
         {
-           new Stakeholder
+           new SimsStakeholder
             {
                 DiscriminatorId = 3,
                 HostId = 23,
@@ -266,7 +276,7 @@ namespace SIMS.TestProjects.Setup
                 Role = "Dancing instructor",
                AddressId=92
             },
-           new Stakeholder
+           new SimsStakeholder
             {
                 DiscriminatorId = 1,
                 HostId = 23,
@@ -276,7 +286,7 @@ namespace SIMS.TestProjects.Setup
                 Role = "Admin",
                 AddressId=18
             },
-           new Stakeholder
+           new SimsStakeholder
             {
                 DiscriminatorId = 2,
                 HostId = 2,
@@ -287,7 +297,7 @@ namespace SIMS.TestProjects.Setup
                 Role = "Admin",
                 AddressId=17
             },
-            new Stakeholder
+            new SimsStakeholder
             {
                 DiscriminatorId = 1,
                 HostId = 1,
@@ -298,7 +308,7 @@ namespace SIMS.TestProjects.Setup
                 Role = "Roling",
                 AddressId=17
             },
-            new Stakeholder
+            new SimsStakeholder
             {
                 DiscriminatorId = 2,
                 HostId = 1,

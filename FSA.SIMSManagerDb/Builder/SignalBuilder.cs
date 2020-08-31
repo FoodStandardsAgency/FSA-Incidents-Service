@@ -15,13 +15,13 @@ namespace FSA.SIMSManagerDb.Builders
             builder.Property(p => p.PublishedDate).HasConversion(b => b, b => DateTime.SpecifyKind(b, DateTimeKind.Utc));
             builder.Property(p => p.InsertedDate).HasConversion(b => b, b => DateTime.SpecifyKind(b, DateTimeKind.Utc));
 
-            builder.Property(p => p.Title).HasMaxLength(300);
+            builder.Property(p => p.Title).HasMaxLength(500);
             builder.Property(p => p.DataSource).IsRequired(true);
 
-            builder.Property(p => p.FoodOrFeed).HasMaxLength(10);
-            builder.Property(p => p.BaseProduct).HasMaxLength(155);
-            builder.Property(p => p.CountryOfOrigin).HasMaxLength(80).IsRequired(false);
-            builder.Property(p => p.NotifyingCountry).HasMaxLength(80).IsRequired(false);
+            builder.Property(p => p.FoodOrFeed).HasMaxLength(500);
+            builder.Property(p => p.BaseProduct).HasMaxLength(500);
+            builder.Property(p => p.CountryOfOrigin).HasMaxLength(500).IsRequired(false);
+            builder.Property(p => p.NotifyingCountry).HasMaxLength(500).IsRequired(false);
 
             
             builder.HasMany(p => p.FromLinks)

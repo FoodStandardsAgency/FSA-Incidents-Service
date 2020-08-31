@@ -41,8 +41,8 @@ namespace FSA.IncidentsManagementDb.Migrations
                 var incidentLinks = new IncidentLinkedRecords(ctx, mapper);
                 var signalLinks = new SignalsLinkedRecords(ctx, mapper);
 
-                var Iitems = await incidentLinks.AddLinks(5, new int[] { 8, 10 }, "Money");
-                var Sitems = await signalLinks.AddLinks(1, new int[] { 2 }, "");
+                var Iitems = await incidentLinks.Add(5, new int[] { 8, 10 }, "Money");
+                var Sitems = await signalLinks.Add(1, new int[] { 2 }, "");
             }
 
         }

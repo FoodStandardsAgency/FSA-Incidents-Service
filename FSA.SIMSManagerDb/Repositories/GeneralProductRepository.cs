@@ -3,31 +3,42 @@ using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagement.Root.Shared;
 using FSA.SIMSManagerDb.Contracts;
+using FSA.SIMSManagerDb.Entities;
 using FSA.SIMSManagerDb.Entities.Core.Product;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace FSA.SIMSManagerDb.Repositories
 {
-    class GeneralProductRepository<T, FBO, Pack, Date> : IDbProductRepository where T : CoreProductDb, ICoreProduct< FBO, Pack, Date>
-                            where FBO : CoreProductFboDb
+    class GeneralProductRepository<T, FBO, Pack, Date> : IDbProductRepository where T : CoreProductDb, ICoreProduct<FBO, Pack, Date>
+                            where FBO : CoreProductFboDb, new()
+                            where Date : CoreProductDateDb
     {
         private readonly SimsDbContext ctx;
         private readonly DbSet<T> DbSet;
+
+        public DbSet<Date> DbSetDates { get; }
+
+        public IDbProductFboRepository Fbos => new GeneralProductFboRepository<FBO>(ctx, mapper);
+
         private readonly IMapper mapper;
 
         public GeneralProductRepository(SimsDbContext ctx, IMapper mapper)
         {
             this.ctx = ctx;
             this.DbSet = ctx.Set<T>();
+            this.DbSetDates = ctx.Set<Date>();
             this.mapper = mapper;
         }
 
-        public async Task<SimsProduct> Add(SimsProduct newProduct)
+        public async Task<SimsProduct> Add(int HostId, SimsProduct newProduct)
         {
+            if (HostId == 0) throw new ArgumentOutOfRangeException("No host selected.");
             var dbItem = mapper.Map<SimsProduct, T>(newProduct);
+            dbItem.HostId = HostId;
             var dbCreated = DbSet.Add(dbItem);
             await ctx.SaveChangesAsync();
             return mapper.Map<T, SimsProduct>(dbCreated.Entity);
@@ -40,10 +51,17 @@ namespace FSA.SIMSManagerDb.Repositories
             //   var isClosed = IsIncidentClosed(product.HostId);
 
             var productDb = this.DbSet
-                        .Include(o => o.ProductDates)
                         .Include(o => o.ProductType)
                         .Include(o => o.PackSizes)
                         .First(p => p.Id == product.Id);
+
+            var pDates = this.DbSetDates.Where(i => i.ProductId == product.Id).ToList();
+
+
+            
+            //var pDates = productDb.ProductDates;
+
+            //mapper.Map(product.ProductDates, productDb.ProductDates);
             mapper.Map(product, productDb);
 
             var updatedEnt = this.DbSet.Update(productDb);

@@ -36,7 +36,7 @@ namespace SIMS.Database
 
                 var simsHost = new SimsDbHost(ctx, this.mapper, this.userId);
 
-                var addedNote = await simsHost.IncidentNotes.AddNote(16, newNote.Note);
+                var addedNote = await simsHost.Incidents.Notes.Add(16, newNote.Note);
                 Assert.True(addedNote.HostId == 16 && addedNote.Note == newNote.Note);
             }
         }
@@ -48,7 +48,7 @@ namespace SIMS.Database
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
                 var simsHost = new SimsDbHost(ctx, this.mapper, this.userId);
-                await simsHost.IncidentNotes.GetNotes(17);
+                await simsHost.Incidents.Notes.GetAll(17);
             }
         }
 

@@ -6,7 +6,7 @@ namespace FSA.SIMSManagerDb.Contracts
 {
     public interface IDbNotesRepository
     {
-        Task<SimsNote> AddNote(int hostId, string note);
-        Task<IEnumerable<SimsNote>> GetNotes(int hostId);
+        Task<SimsNote> Add(int hostId, string note);
+        Task<IEnumerable<SimsNote>> GetAll(int hostId);
     }
 }

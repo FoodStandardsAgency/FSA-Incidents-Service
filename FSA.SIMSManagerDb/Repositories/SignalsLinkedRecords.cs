@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
 using FSA.IncidentsManagement.Root.Domain;
 using FSA.IncidentsManagement.Root.DTOS;
+using FSA.SIMSManagerDb.Contracts;
 using FSA.SIMSManagerDb.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace FSA.SIMSManagerDb.Repositories
 {
-    public class SignalsLinkedRecords : IDBLinkedRecordsRepository, ISIMSLinks
+    public class SignalsLinkedRecords : IDbLinkedRecordsRepository
     {
         //private readonly SimsDbContext ctx;
         //private readonly Mapper mapper;
@@ -17,14 +18,14 @@ namespace FSA.SIMSManagerDb.Repositories
         {
             this.linksManager = new GeneralLinkedRecordsRepository<SignalLinkDb, SignalNoteDb>(ctx, mapper);
         }
-        public Task<IEnumerable<SimsLinkedRecord>> AddLinks(int from, IEnumerable<int> tos, string reason)
+        public Task<IEnumerable<SimsLinkedRecord>> Add(int from, IEnumerable<int> tos, string reason)
         {
-            return this.linksManager.AddLinks(from, tos, reason);
+            return this.linksManager.Add(from, tos, reason);
         }
 
-        public Task<SimsLinkedRecord> RemoveLink(int from, int to)
+        public Task<SimsLinkedRecord> Remove(int from, int to)
         {
-            return this.linksManager.RemoveLink(from, to);
+            return this.linksManager.Remove(from, to);
         }
     }
 }
