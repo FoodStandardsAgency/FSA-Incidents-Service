@@ -1,7 +1,6 @@
 ﻿using FSA.SIMSManagerDb.Builder;
 using FSA.SIMSManagerDb.Builders;
 using FSA.SIMSManagerDb.Entities;
-using FSA.SIMSManagerDb.Entities.Core;
 using FSA.SIMSManagerDb.Entities.Lookups;
 using FSA.SIMSManagerDb.Utilities;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +14,6 @@ namespace FSA.SIMSManagerDb
         internal DbSet<IncidentDb> Incidents { get; set; }
         internal DbSet<IncidentLinkDb> IncidentLinks { get; set; }
         internal DbSet<IncidentNoteDb> IncidentNotes { get; set; }
-        internal DbSet<IncidentProductDb> IncidentProductDb { get; set; }
         internal DbSet<IncidentStakeholderDb> IncidentStakeholders { get; set; }
         internal DbSet<IncidentAttachmentDb> IncidentAttachments { get; set; }
         internal DbSet<IncidentProductDb> IncidentProducts { get; set; }
@@ -29,7 +27,7 @@ namespace FSA.SIMSManagerDb
         internal DbSet<SignalDb> Signals { get; set; }
         internal DbSet<SignalLinkDb> SignalLinks { get; set; }
         internal DbSet<SignalNoteDb> SignalNotes { get; set; }
-        internal DbSet<SignalProductDb> SignalProductDb { get; set; }
+        
         internal DbSet<SignalStakeholderDb> SignalStakeholders { get; set; }
         internal DbSet<SignalAttachmentDb> SignalAttachments { get; set; }
 
@@ -76,9 +74,9 @@ namespace FSA.SIMSManagerDb
             modelBuilder.ApplyConfiguration(new NotesBuilder<IncidentNoteDb>(nameof(this.IncidentNotes), "IncidentId"));
 
             modelBuilder.ApplyConfiguration(new IncidentProductBuilder());
-            modelBuilder.ApplyConfiguration(new ProductPackSizeBuilder<IncidentProductDb>(nameof(this.IncidentProductPackSizes), "IncidentId"));
-            modelBuilder.ApplyConfiguration(new FboProductBuilder<IncidentProductDb>(nameof(this.IncidentProductFbos), "IncidentId"));
-            modelBuilder.ApplyConfiguration(new ProductDateBuilder<IncidentProductDb>(nameof(this.IncidentProductDates), "IncidentId"));
+            modelBuilder.ApplyConfiguration(new ProductPackSizeBuilder<IncidentProductPackSizeDb>(nameof(this.IncidentProductPackSizes), "IncidentId"));
+            modelBuilder.ApplyConfiguration(new ProductFboBuilder<IncidentProductFboDb>(nameof(this.IncidentProductFbos)));
+            modelBuilder.ApplyConfiguration(new ProductDateBuilder<IncidentProductDateDb>(nameof(this.IncidentProductDates), "IncidentId"));
 
             modelBuilder.ApplyConfiguration(new SignalBuilder());
             modelBuilder.ApplyConfiguration(new LinksBuilder<SignalLinkDb>(nameof(this.SignalLinks)));
@@ -87,9 +85,9 @@ namespace FSA.SIMSManagerDb
             modelBuilder.ApplyConfiguration(new NotesBuilder<SignalNoteDb>(nameof(this.SignalNotes), "SignalId"));
 
             modelBuilder.ApplyConfiguration(new SignalProductBuilder());
-            modelBuilder.ApplyConfiguration(new ProductPackSizeBuilder<SignalProductDb>(nameof(this.SignalProductPackSizes), "SignalId"));
-            modelBuilder.ApplyConfiguration(new ProductDateBuilder<SignalProductDb>(nameof(this.SignalProductDates), "SignalId"));
-            modelBuilder.ApplyConfiguration(new FboProductBuilder<SignalProductDb>(nameof(this.SignalProductFbos), "SignalId"));
+            modelBuilder.ApplyConfiguration(new ProductPackSizeBuilder<SignalProductPackSizeDb>(nameof(this.SignalProductPackSizes), "SignalId"));
+            modelBuilder.ApplyConfiguration(new ProductDateBuilder<SignalProductDateDb>(nameof(this.SignalProductDates), "SignalId"));
+            modelBuilder.ApplyConfiguration(new ProductFboBuilder<SignalProductFboDb>(nameof(this.SignalProductFbos)));
 
             #region Lookups           
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<CategoryDb>());

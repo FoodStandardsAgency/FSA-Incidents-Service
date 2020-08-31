@@ -41,7 +41,7 @@ namespace SIMS.Database
         public async Task AddAddress()
         {
             var testTitle = "Test - New orgnaisations";
-            var org = new SimsAddress
+            var org = new Address
             {
                 Title = testTitle,
                 //MainContact = "New-Org Smity",
@@ -52,7 +52,7 @@ namespace SIMS.Database
                 CountryId = 201,
                 County = "Country",
                 TelephoneNumber = "01234567890",
-                Contacts = new List<SimsAddressContact> { new SimsAddressContact { EmailAddress = "email@address", TelephoneNumber = "01234567890", Name = "New-Org Smity", IsMain = true } }
+                Contacts = new List<AddressContact> { new AddressContact { EmailAddress = "email@address", TelephoneNumber = "01234567890", Name = "New-Org Smity", IsMain = true } }
             };
 
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))

@@ -369,7 +369,7 @@ namespace FSA.UnitTests.Db
         [Fact]
         public async Task AddStakeholder()
         {
-            var newStakeHolder = new SimsStakeholder
+            var newStakeHolder = new Stakeholder
             {
                 DiscriminatorId = 3,
                 HostId = 5517,
@@ -388,7 +388,7 @@ namespace FSA.UnitTests.Db
         [Fact]
         public async Task AddStakeholderNoIncident()
         {
-            var newStakeHolder = new SimsStakeholder
+            var newStakeHolder = new Stakeholder
             {
                 DiscriminatorId = 3,
                 Name = "Pickle pie",

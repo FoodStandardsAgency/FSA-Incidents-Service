@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Models
 {
-    public class ProductFboAddressViewModel : SimsAddress
+    public class ProductFboAddressViewModel : Address
     {
         public int ProductId { get; set; }
         public IEnumerable<FboTypes> FboTypes { get; set; }

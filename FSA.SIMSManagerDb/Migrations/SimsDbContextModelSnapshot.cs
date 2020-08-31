@@ -146,328 +146,6 @@ namespace FSA.SIMSManagerDb.Migrations
                     b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.Core.BaseProductDateDb<FSA.SIMSManagerDb.Entities.IncidentProductDb>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("DateTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<int>("ProductId")
-                        .HasColumnName("IncidentId")
-                        .HasColumnType("int");
-
-                    b.Property<byte[]>("Timestamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DateTypeId");
-
-                    b.ToTable("IncidentProductDates");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("BaseProductDateDb<IncidentProductDb>");
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.Core.BaseProductDateDb<FSA.SIMSManagerDb.Entities.SignalProductDb>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("DateTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<int>("ProductId")
-                        .HasColumnName("SignalId")
-                        .HasColumnType("int");
-
-                    b.Property<byte[]>("Timestamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DateTypeId");
-
-                    b.ToTable("SignalProductDates");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("BaseProductDateDb<SignalProductDb>");
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.Core.BaseProductFboDb<FSA.SIMSManagerDb.Entities.IncidentProductDb>", b =>
-                {
-                    b.Property<int>("ProductId")
-                        .HasColumnName("IncidentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AddressId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("FboTypes")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<byte[]>("Timestamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.HasKey("ProductId", "AddressId");
-
-                    b.HasIndex("AddressId");
-
-                    b.ToTable("IncidentProductFbos");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("BaseProductFboDb<IncidentProductDb>");
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.Core.BaseProductFboDb<FSA.SIMSManagerDb.Entities.SignalProductDb>", b =>
-                {
-                    b.Property<int>("ProductId")
-                        .HasColumnName("SignalId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AddressId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("FboTypes")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<byte[]>("Timestamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.HasKey("ProductId", "AddressId");
-
-                    b.HasIndex("AddressId");
-
-                    b.ToTable("SignalProductFbos");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("BaseProductFboDb<SignalProductDb>");
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.Core.BaseProductPackSizeDb<FSA.SIMSManagerDb.Entities.IncidentProductDb>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<int>("ProductId")
-                        .HasColumnName("IncidentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Size")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("Timestamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<int>("UnitId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UnitId");
-
-                    b.ToTable("IncidentProductPackSizes");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("BaseProductPackSizeDb<IncidentProductDb>");
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.Core.BaseProductPackSizeDb<FSA.SIMSManagerDb.Entities.SignalProductDb>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<int>("ProductId")
-                        .HasColumnName("SignalId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Size")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("Timestamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<int>("UnitId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UnitId");
-
-                    b.ToTable("SignalProductPackSizes");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("BaseProductPackSizeDb<SignalProductDb>");
-                });
-
             modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentAttachmentDb", b =>
                 {
                     b.Property<string>("DocUrl")
@@ -740,6 +418,57 @@ namespace FSA.SIMSManagerDb.Migrations
                     b.ToTable("IncidentNotes");
                 });
 
+            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentProductDateDb", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DateTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<int>("ProductId")
+                        .HasColumnName("IncidentId")
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DateTypeId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("IncidentProductDates");
+                });
+
             modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentProductDb", b =>
                 {
                     b.Property<int>("Id")
@@ -777,7 +506,7 @@ namespace FSA.SIMSManagerDb.Migrations
                         .HasColumnType("nvarchar(70)")
                         .HasMaxLength(70);
 
-                    b.Property<int>("IncidentId")
+                    b.Property<int>("HostId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Modified")
@@ -811,11 +540,106 @@ namespace FSA.SIMSManagerDb.Migrations
 
                     b.HasIndex("CountryOfOriginId");
 
-                    b.HasIndex("IncidentId");
+                    b.HasIndex("HostId");
 
                     b.HasIndex("ProductTypeId");
 
-                    b.ToTable("IncidentProductDb");
+                    b.ToTable("IncidentProducts");
+                });
+
+            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentProductFboDb", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AddressId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<int>("FboTypes")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("ProductId", "AddressId");
+
+                    b.HasIndex("AddressId");
+
+                    b.ToTable("IncidentProductFbos");
+                });
+
+            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentProductPackSizeDb", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<int>("ProductId")
+                        .HasColumnName("IncidentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Size")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<int>("UnitId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UnitId");
+
+                    b.ToTable("IncidentProductPackSizes");
                 });
 
             modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentStakeholderDb", b =>
@@ -7464,6 +7288,57 @@ namespace FSA.SIMSManagerDb.Migrations
                     b.ToTable("SignalNotes");
                 });
 
+            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.SignalProductDateDb", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DateTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<int>("ProductId")
+                        .HasColumnName("SignalId")
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DateTypeId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("SignalProductDates");
+                });
+
             modelBuilder.Entity("FSA.SIMSManagerDb.Entities.SignalProductDb", b =>
                 {
                     b.Property<int>("Id")
@@ -7501,6 +7376,9 @@ namespace FSA.SIMSManagerDb.Migrations
                         .HasColumnType("nvarchar(70)")
                         .HasMaxLength(70);
 
+                    b.Property<int>("HostId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Modified")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
@@ -7521,9 +7399,6 @@ namespace FSA.SIMSManagerDb.Migrations
                     b.Property<int>("ProductTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SignalId")
-                        .HasColumnType("int");
-
                     b.Property<byte[]>("Timestamp")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
@@ -7535,11 +7410,106 @@ namespace FSA.SIMSManagerDb.Migrations
 
                     b.HasIndex("CountryOfOriginId");
 
+                    b.HasIndex("HostId");
+
                     b.HasIndex("ProductTypeId");
 
-                    b.HasIndex("SignalId");
+                    b.ToTable("SignalProducts");
+                });
 
-                    b.ToTable("SignalProductDb");
+            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.SignalProductFboDb", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AddressId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<int>("FboTypes")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("ProductId", "AddressId");
+
+                    b.HasIndex("AddressId");
+
+                    b.ToTable("SignalProductFbos");
+                });
+
+            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.SignalProductPackSizeDb", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
+
+                    b.Property<int>("ProductId")
+                        .HasColumnName("SignalId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Size")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<int>("UnitId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UnitId");
+
+                    b.ToTable("SignalProductPackSizes");
                 });
 
             modelBuilder.Entity("FSA.SIMSManagerDb.Entities.SignalStakeholderDb", b =>
@@ -7610,66 +7580,6 @@ namespace FSA.SIMSManagerDb.Migrations
                     b.ToTable("SignalStakeholders");
                 });
 
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentProductDateDb", b =>
-                {
-                    b.HasBaseType("FSA.SIMSManagerDb.Entities.Core.BaseProductDateDb<FSA.SIMSManagerDb.Entities.IncidentProductDb>");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasDiscriminator().HasValue("IncidentProductDateDb");
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.SignalProductDateDb", b =>
-                {
-                    b.HasBaseType("FSA.SIMSManagerDb.Entities.Core.BaseProductDateDb<FSA.SIMSManagerDb.Entities.SignalProductDb>");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasDiscriminator().HasValue("SignalProductDateDb");
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentProductFboDb", b =>
-                {
-                    b.HasBaseType("FSA.SIMSManagerDb.Entities.Core.BaseProductFboDb<FSA.SIMSManagerDb.Entities.IncidentProductDb>");
-
-                    b.Property<int?>("ProductId1")
-                        .HasColumnType("int");
-
-                    b.HasIndex("ProductId1");
-
-                    b.HasDiscriminator().HasValue("IncidentProductFboDb");
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.SignalProductFboDb", b =>
-                {
-                    b.HasBaseType("FSA.SIMSManagerDb.Entities.Core.BaseProductFboDb<FSA.SIMSManagerDb.Entities.SignalProductDb>");
-
-                    b.Property<int?>("ProductId1")
-                        .HasColumnType("int");
-
-                    b.HasIndex("ProductId1");
-
-                    b.HasDiscriminator().HasValue("SignalProductFboDb");
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentProductPackSizeDb", b =>
-                {
-                    b.HasBaseType("FSA.SIMSManagerDb.Entities.Core.BaseProductPackSizeDb<FSA.SIMSManagerDb.Entities.IncidentProductDb>");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasDiscriminator().HasValue("IncidentProductPackSizeDb");
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.SignalProductPackSizeDb", b =>
-                {
-                    b.HasBaseType("FSA.SIMSManagerDb.Entities.Core.BaseProductPackSizeDb<FSA.SIMSManagerDb.Entities.SignalProductDb>");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasDiscriminator().HasValue("SignalProductPackSizeDb");
-                });
-
             modelBuilder.Entity("FSA.SIMSManagerDb.Entities.AddressContactDb", b =>
                 {
                     b.HasOne("FSA.SIMSManagerDb.Entities.AddressDb", "Address")
@@ -7690,60 +7600,6 @@ namespace FSA.SIMSManagerDb.Migrations
                     b.HasOne("FSA.SIMSManagerDb.Entities.Lookups.CountryDb", "Country")
                         .WithMany()
                         .HasForeignKey("CountryId");
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.Core.BaseProductDateDb<FSA.SIMSManagerDb.Entities.IncidentProductDb>", b =>
-                {
-                    b.HasOne("FSA.SIMSManagerDb.Entities.Lookups.DateTypeDb", "DateType")
-                        .WithMany()
-                        .HasForeignKey("DateTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.Core.BaseProductDateDb<FSA.SIMSManagerDb.Entities.SignalProductDb>", b =>
-                {
-                    b.HasOne("FSA.SIMSManagerDb.Entities.Lookups.DateTypeDb", "DateType")
-                        .WithMany()
-                        .HasForeignKey("DateTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.Core.BaseProductFboDb<FSA.SIMSManagerDb.Entities.IncidentProductDb>", b =>
-                {
-                    b.HasOne("FSA.SIMSManagerDb.Entities.AddressDb", "Address")
-                        .WithMany()
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.Core.BaseProductFboDb<FSA.SIMSManagerDb.Entities.SignalProductDb>", b =>
-                {
-                    b.HasOne("FSA.SIMSManagerDb.Entities.AddressDb", "Address")
-                        .WithMany()
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.Core.BaseProductPackSizeDb<FSA.SIMSManagerDb.Entities.IncidentProductDb>", b =>
-                {
-                    b.HasOne("FSA.SIMSManagerDb.Entities.Lookups.UnitQuantityDb", "Unit")
-                        .WithMany()
-                        .HasForeignKey("UnitId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.Core.BaseProductPackSizeDb<FSA.SIMSManagerDb.Entities.SignalProductDb>", b =>
-                {
-                    b.HasOne("FSA.SIMSManagerDb.Entities.Lookups.UnitQuantityDb", "Unit")
-                        .WithMany()
-                        .HasForeignKey("UnitId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentAttachmentDb", b =>
@@ -7850,6 +7706,21 @@ namespace FSA.SIMSManagerDb.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentProductDateDb", b =>
+                {
+                    b.HasOne("FSA.SIMSManagerDb.Entities.Lookups.DateTypeDb", "DateType")
+                        .WithMany()
+                        .HasForeignKey("DateTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FSA.SIMSManagerDb.Entities.IncidentProductDb", "Product")
+                        .WithMany("ProductDates")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentProductDb", b =>
                 {
                     b.HasOne("FSA.SIMSManagerDb.Entities.Lookups.UnitQuantityDb", "AmountUnitType")
@@ -7864,16 +7735,46 @@ namespace FSA.SIMSManagerDb.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FSA.SIMSManagerDb.Entities.IncidentDb", "Incident")
+                    b.HasOne("FSA.SIMSManagerDb.Entities.IncidentDb", "Host")
                         .WithMany("Products")
-                        .HasForeignKey("IncidentId")
+                        .HasForeignKey("HostId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("FSA.SIMSManagerDb.Entities.IncidentProductDb", "ProductType")
+                    b.HasOne("FSA.SIMSManagerDb.Entities.Lookups.ProductTypeDb", "ProductType")
                         .WithMany()
                         .HasForeignKey("ProductTypeId")
                         .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentProductFboDb", b =>
+                {
+                    b.HasOne("FSA.SIMSManagerDb.Entities.AddressDb", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("FSA.SIMSManagerDb.Entities.IncidentProductDb", "Product")
+                        .WithMany("RelatedFBOs")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentProductPackSizeDb", b =>
+                {
+                    b.HasOne("FSA.SIMSManagerDb.Entities.IncidentProductDb", "Product")
+                        .WithMany("PackSizes")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FSA.SIMSManagerDb.Entities.Lookups.UnitQuantityDb", "Unit")
+                        .WithMany()
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -7936,6 +7837,21 @@ namespace FSA.SIMSManagerDb.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.SignalProductDateDb", b =>
+                {
+                    b.HasOne("FSA.SIMSManagerDb.Entities.Lookups.DateTypeDb", "DateType")
+                        .WithMany()
+                        .HasForeignKey("DateTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FSA.SIMSManagerDb.Entities.SignalProductDb", "Product")
+                        .WithMany("ProductDates")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("FSA.SIMSManagerDb.Entities.SignalProductDb", b =>
                 {
                     b.HasOne("FSA.SIMSManagerDb.Entities.Lookups.UnitQuantityDb", "AmountUnitType")
@@ -7950,16 +7866,46 @@ namespace FSA.SIMSManagerDb.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FSA.SIMSManagerDb.Entities.SignalProductDb", "ProductType")
+                    b.HasOne("FSA.SIMSManagerDb.Entities.SignalDb", "Host")
+                        .WithMany("Products")
+                        .HasForeignKey("HostId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("FSA.SIMSManagerDb.Entities.Lookups.ProductTypeDb", "ProductType")
                         .WithMany()
                         .HasForeignKey("ProductTypeId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+                });
 
-                    b.HasOne("FSA.SIMSManagerDb.Entities.SignalDb", "Signal")
-                        .WithMany("Products")
-                        .HasForeignKey("SignalId")
+            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.SignalProductFboDb", b =>
+                {
+                    b.HasOne("FSA.SIMSManagerDb.Entities.AddressDb", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("FSA.SIMSManagerDb.Entities.SignalProductDb", "Product")
+                        .WithMany("RelatedFBOs")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.SignalProductPackSizeDb", b =>
+                {
+                    b.HasOne("FSA.SIMSManagerDb.Entities.SignalProductDb", "Product")
+                        .WithMany("PackSizes")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FSA.SIMSManagerDb.Entities.Lookups.UnitQuantityDb", "Unit")
+                        .WithMany()
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -7978,56 +7924,6 @@ namespace FSA.SIMSManagerDb.Migrations
                     b.HasOne("FSA.SIMSManagerDb.Entities.Lookups.StakeholderDiscriminatorDb", "StakeholderDiscriminator")
                         .WithMany()
                         .HasForeignKey("StakeholderDiscriminatorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentProductDateDb", b =>
-                {
-                    b.HasOne("FSA.SIMSManagerDb.Entities.IncidentProductDb", "Product")
-                        .WithMany("ProductDates")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.SignalProductDateDb", b =>
-                {
-                    b.HasOne("FSA.SIMSManagerDb.Entities.SignalProductDb", "Product")
-                        .WithMany("ProductDates")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentProductFboDb", b =>
-                {
-                    b.HasOne("FSA.SIMSManagerDb.Entities.IncidentProductDb", "Product")
-                        .WithMany("RelatedFBOs")
-                        .HasForeignKey("ProductId1");
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.SignalProductFboDb", b =>
-                {
-                    b.HasOne("FSA.SIMSManagerDb.Entities.SignalProductDb", "Product")
-                        .WithMany("RelatedFBOs")
-                        .HasForeignKey("ProductId1");
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentProductPackSizeDb", b =>
-                {
-                    b.HasOne("FSA.SIMSManagerDb.Entities.IncidentProductDb", "Product")
-                        .WithMany("PackSizes")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.SignalProductPackSizeDb", b =>
-                {
-                    b.HasOne("FSA.SIMSManagerDb.Entities.SignalProductDb", "Product")
-                        .WithMany("PackSizes")
-                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

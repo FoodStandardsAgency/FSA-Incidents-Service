@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FSA.IncidentsManagement.Root.DTOS
 {
-   public class LinkedRecord
+   public class SimsLinkedRecord
     {
         public int From { get; set; }
         public int To { get; set; }

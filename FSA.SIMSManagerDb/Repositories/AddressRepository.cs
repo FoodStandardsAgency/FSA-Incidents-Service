@@ -19,35 +19,35 @@ namespace FSA.SIMSManagerDb.Repositories
             this.mapper = mapper;
         }
 
-        public async Task<SimsAddress> Add(SimsAddress address)
+        public async Task<Address> Add(Address address)
         {
-            var newDbAddress = mapper.Map<SimsAddress, AddressDb>(address);
+            var newDbAddress = mapper.Map<Address, AddressDb>(address);
             //newDbItem.Contacts = address.Contacts.ToDb().ToList();
             this.ctx.Addresses.Add(newDbAddress);
             await this.ctx.SaveChangesAsync();
-            return mapper.Map<AddressDb, SimsAddress>(newDbAddress);
+            return mapper.Map<AddressDb, Address>(newDbAddress);
         }
 
-        public async Task Add(IEnumerable<SimsAddress> addresses)
+        public async Task Add(IEnumerable<Address> addresses)
         {
             var newDbItems = new List<AddressDb>(mapper.Map<IEnumerable<AddressDb>>(addresses));
             this.ctx.Addresses.AddRange(newDbItems);
             await this.ctx.SaveChangesAsync();
         }
 
-        public async Task<SimsAddress> Get(int addressId)
+        public async Task<Address> Get(int addressId)
         {
             var addr = await ctx.Addresses.
                 Include(o => o.Contacts)
                 .AsNoTracking().FirstAsync(a => a.Id == addressId);
-            return mapper.Map<AddressDb, SimsAddress>(addr);
+            return mapper.Map<AddressDb, Address>(addr);
         }
         /// <summary>
         /// TO DO !!!!
         /// </summary>
         /// <param name="address"></param>
         /// <returns></returns>
-        public async Task<SimsAddress> Update(SimsAddress address)
+        public async Task<Address> Update(Address address)
         {
             var dbItem = await ctx.Addresses.Include(i => i.Contacts).SingleAsync(s => s.Id == address.Id);
             // Updates the address details
@@ -69,16 +69,16 @@ namespace FSA.SIMSManagerDb.Repositories
                 }
                 else
                 {
-                    var newDbContact = mapper.Map<SimsAddressContact, AddressContactDb>(firstContact);
+                    var newDbContact = mapper.Map<AddressContact, AddressContactDb>(firstContact);
                     dbItem.Contacts.Add(newDbContact);
                 }
                 await ctx.SaveChangesAsync();
             }
 
-            return mapper.Map<AddressDb, SimsAddress>(dbItem);
+            return mapper.Map<AddressDb, Address>(dbItem);
         }
 
-        public async Task<IEnumerable<SimsAddress>> FindAddress(string search)
+        public async Task<IEnumerable<Address>> FindAddress(string search)
         {
             var qryAddr = this.ctx
                      .Addresses.Include(o => o.Contacts)
@@ -88,7 +88,7 @@ namespace FSA.SIMSManagerDb.Repositories
                                 || EF.Functions.Like(o.PostCode, $"%{search}%")
                                 || o.Contacts.Any(ac => EF.Functions.Like(ac.Name, $"%{search}")));
 
-            return await qryAddr.Select(o => mapper.Map<AddressDb, SimsAddress>(o)).ToListAsync();
+            return await qryAddr.Select(o => mapper.Map<AddressDb, Address>(o)).ToListAsync();
         }
 
     }

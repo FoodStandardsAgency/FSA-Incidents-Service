@@ -8,7 +8,7 @@ namespace FSA.IncidentsManagement.Root.Domain
 {
     public interface ISIMSLinks
     {
-        Task<IEnumerable<LinkedRecord>> AddLinks(int from, IEnumerable<int> to, string reason);
-        Task<LinkedRecord> RemoveLink(int from, int to);
+        Task<IEnumerable<SimsLinkedRecord>> AddLinks(int from, IEnumerable<int> to, string reason);
+        Task<SimsLinkedRecord> RemoveLink(int from, int to);
     }
 }

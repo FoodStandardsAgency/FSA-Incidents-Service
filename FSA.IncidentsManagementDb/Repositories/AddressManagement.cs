@@ -24,7 +24,7 @@ namespace FSA.IncidentsManagementDb.Repositories
             this.ctx = ctx;
         }
 
-        public async Task<SimsAddress> Add(SimsAddress address)
+        public async Task<Address> Add(Address address)
         {
             var newDbItem = address.ToDb();
             //newDbItem.Contacts = address.Contacts.ToDb().ToList();
@@ -33,7 +33,7 @@ namespace FSA.IncidentsManagementDb.Repositories
             return newDbItem.ToClient();
         }
 
-        public async Task Add(IEnumerable<SimsAddress> addresses)
+        public async Task Add(IEnumerable<Address> addresses)
         {
             var newDbItems = new List<AddressDb>(addresses.ToDb());
             this.ctx.Addresses.AddRange(newDbItems);
@@ -42,7 +42,7 @@ namespace FSA.IncidentsManagementDb.Repositories
 
 
 
-        public async Task<int> AddNotifier(NotifierTypes notifier, SimsAddress newAddress)
+        public async Task<int> AddNotifier(NotifierTypes notifier, Address newAddress)
         {
             var dbAddress = newAddress.ToDb();
             var dbNotifier = new NotifierDb
@@ -56,7 +56,7 @@ namespace FSA.IncidentsManagementDb.Repositories
             return dbNotifier.Id;
         }
 
-        public async Task<SimsAddress> Get(int OrganisationId)
+        public async Task<Address> Get(int OrganisationId)
         {
             var addr = await ctx.Addresses.Include(o=>o.Contacts).AsNoTracking().FirstAsync(a => a.Id == OrganisationId);
             return addr.ToClient();
@@ -66,7 +66,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         /// </summary>
         /// <param name="address"></param>
         /// <returns></returns>
-        public async Task<SimsAddress> Update(SimsAddress address)
+        public async Task<Address> Update(Address address)
         {
             var dbItem = await ctx.Addresses.Include(i => i.Contacts).SingleAsync(s => s.Id == address.Id);
             // Updates the address details
@@ -150,7 +150,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         }
 
 
-        public async Task<IEnumerable<SimsAddress>> FindAddress(string search)
+        public async Task<IEnumerable<Address>> FindAddress(string search)
         {
             var qryAddr = this.ctx
                      .Addresses.Include(o => o.Contacts)

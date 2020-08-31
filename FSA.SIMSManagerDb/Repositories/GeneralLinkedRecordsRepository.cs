@@ -30,19 +30,19 @@ namespace FSA.SIMSManagerDb.Repositories
         }
 
 
-        public async Task<LinkedRecord> RemoveLink(int from, int to)
+        public async Task<SimsLinkedRecord> RemoveLink(int from, int to)
         {
             // LOcal functions fancy.
             // Cos the logic is annoying and I'm not confident in it yet.
             // Why should we update the host object?
-            async Task<LinkedRecord> DeleteLink(LinkDb link)
+            async Task<SimsLinkedRecord> DeleteLink(LinkDb link)
             {
                 this.LinkSet.Remove(link);
                 //var fromIncident = this.LinkSet.Find(link.FromId);
                 //var toincident = this.LinkSet.Find(link.ToId);
 
                 await ctx.SaveChangesAsync();
-                return new LinkedRecord { From = from, To = to };
+                return new SimsLinkedRecord { From = from, To = to };
             }
 
             var linkData = this.LinkSet.Find(from, to);
@@ -53,7 +53,7 @@ namespace FSA.SIMSManagerDb.Repositories
             }
             if (linkData != null)
                 return await DeleteLink(linkData);
-            else return new LinkedRecord { From = 0, To = 0 };
+            else return new SimsLinkedRecord { From = 0, To = 0 };
         }
 
         /// <summary>
@@ -64,14 +64,14 @@ namespace FSA.SIMSManagerDb.Repositories
         /// </summary>
         /// <param name="from"></param>
         /// <param name="to"></param>
-        public async Task<IEnumerable<LinkedRecord>> AddLinks(int from, IEnumerable<int> tos, string reason)
+        public async Task<IEnumerable<SimsLinkedRecord>> AddLinks(int from, IEnumerable<int> tos, string reason)
         {
 
             var allTo = new HashSet<int>(tos);
             // remove our from numb if present
             allTo.Remove(from);
 
-            List<LinkedRecord> results = new List<LinkedRecord>();
+            List<SimsLinkedRecord> results = new List<SimsLinkedRecord>();
 
             // helper
             var isReasonPresent = string.IsNullOrEmpty(reason);
@@ -92,7 +92,7 @@ namespace FSA.SIMSManagerDb.Repositories
                     }
                     updatesOccured = true;
                     this.LinkSet.Add(newLink);
-                    results.Add(mapper.Map<LinkDb, LinkedRecord>(newLink));
+                    results.Add(mapper.Map<LinkDb, SimsLinkedRecord>(newLink));
                 }
             }
             // We musht have updated something

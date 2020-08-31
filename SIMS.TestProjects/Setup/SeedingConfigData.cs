@@ -219,9 +219,9 @@ namespace SIMS.TestProjects.Setup
 
         };
 
-        public IEnumerable<SimsStakeholder> GetIncidentStakeholder => new List<SimsStakeholder>
+        public IEnumerable<Stakeholder> GetIncidentStakeholder => new List<Stakeholder>
         {
-           new SimsStakeholder
+           new Stakeholder
             {
                 DiscriminatorId = 3,
                 HostId = 17,
@@ -231,7 +231,7 @@ namespace SIMS.TestProjects.Setup
                 Role = "Dancing instructor",
                AddressId=92
             },
-           new SimsStakeholder
+           new Stakeholder
             {
                 DiscriminatorId = 4,
                 HostId = 17,
@@ -241,7 +241,7 @@ namespace SIMS.TestProjects.Setup
                 Role = "Admin",
                 AddressId=18
             },
-           new SimsStakeholder
+           new Stakeholder
             {
                 DiscriminatorId = 2,
                 HostId = 17,
@@ -254,9 +254,9 @@ namespace SIMS.TestProjects.Setup
             }
         };
 
-        public IEnumerable<SimsStakeholder> GetSignalStakeholder => new List<SimsStakeholder>
+        public IEnumerable<Stakeholder> GetSignalStakeholder => new List<Stakeholder>
         {
-           new SimsStakeholder
+           new Stakeholder
             {
                 DiscriminatorId = 3,
                 HostId = 23,
@@ -266,7 +266,7 @@ namespace SIMS.TestProjects.Setup
                 Role = "Dancing instructor",
                AddressId=92
             },
-           new SimsStakeholder
+           new Stakeholder
             {
                 DiscriminatorId = 1,
                 HostId = 23,
@@ -276,7 +276,7 @@ namespace SIMS.TestProjects.Setup
                 Role = "Admin",
                 AddressId=18
             },
-           new SimsStakeholder
+           new Stakeholder
             {
                 DiscriminatorId = 2,
                 HostId = 2,
@@ -287,7 +287,7 @@ namespace SIMS.TestProjects.Setup
                 Role = "Admin",
                 AddressId=17
             },
-            new SimsStakeholder
+            new Stakeholder
             {
                 DiscriminatorId = 1,
                 HostId = 1,
@@ -298,7 +298,7 @@ namespace SIMS.TestProjects.Setup
                 Role = "Roling",
                 AddressId=17
             },
-            new SimsStakeholder
+            new Stakeholder
             {
                 DiscriminatorId = 2,
                 HostId = 1,

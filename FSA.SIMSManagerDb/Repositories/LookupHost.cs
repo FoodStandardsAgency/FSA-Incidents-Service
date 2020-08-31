@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FSA.IncidentsManagement.Root.Contracts;
 using FSA.IncidentsManagement.Root.Models;
+using FSA.SIMSManagerDb.Contracts;
 using FSA.SIMSManagerDb.Entities.Lookups;
 namespace FSA.SIMSManagerDb.Repositories
 {
@@ -8,7 +9,7 @@ namespace FSA.SIMSManagerDb.Repositories
     /// Simple fetcher for all the lookips and basic conversions
     /// GetAll it is exepected for the reciver to cache the results
     /// </summary>
-    public class LookupHost : ILookupDataHost
+    public class LookupHost : IDbLookups
     {
         private SimsDbContext ctx;
         private readonly IMapper mapper;

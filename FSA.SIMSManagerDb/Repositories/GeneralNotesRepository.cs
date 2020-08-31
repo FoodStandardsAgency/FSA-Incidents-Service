@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FSA.IncidentsManagement.Root.Models;
+using FSA.SIMSManagerDb.Contracts;
 using FSA.SIMSManagerDbEntities;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;

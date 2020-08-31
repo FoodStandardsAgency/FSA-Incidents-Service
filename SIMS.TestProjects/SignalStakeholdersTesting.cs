@@ -35,7 +35,7 @@ namespace SIMS.Database
         [Fact]
         public async Task AddStakeholder()
         {
-            var newStakeHolder = new SimsStakeholder
+            var newStakeHolder = new Stakeholder
             {
                 DiscriminatorId = 3,
                 HostId = 17,
@@ -54,7 +54,7 @@ namespace SIMS.Database
         [Fact]
         public async Task AddStakeholderNoSignal()
         {
-            var newStakeHolder = new SimsStakeholder
+            var newStakeHolder = new Stakeholder
             {
                 DiscriminatorId = 3,
                 Name = "Pickle pie",

@@ -1,5 +1,6 @@
 ﻿using FSA.SIMSManagerDb.Builders;
 using FSA.SIMSManagerDb.Entities.Core;
+using FSA.SIMSManagerDb.Entities.Core.Product;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -8,7 +9,7 @@ using System.Text;
 
 namespace FSA.SIMSManagerDb.Builder
 {
-    internal class ProductPackSizeBuilder<T> : AuditInfoBuilderConfiguration<BaseProductPackSizeDb<T>> where T :class
+    internal class ProductPackSizeBuilder<T> : AuditInfoBuilderConfiguration<T> where T : CoreProductPackSizeDb
     {
         private string hostname;
         private string tableName;
@@ -19,9 +20,8 @@ namespace FSA.SIMSManagerDb.Builder
             this.tableName = tableName;
         }
 
-        public override void Configure(EntityTypeBuilder<BaseProductPackSizeDb<T>> builder)
+        public override void Configure(EntityTypeBuilder<T> builder)
         {
-            base.Configure(builder);
             base.Configure(builder);
             builder.ToTable(tableName);
             builder.Property(o => o.ProductId).HasColumnName(hostname);

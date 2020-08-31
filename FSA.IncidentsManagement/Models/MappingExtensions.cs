@@ -125,7 +125,7 @@ namespace FSA.IncidentsManagement.Models
 
         public static FboAddressWebModel ToWeb(this FboAddress @this) => new FboAddressWebModel
         {
-            Address = new SimsAddress
+            Address = new Address
             {
                 AddressLine1 = @this.AddressLine1,
                 AddressLine2 = @this.AddressLine2,
@@ -157,7 +157,7 @@ namespace FSA.IncidentsManagement.Models
             ContactMethodId = @this.ContactMethodId,
             EmailAddress = @this.Contacts.Count() > 0 ? @this.Contacts.First().EmailAddress : "",
             Title = @this.Title,
-            Contacts = new List<SimsAddressContact>(),
+            Contacts = new List<AddressContact>(),
             ProductId = @this.ProductId,
             FboTypes = Utilities.SelectedFlags(@this.FboTypes)
         };
@@ -190,7 +190,7 @@ namespace FSA.IncidentsManagement.Models
             }
         }
 
-        public static SimsStakeholder ToClient(this StakeholderModel @this) => new SimsStakeholder
+        public static Stakeholder ToClient(this StakeholderModel @this) => new Stakeholder
         {
             Id = @this.Id,
             HostId = @this.HostId,
@@ -203,7 +203,7 @@ namespace FSA.IncidentsManagement.Models
             AddressId = @this.AddressId == 0 ? new Nullable<int>() : @this.AddressId
         };
 
-        public static SimsAddress ToClient(this SimsAddressViewModel @this) => new SimsAddress
+        public static Address ToClient(this SimsAddressViewModel @this) => new Address
         {
             Id = @this.Id,
             Title = @this.Title,
@@ -216,10 +216,10 @@ namespace FSA.IncidentsManagement.Models
             ContactMethodId = @this.ContactMethodId,
             //OrganisationRoleId = @this.OrganisationRoleId,
             TelephoneNumber = @this.TelephoneNumber,
-            Contacts =  string.IsNullOrEmpty( @this.MainContact) ? new List<SimsAddressContact>() :   new List<SimsAddressContact> { new SimsAddressContact { EmailAddress = @this.EmailAddress ?? "", Name =@this.MainContact, IsMain=true, TelephoneNumber =@this.TelephoneNumber ?? ""} }
+            Contacts =  string.IsNullOrEmpty( @this.MainContact) ? new List<AddressContact>() :   new List<AddressContact> { new AddressContact { EmailAddress = @this.EmailAddress ?? "", Name =@this.MainContact, IsMain=true, TelephoneNumber =@this.TelephoneNumber ?? ""} }
         };
 
-        public static IEnumerable<SimsAddress> ToClient(this IEnumerable<SimsAddressViewModel> @this)
+        public static IEnumerable<Address> ToClient(this IEnumerable<SimsAddressViewModel> @this)
         {
             foreach (var item in @this)
             {
@@ -227,7 +227,7 @@ namespace FSA.IncidentsManagement.Models
             }
         }
 
-        public static SimsAddressViewModel ToWeb(this SimsAddress @this) => new SimsAddressViewModel
+        public static SimsAddressViewModel ToWeb(this Address @this) => new SimsAddressViewModel
         {
             Id = @this.Id,
             Title = @this.Title,
@@ -244,7 +244,7 @@ namespace FSA.IncidentsManagement.Models
             EmailAddress = @this.Contacts.ToList().Count > 0 ? @this.Contacts.First().EmailAddress : ""
         };
 
-        public static IEnumerable<SimsAddressViewModel> ToWeb(this IEnumerable<SimsAddress> @this)
+        public static IEnumerable<SimsAddressViewModel> ToWeb(this IEnumerable<Address> @this)
         {
             foreach (var item in @this)
             {
@@ -254,7 +254,7 @@ namespace FSA.IncidentsManagement.Models
 
 
 
-        public static StakeholderModel ToWeb(this SimsStakeholder @this) => new StakeholderModel
+        public static StakeholderModel ToWeb(this Stakeholder @this) => new StakeholderModel
         {
             Id = @this.Id,
             HostId = @this.HostId,
@@ -267,7 +267,7 @@ namespace FSA.IncidentsManagement.Models
             AddressId = @this.AddressId.HasValue ? @this.AddressId.Value : 0
         };
 
-        public static IEnumerable<StakeholderModel> ToWeb(this IEnumerable<SimsStakeholder> @this)
+        public static IEnumerable<StakeholderModel> ToWeb(this IEnumerable<Stakeholder> @this)
         {
             foreach (var item in @this)
             {

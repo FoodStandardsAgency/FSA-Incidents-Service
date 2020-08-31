@@ -5,12 +5,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Entities\IncidentProducts\SignalProductDateDb.cs" />
+    <Compile Remove="Entities\IncidentProducts\SignalProductDb.cs" />
+    <Compile Remove="Entities\IncidentProducts\SignalProductFboDb.cs" />
+    <Compile Remove="Entities\IncidentProducts\SignalProductPackSizeDb.cs" />
+    <Compile Remove="Entities\IncidentProducts\xSignalProductDateDb.cs" />
+    <Compile Remove="Entities\IncidentProducts\xSignalProductDb.cs" />
+    <Compile Remove="Entities\IncidentProducts\xSignalProductFboDb.cs" />
+    <Compile Remove="Entities\IncidentProducts\xSignalProductPackSizeDb.cs" />
     <Compile Remove="Migrations\20200828211711_justChecking.cs" />
     <Compile Remove="Migrations\20200828211711_justChecking.Designer.cs" />
     <Compile Remove="Migrations\20200828230945_LessDiscriminatingNote.cs" />
     <Compile Remove="Migrations\20200828230945_LessDiscriminatingNote.Designer.cs" />
     <Compile Remove="Migrations\20200829104144_AddressAttachments.cs" />
     <Compile Remove="Migrations\20200829104144_AddressAttachments.Designer.cs" />
+    <Compile Remove="Migrations\20200830231359_yelp.cs" />
+    <Compile Remove="Migrations\20200830231359_yelp.Designer.cs" />
+    <Compile Remove="Migrations\20200830232528_yelp.cs" />
+    <Compile Remove="Migrations\20200830232528_yelp.Designer.cs" />
+    <Compile Remove="Migrations\20200830233920_yelp.cs" />
+    <Compile Remove="Migrations\20200830233920_yelp.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

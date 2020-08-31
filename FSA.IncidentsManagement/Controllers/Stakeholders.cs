@@ -39,7 +39,7 @@ namespace FSA.IncidentsManagement.Controllers
             var stakeholders = await this.simsData.Incidents.GetStakeholders(id);
             var addressItems = stakeholders.Where(o => o.AddressId.HasValue).Select(o => new { Id = o.Id, AddressId = o.AddressId.Value });
 
-            var addressList = new List<SimsAddress>();
+            var addressList = new List<Address>();
             foreach (var item in addressItems)
             {
                 var address = await simsData.Addresses.Get(item.AddressId);

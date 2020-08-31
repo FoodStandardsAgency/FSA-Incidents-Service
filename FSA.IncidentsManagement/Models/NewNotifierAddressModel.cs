@@ -9,6 +9,6 @@ namespace FSA.IncidentsManagement.Models
     public class NewNotifierAddressModel
     {
         public NotifierTypes Notifier { get; set; }
-        public SimsAddress Address { get; set; }
+        public Address Address { get; set; }
     }
 }

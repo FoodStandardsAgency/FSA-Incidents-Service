@@ -2,9 +2,6 @@
 using FSA.SIMSManagerDb.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FSA.SIMSManagerDb.Builder
 {
@@ -15,10 +12,12 @@ namespace FSA.SIMSManagerDb.Builder
             base.Configure(builder);
 
             builder.HasMany(o => o.RelatedFBOs)
-                   .WithOne(o => o.Product);
+                   .WithOne(o => o.Product)
+                   .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction);
 
             builder.Property(p => p.Name).IsRequired();
-            builder.HasOne(p => p.Signal)
+            
+            builder.HasOne(p => p.Host)
                    .WithMany(i => i.Products)
                    .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction);
 

@@ -4,12 +4,12 @@ using System.Text;
 
 namespace FSA.IncidentsManagement.Root.Models
 {
-    public class SimsAddress
+    public class Address
     {
-        public SimsAddress()
+        public Address()
         {
             ContactMethodId = 1;
-            this.Contacts = new List<SimsAddressContact>();
+            this.Contacts = new List<AddressContact>();
         }
 
         public int Id { get; set; }
@@ -22,6 +22,6 @@ namespace FSA.IncidentsManagement.Root.Models
         public string PostCode { get; set; }
         public string TelephoneNumber { get; set; }
         public int ContactMethodId { get; set; }
-        public IEnumerable<SimsAddressContact> Contacts { get; set; }
+        public IEnumerable<AddressContact> Contacts { get; set; }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.ModelValidators
 {
-    public class StakeholderModelValidator : AbstractValidator<SimsStakeholder>
+    public class StakeholderModelValidator : AbstractValidator<Stakeholder>
     {
         public StakeholderModelValidator()
         {

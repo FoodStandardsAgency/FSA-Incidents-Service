@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using FSA.IncidentsManagement.Root.DTOS;
+using FSA.SIMSManagerDb.Contracts;
 using FSA.SIMSManagerDb.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FSA.SIMSManagerDb.Repositories

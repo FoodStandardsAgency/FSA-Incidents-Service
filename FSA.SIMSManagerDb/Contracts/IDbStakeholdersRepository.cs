@@ -6,9 +6,9 @@ namespace FSA.SIMSManagerDb.Repositories
 {
     public interface IDbStakeholdersRepository
     {
-        Task<SimsStakeholder> Add(int hostId, SimsStakeholder stakeholder);
-        Task<List<SimsStakeholder>> GetAll(int hostId);
+        Task<Stakeholder> Add(int hostId, Stakeholder stakeholder);
+        Task<List<Stakeholder>> GetAll(int hostId);
         Task Remove(int stakeholderId);
-        Task<SimsStakeholder> Update(SimsStakeholder stakeholder);
+        Task<Stakeholder> Update(Stakeholder stakeholder);
     }
 }

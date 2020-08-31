@@ -23,16 +23,16 @@ namespace FSA.SIMSManagerDb.Repositories
             this.mapper = mapper;
         }
 
-        public Task<List<SimsStakeholder>> GetAll(int hostId)
+        public Task<List<Stakeholder>> GetAll(int hostId)
         {
             if (hostId == 0) throw new ArgumentOutOfRangeException ("Host Id missing");
             return this.DbSet
                             .Include(o=>o.Address)
                             .Where(o => o.HostId == hostId)
-                            .Select(a => this.mapper.Map<T, SimsStakeholder>(a)).ToListAsync();
+                            .Select(a => this.mapper.Map<T, Stakeholder>(a)).ToListAsync();
         }
 
-        public async Task<SimsStakeholder> Add(int hostId, SimsStakeholder stakeholder)
+        public async Task<Stakeholder> Add(int hostId, Stakeholder stakeholder)
         {
             if (hostId == 0) throw new ArgumentOutOfRangeException("Host Id missing.");
 
@@ -45,11 +45,11 @@ namespace FSA.SIMSManagerDb.Repositories
             //if (stakeholder.AddressId.HasValue && stakeholder.DiscriminatorId == (int)StakeholderTypes.FSA)
             //throw new SIMSException("FSA Stakeholder must not have an address");
             
-            var toDb = mapper.Map<SimsStakeholder, T>(stakeholder);
+            var toDb = mapper.Map<Stakeholder, T>(stakeholder);
             var dbItem = this.DbSet.Add(toDb);
 
             await ctx.SaveChangesAsync();
-            return this.mapper.Map<T, SimsStakeholder>(dbItem.Entity);
+            return this.mapper.Map<T, Stakeholder>(dbItem.Entity);
         }
 
         public async Task Remove(int stakeholderId)
@@ -66,7 +66,7 @@ namespace FSA.SIMSManagerDb.Repositories
             await ctx.SaveChangesAsync();
         }
 
-        public async Task<SimsStakeholder> Update(SimsStakeholder stakeholder)
+        public async Task<Stakeholder> Update(Stakeholder stakeholder)
         {
             if (stakeholder.Id == 0) throw new ArgumentOutOfRangeException ("stakeholder missing");
 
@@ -84,7 +84,7 @@ namespace FSA.SIMSManagerDb.Repositories
 
             //var dbEnt = ctx.Stakeholders.Update(dbItem);
             await ctx.SaveChangesAsync();
-            return mapper.Map<T, SimsStakeholder>(dbItem);
+            return mapper.Map<T, Stakeholder>(dbItem);
         }
     }
 }

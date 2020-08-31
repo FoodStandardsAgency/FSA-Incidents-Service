@@ -17,12 +17,12 @@ namespace FSA.SIMSManagerDb.Repositories
         {
             this.linksManager = new GeneralLinkedRecordsRepository<SignalLinkDb, SignalNoteDb>(ctx, mapper);
         }
-        public Task<IEnumerable<LinkedRecord>> AddLinks(int from, IEnumerable<int> tos, string reason)
+        public Task<IEnumerable<SimsLinkedRecord>> AddLinks(int from, IEnumerable<int> tos, string reason)
         {
             return this.linksManager.AddLinks(from, tos, reason);
         }
 
-        public Task<LinkedRecord> RemoveLink(int from, int to)
+        public Task<SimsLinkedRecord> RemoveLink(int from, int to)
         {
             return this.linksManager.RemoveLink(from, to);
         }

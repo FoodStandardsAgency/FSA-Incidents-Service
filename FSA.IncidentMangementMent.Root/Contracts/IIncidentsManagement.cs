@@ -36,10 +36,10 @@ namespace FSA.IncidentsManagement.Root.Contracts
         Task<IPaging<IncidentDashboardView>> DashboardSearch(string search = null, int pageSize = 500, int startPage = 1);
         Task<IEnumerable<IncidentDashboardView>> DashboardIncidentLinks(int incidentId);
 
-        Task<IEnumerable<SimsStakeholder>> GetStakeholders(int incidentId);
-        Task<SimsStakeholder> AddStakeholder(SimsStakeholder stakeholder);
+        Task<IEnumerable<Stakeholder>> GetStakeholders(int incidentId);
+        Task<Stakeholder> AddStakeholder(Stakeholder stakeholder);
         Task RemoveStakeholder(int stakeholderId);
-        Task<SimsStakeholder> UpdateStakeholder(SimsStakeholder stakeholder);
+        Task<Stakeholder> UpdateStakeholder(Stakeholder stakeholder);
 
         Task BulkClose(IEnumerable<int> incidentIds);
 

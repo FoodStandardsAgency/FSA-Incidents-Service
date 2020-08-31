@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FSA.IncidentsManagement.Root.Models
 {
-    public class SimsStakeholder
+    public class Stakeholder
     {
         public int Id { get; set; }
         public int HostId { get; set; }

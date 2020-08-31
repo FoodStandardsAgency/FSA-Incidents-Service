@@ -189,6 +189,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         /// </summary>
         /// <param name="productId"></param>
         /// <returns></returns>
+ 
         private bool IsProductIncidentClosed(int productId)
         {
             return ctx.Products.AsNoTracking()

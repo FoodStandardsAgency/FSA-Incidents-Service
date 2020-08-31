@@ -19,14 +19,14 @@ namespace FSA.IncidentsManagement.Root.Contracts
         //Task<NotifierAddress> GetNotifier(int NotifierId);
         
 
-        Task<SimsAddress> Get(int OrganisationId);
-        Task<SimsAddress> Add(SimsAddress address);
-        Task<SimsAddress> Update(SimsAddress address);
+        Task<Address> Get(int OrganisationId);
+        Task<Address> Add(Address address);
+        Task<Address> Update(Address address);
 
-        Task Add(IEnumerable<SimsAddress> addresses);
+        Task Add(IEnumerable<Address> addresses);
 
 
-        Task<IEnumerable<SimsAddress>> FindAddress(string search);
+        Task<IEnumerable<Address>> FindAddress(string search);
 
 
 

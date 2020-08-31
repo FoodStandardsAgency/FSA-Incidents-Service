@@ -24,7 +24,7 @@ namespace FSA.SIMSManagerDb.Repositories
             this.LinksManager = new GeneralLinkedRecordsRepository<IncidentLinkDb, IncidentNoteDb>(ctx, mapper);
         }
 
-        public async Task<IEnumerable<LinkedRecord>> AddLinks(int from, IEnumerable<int> tos, string reason)
+        public async Task<IEnumerable<SimsLinkedRecord>> AddLinks(int from, IEnumerable<int> tos, string reason)
         {
             var addedLinks = await LinksManager.AddLinks(from, tos, reason);
 
@@ -48,7 +48,7 @@ namespace FSA.SIMSManagerDb.Repositories
             return addedLinks;
         }
 
-        public async Task<LinkedRecord> RemoveLink(int from, int to)
+        public async Task<SimsLinkedRecord> RemoveLink(int from, int to)
         {
             // Incidents that are linked must also be updated
             // unless they closed.

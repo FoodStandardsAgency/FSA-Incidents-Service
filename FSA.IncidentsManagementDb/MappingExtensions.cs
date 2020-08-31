@@ -77,7 +77,7 @@ namespace FSA.IncidentsManagementDb
             Title = @this.Title,
         };
 
-        public static IEnumerable<AddressDb> ToDb(this IEnumerable<SimsAddress> @this)
+        public static IEnumerable<AddressDb> ToDb(this IEnumerable<Address> @this)
         {
             foreach (var itm in @this)
             {
@@ -85,7 +85,7 @@ namespace FSA.IncidentsManagementDb
             }
         }
 
-        public static IEnumerable<SimsAddress> ToDb(this IEnumerable<AddressDb> @this)
+        public static IEnumerable<Address> ToDb(this IEnumerable<AddressDb> @this)
         {
             foreach (var itm in @this)
             {
@@ -102,7 +102,7 @@ namespace FSA.IncidentsManagementDb
         //}
 
 
-        public static SimsAddress ToClient(this AddressDb @this) => new SimsAddress
+        public static Address ToClient(this AddressDb @this) => new Address
         {
             Id = @this.Id,
             Title = @this.Title,
@@ -147,7 +147,7 @@ namespace FSA.IncidentsManagementDb
         }
 
 
-        public static AddressDb ToDb(this SimsAddress @this) => new AddressDb
+        public static AddressDb ToDb(this Address @this) => new AddressDb
         {
             Id = @this.Id,
             Title = @this.Title,
@@ -162,7 +162,7 @@ namespace FSA.IncidentsManagementDb
             Contacts = @this.Contacts.ToDb().ToList()
         };
 
-        public static SimsAddressContact ToClient(this AddressContactDb @this) => new SimsAddressContact
+        public static AddressContact ToClient(this AddressContactDb @this) => new AddressContact
         {
             Id = @this.Id,
             AddressId = @this.AddressId,
@@ -173,7 +173,7 @@ namespace FSA.IncidentsManagementDb
         };
 
 
-        public static IEnumerable<SimsAddressContact> ToClient(this IEnumerable<AddressContactDb> @this)
+        public static IEnumerable<AddressContact> ToClient(this IEnumerable<AddressContactDb> @this)
         {
             foreach (var itm in @this)
             {
@@ -181,7 +181,7 @@ namespace FSA.IncidentsManagementDb
             }
         }
 
-        public static AddressContactDb ToDb(this SimsAddressContact @this) => new AddressContactDb
+        public static AddressContactDb ToDb(this AddressContact @this) => new AddressContactDb
         {
             Id = @this.Id,
             AddressId = @this.AddressId,
@@ -196,7 +196,7 @@ namespace FSA.IncidentsManagementDb
         /// </summary>
         /// <param name="this"></param>
         /// <param name="entity"></param>
-        public static void ToDb(this SimsAddressContact @this, AddressContactDb entity)
+        public static void ToDb(this AddressContact @this, AddressContactDb entity)
         {
             //entity.AddressId = @this.AddressId;
             entity.EmailAddress = @this.EmailAddress;
@@ -205,7 +205,7 @@ namespace FSA.IncidentsManagementDb
             entity.IsMain = @this.IsMain;
         }
 
-        public static IEnumerable<AddressContactDb> ToDb(this IEnumerable<SimsAddressContact> @this)
+        public static IEnumerable<AddressContactDb> ToDb(this IEnumerable<AddressContact> @this)
         {
             foreach (var itm in @this)
             {
@@ -213,7 +213,7 @@ namespace FSA.IncidentsManagementDb
             }
         }
 
-        public static void ToDb(this SimsAddress @this, AddressDb entity)
+        public static void ToDb(this Address @this, AddressDb entity)
         {
             entity.Title = @this.Title;
             //entity.MainContact = @this.MainContact;
@@ -721,7 +721,7 @@ namespace FSA.IncidentsManagementDb
             NotifierType = @this.NotifierType.Title
         };
 
-        public static SimsStakeholder ToClient(this StakeholderDb @this) => new SimsStakeholder
+        public static Stakeholder ToClient(this StakeholderDb @this) => new Stakeholder
         {
             DiscriminatorId = @this.StakeholderDiscriminatorId,
             Email = @this.Email,
@@ -734,7 +734,7 @@ namespace FSA.IncidentsManagementDb
             AddressId = @this.AddressId
         };
 
-        public static void ToUpdateDb(this SimsStakeholder @this, StakeholderDb entity)
+        public static void ToUpdateDb(this Stakeholder @this, StakeholderDb entity)
         {
             entity.StakeholderDiscriminatorId = @this.DiscriminatorId;
             entity.Email = @this.Email;
@@ -746,7 +746,7 @@ namespace FSA.IncidentsManagementDb
             entity.Id = @this.Id;
         }
 
-        public static StakeholderDb ToDb(this SimsStakeholder @this) => new StakeholderDb
+        public static StakeholderDb ToDb(this Stakeholder @this) => new StakeholderDb
         {
             StakeholderDiscriminatorId = @this.DiscriminatorId,
             Email = @this.Email,
