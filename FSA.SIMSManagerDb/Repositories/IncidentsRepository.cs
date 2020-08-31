@@ -87,6 +87,7 @@ namespace FSA.SIMSManagerDb.Repositories
             var WhereClause = String.Join(" OR ", ids.Select(o => $"Id={o}"));
             // Grab the incidents, as long as they are not closed.
             var incidents = ctx.Incidents.FromSqlRaw($"SELECT * from Incidents where ({WhereClause}) AND IncidentStatusId <> {closeStatus}");
+            // update the officer, and Ensure they are also operned too.
             foreach (var incident in incidents)
             {
                 incident.IncidentStatusId = openStatus;
@@ -138,7 +139,7 @@ namespace FSA.SIMSManagerDb.Repositories
         /// <exception cref="NullReferenceException" />
         public async Task<BaseIncident> UpdateClassification(int id, int ClassificationId)
         {
-            //if (await this.IsClosed(id)) throw new IncidentClosedException("Incident is closed.");
+            if (await this.IsClosed(id)) throw new ArgumentOutOfRangeException("Cannot update a closed incident.");
 
             var dbItem = await ctx.Incidents.FindAsync(id);
             dbItem.ClassificationId = ClassificationId;
@@ -155,8 +156,8 @@ namespace FSA.SIMSManagerDb.Repositories
         {
             var dbItem = this.ctx.Incidents.Find(incident.CommonId);
 
-            //if (dbItem == null) throw new SIMSException("No incident was found");
-            //if (dbItem.IncidentStatusId == (int)IncidentStatusTypes.Closed) throw new IncidentClosedException("Cannot update a closed incident!");
+            if (dbItem == null) throw new NullReferenceException("No incident was found");
+            if (dbItem.IncidentStatusId == (int)IncidentStatusTypes.Closed) throw new ArgumentOutOfRangeException("Cannot update a closed incident!");
 
             // Logical changes.
             // Mark some differences since last update

@@ -8,7 +8,7 @@ namespace FSA.SIMSManagerDbEntities.Helpers
     /// This is a helper to stop having to do unwise lookups
     /// Remember DB IncidentStatus Id values and these MUST BE THE SAME!!
     /// </summary>
-    public enum IncidentStatusTypes
+    internal enum IncidentStatusTypes
     {
         Unknown = 0,
         Unassigned = 4,
@@ -16,7 +16,7 @@ namespace FSA.SIMSManagerDbEntities.Helpers
         Closed = 2
     }
 
-    public enum PrioritiesStatus
+    internal enum PrioritiesStatus
     {
         Unknown = 0,
         TBC = 1,

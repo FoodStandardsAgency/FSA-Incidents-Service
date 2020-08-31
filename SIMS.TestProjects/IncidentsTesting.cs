@@ -21,7 +21,6 @@ namespace SIMS.Database
         private string anotherId;
         private string userId3;
         private string miller;
-        private SimsDbContext ctx;
         private string conn;
 
         public IncidentsTesting()
@@ -73,7 +72,7 @@ namespace SIMS.Database
                 ); ;
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
-                var simsHost = new SimsDbHost(ctx, this.mapper, this.userId);
+                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var savedIncident = await simsHost.Incidents.Add(incident);
                 Assert.True(savedIncident.MostUniqueId != Guid.Empty && savedIncident.StatusId == (int)IncidentStatusTypes.Unassigned);
             }
@@ -112,7 +111,7 @@ namespace SIMS.Database
        );
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
-                var simsHost = new SimsDbHost(ctx, this.mapper, this.userId);
+                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var savedIncident = await simsHost.Incidents.Add(incident);
                 Assert.True(savedIncident.MostUniqueId != Guid.Empty);
             }
@@ -127,7 +126,7 @@ namespace SIMS.Database
             {
 
                 var fakeId = Guid.Parse("00000000-0000-0000-0000-000000000001");
-                var simsHost = new SimsDbHost(ctx, this.mapper, this.userId);
+                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var incidents = simsHost.Incidents;
                 var incident = await incidents.Get(1);
                 var updated = incident
@@ -144,7 +143,7 @@ namespace SIMS.Database
         {
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
-                var simsHost = new SimsDbHost(ctx, this.mapper, this.userId);
+                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
 
                 BaseIncident incident = await simsHost.Incidents.Get(22);
                 // Ensure we have a lead officer and we are open
@@ -160,7 +159,7 @@ namespace SIMS.Database
         {
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
-                var simsHost = new SimsDbHost(ctx, this.mapper, this.userId);
+                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
 
                 var incidentId = await simsHost.Incidents.Get(1);
 
@@ -183,7 +182,7 @@ namespace SIMS.Database
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
 
-                var simsHost = new SimsDbHost(ctx, this.mapper, this.userId);
+                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var incidentId = await simsHost.Incidents.Get(3);
 
                 var incident = await simsHost.Incidents.Get(incidentId.MostUniqueId);
@@ -203,7 +202,7 @@ namespace SIMS.Database
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
 
-                var simsHost = new SimsDbHost(ctx, this.mapper, this.userId);
+                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var incident = await simsHost.Incidents.Get(2);
 
                 // Closing shall replace the leadOfficer
@@ -223,7 +222,7 @@ namespace SIMS.Database
             // one of them (82) is known to be closed. It should NOT be assigned, and should be closed.
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
-                var simsHost = new SimsDbHost(ctx, this.mapper, this.userId);
+                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var fakeUser = Guid.NewGuid().ToString();
                 await simsHost.Incidents.BulkClose(new int[] { 82 });
                 await simsHost.Incidents.AssignLeadOfficer(new int[] { 39, 82, 102, 55 }, fakeUser);
@@ -243,7 +242,7 @@ namespace SIMS.Database
         {
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
-                var simsHost = new SimsDbHost(ctx, this.mapper, this.userId);
+                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var results = await simsHost.Incidents.DashboardSearch("peanuts");
                 Assert.True(results.TotalResults > 0);
             }
@@ -254,7 +253,7 @@ namespace SIMS.Database
         {
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
-                var simsHost = new SimsDbHost(ctx, this.mapper, this.userId);
+                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var data = (await simsHost.Incidents.DashboardSearch(PageSize: 10, StartPage: 519));
                 var mod = data.TotalResults % 10;
                 var allPages = (data.TotalResults / 10) + ((mod != 0) ? 1 : 0);
@@ -273,7 +272,7 @@ namespace SIMS.Database
         {
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
-                var simsHost = new SimsDbHost(ctx, this.mapper, this.userId);
+                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var data = await simsHost.Incidents.Get(32);
                 var updated = data.WithLocalAuthority(5);
 
@@ -288,7 +287,7 @@ namespace SIMS.Database
         {
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
-                var simsHost = new SimsDbHost(ctx, this.mapper, this.userId);
+                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var data = await simsHost.Incidents.Get(3);
                 var updated = data.WithLocalAuthority(null);
 
@@ -304,7 +303,7 @@ namespace SIMS.Database
         {
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
-                var simsHost = new SimsDbHost(ctx, this.mapper, this.userId);
+                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var data = await simsHost.Incidents.Get(59);
                 var updated = data.WithIncidentStatus((int)IncidentStatusTypes.Closed);
                 var item = await simsHost.Incidents.Update(updated);
@@ -317,7 +316,7 @@ namespace SIMS.Database
         {
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
-                var simsHost = new SimsDbHost(ctx, this.mapper, this.userId);
+                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var data = await simsHost.Incidents.Get(59);
                 var updated = data.WithTitle("New Title after closing");
                 //await Assert.ThrowsAsync<IncidentClosedException>(async () => await simsHost.Incidents.Update(updated));

@@ -36,7 +36,7 @@ namespace FSA.IncidentsManagementDb.Migrations
 
             using (var ctx = new SimsDbContext(dbContextBuilder.Options))
             {
-                var host = new SimsDbHost(ctx, mapper, "Paul Lawrence");
+                var host = SimsDbHost.CreateHost(ctx, mapper, "Paul Lawrence");
 
                 var incidentLinks = new IncidentLinkedRecords(ctx, mapper);
                 var signalLinks = new SignalsLinkedRecords(ctx, mapper);

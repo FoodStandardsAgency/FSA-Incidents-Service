@@ -5,6 +5,7 @@ using FSA.IncidentsManagement.Models;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagementDb.Entities.Helpers;
 using FSA.SIMSManagerDb;
+using FSA.SIMSManagerDb.Contracts;
 using FSA.SIMSManagerDb.MapperProfile;
 using FSA.SIMSManagerDb.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -76,7 +77,7 @@ namespace SIMS.TestProjects.Setup
             return new SimsDbContext(dbContextBuilder.Options);
         }
 
-        private async Task CreateAddress(SimsDbHost sims)
+        private async Task CreateAddress(ISimsDbHost sims)
         {
             var viewAddressModels = System.Text.Json.JsonSerializer.Deserialize<List<SimsAddressViewModel>>(File.OpenText("./Setup/orgs.json").ReadToEnd());
             var addresses = viewAddressModels.ToSimsClient().ToList();
@@ -108,7 +109,7 @@ namespace SIMS.TestProjects.Setup
 
         }
 
-        private async Task CreateIncidents(SimsDbHost sims, SimsDbContext ctx, SeedingConfigData seeder)
+        private async Task CreateIncidents(ISimsDbHost sims, SimsDbContext ctx, SeedingConfigData seeder)
         {
             var iManager = sims.Incidents;
             List<Task<BaseIncident>> TaskList = new List<Task<BaseIncident>>();
@@ -129,7 +130,7 @@ namespace SIMS.TestProjects.Setup
             await iManager.Add(newBatch);
         }
 
-        private async Task CreateIncidentProducts(SimsDbHost sims, SeedingConfigData seeder)
+        private async Task CreateIncidentProducts(ISimsDbHost sims, SeedingConfigData seeder)
         {
             var products = seeder.GetNewProducts();
             var tasks = products.Select(p => sims.Incidents.Products.Add(p.HostId, p));
@@ -145,13 +146,13 @@ namespace SIMS.TestProjects.Setup
 
         }
 
-        private async Task CreateSignals(SimsDbHost sims)
+        private async Task CreateSignals(ISimsDbHost sims)
         {
             var signals = SignalSeed.Signals();
             await sims.Signals.AddBatch(signals.Take(400).ToList());
         }
 
-        private async Task CreateIncidentStakeholders(SimsDbHost sims, SeedingConfigData seeder)
+        private async Task CreateIncidentStakeholders(ISimsDbHost sims, SeedingConfigData seeder)
         {
             var stakeholders = seeder.GetIncidentStakeholder.ToList();
 
@@ -162,7 +163,7 @@ namespace SIMS.TestProjects.Setup
 
         }
 
-        private async Task CreateSignalStakeholders(SimsDbHost sims, SeedingConfigData seeder)
+        private async Task CreateSignalStakeholders(ISimsDbHost sims, SeedingConfigData seeder)
         {
             var stakeholders = seeder.GetSignalStakeholder.ToList();
 
@@ -188,7 +189,7 @@ namespace SIMS.TestProjects.Setup
                         var mapper = new Mapper(mapperConfig);
 
                         var seeder = new SeedingConfigData();
-                        var SIMS = new SimsDbHost(ctx, mapper, ((JsonElement)Config["username"]).ToString());
+                        var SIMS = SimsDbHost.CreateHost(ctx, mapper, ((JsonElement)Config["username"]).ToString());
                         var t2 = CreateIncidents(SIMS, ctx, seeder);
 
                         try

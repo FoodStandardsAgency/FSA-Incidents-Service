@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using FSA.IncidentsManagement.Root.DTOS;
-using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb;
 using FSA.SIMSManagerDb.Repositories;
 using SIMS.TestProjects.Setup;
@@ -18,7 +17,6 @@ namespace SIMS.Database
         private string anotherId;
         private string userId3;
         private string miller;
-        private SimsDbContext ctx;
         private string conn;
         public IncidentStakeholdersTesting()
         {
@@ -47,7 +45,7 @@ namespace SIMS.Database
             };
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
-                var simsApp = new SimsDbHost(ctx, mapper, this.userId);
+                var simsApp = SimsDbHost.CreateHost(ctx, mapper, this.userId);
                 var createdStakeHolder = await simsApp.Incidents.Stakeholders.Add(newStakeHolder.HostId, newStakeHolder);
                 Assert.True(createdStakeHolder.Name == newStakeHolder.Name && createdStakeHolder.HostId == 17);
             }
@@ -66,7 +64,7 @@ namespace SIMS.Database
 
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
-                var simsApp = new SimsDbHost(ctx, mapper, this.userId);
+                var simsApp = SimsDbHost.CreateHost(ctx, mapper, this.userId);
                 await Assert.ThrowsAnyAsync<Exception>(async () => await simsApp.Incidents.Stakeholders.Add(0, newStakeHolder));
             }
         }
@@ -76,7 +74,7 @@ namespace SIMS.Database
         {
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
-                var simsApp = new SimsDbHost(ctx, mapper, this.userId);
+                var simsApp = SimsDbHost.CreateHost(ctx, mapper, this.userId);
                 var allStakeholders = await simsApp.Incidents.Stakeholders.GetAll(1);
                 var totalStakeholders = allStakeholders.Count;
                 await simsApp.Incidents.Stakeholders.Remove(2);

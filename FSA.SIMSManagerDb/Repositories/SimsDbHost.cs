@@ -2,19 +2,19 @@
 using FSA.IncidentsManagement.Root.Domain;
 using FSA.SIMSManagerDb.Contracts;
 using FSA.SIMSManagerDb.Entities;
+using System.Runtime.CompilerServices;
 
 namespace FSA.SIMSManagerDb.Repositories
 {
-    public class SimsDbHost
+    public class SimsDbHost : ISimsDbHost
     {
         private SimsDbContext ctx;
         private IMapper mapper;
 
-        public SimsDbHost(SimsDbContext ctx, IMapper mapper, string userId)
+        internal  SimsDbHost(SimsDbContext ctx, IMapper mapper)
         {
             this.ctx = ctx;
             this.mapper = mapper;
-            ctx.SetEditor(userId);
             this.Incidents = new IncidentsRepository(ctx, mapper);
             this.Signals = new SignalsRepository(ctx, mapper);
 
@@ -62,5 +62,10 @@ namespace FSA.SIMSManagerDb.Repositories
         public IDbLookups Lookups { get; set; }
         public IDbAddressRepository Addresses { get; }
 
+        public static ISimsDbHost CreateHost(SimsDbContext ctx, IMapper mapper, string userId)
+        {
+            ctx.SetEditor(userId);
+            return new SimsDbHost(ctx, mapper);
+        }
     }
 }

@@ -47,7 +47,7 @@ namespace SIMS.Database
             };
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
-                var simsApp = new SimsDbHost(ctx, mapper, this.userId);
+                var simsApp = SimsDbHost.CreateHost(ctx, mapper, this.userId);
                 var createdStakeHolder = await simsApp.Signals.Stakeholders.Add(newStakeHolder.HostId, newStakeHolder);
                 Assert.True(createdStakeHolder.Name == newStakeHolder.Name && createdStakeHolder.HostId == 17);
             }
@@ -66,17 +66,18 @@ namespace SIMS.Database
 
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
-                var simsApp = new SimsDbHost(ctx, mapper, this.userId);
+                var simsApp = SimsDbHost.CreateHost(ctx, mapper, this.userId);
                 await Assert.ThrowsAnyAsync<Exception>(async () => await simsApp.Signals.Stakeholders.Add(0, newStakeHolder));
             }
         }
 
         [Fact]
+
         public async Task RemoveStakeholder()
         {
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
-                var simsApp = new SimsDbHost(ctx, mapper, this.userId);
+                var simsApp = SimsDbHost.CreateHost(ctx, mapper, this.userId);
                 var allStakeholders = await simsApp.Signals.Stakeholders.GetAll(1);
                 var totalStakeholders = allStakeholders.Count;
                 await simsApp.Signals.Stakeholders.Remove(2);

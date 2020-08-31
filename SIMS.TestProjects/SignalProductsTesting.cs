@@ -53,7 +53,7 @@ namespace SIMS.Database
             };
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
-                var simsHost = new SimsDbHost(ctx, this.mapper, this.userId);
+                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var updatedProduct = await simsHost.Signals.Products.Add(product.HostId, product);
                 Assert.True(updatedProduct.Name == newName);
             }
@@ -66,7 +66,7 @@ namespace SIMS.Database
         {
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
-                var simsHost = new SimsDbHost(ctx, this.mapper, this.userId);
+                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var prodDisplay = await simsHost.Signals.Products.Get(1);
                 Assert.True(String.IsNullOrEmpty(prodDisplay.Amount) != false);
             }
@@ -95,7 +95,7 @@ namespace SIMS.Database
 
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
-                var simsHost = new SimsDbHost(ctx, this.mapper, this.userId);
+                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var updatedProduct = await simsHost.Signals.Products.Add(product.HostId, product);
                 Assert.True(updatedProduct.ProductDates.Count() > 0);
             }
@@ -125,7 +125,7 @@ namespace SIMS.Database
 
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
-                var simsHost = new SimsDbHost(ctx, this.mapper, this.userId);
+                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var updatedProduct = await simsHost.Signals.Products.Add(product.HostId, product);
                 Assert.True(updatedProduct.PackSizes.Count() == 2 && updatedProduct.Amount == "0.0");
             }
@@ -137,7 +137,7 @@ namespace SIMS.Database
         {
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
-                var simsHost = new SimsDbHost(ctx, this.mapper, this.userId);
+                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var product = await simsHost.Signals.Products.Get(1);
                 product.Name = "Updated Producted";
                 var pDates = product.ProductDates.ToList();
@@ -155,7 +155,7 @@ namespace SIMS.Database
         {
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
-                var simsHost = new SimsDbHost(ctx, this.mapper, this.userId);
+                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var addresses = await simsHost.Signals.Products.Fbos.GetAddresses(1);
             }
         }

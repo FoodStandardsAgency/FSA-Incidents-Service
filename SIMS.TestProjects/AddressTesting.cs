@@ -58,7 +58,7 @@ namespace SIMS.Database
 
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
-                var simsHost = new SimsDbHost(ctx, this.mapper, this.userId);
+                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var savedAddress = await simsHost.Addresses.Add(org);
                 Assert.True(savedAddress.Title == testTitle);
             }
@@ -71,7 +71,7 @@ namespace SIMS.Database
         {
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
-                var simsHost = new SimsDbHost(ctx, this.mapper, this.userId);
+                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var results = await simsHost.Addresses.FindAddress("black");
                 Assert.True(results.ToList().Count > 0);
             }

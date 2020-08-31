@@ -1,7 +1,5 @@
-﻿using FSA.IncidentsManagement.Root.Models;
-using System;
+﻿using FSA.IncidentsManagement.Root.DTOS;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Root.Domain
@@ -9,13 +7,13 @@ namespace FSA.IncidentsManagement.Root.Domain
     public interface ISIMSAddress
     {
 
-        Task<Address> Get(int OrganisationId);
-        Task<Address> Add(Address address);
-        Task<Address> Update(Address address);
+        Task<SimsAddress> Get(int OrganisationId);
+        Task<SimsAddress> Add(SimsAddress address);
+        Task<SimsAddress> Update(SimsAddress address);
 
-        Task Add(IEnumerable<Address> addresses);
+        Task Add(IEnumerable<SimsAddress> addresses);
 
 
-        Task<IEnumerable<Address>> FindAddress(string search);
+        Task<IEnumerable<SimsAddress>> FindAddress(string search);
     }
 }

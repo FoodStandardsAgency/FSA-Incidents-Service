@@ -1,4 +1,5 @@
-﻿using FSA.IncidentsManagement.Root.Models;
+﻿using FSA.IncidentsManagement.Root.DTOS;
+using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagement.Root.Shared;
 using System;
 using System.Collections.Generic;
@@ -9,14 +10,14 @@ namespace FSA.IncidentsManagement.Root.Domain
 {
     public interface ISIMSProducts
     {
-        Task<Product> Add(int hostId, Product newProduct);
-        Task<Product> Update(Product product);
-        Task<ProductDisplayModel> Get(int productId);
-        Task<IEnumerable<Product>> IncidentProducts(int incidentId);
-        Task<IEnumerable<ProductFboAddress>> GetProductAddresses(int productId);
-        Task<IPaging<ProductDashboard>> DashboardItems(int hostId, int pageSize = 10, int startPage = 1);
-        Task AssignFbo(int productId, int addressId, FboTypes types);
-        Task RemoveFbo(int productId, int addressId);
-        Task UpdateFbo(int productId, int addressId, FboTypes fboTypes);
+        Task<SimsProduct> Add(int hostId, SimsProduct newSimsProduct);
+        Task<SimsProduct> Update(SimsProduct SimsProduct);
+        Task<SimsProductDisplayModel> Get(int SimsProductId);
+        Task<IEnumerable<SimsProduct>> IncidentSimsProducts(int incidentId);
+        Task<IEnumerable<SimsProductFboAddress>> GetSimsProductAddresses(int SimsProductId);
+        Task<IPaging<SimsProductDashboard>> DashboardItems(int hostId, int pageSize = 10, int startPage = 1);
+        Task AssignFbo(int SimsProductId, int addressId, FboTypes types);
+        Task RemoveFbo(int SimsProductId, int addressId);
+        Task UpdateFbo(int SimsProductId, int addressId, FboTypes fboTypes);
     }
 }

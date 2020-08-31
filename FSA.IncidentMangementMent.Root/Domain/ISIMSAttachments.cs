@@ -10,7 +10,7 @@ namespace FSA.IncidentsManagement.Root.Domain
     {
         Task UpdateTags(int id, string docUrl, DocumentTagTypes tags);
         Task<IEnumerable<AttachmentFileInfo>> GetAllTags(int hostId);
-        Task<IEnumerable<AttachmentFileInfo>> FetchAllAttchmentsLinks(string hostId);
+        Task<IEnumerable<AttachmentFileInfo>> FetchAllAttchmentsLinks(int hostId);
         Task<AttachmentFileInfo> AddAttachment(string filePath, string filename, string hostId);
         Task<AttachmentLibraryInfo> EnsureLibrary(string stringId);
 
