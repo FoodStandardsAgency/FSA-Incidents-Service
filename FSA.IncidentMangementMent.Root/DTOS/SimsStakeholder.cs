@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FSA.IncidentsManagement.Root.DTOS
+﻿namespace FSA.IncidentsManagement.Root.DTOS
 {
     public class SimsStakeholder
     {
@@ -15,6 +11,6 @@ namespace FSA.IncidentsManagement.Root.DTOS
         public string Email { get; set; }
         public int DiscriminatorId { get; set; }
         public int? AddressId { get; set; }
-        public string addressBlock { get; set; }
+        public string AddressTitle { get; set; }
     }
 }

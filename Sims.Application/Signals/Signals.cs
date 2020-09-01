@@ -10,10 +10,12 @@ namespace Sims.Application
     class Signals : ISIMSSignals
     {
         private readonly ISimsDbHost dbHost;
+        private readonly ISIMSAttachmentHost attachments;
 
-        internal Signals(ISimsDbHost dbHost)
+        internal Signals(ISimsDbHost dbHost, ISIMSAttachmentHost attachments)
         {
             this.dbHost = dbHost;
+            this.attachments = attachments;
         }
 
         public ISIMSLinks Links => new SignalLinks(dbHost);
@@ -22,7 +24,7 @@ namespace Sims.Application
 
         public ISIMSProducts Products => new SignalProducts(dbHost);
 
-        public ISIMSAttachments Attachments => new SignalAttachments(dbHost);
+        public ISIMSAttachments Attachments => new SignalAttachments(dbHost, attachments.Signals);
 
         public ISIMSStakeholders Stakeholders => new SignalStakeholders(dbHost);
 

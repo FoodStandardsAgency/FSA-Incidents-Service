@@ -40,8 +40,10 @@ namespace FSA.SIMSManagerDb.Repositories
         {
 
             //if (incident.CommonId != 0) throw new IncidentExistsException("This item has already been added.");
-
+            if (String.IsNullOrEmpty(incident.LeadOfficer))
+                incident.WithIncidentStatus((int)IncidentStatusTypes.Open);
             var dbItem = mapper.Map<BaseIncident, IncidentDb>(incident);
+
             dbItem.IncidentCreated = dbItem.Created;
             dbItem.IncidentClosed = null; // Ensure lack of shenanigans
             var dbPonder = this.ctx.Incidents.Add(dbItem);

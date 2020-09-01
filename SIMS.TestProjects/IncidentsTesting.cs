@@ -26,7 +26,7 @@ namespace SIMS.Database
         public IncidentsTesting()
         {
             var cfg = new MapperConfigurationExpression();
-            cfg.AddProfile<SIMSMappingProfile>();
+            cfg.AddProfile<SimsDbMappingProfile>();
             var mapperConfig = new MapperConfiguration(cfg);
             this.mapper = new Mapper(mapperConfig);
 

@@ -1,11 +1,18 @@
+using AutoMapper;
+using AutoMapper.EquivalencyExpression;
 using EntityFrameworkCore.TemporalTables.Extensions;
 using FluentValidation.AspNetCore;
 using FSA.Attachments;
 using FSA.IncidentsManagement.Misc;
 using FSA.IncidentsManagement.ModelValidators;
 using FSA.IncidentsManagement.Root.Contracts;
+using FSA.IncidentsManagement.Root.Domain;
 using FSA.IncidentsManagementDb;
 using FSA.IncidentsManagementDb.Repositories;
+using FSA.SIMSManagerDb;
+using FSA.SIMSManagerDb.Contracts;
+using FSA.SIMSManagerDb.MapperProfile;
+using FSA.SIMSManagerDb.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -19,7 +26,6 @@ using Microsoft.Identity.Web.TokenCacheProviders.InMemory;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
-using System.Net.Http;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 
@@ -57,18 +63,6 @@ namespace FSA.IncidentsManagement
                 };
             });
             services.AddScoped<UserInfo>();
-
-            services.AddHttpClient();
-
-            //services.AddScoped<IFSATermStore, AttachmentTerms>((o) =>
-            //{
-            //    var conf = o.GetRequiredService<IConfiguration>();
-            //    var azureAd = conf.GetSection("AzureAd");
-            //    var sharepointSec = conf.GetSection("SharePoint");
-            //    var user = o.GetRequiredService<UserInfo>();
-            //  return  new AttachmentTerms(o.GetRequiredService<IHttpClientFactory>().CreateClient("taxonomy"), sharepointSec["SimsTermSetId"]); sharepointSec["TagsTermSetId"]);
-            //});
-
             // grabbing current userInfo
             services.AddHttpContextAccessor();
             // outside api calls [OBO]
@@ -108,7 +102,15 @@ namespace FSA.IncidentsManagement
             services.AddScoped<X509Certificate2>((o) => new X509Certificate2(Convert.FromBase64String(Configuration["SharePointAccess"])));
 
 
+            services.AddAutoMapper((cfg)=> {
+                cfg.AddProfile<SimsDbMappingProfile>();
+                cfg.AddProfile<WebMappingProfile>();
+                cfg.AddCollectionMappers();
+            });
+
             var fsaConn = Configuration.GetConnectionString("FSADbConn");
+            var simsConn = Configuration.GetConnectionString("SIMSDbConn");
+
             services.AddDbContext<FSADbContext>((provider, opts) => opts
                         //.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddDebug()))
                         .UseSqlServer(fsaConn, (d) =>
@@ -118,23 +120,52 @@ namespace FSA.IncidentsManagement
                         })
                         .UseInternalServiceProvider(provider));
 
+            services.AddDbContext<SimsDbContext>((provider, opts) => opts
+                .UseSqlServer(simsConn, (d) =>
+                {
+                    d.EnableRetryOnFailure(15);
+                    d.CommandTimeout(100);
+                })
+                .UseInternalServiceProvider(provider));
+
             services.AddEntityFrameworkSqlServer();
 
             services.RegisterTemporalTablesForDatabase<FSADbContext>();
+            
+            services.RegisterTemporalTablesForDatabase<SimsDbContext>();
 
-            services.AddScoped<ILookupDataHost, LookupDataHost>();
-
-            services.AddScoped<ISIMSManager, SIMSDataManager>(ids => new SIMSDataManager(ids.GetRequiredService<FSADbContext>(), ids.GetRequiredService<UserInfo>().GetUserId()));
-
-            services.AddScoped<IFSAAttachments, SPIncidentAttachments>((o) =>
+            services.AddScoped<ISimsDbHost, SimsDbHost>((srv)=> {
+                var db = srv.GetRequiredService<SimsDbContext>();
+                var map = srv.GetRequiredService<IMapper>();
+                var userInfo = srv.GetRequiredService<UserInfo>();
+                return SimsDbHost.CreateHost(db, map, userInfo.GetTenantId()) as SimsDbHost;
+            });
+            services.AddScoped<ISIMSAttachmentHost, SimsAttachments>((o) =>
             {
                 var user = o.GetRequiredService<UserInfo>();
                 var conf = o.GetRequiredService<IConfiguration>();
                 var section = conf.GetSection("AzureAd");
                 var sharePoint = conf.GetSection("SharePoint");
                 var cert = o.GetRequiredService<X509Certificate2>();
-                return new SPIncidentAttachments(section["ClientId"], user.GetTenantId(), cert, sharePoint["HostSiteCol"], $"https://{sharePoint["HostSiteCol"]}/{sharePoint["DocSiteUrl"]}", sharePoint["SimsDocCType"]);// Guid.Parse(sharePoint["SimsTermSetId"]));
+                var incidentAttach = new AttachConfig { ContentTypeId = sharePoint["SimsDocCType"], SiteUrl = $"https://{sharePoint["HostSiteCol"]}/{sharePoint["DocSiteUrl"]}" };
+                var signalsAttach = new AttachConfig { ContentTypeId = sharePoint["SimsDocCType"], SiteUrl = $"https://{sharePoint["HostSiteCol"]}/{sharePoint["DocSiteUrl"]}" };
+                return new SimsAttachments(section["ClientId"], user.GetTenantId(), cert, sharePoint["HostSiteCol"], incidentAttach, signalsAttach);
             });
+
+            #region v1
+            services.AddScoped<ILookupDataHost, LookupDataHost>();
+            services.AddScoped<ISIMSManager, SIMSDataManager>(ids => new SIMSDataManager(ids.GetRequiredService<FSADbContext>(), ids.GetRequiredService<UserInfo>().GetUserId()));
+            services.AddScoped<IFSAAttachments, SPAttachments>((o) =>
+            {
+                var user = o.GetRequiredService<UserInfo>();
+                var conf = o.GetRequiredService<IConfiguration>();
+                var section = conf.GetSection("AzureAd");
+                var sharePoint = conf.GetSection("SharePoint");
+                var cert = o.GetRequiredService<X509Certificate2>();
+                return new SPAttachments(section["ClientId"], user.GetTenantId(), cert, sharePoint["HostSiteCol"], $"https://{sharePoint["HostSiteCol"]}/{sharePoint["DocSiteUrl"]}", sharePoint["SimsDocCType"]);// Guid.Parse(sharePoint["SimsTermSetId"]));
+            });
+            #endregion
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

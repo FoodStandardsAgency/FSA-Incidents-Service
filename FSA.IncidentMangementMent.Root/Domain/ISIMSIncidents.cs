@@ -10,6 +10,8 @@ namespace FSA.IncidentsManagement.Root.Domain
     public interface ISIMSIncidents
     {
         Task<BaseIncident> Get(int Id);
+
+        [Obsolete]
         Task<BaseIncident> Get(Guid guid);
         Task<IEnumerable<BaseIncident>> GetAll();
         Task<BaseIncident> Add(BaseIncident incident);

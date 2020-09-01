@@ -1,5 +1,6 @@
 ﻿using FSA.IncidentsManagement.Root.Contracts;
 using FSA.IncidentsManagement.Root.Models;
+using FSA.SIMSManagerDb.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -19,21 +20,21 @@ namespace FSA.IncidentsManagement.Controllers
     public class LookupsController : ControllerBase
     {
         private readonly ILogger<LookupsController> log;
-        private readonly ILookupDataHost lookupdata;
+        private readonly ISimsDbHost simsDbHost;
 
-        public LookupsController(ILogger<LookupsController> log, ILookupDataHost lookupdata)
+        public LookupsController(ILogger<LookupsController> log, ISimsDbHost simsDbHost)
         {
             this.log = log;
-            this.lookupdata = lookupdata;
+            this.simsDbHost = simsDbHost;
         }
 
         [HttpGet("")]
         [ProducesResponseType(typeof(LookupsHost), 200)]
         [ProducesResponseType(500)]
-        [SwaggerOperation(Summary = "All The lookups in the WORLD")]
+        [SwaggerOperation(Summary = "All lookups")]
         public IActionResult GetAll()
         {
-            return new OkObjectResult(this.lookupdata.GetAll());
+            return new OkObjectResult(this.simsDbHost.Lookups.GetAll());
         }
     }
 }

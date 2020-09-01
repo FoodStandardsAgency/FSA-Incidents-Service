@@ -26,7 +26,7 @@ namespace FSA.IncidentsManagementDb.Migrations
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json").Build();
             var cfg = new MapperConfigurationExpression();
-            cfg.AddProfile<SIMSMappingProfile>();
+            cfg.AddProfile<SimsDbMappingProfile>();
             var mapperConfig = new MapperConfiguration(cfg);
             var mapper = new Mapper(mapperConfig);
 

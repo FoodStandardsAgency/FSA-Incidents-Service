@@ -76,5 +76,10 @@ namespace FSA.SIMSManagerDb.Repositories
             var dbItem = await this.ctx.Signals.AsNoTracking().FirstOrDefaultAsync(o => o.Id == signalId);
             return dbItem != null;
         }
+
+        public Task<object> DashboardIncidentLinks(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

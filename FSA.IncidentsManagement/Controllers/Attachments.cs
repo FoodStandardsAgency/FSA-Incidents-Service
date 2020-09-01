@@ -49,7 +49,7 @@ namespace FSA.IncidentsManagement.Controllers
             return new OkObjectResult(null);
         }
 
-        [HttpPost("{incidentSignal/{id}")]
+        [HttpPost("{incidentSignal}/{id}")]
         [SwaggerOperation(Summary = "Add Attachment to incident/signal")]
         [ProducesResponseType(typeof((string fileName, string url)), 200)]
         [ProducesResponseType(500)]

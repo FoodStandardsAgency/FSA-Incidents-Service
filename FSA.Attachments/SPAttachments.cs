@@ -1,15 +1,12 @@
 ﻿using FSA.IncidentsManagement.Root.Contracts;
+using FSA.IncidentsManagement.Root.Domain;
 using FSA.IncidentsManagement.Root.Models;
-using Microsoft.Graph;
 using Microsoft.SharePoint.Client;
-using Microsoft.SharePoint.Client.Taxonomy;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Threading.Tasks;
 using List = Microsoft.SharePoint.Client.List;
 
@@ -18,7 +15,7 @@ namespace FSA.Attachments
     /// <summary>
     /// Manage the attachments to a particular incident
     /// </summary>
-    public class SPIncidentAttachments : IFSAAttachments
+    public class SPAttachments : ISimSpAttachments, IFSAAttachments
     {
 
         private readonly X509Certificate2 cert;
@@ -26,15 +23,15 @@ namespace FSA.Attachments
         private readonly string contentTypeId;
 
         private readonly Func<Task<string>> fetchAccessToken;
-        private readonly Guid SimsIdTermSet;
+        
         private readonly string[] scopes;
-        public SPIncidentAttachments(string clientId, string tenantId, X509Certificate2 cert, string hostUrl, string siteUrl, string contentTypeId)
+        public SPAttachments(string clientId, string tenantId, X509Certificate2 cert, string hostUrl, string siteUrl, string contentTypeId)
         {
             //this.clientId = clientId;
             this.cert = cert;
             this.siteUrl = siteUrl;
             this.contentTypeId = contentTypeId;
-            SimsIdTermSet = Guid.Empty;
+            
             //this.tenantId = tenantId;
             this.scopes = new string[] { $"https://{hostUrl}/.default" }; // "https://{hostUrl}.com/TermStore.ReadWrite.All" };
             this.fetchAccessToken = () => SpContextHelper.GetApplicationAuthenticatedClient(clientId, this.cert, this.scopes, tenantId);
@@ -88,35 +85,8 @@ namespace FSA.Attachments
             }
 
         }
-
-        private async Task EnureIncidentTerm(string incidentId, ClientContext ctx)
-        {
-            //var taxonomySession = TaxonomySession.GetTaxonomySession(ctx);
-            //var tStore = taxonomySession.GetDefaultKeywordsTermStore();
-            //var simsIds = tStore.GetTermSet(this.SimsIdTermSet);
-
-            //var tCollection = taxonomySession.GetTermSetsByTermLabel(new string[] { incidentId }, 1033);
-            //ctx.Load(tCollection);
-            //await ctx.ExecuteQueryAsync();
-            //var createNewTerm = true;
-            //if (tCollection.Count > 0)
-            //{
-            //    foreach (var termSet in tCollection)
-            //    {
-            //        if (termSet.Id == this.SimsIdTermSet)
-            //            createNewTerm = false;
-            //    }
-            //}
-            //if (createNewTerm)
-            //{
-            //    //var newTerm = simsIds.CreateTerm(incidentId, 1033, Guid.NewGuid());
-            //    //ctx.Load(newTerm);
-            //    //await ctx.ExecuteQueryAsync();
-            //}
-
-        }
-
-        public async Task<(string filename, string url)> AddAttachment(string filePath, string fileName, string incidentId)
+        
+        public async Task<(string filename, string url)> AddAttachment(string filePath, string fileName, string hostIdentifier)
         {
             var accessToken = await fetchAccessToken();
             using (var ctx = SpContextHelper.GetClientContextWithAccessToken(this.siteUrl, accessToken))
@@ -124,7 +94,7 @@ namespace FSA.Attachments
                 try
                 {
                     // Ensure we have a library related to the incident.(It is created if not)
-                    var uploadLib = await EnsureList(incidentId, ctx);
+                    var uploadLib = await EnsureList(hostIdentifier, ctx);
 
                     var fileSize = new FileInfo(filePath).Length;
                     var fileMb = (fileSize / 1024) / 1024;
@@ -143,7 +113,7 @@ namespace FSA.Attachments
                         var fileFields = ctx.Web.GetFileByServerRelativeUrl(uploadedFile.ServerRelativeUrl);
                         ctx.Load(fileFields, f => f.ListItemAllFields["EncodedAbsUrl"]);
                         fileItem["ContentTypeId"] = this.contentTypeId;
-                        fileItem["SIMSIncidentId"] = incidentId; // Custom Column
+                        fileItem["SIMSIncidentId"] = hostIdentifier; // Custom Column
                         fileItem.Update();
                         await ctx.ExecuteQueryAsync();
                         return (uploadedFile.Name, String.IsNullOrEmpty(uploadedFile.LinkingUrl) ? fileFields.ListItemAllFields["EncodedAbsUrl"] as string : uploadedFile.LinkingUrl);
@@ -296,12 +266,12 @@ namespace FSA.Attachments
             return newFile;
         }
 
-        public async Task<IEnumerable<AttachmentFileInfo>> FetchAllAttchmentsLinks(string incidentId)
+        public async Task<IEnumerable<AttachmentFileInfo>> FetchAllAttchmentsLinks(string listName)
         {
             var accessToken = await fetchAccessToken();
             using (var ctx = SpContextHelper.GetClientContextWithAccessToken(this.siteUrl, accessToken))
             {
-                var theLib = await EnsureList(incidentId, ctx);
+                var theLib = await EnsureList(listName, ctx);
                 var files = theLib.RootFolder.Files;
                 ctx.Load(files, o=>o.Include(p=>p.ListItemAllFields["EncodedAbsUrl"], p=>p.Name));
                 await ctx.ExecuteQueryAsync();
@@ -366,11 +336,6 @@ namespace FSA.Attachments
                 }
             }
             return ("", "");
-        }
-
-        public Task<bool> ReplaceAttachment(FileStream filem, string url)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<AttachmentLibraryInfo> EnsureLibrary(string incidentId)

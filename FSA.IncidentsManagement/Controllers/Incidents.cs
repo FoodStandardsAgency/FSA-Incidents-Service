@@ -1,14 +1,12 @@
 ﻿using FSA.IncidentsManagement.Models;
 using FSA.IncidentsManagement.Root.Contracts;
 using FSA.IncidentsManagement.Root.Models;
+using FSA.SIMSManagerDb.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Controllers
@@ -20,13 +18,13 @@ namespace FSA.IncidentsManagement.Controllers
     public class IncidentsController : ControllerBase
     {
         private readonly ILogger<IncidentsController> log;
-        private readonly ISIMSManager fsaData;
+        private readonly ISimsDbHost fsaData;
         private readonly IFSAAttachments attachments;
 
-        public IncidentsController(ILogger<IncidentsController> log, ISIMSManager fsaData, IFSAAttachments attachments)
+        public IncidentsController(ILogger<IncidentsController> log, ISimsDbHost simsDbHost, IFSAAttachments attachments)
         {
             this.log = log;
-            this.fsaData = fsaData;
+            this.fsaData = simsDbHost;
             this.attachments = attachments;
         }
 
@@ -48,7 +46,6 @@ namespace FSA.IncidentsManagement.Controllers
         [Produces("application/json")]
         public async Task<IActionResult> UpdateIncident([FromBody, SwaggerParameter("Updated Incident", Required = true)] IncidentUpdateModel incident)
         {
-
             return new OkObjectResult(await this.fsaData.Incidents.Update(incident.ToClient()));
         }
 

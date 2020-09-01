@@ -184,7 +184,7 @@ namespace SIMS.TestProjects.Setup
                         ctx.Database.EnsureDeleted();
                         ctx.Database.Migrate();
                         var cfg = new MapperConfigurationExpression();
-                        cfg.AddProfile<SIMSMappingProfile>();
+                        cfg.AddProfile<SimsDbMappingProfile>();
                         var mapperConfig = new MapperConfiguration(cfg);
                         var mapper = new Mapper(mapperConfig);
 

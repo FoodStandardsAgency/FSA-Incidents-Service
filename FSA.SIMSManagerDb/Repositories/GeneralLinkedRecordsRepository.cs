@@ -68,7 +68,7 @@ namespace FSA.SIMSManagerDb.Repositories
         {
 
             var allTo = new HashSet<int>(tos);
-            // remove our from numb if present
+            // ensure we are not trying to link to the same record
             allTo.Remove(from);
 
             List<SimsLinkedRecord> results = new List<SimsLinkedRecord>();

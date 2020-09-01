@@ -12,10 +12,12 @@ namespace Sims.Application
     public class Incidents : ISIMSIncidents
     {
         private readonly ISimsDbHost dbHost;
+        private readonly ISIMSAttachmentHost attachments;
 
-        internal Incidents(ISimsDbHost dbHost)
+        internal Incidents(ISimsDbHost dbHost, ISIMSAttachmentHost attachments)
         {
             this.dbHost = dbHost;
+            this.attachments = attachments;
         }
 
         public ISIMSLinks Links => new IncidentLinks(dbHost);
@@ -24,7 +26,7 @@ namespace Sims.Application
 
         public ISIMSProducts Products => new IncidentProducts(dbHost);
 
-        public ISIMSAttachments Attachments => new IncidentAttachments(dbHost);
+        public ISIMSAttachments Attachments => new IncidentAttachments(dbHost, attachments.Incidents);
 
         public ISIMSStakeholders Stakeholders => new IncidentStakeholders(dbHost);
 
@@ -42,7 +44,7 @@ namespace Sims.Application
 
         public Task<bool> Exists(int incidentId)
         {
-            if (incidentId == 0) return Task.Run(()=>false);
+            if (incidentId == 0) return Task.Run(() => false);
             return dbHost.Incidents.Exists(incidentId);
         }
 
@@ -64,10 +66,10 @@ namespace Sims.Application
         /// <param name="id"></param>
         /// <returns></returns>
         public Task<IncidentsDisplayModel> GetDisplayItem(int id) => dbHost.Incidents.GetDisplayItem(id);
-    
+
         public Task<bool> IsClosed(int incidentId)
         {
-            if (incidentId == 0) return Task.Run(()=>true);
+            if (incidentId == 0) return Task.Run(() => true);
             return dbHost.Incidents.IsClosed(incidentId);
         }
 
@@ -75,13 +77,14 @@ namespace Sims.Application
         {
             try
             {
+                if (incident.CommonId == 0) throw new SimsItemMissing("Incident Id missing");
                 return await dbHost.Incidents.Update(incident);
             }
-            catch(NullReferenceException ex)
+            catch (NullReferenceException ex)
             {
                 throw new SimsIncidentMissingException("Incident missing");
             }
-            catch(ArgumentOutOfRangeException ex)
+            catch (ArgumentOutOfRangeException ex)
             {
                 throw new SimsIncidentClosedException("Cannot update closed incident");
             }

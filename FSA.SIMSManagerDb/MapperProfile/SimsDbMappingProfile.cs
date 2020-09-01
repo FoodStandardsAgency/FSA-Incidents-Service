@@ -13,9 +13,9 @@ using System.Text;
 
 namespace FSA.SIMSManagerDb.MapperProfile
 {
-    public class SIMSMappingProfile : Profile
+    public class SimsDbMappingProfile : Profile
     {
-        public SIMSMappingProfile()
+        public SimsDbMappingProfile()
         {
             
             CreateMap<CategoryDb, Category>(MemberList.Destination);
@@ -46,11 +46,11 @@ namespace FSA.SIMSManagerDb.MapperProfile
 
             CreateMap<SignalStakeholderDb, SimsStakeholder>()
                 .ForMember(a => a.DiscriminatorId, m => m.MapFrom(a => a.StakeholderDiscriminatorId))
-                .ForMember(a => a.addressBlock, m => m.MapFrom(a => $"{(a.Address != null ? a.Address.AddressLine1 : String.Empty)} {(a.Address != null ? a.Address.PostCode : String.Empty)}"));
+                .ForMember(a => a.AddressTitle, m => m.MapFrom(a => $"{(a.Address != null ? a.Address.AddressLine1 : String.Empty)} {(a.Address != null ? a.Address.PostCode : String.Empty)}"));
 
             CreateMap<IncidentStakeholderDb, SimsStakeholder>()
                 .ForMember(a => a.DiscriminatorId, m => m.MapFrom(a => a.StakeholderDiscriminatorId))
-                .ForMember(a => a.addressBlock, m => m.MapFrom(a => $"{(a.Address != null ? a.Address.AddressLine1 : String.Empty)} {(a.Address != null ? a.Address.PostCode : String.Empty)}"));
+                .ForMember(a => a.AddressTitle, m => m.MapFrom(a => $"{(a.Address != null ? a.Address.AddressLine1 : String.Empty)} {(a.Address != null ? a.Address.PostCode : String.Empty)}"));
 
             CreateMap<IncidentNoteDb, SimsNote>(MemberList.Destination);
 

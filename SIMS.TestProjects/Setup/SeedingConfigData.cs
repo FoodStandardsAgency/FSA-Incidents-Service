@@ -35,7 +35,7 @@ namespace SIMS.TestProjects.Setup
         internal IMapper GetDbAutoMapper()
         {
             var cfg = new MapperConfigurationExpression();
-            cfg.AddProfile<SIMSMappingProfile>();
+            cfg.AddProfile<SimsDbMappingProfile>();
             cfg.AddCollectionMappers();
             var mapperConfig = new MapperConfiguration(cfg);
             return new Mapper(mapperConfig);

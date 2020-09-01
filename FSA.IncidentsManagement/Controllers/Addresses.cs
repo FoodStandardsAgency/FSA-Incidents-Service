@@ -1,5 +1,8 @@
-﻿using FSA.IncidentsManagement.Models;
+﻿using AutoMapper;
+using FSA.IncidentsManagement.Models;
 using FSA.IncidentsManagement.Root.Contracts;
+using FSA.IncidentsManagement.Root.DTOS;
+using FSA.SIMSManagerDb.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -18,12 +21,14 @@ namespace FSA.IncidentsManagement.Controllers
     {
 
         private readonly ILogger<AddressesController> log;
-        private readonly ISIMSManager fsaData;
+        private readonly ISimsDbHost simsDbHost;
+        private readonly IMapper mapper;
 
-        public AddressesController(ILogger<AddressesController> log, ISIMSManager fsaData)
+        public AddressesController(ILogger<AddressesController> log, ISimsDbHost simsDbHost, IMapper mapper)
         {
             this.log = log;
-            this.fsaData = fsaData;
+            this.simsDbHost = simsDbHost;
+            this.mapper = mapper;
         }
 
         [HttpPost("Find")]
@@ -31,7 +36,7 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(typeof(List<SimsAddressViewModel>), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
-        public async Task<IActionResult> FindAddress([FromBody] AddressSearchModel addressSearch) => new OkObjectResult((await fsaData.Addresses.FindAddress(addressSearch.Search)).ToWeb().ToList());
+        public async Task<IActionResult> FindAddress([FromBody] AddressSearchModel addressSearch) => new OkObjectResult((await simsDbHost.Addresses.FindAddress(addressSearch.Search)).ToList());
 
         [HttpPost()]
         [SwaggerOperation(Summary = "Add Address")]
@@ -40,9 +45,9 @@ namespace FSA.IncidentsManagement.Controllers
         [Produces("application/json")]
         public async Task<IActionResult> AddAddress([FromBody] SimsAddressViewModel newAddress)
         {
-            var newDbAddress = newAddress.ToClient();
-            var createdAddress = await fsaData.Addresses.Add(newDbAddress);
-            return new OkObjectResult(createdAddress);
+            var newDbAddress = mapper.Map<SimsAddressViewModel, SimsAddress>(newAddress);
+            var createdAddress = await simsDbHost.Addresses.Add(newDbAddress);
+            return new OkObjectResult(mapper.Map<SimsAddress, SimsAddressViewModel>(createdAddress));
         }
 
         [HttpPut()]
@@ -50,11 +55,12 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(typeof(SimsAddressViewModel), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
-        public async Task<IActionResult> UpdateAddress([FromBody] SimsAddressViewModel newAddress)
+        public async Task<IActionResult> UpdateAddress([FromBody] SimsAddressViewModel updateAddress)
         {
-            var newDbAddress = newAddress.ToClient();
-            var createdAddress = await fsaData.Addresses.Update(newDbAddress);
-            return new OkObjectResult(createdAddress.ToWeb());
+            var updateAppAddress = mapper.Map<SimsAddressViewModel, SimsAddress>(updateAddress);
+            var createdAddress = await simsDbHost.Addresses.Update(updateAppAddress);
+            return new OkObjectResult(mapper.Map<SimsAddress, SimsAddressViewModel>(createdAddress));
+
         }
 
 
@@ -65,8 +71,9 @@ namespace FSA.IncidentsManagement.Controllers
         [Produces("application/json")]
         public async Task<IActionResult> GetAddress([FromRoute] int addressId)
         {
-            var address = await fsaData.Addresses.Get(addressId);
-            return new OkObjectResult(address.ToWeb());
+            var address = await simsDbHost.Addresses.Get(addressId);
+            return new OkObjectResult(mapper.Map<SimsAddress, SimsAddressViewModel>(address));
+
         }
     }
 }

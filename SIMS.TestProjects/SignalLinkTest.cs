@@ -22,7 +22,7 @@ namespace SIMS.Database
         public SignalLinkTest()
         {
             var cfg = new MapperConfigurationExpression();
-            cfg.AddProfile<SIMSMappingProfile>();
+            cfg.AddProfile<SimsDbMappingProfile>();
             var mapperConfig = new MapperConfiguration(cfg);
             this.mapper = new Mapper(mapperConfig);
 

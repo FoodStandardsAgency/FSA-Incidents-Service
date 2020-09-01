@@ -1,8 +1,11 @@
-﻿using FSA.IncidentsManagement.Root.Domain;
+﻿using FSA.IncidentsManagement.Root;
+using FSA.IncidentsManagement.Root.Domain;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb.Contracts;
 using Microsoft.BusinessData.MetadataModel;
+using Microsoft.Graph;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sims.Application
@@ -10,32 +13,47 @@ namespace Sims.Application
     internal class IncidentAttachments : ISIMSAttachments
     {
         private ISimsDbHost dbHost;
+        private readonly ISimSpAttachments attachments;
 
-        public IncidentAttachments(ISimsDbHost dbHost)
+        public IncidentAttachments(ISimsDbHost dbHost, ISimSpAttachments attachments)
         {
             this.dbHost = dbHost;
+            this.attachments = attachments;
         }
 
-        public Task<AttachmentFileInfo> AddAttachment(string filePath, string filename, string hostId)
+        public async Task<AttachmentFileInfo> AddAttachment(string filePath, string filename, int hostId)
         {
-            throw new System.NotImplementedException();
+            var incidentLibrary = AppExtensions.GenerateIncidentId(hostId);
+            var item =  await attachments.AddAttachment(filePath, filename, incidentLibrary);
+            return new AttachmentFileInfo
+            {
+                FileName = item.filename,
+                Tags = new List<int>(),
+                Url = item.url
+            };
         }
 
-        public Task<AttachmentLibraryInfo> EnsureLibrary(string stringId)
+        public Task<AttachmentLibraryInfo> EnsureLibrary(int hostId)
         {
-            throw new System.NotImplementedException();
+            var incidentLibrary = AppExtensions.GenerateIncidentId(hostId);
+            return attachments.EnsureLibrary(incidentLibrary);
         }
 
-        public async Task<IEnumerable<AttachmentFileInfo>> FetchAllAttchmentsLinks(int hostId)
+        public Task<IEnumerable<AttachmentFileInfo>> FetchAllAttchmentsLinks(int hostId)
         {
-            //var items = await dbHost.Incidents.Attachments.GetAttachmentTags(hostId);
-            //await 
-            throw new System.NotImplementedException();
+            var incidentLibrary = AppExtensions.GenerateIncidentId(hostId);
+            return attachments.FetchAllAttchmentsLinks(incidentLibrary);
         }
 
-        public Task<IEnumerable<AttachmentFileInfo>> GetAllTags(int hostId)
+        public async Task<IEnumerable<AttachmentFileInfo>> GetAllTags(int hostId)
         {
-            throw new System.NotImplementedException();
+            var tagInfo  = await dbHost.Incidents.Attachments.GetAttachmentTags(hostId);
+            return tagInfo.Select(o => new AttachmentFileInfo
+            {
+                FileName = o.fileUrl,
+                Tags = AppExtensions.SelectedFlags<DocumentTagTypes>(o.tags).Select(o => (int)o).ToList(),
+                Url = o.fileUrl
+            });
         }
 
         public Task UpdateTags(int id, string docUrl, DocumentTagTypes tags)
