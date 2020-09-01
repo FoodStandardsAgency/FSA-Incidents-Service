@@ -1,14 +1,11 @@
 ﻿using FSA.IncidentsManagement.Models;
-using FSA.IncidentsManagement.Root.Contracts;
-using FSA.IncidentsManagement.Root.Models;
+using FSA.IncidentsManagement.Root.Domain;
+using FSA.IncidentsManagement.Root.DTOS;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Controllers
@@ -20,17 +17,17 @@ namespace FSA.IncidentsManagement.Controllers
     public class SignalsController:ControllerBase
     {
         private readonly ILogger<SignalsController> log;
-        private ISIMSManager fsaData;
+        private ISIMSApplication simsApp;
 
-        public SignalsController(ILogger<SignalsController> log, ISIMSManager fsaData)
+        public SignalsController(ILogger<SignalsController> log, ISIMSApplication simsApp)
         {
             this.log = log;
-            this.fsaData = fsaData;
+            this.simsApp = simsApp;
         }
 
         [HttpGet()]
         [SwaggerOperation(Summary = "Get incident by id")]
-        [ProducesResponseType(typeof(Signal), 200)]
+        [ProducesResponseType(typeof(SimsSignal), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
         public async Task<IActionResult> GetSignal(int id)
@@ -41,27 +38,28 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpPut()]
         [SwaggerOperation(Summary = "Replace an incident")]
-        [ProducesResponseType(typeof(Signal), 200)]
+        [ProducesResponseType(typeof(SimsSignal), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
-        public async Task<IActionResult> UpdateSignal([FromBody, SwaggerParameter("Updated Signal", Required = true)] Signal signal)
+        public async Task<IActionResult> UpdateSignal([FromBody, SwaggerParameter("Updated Signal", Required = true)] SimsSignal signal)
         {
             return new OkObjectResult(null);
         }
 
         [HttpPost()]
         [SwaggerOperation(Summary = "Create an incident")]
-        [ProducesResponseType(typeof(Signal), 200)]
+        [ProducesResponseType(typeof(SimsSignal), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
-        public async Task<IActionResult> CreateSignal([FromBody, SwaggerParameter("Create Signal", Required = true)] Signal signal)
+        public async Task<IActionResult> CreateSignal([FromBody, SwaggerParameter("Create Signal", Required = true)] SimsSignal signal)
         {
+
             return new OkObjectResult("");
         }
 
         [HttpPost("Status/{id}")]
         [SwaggerOperation(Summary = "Update status of an incident")]
-        [ProducesResponseType(typeof(Signal), 200)]
+        [ProducesResponseType(typeof(SimsSignal), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
         public async Task<IActionResult> UpdateStatus([FromRoute] int id, [Required] int statusId)
@@ -75,7 +73,7 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(500)]
         public async Task<IActionResult> UpdateLeadOfficer([FromBody, SwaggerParameter("Update Lead officer entries", Required = true)] UpdateLeadOfficerModel officer)
         {
-           // await this.fsaData.Incidents.AssignLeadOfficer(officer.IncidentIds, officer.Officer);
+           // await this.simsApp.Incidents.AssignLeadOfficer(officer.IncidentIds, officer.Officer);
             return new OkResult();
         }
 
@@ -86,7 +84,7 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(500)]
         public async Task<IActionResult> PromoteToIncident([FromRoute] int id)
         {
-            // await this.fsaData.Incidents.AssignLeadOfficer(officer.IncidentIds, officer.Officer);
+            // await this.simsApp.Incidents.AssignLeadOfficer(officer.IncidentIds, officer.Officer);
             return new OkResult();
         }
     }

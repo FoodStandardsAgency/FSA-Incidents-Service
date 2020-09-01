@@ -15,12 +15,12 @@ namespace Sims.Application
             this.dbHost = dbHost;
         }
 
-        public Task<SimsNote> AddNote(int hostId, string note)
+        public Task<SimsNote> Add(int hostId, string note)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<IEnumerable<SimsNote>> GetNotes(int hostId)
+        public Task<IEnumerable<SimsNote>> GetAll(int hostId)
         {
             throw new System.NotImplementedException();
         }

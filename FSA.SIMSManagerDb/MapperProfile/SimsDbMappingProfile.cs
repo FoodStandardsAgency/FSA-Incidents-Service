@@ -92,8 +92,8 @@ namespace FSA.SIMSManagerDb.MapperProfile
                                                               .Concat(a.FromLinks.Select(o => o.ToId).ToList())));
 
 
-            CreateMap<SimsSignal, SignalDb>(MemberList.Source);
-            CreateMap<SignalDb, SimsSignal>(MemberList.Destination);
+            CreateMap<IncidentsManagement.Root.DTOS.SimsSignal, SignalDb>(MemberList.Source);
+            CreateMap<SignalDb, IncidentsManagement.Root.DTOS.SimsSignal>(MemberList.Destination);
 
             CreateMap<IncidentProductDb, SimsProduct>(MemberList.Destination)
                 .ForMember(a => a.AdditionalInfo, m => m.MapFrom(a => String.IsNullOrEmpty(a.AdditionalInfo) ? "" : a.AdditionalInfo))

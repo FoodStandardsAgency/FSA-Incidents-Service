@@ -1,4 +1,6 @@
 ﻿using FSA.IncidentsManagement.Root.DTOS;
+using FSA.IncidentsManagement.Root.Models;
+using FSA.IncidentsManagement.Root.Shared;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -19,6 +21,9 @@ namespace FSA.SIMSManagerDb.Contracts
         IDbAttachmentsRepository Attachments { get; }
         IDbStakeholdersRepository Stakeholders { get; }
 
-        Task<object> DashboardIncidentLinks(int id);
+        Task<IEnumerable<SignalDashboardView>> DashboardLinks(int id);
+        Task<IPaging<SignalDashboardView>> DashboardSearch(string search = null, int pageSize = 500, int startPage = 1);
+        Task UpdateLeadOfficer(IEnumerable<int> ids, string user);
+        Task UpdateStatus(int signalId, string status);
     }
 }

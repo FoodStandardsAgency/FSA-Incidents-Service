@@ -1,6 +1,10 @@
 ﻿using FSA.IncidentsManagement.Root.Domain;
+using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb.Contracts;
+using Sims.Application.Exceptions;
+using Sims.Application.Helpers;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sims.Application
@@ -14,24 +18,34 @@ namespace Sims.Application
             this.dbHost = dbHost;
         }
 
-        public Task<Stakeholder> Add(int hostId, Stakeholder stakeholder)
+        public Task<SimsStakeholder> Add(int hostId, SimsStakeholder stakeHolder)
         {
-            throw new System.NotImplementedException();
+            if (stakeHolder.DiscriminatorId == (int)SimsStakeholderAddressTypes.FSA && stakeHolder.AddressId > 0)
+                throw new SIMSException("FSA Member cannot have an address assigned");
+            if (stakeHolder.AddressId == 0) stakeHolder.AddressId = null;
+            return dbHost.Incidents.Stakeholders.Add(hostId, stakeHolder);
         }
 
-        public Task<Stakeholder> GetAll(int hostId, int Stakeholder)
+        public async Task<IEnumerable<SimsStakeholder>> GetAll(int signalId)
         {
-            throw new System.NotImplementedException();
+            if (signalId == 0) throw new SimsItemMissing("Stakeholder id missing");
+            return await this.dbHost.Incidents.Stakeholders.GetAll(signalId);
         }
 
-        public Task<Stakeholder> Remove(Stakeholder stakeholder)
+        public Task Remove(int stakeholderId)
         {
-            throw new System.NotImplementedException();
+            if (stakeholderId == 0) throw new SimsItemMissing("Stakeholder id missing");
+
+            return this.dbHost.Incidents.Stakeholders.Remove(stakeholderId);
         }
 
-        public Task<Stakeholder> Update(Stakeholder stakeholder)
+        public async Task<SimsStakeholder> Update(SimsStakeholder stakeHolder)
         {
-            throw new System.NotImplementedException();
+            if (stakeHolder.DiscriminatorId == (int)SimsStakeholderAddressTypes.FSA && stakeHolder.AddressId > 0)
+                throw new SIMSException("FSA Member cannot have an address assigned");
+            if (stakeHolder.Id == 0) throw new SimsItemMissing("Stakeholder id missing");
+            if (stakeHolder.HostId == 0) throw new SimsIncidentMissingException("Signal id missing");
+            return await this.dbHost.Incidents.Stakeholders.Update(stakeHolder);
         }
     }
 }

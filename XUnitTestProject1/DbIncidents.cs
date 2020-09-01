@@ -295,7 +295,7 @@ namespace FSA.UnitTests.Db
             {
                 ISIMSManager incidents = new SIMSDataManager(ctx, userId);
                 var data = await incidents.Incidents.Get(59);
-                var updated = data.WithIncidentStatus((int)IncidentStatusTypes.Closed);
+                var updated = data.WithStatus((int)IncidentStatusTypes.Closed);
                 var item = await incidents.Incidents.Update(updated);
                 Assert.True(item.IncidentClosed != null && item.StatusId == (int)IncidentStatusTypes.Closed);
             }
@@ -325,7 +325,7 @@ namespace FSA.UnitTests.Db
             {
                 ISIMSManager sims = new SIMSDataManager(ctx, userId);
                 var data = await sims.Incidents.Get(incidentId);
-                await Assert.ThrowsAsync<IncidentClosedException>(async () => await sims.Incidents.Update(data.WithIncidentStatus(2)));
+                await Assert.ThrowsAsync<IncidentClosedException>(async () => await sims.Incidents.Update(data.WithStatus(2)));
 
             }
 

@@ -1,5 +1,6 @@
 ﻿using FSA.IncidentsManagement.Models;
 using FSA.IncidentsManagement.Root.Contracts;
+using FSA.IncidentsManagement.Root.Domain;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb.Contracts;
 using Microsoft.AspNetCore.Authorization;
@@ -21,12 +22,12 @@ namespace FSA.IncidentsManagement.Controllers
     public class NotesController : ControllerBase
     {
         private readonly ILogger<NotesController> log;
-        private readonly ISimsDbHost simsDbHost;
+        private readonly ISIMSApplication simsApp;
 
-        public NotesController(ILogger<NotesController> log, ISimsDbHost fsaData)
+        public NotesController(ILogger<NotesController> log, ISIMSApplication simsApp)
         {
             this.log = log;
-            this.simsDbHost = fsaData;
+            this.simsApp = simsApp;
         }
 
         [HttpPost("{incidentSignal}")]
@@ -39,8 +40,8 @@ namespace FSA.IncidentsManagement.Controllers
             {
                 _ = incidentSignal.ToLower() switch
                 {
-                    "incident" => await this.simsDbHost.Incidents.Notes.Add(addIncident.IncidentId, addIncident.Note),
-                    "signal" => await this.simsDbHost.Signals.Notes.Add(addIncident.IncidentId, addIncident.Note),
+                    "incident" => await this.simsApp.Incidents.Notes.Add(addIncident.IncidentId, addIncident.Note),
+                    "signal" => await this.simsApp.Signals.Notes.Add(addIncident.IncidentId, addIncident.Note),
                     _ => throw new InvalidOperationException()
             };
                 return new OkResult();
@@ -64,8 +65,8 @@ namespace FSA.IncidentsManagement.Controllers
             {
                 _ = incidentSignal.ToLower() switch
                 {
-                    "incident" => await this.simsDbHost.Incidents.Notes.GetAll(id),
-                    "signal" => await this.simsDbHost.Signals.Notes.GetAll(id),
+                    "incident" => await this.simsApp.Incidents.Notes.GetAll(id),
+                    "signal" => await this.simsApp.Signals.Notes.GetAll(id),
                     _ => throw new InvalidOperationException()
                 };
                 return new OkResult();

@@ -24,6 +24,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.TokenCacheProviders.InMemory;
 using Microsoft.OpenApi.Models;
+using Sims.Application;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.Reflection;
@@ -134,11 +135,12 @@ namespace FSA.IncidentsManagement
             
             services.RegisterTemporalTablesForDatabase<SimsDbContext>();
 
-            services.AddScoped<ISimsDbHost, SimsDbHost>((srv)=> {
+            services.AddScoped<ISIMSApplication, SimsManangement>((srv)=> {
                 var db = srv.GetRequiredService<SimsDbContext>();
                 var map = srv.GetRequiredService<IMapper>();
                 var userInfo = srv.GetRequiredService<UserInfo>();
-                return SimsDbHost.CreateHost(db, map, userInfo.GetTenantId()) as SimsDbHost;
+                var attachments = srv.GetRequiredService<ISIMSAttachmentHost>();
+                return new SimsManangement(db, map, attachments, userInfo.GetTenantId());
             });
             services.AddScoped<ISIMSAttachmentHost, SimsAttachments>((o) =>
             {

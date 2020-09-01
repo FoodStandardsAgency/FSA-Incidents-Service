@@ -29,7 +29,7 @@ namespace Sims.Application
 
         public Task<SimsAddress> Update(SimsAddress address)
         {
-            if (address.Id != 0) throw new SimsItemMissing("Address Id missing");
+            if (address.Id == 0) throw new SimsItemMissing("Address Id missing");
             return dbHost.Addresses.Update(address);
         }
     }

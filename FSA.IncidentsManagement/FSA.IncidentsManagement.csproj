@@ -37,6 +37,7 @@
     <ProjectReference Include="..\FSA.IncidentMangementMent.Root\FSA.IncidentsManagement.Root.csproj" />
     <ProjectReference Include="..\FSA.IncidentsManagementDb\FSA.IncidentsManagementDb.csproj" />
     <ProjectReference Include="..\FSA.SIMSManagerDb\FSA.SIMSManagerDb.csproj" />
+    <ProjectReference Include="..\Sims.Application\Sims.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>

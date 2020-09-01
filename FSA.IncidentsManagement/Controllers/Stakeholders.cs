@@ -1,7 +1,6 @@
-﻿using FSA.IncidentsManagement.Models;
-using FSA.IncidentsManagement.Root.Contracts;
+﻿using FSA.IncidentsManagement.Misc;
+using FSA.IncidentsManagement.Root.Domain;
 using FSA.IncidentsManagement.Root.DTOS;
-using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +8,6 @@ using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Controllers
@@ -22,12 +20,14 @@ namespace FSA.IncidentsManagement.Controllers
     public class StakeholdersController : ControllerBase
     {
         private readonly ILogger<StakeholdersController> log;
-        private readonly ISimsDbHost simsDbhost;
+        private readonly ISIMSApplication simsApp;
 
-        public StakeholdersController(ILogger<StakeholdersController> log, ISimsDbHost simsDbhost)
+
+        public StakeholdersController(ILogger<StakeholdersController> log, ISIMSApplication simsApp)
         {
             this.log = log;
-            this.simsDbhost = simsDbhost;
+            this.simsApp = simsApp;
+
         }
 
 
@@ -42,8 +42,8 @@ namespace FSA.IncidentsManagement.Controllers
             {
                 var stakeholders = incidentSignal.ToLower() switch
                 {
-                    "incident" => await this.simsDbhost.Incidents.Stakeholders.GetAll(id),
-                    "signal" => await this.simsDbhost.Signals.Stakeholders.GetAll(id),
+                    IncidentOrSignal.Incidents => await this.simsApp.Incidents.Stakeholders.GetAll(id),
+                    "signal" => await this.simsApp.Signals.Stakeholders.GetAll(id),
                     _ => throw new InvalidOperationException(),
                 };
 
@@ -66,11 +66,11 @@ namespace FSA.IncidentsManagement.Controllers
         {
             try
             {
-                
+
                 var newStakeholder = incidentSignal.ToLower() switch
                 {
-                    "incident" => await this.simsDbhost.Incidents.Stakeholders.Add(stakeholder.Id, stakeholder),
-                    "signal" => await this.simsDbhost.Signals.Stakeholders.Add(stakeholder.Id, stakeholder),
+                    IncidentOrSignal.Incidents => await this.simsApp.Incidents.Stakeholders.Add(stakeholder.HostId, stakeholder),
+                    IncidentOrSignal.Signals => await this.simsApp.Signals.Stakeholders.Add(stakeholder.HostId, stakeholder),
                     _ => throw new InvalidOperationException(),
                 };
                 return new OkObjectResult(newStakeholder);
@@ -100,8 +100,8 @@ namespace FSA.IncidentsManagement.Controllers
 
                 var newStakeholder = incidentSignal.ToLower() switch
                 {
-                    "incident" => await this.simsDbhost.Incidents.Stakeholders.Update(stakeholder),
-                    "signal" => await this.simsDbhost.Signals.Stakeholders.Update(stakeholder),
+                    IncidentOrSignal.Incidents => await this.simsApp.Incidents.Stakeholders.Update(stakeholder),
+                    IncidentOrSignal.Signals => await this.simsApp.Signals.Stakeholders.Update(stakeholder),
                     _ => throw new InvalidOperationException(),
                 };
                 return new OkObjectResult(newStakeholder);
@@ -131,8 +131,8 @@ namespace FSA.IncidentsManagement.Controllers
 
                 var t = incidentSignal.ToLower() switch
                 {
-                    "incident" =>  this.simsDbhost.Incidents.Stakeholders.Remove(id),
-                    "signal" =>  this.simsDbhost.Signals.Stakeholders.Remove(id),
+                    IncidentOrSignal.Incidents => this.simsApp.Incidents.Stakeholders.Remove(id),
+                    IncidentOrSignal.Signals => this.simsApp.Signals.Stakeholders.Remove(id),
                     _ => throw new InvalidOperationException(),
                 };
                 await t;

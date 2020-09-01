@@ -1,14 +1,9 @@
-﻿using FSA.IncidentsManagement.Root.Contracts;
+﻿using FSA.IncidentsManagement.Root.Domain;
 using FSA.IncidentsManagement.Root.Models;
-using FSA.SIMSManagerDb.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Controllers
 {
@@ -20,12 +15,12 @@ namespace FSA.IncidentsManagement.Controllers
     public class LookupsController : ControllerBase
     {
         private readonly ILogger<LookupsController> log;
-        private readonly ISimsDbHost simsDbHost;
+        private readonly ISIMSApplication simsApp;
 
-        public LookupsController(ILogger<LookupsController> log, ISimsDbHost simsDbHost)
+        public LookupsController(ILogger<LookupsController> log, ISIMSApplication simsApp)
         {
             this.log = log;
-            this.simsDbHost = simsDbHost;
+            this.simsApp = simsApp;
         }
 
         [HttpGet("")]
@@ -34,7 +29,7 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "All lookups")]
         public IActionResult GetAll()
         {
-            return new OkObjectResult(this.simsDbHost.Lookups.GetAll());
+            return new OkObjectResult(this.simsApp.Lookups.GetAll());
         }
     }
 }

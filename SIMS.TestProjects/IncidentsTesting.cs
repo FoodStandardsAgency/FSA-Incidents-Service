@@ -305,7 +305,7 @@ namespace SIMS.Database
             {
                 var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var data = await simsHost.Incidents.Get(59);
-                var updated = data.WithIncidentStatus((int)IncidentStatusTypes.Closed);
+                var updated = data.WithStatus((int)IncidentStatusTypes.Closed);
                 var item = await simsHost.Incidents.Update(updated);
                 Assert.True(item.IncidentClosed != null && item.StatusId == (int)IncidentStatusTypes.Closed);
             }

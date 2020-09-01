@@ -15,12 +15,12 @@ namespace Sims.Application
             this.dbHost = dbHost;
         }
 
-        public Task<SimsNote> AddNote(int incidentId, string note)
+        public Task<SimsNote> Add(int incidentId, string note)
         {
             return dbHost.Incidents.Notes.Add(incidentId, note);
         }
 
-        public Task<IEnumerable<SimsNote>> GetNotes(int incidentId)
+        public Task<IEnumerable<SimsNote>> GetAll(int incidentId)
         {
             return dbHost.Incidents.Notes.GetAll(incidentId);
 

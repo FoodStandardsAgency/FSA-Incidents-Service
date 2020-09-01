@@ -1,6 +1,9 @@
 ﻿using FSA.IncidentsManagement.Root.Domain;
+using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb.Contracts;
+using Sims.Application.Exceptions;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sims.Application
@@ -14,24 +17,29 @@ namespace Sims.Application
             this.dbHost = dbHost;
         }
 
-        public Task<Stakeholder> Add(int hostId, Stakeholder stakeholder)
+        public Task<SimsStakeholder> Add(int hostId, SimsStakeholder SimsStakeholder)
         {
-            throw new System.NotImplementedException();
+            return this.dbHost.Signals.Stakeholders.Add(hostId, SimsStakeholder);
+
         }
 
-        public Task<Stakeholder> GetAll(int hostId, int Stakeholder)
+        public async Task<IEnumerable<SimsStakeholder>> GetAll(int incidentId)
         {
-            throw new System.NotImplementedException();
+            if (incidentId == 0) throw new SimsItemMissing("incident id missing");
+            return await this.dbHost.Signals.Stakeholders.GetAll(incidentId);
         }
 
-        public Task<Stakeholder> Remove(Stakeholder stakeholder)
+        public Task Remove(int stakeholderId)
         {
-            throw new System.NotImplementedException();
+            if (stakeholderId == 0) throw new SimsItemMissing("Stakeholder id missing");
+            return this.dbHost.Signals.Stakeholders.Remove(stakeholderId);
         }
 
-        public Task<Stakeholder> Update(Stakeholder stakeholder)
+        public async Task<SimsStakeholder> Update(SimsStakeholder SimsStakeholder)
         {
-            throw new System.NotImplementedException();
+            if (SimsStakeholder.Id == 0) throw new SimsItemMissing("Stakeholder id missing");
+            if (SimsStakeholder.HostId == 0) throw new SimsSignalMissingException("Signal id missing");
+            return await this.dbHost.Signals.Stakeholders.Update(SimsStakeholder);
         }
     }
 }

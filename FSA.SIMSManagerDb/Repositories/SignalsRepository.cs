@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using FSA.IncidentsManagement.Root.DTOS;
+using FSA.IncidentsManagement.Root.Models;
+using FSA.IncidentsManagement.Root.Shared;
 using FSA.SIMSManagerDb.Contracts;
 using FSA.SIMSManagerDb.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -77,7 +79,22 @@ namespace FSA.SIMSManagerDb.Repositories
             return dbItem != null;
         }
 
-        public Task<object> DashboardIncidentLinks(int id)
+        public Task<IEnumerable<SignalDashboardView>> DashboardLinks(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IPaging<SignalDashboardView>> DashboardSearch(string search = null, int pageSize = 500, int startPage = 1)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateLeadOfficer(IEnumerable<int> ids, string user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateStatus(int signalId, string status)
         {
             throw new NotImplementedException();
         }

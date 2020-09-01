@@ -303,35 +303,35 @@ namespace FSA.IncidentsManagement.Root.Models
                    lastChangedDate: @this.LastChangedDate
                    );
 
-        public static BaseIncident WithIncidentStatus(this BaseIncident @this, int incidentStatus) => new BaseIncident(
-           @this.CommonId,
-          mostUniqueId: @this.MostUniqueId,
-          incidentTitle: @this.IncidentTitle,
+        //public static BaseIncident WithIncidentStatus(this BaseIncident @this, int incidentStatus) => new BaseIncident(
+        //   @this.CommonId,
+        //  mostUniqueId: @this.MostUniqueId,
+        //  incidentTitle: @this.IncidentTitle,
           
-          incidentTypeId: @this.IncidentTypeId,
-          contactMethodId: @this.ContactMethodId,
-          statusId: incidentStatus,
-          signalStatusId: @this.SignalStatusId,
-          notifierId: @this.NotifierId,
-          principalFBOId: @this.PrincipalFBOId,
-          priorityId: @this.PriorityId,
-          classificationId: @this.ClassificationId,
-          dataSourceId: @this.DataSourceId,
-                  signalUrl: @this.SignalUrl,
-          productTypeId: @this.ProductTypeId,
-          leadOfficer: @this.LeadOfficer,
-          leadOffice: @this.LeadOffice,
-          adminLeadId: @this.AdminLeadId,
-          fieldOfficer: @this.FieldOfficer,
-          leadLocalAuthorityId: @this.LeadLocalAuthorityId,
-          lAAdvised: @this.LAAdvised,
-          deathIllnessId: @this.DeathIllnessId,
-          receivedOn: @this.ReceivedOn,
-          incidentCreated: @this.IncidentCreated,
-          incidentClosed: @this.IncidentClosed,
-          lastChangedBy: @this.LastChangedBy,
-           lastChangedDate: @this.LastChangedDate
-           );
+        //  incidentTypeId: @this.IncidentTypeId,
+        //  contactMethodId: @this.ContactMethodId,
+        //  statusId: incidentStatus,
+        //  signalStatusId: @this.SignalStatusId,
+        //  notifierId: @this.NotifierId,
+        //  principalFBOId: @this.PrincipalFBOId,
+        //  priorityId: @this.PriorityId,
+        //  classificationId: @this.ClassificationId,
+        //  dataSourceId: @this.DataSourceId,
+        //          signalUrl: @this.SignalUrl,
+        //  productTypeId: @this.ProductTypeId,
+        //  leadOfficer: @this.LeadOfficer,
+        //  leadOffice: @this.LeadOffice,
+        //  adminLeadId: @this.AdminLeadId,
+        //  fieldOfficer: @this.FieldOfficer,
+        //  leadLocalAuthorityId: @this.LeadLocalAuthorityId,
+        //  lAAdvised: @this.LAAdvised,
+        //  deathIllnessId: @this.DeathIllnessId,
+        //  receivedOn: @this.ReceivedOn,
+        //  incidentCreated: @this.IncidentCreated,
+        //  incidentClosed: @this.IncidentClosed,
+        //  lastChangedBy: @this.LastChangedBy,
+        //   lastChangedDate: @this.LastChangedDate
+        //   );
 
         public static BaseIncident WithPrincipalFbo(this BaseIncident @this, int? addressId) => new BaseIncident(
                                @this.CommonId,

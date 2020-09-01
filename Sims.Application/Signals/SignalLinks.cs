@@ -15,12 +15,12 @@ namespace Sims.Application
             this.dbHost = dbHost;
         }
 
-        public Task<IEnumerable<SimsLinkedRecord>> AddLinks(int from, IEnumerable<int> to, string reason)
+        public Task<IEnumerable<SimsLinkedRecord>> Add(int from, IEnumerable<int> to, string reason)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<SimsLinkedRecord> RemoveLink(int from, int to)
+        public Task<SimsLinkedRecord> Remove(int from, int to)
         {
             throw new System.NotImplementedException();
         }

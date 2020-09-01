@@ -1,7 +1,9 @@
 ﻿using FSA.IncidentsManagement.Root.Domain;
+using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagement.Root.Shared;
 using FSA.SIMSManagerDb.Contracts;
+using Sims.Application.Exceptions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -28,24 +30,29 @@ namespace Sims.Application
 
         public ISIMSStakeholders Stakeholders => new SignalStakeholders(dbHost);
 
-        public Task<Signal> Add(Signal signal)
+        public Task<SimsSignal> Add(SimsSignal signal)
         {
-            throw new System.NotImplementedException();
+            if (signal.Id !=0) throw new SimsItemExists("Signal already exists!");
+            return dbHost.Signals.Add(signal);
         }
 
-        public Task<IEnumerable<SignalDashboardView>> DashboardLinks(int signalId)
+        public async Task<IEnumerable<SignalDashboardView>> DashboardLinks(int signalId)
         {
-            throw new System.NotImplementedException();
+            return await dbHost.Signals.DashboardLinks(signalId);
+
         }
 
         public Task<IPaging<SignalDashboardView>> DashboardSearch(string search = null, int pageSize = 500, int startPage = 1)
         {
-            throw new System.NotImplementedException();
+            return dbHost.Signals.DashboardSearch(search, pageSize, startPage);
+
         }
 
-        public Task<Signal> Get(int signalId)
+        public Task<SimsSignal> Get(int signalId)
         {
-            throw new System.NotImplementedException();
+
+            if (signalId == 0) throw new SIMSException("Unknown signal Id.");
+            return dbHost.Signals.Get(signalId);
         }
 
         public Task<int> PromoteToIncident(int signalId)
@@ -53,19 +60,19 @@ namespace Sims.Application
             throw new System.NotImplementedException();
         }
 
-        public Task<Signal> Update(Signal signal)
+        public Task<SimsSignal> Update(SimsSignal signal)
         {
-            throw new System.NotImplementedException();
+            return dbHost.Signals.Update(signal);
         }
 
-        public Task UpdateLeadOfficer(IEnumerable<int> id, string user)
+        public Task UpdateLeadOfficer(IEnumerable<int> ids, string user)
         {
-            throw new System.NotImplementedException();
+            return dbHost.Signals.UpdateLeadOfficer(ids, user);
         }
 
-        public Task UpdateStatus(int signalId, int status)
+        public Task UpdateStatus(int signalId, string status)
         {
-            throw new System.NotImplementedException();
+            return dbHost.Signals.UpdateStatus(signalId, status);
         }
     }
 

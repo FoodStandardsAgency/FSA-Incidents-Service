@@ -1,5 +1,6 @@
 ﻿using FSA.IncidentsManagement.Models;
 using FSA.IncidentsManagement.Root.Contracts;
+using FSA.IncidentsManagement.Root.Domain;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb.Contracts;
 using Microsoft.AspNetCore.Authorization;
@@ -18,13 +19,13 @@ namespace FSA.IncidentsManagement.Controllers
     public class IncidentsController : ControllerBase
     {
         private readonly ILogger<IncidentsController> log;
-        private readonly ISimsDbHost fsaData;
+        private readonly ISIMSApplication simsApp;
         private readonly IFSAAttachments attachments;
 
-        public IncidentsController(ILogger<IncidentsController> log, ISimsDbHost simsDbHost, IFSAAttachments attachments)
+        public IncidentsController(ILogger<IncidentsController> log, ISIMSApplication simsApp, IFSAAttachments attachments)
         {
             this.log = log;
-            this.fsaData = simsDbHost;
+            this.simsApp = simsApp;
             this.attachments = attachments;
         }
 
@@ -36,7 +37,7 @@ namespace FSA.IncidentsManagement.Controllers
         public async Task<IActionResult> GetIncident(int id)
         {
             if (id == 0) return BadRequest("No Incident Id was passed");
-            return new OkObjectResult(await this.fsaData.Incidents.GetDisplayItem(id));
+            return new OkObjectResult(await this.simsApp.Incidents.GetDisplayItem(id));
         }
 
         [HttpPut()]
@@ -46,7 +47,7 @@ namespace FSA.IncidentsManagement.Controllers
         [Produces("application/json")]
         public async Task<IActionResult> UpdateIncident([FromBody, SwaggerParameter("Updated Incident", Required = true)] IncidentUpdateModel incident)
         {
-            return new OkObjectResult(await this.fsaData.Incidents.Update(incident.ToClient()));
+            return new OkObjectResult(await this.simsApp.Incidents.Update(incident.ToClient()));
         }
 
         [HttpPost()]
@@ -56,7 +57,7 @@ namespace FSA.IncidentsManagement.Controllers
         [Produces("application/json")]
         public async Task<IActionResult> CreateIncident([FromBody, SwaggerParameter("Create Incident", Required = true)] IncidentCreateModel incident)
         {
-            return new OkObjectResult(await this.fsaData.Incidents.Add(incident.ToClient()));
+            return new OkObjectResult(await this.simsApp.Incidents.Add(incident.ToClient()));
         }
 
         [HttpPost("Classification/{id}")]
@@ -66,7 +67,7 @@ namespace FSA.IncidentsManagement.Controllers
         [Produces("application/json")]
         public async Task<IActionResult> UpdateClassification([FromRoute] int id, [Required] int classificationId)
         {
-            return new OkObjectResult(await this.fsaData.Incidents.UpdateClassification(id, classificationId));
+            return new OkObjectResult(await this.simsApp.Incidents.UpdateClassification(id, classificationId));
         }
 
         [HttpPost("Status/{id}")]
@@ -76,7 +77,7 @@ namespace FSA.IncidentsManagement.Controllers
         [Produces("application/json")]
         public async Task<IActionResult> UpdateStatus([FromRoute] int id, [Required] int statusId)
         {
-            return new OkObjectResult(await this.fsaData.Incidents.UpdateStatus(id, statusId));
+            return new OkObjectResult(await this.simsApp.Incidents.UpdateStatus(id, statusId));
         }
 
         [HttpPost("CloseAll")]
@@ -85,7 +86,7 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(500)]
         public async Task<IActionResult> CloseAll([Required] int[] incidentIds)
         {
-            await this.fsaData.Incidents.BulkClose(incidentIds);
+            await this.simsApp.Incidents.BulkClose(incidentIds);
             return new OkResult();
         }
 
@@ -95,7 +96,7 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(500)]
         public async Task<IActionResult> UpdateLeadOfficer([FromBody, SwaggerParameter("Update Lead officer entries", Required = true)] UpdateLeadOfficerModel officer)
         {
-            await this.fsaData.Incidents.AssignLeadOfficer(officer.Ids, officer.Officer);
+            await this.simsApp.Incidents.UpdateLeadOfficer(officer.Ids, officer.Officer);
             return new OkResult();
         }
 

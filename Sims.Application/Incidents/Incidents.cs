@@ -3,6 +3,7 @@ using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagement.Root.Shared;
 using FSA.SIMSManagerDb.Contracts;
 using Sims.Application.Exceptions;
+using Sims.Application.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -33,6 +34,9 @@ namespace Sims.Application
         public Task<BaseIncident> Add(BaseIncident incident)
         {
             if (incident.CommonId != 0) throw new SimsIncidentExistsException("This incident has already been added.");
+
+            if (String.IsNullOrEmpty(incident.LeadOfficer) && incident.StatusId != (int)SimsIncidentStatusTypes.Open)
+                incident = incident.WithStatus((int)SimsIncidentStatusTypes.Open);
             return dbHost.Incidents.Add(incident);
         }
 
