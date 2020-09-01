@@ -2,6 +2,7 @@
 using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagement.Root.Shared;
 using FSA.IncidentsManagementDb.Entities;
+using FSA.IncidentsManagementDb.Entities.Helpers;
 using FSA.IncidentsManagementDb.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -31,9 +32,13 @@ namespace FSA.IncidentsManagementDb.Repositories
 
             if (incident.CommonId != 0) throw new IncidentExistsException("This item has already been added.");
 
+            if (string.IsNullOrEmpty(incident.LeadOfficer))
+                incident = incident.WithIncidentStatus((int)IncidentStatus.Open);
+
             var dbItem = incident.ToDb();
             dbItem.IncidentCreated = dbItem.Created;
             dbItem.IncidentClosed = null; // Ensure lack of shenanigans
+            
             var dbPonder = this.ctx.Incidents.Add(dbItem);
             await this.ctx.SaveChangesAsync();
             return dbPonder.Entity.ToClient();
