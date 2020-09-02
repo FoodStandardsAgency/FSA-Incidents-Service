@@ -75,7 +75,7 @@ namespace FSA.SIMSManagerDb.Repositories
             await ctx.SaveChangesAsync();
         }
 
-        public async Task<List<SimsProductFboAddress>> GetAddresses(int productId)
+        public async Task<IEnumerable<SimsProductFboAddress>> GetAddresses(int productId)
         {
             var productDbItems = this.DbSet.AsNoTracking()
                                     .Include(o => o.Address)

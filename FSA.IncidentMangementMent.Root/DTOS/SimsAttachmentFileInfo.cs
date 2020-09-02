@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace FSA.IncidentsManagement.Root.Models
+namespace FSA.IncidentsManagement.Root.DTOS
 {
-    [Obsolete]
-    public class AttachmentFileInfo
+    public class SimsAttachmentFileInfo
     {
         public string FileName { get; set; }
         public string Url { get; set; }
         public List<int> Tags { get; set; } = new List<int>();
+        public string UserId { get; set; }
+        public DateTime Created { get; set; }
     }
 }

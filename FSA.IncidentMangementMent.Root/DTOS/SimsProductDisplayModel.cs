@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace FSA.IncidentsManagement.Root.DTOS
 {
-   
+
     public class SimsProductDisplayModel : SimsProduct
     {
         public SimsProductDisplayModel()
@@ -12,8 +10,8 @@ namespace FSA.IncidentsManagement.Root.DTOS
             PackSizes = new List<SimsProductPackSize>();
             ProductDates = new List<SimsProductDate>();
         }
-
-        public string DataSource { get; set; }
+        
+        public int DataSourceId { get; set; }
         public string SignalUrl { get; set; }
 
 

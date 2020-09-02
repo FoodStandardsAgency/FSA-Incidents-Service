@@ -1,5 +1,6 @@
 ﻿using FSA.IncidentsManagement.Root.Contracts;
 using FSA.IncidentsManagement.Root.Domain;
+using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
 using Microsoft.SharePoint.Client;
 using System;
@@ -15,7 +16,7 @@ namespace FSA.Attachments
     /// <summary>
     /// Manage the attachments to a particular incident
     /// </summary>
-    public class SPAttachments : ISimSpAttachments, IFSAAttachments
+    public class SPAttachments : ISimSpAttachments
     {
 
         private readonly X509Certificate2 cert;
@@ -266,7 +267,7 @@ namespace FSA.Attachments
             return newFile;
         }
 
-        public async Task<IEnumerable<AttachmentFileInfo>> FetchAllAttchmentsLinks(string listName)
+        public async Task<IEnumerable<SimsAttachmentFileInfo>> FetchAllAttchmentsLinks(string listName)
         {
             var accessToken = await fetchAccessToken();
             using (var ctx = SpContextHelper.GetClientContextWithAccessToken(this.siteUrl, accessToken))
@@ -275,7 +276,7 @@ namespace FSA.Attachments
                 var files = theLib.RootFolder.Files;
                 ctx.Load(files, o=>o.Include(p=>p.ListItemAllFields["EncodedAbsUrl"], p=>p.Name));
                 await ctx.ExecuteQueryAsync();
-                return files.Select(p => new AttachmentFileInfo { FileName = p.Name, Url = p.ListItemAllFields["EncodedAbsUrl"] as string }).ToList();
+                return files.Select(p => new SimsAttachmentFileInfo { FileName = p.Name, Url = p.ListItemAllFields["EncodedAbsUrl"] as string }).ToList();
             }
         }
 

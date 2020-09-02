@@ -37,12 +37,12 @@ namespace Sims.Application
             throw new System.NotImplementedException();
         }
 
-        public Task<IEnumerable<SimsProductFboAddress>> GetSimsProductAddresses(int SimsProductId)
+        public Task<IEnumerable<SimsProductFboAddress>> GetAddress(int SimsProductId)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<IEnumerable<SimsProduct>> IncidentSimsProducts(int incidentId)
+        public Task<IEnumerable<SimsProduct>> GetAll(int incidentId)
         {
             throw new System.NotImplementedException();
         }

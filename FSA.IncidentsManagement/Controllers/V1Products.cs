@@ -144,7 +144,7 @@ namespace FSA.IncidentsManagement.Controllers
                 await this.simsManager.Products.AssignFbo(assignObj.Id, assignObj.AddressId, (FboTypes)assignObj.FboTypes.Sum());
                 return new OkResult();
             }
-            catch (SIMSException ex)
+            catch (OldSIMSException ex)
             {
                 this.log.LogError(ex, ex.Message);
                 return new BadRequestObjectResult(ex.Message);
@@ -162,7 +162,7 @@ namespace FSA.IncidentsManagement.Controllers
                 await this.simsManager.Products.UpdateFbo(assignObj.Id, assignObj.AddressId, (FboTypes)assignObj.FboTypes.Sum());
                 return new OkResult();
             }
-            catch (SIMSException ex)
+            catch (OldSIMSException ex)
             {
                 this.log.LogError(ex, ex.Message);
                 return new BadRequestObjectResult(ex.Message);
@@ -181,7 +181,7 @@ namespace FSA.IncidentsManagement.Controllers
                 await this.simsManager.Products.RemoveFbo(assignObj.Id, assignObj.AddressId);
                 return new OkResult();
             }
-            catch (SIMSException ex)
+            catch (OldSIMSException ex)
             {
                 this.log.LogError(ex, ex.Message);
                 return new BadRequestObjectResult(ex.Message);

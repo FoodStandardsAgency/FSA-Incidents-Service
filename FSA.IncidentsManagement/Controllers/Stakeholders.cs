@@ -38,23 +38,13 @@ namespace FSA.IncidentsManagement.Controllers
         [Produces("application/json")]
         public async Task<IActionResult> GetStakeholder([FromRoute] string incidentSignal, [FromRoute] int id)
         {
-            try
-            {
-                var stakeholders = incidentSignal.ToLower() switch
-                {
-                    IncidentOrSignal.Incidents => await this.simsApp.Incidents.Stakeholders.GetAll(id),
-                    "signal" => await this.simsApp.Signals.Stakeholders.GetAll(id),
-                    _ => throw new InvalidOperationException(),
-                };
 
-                return new OkObjectResult(stakeholders);
-            }
-            catch (InvalidOperationException ex)
+            return incidentSignal.ToLower() switch
             {
-                log.LogError(nameof(GetStakeholder), $"Unknown route: {incidentSignal}");
-                return BadRequest("Unknown route");
-
-            }
+                IncidentOrSignal.Incidents => new OkObjectResult(await this.simsApp.Incidents.Stakeholders.GetAll(id)),
+                IncidentOrSignal.Signals => new OkObjectResult(await this.simsApp.Signals.Stakeholders.GetAll(id)),
+                _ => BadRequest("Unknown route")
+            };
         }
 
         [HttpPost("{incidentSignal}")]
@@ -66,24 +56,17 @@ namespace FSA.IncidentsManagement.Controllers
         {
             try
             {
-
-                var newStakeholder = incidentSignal.ToLower() switch
+                return incidentSignal.ToLower() switch
                 {
-                    IncidentOrSignal.Incidents => await this.simsApp.Incidents.Stakeholders.Add(stakeholder.HostId, stakeholder),
-                    IncidentOrSignal.Signals => await this.simsApp.Signals.Stakeholders.Add(stakeholder.HostId, stakeholder),
-                    _ => throw new InvalidOperationException(),
+                    IncidentOrSignal.Incidents => new OkObjectResult(await this.simsApp.Incidents.Stakeholders.Add(stakeholder.HostId, stakeholder)),
+                    IncidentOrSignal.Signals => new OkObjectResult(await this.simsApp.Signals.Stakeholders.Add(stakeholder.HostId, stakeholder)),
+                    _ => BadRequest("Unknown route")
                 };
-                return new OkObjectResult(newStakeholder);
             }
             catch (ArgumentOutOfRangeException ex)
             {
+                log.LogError(nameof(AddStakeholder), ex);
                 return new BadRequestObjectResult(ex.Message);
-            }
-            catch (InvalidOperationException ex)
-            {
-                log.LogError(nameof(AddStakeholder), $"Unknown route: {incidentSignal}");
-                return BadRequest("Unknown route");
-
             }
 
         }
@@ -98,24 +81,20 @@ namespace FSA.IncidentsManagement.Controllers
             try
             {
 
-                var newStakeholder = incidentSignal.ToLower() switch
+                return  incidentSignal.ToLower() switch
                 {
-                    IncidentOrSignal.Incidents => await this.simsApp.Incidents.Stakeholders.Update(stakeholder),
-                    IncidentOrSignal.Signals => await this.simsApp.Signals.Stakeholders.Update(stakeholder),
-                    _ => throw new InvalidOperationException(),
+                    IncidentOrSignal.Incidents => new OkObjectResult(await this.simsApp.Incidents.Stakeholders.Update(stakeholder)),
+                    IncidentOrSignal.Signals => new OkObjectResult(await this.simsApp.Signals.Stakeholders.Update(stakeholder)),
+                    _ => BadRequest("Unknown route")
                 };
-                return new OkObjectResult(newStakeholder);
+                
             }
             catch (ArgumentOutOfRangeException ex)
             {
+                log.LogError(nameof(UpdateStakeholder), ex);
                 return new BadRequestObjectResult(ex.Message);
             }
-            catch (InvalidOperationException ex)
-            {
-                log.LogError(nameof(AddStakeholder), $"Unknown route: {incidentSignal}");
-                return BadRequest("Unknown route");
 
-            }
         }
 
 
@@ -140,11 +119,12 @@ namespace FSA.IncidentsManagement.Controllers
             }
             catch (ArgumentOutOfRangeException ex)
             {
+                log.LogError(nameof(RemoveStakeholder), ex);
                 return new BadRequestObjectResult(ex.Message);
             }
-            catch (InvalidOperationException ex)
+            catch (InvalidOperationException)
             {
-                log.LogError(nameof(AddStakeholder), $"Unknown route: {incidentSignal}");
+                log.LogError(nameof(RemoveStakeholder), $"Unknown route: {incidentSignal}");
                 return BadRequest("Unknown route");
 
             }

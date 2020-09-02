@@ -1,4 +1,5 @@
-﻿using FSA.IncidentsManagement.Models;
+﻿using FSA.IncidentsManagement.Misc;
+using FSA.IncidentsManagement.Models;
 using FSA.IncidentsManagement.Root.Contracts;
 using FSA.IncidentsManagement.Root.Domain;
 using FSA.IncidentsManagement.Root.Models;
@@ -34,19 +35,19 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "Add note to an incident/signal")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> AddNote([FromRoute] string incidentSignal, [FromBody, SwaggerParameter(Required = true)] IncidentComment addIncident)
+        public async Task<IActionResult> AddNote([FromRoute] string incidentSignal, [FromBody, SwaggerParameter(Required = true)] SimsCommentModel addIncident)
         {
             try
             {
                 _ = incidentSignal.ToLower() switch
                 {
-                    "incident" => await this.simsApp.Incidents.Notes.Add(addIncident.IncidentId, addIncident.Note),
-                    "signal" => await this.simsApp.Signals.Notes.Add(addIncident.IncidentId, addIncident.Note),
+                    IncidentOrSignal.Incidents => await this.simsApp.Incidents.Notes.Add(addIncident.HostId, addIncident.Note),
+                    IncidentOrSignal.Signals => await this.simsApp.Signals.Notes.Add(addIncident.HostId, addIncident.Note),
                     _ => throw new InvalidOperationException()
             };
                 return new OkResult();
             }
-            catch (ArgumentOutOfRangeException ex)
+            catch (InvalidOperationException)
             {
                 log.LogError(nameof(AddNote), $"Unknown route: {incidentSignal}");
                 return BadRequest("Unknown route");
@@ -65,13 +66,13 @@ namespace FSA.IncidentsManagement.Controllers
             {
                 _ = incidentSignal.ToLower() switch
                 {
-                    "incident" => await this.simsApp.Incidents.Notes.GetAll(id),
-                    "signal" => await this.simsApp.Signals.Notes.GetAll(id),
+                    IncidentOrSignal.Incidents => await this.simsApp.Incidents.Notes.GetAll(id),
+                    IncidentOrSignal.Signals => await this.simsApp.Signals.Notes.GetAll(id),
                     _ => throw new InvalidOperationException()
                 };
                 return new OkResult();
             }
-            catch (InvalidOperationException ex)
+            catch (InvalidOperationException)
             {
                 log.LogError(nameof(GetNotes), $"Unknown route: {incidentSignal}");
                 return BadRequest("Unknown route");

@@ -136,8 +136,8 @@ namespace FSA.IncidentsManagementDb.Repositories
         public async Task AssignFbo(int productId, int addressId, FboTypes types)
         {
 
-            if (productId == 0) throw new SIMSException("Product Id missing");
-            if (addressId == 0) throw new SIMSException("Address Id missing");
+            if (productId == 0) throw new OldSIMSException("Product Id missing");
+            if (addressId == 0) throw new OldSIMSException("Address Id missing");
             // need to check to see if the incident has already been closed.
             if (IsProductIncidentClosed(productId)) throw new IncidentClosedException("This incident is closed.");
 
@@ -153,8 +153,8 @@ namespace FSA.IncidentsManagementDb.Repositories
 
         public async Task UpdateFbo(int productId, int addressId, FboTypes fboTypes)
         {
-            if (productId == 0) throw new SIMSException("Product Id missing");
-            if (addressId == 0) throw new SIMSException("Address Id missing");
+            if (productId == 0) throw new OldSIMSException("Product Id missing");
+            if (addressId == 0) throw new OldSIMSException("Address Id missing");
             //if ((int)fboTypes == 0) throw new SIMSException("No Fbo types selected");
 
             // need to check to see if the incident has already been closed.
@@ -169,15 +169,15 @@ namespace FSA.IncidentsManagementDb.Repositories
             }
             else
             {
-                throw new SIMSException("Product Fbo Address not found");
+                throw new OldSIMSException("Product Fbo Address not found");
             }
 
         }
 
         public async Task RemoveFbo(int productId, int addressId)
         {
-            if (productId == 0) throw new SIMSException("Product Id missing");
-            if (addressId == 0) throw new SIMSException("Address Id missing");
+            if (productId == 0) throw new OldSIMSException("Product Id missing");
+            if (addressId == 0) throw new OldSIMSException("Address Id missing");
             if (IsProductIncidentClosed(productId)) throw new IncidentClosedException("Incident is closed");
 
             var item = ctx.ProductFBOItems.Find(productId, addressId);

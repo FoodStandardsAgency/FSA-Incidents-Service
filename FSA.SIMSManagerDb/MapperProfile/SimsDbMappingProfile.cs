@@ -8,6 +8,7 @@ using FSA.SIMSManagerDb.Entities.Core.Product;
 using FSA.SIMSManagerDb.Entities.Lookups;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -17,7 +18,7 @@ namespace FSA.SIMSManagerDb.MapperProfile
     {
         public SimsDbMappingProfile()
         {
-            
+
             CreateMap<CategoryDb, Category>(MemberList.Destination);
             CreateMap<ClassificationDb, Classification>(MemberList.Destination);
             CreateMap<PriorityDb, Priority>(MemberList.Destination);
@@ -74,6 +75,21 @@ namespace FSA.SIMSManagerDb.MapperProfile
             CreateMap<SimsStakeholder, SignalStakeholderDb>(MemberList.Source)
                 .ForMember(a => a.StakeholderDiscriminatorId, m => m.MapFrom(a => a.DiscriminatorId));
 
+            CreateMap<IncidentAttachmentDb, SimsAttachmentFileInfo>(MemberList.Destination)
+                    .ForMember(a => a.UserId, m => m.MapFrom(o => o.CreatedBy))
+                    .ForMember(a => a.Url, m => m.MapFrom(o => o.DocUrl))
+                    .ForMember(o => o.FileName, m => m.MapFrom(o => Path.GetFileName(o.DocUrl)));
+
+            CreateMap<SignalAttachmentDb, SimsAttachmentFileInfo>(MemberList.Destination)
+                    .ForMember(a => a.UserId, m => m.MapFrom(o => o.CreatedBy))
+                    .ForMember(a => a.Url, m => m.MapFrom(o => o.DocUrl))
+                    .ForMember(o => o.FileName, m => m.MapFrom(o => Path.GetFileName(o.DocUrl)));
+
+            CreateMap<IncidentDb, IncidentsDisplayModel>(MemberList.Source)
+                .ForCtorParam("statusId", o => o.MapFrom(a => a.IncidentStatusId))
+                .ForCtorParam("lastChangedBy", o => o.MapFrom(a => a.ModifiedBy))
+                .ForCtorParam("lastChangedDate", o => o.MapFrom(a => a.Modified));
+
             CreateMap<IncidentDb, BaseIncident>(MemberList.Source)
                 .ForCtorParam("statusId", o => o.MapFrom(a => a.IncidentStatusId))
                 .ForCtorParam("lastChangedBy", o => o.MapFrom(a => a.ModifiedBy))
@@ -88,7 +104,7 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForMember(a => a.CommonId, m => m.MapFrom(a => a.Id))
                 .ForMember(a => a.Status, m => m.MapFrom(a => a.IncidentStatus.Title))
                 .ForMember(a => a.Updated, m => m.MapFrom(a => a.Modified))
-                .ForMember(a => a.Status, m => m.MapFrom(a => a.ToLinks.Select(o => o.FromId)
+                .ForMember(a => a.Links, m => m.MapFrom(a => a.ToLinks.Select(o => o.FromId)
                                                               .Concat(a.FromLinks.Select(o => o.ToId).ToList())));
 
 
@@ -98,18 +114,19 @@ namespace FSA.SIMSManagerDb.MapperProfile
             CreateMap<IncidentProductDb, SimsProduct>(MemberList.Destination)
                 .ForMember(a => a.AdditionalInfo, m => m.MapFrom(a => String.IsNullOrEmpty(a.AdditionalInfo) ? "" : a.AdditionalInfo))
                 .ForMember(a => a.Added, m => m.MapFrom(a => a.Created))
-                .ForMember(a => a.LastUpdated, m => m.MapFrom(a => a.Host.Modified))
-                .ForMember(a => a.LastUpdatedBy, m => m.MapFrom(a => a.Host.ModifiedBy));
+                .ForMember(a => a.LastUpdated, m => m.MapFrom(a => a.Modified))
+                .ForMember(a => a.LastUpdatedBy, m => m.MapFrom(a => a.ModifiedBy));
+
             CreateMap<SignalProductDb, SimsProduct>(MemberList.Destination)
                 .ForMember(a => a.AdditionalInfo, m => m.MapFrom(a => String.IsNullOrEmpty(a.AdditionalInfo) ? "" : a.AdditionalInfo))
                 .ForMember(a => a.Added, m => m.MapFrom(a => a.Created))
-                .ForMember(a => a.LastUpdated, m => m.MapFrom(a => a.Host.Modified))
-                .ForMember(a => a.LastUpdatedBy, m => m.MapFrom(a => a.Host.ModifiedBy));
+                .ForMember(a => a.LastUpdated, m => m.MapFrom(a => a.Modified))
+                .ForMember(a => a.LastUpdatedBy, m => m.MapFrom(a => a.ModifiedBy));
 
             CreateMap<SimsProduct, IncidentProductDb>(MemberList.Source)
                 .ForMember(a => a.AdditionalInfo, m => m.MapFrom(a => String.IsNullOrEmpty(a.AdditionalInfo) ? "" : a.AdditionalInfo))
                 .IgnoreAuditData();
-                
+
             CreateMap<SimsProduct, SignalProductDb>(MemberList.Source)
                 .ForMember(a => a.AdditionalInfo, m => m.MapFrom(a => String.IsNullOrEmpty(a.AdditionalInfo) ? "" : a.AdditionalInfo))
                 .IgnoreAuditData();
@@ -119,7 +136,7 @@ namespace FSA.SIMSManagerDb.MapperProfile
             CreateMap<SimsProductPackSize, SignalProductPackSizeDb>(MemberList.Source)
                     .IgnoreAuditData();
 
-            CreateMap<IncidentProductPackSizeDb,SimsProductPackSize>(MemberList.Destination);
+            CreateMap<IncidentProductPackSizeDb, SimsProductPackSize>(MemberList.Destination);
             CreateMap<SignalProductPackSizeDb, SimsProductPackSize>(MemberList.Destination);
 
             CreateMap<SimsProductDate, IncidentProductDateDb>(MemberList.Source)
@@ -136,22 +153,22 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForMember(p => p.Modified, p => p.UseDestinationValue())
                 .ForMember(p => p.ModifiedBy, p => p.DoNotAllowNull());
 
-            CreateMap<IncidentProductDateDb,SimsProductDate>(MemberList.Destination);
+            CreateMap<IncidentProductDateDb, SimsProductDate>(MemberList.Destination);
             CreateMap<SignalProductDateDb, SimsProductDate>(MemberList.Destination);
 
             CreateMap<IncidentProductDb, SimsProductDisplayModel>(MemberList.Destination)
-                .ForMember(a => a.DataSource, m => m.MapFrom(a => a.Host.DataSource.Title))
-                .ForMember(a => a.SignalUrl, m => m.MapFrom(a => a.Host.SignalUrl))
-                .ForMember(a => a.LastUpdated, m => m.MapFrom(a => a.Host.Modified))
-                .ForMember(a => a.LastUpdatedBy, m => m.MapFrom(a => a.Host.ModifiedBy));
+                .ForMember(a => a.DataSourceId, m => m.Ignore())
+                .ForMember(a => a.SignalUrl, m => m.Ignore())
+                .ForMember(a => a.LastUpdated, m => m.MapFrom(a => a.Modified))
+                .ForMember(a => a.LastUpdatedBy, m => m.MapFrom(a => a.ModifiedBy))
+                .ForMember(a => a.Added, m => m.MapFrom(a => a.Created));
 
             CreateMap<SignalProductDb, SimsProductDisplayModel>(MemberList.Destination)
-                .ForMember(a => a.DataSource, m => m.MapFrom(a => a.Host.DataSource))
-                .ForMember(a => a.SignalUrl, m => m.MapFrom(a => a.Host.SourceLink))
+                .ForMember(a => a.DataSourceId, m => m.Ignore())
+                .ForMember(a => a.SignalUrl, m => m.Ignore())
                 .ForMember(a => a.LastUpdated, m => m.MapFrom(a => a.Host.Modified))
-                .ForMember(a => a.LastUpdatedBy, m => m.MapFrom(a => a.Host.ModifiedBy));
-
-
+                .ForMember(a => a.LastUpdatedBy, m => m.MapFrom(a => a.Host.ModifiedBy))
+                .ForMember(a => a.Added, m => m.MapFrom(a => a.Created));
 
             CreateMap<IncidentProductDb, SimsProductDetail>(MemberList.Destination);
             CreateMap<SignalProductDb, SimsProductDetail>(MemberList.Destination);
@@ -164,7 +181,36 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForMember(a => a.ProductType, m => m.MapFrom(a => a.ProductType.Title))
                 .ForMember(a => a.AddressNames, m => m.MapFrom(a => a.RelatedFBOs != null ? a.RelatedFBOs.Select(p => p.Address.Title).ToList() : new List<string>()));
 
-            
+            CreateMap<IncidentProductFboDb, SimsProductFboAddress>(MemberList.Destination)
+            .ForMember(a => a.Id, m => m.MapFrom(m => m.AddressId))
+                .ForMember(a => a.Title, m => m.MapFrom(m => m.Address.Title))
+                .ForMember(a => a.AddressLine1, m => m.MapFrom(m => m.Address.AddressLine1))
+                .ForMember(a => a.AddressLine2, m => m.MapFrom(m => m.Address.AddressLine2))
+                .ForMember(a => a.PostCode, m => m.MapFrom(m => m.Address.PostCode))
+                .ForMember(a => a.County, m => m.MapFrom(m => m.Address.County))
+                .ForMember(a => a.CountryId, m => m.MapFrom(m => m.Address.CountryId))
+                .ForMember(a => a.CountryId, m => m.MapFrom(m => m.Address.CountryId))
+                .ForMember(a => a.TownCity, m => m.MapFrom(m => m.Address.TownCity))
+                .ForMember(a => a.TelephoneNumber, m => m.MapFrom(m => m.Address.TelephoneNumber))
+                .ForMember(a => a.ContactMethodId, m => m.MapFrom(m => m.Address.ContactMethodId))
+                .ForMember(a => a.Contacts, m => m.MapFrom(m=>m.Address.Contacts));
+
+            CreateMap<SignalProductFboDb, SimsProductFboAddress>(MemberList.Destination)
+                .ForMember(a => a.Id, m => m.MapFrom(m => m.AddressId))
+                .ForMember(a => a.Title, m => m.MapFrom(m => m.Address.Title))
+                .ForMember(a => a.AddressLine1, m => m.MapFrom(m => m.Address.AddressLine1))
+                .ForMember(a => a.AddressLine2, m => m.MapFrom(m => m.Address.AddressLine2))
+                .ForMember(a => a.PostCode, m => m.MapFrom(m => m.Address.PostCode))
+                .ForMember(a => a.County, m => m.MapFrom(m => m.Address.County))
+                .ForMember(a => a.CountryId, m => m.MapFrom(m => m.Address.CountryId))
+                .ForMember(a => a.CountryId, m => m.MapFrom(m => m.Address.CountryId))
+                .ForMember(a => a.TownCity, m => m.MapFrom(m => m.Address.TownCity))
+                .ForMember(a => a.TelephoneNumber, m => m.MapFrom(m => m.Address.TelephoneNumber))
+                .ForMember(a => a.ContactMethodId, m => m.MapFrom(m => m.Address.ContactMethodId))
+                .ForMember(a => a.Contacts, m => m.MapFrom(m => m.Address.Contacts));
+
+
+
         }
 
 

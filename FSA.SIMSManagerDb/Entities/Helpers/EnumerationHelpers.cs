@@ -24,4 +24,5 @@ namespace FSA.SIMSManagerDbEntities.Helpers
         Medium = 3,
         Low = 4
     }
+
 }

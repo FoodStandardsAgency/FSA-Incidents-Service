@@ -13,8 +13,8 @@ namespace FSA.IncidentsManagement.Root.Domain
         Task<SimsProduct> Add(int hostId, SimsProduct newSimsProduct);
         Task<SimsProduct> Update(SimsProduct SimsProduct);
         Task<SimsProductDisplayModel> Get(int SimsProductId);
-        Task<IEnumerable<SimsProduct>> IncidentSimsProducts(int incidentId);
-        Task<IEnumerable<SimsProductFboAddress>> GetSimsProductAddresses(int SimsProductId);
+        Task<IEnumerable<SimsProduct>> GetAll(int incidentId);
+        Task<IEnumerable<SimsProductFboAddress>> GetAddress(int SimsProductId);
         Task<IPaging<SimsProductDashboard>> DashboardItems(int hostId, int pageSize = 10, int startPage = 1);
         Task AssignFbo(int SimsProductId, int addressId, FboTypes types);
         Task RemoveFbo(int SimsProductId, int addressId);

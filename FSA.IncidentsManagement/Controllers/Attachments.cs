@@ -1,7 +1,7 @@
 ﻿using FSA.IncidentsManagement.Misc;
 using FSA.IncidentsManagement.Models;
-using FSA.IncidentsManagement.Root;
-using FSA.IncidentsManagement.Root.Contracts;
+using FSA.IncidentsManagement.Root.Domain;
+using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,14 +24,12 @@ namespace FSA.IncidentsManagement.Controllers
     public class AttachmentsController : ControllerBase
     {
         private readonly ILogger<AttachmentsController> log;
-        private readonly IFSAAttachments attachments;
-        private readonly ISIMSManager sims;
+        private readonly ISIMSApplication simsApp;
 
-        public AttachmentsController(ILogger<AttachmentsController> log, IFSAAttachments attachments, ISIMSManager sims)
+        public AttachmentsController(ILogger<AttachmentsController> log, ISIMSApplication simsApp)
         {
             this.log = log;
-            this.attachments = attachments;
-            this.sims = sims;
+            this.simsApp = simsApp;
         }
 
         [HttpPost("EnsureLibrary/{incidentSignal}/{id}")]
@@ -40,101 +38,95 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(500)]
         public async Task<IActionResult> EnsureLibrary([FromRoute] string incidentSignal, [FromRoute] int id)
         {
-            //var stringId = GeneralExtensions.GenerateIncidentId(Id);
-            //if (await this.fsaData.Incidents.Exists(Id))
-            //{
-            //    var listInfo = await this.attachments.EnsureLibrary(stringId);
-            //    return new OkObjectResult(listInfo);
-            //}
-            return new OkObjectResult(null);
+            return incidentSignal.ToLower() switch
+            {
+                IncidentOrSignal.Incidents => new OkObjectResult(await this.simsApp.Incidents.Attachments.EnsureLibrary(id)),
+                IncidentOrSignal.Signals => new OkObjectResult(await this.simsApp.Signals.Attachments.EnsureLibrary(id)),
+                _ => BadRequest("Unknown route")
+            };
         }
 
         [HttpPost("{incidentSignal}/{id}")]
         [SwaggerOperation(Summary = "Add Attachment to incident/signal")]
-        [ProducesResponseType(typeof((string fileName, string url)), 200)]
+        [ProducesResponseType(typeof(SimsAttachmentFileInfo), 200)]
         [ProducesResponseType(500)]
         [ProducesResponseType(400)]
         [ProducesResponseType(403)]
         [Produces("application/json")]
         public async Task<IActionResult> AddAttachment([FromRoute] string incidentSignal, [FromRoute] int id)
         {
-            // Ensure a file has been added
+            // The action to actually upload the file
+            // But also validates the action without doing work
+            Func<string, string, int, Task<SimsAttachmentFileInfo>> UploadFile = incidentSignal.ToLower() switch
+            {
+                IncidentOrSignal.Incidents => this.simsApp.Incidents.Attachments.AddAttachment,
+                IncidentOrSignal.Signals => this.simsApp.Signals.Attachments.AddAttachment,
+                _ => throw new InvalidOperationException("Unknown route")
+            };
+
+            // Ensure a file has been added to the request
             var file = this.Request.Form.Files.Count > 0 ? this.Request.Form.Files[0] : null;
             if (file == null)
                 return new OkObjectResult("No files uploaded : Successfully!");
 
-            // Ensure the incident is not already closed.
-            if (!await sims.Incidents.IsClosed(id))
+            var fileTempPath = Path.GetTempFileName();
+            var fileName = file.FileName;
+            try
             {
-                var stringId = GeneralExtensions.GenerateIncidentId(id);
-                string[] scopes = new string[] { ".default" };
-
-                // Should also be the id of the document library
-                var fileTempPath = Path.GetTempFileName();
-                var fileName = file.FileName;
-                try
+                using (var stream = System.IO.File.OpenWrite(fileTempPath))
                 {
-                    using (var stream = System.IO.File.OpenWrite(fileTempPath))
-                    {
-                        await file.CopyToAsync(stream);
-                    }
-                    var attachedFile = await attachments.AddAttachment(fileTempPath, fileName, stringId);
-                    System.IO.File.Delete(fileTempPath);
-                    return new OkObjectResult(new { FileName = attachedFile.filename, Url = attachedFile.url });
+                    await file.CopyToAsync(stream);
                 }
-                catch (System.IO.IOException ex)
-                {
-                    System.IO.File.Delete(fileTempPath);
-                    this.log.LogWarning(ex, "error during Attachment upload.");
-                    return this.StatusCode(500, "Error during upload.");
-                }
-                catch (ServerException ex)
-                {
-                    System.IO.File.Delete(fileTempPath);
-                    this.log.LogWarning("Duplicate file attempt");
-                    return this.StatusCode(500, "Duplicate file cannot be added.");
-                }
+                // Where the delegate is finally used.
+                var attachedFile = await UploadFile(fileTempPath, fileName, id);
+                return new OkObjectResult(attachedFile);
             }
-            else
+            catch (System.IO.IOException ex)
             {
-                return new BadRequestObjectResult("Incident is closed");
+                this.log.LogWarning(ex, "error during Attachment upload.");
+                return this.StatusCode(500, "Error during upload.");
             }
-            //attachments.AddAttachment(file)
+            catch (ServerException ex)
+            {
+                this.log.LogWarning("Duplicate file attempt");
+                return this.StatusCode(500, "Duplicate file cannot be added.");
+            }
+            finally
+            {
+                System.IO.File.Delete(fileTempPath);
+            }
         }
 
         [HttpGet("{incidentSignal}/{id}")]
         [SwaggerOperation(Summary = "Download incident attachments info")]
-        [ProducesResponseType(typeof(List<AttachmentFileInfo>), 200)]
+        [ProducesResponseType(typeof(List<SimsAttachmentFileInfo>), 200)]
         public async Task<IActionResult> FetchAllAttachmentInfo([FromRoute] string incidentSignal, [FromRoute] int id)
         {
-            var stringId = GeneralExtensions.GenerateIncidentId(id);
-            var fileInfo = await this.attachments.FetchAllAttchmentsLinks(stringId);
-            var tags = await sims.Incidents.GetAttachmentTags(id);
-            // This may be the worst code I've written this year.
-            var completeFileInfo = fileInfo.Select(o =>
-            {
-                var itm = tags.SingleOrDefault(p => p.fileUrl == o.Url);
-                o.Tags = itm.Equals(default(ValueTuple<string, string>)) ? o.Tags : Utilities.SelectedFlags<DocumentTagTypes>(itm.tags).Select(o => (int)o).ToList();
-                return o;
-            });
 
-            return new OkObjectResult(completeFileInfo.ToList());
+           var fileInfo = incidentSignal.ToLower() switch
+            {
+                IncidentOrSignal.Incidents => await this.simsApp.Incidents.Attachments.FetchAllAttchmentsLinks(id),
+                IncidentOrSignal.Signals => await this.simsApp.Signals.Attachments.FetchAllAttchmentsLinks(id),
+                _ => throw new InvalidOperationException("Unknown route")
+            };
+
+
+            return new OkObjectResult(fileInfo.ToList());
         }
 
         [HttpPost("Tags/{incidentSignal}")]
         [SwaggerOperation(Summary = "Update tags for for an attachment.")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> UpdateAttachmentTags([FromRoute] string incidentSignal, [FromBody] UpdateDocumentTagsModel updateTags)
+        public async Task<IActionResult> UpdateAttachmentTags([FromBody] UpdateDocumentTagsModel updateTags)
         {
-            var docTags = (DocumentTagTypes)updateTags.Tags.ToList().Sum();
-            await sims.Incidents.UpdateAttachmentTags(updateTags.Id, updateTags.DocUrl, docTags);
+            await this.simsApp.AttachmentUpdates.UpdateTags(updateTags.DocUrl, updateTags.Tags);
             return new OkResult();
         }
 
         [HttpPost("Rename")]
         [SwaggerOperation(Summary = "Renames an attachment.")]
-        [ProducesResponseType(typeof((string fileName, string url)), 200)]
+        [ProducesResponseType(typeof(SimsAttachmentFileInfo), 200)]
         [ProducesResponseType(500)]
         [ProducesResponseType(400)]
         [ProducesResponseType(403)]
@@ -143,11 +135,12 @@ namespace FSA.IncidentsManagement.Controllers
         {
             try
             {
-                var fileInfo = await this.attachments.RenameAttachment(renameFile.FileName, renameFile.ExistingUrl);
-                return new OkObjectResult(new { FileName = fileInfo.fileName, Url = fileInfo.url });
+                var fileInfo = await this.simsApp.AttachmentUpdates.Rename(renameFile.FileName, renameFile.ExistingUrl);
+                return new OkObjectResult(fileInfo);
             }
             catch (ArgumentOutOfRangeException ex) // new filename already exitst
             {
+                log.LogError(nameof(RenameAttachment), ex);
                 return new ConflictResult();
             }
         }

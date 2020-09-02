@@ -1,5 +1,6 @@
 ﻿using FSA.IncidentsManagement.Root;
 using FSA.IncidentsManagement.Root.Domain;
+using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb.Contracts;
 using System.Collections.Generic;
@@ -18,16 +19,11 @@ namespace Sims.Application
             this.dbHost = dbHost;
             this.attachments = attachments;
         }
-        public async Task<AttachmentFileInfo> AddAttachment(string filePath, string filename, int hostId)
+        public async Task<SimsAttachmentFileInfo> AddAttachment(string filePath, string filename, int hostId)
         {
             var signalLibrary = AppExtensions.GenerateSignalsId(hostId);
             var item = await attachments.AddAttachment(filePath, filename, signalLibrary);
-            return new AttachmentFileInfo
-            {
-                FileName = item.filename,
-                Tags = new List<int>(),
-                Url = item.url
-            };
+            return await dbHost.Incidents.Attachments.Add(item.url, hostId);
         }
 
         public Task<AttachmentLibraryInfo> EnsureLibrary(int hostId)
@@ -36,26 +32,15 @@ namespace Sims.Application
             return attachments.EnsureLibrary(signalLibrary);
         }
 
-        public Task<IEnumerable<AttachmentFileInfo>> FetchAllAttchmentsLinks(int hostId)
+        public Task<IEnumerable<SimsAttachmentFileInfo>> FetchAllAttchmentsLinks(int hostId)
         {
             var signalLibrary = AppExtensions.GenerateSignalsId(hostId);
             return attachments.FetchAllAttchmentsLinks(signalLibrary);
         }
 
-        public async Task<IEnumerable<AttachmentFileInfo>> GetAllTags(int hostId)
+        public Task<IEnumerable<SimsAttachmentFileInfo>> GetAllTags(int hostId)
         {
-            var tagInfo = await dbHost.Incidents.Attachments.GetAttachmentTags(hostId);
-            return tagInfo.Select(o => new AttachmentFileInfo
-            {
-                FileName = o.fileUrl,
-                Tags = AppExtensions.SelectedFlags<DocumentTagTypes>(o.tags).Select(o => (int)o).ToList(),
-                Url = o.fileUrl
-            });
-        }
-
-        public Task UpdateTags(int id, string docUrl, DocumentTagTypes tags)
-        {
-            return dbHost.Incidents.Attachments.UpdateAttachmentTags(id, docUrl, tags);
+            return dbHost.Incidents.Attachments.Get(hostId);
         }
     }
 }

@@ -229,7 +229,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         {
             var dbItem = this.ctx.Incidents.Find(incident.CommonId);
 
-            if (dbItem == null) throw new SIMSException("No incident was found");
+            if (dbItem == null) throw new OldSIMSException("No incident was found");
             if (dbItem.IncidentStatusId == (int)IncidentStatusTypes.Closed) throw new IncidentClosedException("Cannot update a closed incident!");
 
             // Logical changes.
@@ -604,10 +604,10 @@ namespace FSA.IncidentsManagementDb.Repositories
 
             var isClosed = await this.IsClosed(stakeholder.HostId);
             if (isClosed) throw new IncidentClosedException("Incident is closed");
-            if (stakeholder.Id > 0) throw new SIMSException("Stakeholder already exists.");
+            if (stakeholder.Id > 0) throw new OldSIMSException("Stakeholder already exists.");
             // Cannot add an FSA member with an address, this is an application error.
             if (stakeholder.AddressId.HasValue && stakeholder.DiscriminatorId == (int)StakeholderTypes.FSA)
-                throw new SIMSException("FSA Stakeholder must not have an address");
+                throw new OldSIMSException("FSA Stakeholder must not have an address");
 
             var dbItem = ctx.Stakeholders.Add(stakeholder.ToDb());
 
@@ -618,7 +618,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         public async Task RemoveStakeholder(int stakeholderId)
         {
             var dbItem = ctx.Stakeholders.Include(o=>o.Incident).SingleOrDefault(s=>s.Id==stakeholderId);
-            if (dbItem== null) throw new SIMSException("Stakeholder must exist.");
+            if (dbItem== null) throw new OldSIMSException("Stakeholder must exist.");
 
             //if (stakeholder.IncidentId == 0) throw new IncidentMissingException("Incident Id Missing");
             var isClosed = (dbItem.Incident.IncidentStatusId == (int)IncidentStatusTypes.Closed);
@@ -632,10 +632,10 @@ namespace FSA.IncidentsManagementDb.Repositories
             if(stakeholder.HostId==0) throw new IncidentMissingException("Incident Id Missing");
             var isClosed = await this.IsClosed(stakeholder.HostId);
             if (isClosed) throw new IncidentClosedException("Incident is closed");
-            if (stakeholder.Id == 0) throw new SIMSException("Stakeholder must exist.");
+            if (stakeholder.Id == 0) throw new OldSIMSException("Stakeholder must exist.");
 
             if (stakeholder.AddressId.HasValue && stakeholder.DiscriminatorId == (int)StakeholderTypes.FSA)
-                throw new SIMSException("FSA Stakeholder must not have an address");
+                throw new OldSIMSException("FSA Stakeholder must not have an address");
 
             var dbItem = ctx.Stakeholders.Find(stakeholder.Id);
             stakeholder.ToUpdateDb(dbItem);

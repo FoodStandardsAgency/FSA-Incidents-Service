@@ -10,5 +10,6 @@ namespace FSA.IncidentsManagement.Root.Domain
         ISIMSSignals Signals { get; }
         ISIMSLookups Lookups { get; }
         ISIMSAddress Addresses { get; }
+        ISIMSAppAttachment AttachmentUpdates { get; }
     }
 }

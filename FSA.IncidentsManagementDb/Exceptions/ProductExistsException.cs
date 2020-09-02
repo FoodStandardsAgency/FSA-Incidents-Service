@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace FSA.IncidentsManagementDb.Exceptions
 {
-    public class ProductExistsException : SIMSException
+    public class ProductExistsException : OldSIMSException
     {
         public ProductExistsException()
         {

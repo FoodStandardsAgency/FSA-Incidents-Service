@@ -21,6 +21,7 @@ namespace FSA.SIMSManagerDb.Builder
             base.Configure(builder);
             builder.ToTable(tableName);
             builder.Property(o => o.HostId).HasColumnName(hostname);
+            builder.Property(o => o.Note).IsRequired();
         }
     }
   

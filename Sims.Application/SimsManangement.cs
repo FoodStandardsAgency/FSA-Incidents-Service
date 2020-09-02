@@ -10,21 +10,23 @@ namespace Sims.Application
     public class SimsManangement : ISIMSApplication
     {
         private readonly ISIMSAttachmentHost attachments;
-        private ISimsDbHost SimsDbHOst;
+        private ISimsDbHost SimsDbHost;
 
         public SimsManangement(SimsDbContext ctx, IMapper mapper, ISIMSAttachmentHost attachments, string userId)
         {
             // unsure about this tbh....
-            this.SimsDbHOst = SimsDbHost.CreateHost(ctx, mapper, userId);
+            this.SimsDbHost = FSA.SIMSManagerDb.Repositories.SimsDbHost.CreateHost(ctx, mapper, userId);
             this.attachments = attachments;
         }
 
-        public ISIMSIncidents Incidents => new Incidents(this.SimsDbHOst, attachments);
+        public ISIMSIncidents Incidents => new Incidents(this.SimsDbHost, attachments);
 
-        public ISIMSSignals Signals => new Signals(this.SimsDbHOst, attachments);
+        public ISIMSSignals Signals => new Signals(this.SimsDbHost, attachments);
 
-        public ISIMSLookups Lookups => new Lookups(this.SimsDbHOst);
+        public ISIMSLookups Lookups => new Lookups(this.SimsDbHost);
 
-        public ISIMSAddress Addresses => new AddressManagment(this.SimsDbHOst);
+        public ISIMSAddress Addresses => new AddressManagment(this.SimsDbHost);
+
+        public ISIMSAppAttachment AttachmentUpdates => new AttachmentUpdates(attachments, SimsDbHost);
     }
 }

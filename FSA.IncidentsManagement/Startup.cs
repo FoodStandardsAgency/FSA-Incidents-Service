@@ -157,15 +157,15 @@ namespace FSA.IncidentsManagement
             #region v1
             services.AddScoped<ILookupDataHost, LookupDataHost>();
             services.AddScoped<ISIMSManager, SIMSDataManager>(ids => new SIMSDataManager(ids.GetRequiredService<FSADbContext>(), ids.GetRequiredService<UserInfo>().GetUserId()));
-            services.AddScoped<IFSAAttachments, SPAttachments>((o) =>
-            {
-                var user = o.GetRequiredService<UserInfo>();
-                var conf = o.GetRequiredService<IConfiguration>();
-                var section = conf.GetSection("AzureAd");
-                var sharePoint = conf.GetSection("SharePoint");
-                var cert = o.GetRequiredService<X509Certificate2>();
-                return new SPAttachments(section["ClientId"], user.GetTenantId(), cert, sharePoint["HostSiteCol"], $"https://{sharePoint["HostSiteCol"]}/{sharePoint["DocSiteUrl"]}", sharePoint["SimsDocCType"]);// Guid.Parse(sharePoint["SimsTermSetId"]));
-            });
+            //services.AddScoped<IFSAAttachments, SPAttachments>((o) =>
+            //{
+            //    var user = o.GetRequiredService<UserInfo>();
+            //    var conf = o.GetRequiredService<IConfiguration>();
+            //    var section = conf.GetSection("AzureAd");
+            //    var sharePoint = conf.GetSection("SharePoint");
+            //    var cert = o.GetRequiredService<X509Certificate2>();
+            //    return new SPAttachments(section["ClientId"], user.GetTenantId(), cert, sharePoint["HostSiteCol"], $"https://{sharePoint["HostSiteCol"]}/{sharePoint["DocSiteUrl"]}", sharePoint["SimsDocCType"]);// Guid.Parse(sharePoint["SimsTermSetId"]));
+            //});
             #endregion
 
         }

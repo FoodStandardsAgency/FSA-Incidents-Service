@@ -158,9 +158,9 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "Add note to an incident")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> AddNote([FromBody, SwaggerParameter(Required = true)] IncidentComment addIncident)
+        public async Task<IActionResult> AddNote([FromBody, SwaggerParameter(Required = true)] SimsCommentModel addIncident)
         {
-            await this.fsaData.Incidents.AddNote(addIncident.IncidentId, addIncident.Note);
+            await this.fsaData.Incidents.AddNote(addIncident.HostId, addIncident.Note);
             return new OkResult();
         }
 

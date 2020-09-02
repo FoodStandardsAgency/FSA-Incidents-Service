@@ -20,13 +20,12 @@ namespace FSA.IncidentsManagement.Controllers
     {
         private readonly ILogger<IncidentsController> log;
         private readonly ISIMSApplication simsApp;
-        private readonly IFSAAttachments attachments;
 
-        public IncidentsController(ILogger<IncidentsController> log, ISIMSApplication simsApp, IFSAAttachments attachments)
+
+        public IncidentsController(ILogger<IncidentsController> log, ISIMSApplication simsApp)
         {
             this.log = log;
             this.simsApp = simsApp;
-            this.attachments = attachments;
         }
 
         [HttpGet()]

@@ -304,7 +304,6 @@ namespace FSA.IncidentsManagementDb
                 @this.Id,
                 mostUniqueId: @this.MostUniqueId,
                 incidentTitle: @this.IncidentTitle,
-
                 incidentTypeId: @this.IncidentTypeId,
                 contactMethodId: @this.ContactMethodId,
                 statusId: @this.IncidentStatusId,

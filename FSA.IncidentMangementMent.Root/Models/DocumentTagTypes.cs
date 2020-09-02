@@ -7,6 +7,7 @@ namespace FSA.IncidentsManagement.Root.Models
     [Flags]
     public enum DocumentTagTypes
     {
+        Unknown=0,
         CVED_CED = 1,
         AnalyticalReport = 2,
         Bill_DeliveryDocument = 4,

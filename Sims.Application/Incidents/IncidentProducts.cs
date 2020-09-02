@@ -3,6 +3,7 @@ using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagement.Root.Shared;
 using FSA.SIMSManagerDb.Contracts;
+using Sims.Application.Exceptions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -17,49 +18,81 @@ namespace Sims.Application
             this.dbHost = dbHost;
         }
 
-        public Task<SimsProduct> Add(int hostId, SimsProduct newSimsProduct)
+        public async Task<SimsProduct> Add(int hostId, SimsProduct newSimsProduct)
         {
-            throw new System.NotImplementedException();
+            if (hostId == 0) throw new SimsIncidentMissingException("Incident missing");
+            if (!await dbHost.Incidents.IsClosed(hostId))
+                return await dbHost.Incidents.Products.Add(hostId, newSimsProduct);
+            else
+                throw new SimsIncidentClosedException("Incident closed");
+
         }
 
-        public Task AssignFbo(int SimsProductId, int addressId, FboTypes types)
+        public async Task AssignFbo(int productId, int addressId, FboTypes types)
         {
-            throw new System.NotImplementedException();
+            if (productId == 0) throw new SimsItemMissing("Prouct Id missing");
+            if (addressId == 0) throw new SimsItemMissing("address Id missing");
+
+            var product = await dbHost.Incidents.Products.Get(productId);
+            if (!await dbHost.Incidents.IsClosed(product.HostId))
+                await dbHost.Incidents.Products.Fbos.Add(productId, addressId, types);
+            else
+                throw new SimsIncidentClosedException("Incident closed");
+
         }
 
         public Task<IPaging<SimsProductDashboard>> DashboardItems(int hostId, int pageSize = 10, int startPage = 1)
         {
-            throw new System.NotImplementedException();
+            if (hostId == 0) throw new SimsItemMissing("No Host id present.");
+            return dbHost.Incidents.Products.DashboardItems(hostId, pageSize, startPage);
         }
 
-        public Task<SimsProductDisplayModel> Get(int SimsProductId)
+        public async Task<SimsProductDisplayModel> Get(int SimsProductId)
         {
-            throw new System.NotImplementedException();
+            var productDispModel = await dbHost.Incidents.Products.Get(SimsProductId);
+            var incident = await this.dbHost.Incidents.Get(productDispModel.HostId);
+            productDispModel.DataSourceId = incident.DataSourceId;
+            productDispModel.SignalUrl = incident.SignalUrl;
+            return productDispModel;
         }
 
-        public Task<IEnumerable<SimsProductFboAddress>> GetSimsProductAddresses(int SimsProductId)
+        public Task<IEnumerable<SimsProductFboAddress>> GetAddress(int SimsProductId)
         {
-            throw new System.NotImplementedException();
+            return dbHost.Incidents.Products.Fbos.GetAddresses(SimsProductId);
         }
 
-        public Task RemoveFbo(int SimsProductId, int addressId)
+        public async Task RemoveFbo(int productId, int addressId)
         {
-            throw new System.NotImplementedException();
+            var product = await dbHost.Incidents.Products.Get(productId);
+            if (!await dbHost.Incidents.IsClosed(product.HostId))
+                await dbHost.Incidents.Products.Fbos.Remove(productId, addressId);
+            else
+                throw new SimsIncidentClosedException("Incident closed");
         }
 
-        public Task<SimsProduct> Update(SimsProduct SimsProduct)
+        public async Task<SimsProduct> Update(SimsProduct SimsProduct)
         {
-            throw new System.NotImplementedException();
+            if (SimsProduct.Id == 0) throw new SimsItemMissing("Missing id");
+            var product = await dbHost.Incidents.Products.Get(SimsProduct.Id);
+            if (!await dbHost.Incidents.IsClosed(product.HostId))
+                return await dbHost.Incidents.Products.Update(SimsProduct);
+            else
+                throw new SimsIncidentClosedException("Incident closed");
         }
 
-        public Task UpdateFbo(int SimsProductId, int addressId, FboTypes fboTypes)
+        public async Task UpdateFbo(int productId, int addressId, FboTypes fboTypes)
         {
-            throw new System.NotImplementedException();
+            if (productId == 0) throw new SimsItemMissing("Missing id");
+            var product = await dbHost.Incidents.Products.Get(productId);
+            if (!await dbHost.Incidents.IsClosed(product.HostId))
+                await dbHost.Incidents.Products.Fbos.Update(productId, addressId, fboTypes);
+            else
+                throw new SimsIncidentClosedException("Incident closed");
         }
 
-        public Task<IEnumerable<SimsProduct>> IncidentSimsProducts(int incidentId)
+        public Task<IEnumerable<SimsProduct>> GetAll(int hostId)
         {
-            throw new System.NotImplementedException();
+            return dbHost.Incidents.Products.HostProducts(hostId);
         }
 
     }
