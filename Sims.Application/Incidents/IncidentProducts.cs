@@ -3,7 +3,9 @@ using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagement.Root.Shared;
 using FSA.SIMSManagerDb.Contracts;
+using Microsoft.SharePoint.Client;
 using Sims.Application.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -49,11 +51,18 @@ namespace Sims.Application
 
         public async Task<SimsProductDisplayModel> Get(int SimsProductId)
         {
-            var productDispModel = await dbHost.Incidents.Products.Get(SimsProductId);
-            var incident = await this.dbHost.Incidents.Get(productDispModel.HostId);
-            productDispModel.DataSourceId = incident.DataSourceId;
-            productDispModel.SignalUrl = incident.SignalUrl;
-            return productDispModel;
+            try
+            {
+                var productDispModel = await dbHost.Incidents.Products.Get(SimsProductId);
+                var incident = await this.dbHost.Incidents.Get(productDispModel.HostId);
+                productDispModel.DataSourceId = incident.DataSourceId;
+                productDispModel.SignalUrl = incident.SignalUrl;
+                return productDispModel;
+            }
+            catch(NullReferenceException)
+            {
+                throw new SimsItemMissing("Cannot find item.");
+            }
         }
 
         public Task<IEnumerable<SimsProductFboAddress>> GetAddress(int SimsProductId)

@@ -5,6 +5,7 @@ using FSA.IncidentsManagement.Root.Shared;
 using FSA.SIMSManagerDb.Contracts;
 using FSA.SIMSManagerDb.Entities;
 using FSA.SIMSManagerDb.Entities.Core.Product;
+using FSA.SIMSManagerDb.Entities.Lookups;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -86,7 +87,7 @@ namespace FSA.SIMSManagerDb.Repositories
                               //.ThenInclude(o => o.FBO).ThenInclude(o => o.Organisation)
                               .FirstOrDefaultAsync(p => p.Id == productId);
 
-            return mapper.Map<T, SimsProductDisplayModel>(productDb);
+            return  mapper.Map<T, SimsProductDisplayModel>(productDb);
         }
 
         public async Task<SimsProductDetail> GetDetail(int productId)

@@ -201,6 +201,8 @@ namespace SIMS.TestProjects.Setup
                         {
                             var res = ex.Flatten();
                             Debug.WriteLine(res);
+                            throw (ex);
+
                         }
 
                         var t3 = CreateAddress(SIMS);

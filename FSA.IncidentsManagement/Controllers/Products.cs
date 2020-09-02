@@ -110,7 +110,7 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(403)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> AddAddress([FromRoute] string incidentSignal, [Required] ProductAddress assignObj)
+        public async Task<IActionResult> AddFbo([FromRoute] string incidentSignal, [Required] ProductAddress assignObj)
         {
             try
             {
@@ -136,7 +136,7 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(typeof(PagedResult<FboAddress>), 200)]
         [ProducesResponseType(403)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> RemoveAddress([FromRoute] string incidentSignal, [Required] ProductAddress assignObj)
+        public async Task<IActionResult> RemoveFbo([FromRoute] string incidentSignal, [Required] ProductAddress assignObj)
         {
             try
             {
@@ -162,7 +162,7 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "Update fbo to product")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> UpdateAddress([FromRoute] string incidentSignal,[Required] ProductAddress assignObj)
+        public async Task<IActionResult> UpdateFbo([FromRoute] string incidentSignal,[Required] ProductAddress assignObj)
         {
             try
             {

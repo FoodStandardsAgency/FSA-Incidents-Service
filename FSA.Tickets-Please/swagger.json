@@ -50,7 +50,7 @@
         "tags": [
           "Addresses"
         ],
-        "summary": "Add new Address",
+        "summary": "Add Address",
         "operationId": "AddAddress",
         "consumes": [
           "application/json",
@@ -145,6 +145,216 @@
           },
           "500": {
             "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Attachments/EnsureLibrary/{incidentSignal}/{id}": {
+      "post": {
+        "tags": [
+          "Attachments"
+        ],
+        "summary": "Ensure library exists",
+        "operationId": "EnsureLibrary",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "incidentSignal",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/AttachmentLibraryInfo"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Attachments/{incidentSignal}/{id}": {
+      "post": {
+        "tags": [
+          "Attachments"
+        ],
+        "summary": "Add Attachment to incident/signal",
+        "operationId": "AddAttachment",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "incidentSignal",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/SimsAttachmentFileInfo"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Attachments"
+        ],
+        "summary": "Download incident attachments info",
+        "operationId": "FetchAllAttachmentInfo",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "incidentSignal",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SimsAttachmentFileInfo"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Attachments/Tags/{incidentSignal}": {
+      "post": {
+        "tags": [
+          "Attachments"
+        ],
+        "summary": "Update tags for for an attachment.",
+        "operationId": "UpdateAttachmentTags",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "incidentSignal",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdateDocumentTagsModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Attachments/Rename": {
+      "post": {
+        "tags": [
+          "Attachments"
+        ],
+        "summary": "Renames an attachment.",
+        "operationId": "RenameAttachment",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/RenameFile"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/SimsAttachmentFileInfo"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
           }
         }
       }
@@ -381,7 +591,111 @@
             "in": "body",
             "name": "body",
             "schema": {
-              "$ref": "#/definitions/UpdateLeadOfficer"
+              "$ref": "#/definitions/UpdateLeadOfficerModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Links/{incidentSignal}/{id}": {
+      "get": {
+        "tags": [
+          "Links"
+        ],
+        "summary": "Get All links for incident/signal",
+        "operationId": "GetLinks",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "incidentSignal",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Links/{incidentSignal}": {
+      "delete": {
+        "tags": [
+          "Links"
+        ],
+        "summary": "Remove links for incident/signal",
+        "operationId": "RemoveLink",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "incidentSignal",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/UnlinkModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Links"
+        ],
+        "summary": "Link two or more incidents",
+        "operationId": "AddLink",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "incidentSignal",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/LinkModel"
             }
           }
         ],
@@ -400,7 +714,7 @@
         "tags": [
           "Lookups"
         ],
-        "summary": "All The lookups in the WORLD",
+        "summary": "All lookups",
         "operationId": "GetAll",
         "produces": [
           "application/json"
@@ -423,7 +737,7 @@
         "tags": [
           "Notes"
         ],
-        "summary": "Add note to an incident",
+        "summary": "Add note to an incident/signal",
         "operationId": "AddNote",
         "consumes": [
           "application/json",
@@ -441,7 +755,7 @@
             "in": "body",
             "name": "body",
             "schema": {
-              "$ref": "#/definitions/IncidentComment"
+              "$ref": "#/definitions/SimsCommentModel"
             }
           }
         ],
@@ -460,7 +774,7 @@
         "tags": [
           "Notes"
         ],
-        "summary": "Get notes for an incident",
+        "summary": "Get notes for an incident/signal",
         "operationId": "GetNotes",
         "produces": [
           "application/json"
@@ -486,9 +800,570 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/IncidentNote"
+                "$ref": "#/definitions/SimsNote"
               }
             }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Products/{incidentSignal}": {
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Create new Product",
+        "operationId": "AddProduct",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "incidentSignal",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/ProductViewModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/SimsProduct"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Products/{incidentSignal}/{productId}": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Fetch product",
+        "operationId": "GetProduct",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "incidentSignal",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "productId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/SimsProductDisplayModel"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Products/all/{incidentSignal}/{id}": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Fetch products",
+        "operationId": "GetAllProducts",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "incidentSignal",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SimsProduct"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Products/Addresses/{incidentSignal}/{productId}": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Fetch product addresses",
+        "operationId": "GetProductAddresses",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "incidentSignal",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "productId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ProductFboAddressViewModel"
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Products/Fbo/{incidentSignal}": {
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Assign fbo to product",
+        "operationId": "AddFbo",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "incidentSignal",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ProductAddress"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Remove fbo from product",
+        "operationId": "RemoveFbo",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "incidentSignal",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ProductAddress"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/FboAddress"
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Update fbo to product",
+        "operationId": "UpdateFbo",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "incidentSignal",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ProductAddress"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Products/Dashboard/{incidentSignal}/{id}": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Product dashboard",
+        "operationId": "GetProductDashboard",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "incidentSignal",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "pageSize",
+            "type": "integer",
+            "format": "int32",
+            "default": 10
+          },
+          {
+            "in": "query",
+            "name": "pageNo",
+            "type": "integer",
+            "format": "int32",
+            "default": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SimsProductDashboard"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Signals": {
+      "get": {
+        "tags": [
+          "Signals"
+        ],
+        "summary": "Get incident by id",
+        "operationId": "GetSignal",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/SimsSignal"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Signals"
+        ],
+        "summary": "Replace an incident",
+        "operationId": "UpdateSignal",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/SimsSignal"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/SimsSignal"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Signals"
+        ],
+        "summary": "Create an incident",
+        "operationId": "CreateSignal",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/SimsSignal"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/SimsSignal"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Signals/Status/{id}": {
+      "post": {
+        "tags": [
+          "Signals"
+        ],
+        "summary": "Update status of an incident",
+        "operationId": "UpdateSignalStatus",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "statusId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/SimsSignal"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Signals/LeadOfficer": {
+      "post": {
+        "tags": [
+          "Signals"
+        ],
+        "summary": "Update incident(s) lead officer",
+        "operationId": "UpdateSignalLeadOfficer",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdateLeadOfficerModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Signals/Promote/{id}": {
+      "post": {
+        "tags": [
+          "Signals"
+        ],
+        "summary": "Update incident(s) lead officer",
+        "operationId": "PromoteToIncident",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
           },
           "500": {
             "description": "Server Error"
@@ -527,9 +1402,39 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/StakeholderModel"
+                "$ref": "#/definitions/SimsStakeholder"
               }
             }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Stakeholders"
+        ],
+        "summary": "Remove a stakeholder to an incident",
+        "operationId": "RemoveStakeholder",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "incidentSignal",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
           },
           "500": {
             "description": "Server Error"
@@ -563,7 +1468,7 @@
             "in": "body",
             "name": "body",
             "schema": {
-              "$ref": "#/definitions/StakeholderModel"
+              "$ref": "#/definitions/SimsStakeholder"
             }
           }
         ],
@@ -571,7 +1476,7 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/StakeholderModel"
+              "$ref": "#/definitions/SimsStakeholder"
             }
           },
           "500": {
@@ -583,7 +1488,7 @@
         "tags": [
           "Stakeholders"
         ],
-        "summary": "Update a  stakeholder to an incident",
+        "summary": "Update a stakeholder",
         "operationId": "UpdateStakeholder",
         "consumes": [
           "application/json",
@@ -604,7 +1509,7 @@
             "in": "body",
             "name": "body",
             "schema": {
-              "$ref": "#/definitions/StakeholderModel"
+              "$ref": "#/definitions/SimsStakeholder"
             }
           }
         ],
@@ -612,7 +1517,7 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/StakeholderModel"
+              "$ref": "#/definitions/SimsStakeholder"
             }
           },
           "500": {
@@ -672,6 +1577,96 @@
         "contactMethodId": {
           "format": "int32",
           "type": "integer"
+        }
+      }
+    },
+    "AttachmentLibraryInfo": {
+      "type": "object",
+      "properties": {
+        "webUrl": {
+          "type": "string"
+        },
+        "serverRelativeFolderUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "SimsAttachmentFileInfo": {
+      "type": "object",
+      "properties": {
+        "fileName": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "userId": {
+          "type": "string"
+        },
+        "created": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "ProblemDetails": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "status": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "detail": {
+          "type": "string"
+        },
+        "instance": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {
+        "type": "object"
+      }
+    },
+    "UpdateDocumentTagsModel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "docUrl": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "RenameFile": {
+      "type": "object",
+      "properties": {
+        "fileName": {
+          "type": "string"
+        },
+        "existingUrl": {
+          "type": "string"
         }
       }
     },
@@ -1183,14 +2178,14 @@
         }
       }
     },
-    "UpdateLeadOfficer": {
+    "UpdateLeadOfficerModel": {
       "required": [
-        "incidentIds",
+        "ids",
         "officer"
       ],
       "type": "object",
       "properties": {
-        "incidentIds": {
+        "ids": {
           "type": "array",
           "items": {
             "format": "int32",
@@ -1198,6 +2193,46 @@
           }
         },
         "officer": {
+          "type": "string"
+        }
+      }
+    },
+    "UnlinkModel": {
+      "required": [
+        "fromId",
+        "toId"
+      ],
+      "type": "object",
+      "properties": {
+        "fromId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "toId": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "LinkModel": {
+      "required": [
+        "fromId",
+        "toIds"
+      ],
+      "type": "object",
+      "properties": {
+        "fromId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "toIds": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "comment": {
           "type": "string"
         }
       }
@@ -1295,27 +2330,6 @@
         },
         "title": {
           "type": "string"
-        }
-      }
-    },
-    "OrganisationRole": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "title": {
-          "type": "string"
-        },
-        "canBeNotifier": {
-          "type": "boolean"
-        },
-        "canBeFBO": {
-          "type": "boolean"
-        },
-        "canBeLocalAuthority": {
-          "type": "boolean"
         }
       }
     },
@@ -1500,12 +2514,6 @@
             "$ref": "#/definitions/DataSource"
           }
         },
-        "organisationRoles": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/OrganisationRole"
-          }
-        },
         "units": {
           "type": "array",
           "items": {
@@ -1548,7 +2556,7 @@
             "$ref": "#/definitions/AdminLead"
           }
         },
-        "productDataTypes": {
+        "productDateTypes": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/ProductDateType"
@@ -1568,10 +2576,10 @@
         }
       }
     },
-    "IncidentComment": {
+    "SimsCommentModel": {
       "type": "object",
       "properties": {
-        "incidentId": {
+        "hostId": {
           "format": "int32",
           "type": "integer"
         },
@@ -1580,10 +2588,10 @@
         }
       }
     },
-    "IncidentNote": {
+    "SimsNote": {
       "type": "object",
       "properties": {
-        "incidentId": {
+        "hostId": {
           "format": "int32",
           "type": "integer"
         },
@@ -1603,18 +2611,571 @@
         }
       }
     },
-    "StakeholderModel": {
+    "ProductPackSizeModel": {
       "type": "object",
       "properties": {
         "id": {
           "format": "int32",
           "type": "integer"
         },
-        "incidentId": {
+        "size": {
+          "type": "string"
+        },
+        "unitId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "productId": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "ProductDateModel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "productId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "dateTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "date": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "ProductViewModel": {
+      "type": "object",
+      "properties": {
+        "hostId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "id": {
           "format": "int32",
           "type": "integer"
         },
         "name": {
+          "type": "string"
+        },
+        "brand": {
+          "type": "string"
+        },
+        "productTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "countryOfOriginId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "amount": {
+          "type": "string"
+        },
+        "amountUnitTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "packSizes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProductPackSizeModel"
+          }
+        },
+        "productDates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProductDateModel"
+          }
+        },
+        "batchCodes": {
+          "type": "string"
+        },
+        "packDescription": {
+          "type": "string"
+        },
+        "additionalInfo": {
+          "type": "string"
+        }
+      }
+    },
+    "SimsProductPackSize": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "size": {
+          "type": "string"
+        },
+        "unitId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "productId": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "SimsProductDate": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "productId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "dateTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "date": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "SimsProduct": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "hostId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "brand": {
+          "type": "string"
+        },
+        "productTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "countryOfOriginId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "amount": {
+          "type": "string"
+        },
+        "amountUnitTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "packSizes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SimsProductPackSize"
+          }
+        },
+        "productDates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SimsProductDate"
+          }
+        },
+        "batchCodes": {
+          "type": "string"
+        },
+        "packDescription": {
+          "type": "string"
+        },
+        "additionalInfo": {
+          "type": "string"
+        },
+        "added": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "lastUpdated": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "lastUpdatedBy": {
+          "type": "string"
+        }
+      }
+    },
+    "SimsProductDisplayModel": {
+      "type": "object",
+      "properties": {
+        "dataSourceId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "signalUrl": {
+          "type": "string"
+        },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "hostId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "brand": {
+          "type": "string"
+        },
+        "productTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "countryOfOriginId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "amount": {
+          "type": "string"
+        },
+        "amountUnitTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "packSizes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SimsProductPackSize"
+          }
+        },
+        "productDates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SimsProductDate"
+          }
+        },
+        "batchCodes": {
+          "type": "string"
+        },
+        "packDescription": {
+          "type": "string"
+        },
+        "additionalInfo": {
+          "type": "string"
+        },
+        "added": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "lastUpdated": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "lastUpdatedBy": {
+          "type": "string"
+        }
+      }
+    },
+    "FboTypes": {
+      "format": "int32",
+      "enum": [
+        0,
+        1,
+        2,
+        4,
+        8,
+        16,
+        32,
+        64,
+        128,
+        256,
+        512,
+        1024,
+        2048,
+        4096,
+        8192,
+        16384,
+        32768,
+        65536
+      ],
+      "type": "integer"
+    },
+    "AddressContact": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "addressId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "telephoneNumber": {
+          "type": "string"
+        },
+        "emailAddress": {
+          "type": "string"
+        },
+        "isMain": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ProductFboAddressViewModel": {
+      "type": "object",
+      "properties": {
+        "productId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "fboTypes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FboTypes"
+          }
+        },
+        "mainContact": {
+          "type": "string"
+        },
+        "emailAddress": {
+          "type": "string"
+        },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "addressLine1": {
+          "type": "string"
+        },
+        "addressLine2": {
+          "type": "string"
+        },
+        "townCity": {
+          "type": "string"
+        },
+        "county": {
+          "type": "string"
+        },
+        "countryId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "postCode": {
+          "type": "string"
+        },
+        "telephoneNumber": {
+          "type": "string"
+        },
+        "contactMethodId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "contacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AddressContact"
+          }
+        }
+      }
+    },
+    "ProductAddress": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "fboTypes": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "addressId": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "FboAddress": {
+      "type": "object",
+      "properties": {
+        "fboId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "addressLine1": {
+          "type": "string"
+        },
+        "addressLine2": {
+          "type": "string"
+        },
+        "townCity": {
+          "type": "string"
+        },
+        "county": {
+          "type": "string"
+        },
+        "countryId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "postCode": {
+          "type": "string"
+        },
+        "telephoneNumber": {
+          "type": "string"
+        },
+        "contactMethodId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "contacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AddressContact"
+          }
+        }
+      }
+    },
+    "SimsProductDashboard": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "productType": {
+          "type": "string"
+        },
+        "batchCodes": {
+          "type": "string"
+        },
+        "lastUpdated": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "addressNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "SimsSignal": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "sptId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "signalStatus": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "string"
+        },
+        "leadOfficer": {
+          "type": "string"
+        },
+        "alertType": {
+          "type": "string"
+        },
+        "countryOfOrigin": {
+          "type": "string"
+        },
+        "notifyingCountry": {
+          "type": "string"
+        },
+        "isEu": {
+          "type": "boolean"
+        },
+        "foodOrFeed": {
+          "type": "string"
+        },
+        "baseProduct": {
+          "type": "string"
+        },
+        "manufacturer": {
+          "type": "string"
+        },
+        "hazard": {
+          "type": "string"
+        },
+        "hazardGroup": {
+          "type": "string"
+        },
+        "dataSource": {
+          "type": "string"
+        },
+        "sourceType": {
+          "type": "string"
+        },
+        "publishedDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "insertedDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "sourceLink": {
+          "type": "string"
+        }
+      }
+    },
+    "SimsStakeholder": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "hostId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "govDept": {
           "type": "string"
         },
         "role": {
@@ -1624,9 +3185,6 @@
           "type": "string"
         },
         "email": {
-          "type": "string"
-        },
-        "govDept": {
           "type": "string"
         },
         "discriminatorId": {

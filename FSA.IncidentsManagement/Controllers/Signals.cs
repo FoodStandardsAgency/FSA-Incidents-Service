@@ -62,7 +62,7 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(typeof(SimsSignal), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
-        public async Task<IActionResult> UpdateStatus([FromRoute] int id, [Required] int statusId)
+        public async Task<IActionResult> UpdateSignalStatus([FromRoute] int id, [Required] int statusId)
         {
             return new OkObjectResult(null);
         }
@@ -71,7 +71,7 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "Update incident(s) lead officer")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> UpdateLeadOfficer([FromBody, SwaggerParameter("Update Lead officer entries", Required = true)] UpdateLeadOfficerModel officer)
+        public async Task<IActionResult> UpdateSignalLeadOfficer([FromBody, SwaggerParameter("Update Lead officer entries", Required = true)] UpdateLeadOfficerModel officer)
         {
            // await this.simsApp.Incidents.AssignLeadOfficer(officer.IncidentIds, officer.Officer);
             return new OkResult();
