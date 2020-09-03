@@ -178,7 +178,7 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/AttachmentLibraryInfo"
+              "$ref": "#/definitions/SimsAttachmentLibraryInfo"
             }
           },
           "500": {
@@ -632,7 +632,7 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/IncidentDashboardView"
+              "$ref": "#/definitions/IncidentDashboardItem"
             }
           },
           "500": {
@@ -1048,7 +1048,7 @@
             "name": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ProductAddress"
+              "$ref": "#/definitions/ProductFboInfoViewModel"
             }
           }
         ],
@@ -1093,19 +1093,13 @@
             "name": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ProductAddress"
+              "$ref": "#/definitions/ProductFboInfoViewModel"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/FboAddress"
-              }
-            }
+            "description": "Success"
           },
           "403": {
             "description": "Forbidden",
@@ -1141,7 +1135,7 @@
             "name": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ProductAddress"
+              "$ref": "#/definitions/ProductFboInfoViewModel"
             }
           }
         ],
@@ -1616,7 +1610,7 @@
         }
       }
     },
-    "AttachmentLibraryInfo": {
+    "SimsAttachmentLibraryInfo": {
       "type": "object",
       "properties": {
         "webUrl": {
@@ -2261,7 +2255,7 @@
         }
       }
     },
-    "IncidentDashboardView": {
+    "IncidentDashboardItem": {
       "type": "object",
       "properties": {
         "id": {
@@ -2990,7 +2984,7 @@
         }
       }
     },
-    "FboTypes": {
+    "SimsFboTypes": {
       "format": "int32",
       "enum": [
         0,
@@ -3014,7 +3008,7 @@
       ],
       "type": "integer"
     },
-    "AddressContact": {
+    "SimsAddressContact": {
       "type": "object",
       "properties": {
         "id": {
@@ -3049,7 +3043,7 @@
         "fboTypes": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/FboTypes"
+            "$ref": "#/definitions/SimsFboTypes"
           }
         },
         "mainContact": {
@@ -3094,12 +3088,12 @@
         "contacts": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/AddressContact"
+            "$ref": "#/definitions/SimsAddressContact"
           }
         }
       }
     },
-    "ProductAddress": {
+    "ProductFboInfoViewModel": {
       "type": "object",
       "properties": {
         "id": {
@@ -3116,54 +3110,6 @@
         "addressId": {
           "format": "int32",
           "type": "integer"
-        }
-      }
-    },
-    "FboAddress": {
-      "type": "object",
-      "properties": {
-        "fboId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "title": {
-          "type": "string"
-        },
-        "addressLine1": {
-          "type": "string"
-        },
-        "addressLine2": {
-          "type": "string"
-        },
-        "townCity": {
-          "type": "string"
-        },
-        "county": {
-          "type": "string"
-        },
-        "countryId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "postCode": {
-          "type": "string"
-        },
-        "telephoneNumber": {
-          "type": "string"
-        },
-        "contactMethodId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "contacts": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/AddressContact"
-          }
         }
       }
     },

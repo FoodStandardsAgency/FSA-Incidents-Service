@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Models
 {
-    public class AttachmentDetail
+    public class RenameFileViewModel
     {
         public string FileName { get; set; }
-        public string Url { get; set; }
+        public string ExistingUrl { get; set; }
     }
 }

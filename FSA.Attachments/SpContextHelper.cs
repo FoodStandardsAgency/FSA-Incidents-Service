@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace FSA.Attachments
 {
+    /// <summary>
+    /// Managees the connetion to sharepoint and the requiste cert.
+    /// </summary>
     internal static class SpContextHelper
     {
         internal static async Task<string> GetApplicationAuthenticatedClient(string clientId, X509Certificate2 cert, string[] scopes, string tenantId)

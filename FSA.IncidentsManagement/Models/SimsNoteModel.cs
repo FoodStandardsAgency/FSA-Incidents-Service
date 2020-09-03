@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Models
 {
-    public class SimsCommentModel
+    public class SimsNoteModel
     {
         public int HostId { get; set; }
         public string Note { get; set; }

@@ -32,7 +32,7 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "Add note to an incident/signal")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> AddNote([FromRoute] string incidentSignal, [FromBody, SwaggerParameter(Required = true)] SimsCommentModel addIncident)
+        public async Task<IActionResult> AddNote([FromRoute] string incidentSignal, [FromBody, SwaggerParameter(Required = true)] SimsNoteModel addIncident)
         {
             try
             {

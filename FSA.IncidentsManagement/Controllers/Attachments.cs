@@ -131,7 +131,7 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(403)]
         [Produces("application/json")]
-        public async Task<IActionResult> RenameAttachment([FromBody] RenameFile renameFile)
+        public async Task<IActionResult> RenameAttachment([FromBody] RenameFileViewModel renameFile)
         {
             try
             {
