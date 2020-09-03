@@ -1,10 +1,7 @@
-﻿using FSA.IncidentsManagement.Root;
-using FSA.IncidentsManagement.Root.Domain;
+﻿using FSA.IncidentsManagement.Root.Domain;
 using FSA.IncidentsManagement.Root.DTOS;
-using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb.Contracts;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sims.Application
