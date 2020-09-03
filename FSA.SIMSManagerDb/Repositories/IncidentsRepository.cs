@@ -266,8 +266,6 @@ namespace FSA.SIMSManagerDb.Repositories
         public async Task<IPaging<IncidentDashboardView>> DashboardSearch(string search = null, int PageSize = 500, int StartPage = 1)
         {
 
-            var personClause = "person:";
-
             if (StartPage < 1 || PageSize < 1) return new PagedResult<IncidentDashboardView>(Enumerable.Empty<IncidentDashboardView>(), 0);
 
             var qry = this.ctx.Incidents.AsNoTracking()
@@ -290,7 +288,7 @@ namespace FSA.SIMSManagerDb.Repositories
                 Expression<Func<IncidentDb, bool>> searchExpression = null;
                 searchExpression = this.DashboardGeneralSearch(searchTerms, incidentIds);
 
-                Expression<Func<IncidentDb, bool>> idExpressions = null;
+                //Expression<Func<IncidentDb, bool>> idExpressions = null;
                 //idExpressions = this.DashboardIdSearch(incidentIds);
                 if (searchExpression != null)
                     qry = qry.Where(searchExpression);

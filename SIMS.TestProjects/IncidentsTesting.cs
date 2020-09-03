@@ -1,8 +1,7 @@
 using AutoMapper;
 using AutoMapper.Configuration;
+using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
-using FSA.IncidentsManagementDb.Entities.Helpers;
-using FSA.SIMSManagerDb;
 using FSA.SIMSManagerDb.MapperProfile;
 using FSA.SIMSManagerDb.Repositories;
 using SIMS.TestProjects.Setup;
@@ -48,7 +47,7 @@ namespace SIMS.Database
                 incidentTitle: "New Incident (no Lead officer)",
                 incidentTypeId: 1,
                 contactMethodId: 2,
-                statusId: (int)IncidentStatusTypes.Unassigned,
+                statusId: (int)SimsIncidentStatusTypes.Unassigned,
                 priorityId: 2,
                 classificationId: 1,
                 dataSourceId: 1,
@@ -74,7 +73,7 @@ namespace SIMS.Database
             {
                 var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var savedIncident = await simsHost.Incidents.Add(incident);
-                Assert.True(savedIncident.MostUniqueId != Guid.Empty && savedIncident.StatusId == (int)IncidentStatusTypes.Unassigned);
+                Assert.True(savedIncident.MostUniqueId != Guid.Empty && savedIncident.StatusId == (int)SimsIncidentStatusTypes.Unassigned);
             }
         }
 
@@ -87,7 +86,7 @@ namespace SIMS.Database
                    incidentTitle: "New Incident (Lead officer)",
                    incidentTypeId: 1,
                    contactMethodId: 2,
-                   statusId: (int)IncidentStatusTypes.Unassigned,
+                   statusId: (int)SimsIncidentStatusTypes.Unassigned,
                    priorityId: 2,
                    classificationId: 1,
                    dataSourceId: 1,
@@ -131,7 +130,7 @@ namespace SIMS.Database
                 var incident = await incidents.Get(1);
                 var updated = incident
                         .WithMostUnique(Guid.Parse("00000000-0000-0000-0000-000000000001"))
-                        .WithPriority((int)PrioritiesStatus.Medium);
+                        .WithPriority((int)SimsPrioritiesStatus.Medium);
 
                 await Assert.ThrowsAsync<InvalidOperationException>(async() => await incidents.Update(updated));
                 //savedIncident.MostUniqueId == fakeId && savedIncident.PriorityId == (int)PrioritiesStatus.Medium);
@@ -168,11 +167,11 @@ namespace SIMS.Database
                 var fakeUser = Guid.NewGuid().ToString();
                 // Ensure we have a lead officer and we are open
                 var changedIncident = incident
-                                        .WithStatus((int)IncidentStatusTypes.Open)
+                                        .WithStatus((int)SimsIncidentStatusTypes.Open)
                                         .WithLeadOfficer(fakeUser);
 
                 var updateIncident = await simsHost.Incidents.Update(changedIncident);
-                Assert.True(updateIncident.LeadOfficer == fakeUser && updateIncident.StatusId == (int)IncidentStatusTypes.Open);
+                Assert.True(updateIncident.LeadOfficer == fakeUser && updateIncident.StatusId == (int)SimsIncidentStatusTypes.Open);
             }
         }
 
@@ -207,11 +206,11 @@ namespace SIMS.Database
 
                 // Closing shall replace the leadOfficer
                 var changedIncident = incident
-                                        .WithStatus((int)IncidentStatusTypes.Closed);
+                                        .WithStatus((int)SimsIncidentStatusTypes.Closed);
                 //.WithLeadOfficer(this.userId3);
 
                 var updateIncident = await simsHost.Incidents.Update(changedIncident);
-                Assert.True(updateIncident.StatusId == (int)IncidentStatusTypes.Closed);
+                Assert.True(updateIncident.StatusId == (int)SimsIncidentStatusTypes.Closed);
             }
         }
 
@@ -232,7 +231,7 @@ namespace SIMS.Database
                 var i82 = (await simsHost.Incidents.Get(82));
                 var Officer82 = i82.LeadOfficer;
                 Assert.True(Officer39 == fakeUser && Officer102 == fakeUser && Officer55 == fakeUser && Officer82 != fakeUser);
-                Assert.True(i82.StatusId == (int)IncidentStatusTypes.Closed);
+                Assert.True(i82.StatusId == (int)SimsIncidentStatusTypes.Closed);
             }
         }
 
@@ -305,9 +304,9 @@ namespace SIMS.Database
             {
                 var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var data = await simsHost.Incidents.Get(59);
-                var updated = data.WithStatus((int)IncidentStatusTypes.Closed);
+                var updated = data.WithStatus((int)SimsIncidentStatusTypes.Closed);
                 var item = await simsHost.Incidents.Update(updated);
-                Assert.True(item.IncidentClosed != null && item.StatusId == (int)IncidentStatusTypes.Closed);
+                Assert.True(item.IncidentClosed != null && item.StatusId == (int)SimsIncidentStatusTypes.Closed);
             }
         }
 

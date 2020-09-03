@@ -104,11 +104,11 @@ namespace Sims.Application
                 return await dbHost.Incidents.UpdateClassification(id, ClassificationId);
 
             }
-            catch (NullReferenceException ex)
+            catch (NullReferenceException)
             {
                 throw new SimsIncidentMissingException("Incident missing");
             }
-            catch (ArgumentOutOfRangeException ex)
+            catch (ArgumentOutOfRangeException)
             {
                 throw new SimsIncidentClosedException("Cannot update closed incident");
             }

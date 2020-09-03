@@ -5,10 +5,7 @@ using FluentValidation.AspNetCore;
 using FSA.Attachments;
 using FSA.IncidentsManagement.Misc;
 using FSA.IncidentsManagement.ModelValidators;
-using FSA.IncidentsManagement.Root.Contracts;
 using FSA.IncidentsManagement.Root.Domain;
-using FSA.IncidentsManagementDb;
-using FSA.IncidentsManagementDb.Repositories;
 using FSA.SIMSManagerDb;
 using FSA.SIMSManagerDb.MapperProfile;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -76,7 +73,6 @@ namespace FSA.IncidentsManagement
 
             services.AddSwaggerGen(c =>
             {
-                //c.DocumentFilter<YamlDocumentFilter>();
                 c.CustomOperationIds(apiDesc =>
                 {
                     return apiDesc.TryGetMethodInfo(out MethodInfo methodInfo) ? methodInfo.Name : null;
@@ -107,17 +103,8 @@ namespace FSA.IncidentsManagement
                 cfg.AddCollectionMappers();
             });
 
-            var fsaConn = Configuration.GetConnectionString("FSADbConn");
+            
             var simsConn = Configuration.GetConnectionString("SIMSDbConn");
-
-            services.AddDbContext<FSADbContext>((provider, opts) => opts
-                        //.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddDebug()))
-                        .UseSqlServer(fsaConn, (d) =>
-                        {
-                            d.EnableRetryOnFailure(15);
-                            d.CommandTimeout(100);
-                        })
-                        .UseInternalServiceProvider(provider));
 
             services.AddDbContext<SimsDbContext>((provider, opts) => opts
                 .UseSqlServer(simsConn, (d) =>
@@ -128,8 +115,6 @@ namespace FSA.IncidentsManagement
                 .UseInternalServiceProvider(provider));
 
             services.AddEntityFrameworkSqlServer();
-
-            services.RegisterTemporalTablesForDatabase<FSADbContext>();
             
             services.RegisterTemporalTablesForDatabase<SimsDbContext>();
 
@@ -140,6 +125,7 @@ namespace FSA.IncidentsManagement
                 var attachments = srv.GetRequiredService<ISIMSAttachmentHost>();
                 return new SimsManangement(db, map, attachments, userInfo.GetTenantId());
             });
+
             services.AddScoped<ISIMSAttachmentHost, SimsAttachments>((o) =>
             {
                 var user = o.GetRequiredService<UserInfo>();
@@ -151,21 +137,6 @@ namespace FSA.IncidentsManagement
                 var signalsAttach = new AttachConfig { ContentTypeId = sharePoint["SimsDocCType"], SiteUrl = $"https://{sharePoint["HostSiteCol"]}/{sharePoint["DocSiteUrl"]}" };
                 return new SimsAttachments(section["ClientId"], user.GetTenantId(), cert, sharePoint["HostSiteCol"], incidentAttach, signalsAttach);
             });
-
-            #region v1
-            services.AddScoped<ILookupDataHost, LookupDataHost>();
-            services.AddScoped<ISIMSManager, SIMSDataManager>(ids => new SIMSDataManager(ids.GetRequiredService<FSADbContext>(), ids.GetRequiredService<UserInfo>().GetUserId()));
-            //services.AddScoped<IFSAAttachments, SPAttachments>((o) =>
-            //{
-            //    var user = o.GetRequiredService<UserInfo>();
-            //    var conf = o.GetRequiredService<IConfiguration>();
-            //    var section = conf.GetSection("AzureAd");
-            //    var sharePoint = conf.GetSection("SharePoint");
-            //    var cert = o.GetRequiredService<X509Certificate2>();
-            //    return new SPAttachments(section["ClientId"], user.GetTenantId(), cert, sharePoint["HostSiteCol"], $"https://{sharePoint["HostSiteCol"]}/{sharePoint["DocSiteUrl"]}", sharePoint["SimsDocCType"]);// Guid.Parse(sharePoint["SimsTermSetId"]));
-            //});
-            #endregion
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

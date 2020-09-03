@@ -1,15 +1,12 @@
 ﻿using AutoMapper;
 using FSA.IncidentsManagement.Models;
-using FSA.IncidentsManagement.Root.Contracts;
 using FSA.IncidentsManagement.Root.Domain;
 using FSA.IncidentsManagement.Root.DTOS;
-using FSA.SIMSManagerDb.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Controllers

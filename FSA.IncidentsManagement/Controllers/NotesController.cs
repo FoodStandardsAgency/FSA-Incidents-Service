@@ -1,12 +1,9 @@
 ﻿using FSA.IncidentsManagement.Misc;
 using FSA.IncidentsManagement.Models;
-using FSA.IncidentsManagement.Root.Contracts;
 using FSA.IncidentsManagement.Root.Domain;
 using FSA.IncidentsManagement.Root.Models;
-using FSA.SIMSManagerDb.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.BusinessData.MetadataModel;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
 using System;

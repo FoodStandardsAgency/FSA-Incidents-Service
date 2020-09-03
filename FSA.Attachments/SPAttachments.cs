@@ -1,5 +1,4 @@
-﻿using FSA.IncidentsManagement.Root.Contracts;
-using FSA.IncidentsManagement.Root.Domain;
+﻿using FSA.IncidentsManagement.Root.Domain;
 using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
 using Microsoft.SharePoint.Client;

@@ -59,7 +59,7 @@ namespace FSA.IncidentsManagement.Controllers
         [Produces("application/json")]
         public async Task<IActionResult> CreateIncident([FromBody, SwaggerParameter("Create Incident", Required = true)] IncidentCreateModel incident)
         {
-            return new OkObjectResult(await this.simsApp.Incidents.Add(incident.ToClient()));
+            return new OkObjectResult(await this.simsApp.Incidents.Add(mapper.Map<BaseIncident>(incident)));
         }
 
         [HttpPost("Classification/{id}/{classificationId}")]

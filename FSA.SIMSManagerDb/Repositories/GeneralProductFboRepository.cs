@@ -77,10 +77,10 @@ namespace FSA.SIMSManagerDb.Repositories
 
         public async Task<IEnumerable<SimsProductFboAddress>> GetAddresses(int productId)
         {
-            var productDbItems = this.DbSet.AsNoTracking()
+            var productDbItems = await this.DbSet.AsNoTracking()
                                     .Include(o => o.Address)
                                     .ThenInclude(o => o.Contacts)
-                                    .Where(p => p.ProductId == productId).ToList();
+                                    .Where(p => p.ProductId == productId).ToListAsync();
 
 
             //  var organisations = fboData.Select(o => o.FBO.Organisation);

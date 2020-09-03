@@ -7,8 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\V1Addresses.cs" />
+    <Compile Remove="Controllers\V1Attachments.cs" />
+    <Compile Remove="Controllers\V1Incidents.cs" />
+    <Compile Remove="Controllers\V1Lookups.cs" />
+    <Compile Remove="Controllers\V1Products.cs" />
     <Compile Remove="Controllers\WeatherForecastController.cs" />
     <Compile Remove="Misc\YamlGenerator.cs" />
+    <Compile Remove="ModelValidators\MappingExtensions.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,7 +41,6 @@
     <ProjectReference Include="..\EntityFrameworkCore.TemporalTables\EntityFrameworkCore.TemporalTables\EntityFrameworkCore.TemporalTables.csproj" />
     <ProjectReference Include="..\FSA.Attachments\FSA.Attachments.csproj" />
     <ProjectReference Include="..\FSA.IncidentMangementMent.Root\FSA.IncidentsManagement.Root.csproj" />
-    <ProjectReference Include="..\FSA.IncidentsManagementDb\FSA.IncidentsManagementDb.csproj" />
     <ProjectReference Include="..\FSA.SIMSManagerDb\FSA.SIMSManagerDb.csproj" />
     <ProjectReference Include="..\Sims.Application\Sims.Application.csproj" />
   </ItemGroup>

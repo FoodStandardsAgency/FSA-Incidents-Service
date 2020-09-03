@@ -19,24 +19,24 @@ namespace FSA.SIMSManagerDb.Repositories
             this.mapper = mapper;
         }
 
-        private IReferenceDataRepo<Category> Categories => new ReferenceDataRepo<Category, CategoryDb>(ctx, mapper);
-        private IReferenceDataRepo<Classification> Classifications => new ReferenceDataRepo<Classification, ClassificationDb>(ctx, mapper);
-        private IReferenceDataRepo<Priority> Priorities => new ReferenceDataRepo<Priority, PriorityDb>(ctx, mapper);
-        private IReferenceDataRepo<IncidentStatusLkUp> IncidentStatus => new ReferenceDataRepo<IncidentStatusLkUp, IncidentStatusDb>(ctx, mapper);
-        private IReferenceDataRepo<ContactMethod> ContactMethods => new ReferenceDataRepo<ContactMethod, ContactMethodDb>(ctx, mapper);
-        private IReferenceDataRepo<Country> Countries => new ReferenceDataRepo<Country, CountryDb>(ctx, mapper);
-        private IReferenceDataRepo<DataSource> DataSources => new ReferenceDataRepo<DataSource, DataSourceDb>(ctx, mapper);
-        private IReferenceDataRepo<DeathIllness> DeathIllnesses => new ReferenceDataRepo<DeathIllness, DeathIllnessDb>(ctx, mapper);
-        private IReferenceDataRepo<ProductType> ProductTypes => new ReferenceDataRepo<ProductType, ProductTypeDb>(ctx, mapper);
-        private IReferenceDataRepo<SignalStatus> SignalStatus => new ReferenceDataRepo<SignalStatus, SignalStatusDb>(ctx, mapper);
-        private IReferenceDataRepo<UnitQuantity> Units => new ReferenceDataRepo<UnitQuantity, UnitQuantityDb>(ctx, mapper);
-        private IReferenceDataRepo<AttachmentTagLkup> AttachmentTags => new ReferenceDataRepo<AttachmentTagLkup, DocumentTagDb>(ctx, mapper);
-        private IReferenceDataRepo<FBOType> FBOTypes => new ReferenceDataRepo<FBOType, FBOTypeDb>(ctx, mapper);
-        private IReferenceDataRepo<NotifierType> NotifierTypes => new ReferenceDataRepo<NotifierType, NotifierTypeDb>(ctx, mapper);
-        private IReferenceDataRepo<AdminLead> AdminLeads => new ReferenceDataRepo<AdminLead, AdminLeadDb>(ctx, mapper);
-        private IReferenceDataRepo<ProductDateType> ProductDateTypes => new ReferenceDataRepo<ProductDateType, DateTypeDb>(ctx, mapper);
-        private IReferenceDataRepo<StakeholderType> StakeholderTypes => new ReferenceDataRepo<StakeholderType, StakeholderDiscriminatorDb>(ctx, mapper);
-        private IReferenceDataRepo<StakeholderIncidentRole> StakeholderIncidentRoles => new ReferenceDataRepo<StakeholderIncidentRole, StakeholderIncidentRoleDb>(ctx, mapper);
+        private ISimsReferenceData<Category> Categories => new ReferenceDataRepo<Category, CategoryDb>(ctx, mapper);
+        private ISimsReferenceData<Classification> Classifications => new ReferenceDataRepo<Classification, ClassificationDb>(ctx, mapper);
+        private ISimsReferenceData<Priority> Priorities => new ReferenceDataRepo<Priority, PriorityDb>(ctx, mapper);
+        private ISimsReferenceData<IncidentStatusLkUp> IncidentStatus => new ReferenceDataRepo<IncidentStatusLkUp, IncidentStatusDb>(ctx, mapper);
+        private ISimsReferenceData<ContactMethod> ContactMethods => new ReferenceDataRepo<ContactMethod, ContactMethodDb>(ctx, mapper);
+        private ISimsReferenceData<Country> Countries => new ReferenceDataRepo<Country, CountryDb>(ctx, mapper);
+        private ISimsReferenceData<DataSource> DataSources => new ReferenceDataRepo<DataSource, DataSourceDb>(ctx, mapper);
+        private ISimsReferenceData<DeathIllness> DeathIllnesses => new ReferenceDataRepo<DeathIllness, DeathIllnessDb>(ctx, mapper);
+        private ISimsReferenceData<ProductType> ProductTypes => new ReferenceDataRepo<ProductType, ProductTypeDb>(ctx, mapper);
+        private ISimsReferenceData<SignalStatus> SignalStatus => new ReferenceDataRepo<SignalStatus, SignalStatusDb>(ctx, mapper);
+        private ISimsReferenceData<UnitQuantity> Units => new ReferenceDataRepo<UnitQuantity, UnitQuantityDb>(ctx, mapper);
+        private ISimsReferenceData<AttachmentTagLkup> AttachmentTags => new ReferenceDataRepo<AttachmentTagLkup, DocumentTagDb>(ctx, mapper);
+        private ISimsReferenceData<FBOType> FBOTypes => new ReferenceDataRepo<FBOType, FBOTypeDb>(ctx, mapper);
+        private ISimsReferenceData<NotifierType> NotifierTypes => new ReferenceDataRepo<NotifierType, NotifierTypeDb>(ctx, mapper);
+        private ISimsReferenceData<AdminLead> AdminLeads => new ReferenceDataRepo<AdminLead, AdminLeadDb>(ctx, mapper);
+        private ISimsReferenceData<ProductDateType> ProductDateTypes => new ReferenceDataRepo<ProductDateType, DateTypeDb>(ctx, mapper);
+        private ISimsReferenceData<StakeholderType> StakeholderTypes => new ReferenceDataRepo<StakeholderType, StakeholderDiscriminatorDb>(ctx, mapper);
+        private ISimsReferenceData<StakeholderIncidentRole> StakeholderIncidentRoles => new ReferenceDataRepo<StakeholderIncidentRole, StakeholderIncidentRoleDb>(ctx, mapper);
         public LookupsHost GetAll() => new LookupsHost
         {
             Categories = this.Categories.GetAll(),

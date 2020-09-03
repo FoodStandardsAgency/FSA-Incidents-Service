@@ -15,8 +15,7 @@ namespace FSA.SIMSManagerDb.Repositories
     public class IncidentLinkedRecords : IDbLinkedRecordsRepository
     {
         private readonly SimsDbContext ctx;
-        private readonly IMapper mapper;
-
+      
         internal GeneralLinkedRecordsRepository<IncidentLinkDb, IncidentNoteDb> LinksManager { get; }
 
         public IncidentLinkedRecords(SimsDbContext ctx, IMapper mapper)

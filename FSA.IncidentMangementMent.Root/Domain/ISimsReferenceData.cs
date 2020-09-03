@@ -9,7 +9,7 @@ namespace FSA.IncidentsManagement.Root.Contracts
     /// Simple interface for the lookup data
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IReferenceDataRepo<T>
+    public interface ISimsReferenceData<T>
     {
         Task<T> GetByIdAsync(int id);
         Task<IEnumerable<T>> GetAllAsync();

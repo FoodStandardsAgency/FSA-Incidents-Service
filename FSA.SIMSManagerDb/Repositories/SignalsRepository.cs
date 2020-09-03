@@ -52,7 +52,7 @@ namespace FSA.SIMSManagerDb.Repositories
 
         public async Task<SimsSignal> Get(int signalId)
         {
-            var dbItem = this.ctx.Signals.Find(signalId);
+            var dbItem = await this.ctx.Signals.FindAsync(signalId);
             if (dbItem != null)
                 return this.mapper.Map<SignalDb, SimsSignal>(dbItem);
             else throw new ArgumentNullException();

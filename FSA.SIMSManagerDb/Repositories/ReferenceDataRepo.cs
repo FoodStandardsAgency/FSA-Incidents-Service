@@ -16,7 +16,7 @@ namespace FSA.SIMSManagerDb.Repositories
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="Db"></typeparam>
-    internal class ReferenceDataRepo<T, Db> : IReferenceDataRepo<T>
+    internal class ReferenceDataRepo<T, Db> : ISimsReferenceData<T>
                         where Db : class, IIDbLookup
     {
         protected readonly SimsDbContext ctx;

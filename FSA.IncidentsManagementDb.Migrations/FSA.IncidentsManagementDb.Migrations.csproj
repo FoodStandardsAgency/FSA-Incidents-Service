@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EntityFrameworkCore.TemporalTables\EntityFrameworkCore.TemporalTables\EntityFrameworkCore.TemporalTables.csproj" />
-    <ProjectReference Include="..\FSA.IncidentsManagementDb\FSA.IncidentsManagementDb.csproj" />
     <ProjectReference Include="..\FSA.SIMSManagerDb\FSA.SIMSManagerDb.csproj" />
   </ItemGroup>
 

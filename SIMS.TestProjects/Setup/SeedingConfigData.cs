@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using AutoMapper.Configuration;
 using AutoMapper.EquivalencyExpression;
+using FSA.IncidentsManagement.ModelValidators;
 using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
-using FSA.IncidentsManagementDb.Entities.Helpers;
 using FSA.SIMSManagerDb;
 using FSA.SIMSManagerDb.MapperProfile;
 using Microsoft.EntityFrameworkCore;
@@ -36,6 +36,7 @@ namespace SIMS.TestProjects.Setup
         {
             var cfg = new MapperConfigurationExpression();
             cfg.AddProfile<SimsDbMappingProfile>();
+            cfg.AddProfile<WebMappingProfile>();
             cfg.AddCollectionMappers();
             var mapperConfig = new MapperConfiguration(cfg);
             return new Mapper(mapperConfig);
@@ -55,7 +56,7 @@ namespace SIMS.TestProjects.Setup
                    incidentTitle: "New Incident",
                    incidentTypeId: 1,
                    contactMethodId: 2,
-                   statusId: (int)IncidentStatusTypes.Unassigned,
+                   statusId: (int)SimsIncidentStatusTypes.Unassigned,
                    priorityId: 2,
                    classificationId: 1,
                    dataSourceId: 1,
@@ -78,7 +79,7 @@ namespace SIMS.TestProjects.Setup
                    incidentTitle: "Mislabelled ingredients omit peanuts",
                    incidentTypeId: 1,
                    contactMethodId: 4,
-                   statusId: (int)IncidentStatusTypes.Open,
+                   statusId: (int)SimsIncidentStatusTypes.Open,
                    priorityId: 2,
                    classificationId: 1,
                    dataSourceId: 1,
@@ -101,7 +102,7 @@ namespace SIMS.TestProjects.Setup
                    incidentTitle: "Salmonella poisoning cases at local GP",
                    incidentTypeId: 1,
                    contactMethodId: 1,
-                   statusId: (int)IncidentStatusTypes.Open,
+                   statusId: (int)SimsIncidentStatusTypes.Open,
                    priorityId: 1,
                    classificationId: 1,
                    signalUrl:"",
@@ -124,7 +125,7 @@ namespace SIMS.TestProjects.Setup
                    incidentTitle: "Chinese Restaurant takeaway pinpointed as likely source for salmonella poisoning (unverified)",
                    incidentTypeId: 1,
                    contactMethodId: 2,
-                   statusId: (int)IncidentStatusTypes.Open,
+                   statusId: (int)SimsIncidentStatusTypes.Open,
                    priorityId: 1,
                    classificationId: 1,
                    dataSourceId: 1,

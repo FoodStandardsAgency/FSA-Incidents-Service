@@ -86,7 +86,7 @@ namespace FSA.IncidentsManagement.Controllers
                 this.log.LogWarning(ex, "error during Attachment upload.");
                 return this.StatusCode(500, "Error during upload.");
             }
-            catch (ServerException ex)
+            catch (ServerException)
             {
                 this.log.LogWarning("Duplicate file attempt");
                 return this.StatusCode(500, "Duplicate file cannot be added.");

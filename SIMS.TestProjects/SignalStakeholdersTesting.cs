@@ -18,7 +18,6 @@ namespace SIMS.Database
         private string anotherId;
         private string userId3;
         private string miller;
-        private SimsDbContext ctx;
         private string conn;
         public SignalsStakeholdersTesting()
         {

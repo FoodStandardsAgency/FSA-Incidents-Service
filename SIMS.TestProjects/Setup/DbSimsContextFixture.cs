@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
-using AutoMapper.Configuration;
 using EntityFrameworkCore.TemporalTables.Extensions;
 using FSA.IncidentsManagement.Models;
+using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
-using FSA.IncidentsManagementDb.Entities.Helpers;
 using FSA.SIMSManagerDb;
 using FSA.SIMSManagerDb.Contracts;
-using FSA.SIMSManagerDb.MapperProfile;
 using FSA.SIMSManagerDb.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +16,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using System.Threading.Tasks; 
+using System.Threading.Tasks;
 
 namespace SIMS.TestProjects.Setup
 {
@@ -77,10 +75,10 @@ namespace SIMS.TestProjects.Setup
             return new SimsDbContext(dbContextBuilder.Options);
         }
 
-        private async Task CreateAddress(ISimsDbHost sims)
+        private async Task CreateAddress(ISimsDbHost sims, IMapper map)
         {
             var viewAddressModels = System.Text.Json.JsonSerializer.Deserialize<List<SimsAddressViewModel>>(File.OpenText("./Setup/orgs.json").ReadToEnd());
-            var addresses = viewAddressModels.ToSimsClient().ToList();
+            var addresses = map.Map<List<SimsAddress>>(viewAddressModels);
             await sims.Addresses.Add(addresses.GetRange(0, addresses.Count - 9));
 
             var Not1 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 9));
@@ -94,18 +92,6 @@ namespace SIMS.TestProjects.Setup
             var add5 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 2));
             var add6 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 1));
 
-
-            //await sims.Addresses.AssignNotifiers(NotifierTypes.LocalAuthority, Enumerable.Range(1, 407).ToList());
-            //await sims.Addresses.AssignNotifier(NotifierTypes.Retailer, Not1.Id);
-            //await sims.Addresses.AssignNotifier(NotifierTypes.Manufacturer, Not2.Id);
-            //await sims.Addresses.AssignNotifier(NotifierTypes.PublicIndividual, Not3.Id);
-
-            //await sims.Addresses.AssignFbo(FboTypes.Consignor | FboTypes.Exporter, add1.Id);
-            //await sims.Addresses.AssignFbo(FboTypes.Exporter | FboTypes.Farmer, add2.Id);
-            //await sims.Addresses.AssignFbo(FboTypes.Manufacturer | FboTypes.Exporter | FboTypes.Consignor, add3.Id);
-            //await sims.Addresses.AssignFbo(FboTypes.E_platform_Market | FboTypes.Storage | FboTypes.Wholesaler, add4.Id);
-            //await sims.Addresses.AssignFbo(FboTypes.Processor | FboTypes.Wholesaler, add5.Id);
-            //await sims.Addresses.AssignFbo(FboTypes.Supplier | FboTypes.Transporter | FboTypes.Retailer, add6.Id);
 
         }
 
@@ -121,7 +107,7 @@ namespace SIMS.TestProjects.Setup
                 foreach (var title in this.titleList)
                 {
                     var newIncident = coreIncident.WithTitle($"{title}-{x}")
-                                                  .WithStatus((int)IncidentStatusTypes.Unassigned)
+                                                  .WithStatus((int)SimsIncidentStatusTypes.Unassigned)
                                                   .WithLeadOfficer("");
                     newBatch.Add(newIncident);
                 }
@@ -183,12 +169,10 @@ namespace SIMS.TestProjects.Setup
                     {
                         ctx.Database.EnsureDeleted();
                         ctx.Database.Migrate();
-                        var cfg = new MapperConfigurationExpression();
-                        cfg.AddProfile<SimsDbMappingProfile>();
-                        var mapperConfig = new MapperConfiguration(cfg);
-                        var mapper = new Mapper(mapperConfig);
-
+                        
                         var seeder = new SeedingConfigData();
+                        var mapper = seeder.GetDbAutoMapper();
+
                         var SIMS = SimsDbHost.CreateHost(ctx, mapper, ((JsonElement)Config["username"]).ToString());
                         var t2 = CreateIncidents(SIMS, ctx, seeder);
 
@@ -205,7 +189,7 @@ namespace SIMS.TestProjects.Setup
 
                         }
 
-                        var t3 = CreateAddress(SIMS);
+                        var t3 = CreateAddress(SIMS, mapper);
                         try
                         {
                             t3.Wait();
