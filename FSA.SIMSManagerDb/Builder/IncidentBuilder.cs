@@ -15,7 +15,8 @@ namespace FSA.SIMSManagerDb.Builders
         {
             base.Configure(builder);
             builder.Property(p => p.MostUniqueId).HasDefaultValueSql("newid()");
-            builder.HasAlternateKey(o => o.MostUniqueId);
+            builder.HasIndex(o => o.MostUniqueId).IsUnique();
+
             builder.Property(o => o.IncidentCreated).IsRequired()
                                                  .HasDefaultValueSql("getutcdate()")
                                                 .ValueGeneratedOnAdd()

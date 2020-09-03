@@ -24,7 +24,7 @@ namespace FSA.IncidentsManagement.Models
         public int ProductTypeId { get; set; }
         public string LeadOfficer { get; set; }
         public string LeadOffice { get; set; }
-        public int AdminLeadId { get; set; }
+        public int? AdminLeadId { get; set; }
         public string FieldOfficer { get; set; }
         public bool LAAdvised { get; set; }
         public int DeathIllnessId { get; set; }

@@ -29,7 +29,7 @@ namespace FSA.IncidentsManagement.Models
                 productTypeId: @this.ProductTypeId,
                 leadOfficer: @this.LeadOfficer,
                 leadOffice: @this.LeadOffice,
-                adminLeadId: @this.AdminLeadId,
+                adminLeadId: @this.AdminLeadId == 0 ? new Nullable<int>() :@this.AdminLeadId,
                 fieldOfficer: @this.FieldOfficer,
                 leadLocalAuthorityId: @this.LeadLocalAuthorityId == 0 ? new Nullable<int>() : @this.LeadLocalAuthorityId,
                 lAAdvised: @this.LAAdvised,

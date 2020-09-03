@@ -4,11 +4,12 @@ using FSA.IncidentsManagement.Root.DTOS;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Sims.Application.Exceptions;
 using Swashbuckle.AspNetCore.Annotations;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
-namespace FSA.IncidentsManagement.Controllers
+namespace FSA.SignalsManagement.Controllers
 {
     [Route("api/[controller]")]
     [Produces("application/json")]
@@ -26,7 +27,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpGet()]
-        [SwaggerOperation(Summary = "Get incident by id")]
+        [SwaggerOperation(Summary = "Get Signal by id")]
         [ProducesResponseType(typeof(SimsSignal), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
@@ -37,7 +38,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPut()]
-        [SwaggerOperation(Summary = "Replace an incident")]
+        [SwaggerOperation(Summary = "Replace an Signal")]
         [ProducesResponseType(typeof(SimsSignal), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
@@ -47,7 +48,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPost()]
-        [SwaggerOperation(Summary = "Create an incident")]
+        [SwaggerOperation(Summary = "Create an Signal")]
         [ProducesResponseType(typeof(SimsSignal), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
@@ -58,7 +59,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPost("Status/{id}")]
-        [SwaggerOperation(Summary = "Update status of an incident")]
+        [SwaggerOperation(Summary = "Update status of an Signal")]
         [ProducesResponseType(typeof(SimsSignal), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
@@ -68,23 +69,23 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPost("LeadOfficer")]
-        [SwaggerOperation(Summary = "Update incident(s) lead officer")]
+        [SwaggerOperation(Summary = "Update Signal(s) lead officer")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> UpdateSignalLeadOfficer([FromBody, SwaggerParameter("Update Lead officer entries", Required = true)] UpdateLeadOfficerModel officer)
         {
-           // await this.simsApp.Incidents.AssignLeadOfficer(officer.IncidentIds, officer.Officer);
+           // await this.simsApp.Signals.AssignLeadOfficer(officer.SignalIds, officer.Officer);
             return new OkResult();
         }
 
 
         [HttpPost("Promote/{id}")]
-        [SwaggerOperation(Summary = "Update incident(s) lead officer")]
+        [SwaggerOperation(Summary = "Update Signal(s) lead officer")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> PromoteToIncident([FromRoute] int id)
+        public async Task<IActionResult> PromoteToSignal([FromRoute] int id)
         {
-            // await this.simsApp.Incidents.AssignLeadOfficer(officer.IncidentIds, officer.Officer);
+            // await this.simsApp.Signals.AssignLeadOfficer(officer.SignalIds, officer.Officer);
             return new OkResult();
         }
     }

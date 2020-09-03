@@ -84,11 +84,11 @@ namespace Sims.Application
                 if (incident.CommonId == 0) throw new SimsItemMissing("Incident Id missing");
                 return await dbHost.Incidents.Update(incident);
             }
-            catch (NullReferenceException ex)
+            catch (NullReferenceException)
             {
                 throw new SimsIncidentMissingException("Incident missing");
             }
-            catch (ArgumentOutOfRangeException ex)
+            catch (ArgumentOutOfRangeException)
             {
                 throw new SimsIncidentClosedException("Cannot update closed incident");
             }

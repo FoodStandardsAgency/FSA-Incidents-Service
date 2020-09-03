@@ -85,16 +85,38 @@ namespace FSA.SIMSManagerDb.MapperProfile
                     .ForMember(a => a.Url, m => m.MapFrom(o => o.DocUrl))
                     .ForMember(o => o.FileName, m => m.MapFrom(o => Path.GetFileName(o.DocUrl)));
 
-            CreateMap<IncidentDb, IncidentsDisplayModel>(MemberList.Source)
+            CreateMap<IncidentDb, IncidentsDisplayModel>(MemberList.Destination)
                 .ForCtorParam("statusId", o => o.MapFrom(a => a.IncidentStatusId))
+                .ForCtorParam("adminLeadId", o => o.MapFrom(@this => @this.AdminLeadId ?? 0))
                 .ForCtorParam("lastChangedBy", o => o.MapFrom(a => a.ModifiedBy))
-                .ForCtorParam("lastChangedDate", o => o.MapFrom(a => a.Modified));
+                .ForCtorParam("lastChangedDate", o => o.MapFrom(a => a.Modified))
+                .ForCtorParam("category", o => o.MapFrom(@this => @this.SignalStatusId.HasValue && @this.SignalStatusId != 0 ? @this.SignalStatus.Title : ""))
+                .ForCtorParam("signalStatus", o => o.MapFrom(a => a.IncidentStatus.Title))
+                .ForCtorParam("incidentStatus", o => o.MapFrom(a => a.IncidentStatus.Title))
+                .ForCtorParam("notifier", o => o.MapFrom(a => a.NotifierId.HasValue ? a.Notifier.Title : "Unassigned"))
+                .ForCtorParam("priority", o => o.MapFrom(a => a.Priority != null ? a.Priority.Title : ""))
+                .ForCtorParam("classification", o => o.MapFrom(a => a.Classification != null ? a.Classification.Title : ""))
+                .ForCtorParam("dataSource", o => o.MapFrom(a => a.DataSource != null ? a.DataSource.Title : ""))
+                .ForCtorParam("productType", o => o.MapFrom(a => a.ProductTypeId != 0 ? a.ProductType.Title : ""))
+                .ForCtorParam("leadLocalAuthority", o => o.MapFrom(a => a.LeadLocalAuthorityId.HasValue ? a.LeadLocalAuthority.Title : "Unassigned"))
+                .ForCtorParam("adminLead", o => o.MapFrom(@this => @this.AdminLeadId.HasValue && @this.AdminLeadId != 0 ? @this.AdminLead.Title : "Unassigned"))
+                .ForCtorParam("deathIllness", o => o.MapFrom(@this => @this.DeathIllnessId != 0 ? @this.DeathIllness.Title : "Unassigned"))
+                .ForCtorParam("principalFBO", o => o.MapFrom(@this => @this.PrincipalFBOId.HasValue && @this.PrincipalFBOId != 0 ? @this.PrincipalFBO.Title : "Unassigned"))
+                .ForCtorParam("fBOEmail", o => o.MapFrom(@this => ""))
+                .ForCtorParam("fBOPhone", o => o.MapFrom(@this => @this.PrincipalFBOId.HasValue && @this.PrincipalFBOId != 0 ? @this.PrincipalFBO.TelephoneNumber : "Unassigned"))
+                .ForCtorParam("fBOAddressLine1", o => o.MapFrom(@this => @this.PrincipalFBOId.HasValue && @this.PrincipalFBOId != 0 ? @this.PrincipalFBO.AddressLine1 : "Unassigned"))
+                .ForCtorParam("fBOAddressLine2", o => o.MapFrom(@this => @this.PrincipalFBOId.HasValue && @this.PrincipalFBOId != 0 ? @this.PrincipalFBO.AddressLine2 : "Unassigned"))
+                .ForCtorParam("fBOAddressTown", o => o.MapFrom(@this => @this.PrincipalFBOId.HasValue && @this.PrincipalFBOId != 0 ? @this.PrincipalFBO.TownCity : "Unassigned"))
+                .ForCtorParam("fBOAddressPostcode", o => o.MapFrom(@this => @this.PrincipalFBOId.HasValue && @this.PrincipalFBOId != 0 ? @this.PrincipalFBO.PostCode : "Unassigned"));
+
+
+
 
             CreateMap<IncidentDb, BaseIncident>(MemberList.Source)
                 .ForCtorParam("statusId", o => o.MapFrom(a => a.IncidentStatusId))
                 .ForCtorParam("lastChangedBy", o => o.MapFrom(a => a.ModifiedBy))
                 .ForCtorParam("lastChangedDate", o => o.MapFrom(a => a.Modified));
-
+                
             CreateMap<BaseIncident, IncidentDb>(MemberList.Source)
                 .IgnoreAuditData()
                 .ForMember(a => a.Id, m => m.MapFrom(a => a.CommonId))
@@ -105,7 +127,7 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForMember(a => a.Status, m => m.MapFrom(a => a.IncidentStatus.Title))
                 .ForMember(a => a.Updated, m => m.MapFrom(a => a.Modified))
                 .ForMember(a => a.Links, m => m.MapFrom(a => a.ToLinks.Select(o => o.FromId)
-                                                              .Concat(a.FromLinks.Select(o => o.ToId).ToList())));
+                .Concat(a.FromLinks.Select(o => o.ToId).ToList())));
 
 
             CreateMap<IncidentsManagement.Root.DTOS.SimsSignal, SignalDb>(MemberList.Source);
