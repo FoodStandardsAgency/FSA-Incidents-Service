@@ -15,7 +15,7 @@ namespace FSA.Attachments
     /// <summary>
     /// Manage the attachments to a particular incident
     /// </summary>
-    public class SPAttachments : ISimSpAttachments
+    public class SPAttachments : ISimsAttachments
     {
 
         private readonly X509Certificate2 cert;

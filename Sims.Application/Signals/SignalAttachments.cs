@@ -12,9 +12,9 @@ namespace Sims.Application
     internal class SignalAttachments : ISIMSAttachments
     {
         private ISimsDbHost dbHost;
-        private readonly ISimSpAttachments attachments;
+        private readonly ISimsAttachments attachments;
 
-        public SignalAttachments(ISimsDbHost dbHost, ISimSpAttachments attachments)
+        public SignalAttachments(ISimsDbHost dbHost, ISimsAttachments attachments)
         {
             this.dbHost = dbHost;
             this.attachments = attachments;

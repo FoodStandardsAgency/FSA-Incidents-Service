@@ -15,9 +15,9 @@ namespace Sims.Application
     internal class IncidentAttachments : ISIMSAttachments
     {
         private ISimsDbHost dbHost;
-        private readonly ISimSpAttachments attachments;
+        private readonly ISimsAttachments attachments;
 
-        public IncidentAttachments(ISimsDbHost dbHost, ISimSpAttachments attachments)
+        public IncidentAttachments(ISimsDbHost dbHost, ISimsAttachments attachments)
         {
             this.dbHost = dbHost;
             this.attachments = attachments;

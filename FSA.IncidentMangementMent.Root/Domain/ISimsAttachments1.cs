@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Root.Domain
 {
-    public interface ISimSpAttachments
+    public interface ISimsAttachments
     {
         Task<(string fileName, string url)> RenameAttachment(string fileName, string url);
         Task<(string filename, string url)> AddAttachment(string filePath, string filename, string library);
