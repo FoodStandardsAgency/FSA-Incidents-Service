@@ -26,7 +26,7 @@ namespace Sims.Application
             return await dbHost.Incidents.Attachments.Add(item.url, hostId);
         }
 
-        public Task<AttachmentLibraryInfo> EnsureLibrary(int hostId)
+        public Task<SimsAttachmentLibraryInfo> EnsureLibrary(int hostId)
         {
             var signalLibrary = AppExtensions.GenerateSignalsId(hostId);
             return attachments.EnsureLibrary(signalLibrary);

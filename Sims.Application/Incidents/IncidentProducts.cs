@@ -1,9 +1,8 @@
 ﻿using FSA.IncidentsManagement.Root.Domain;
 using FSA.IncidentsManagement.Root.DTOS;
-using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagement.Root.Shared;
 using FSA.SIMSManagerDb.Contracts;
-using Microsoft.SharePoint.Client;
+using FSA.SIMSManagerDbEntities.Helpers;
 using Sims.Application.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -30,14 +29,14 @@ namespace Sims.Application
 
         }
 
-        public async Task AssignFbo(int productId, int addressId, FboTypes types)
+        public async Task AssignFbo(int productId, int addressId, SimsFboTypes types)
         {
             if (productId == 0) throw new SimsItemMissing("Prouct Id missing");
             if (addressId == 0) throw new SimsItemMissing("address Id missing");
 
             var product = await dbHost.Incidents.Products.Get(productId);
             if (!await dbHost.Incidents.IsClosed(product.HostId))
-                await dbHost.Incidents.Products.Fbos.Add(productId, addressId, types);
+                await dbHost.Incidents.Products.Fbos.Add(productId, addressId, (FboTypes)types);
             else
                 throw new SimsIncidentClosedException("Incident closed");
 
@@ -89,12 +88,12 @@ namespace Sims.Application
                 throw new SimsIncidentClosedException("Incident closed");
         }
 
-        public async Task UpdateFbo(int productId, int addressId, FboTypes fboTypes)
+        public async Task UpdateFbo(int productId, int addressId, SimsFboTypes fboTypes)
         {
             if (productId == 0) throw new SimsItemMissing("Missing id");
             var product = await dbHost.Incidents.Products.Get(productId);
             if (!await dbHost.Incidents.IsClosed(product.HostId))
-                await dbHost.Incidents.Products.Fbos.Update(productId, addressId, fboTypes);
+                await dbHost.Incidents.Products.Fbos.Update(productId, addressId, (FboTypes)fboTypes);
             else
                 throw new SimsIncidentClosedException("Incident closed");
         }

@@ -12,8 +12,8 @@ namespace FSA.IncidentsManagement.Root.Domain
         Task<SimsSignal> Update(SimsSignal signal);
         Task<SimsSignal> Get(int signalId);
 
-        Task<IPaging<SignalDashboardView>> DashboardSearch(string search = null, int pageSize = 500, int startPage = 1);
-        Task<IEnumerable<SignalDashboardView>> DashboardLinks(int signalId);
+        Task<IPaging<SignalDashboardItem>> DashboardSearch(string search = null, int pageSize = 500, int startPage = 1);
+        Task<IEnumerable<SignalDashboardItem>> DashboardLinks(int signalId);
 
         Task UpdateLeadOfficer(IEnumerable<int> id, string user);
         Task UpdateStatus(int signalId, string status);

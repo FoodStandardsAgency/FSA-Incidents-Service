@@ -10,7 +10,7 @@ namespace FSA.IncidentsManagement.Root.Domain
         Task<(string fileName, string url)> RenameAttachment(string fileName, string url);
         Task<(string filename, string url)> AddAttachment(string filePath, string filename, string library);
         Task<IEnumerable<SimsAttachmentFileInfo>> FetchAllAttchmentsLinks(string hostId);
-        Task<IncidentAttachment> FetchAttachment(string url);
-        Task<AttachmentLibraryInfo> EnsureLibrary(string hostId);
+        //Task<IncidentAttachment> FetchAttachment(string url);
+        Task<SimsAttachmentLibraryInfo> EnsureLibrary(string hostId);
     }
 }

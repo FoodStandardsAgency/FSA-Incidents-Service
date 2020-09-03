@@ -22,7 +22,7 @@ namespace Sims.Application
             throw new System.NotImplementedException();
         }
 
-        public Task AssignFbo(int SimsProductId, int addressId, FboTypes types)
+        public Task AssignFbo(int SimsProductId, int addressId, SimsFboTypes types)
         {
             throw new System.NotImplementedException();
         }
@@ -57,7 +57,7 @@ namespace Sims.Application
             throw new System.NotImplementedException();
         }
 
-        public Task UpdateFbo(int SimsProductId, int addressId, FboTypes fboTypes)
+        public Task UpdateFbo(int SimsProductId, int addressId, SimsFboTypes fboTypes)
         {
             throw new System.NotImplementedException();
         }

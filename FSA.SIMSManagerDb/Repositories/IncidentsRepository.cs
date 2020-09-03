@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FSA.IncidentsManagement.Root.Domain;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagement.Root.Shared;
 using FSA.SIMSManagerDb.Contracts;
@@ -263,10 +264,10 @@ namespace FSA.SIMSManagerDb.Repositories
         /// <param name="PageSize"></param>
         /// <param name="startPage" default="1" ></param>
         /// <returns></returns>
-        public async Task<IPaging<IncidentDashboardView>> DashboardSearch(string search = null, int PageSize = 500, int StartPage = 1)
+        public async Task<IPaging<IncidentDashboardItem>> DashboardSearch(string search = null, int PageSize = 500, int StartPage = 1)
         {
 
-            if (StartPage < 1 || PageSize < 1) return new PagedResult<IncidentDashboardView>(Enumerable.Empty<IncidentDashboardView>(), 0);
+            if (StartPage < 1 || PageSize < 1) return new PagedResult<IncidentDashboardItem>(Enumerable.Empty<IncidentDashboardItem>(), 0);
 
             var qry = this.ctx.Incidents.AsNoTracking()
                        .Include(i => i.Priority)
@@ -308,8 +309,8 @@ namespace FSA.SIMSManagerDb.Repositories
                                     .ThenBy(i => i.IncidentCreated)
                                     .Skip(startRecord)
                                     .Take(PageSize)
-                                    .Select(i => mapper.Map<IncidentDb, IncidentDashboardView>(i)).ToListAsync();
-            return new PagedResult<IncidentDashboardView>(results, totalRecords);
+                                    .Select(i => mapper.Map<IncidentDb, IncidentDashboardItem>(i)).ToListAsync();
+            return new PagedResult<IncidentDashboardItem>(results, totalRecords);
         }
 
         private (List<string> search, string person, List<int> ids) ParseSearchTerms(string search)
@@ -410,7 +411,7 @@ namespace FSA.SIMSManagerDb.Repositories
         /// </summary>
         /// <param name="incidentId"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<IncidentDashboardView>> DashboardIncidentLinks(int incidentId)
+        public async Task<IEnumerable<IncidentDashboardItem>> DashboardIncidentLinks(int incidentId)
         {
             var incident = await this.ctx.Incidents
                                     .Include(o => o.FromLinks)
@@ -446,7 +447,7 @@ namespace FSA.SIMSManagerDb.Repositories
             var allItems = toQ.Concat(fromIncidentList)
                               .Concat(fromIncidents).Where(o => o.Id != incidentId);
 
-            return await allItems.Select(i => mapper.Map<IncidentDb, IncidentDashboardView>(i)).ToListAsync();
+            return await allItems.Select(i => mapper.Map<IncidentDb, IncidentDashboardItem>(i)).ToListAsync();
         }
 
 

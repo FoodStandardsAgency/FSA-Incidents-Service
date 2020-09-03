@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FSA.IncidentsManagement.Root.Models
 {
-    public class SignalDashboardView
+    public class SignalDashboardItem
     {
         public string Id { get => GeneralExtensions.GenerateSignalsId(CommonId); }
         public int CommonId { get; set; }

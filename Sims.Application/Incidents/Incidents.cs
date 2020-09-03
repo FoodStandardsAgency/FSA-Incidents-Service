@@ -42,9 +42,9 @@ namespace Sims.Application
 
         public Task BulkClose(IEnumerable<int> incidentIds) => dbHost.Incidents.BulkClose(incidentIds);
 
-        public Task<IEnumerable<IncidentDashboardView>> DashboardIncidentLinks(int incidentId) => dbHost.Incidents.DashboardIncidentLinks(incidentId);
+        public Task<IEnumerable<IncidentDashboardItem>> DashboardIncidentLinks(int incidentId) => dbHost.Incidents.DashboardIncidentLinks(incidentId);
 
-        public Task<IPaging<IncidentDashboardView>> DashboardSearch(string search = null, int pageSize = 500, int startPage = 1) => dbHost.Incidents.DashboardSearch(search, pageSize, startPage);
+        public Task<IPaging<IncidentDashboardItem>> DashboardSearch(string search = null, int pageSize = 500, int startPage = 1) => dbHost.Incidents.DashboardSearch(search, pageSize, startPage);
 
         public Task<bool> Exists(int incidentId)
         {

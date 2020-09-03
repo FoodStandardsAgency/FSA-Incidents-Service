@@ -110,15 +110,15 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(403)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> AddFbo([FromRoute] string incidentSignal, [Required] ProductAddress assignObj)
+        public async Task<IActionResult> AddFbo([FromRoute] string incidentSignal, [Required] ProductFboInfoViewModel assignObj)
         {
             try
             {
 
                 var t = incidentSignal.ToLower() switch
                 {
-                    IncidentOrSignal.Incidents => this.simsApp.Incidents.Products.AssignFbo(assignObj.Id, assignObj.AddressId, (FboTypes)assignObj.FboTypes.Sum()),
-                    IncidentOrSignal.Signals => this.simsApp.Signals.Products.AssignFbo(assignObj.Id, assignObj.AddressId, (FboTypes)assignObj.FboTypes.Sum()),
+                    IncidentOrSignal.Incidents => this.simsApp.Incidents.Products.AssignFbo(assignObj.Id, assignObj.AddressId, (SimsFboTypes)assignObj.FboTypes.Sum()),
+                    IncidentOrSignal.Signals => this.simsApp.Signals.Products.AssignFbo(assignObj.Id, assignObj.AddressId, (SimsFboTypes)assignObj.FboTypes.Sum()),
                     _ => throw new InvalidOperationException("Unknow Route")
                 };
                 await t;
@@ -133,10 +133,10 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpDelete("Fbo/{incidentSignal}")]
         [SwaggerOperation(Summary = "Remove fbo from product")]
-        [ProducesResponseType(typeof(PagedResult<FboAddress>), 200)]
+        [ProducesResponseType( 200)]
         [ProducesResponseType(403)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> RemoveFbo([FromRoute] string incidentSignal, [Required] ProductAddress assignObj)
+        public async Task<IActionResult> RemoveFbo([FromRoute] string incidentSignal, [Required] ProductFboInfoViewModel assignObj)
         {
             try
             {
@@ -162,14 +162,14 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "Update fbo to product")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> UpdateFbo([FromRoute] string incidentSignal,[Required] ProductAddress assignObj)
+        public async Task<IActionResult> UpdateFbo([FromRoute] string incidentSignal,[Required] ProductFboInfoViewModel assignObj)
         {
             try
             {
                 var t = incidentSignal.ToLower() switch
                 {
-                    IncidentOrSignal.Incidents => this.simsApp.Incidents.Products.UpdateFbo(assignObj.Id, assignObj.AddressId, (FboTypes)assignObj.FboTypes.Sum()),
-                    IncidentOrSignal.Signals => this.simsApp.Signals.Products.UpdateFbo(assignObj.Id, assignObj.AddressId, (FboTypes)assignObj.FboTypes.Sum()),
+                    IncidentOrSignal.Incidents => this.simsApp.Incidents.Products.UpdateFbo(assignObj.Id, assignObj.AddressId, (SimsFboTypes)assignObj.FboTypes.Sum()),
+                    IncidentOrSignal.Signals => this.simsApp.Signals.Products.UpdateFbo(assignObj.Id, assignObj.AddressId, (SimsFboTypes)assignObj.FboTypes.Sum()),
                     _ => throw new InvalidOperationException("Unknow Route")
                 };
                 await t;

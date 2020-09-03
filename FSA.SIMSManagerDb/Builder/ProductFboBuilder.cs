@@ -1,6 +1,7 @@
 ﻿using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb.Builders;
 using FSA.SIMSManagerDb.Entities.Core.Product;
+using FSA.SIMSManagerDbEntities.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

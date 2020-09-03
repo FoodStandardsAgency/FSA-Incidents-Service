@@ -279,7 +279,7 @@ namespace FSA.Attachments
             }
         }
 
-        public async Task<IncidentAttachment> FetchAttachment(string url)
+        public async Task< IncidentAttachment> FetchAttachment(string url)
         {
             var accessToken = await fetchAccessToken();
             using (var ctx = SpContextHelper.GetClientContextWithAccessToken(this.siteUrl, accessToken))
@@ -338,7 +338,7 @@ namespace FSA.Attachments
             return ("", "");
         }
 
-        public async Task<AttachmentLibraryInfo> EnsureLibrary(string incidentId)
+        public async Task<SimsAttachmentLibraryInfo> EnsureLibrary(string incidentId)
         {
             var accessToken = await fetchAccessToken();
             using (var ctx = SpContextHelper.GetClientContextWithAccessToken(this.siteUrl, accessToken))
@@ -353,7 +353,7 @@ namespace FSA.Attachments
                 // /sites/blah/folder
                 var rootFolderUrl = list.RootFolder.ServerRelativeUrl;
                 //var startOverlap webUrl.Contains()
-                return new AttachmentLibraryInfo
+                return new SimsAttachmentLibraryInfo
                 {
                     WebUrl = webUrl,
                     ServerRelativeFolderUrl = rootFolderUrl

@@ -23,6 +23,8 @@ namespace FSA.SIMSManagerDb.Repositories
             return this.linksManager.Add(from, tos, reason);
         }
 
+        public Task<IEnumerable<SimsLinkedRecord>> GetForHost(int hostId) => linksManager.GetForHost(hostId);
+
         public Task<SimsLinkedRecord> Remove(int from, int to)
         {
             return this.linksManager.Remove(from, to);

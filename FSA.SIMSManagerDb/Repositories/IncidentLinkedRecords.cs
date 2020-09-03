@@ -15,7 +15,7 @@ namespace FSA.SIMSManagerDb.Repositories
     public class IncidentLinkedRecords : IDbLinkedRecordsRepository
     {
         private readonly SimsDbContext ctx;
-      
+
         internal GeneralLinkedRecordsRepository<IncidentLinkDb, IncidentNoteDb> LinksManager { get; }
 
         public IncidentLinkedRecords(SimsDbContext ctx, IMapper mapper)
@@ -26,25 +26,30 @@ namespace FSA.SIMSManagerDb.Repositories
 
         public async Task<IEnumerable<SimsLinkedRecord>> Add(int from, IEnumerable<int> tos, string reason)
         {
-            var addedLinks = await LinksManager.Add(from, tos, reason);
+            var addedLinks = (await LinksManager.Add(from, tos, reason)).ToList();
 
-            var WhereFromClause = String.Join(" OR ", addedLinks.Select(o => $"Id={o.From}"));
-            var WhereToClause = String.Join(" OR ", addedLinks.Select(o => $"Id={o.To}"));
-
-            // Grab the incidents, as long as they are not closed.
-            var closeStatus = (int)IncidentStatusTypes.Closed;
-            var incidentsFrom = ctx.Incidents.FromSqlRaw($"SELECT * from Incidents where ({WhereFromClause}) AND IncidentStatusId <> {closeStatus}");
-            var incidentsTo = ctx.Incidents.FromSqlRaw($"SELECT * from Incidents where ({WhereToClause}) AND IncidentStatusId <> {closeStatus}");
-            foreach (var item in incidentsFrom)
+            if (addedLinks.Count > 0)
             {
-                ctx.Incidents.Update(item);
-            }
-            foreach (var item in incidentsTo)
-            {
-                ctx.Incidents.Update(item);
-            }
+                var WhereFromClause = String.Join(" OR ", addedLinks.Select(o => $"Id={o.From}"));
+                var WhereToClause = String.Join(" OR ", addedLinks.Select(o => $"Id={o.To}"));
 
-            await ctx.SaveChangesAsync();
+                // Grab the incidents, as long as they are not closed.
+                var closeStatus = (int)IncidentStatusTypes.Closed;
+                var incidentsFrom = ctx.Incidents.FromSqlRaw($"SELECT * from Incidents where ({WhereFromClause}) AND IncidentStatusId <> {closeStatus}");
+                var incidentsTo = ctx.Incidents.FromSqlRaw($"SELECT * from Incidents where ({WhereToClause}) AND IncidentStatusId <> {closeStatus}");
+                if (WhereFromClause.Length > 0)
+                    foreach (var item in incidentsFrom)
+                    {
+                        ctx.Incidents.Update(item);
+                    }
+                if (WhereToClause.Length > 0)
+                    foreach (var item in incidentsTo)
+                    {
+                        ctx.Incidents.Update(item);
+                    }
+
+                await ctx.SaveChangesAsync();
+            }
             return addedLinks;
         }
 
@@ -63,5 +68,7 @@ namespace FSA.SIMSManagerDb.Repositories
             await ctx.SaveChangesAsync();
             return removedLink;
         }
+
+        public Task<IEnumerable<SimsLinkedRecord>> GetForHost(int hostId) => LinksManager.GetForHost(hostId);
     }
 }

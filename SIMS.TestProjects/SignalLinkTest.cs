@@ -42,8 +42,9 @@ namespace SIMS.Database
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
                 var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
-                var allLinks = (await simsHost.Signals.Links.Add(1, new int[] { 40, 34, 85 }, "Terry can")).ToList();
-                Assert.True(allLinks.Count == 4);
+                var allAddedLinks = (await simsHost.Signals.Links.Add(1, new int[] { 40, 34, 85 }, "Terry can")).ToList();
+                var alLinks = (await simsHost.Signals.Links.GetForHost(1)).ToList();
+                Assert.True(alLinks.Count == 3);
             }
         }
 

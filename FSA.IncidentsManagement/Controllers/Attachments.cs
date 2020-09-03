@@ -34,7 +34,7 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpPost("EnsureLibrary/{incidentSignal}/{id}")]
         [SwaggerOperation(Summary = "Ensure library exists")]
-        [ProducesResponseType(typeof(AttachmentLibraryInfo), 200)]
+        [ProducesResponseType(typeof(SimsAttachmentLibraryInfo), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> EnsureLibrary([FromRoute] string incidentSignal, [FromRoute] int id)
         {

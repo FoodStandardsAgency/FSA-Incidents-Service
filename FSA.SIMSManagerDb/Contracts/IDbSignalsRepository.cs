@@ -21,8 +21,8 @@ namespace FSA.SIMSManagerDb.Contracts
         IDbAttachmentsRepository Attachments { get; }
         IDbStakeholdersRepository Stakeholders { get; }
 
-        Task<IEnumerable<SignalDashboardView>> DashboardLinks(int id);
-        Task<IPaging<SignalDashboardView>> DashboardSearch(string search = null, int pageSize = 500, int startPage = 1);
+        Task<IEnumerable<SignalDashboardItem>> DashboardLinks(int id);
+        Task<IPaging<SignalDashboardItem>> DashboardSearch(string search = null, int pageSize = 500, int startPage = 1);
         Task UpdateLeadOfficer(IEnumerable<int> ids, string user);
         Task UpdateStatus(int signalId, string status);
     }

@@ -1,5 +1,6 @@
 ﻿using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
+using FSA.SIMSManagerDbEntities.Helpers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

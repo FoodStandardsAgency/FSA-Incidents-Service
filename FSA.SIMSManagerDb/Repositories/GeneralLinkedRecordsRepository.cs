@@ -106,5 +106,16 @@ namespace FSA.SIMSManagerDb.Repositories
             return results;
 
         }
+        /// <summary>
+        /// Returns all the links containing that record id
+        /// </summary>
+        /// <param name="hostId"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<SimsLinkedRecord>> GetForHost(int hostId)
+        {
+            var allLinks = await this.LinkSet.AsNoTracking().Where(o => o.FromId == hostId || o.ToId == hostId).ToListAsync();
+            return mapper.Map<IEnumerable<SimsLinkedRecord>>(allLinks);
+
+        }
     }
 }

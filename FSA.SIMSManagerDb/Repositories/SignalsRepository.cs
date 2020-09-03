@@ -79,12 +79,12 @@ namespace FSA.SIMSManagerDb.Repositories
             return dbItem != null;
         }
 
-        public Task<IEnumerable<SignalDashboardView>> DashboardLinks(int id)
+        public Task<IEnumerable<SignalDashboardItem>> DashboardLinks(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IPaging<SignalDashboardView>> DashboardSearch(string search = null, int pageSize = 500, int startPage = 1)
+        public Task<IPaging<SignalDashboardItem>> DashboardSearch(string search = null, int pageSize = 500, int startPage = 1)
         {
             throw new NotImplementedException();
         }

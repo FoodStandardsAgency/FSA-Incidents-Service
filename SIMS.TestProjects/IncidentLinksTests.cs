@@ -39,11 +39,14 @@ namespace SIMS.Database
         [Fact]
         public async Task AddLink()
         {
+            var hostId = 1;
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
                 var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
-                var allLinks = (await simsHost.Incidents.Links.Add(1, new int[] { 6, 100, 200 }, "Terry can")).ToList();
-                Assert.True(allLinks.Count == 4);
+                // This returns added links
+                var addedLinks = (await simsHost.Incidents.Links.Add(hostId, new int[] { 6, 100, 200 }, "Terry can")).ToList();
+                var allLinksSet = await simsHost.Incidents.Links.GetForHost(hostId);
+                Assert.True(allLinksSet.Count() == 3);
             }
         }
 

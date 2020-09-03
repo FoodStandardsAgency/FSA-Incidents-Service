@@ -1,5 +1,6 @@
 ﻿using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb.Entities.Core;
+using FSA.SIMSManagerDbEntities.Helpers;
 
 namespace FSA.SIMSManagerDb.Entities.Core
 {

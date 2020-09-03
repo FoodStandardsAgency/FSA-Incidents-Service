@@ -36,13 +36,13 @@ namespace Sims.Application
             return dbHost.Signals.Add(signal);
         }
 
-        public async Task<IEnumerable<SignalDashboardView>> DashboardLinks(int signalId)
+        public async Task<IEnumerable<SignalDashboardItem>> DashboardLinks(int signalId)
         {
             return await dbHost.Signals.DashboardLinks(signalId);
 
         }
 
-        public Task<IPaging<SignalDashboardView>> DashboardSearch(string search = null, int pageSize = 500, int startPage = 1)
+        public Task<IPaging<SignalDashboardItem>> DashboardSearch(string search = null, int pageSize = 500, int startPage = 1)
         {
             return dbHost.Signals.DashboardSearch(search, pageSize, startPage);
 

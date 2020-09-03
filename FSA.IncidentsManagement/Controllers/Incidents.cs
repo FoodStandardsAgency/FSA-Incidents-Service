@@ -104,7 +104,7 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpPost("Dashboard")]
         [SwaggerOperation(Summary = "Incident dashboard search")]
-        [ProducesResponseType(typeof(IncidentDashboardView), 200)]
+        [ProducesResponseType(typeof(IncidentDashboardItem), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
         public async Task<IActionResult> GetIncidentDashboard(DashboardSearchViewModel dashboard)
@@ -112,7 +112,7 @@ namespace FSA.IncidentsManagement.Controllers
             log.LogInformation($"search terms : {dashboard.Search} {dashboard.PageNo} {dashboard.PageSize}", "GetIncidentsDashboard");
 
             if (dashboard.PageNo < 1 || dashboard.PageSize < 0)
-                return new OkObjectResult(new PagedResult<IncidentDashboardView>(Enumerable.Empty<IncidentDashboardView>(), 0));
+                return new OkObjectResult(new PagedResult<IncidentDashboardItem>(Enumerable.Empty<IncidentDashboardItem>(), 0));
 
             var dashBoard = dashboard.PageSize.HasValue && dashboard.PageSize>0 ? await this.simsApp.Incidents.DashboardSearch(search: dashboard.Search ?? "", startPage: dashboard.PageNo, pageSize: dashboard.PageSize.Value) 
                                                 : await this.simsApp.Incidents.DashboardSearch(search: dashboard.Search ?? "", startPage: dashboard.PageNo);

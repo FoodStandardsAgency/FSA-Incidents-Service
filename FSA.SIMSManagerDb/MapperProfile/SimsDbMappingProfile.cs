@@ -4,13 +4,11 @@ using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb.Entities;
 using FSA.SIMSManagerDb.Entities.Core;
-using FSA.SIMSManagerDb.Entities.Core.Product;
 using FSA.SIMSManagerDb.Entities.Lookups;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace FSA.SIMSManagerDb.MapperProfile
 {
@@ -122,7 +120,7 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForMember(a => a.Id, m => m.MapFrom(a => a.CommonId))
                 .ForMember(a => a.IncidentStatusId, m => m.MapFrom(a => a.StatusId));
 
-            CreateMap<IncidentDb, IncidentDashboardView>()
+            CreateMap<IncidentDb, IncidentDashboardItem>()
                 .ForMember(a => a.CommonId, m => m.MapFrom(a => a.Id))
                 .ForMember(a => a.Status, m => m.MapFrom(a => a.IncidentStatus.Title))
                 .ForMember(a => a.Updated, m => m.MapFrom(a => a.Modified))
@@ -154,8 +152,10 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .IgnoreAuditData();
 
             CreateMap<SimsProductPackSize, IncidentProductPackSizeDb>(MemberList.Source)
-                   .IgnoreAuditData();
+                    .EqualityComparison((dto, o) => dto.Id == o.Id)
+                    .IgnoreAuditData();
             CreateMap<SimsProductPackSize, SignalProductPackSizeDb>(MemberList.Source)
+                    .EqualityComparison((dto, o) => dto.Id == o.Id)
                     .IgnoreAuditData();
 
             CreateMap<IncidentProductPackSizeDb, SimsProductPackSize>(MemberList.Destination);
@@ -163,17 +163,11 @@ namespace FSA.SIMSManagerDb.MapperProfile
 
             CreateMap<SimsProductDate, IncidentProductDateDb>(MemberList.Source)
                 .EqualityComparison((dto, o) => dto.Id == o.Id)
-                .ForMember(p => p.Created, p => p.UseDestinationValue())
-                .ForMember(p => p.CreatedBy, p => p.UseDestinationValue())
-                .ForMember(p => p.Modified, p => p.UseDestinationValue())
-                .ForMember(p => p.ModifiedBy, p => p.UseDestinationValue());
+                .IgnoreAuditData();
             //.IgnoreAuditData();
             CreateMap<SimsProductDate, SignalProductDateDb>(MemberList.Source)
                 .EqualityComparison((dto, o) => dto.Id == o.Id)
-                .ForMember(p => p.Created, p => p.UseDestinationValue())
-                .ForMember(p => p.CreatedBy, p => p.UseDestinationValue())
-                .ForMember(p => p.Modified, p => p.UseDestinationValue())
-                .ForMember(p => p.ModifiedBy, p => p.DoNotAllowNull());
+                .IgnoreAuditData();
 
             CreateMap<IncidentProductDateDb, SimsProductDate>(MemberList.Destination);
             CreateMap<SignalProductDateDb, SimsProductDate>(MemberList.Destination);

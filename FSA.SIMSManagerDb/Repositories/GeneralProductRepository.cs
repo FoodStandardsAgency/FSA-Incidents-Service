@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FSA.IncidentsManagement.Root.Domain;
 using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagement.Root.Shared;
@@ -58,11 +59,6 @@ namespace FSA.SIMSManagerDb.Repositories
 
             var pDates = this.DbSetDates.Where(i => i.ProductId == product.Id).ToList();
 
-
-            
-            //var pDates = productDb.ProductDates;
-
-            //mapper.Map(product.ProductDates, productDb.ProductDates);
             mapper.Map(product, productDb);
 
             var updatedEnt = this.DbSet.Update(productDb);

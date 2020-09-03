@@ -35,7 +35,7 @@ namespace Sims.Application
                 throw new SimsIncidentClosedException("Incident closed, cannot upload attachment");
         }
 
-        public Task<AttachmentLibraryInfo> EnsureLibrary(int hostId)
+        public Task<SimsAttachmentLibraryInfo> EnsureLibrary(int hostId)
         {
             var incidentLibrary = AppExtensions.GenerateIncidentId(hostId);
             return attachments.EnsureLibrary(incidentLibrary);
