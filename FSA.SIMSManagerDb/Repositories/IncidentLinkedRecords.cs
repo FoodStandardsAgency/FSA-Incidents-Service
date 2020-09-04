@@ -16,12 +16,12 @@ namespace FSA.SIMSManagerDb.Repositories
     {
         private readonly SimsDbContext ctx;
 
-        internal GeneralLinkedRecordsRepository<IncidentLinkDb, IncidentNoteDb> LinksManager { get; }
+        internal LinkedRecordsRepository<IncidentLinkDb, IncidentNoteDb> LinksManager { get; }
 
         public IncidentLinkedRecords(SimsDbContext ctx, IMapper mapper)
         {
             this.ctx = ctx;
-            this.LinksManager = new GeneralLinkedRecordsRepository<IncidentLinkDb, IncidentNoteDb>(ctx, mapper);
+            this.LinksManager = new LinkedRecordsRepository<IncidentLinkDb, IncidentNoteDb>(ctx, mapper);
         }
 
         public async Task<IEnumerable<SimsLinkedRecord>> Add(int from, IEnumerable<int> tos, string reason)

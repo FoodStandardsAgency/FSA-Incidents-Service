@@ -224,7 +224,7 @@ namespace SIMS.Database
                 var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var fakeUser = Guid.NewGuid().ToString();
                 await simsHost.Incidents.BulkClose(new int[] { 82 });
-                await simsHost.Incidents.AssignLeadOfficer(new int[] { 39, 82, 102, 55 }, fakeUser);
+                await simsHost.Incidents.UpdateLeadOfficer(new int[] { 39, 82, 102, 55 }, fakeUser);
                 var Officer39 = (await simsHost.Incidents.Get(39)).LeadOfficer;
                 var Officer102 = (await simsHost.Incidents.Get(102)).LeadOfficer;
                 var Officer55 = (await simsHost.Incidents.Get(55)).LeadOfficer;

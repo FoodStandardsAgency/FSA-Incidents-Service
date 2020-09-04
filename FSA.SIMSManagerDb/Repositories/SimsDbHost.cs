@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
-using FSA.IncidentsManagement.Root.Domain;
 using FSA.SIMSManagerDb.Contracts;
-using FSA.SIMSManagerDb.Entities;
-using System.Runtime.CompilerServices;
 
 namespace FSA.SIMSManagerDb.Repositories
 {
+    /// <summary>
+    /// This is the entry point for the db end of the applicatioN
+    /// The db has only a tenous connection to the rest of the application
+    /// Treat it more as adjunct of the Sims.Application project
+    /// </summary>
     public class SimsDbHost : ISimsDbHost
     {
         private SimsDbContext ctx;
@@ -42,22 +44,6 @@ namespace FSA.SIMSManagerDb.Repositories
 
         public IDbIncidentsRepository Incidents { get; }
         public IDbSignalsRepository Signals { get; }
-
-        //public IDbLinkedRecordsRepository IncidentLinks { get; }
-        //public IDbStakeholdersRepository IncidentStakeholders { get; }
-        //public IDbAttachmentsRepository IncidentAttachments { get; }
-        //public IDbNotesRepository IncidentNotes { get; }
-
-        //public IDbLinkedRecordsRepository SignalLinks { get; }
-        //public IDbStakeholdersRepository SignalStakeholders { get; }
-        //public IDbAttachmentsRepository SignalAttachments { get; }
-        //public IDbNotesRepository SignalNotes { get; }
-
-        //public IDbProductRepository IncidentProducts { get; }
-        //public IDbProductFboRepository IncidentProductFbos { get; set; }
-
-        //public IDbProductRepository SignalProducts { get; }
-        //public IDbProductFboRepository SignalProductFbos { get; set; }
 
         public IDbLookups Lookups { get; set; }
         public IDbAddressRepository Addresses { get; }

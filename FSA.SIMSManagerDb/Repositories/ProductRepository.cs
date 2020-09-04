@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace FSA.SIMSManagerDb.Repositories
 {
-    class GeneralProductRepository<T, FBO, Pack, Date> : IDbProductRepository where T : CoreProductDb, ICoreProduct<FBO, Pack, Date>
+    class ProductRepository<T, FBO, Pack, Date> : IDbProductRepository where T : CoreProductDb, ICoreProduct<FBO, Pack, Date>
                             where FBO : CoreProductFboDb, new()
                             where Date : CoreProductDateDb
     {
@@ -24,11 +24,11 @@ namespace FSA.SIMSManagerDb.Repositories
 
         public DbSet<Date> DbSetDates { get; }
 
-        public IDbProductFboRepository Fbos => new GeneralProductFboRepository<FBO>(ctx, mapper);
+        public IDbProductFboRepository Fbos => new ProductFboRepository<FBO>(ctx, mapper);
 
         private readonly IMapper mapper;
 
-        public GeneralProductRepository(SimsDbContext ctx, IMapper mapper)
+        public ProductRepository(SimsDbContext ctx, IMapper mapper)
         {
             this.ctx = ctx;
             this.DbSet = ctx.Set<T>();
@@ -48,10 +48,6 @@ namespace FSA.SIMSManagerDb.Repositories
 
         public async Task<SimsProduct> Update(SimsProduct product)
         {
-            // ensure we can update the incident.
-            // need to check to see if the incident has already been closed.
-            //   var isClosed = IsIncidentClosed(product.HostId);
-
             var productDb = this.DbSet
                         .Include(o => o.ProductType)
                         .Include(o => o.PackSizes)
@@ -83,7 +79,7 @@ namespace FSA.SIMSManagerDb.Repositories
                               //.ThenInclude(o => o.FBO).ThenInclude(o => o.Organisation)
                               .FirstOrDefaultAsync(p => p.Id == productId);
 
-            return  mapper.Map<T, SimsProductDisplayModel>(productDb);
+            return mapper.Map<T, SimsProductDisplayModel>(productDb);
         }
 
         public async Task<SimsProductDetail> GetDetail(int productId)

@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace FSA.SIMSManagerDb.Repositories
 {
-    class GeneralAttachmentsRepository<AttachmentDb> : IDbAttachmentsRepository where AttachmentDb : BaseAttachmentDb, new()
+    class AttachmentsRepository<AttachmentDb> : IDbAttachmentsRepository where AttachmentDb : BaseAttachmentDb, new()
     {
         private readonly DbSet<AttachmentDb> DbSet;
         private readonly SimsDbContext ctx;
         private readonly IMapper mapper;
 
-        public GeneralAttachmentsRepository(SimsDbContext ctx, IMapper mapper)
+        public AttachmentsRepository(SimsDbContext ctx, IMapper mapper)
         {
             this.DbSet = ctx.Set<AttachmentDb>();
             this.ctx = ctx;

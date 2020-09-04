@@ -7,6 +7,7 @@ using FSA.SIMSManagerDb.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FSA.SIMSManagerDb.Repositories
@@ -16,15 +17,15 @@ namespace FSA.SIMSManagerDb.Repositories
         private readonly SimsDbContext ctx;
         private readonly IMapper mapper;
 
-        public IDbNotesRepository Notes => new GeneralNotesRepository<SignalNoteDb>(ctx, mapper);
+        public IDbNotesRepository Notes => new NotesRepository<SignalNoteDb>(ctx, mapper);
 
-        public IDbLinkedRecordsRepository Links => new SignalsLinkedRecords(ctx, mapper);
+        public IDbLinkedRecordsRepository Links => new LinkedRecordsRepository<SignalLinkDb, SignalNoteDb>(ctx, mapper);
 
-        public IDbProductRepository Products => new GeneralProductRepository<SignalProductDb, SignalProductFboDb, SignalProductPackSizeDb, SignalProductDateDb>(ctx, mapper);
+        public IDbProductRepository Products => new ProductRepository<SignalProductDb, SignalProductFboDb, SignalProductPackSizeDb, SignalProductDateDb>(ctx, mapper);
 
-        public IDbAttachmentsRepository Attachments => new GeneralAttachmentsRepository<SignalAttachmentDb>(ctx, mapper);
+        public IDbAttachmentsRepository Attachments => new AttachmentsRepository<SignalAttachmentDb>(ctx, mapper);
 
-        public IDbStakeholdersRepository Stakeholders => new GeneralStakeholdersRepository<SignalStakeholderDb>(ctx, mapper);
+        public IDbStakeholdersRepository Stakeholders => new StakeholdersRepository<SignalStakeholderDb>(ctx, mapper);
 
         public SignalsRepository(SimsDbContext ctx, IMapper mapper)
         {
@@ -89,14 +90,33 @@ namespace FSA.SIMSManagerDb.Repositories
             throw new NotImplementedException();
         }
 
-        public Task UpdateLeadOfficer(IEnumerable<int> ids, string user)
+        public async Task UpdateLeadOfficer(IEnumerable<int> ids, string user)
         {
-            throw new NotImplementedException();
+            var idList = ids.ToList();
+            if (idList.Count > 0)
+            {
+                var WhereClause = String.Join(" OR ", ids.Select(o => $"Id={o}"));
+
+                var signals = ctx.Signals.FromSqlRaw($"SELECT * from signals where ({WhereClause})");
+                // update the officer, and Ensure they are also operned too.
+                foreach (var signal in signals)
+                {
+                    signal.SignalStatus = "Open";
+                    signal.LeadOfficer = user;
+                }
+
+                await this.ctx.SaveChangesAsync();
+            }
         }
 
-        public Task UpdateStatus(int signalId, string status)
+        public async Task<SimsSignal> UpdateStatus(int id, string status)
         {
-            throw new NotImplementedException();
+            var dbItem = await ctx.Signals.FindAsync(id);
+            dbItem.SignalStatus = status;
+            if (status.ToLowerInvariant() == "unassigned")
+                dbItem.LeadOfficer = "";
+            await ctx.SaveChangesAsync();
+            return mapper.Map<SignalDb, SimsSignal>(dbItem);
         }
     }
 }

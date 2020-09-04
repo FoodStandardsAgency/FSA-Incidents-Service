@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace FSA.SIMSManagerDb.Repositories
 {
-    internal class GeneralLinkedRecordsRepository<LinkDb, NoteDb> : IDbLinkedRecordsRepository
+    internal class LinkedRecordsRepository<LinkDb, NoteDb> : IDbLinkedRecordsRepository
                         where LinkDb : BaseLinkDb, new()
                         where NoteDb : BaseNoteDb, new()
     {
@@ -21,7 +21,7 @@ namespace FSA.SIMSManagerDb.Repositories
 
         private readonly IMapper mapper;
 
-        public GeneralLinkedRecordsRepository(SimsDbContext ctx, IMapper mapper)
+        public LinkedRecordsRepository(SimsDbContext ctx, IMapper mapper)
         {
             this.ctx = ctx;
             this.LinkSet = ctx.Set<LinkDb>();

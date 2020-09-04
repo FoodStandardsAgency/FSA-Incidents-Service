@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace FSA.SIMSManagerDb.Repositories
 {
-    internal class GeneralStakeholdersRepository<T> : IDbStakeholdersRepository where T : BaseStakeholderDb
+    internal class StakeholdersRepository<T> : IDbStakeholdersRepository where T : BaseStakeholderDb
     {
         private readonly SimsDbContext ctx;
         private DbSet<T> DbSet;
         private readonly IMapper mapper;
 
-        public GeneralStakeholdersRepository(SimsDbContext ctx, IMapper mapper)
+        public StakeholdersRepository(SimsDbContext ctx, IMapper mapper)
         {
             this.ctx = ctx;
             this.DbSet = ctx.Set<T>();

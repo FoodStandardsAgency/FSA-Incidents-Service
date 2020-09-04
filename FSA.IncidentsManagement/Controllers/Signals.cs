@@ -34,7 +34,8 @@ namespace FSA.SignalsManagement.Controllers
         public async Task<IActionResult> GetSignal(int id)
         {
             if (id == 0) return BadRequest("No signal Id was passed");
-            return new OkObjectResult(null);
+            return new OkObjectResult(await this.simsApp.Signals.Get(id));
+            
         }
 
         [HttpPut()]
@@ -44,7 +45,8 @@ namespace FSA.SignalsManagement.Controllers
         [Produces("application/json")]
         public async Task<IActionResult> UpdateSignal([FromBody, SwaggerParameter("Updated Signal", Required = true)] SimsSignal signal)
         {
-            return new OkObjectResult(null);
+            var updatedSignal = await this.simsApp.Signals.Update(signal);
+            return new OkObjectResult(updatedSignal);
         }
 
         [HttpPost()]
@@ -54,8 +56,8 @@ namespace FSA.SignalsManagement.Controllers
         [Produces("application/json")]
         public async Task<IActionResult> CreateSignal([FromBody, SwaggerParameter("Create Signal", Required = true)] SimsSignal signal)
         {
-
-            return new OkObjectResult("");
+            var createdSignal = await simsApp.Signals.Add(signal);
+            return new OkObjectResult(createdSignal);
         }
 
         [HttpPost("Status/{id}")]
@@ -63,9 +65,10 @@ namespace FSA.SignalsManagement.Controllers
         [ProducesResponseType(typeof(SimsSignal), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
-        public async Task<IActionResult> UpdateSignalStatus([FromRoute] int id, [Required] int statusId)
+        public async Task<IActionResult> UpdateSignalStatus([FromRoute] int id, [Required] string status)
         {
-            return new OkObjectResult(null);
+            await simsApp.Signals.UpdateStatus(id, status);
+            return new OkResult();
         }
 
         [HttpPost("LeadOfficer")]
@@ -74,7 +77,7 @@ namespace FSA.SignalsManagement.Controllers
         [ProducesResponseType(500)]
         public async Task<IActionResult> UpdateSignalLeadOfficer([FromBody, SwaggerParameter("Update Lead officer entries", Required = true)] UpdateLeadOfficerModel officer)
         {
-           // await this.simsApp.Signals.AssignLeadOfficer(officer.SignalIds, officer.Officer);
+            await simsApp.Signals.UpdateLeadOfficer(officer.Ids, officer.Officer);
             return new OkResult();
         }
 
@@ -85,7 +88,7 @@ namespace FSA.SignalsManagement.Controllers
         [ProducesResponseType(500)]
         public async Task<IActionResult> PromoteToSignal([FromRoute] int id)
         {
-            // await this.simsApp.Signals.AssignLeadOfficer(officer.SignalIds, officer.Officer);
+            await this.simsApp.Signals.PromoteToIncident(id);
             return new OkResult();
         }
     }

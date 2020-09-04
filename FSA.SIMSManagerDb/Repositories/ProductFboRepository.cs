@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace FSA.SIMSManagerDb.Repositories
 {
-    class GeneralProductFboRepository<ProductFBO> : IDbProductFboRepository where ProductFBO : CoreProductFboDb, new()
+    class ProductFboRepository<ProductFBO> : IDbProductFboRepository where ProductFBO : CoreProductFboDb, new()
     {
         private readonly SimsDbContext ctx;
         private readonly DbSet<ProductFBO> DbSet;
         private readonly IMapper mapper;
 
-        public GeneralProductFboRepository(SimsDbContext ctx, IMapper mapper)
+        public ProductFboRepository(SimsDbContext ctx, IMapper mapper)
         {
             this.ctx = ctx;
             this.DbSet = ctx.Set<ProductFBO>();

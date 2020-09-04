@@ -39,10 +39,10 @@ namespace FSA.IncidentsManagementDb.Migrations
                 var host = SimsDbHost.CreateHost(ctx, mapper, "Paul Lawrence");
 
                 var incidentLinks = new IncidentLinkedRecords(ctx, mapper);
-                var signalLinks = new SignalsLinkedRecords(ctx, mapper);
-
+                //var signalLinks = new SignalsLinkedRecords(ctx, mapper);
+                var signalLinks = host.Signals.Links;
                 var Iitems = await incidentLinks.Add(5, new int[] { 8, 10 }, "Money");
-                var Sitems = await signalLinks.Add(1, new int[] { 2 }, "");
+                var items = await signalLinks.Add(1, new int[] { 2 }, "");
             }
 
         }

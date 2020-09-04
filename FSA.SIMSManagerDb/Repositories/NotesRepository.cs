@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace FSA.SIMSManagerDb.Repositories
 {
-    class GeneralNotesRepository<NoteDb> : IDbNotesRepository where NoteDb : BaseNoteDb, new()
+    class NotesRepository<NoteDb> : IDbNotesRepository where NoteDb : BaseNoteDb, new()
     {
         private SimsDbContext ctx;
         private DbSet<NoteDb> NoteSet;
         private IMapper mapper;
 
-        public GeneralNotesRepository(SimsDbContext ctx, IMapper mapper)
+        public NotesRepository(SimsDbContext ctx, IMapper mapper)
         {
             this.ctx = ctx;
             this.NoteSet = ctx.Set<NoteDb>();

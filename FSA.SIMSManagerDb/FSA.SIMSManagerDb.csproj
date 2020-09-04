@@ -26,6 +26,7 @@
     <Compile Remove="Migrations\20200830232528_yelp.Designer.cs" />
     <Compile Remove="Migrations\20200830233920_yelp.cs" />
     <Compile Remove="Migrations\20200830233920_yelp.Designer.cs" />
+    <Compile Remove="Repositories\SignalsLinkedRecords.cs" />
   </ItemGroup>
 
   <ItemGroup>

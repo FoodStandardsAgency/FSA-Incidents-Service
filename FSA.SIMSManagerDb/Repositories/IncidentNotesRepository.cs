@@ -14,14 +14,14 @@ namespace FSA.SIMSManagerDb.Repositories
         private readonly SimsDbContext ctx;
         private readonly IMapper mapper;
         private readonly SimsDbHost simsHost;
-        private readonly GeneralNotesRepository<IncidentNoteDb> incidentNotes;
+        private readonly NotesRepository<IncidentNoteDb> incidentNotes;
 
         public IncidentNotesRepository(SimsDbContext ctx, IMapper mapper, SimsDbHost simsHost)
         {
             this.ctx = ctx;
             this.mapper = mapper;
             this.simsHost = simsHost;
-            this.incidentNotes = new GeneralNotesRepository<IncidentNoteDb>(ctx, mapper);
+            this.incidentNotes = new NotesRepository<IncidentNoteDb>(ctx, mapper);
         }
 
         public async Task<SimsNote> Add(int incidentId, string note)

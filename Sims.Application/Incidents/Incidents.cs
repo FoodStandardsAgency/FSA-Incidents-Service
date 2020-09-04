@@ -120,7 +120,7 @@ namespace Sims.Application
         /// <param name="ids"></param>
         /// <param name="user"></param>
         /// <returns></returns>
-        public Task UpdateLeadOfficer(IEnumerable<int> ids, string user) => dbHost.Incidents.AssignLeadOfficer(ids, user);
+        public Task UpdateLeadOfficer(IEnumerable<int> ids, string user) => dbHost.Incidents.UpdateLeadOfficer(ids, user);
 
         public Task<BaseIncident> UpdateStatus(int id, int statusId) => dbHost.Incidents.UpdateStatus(id, statusId);
     }

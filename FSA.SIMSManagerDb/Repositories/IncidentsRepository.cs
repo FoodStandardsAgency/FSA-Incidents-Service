@@ -21,15 +21,15 @@ namespace FSA.SIMSManagerDb.Repositories
         private SimsDbContext ctx;
         private readonly IMapper mapper;
 
-        public IDbNotesRepository Notes => new GeneralNotesRepository<IncidentNoteDb>(ctx, mapper);
+        public IDbNotesRepository Notes => new NotesRepository<IncidentNoteDb>(ctx, mapper);
 
         public IDbLinkedRecordsRepository Links => new IncidentLinkedRecords(ctx, mapper);
 
-        public IDbProductRepository Products => new GeneralProductRepository<IncidentProductDb, IncidentProductFboDb, IncidentProductPackSizeDb, IncidentProductDateDb>(ctx, mapper);
+        public IDbProductRepository Products => new ProductRepository<IncidentProductDb, IncidentProductFboDb, IncidentProductPackSizeDb, IncidentProductDateDb>(ctx, mapper);
 
-        public IDbAttachmentsRepository Attachments => new GeneralAttachmentsRepository<IncidentAttachmentDb>(ctx, mapper);
+        public IDbAttachmentsRepository Attachments => new AttachmentsRepository<IncidentAttachmentDb>(ctx, mapper);
 
-        public IDbStakeholdersRepository Stakeholders => new GeneralStakeholdersRepository<IncidentStakeholderDb>(ctx, mapper);
+        public IDbStakeholdersRepository Stakeholders => new StakeholdersRepository<IncidentStakeholderDb>(ctx, mapper);
 
         public IncidentsRepository(SimsDbContext ctx, IMapper mapper)
         {
@@ -77,7 +77,7 @@ namespace FSA.SIMSManagerDb.Repositories
         /// <param name="id"></param>
         /// <param name="user"></param>
         /// <returns></returns>
-        public async Task AssignLeadOfficer(IEnumerable<int> ids, string user)
+        public async Task UpdateLeadOfficer(IEnumerable<int> ids, string user)
         {
             // I dislike plus 4!
             var openStatus = (int)IncidentStatusTypes.Open;
@@ -382,29 +382,7 @@ namespace FSA.SIMSManagerDb.Repositories
             return completeSearch;
         }
 
-        private Expression<Func<IncidentDb, bool>> DashboardIdSearch(IEnumerable<int> ids)
-        {
-            List<Expression<Func<IncidentDb, bool>>> idClause = new List<Expression<Func<IncidentDb, bool>>>();
-
-            foreach (var id in ids)
-            {
-                idClause.Add(i => i.Id == id);
-            }
-
-            var idStack = new Stack<Expression<Func<IncidentDb, bool>>>(idClause);
-            Expression<Func<IncidentDb, bool>> completeSearch = null;
-            // we are going to OR all the clauses together.
-
-            while (idStack.Count > 0)
-            {
-                if (completeSearch == null)
-                    completeSearch = idStack.Pop();
-                else
-                    completeSearch = completeSearch.Or(idStack.Pop());
-            }
-            return completeSearch;
-        }
-
+  
         /// <summary>
         /// Returns dashbord view for linked incidents.
         /// Excludes the parent Incident.
