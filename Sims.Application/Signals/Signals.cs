@@ -4,6 +4,7 @@ using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagement.Root.Shared;
 using FSA.SIMSManagerDb.Contracts;
 using Sims.Application.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -62,7 +63,14 @@ namespace Sims.Application
 
         public Task<SimsSignal> Update(SimsSignal signal)
         {
-            return dbHost.Signals.Update(signal);
+            try
+            {
+                return dbHost.Signals.Update(signal);
+            }
+            catch(ArgumentOutOfRangeException ex)
+            {
+                throw new SIMSException(ex.Message);
+            }
         }
 
         public Task UpdateLeadOfficer(IEnumerable<int> ids, string user)

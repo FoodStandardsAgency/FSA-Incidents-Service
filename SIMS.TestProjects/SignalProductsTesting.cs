@@ -68,7 +68,7 @@ namespace SIMS.Database
             {
                 var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var prodDisplay = await simsHost.Signals.Products.Get(1);
-                Assert.True(String.IsNullOrEmpty(prodDisplay.Amount) != false);
+                Assert.True(!String.IsNullOrEmpty(prodDisplay.Amount) && !String.IsNullOrEmpty(prodDisplay.Name));
             }
         }
 

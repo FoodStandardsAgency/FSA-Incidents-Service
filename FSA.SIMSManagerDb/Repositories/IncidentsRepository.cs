@@ -391,9 +391,6 @@ namespace FSA.SIMSManagerDb.Repositories
         /// <returns></returns>
         public async Task<IEnumerable<IncidentDashboardItem>> DashboardIncidentLinks(int incidentId)
         {
-            var incident = await this.ctx.Incidents
-                                    .Include(o => o.FromLinks)
-                                    .Include(o => o.ToLinks).AsNoTracking().FirstAsync(f => f.Id == incidentId);
 
             var incidentsQry = this.ctx.Incidents
                                    .Include(i => i.Priority)
