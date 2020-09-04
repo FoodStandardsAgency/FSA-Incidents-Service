@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace FSA.SIMSManagerDb.Entities
 {
-    internal class SignalDb : BaseEntityDb, IDbId<int>
+    internal class SignalDb : BaseEntityDb, IDbId, HostFields
     {
         public int Id { get; set; }
         public int? SPTId { get; set; }

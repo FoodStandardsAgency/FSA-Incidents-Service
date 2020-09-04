@@ -29,7 +29,7 @@ namespace FSA.IncidentsManagement.Root.Domain
         Task UpdateLeadOfficer(IEnumerable<int> id, string user);
 
         Task<IPaging<IncidentDashboardItem>> DashboardSearch(string search = null, int pageSize = 500, int startPage = 1);
-        Task<IEnumerable<IncidentDashboardItem>> DashboardIncidentLinks(int incidentId);
+        Task<IEnumerable<IncidentDashboardItem>> DashboardLinks(int incidentId);
         Task BulkClose(IEnumerable<int> incidentIds);
 
         /// <summary>

@@ -4,8 +4,8 @@ using System.Text;
 
 namespace FSA.SIMSManagerDb.Entities.Core
 {
-    internal interface IDbId<T>
+    internal interface IDbId
     {
-        T Id { get; }
+        int Id { get; }
     }
 }

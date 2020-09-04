@@ -391,6 +391,11 @@ namespace FSA.SIMSManagerDb.Repositories
         /// <returns></returns>
         public async Task<IEnumerable<IncidentDashboardItem>> DashboardIncidentLinks(int incidentId)
         {
+            var hostIncident = await this.ctx.Incidents
+                        .Include(o => o.FromLinks)
+                        .Include(o => o.ToLinks).AsNoTracking().FirstAsync(f => f.Id == incidentId);
+
+
 
             var incidentsQry = this.ctx.Incidents
                                    .Include(i => i.Priority)
@@ -414,7 +419,7 @@ namespace FSA.SIMSManagerDb.Repositories
             // ALl from incidents where incidentId is in `from` Column( the original linker)
             var toQ = (from iq in incidentsQry
                        join toLink in ctx.IncidentLinks
-                           on iq.Id equals toLink.FromId
+                           on iq.Id equals toLink.ToId
                        where toLink.FromId == incidentId
                        select iq);
 

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace FSA.SIMSManagerDb.Entities
 {
-    internal class IncidentDb : BaseEntityDb, IDbId<int>
+    internal class IncidentDb : BaseEntityDb, IDbId, HostFields
     {
         public IncidentDb()
         {

@@ -119,8 +119,8 @@ namespace FSA.SIMSManagerDb.Repositories
                     .Include(o => o.RelatedFBOs).ThenInclude(o => o.Address)
                     .Include(o => o.ProductType).Where(o => o.HostId == hostId)
                     .Skip(startRecord).Take(pageSize).ToListAsync();
-
-            return new PagedResult<SimsProductDashboard>(mapper.Map<IEnumerable<T>, IEnumerable<SimsProductDashboard>>(items), totalRecords);
+            var results = mapper.Map<IEnumerable<T>, IEnumerable<SimsProductDashboard>>(items);
+            return new PagedResult<SimsProductDashboard>(results, totalRecords);
         }
 
     }

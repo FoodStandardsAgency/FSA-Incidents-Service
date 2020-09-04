@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using FSA.IncidentsManagement.Root.DTOS;
 using FSA.SIMSManagerDb.Repositories;
-using Microsoft.Graph;
-using Sims.Application.Exceptions;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using SIMS.TestProjects.Setup;
 using System;
 using System.Text.Json;
@@ -55,6 +55,7 @@ namespace SIMS.Database
                 InsertedDate = DateTime.Parse("2020-08-20"),
                 SourceLink = "https://foodpoisoningbulletin.com/2020/maison-terre-goldenseal-root-powder-recalled-one-infant-has-died/"
             };
+
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
                 var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);

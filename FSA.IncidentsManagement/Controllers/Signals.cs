@@ -26,12 +26,12 @@ namespace FSA.SignalsManagement.Controllers
             this.simsApp = simsApp;
         }
 
-        [HttpGet()]
+        [HttpGet("{id}")]
         [SwaggerOperation(Summary = "Get Signal by id")]
         [ProducesResponseType(typeof(SimsSignal), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
-        public async Task<IActionResult> GetSignal(int id)
+        public async Task<IActionResult> GetSignal([FromRoute]int id)
         {
             if (id == 0) return BadRequest("No signal Id was passed");
             return new OkObjectResult(await this.simsApp.Signals.Get(id));
@@ -60,12 +60,12 @@ namespace FSA.SignalsManagement.Controllers
             return new OkObjectResult(createdSignal);
         }
 
-        [HttpPost("Status/{id}")]
+        [HttpPost("Status/{id}/{status}")]
         [SwaggerOperation(Summary = "Update status of an Signal")]
         [ProducesResponseType(typeof(SimsSignal), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
-        public async Task<IActionResult> UpdateSignalStatus([FromRoute] int id, [Required] string status)
+        public async Task<IActionResult> UpdateSignalStatus([FromRoute] int id, [FromRoute] string status)
         {
             await simsApp.Signals.UpdateStatus(id, status);
             return new OkResult();

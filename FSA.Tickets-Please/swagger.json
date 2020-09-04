@@ -330,7 +330,7 @@
             "in": "body",
             "name": "body",
             "schema": {
-              "$ref": "#/definitions/RenameFile"
+              "$ref": "#/definitions/RenameFileViewModel"
             }
           }
         ],
@@ -791,7 +791,7 @@
             "in": "body",
             "name": "body",
             "schema": {
-              "$ref": "#/definitions/SimsCommentModel"
+              "$ref": "#/definitions/SimsNoteModel"
             }
           }
         ],
@@ -1204,7 +1204,7 @@
         }
       }
     },
-    "/api/Signals": {
+    "/api/Signals/{id}": {
       "get": {
         "tags": [
           "Signals"
@@ -1216,8 +1216,9 @@
         ],
         "parameters": [
           {
-            "in": "query",
+            "in": "path",
             "name": "id",
+            "required": true,
             "type": "integer",
             "format": "int32"
           }
@@ -1233,7 +1234,9 @@
             "description": "Server Error"
           }
         }
-      },
+      }
+    },
+    "/api/Signals": {
       "put": {
         "tags": [
           "Signals"
@@ -1305,7 +1308,7 @@
         }
       }
     },
-    "/api/Signals/Status/{id}": {
+    "/api/Signals/Status/{id}/{status}": {
       "post": {
         "tags": [
           "Signals"
@@ -1324,11 +1327,10 @@
             "format": "int32"
           },
           {
-            "in": "query",
-            "name": "statusId",
+            "in": "path",
+            "name": "status",
             "required": true,
-            "type": "integer",
-            "format": "int32"
+            "type": "string"
           }
         ],
         "responses": {
@@ -1689,7 +1691,7 @@
         }
       }
     },
-    "RenameFile": {
+    "RenameFileViewModel": {
       "type": "object",
       "properties": {
         "fileName": {
@@ -2673,7 +2675,7 @@
         }
       }
     },
-    "SimsCommentModel": {
+    "SimsNoteModel": {
       "type": "object",
       "properties": {
         "hostId": {

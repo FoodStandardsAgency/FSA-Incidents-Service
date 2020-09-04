@@ -35,7 +35,7 @@ namespace FSA.IncidentsManagement.Controllers
         {
             return incidentSignal.ToLower() switch
             {
-                IncidentOrSignal.Incidents => new OkObjectResult(await simsApp.Incidents.DashboardIncidentLinks(id)),
+                IncidentOrSignal.Incidents => new OkObjectResult(await simsApp.Incidents.DashboardLinks(id)),
                 IncidentOrSignal.Signals => new OkObjectResult(await simsApp.Signals.DashboardLinks(id)),
                 _ => new BadRequestObjectResult("Route not found")
             };

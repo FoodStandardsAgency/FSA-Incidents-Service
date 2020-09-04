@@ -1,9 +1,6 @@
 ﻿using FSA.IncidentsManagement.Root.DTOS;
-using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagement.Root.Shared;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Root.Domain

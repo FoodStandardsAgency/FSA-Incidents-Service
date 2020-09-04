@@ -24,17 +24,20 @@ namespace FSA.SIMSManagerDb.MapperProfile
             CreateMap<ContactMethodDb, ContactMethod>(MemberList.Destination);
             CreateMap<CountryDb, Country>(MemberList.Destination);
             CreateMap<DataSourceDb, DataSource>(MemberList.Destination);
+            
             CreateMap<DeathIllnessDb, DeathIllness>(MemberList.Destination);
             CreateMap<ProductTypeDb, ProductType>(MemberList.Destination);
             CreateMap<SignalStatusDb, SignalStatus>(MemberList.Destination);
             CreateMap<UnitQuantityDb, UnitQuantity>(MemberList.Destination);
-            CreateMap<AttachmentTagLkup, DocumentTagDb>(MemberList.Destination);
-            CreateMap<FBOType, FBOTypeDb>(MemberList.Destination);
+            CreateMap<DocumentTagDb, AttachmentTagLkup>(MemberList.Destination);
+
+            CreateMap<FBOTypeDb,FBOType>(MemberList.Destination);
             CreateMap<NotifierTypeDb, NotifierType>(MemberList.Destination);
             CreateMap<AdminLeadDb, AdminLead>(MemberList.Destination);
-            CreateMap<ProductDateType, DateTypeDb>(MemberList.Destination);
+            CreateMap<DateTypeDb, ProductDateType>(MemberList.Destination);
             CreateMap<StakeholderDiscriminatorDb, StakeholderType>(MemberList.Destination);
             CreateMap<StakeholderIncidentRoleDb, StakeholderIncidentRole>(MemberList.Destination);
+
 
             CreateMap<IncidentLinkDb, SimsLinkedRecord>()
                     .ForMember(o => o.From, m => m.MapFrom(a => a.FromId))
@@ -55,11 +58,11 @@ namespace FSA.SIMSManagerDb.MapperProfile
 
             CreateMap<SignalNoteDb, SimsNote>(MemberList.Destination);
 
-            CreateMap<FSA.IncidentsManagement.Root.DTOS.SimsAddress, AddressDb>(MemberList.Source);
-            CreateMap<FSA.IncidentsManagement.Root.DTOS.SimsAddress, AddressDb>(MemberList.Source);
-            CreateMap<AddressDb, FSA.IncidentsManagement.Root.DTOS.SimsAddress>(MemberList.Destination);
+            CreateMap<SimsAddress, AddressDb>(MemberList.Source);
+            CreateMap<SimsAddress, AddressDb>(MemberList.Source);
+            CreateMap<AddressDb, SimsAddress>(MemberList.Destination);
 
-            CreateMap<FSA.IncidentsManagement.Root.DTOS.SimsAddressContact, AddressContactDb>(MemberList.Source);
+            CreateMap<SimsAddressContact, AddressContactDb>(MemberList.Source);
             CreateMap<AddressContactDb, IncidentsManagement.Root.DTOS.SimsAddressContact>(MemberList.Destination);
 
             CreateMap<IncidentStakeholderDb, SimsStakeholder>(MemberList.Destination);
@@ -121,9 +124,12 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForMember(a => a.IncidentStatusId, m => m.MapFrom(a => a.StatusId));
 
             CreateMap<IncidentDb, IncidentDashboardItem>()
+                .ForMember(a => a.Title, m => m.MapFrom(b => b.IncidentTitle))
+                .ForMember(a => a.Notifier, m => m.MapFrom(b => b.NotifierId.HasValue && b.NotifierId != 0 ? b.Notifier.Title : "Unassigned"))
                 .ForMember(a => a.CommonId, m => m.MapFrom(a => a.Id))
                 .ForMember(a => a.Status, m => m.MapFrom(a => a.IncidentStatus.Title))
                 .ForMember(a => a.Updated, m => m.MapFrom(a => a.Modified))
+                .ForMember(a => a.Priority, m => m.MapFrom(a => a.Priority.Title))
                 .ForMember(a => a.Links, m => m.MapFrom(a => a.ToLinks.Select(o => o.FromId)
                 .Concat(a.FromLinks.Select(o => o.ToId).ToList())));
 

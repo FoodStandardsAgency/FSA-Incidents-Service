@@ -133,7 +133,7 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpDelete("Fbo/{incidentSignal}")]
         [SwaggerOperation(Summary = "Remove fbo from product")]
-        [ProducesResponseType( 200)]
+        [ProducesResponseType(200)]
         [ProducesResponseType(403)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> RemoveFbo([FromRoute] string incidentSignal, [Required] ProductFboInfoViewModel assignObj)
@@ -162,7 +162,7 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "Update fbo to product")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> UpdateFbo([FromRoute] string incidentSignal,[Required] ProductFboInfoViewModel assignObj)
+        public async Task<IActionResult> UpdateFbo([FromRoute] string incidentSignal, [Required] ProductFboInfoViewModel assignObj)
         {
             try
             {
@@ -191,13 +191,19 @@ namespace FSA.IncidentsManagement.Controllers
         {
             try
             {
-                return incidentSignal.ToLower() switch
+                var items = incidentSignal.ToLower() switch
                 {
-                    IncidentOrSignal.Incidents => new OkObjectResult(await this.simsApp.Incidents.Products.DashboardItems(id, pageSize, pageNo)),
-                    IncidentOrSignal.Signals => new OkObjectResult(await this.simsApp.Signals.Products.DashboardItems(id, pageSize, pageNo)),
-                    _ => BadRequest("Unknown route")
+                    IncidentOrSignal.Incidents => await this.simsApp.Incidents.Products.DashboardItems(id, pageSize, pageNo),
+                    IncidentOrSignal.Signals => await this.simsApp.Signals.Products.DashboardItems(id, pageSize, pageNo),
+                    _ => throw new InvalidOperationException("Unknown route")
                 };
 
+                return new OkObjectResult(new { Results = items, TotalRecords = items.TotalResults });
+            }
+            catch (InvalidOperationException ex)
+            {
+                this.log.LogError(nameof(GetProductDashboard), ex.Message);
+                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
