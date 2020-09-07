@@ -29,7 +29,7 @@ namespace Sims.Application
         public async Task<IEnumerable<SimsStakeholder>> GetAll(int signalId)
         {
             if (signalId == 0) throw new SimsItemMissing("Stakeholder id missing");
-            return await this.dbHost.Incidents.Stakeholders.GetAll(signalId);
+            return await dbHost.Incidents.Stakeholders.GetAll(signalId);
         }
 
         public Task Remove(int stakeholderId)

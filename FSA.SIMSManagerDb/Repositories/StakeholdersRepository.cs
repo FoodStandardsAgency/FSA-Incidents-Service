@@ -23,13 +23,14 @@ namespace FSA.SIMSManagerDb.Repositories
             this.mapper = mapper;
         }
 
-        public Task<List<SimsStakeholder>> GetAll(int hostId)
+        public async Task<List<SimsStakeholder>> GetAll(int hostId)
         {
             if (hostId == 0) throw new ArgumentOutOfRangeException ("Host Id missing");
-            return this.DbSet
-                            .Include(o=>o.Address)
-                            .Where(o => o.HostId == hostId)
-                            .Select(a => this.mapper.Map<T, SimsStakeholder>(a)).ToListAsync();
+            var items = await this.DbSet
+                            .Include(o => o.Address)
+                            .Where(o => o.HostId == hostId).ToListAsync();
+
+            return items.Select(a => this.mapper.Map<SimsStakeholder>(a)).ToList();
         }
 
         public async Task<SimsStakeholder> Add(int hostId, SimsStakeholder stakeholder)
