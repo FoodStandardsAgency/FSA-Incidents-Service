@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FSA.IncidentsManagement.Root.Domain;
 using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagement.Root.Shared;
@@ -8,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace FSA.SIMSManagerDb.Repositories
@@ -62,7 +65,7 @@ namespace FSA.SIMSManagerDb.Repositories
         public async Task<SimsSignal> Update(SimsSignal signal)
         {
             var dbItem = this.ctx.Signals.Find(signal.Id);
-            if (dbItem.SPTId is null && signal.SPTId.HasValue || (dbItem.SPTId !=signal.SPTId))
+            if (dbItem.SPTId is null && signal.SPTId.HasValue || (dbItem.SPTId != signal.SPTId))
                 throw new ArgumentOutOfRangeException("Cannot update SPTid.");
 
             if (dbItem.PublishedDate != signal.PublishedDate)
@@ -88,15 +91,160 @@ namespace FSA.SIMSManagerDb.Repositories
             return dbItem != null;
         }
 
-        public Task<IEnumerable<SignalDashboardItem>> DashboardLinks(int id)
+        public async Task<IEnumerable<SignalDashboardItem>> DashboardLinks(int signalId)
         {
-            throw new NotImplementedException();
+            var hostIncident = await this.ctx.Signals
+                        .Include(o => o.FromLinks)
+                        .Include(o => o.ToLinks).AsNoTracking().FirstAsync(f => f.Id == signalId);
+
+
+            var signalQry = this.ctx.Signals;
+            // Where signal was assigned too. SignalId->to
+            var fromIds = this.ctx
+                                .SignalLinks.AsNoTracking().Where(o => o.ToId == signalId);
+
+            // the From signals [This contains the ToLinks]
+            var fromSignals = (from iq in signalQry
+                               join fIds in fromIds
+                                on iq.Id equals fIds.FromId
+                               select iq);
+            var tLinks = fromSignals.Select(i => i.FromLinks).SelectMany(o => o);
+            // The children of the from signals
+            var fromSignalList = (from iq in signalQry
+                                  where tLinks.Any(p => p.ToId == iq.Id)
+                                  select iq);
+
+            // ALl from signal where incidentId is in `from` Column( the original linker) to<-SignalId
+            var toQ = (from iq in signalQry
+                       join toLink in ctx.SignalLinks
+                           on iq.Id equals toLink.ToId
+                       where toLink.FromId == signalId
+                       select iq);
+
+
+            var allItems = toQ.Concat(fromSignalList)
+                              .Concat(fromSignals).Where(o => o.Id != signalId);
+
+            return await allItems.Select(i => mapper.Map<SignalDb, SignalDashboardItem>(i)).ToListAsync();
         }
 
-        public Task<IPaging<SignalDashboardItem>> DashboardSearch(string search = null, int pageSize = 500, int startPage = 1)
+        public async Task<IPaging<SignalDashboardItem>> DashboardSearch(string search = null, int pageSize = 500, int startPage = 1)
         {
-            throw new NotImplementedException();
+            if (startPage < 1 || pageSize < 1) return new PagedResult<SignalDashboardItem>(Enumerable.Empty<SignalDashboardItem>(), 0);
+
+            var qry = this.ctx.Signals.AsNoTracking().AsQueryable();
+
+            if (!String.IsNullOrEmpty(search))
+            {
+                // Split out all the terms
+
+                (var searchTerms, var person, var incidentIds) = this.ParseSearchTerms(search);
+                // This is what we actually pass to the qry.
+                // There are several paths to execution
+                // 1. Search + Person
+                // 2. Search
+                // 3. Person
+                Expression<Func<SignalDb, bool>> searchExpression = null;
+                searchExpression = this.DashboardGeneralSearch(searchTerms, incidentIds);
+
+                if (searchExpression != null)
+                    qry = qry.Where(searchExpression);
+                if (!string.IsNullOrEmpty(person))
+                    qry = qry.Where(o => o.LeadOfficer == person);
+
+
+            }
+
+            // build a where clause
+            var totalRecords = await qry.CountAsync();
+            // Find the start record
+            var startRecord = (startPage - 1) * pageSize;
+            var results = await qry  //.OrderByDescending(i => i.IncidentStatus.SortOrder)
+                                    .OrderBy(i => i.Created)
+                                    .Skip(startRecord)
+                                    .Take(pageSize)
+                                    .Select(i => mapper.Map<SignalDb, SignalDashboardItem>(i)).ToListAsync();
+            return new PagedResult<SignalDashboardItem>(results, totalRecords);
         }
+
+        private (List<string> search, string person, List<int> ids) ParseSearchTerms(string search)
+        {
+            var personClause = "person:";
+            // 1. I-000-000
+            // 2. i-000-000
+            // 3. 000-000   
+            // 4. 0002000
+            // 5. 000-00000 etc
+            //number
+            var reg = new Regex("(^|-)(?<number>[0-9]+)");// [I-i]?(?<number>[0-9]{1,})");
+
+            // We build the final search terms from this
+            var allTerms = new List<string>();
+            // any and all matching ids
+            var idTerms = new List<int>();
+            var totalTerms = search.ToLowerInvariant().Split(" ", StringSplitOptions.RemoveEmptyEntries).ToList();
+            // Get the person out of the way first, as it can trip up the idmatches 
+            var person = totalTerms.Where(o => o.ToLowerInvariant().StartsWith(personClause)).FirstOrDefault();
+            if (!string.IsNullOrEmpty(person)) totalTerms.Remove(person);
+            // Any matches for the reg ex are added to the idterms
+            // Non matches are added to the total terms
+            foreach (var term in totalTerms)
+            {
+                var matches = reg.Matches(term);
+                if (matches.Count == 0)
+                    allTerms.Add(term);
+                else
+                {
+                    int id = 0;
+                    if (int.TryParse(String.Join("", matches.Select(o => o.Groups["number"].Value)), out id))
+                        idTerms.Add(id);
+                }
+            }
+
+            return (allTerms.Where(o => o.ToLowerInvariant().StartsWith(personClause) == false).ToList(), person != null ? person.Substring(personClause.Length) : person, idTerms);
+        }
+
+
+        /// <summary>
+        /// A very lazy copy paste from rhe Incidents.
+        /// This (all Dashboard methods) needs, needs needs to be broken out to thieor s own Class.
+        /// </summary>
+        /// <param name="allWords"></param>
+        /// <param name="allIds"></param>
+        /// <returns></returns>
+        private Expression<Func<SignalDb, bool>> DashboardGeneralSearch(IEnumerable<string> allWords, IEnumerable<int> allIds)
+        {
+            List<Expression<Func<SignalDb, bool>>> allClauses = new List<Expression<Func<SignalDb, bool>>>();
+            // The Full list of searches per word
+            foreach (var itm in allWords)
+            {
+                var wrd = $"%{itm}%";
+                allClauses.Add(i => EF.Functions.Like(i.Title, wrd));
+                allClauses.Add(i => EF.Functions.Like(i.Priority, wrd));
+                allClauses.Add(i => EF.Functions.Like(i.BaseProduct, wrd));
+                allClauses.Add(i => EF.Functions.Like(i.SignalStatus, wrd));
+            }
+            // full list of serches on id
+            foreach (var id in allIds)
+            {
+                var capturedId = id;
+                allClauses.Add(i => i.Id == capturedId);
+            }
+
+            var wordStack = new Stack<Expression<Func<SignalDb, bool>>>(allClauses);
+            // we are going to OR all the clauses together.
+            Expression<Func<SignalDb, bool>> completeSearch = null;
+            while (wordStack.Count > 0)
+            {
+                if (completeSearch == null)
+                    completeSearch = wordStack.Pop();
+                else
+                    completeSearch = completeSearch.Or(wordStack.Pop());
+            }
+            return completeSearch;
+        }
+
+
 
         public async Task UpdateLeadOfficer(IEnumerable<int> ids, string user)
         {

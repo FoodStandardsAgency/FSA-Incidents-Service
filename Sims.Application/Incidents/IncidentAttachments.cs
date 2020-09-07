@@ -41,10 +41,25 @@ namespace Sims.Application
             return attachments.EnsureLibrary(incidentLibrary);
         }
 
-        public Task<IEnumerable<SimsAttachmentFileInfo>> FetchAllAttchmentsLinks(int hostId)
+        public async Task<IEnumerable<SimsAttachmentFileInfo>> FetchAllAttchmentsLinks(int hostId)
         {
             var incidentLibrary = AppExtensions.GenerateIncidentId(hostId);
-            return attachments.FetchAllAttchmentsLinks(incidentLibrary);
+            var fileDat = await attachments.FetchAllAttchmentsLinks(incidentLibrary);
+            var dbData = await dbHost.Incidents.Attachments.Get(hostId);
+
+            var allData = from file in fileDat
+                          join db in dbData
+                          on file.Url equals db.Url
+                          select new SimsAttachmentFileInfo
+                          {
+                              FileName = file.FileName,
+                              Url = file.Url,
+                              Tags = db.Tags,
+                              Created = db.Created,
+                              UserId = db.UserId
+                          };
+
+            return allData.ToList();
         }
 
         public Task<IEnumerable<SimsAttachmentFileInfo>> GetAllTags(int hostId)

@@ -12,7 +12,7 @@ namespace FSA.SIMSManagerDb.Contracts
         Task Add(IEnumerable<BaseIncident> incidents);
         Task UpdateLeadOfficer(IEnumerable<int> ids, string user);
         Task BulkClose(IEnumerable<int> incidentIds);
-        Task<IEnumerable<IncidentDashboardItem>> DashboardIncidentLinks(int incidentId);
+        Task<IEnumerable<IncidentDashboardItem>> DashboardLinks(int incidentId);
         Task<IPaging<IncidentDashboardItem>> DashboardSearch(string search = null, int PageSize = 500, int StartPage = 1);
         Task<bool> Exists(int incidentId);
         Task<BaseIncident> Get(Guid guid);

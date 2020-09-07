@@ -133,6 +133,11 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForMember(a => a.Links, m => m.MapFrom(a => a.ToLinks.Select(o => o.FromId)
                 .Concat(a.FromLinks.Select(o => o.ToId).ToList())));
 
+            CreateMap<SignalDb, SignalDashboardItem>(MemberList.Destination)
+                .ForMember(a => a.CommonId, m => m.MapFrom(a => a.Id))
+                .ForMember(a => a.Updated, m => m.MapFrom(a => a.Modified));
+
+
 
             CreateMap<IncidentsManagement.Root.DTOS.SimsSignal, SignalDb>(MemberList.Source);
             CreateMap<SignalDb, IncidentsManagement.Root.DTOS.SimsSignal>(MemberList.Destination);
@@ -201,6 +206,7 @@ namespace FSA.SIMSManagerDb.MapperProfile
 
             CreateMap<SignalProductDb, SimsProductDashboard>(MemberList.Destination)
                 .ForMember(a => a.ProductType, m => m.MapFrom(a => a.ProductType.Title))
+                .ForMember(a=>a.LastUpdated, m=>m.MapFrom(b=>b.Modified))                
                 .ForMember(a => a.AddressNames, m => m.MapFrom(a => a.RelatedFBOs != null ? a.RelatedFBOs.Select(p => p.Address.Title).ToList() : new List<string>()));
 
             CreateMap<IncidentProductFboDb, SimsProductFboAddress>(MemberList.Destination)

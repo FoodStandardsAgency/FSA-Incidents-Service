@@ -1,7 +1,10 @@
 ﻿using FSA.IncidentsManagement.Root.Domain;
 using FSA.IncidentsManagement.Root.DTOS;
 using FSA.SIMSManagerDb.Contracts;
+using Microsoft.Graph;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 
 namespace Sims.Application
@@ -29,10 +32,25 @@ namespace Sims.Application
             return attachments.EnsureLibrary(signalLibrary);
         }
 
-        public Task<IEnumerable<SimsAttachmentFileInfo>> FetchAllAttchmentsLinks(int hostId)
+        public async Task<IEnumerable<SimsAttachmentFileInfo>> FetchAllAttchmentsLinks(int hostId)
         {
             var signalLibrary = AppExtensions.GenerateSignalsId(hostId);
-            return attachments.FetchAllAttchmentsLinks(signalLibrary);
+            var fileDat = await attachments.FetchAllAttchmentsLinks(signalLibrary);
+            var dbData = await dbHost.Signals.Attachments.Get(hostId);
+
+            var allData = from file in fileDat
+                          join db in dbData
+                          on file.Url equals db.Url
+                          select new SimsAttachmentFileInfo
+                          {
+                              FileName = file.FileName,
+                              Url = file.Url,
+                              Tags = db.Tags,
+                              Created = db.Created,
+                              UserId = db.UserId
+                          };
+
+            return allData.ToList();
         }
 
         public Task<IEnumerable<SimsAttachmentFileInfo>> GetAllTags(int hostId)

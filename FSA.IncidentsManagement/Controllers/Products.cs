@@ -58,6 +58,32 @@ namespace FSA.IncidentsManagement.Controllers
             }
         }
 
+        [HttpPut("{incidentSignal}")]
+        [SwaggerOperation(Summary = "Update Product")]
+        [ProducesResponseType(typeof(SimsProduct), 200)]
+        [ProducesResponseType(500)]
+        [ProducesResponseType(403)]
+        public async Task<IActionResult> UpdateProduct([FromRoute] string incidentSignal,[FromBody] ProductViewModel product)
+        {
+            try
+            {
+                var updatedProduct = mapper.Map<SimsProduct>(product);
+
+                return incidentSignal.ToLower() switch
+                {
+                    IncidentOrSignal.Incidents => new OkObjectResult(await this.simsApp.Incidents.Products.Update(updatedProduct)),
+                    IncidentOrSignal.Signals => new OkObjectResult(await this.simsApp.Signals.Products.Update(updatedProduct)),
+                    _ => BadRequest("Unknown route")
+                };
+
+            }
+            catch (SIMSException ex)
+            {
+                log.LogWarning(ex, ex.Message);
+                return new BadRequestObjectResult(ex.Message);
+            }
+        }
+
         [HttpGet("{incidentSignal}/{productId}")]
         [SwaggerOperation(Summary = "Fetch product")]
         [ProducesResponseType(typeof(SimsProductDisplayModel), 200)]
@@ -181,6 +207,7 @@ namespace FSA.IncidentsManagement.Controllers
                 return new BadRequestObjectResult(ex.Message);
             }
         }
+
 
 
         [HttpGet("Dashboard/{incidentSignal}/{id}")]
