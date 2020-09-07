@@ -5,6 +5,7 @@ using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagement.Root.Shared;
 using FSA.SIMSManagerDb.Contracts;
 using FSA.SIMSManagerDb.Entities;
+using FSA.SIMSManagerDbEntities.Helpers;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -82,7 +83,7 @@ namespace FSA.SIMSManagerDb.Repositories
         public async Task<bool> IsClosed(int signalId)
         {
             var dbItem = await this.ctx.Signals.AsNoTracking().FirstAsync(o => o.Id == signalId);
-            return dbItem.SignalStatus == "Closed";
+            return dbItem.SignalStatusId == (int)SignalStatusTypes.Closed_Incident || dbItem.SignalStatusId == (int)SignalStatusTypes.Closed_No_Incident;
         }
 
         public async Task<bool> Exists(int signalId)
@@ -132,7 +133,9 @@ namespace FSA.SIMSManagerDb.Repositories
         {
             if (startPage < 1 || pageSize < 1) return new PagedResult<SignalDashboardItem>(Enumerable.Empty<SignalDashboardItem>(), 0);
 
-            var qry = this.ctx.Signals.AsNoTracking().AsQueryable();
+            var qry = this.ctx.Signals
+                                .Include(o => o.SignalStatus)
+                                .AsNoTracking().AsQueryable();
 
             if (!String.IsNullOrEmpty(search))
             {
@@ -222,7 +225,7 @@ namespace FSA.SIMSManagerDb.Repositories
                 allClauses.Add(i => EF.Functions.Like(i.Title, wrd));
                 allClauses.Add(i => EF.Functions.Like(i.Priority, wrd));
                 allClauses.Add(i => EF.Functions.Like(i.BaseProduct, wrd));
-                allClauses.Add(i => EF.Functions.Like(i.SignalStatus, wrd));
+                allClauses.Add(i => EF.Functions.Like(i.SignalStatus.Title, wrd));
             }
             // full list of serches on id
             foreach (var id in allIds)
@@ -257,7 +260,7 @@ namespace FSA.SIMSManagerDb.Repositories
                 // update the officer, and Ensure they are also operned too.
                 foreach (var signal in signals)
                 {
-                    signal.SignalStatus = "Open";
+                    signal.SignalStatusId = (int)SignalStatusTypes.Open;
                     signal.LeadOfficer = user;
                 }
 
@@ -265,11 +268,11 @@ namespace FSA.SIMSManagerDb.Repositories
             }
         }
 
-        public async Task<SimsSignal> UpdateStatus(int id, string status)
+        public async Task<SimsSignal> UpdateStatus(int id, int status)
         {
             var dbItem = await ctx.Signals.FindAsync(id);
-            dbItem.SignalStatus = status;
-            if (status.ToLowerInvariant() == "unassigned")
+            dbItem.SignalStatusId = status;
+            if (status == (int)SignalStatusTypes.Unassigned)
                 dbItem.LeadOfficer = "";
             await ctx.SaveChangesAsync();
             return mapper.Map<SignalDb, SimsSignal>(dbItem);

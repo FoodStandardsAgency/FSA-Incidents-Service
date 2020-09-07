@@ -36,7 +36,7 @@ namespace SIMS.TestProjects.Seeeds
                     Id = 0,
                     SPTId = sptId,
                     Title = title,
-                    SignalStatus = "Unknown",
+                    SignalStatusId = 0,
                     Priority = line["Prioritisation"],
                     LeadOfficer = "",
                     CountryOfOrigin = cofO,

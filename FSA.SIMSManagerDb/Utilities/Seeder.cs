@@ -185,56 +185,14 @@ namespace FSA.SIMSManagerDb.Utilities
                 new SignalStatusDb
                 {
                     Id = 3,
-                    Title = "Closed",
+                    Title = "Closed : Incident",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new SignalStatusDb
                 {
                     Id = 4,
-                    Title = "Duplicate",
-                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                },
-                new SignalStatusDb
-                {
-                    Id = 5,
-                    Title = "Rejected",
-                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                },
-                new SignalStatusDb
-                {
-                    Id = 6,
-                    Title = "Converted to Incident",
-                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                },
-                new SignalStatusDb
-                {
-                    Id = 7,
-                    Title = "Associated to Incident",
-                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                },
-                new SignalStatusDb
-                {
-                    Id = 8,
-                    Title = "Converted to Signal",
-                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                },
-                new SignalStatusDb
-                {
-                    Id = 9,
-                    Title = "Associated to Signal",
-                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                },
-                new SignalStatusDb
-                {
-                    Id = 10,
-                    Title = "Merged to Incident",
+                    Title = "Closed : No Incident",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 });

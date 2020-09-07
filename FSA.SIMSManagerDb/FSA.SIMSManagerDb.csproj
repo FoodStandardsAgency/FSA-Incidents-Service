@@ -26,6 +26,10 @@
     <Compile Remove="Migrations\20200830232528_yelp.Designer.cs" />
     <Compile Remove="Migrations\20200830233920_yelp.cs" />
     <Compile Remove="Migrations\20200830233920_yelp.Designer.cs" />
+    <Compile Remove="Migrations\20200907115143_statusIdPtOneFool.cs" />
+    <Compile Remove="Migrations\20200907115143_statusIdPtOneFool.Designer.cs" />
+    <Compile Remove="Migrations\20200907115753_statusIdPtOneFool.cs" />
+    <Compile Remove="Migrations\20200907115753_statusIdPtOneFool.Designer.cs" />
     <Compile Remove="Repositories\SignalsLinkedRecords.cs" />
   </ItemGroup>
 

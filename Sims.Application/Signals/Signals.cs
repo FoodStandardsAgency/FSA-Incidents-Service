@@ -78,7 +78,7 @@ namespace Sims.Application
             return dbHost.Signals.UpdateLeadOfficer(ids, user);
         }
 
-        public Task UpdateStatus(int signalId, string status)
+        public Task UpdateStatus(int signalId, int status)
         {
             return dbHost.Signals.UpdateStatus(signalId, status);
         }

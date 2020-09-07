@@ -131,12 +131,16 @@ namespace FSA.SIMSManagerDb.MapperProfile
 
             CreateMap<SignalDb, SignalDashboardItem>(MemberList.Destination)
                 .ForMember(a => a.CommonId, m => m.MapFrom(a => a.Id))
+                .ForMember(a => a.Status, m => m.MapFrom(a => a.SignalStatus.Title))
                 .ForMember(a => a.Updated, m => m.MapFrom(a => a.Modified));
 
 
 
             CreateMap<IncidentsManagement.Root.DTOS.SimsSignal, SignalDb>(MemberList.Source);
+
             CreateMap<SignalDb, IncidentsManagement.Root.DTOS.SimsSignal>(MemberList.Destination);
+                //.ForMember(a => a.SignalStatus, m => m.MapFrom(a => a.SignalStatus.Title));
+                
 
             CreateMap<IncidentProductDb, SimsProduct>(MemberList.Destination)
                 .ForMember(a => a.AdditionalInfo, m => m.MapFrom(a => String.IsNullOrEmpty(a.AdditionalInfo) ? "" : a.AdditionalInfo))

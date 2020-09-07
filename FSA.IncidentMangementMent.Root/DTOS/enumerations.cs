@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FSA.IncidentsManagement.Root.DTOS
 {
@@ -38,6 +36,17 @@ namespace FSA.IncidentsManagement.Root.DTOS
         Medium = 3,
         Low = 4
     }
+
+    
+    public enum SimsSignalStatusTypes
+    {
+        Unassigned = 1,
+        Open = 2,
+        Pending = 3,
+        Closed_Incident = 4,
+        Closed_No_Incident = 5,
+        Unknown = 0
+    };
 
     /// <summary>
     /// These must match with the 'StakeholdersDiscriminatorsDb' table list
