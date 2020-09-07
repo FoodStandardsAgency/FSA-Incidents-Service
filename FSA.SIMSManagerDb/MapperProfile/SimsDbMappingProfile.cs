@@ -5,6 +5,7 @@ using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb.Entities;
 using FSA.SIMSManagerDb.Entities.Core;
 using FSA.SIMSManagerDb.Entities.Lookups;
+using FSA.SIMSManagerDbEntities.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,14 +25,14 @@ namespace FSA.SIMSManagerDb.MapperProfile
             CreateMap<ContactMethodDb, ContactMethod>(MemberList.Destination);
             CreateMap<CountryDb, Country>(MemberList.Destination);
             CreateMap<DataSourceDb, DataSource>(MemberList.Destination);
-            
+
             CreateMap<DeathIllnessDb, DeathIllness>(MemberList.Destination);
             CreateMap<ProductTypeDb, ProductType>(MemberList.Destination);
             CreateMap<SignalStatusDb, SignalStatus>(MemberList.Destination);
             CreateMap<UnitQuantityDb, UnitQuantity>(MemberList.Destination);
             CreateMap<DocumentTagDb, AttachmentTagLkup>(MemberList.Destination);
 
-            CreateMap<FBOTypeDb,FBOType>(MemberList.Destination);
+            CreateMap<FBOTypeDb, FBOType>(MemberList.Destination);
             CreateMap<NotifierTypeDb, NotifierType>(MemberList.Destination);
             CreateMap<AdminLeadDb, AdminLead>(MemberList.Destination);
             CreateMap<DateTypeDb, ProductDateType>(MemberList.Destination);
@@ -75,6 +76,7 @@ namespace FSA.SIMSManagerDb.MapperProfile
             CreateMap<IncidentAttachmentDb, SimsAttachmentFileInfo>(MemberList.Destination)
                     .ForMember(a => a.UserId, m => m.MapFrom(o => o.CreatedBy))
                     .ForMember(a => a.Url, m => m.MapFrom(o => o.DocUrl))
+                    .ForMember(a => a.Tags, m => m.MapFrom(o => o.TagFlags.SelectedFlags().Select(o=>(int)o).Where(o=>o!=0).ToList()))
                     .ForMember(o => o.FileName, m => m.MapFrom(o => Path.GetFileName(o.DocUrl)));
 
             CreateMap<SignalAttachmentDb, SimsAttachmentFileInfo>(MemberList.Destination)
@@ -113,7 +115,7 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForCtorParam("statusId", o => o.MapFrom(a => a.IncidentStatusId))
                 .ForCtorParam("lastChangedBy", o => o.MapFrom(a => a.ModifiedBy))
                 .ForCtorParam("lastChangedDate", o => o.MapFrom(a => a.Modified));
-                
+
             CreateMap<BaseIncident, IncidentDb>(MemberList.Source)
                 .IgnoreAuditData()
                 .ForMember(a => a.Id, m => m.MapFrom(a => a.CommonId))
@@ -202,7 +204,7 @@ namespace FSA.SIMSManagerDb.MapperProfile
 
             CreateMap<SignalProductDb, SimsProductDashboard>(MemberList.Destination)
                 .ForMember(a => a.ProductType, m => m.MapFrom(a => a.ProductType.Title))
-                .ForMember(a=>a.LastUpdated, m=>m.MapFrom(b=>b.Modified))                
+                .ForMember(a => a.LastUpdated, m => m.MapFrom(b => b.Modified))
                 .ForMember(a => a.AddressNames, m => m.MapFrom(a => a.RelatedFBOs != null ? a.RelatedFBOs.Select(p => p.Address.Title).ToList() : new List<string>()));
 
             CreateMap<IncidentProductFboDb, SimsProductFboAddress>(MemberList.Destination)
@@ -217,7 +219,7 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForMember(a => a.TownCity, m => m.MapFrom(m => m.Address.TownCity))
                 .ForMember(a => a.TelephoneNumber, m => m.MapFrom(m => m.Address.TelephoneNumber))
                 .ForMember(a => a.ContactMethodId, m => m.MapFrom(m => m.Address.ContactMethodId))
-                .ForMember(a => a.Contacts, m => m.MapFrom(m=>m.Address.Contacts));
+                .ForMember(a => a.Contacts, m => m.MapFrom(m => m.Address.Contacts));
 
             CreateMap<SignalProductFboDb, SimsProductFboAddress>(MemberList.Destination)
                 .ForMember(a => a.Id, m => m.MapFrom(m => m.AddressId))
@@ -250,6 +252,23 @@ namespace FSA.SIMSManagerDb.MapperProfile
             .ForMember(a => a.ModifiedBy, m => m.UseDestinationValue())
             .ForMember(a => a.Timestamp, m => m.UseDestinationValue());
         }
+
+        public static IEnumerable<T> DecomposeEnum<T>() where T : System.Enum
+        {
+            var arr = Enum.GetValues(typeof(T));
+            return new List<T>(arr.OfType<T>());
+        }
+
+        public static IEnumerable<ENUM> SelectedFlags<ENUM>(this ENUM input) where ENUM : System.Enum
+        {
+            var enumValues = DecomposeEnum<ENUM>();
+            foreach (var item in enumValues)
+            {
+                if (input.HasFlag(item))
+                    yield return item;
+            }
+        }
+
     }
 
 }

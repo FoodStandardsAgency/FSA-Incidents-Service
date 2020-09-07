@@ -3,6 +3,7 @@ using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb.Contracts;
 using FSA.SIMSManagerDb.Entities.Core;
+using FSA.SIMSManagerDbEntities.Helpers;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +43,7 @@ namespace FSA.SIMSManagerDb.Repositories
             return attachments.Select(s => mapper.Map<AttachmentDb, SimsAttachmentFileInfo>(s)).ToList();
         }
 
-        public async Task Update(string docUrl, DocumentTagTypes tags)
+        public async Task<SimsAttachmentFileInfo> Update(string docUrl, int tags)
         {
             //// Ensure we have a an incident
             //// tHE DOCUment is taken on faith alas.
@@ -52,9 +53,12 @@ namespace FSA.SIMSManagerDb.Repositories
             var existingAttachment = this.DbSet.Find(docUrl);
             if (existingAttachment != null)
             {
-                existingAttachment.TagFlags = tags;
+                existingAttachment.TagFlags = (DocumentTagTypes)tags;
                 await ctx.SaveChangesAsync();
+                return mapper.Map<AttachmentDb, SimsAttachmentFileInfo>(existingAttachment);
             }
+
+            return null;
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Sims.Application
 
         public Task UpdateTags(string docUrl, IEnumerable<int> tags)
         {
-            return dbHost.Signals.Attachments.Update(docUrl, (DocumentTagTypes)tags.ToList().Sum());
+            return dbHost.Signals.Attachments.Update(docUrl, tags.ToList().Sum());
         }
     }
 }

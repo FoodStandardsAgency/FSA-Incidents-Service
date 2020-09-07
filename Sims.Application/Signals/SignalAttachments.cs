@@ -55,7 +55,17 @@ namespace Sims.Application
 
         public Task<IEnumerable<SimsAttachmentFileInfo>> GetAllTags(int hostId)
         {
-            return dbHost.Incidents.Attachments.Get(hostId);
+            return dbHost.Signals.Attachments.Get(hostId);
+        }
+
+        public Task<SimsAttachmentFileInfo> RegisterAttachment(string fileUrl, int hostId)
+        {
+            return dbHost.Signals.Attachments.Add(fileUrl, hostId);
+        }
+
+        public Task<SimsAttachmentFileInfo> Update(string filePath, SimsDocumentTagTypes docTagTypes)
+        {
+            return dbHost.Signals.Attachments.Update(filePath, (int)docTagTypes);
         }
     }
 }

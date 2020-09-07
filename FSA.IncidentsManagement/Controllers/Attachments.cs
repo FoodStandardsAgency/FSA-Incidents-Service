@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace FSA.IncidentsManagement.Controllers
 {
@@ -97,13 +98,40 @@ namespace FSA.IncidentsManagement.Controllers
             }
         }
 
+
+        [HttpPost("Register/{incidentSignal}")]
+        [SwaggerOperation(Summary = "Register attachment to  incident/signal")]
+        [ProducesResponseType(typeof(SimsAttachmentFileInfo), 200)]
+        [ProducesResponseType(500)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(403)]
+        [Produces("application/json")]
+        public async Task<IActionResult> RegisterAttachment([FromRoute] string incidentSignal, [FromBody] RegisterAttachmentModel newAttachment)
+        {
+            var docUri = new Uri(newAttachment.DocUrl).GetComponents(UriComponents.Scheme | UriComponents.Host | UriComponents.Path, UriFormat.UriEscaped);
+
+            // The action to actually upload the file
+            // But also validates the action without doing work
+            return incidentSignal.ToLower() switch
+            {
+                IncidentOrSignal.Incidents => new OkObjectResult(await this.simsApp.Incidents.Attachments.RegisterAttachment(docUri, newAttachment.HostId)),
+                IncidentOrSignal.Signals => new OkObjectResult(await this.simsApp.Signals.Attachments.RegisterAttachment(docUri, newAttachment.HostId)),
+                _ => throw new InvalidOperationException("Unknown route")
+            };
+
+
+        }
+
+
+
+
         [HttpGet("{incidentSignal}/{id}")]
         [SwaggerOperation(Summary = "Download incident attachments info")]
         [ProducesResponseType(typeof(List<SimsAttachmentFileInfo>), 200)]
         public async Task<IActionResult> FetchAllAttachmentInfo([FromRoute] string incidentSignal, [FromRoute] int id)
         {
 
-           var fileInfo = incidentSignal.ToLower() switch
+            var fileInfo = incidentSignal.ToLower() switch
             {
                 IncidentOrSignal.Incidents => await this.simsApp.Incidents.Attachments.FetchAllAttchmentsLinks(id),
                 IncidentOrSignal.Signals => await this.simsApp.Signals.Attachments.FetchAllAttchmentsLinks(id),
@@ -118,10 +146,17 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "Update tags for for an attachment.")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> UpdateAttachmentTags([FromBody] UpdateDocumentTagsModel updateTags)
+        public async Task<IActionResult> UpdateAttachmentTags([FromRoute] string incidentSignal, [FromBody] UpdateDocumentTagsModel updateTags)
         {
-            await this.simsApp.AttachmentUpdates.UpdateTags(updateTags.DocUrl, updateTags.Tags);
-            return new OkResult();
+            var docUri = new Uri(updateTags.DocUrl).GetComponents(UriComponents.Scheme | UriComponents.Host | UriComponents.Path, UriFormat.UriEscaped);
+
+            return incidentSignal.ToLower() switch
+            {
+                IncidentOrSignal.Incidents => new OkObjectResult(await this.simsApp.Incidents.Attachments.Update(docUri, (SimsDocumentTagTypes) updateTags.Tags.Sum())),
+                IncidentOrSignal.Signals => new OkObjectResult(await this.simsApp.Signals.Attachments.Update(docUri, (SimsDocumentTagTypes)updateTags.Tags.Sum())),
+                _ => throw new InvalidOperationException("Unknown route")
+            };
+
         }
 
         [HttpPost("Rename")]

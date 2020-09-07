@@ -273,6 +273,61 @@
         }
       }
     },
+    "/api/Attachments/Register/{incidentSignal}": {
+      "post": {
+        "tags": [
+          "Attachments"
+        ],
+        "summary": "Register attachment to  incident/signal",
+        "operationId": "RegisterAttachment",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "incidentSignal",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/RegisterAttachmentModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/SimsAttachmentFileInfo"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
     "/api/Attachments/Tags/{incidentSignal}": {
       "post": {
         "tags": [
@@ -1717,6 +1772,18 @@
       },
       "additionalProperties": {
         "type": "object"
+      }
+    },
+    "RegisterAttachmentModel": {
+      "type": "object",
+      "properties": {
+        "hostId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "docUrl": {
+          "type": "string"
+        }
       }
     },
     "UpdateDocumentTagsModel": {

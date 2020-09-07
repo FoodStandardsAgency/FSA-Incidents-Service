@@ -1,10 +1,6 @@
-﻿using FSA.IncidentsManagement.Root;
-using FSA.IncidentsManagement.Root.Domain;
+﻿using FSA.IncidentsManagement.Root.Domain;
 using FSA.IncidentsManagement.Root.DTOS;
-using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb.Contracts;
-using Microsoft.BusinessData.MetadataModel;
-using Microsoft.Graph;
 using Sims.Application.Exceptions;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,8 +60,18 @@ namespace Sims.Application
 
         public Task<IEnumerable<SimsAttachmentFileInfo>> GetAllTags(int hostId)
         {
-            return dbHost.Incidents.Attachments.Get(hostId);
-            
+            return dbHost.Incidents.Attachments.Get(hostId);   
+        }
+
+        public Task<SimsAttachmentFileInfo> RegisterAttachment(string fileUrl, int hostId)
+        {
+            return dbHost.Incidents.Attachments.Add(fileUrl,hostId);
+
+        }
+
+        public Task<SimsAttachmentFileInfo> Update(string filePath, SimsDocumentTagTypes docTagTypes)
+        {
+            return dbHost.Incidents.Attachments.Update(filePath, (int)docTagTypes);
         }
     }
 }
