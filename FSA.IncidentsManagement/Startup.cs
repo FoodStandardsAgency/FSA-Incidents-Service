@@ -123,7 +123,7 @@ namespace FSA.IncidentsManagement
                 var map = srv.GetRequiredService<IMapper>();
                 var userInfo = srv.GetRequiredService<UserInfo>();
                 var attachments = srv.GetRequiredService<ISIMSAttachmentHost>();
-                return new SimsManangement(db, map, attachments, userInfo.GetTenantId());
+                return new SimsManangement(db, map, attachments, userInfo.GetUserId());
             });
 
             services.AddScoped<ISIMSAttachmentHost, SimsAttachments>((o) =>
