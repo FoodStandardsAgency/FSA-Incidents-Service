@@ -36,7 +36,7 @@ namespace Sims.Application
 
             var product = await dbHost.Incidents.Products.Get(productId);
             if (!await dbHost.Incidents.IsClosed(product.HostId))
-                await dbHost.Incidents.Products.Fbos.Add(productId, addressId, (FboTypes)types);
+                await dbHost.Incidents.Products.Fbos.Add(productId, addressId, (int)types);
             else
                 throw new SimsIncidentClosedException("Incident closed");
 
@@ -93,7 +93,7 @@ namespace Sims.Application
             if (productId == 0) throw new SimsItemMissing("Missing id");
             var product = await dbHost.Incidents.Products.Get(productId);
             if (!await dbHost.Incidents.IsClosed(product.HostId))
-                await dbHost.Incidents.Products.Fbos.Update(productId, addressId, (FboTypes)fboTypes);
+                await dbHost.Incidents.Products.Fbos.Update(productId, addressId, (int)fboTypes);
             else
                 throw new SimsIncidentClosedException("Incident closed");
         }

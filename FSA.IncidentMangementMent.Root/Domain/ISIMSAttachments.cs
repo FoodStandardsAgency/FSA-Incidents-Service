@@ -13,5 +13,7 @@ namespace FSA.IncidentsManagement.Root.Domain
         Task<IEnumerable<SimsAttachmentFileInfo>> FetchAllAttchmentsLinks(int hostId);
         Task<SimsAttachmentLibraryInfo> EnsureLibrary(int stringId);
         Task<SimsAttachmentFileInfo> RegisterAttachment(string fileUrl, int hostId);
+
+        Task<SimsAttachmentFileInfo> Rename(string existingUrl, string fileName);
     }
 }

@@ -35,9 +35,13 @@ namespace Sims.Application
         {
             if (incident.CommonId != 0) throw new SimsIncidentExistsException("This incident has already been added.");
 
-            if (String.IsNullOrEmpty(incident.LeadOfficer) && incident.StatusId != (int)SimsIncidentStatusTypes.Open)
+             // IF we have an officer, and status is not open...
+            if (!String.IsNullOrEmpty(incident.LeadOfficer) && incident.StatusId != (int)SimsIncidentStatusTypes.Open)
                 incident = incident.WithStatus((int)SimsIncidentStatusTypes.Open);
-            return dbHost.Incidents.Add(incident);
+            // if we don't have an officer status must be unsassigned
+            if (String.IsNullOrEmpty(incident.LeadOfficer))
+                incident = incident.WithStatus((int)SimsIncidentStatusTypes.Unassigned);
+                return dbHost.Incidents.Add(incident);
         }
 
         public Task BulkClose(IEnumerable<int> incidentIds) => dbHost.Incidents.BulkClose(incidentIds);

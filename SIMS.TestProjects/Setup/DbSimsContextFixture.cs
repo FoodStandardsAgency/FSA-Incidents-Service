@@ -123,20 +123,33 @@ namespace SIMS.TestProjects.Setup
             var tasks = products.Select(p => sims.Incidents.Products.Add(p.HostId, p));
             await Task.WhenAll(tasks);
 
-            await sims.Incidents.Products.Fbos.Add(1, 1, FboTypes.Consignor | FboTypes.Exporter | FboTypes.Hospitality_service);
-            await sims.Incidents.Products.Fbos.Add(1, 2, FboTypes.Unknown);
-            await sims.Incidents.Products.Fbos.Add(1, 3, FboTypes.Importer | FboTypes.Manufacturer);
+            await sims.Incidents.Products.Fbos.Add(1, 1, (int)(FboTypes.Consignor | FboTypes.Exporter | FboTypes.Hospitality_service));
+            await sims.Incidents.Products.Fbos.Add(1, 2, (int)FboTypes.Unknown);
+            await sims.Incidents.Products.Fbos.Add(1, 3, (int)(FboTypes.Importer | FboTypes.Manufacturer));
 
-            await sims.Incidents.Products.Fbos.Add(2, 4, FboTypes.Retailer | FboTypes.Manufacturer);
-            await sims.Incidents.Products.Fbos.Add(2, 5, FboTypes.Packer_filler | FboTypes.Storage);
-            await sims.Incidents.Products.Fbos.Add(2, 6, FboTypes.Unknown);
+            await sims.Incidents.Products.Fbos.Add(2, 4, (int)(FboTypes.Retailer | FboTypes.Manufacturer));
+            await sims.Incidents.Products.Fbos.Add(2, 5, (int)(FboTypes.Packer_filler | FboTypes.Storage));
+            await sims.Incidents.Products.Fbos.Add(2, 6, (int)FboTypes.Unknown);
 
         }
 
         private async Task CreateSignals(ISimsDbHost sims)
         {
             var signals = SignalSeed.Signals();
-            await sims.Signals.AddBatch(signals.Take(400).ToList());
+
+            var signalCount = signals.Count;
+            int lastRound = 0;
+            while(signalCount>0)
+            {
+                var thisRound = 400;
+
+                if (thisRound >= signalCount)
+                    thisRound = signalCount;
+                await sims.Signals.AddBatch(signals.Skip(lastRound).Take(thisRound).ToList());
+                signalCount = signalCount - thisRound;
+                lastRound = thisRound;
+            }
+
         }
 
         private async Task CreateIncidentStakeholders(ISimsDbHost sims, SeedingConfigData seeder)

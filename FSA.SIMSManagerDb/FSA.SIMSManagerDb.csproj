@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Entities\Core\Product\BaseProductDateDb.cs" />
+    <Compile Remove="Entities\Core\Product\BaseProductDb.cs" />
+    <Compile Remove="Entities\Core\Product\BaseProductFboDb.cs" />
+    <Compile Remove="Entities\Core\Product\BaseProductPackSizeDb.cs" />
     <Compile Remove="Entities\IncidentProducts\SignalProductDateDb.cs" />
     <Compile Remove="Entities\IncidentProducts\SignalProductDb.cs" />
     <Compile Remove="Entities\IncidentProducts\SignalProductFboDb.cs" />
@@ -30,6 +34,8 @@
     <Compile Remove="Migrations\20200907115143_statusIdPtOneFool.Designer.cs" />
     <Compile Remove="Migrations\20200907115753_statusIdPtOneFool.cs" />
     <Compile Remove="Migrations\20200907115753_statusIdPtOneFool.Designer.cs" />
+    <Compile Remove="Migrations\20200908130709_hose.cs" />
+    <Compile Remove="Migrations\20200908130709_hose.Designer.cs" />
     <Compile Remove="Repositories\SignalsLinkedRecords.cs" />
   </ItemGroup>
 
@@ -43,6 +49,10 @@
   <ItemGroup>
     <ProjectReference Include="..\EntityFrameworkCore.TemporalTables\EntityFrameworkCore.TemporalTables\EntityFrameworkCore.TemporalTables.csproj" />
     <ProjectReference Include="..\FSA.IncidentMangementMent.Root\FSA.IncidentsManagement.Root.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Entities\Core\Product\" />
   </ItemGroup>
 
 </Project>

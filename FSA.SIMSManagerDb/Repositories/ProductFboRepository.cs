@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using FSA.IncidentsManagement.Root.DTOS;
-using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb.Contracts;
-using FSA.SIMSManagerDb.Entities.Core.Product;
+using FSA.SIMSManagerDb.Entities.Core;
 using FSA.SIMSManagerDbEntities.Helpers;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -11,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace FSA.SIMSManagerDb.Repositories
 {
-    class ProductFboRepository<ProductFBO> : IDbProductFboRepository where ProductFBO : CoreProductFboDb, new()
+    class ProductFboRepository<ProductFBO> : IDbProductFboRepository where ProductFBO : BaseProductFboDb, new()
     {
         private readonly SimsDbContext ctx;
         private readonly DbSet<ProductFBO> DbSet;
@@ -24,7 +23,7 @@ namespace FSA.SIMSManagerDb.Repositories
             this.mapper = mapper;
         }
 
-        public async Task Add(int productId, int addressId, FboTypes types)
+        public async Task Add(int productId, int addressId, int types)
         {
 
             //if (productId == 0) throw new SIMSException("Product Id missing");
@@ -34,7 +33,7 @@ namespace FSA.SIMSManagerDb.Repositories
 
             this.DbSet.Add(new ProductFBO
             {
-                FboTypes = types,
+                FboTypes = (FboTypes)types,
                 AddressId = addressId,
                 ProductId = productId
             });
@@ -42,7 +41,7 @@ namespace FSA.SIMSManagerDb.Repositories
 
         }
 
-        public async Task Update(int productId, int addressId, FboTypes fboTypes)
+        public async Task Update(int productId, int addressId, int fboTypes)
         {
             //if (productId == 0) throw new SIMSException("Product Id missing");
             //if (addressId == 0) throw new SIMSException("Address Id missing");
@@ -55,7 +54,7 @@ namespace FSA.SIMSManagerDb.Repositories
 
             if (addressInfo != null)
             {
-                addressInfo.FboTypes = fboTypes;
+                addressInfo.FboTypes = (FboTypes)fboTypes;
                 await this.ctx.SaveChangesAsync();
             }
             //else

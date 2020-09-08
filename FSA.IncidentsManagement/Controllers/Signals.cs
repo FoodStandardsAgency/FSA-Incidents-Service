@@ -1,12 +1,12 @@
 ﻿using FSA.IncidentsManagement.Models;
 using FSA.IncidentsManagement.Root.Domain;
 using FSA.IncidentsManagement.Root.DTOS;
+using FSA.IncidentsManagement.Root.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Sims.Application.Exceptions;
 using Swashbuckle.AspNetCore.Annotations;
-using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FSA.SignalsManagement.Controllers
@@ -90,6 +90,32 @@ namespace FSA.SignalsManagement.Controllers
         {
             await this.simsApp.Signals.PromoteToIncident(id);
             return new OkResult();
+        }
+
+        [HttpPost("Dashboard")]
+        [SwaggerOperation(Summary = "Incident dashboard search")]
+        [ProducesResponseType(typeof(SignalDashboardItem), 200)]
+        [ProducesResponseType(500)]
+        [Produces("application/json")]
+        public async Task<IActionResult> GetSignalDashboard(DashboardSearchViewModel dashboard)
+        {
+            log.LogInformation($"search terms : {dashboard.Search} {dashboard.PageNo} {dashboard.PageSize}", "GetIncidentsDashboard");
+
+            if (dashboard.PageNo < 1 || dashboard.PageSize < 0)
+                return new OkObjectResult(new
+                {
+                    Results = Enumerable.Empty<SignalDashboardItem>(),
+                    TotalRecords = 0
+                });
+
+            var dashBoard = dashboard.PageSize.HasValue && dashboard.PageSize > 0 
+                                                ? await this.simsApp.Signals.DashboardSearch(search: dashboard.Search ?? "", startPage: dashboard.PageNo, pageSize: dashboard.PageSize.Value)
+                                                : await this.simsApp.Signals.DashboardSearch(search: dashboard.Search ?? "", startPage: dashboard.PageNo);
+            return new OkObjectResult(new
+            {
+                Results = dashBoard,
+                TotalRecords = dashBoard.TotalResults
+            });
         }
     }
 }

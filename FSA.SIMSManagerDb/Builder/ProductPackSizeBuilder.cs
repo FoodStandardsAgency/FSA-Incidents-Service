@@ -1,15 +1,11 @@
 ﻿using FSA.SIMSManagerDb.Builders;
 using FSA.SIMSManagerDb.Entities.Core;
-using FSA.SIMSManagerDb.Entities.Core.Product;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FSA.SIMSManagerDb.Builder
 {
-    internal class ProductPackSizeBuilder<T> : AuditInfoBuilderConfiguration<T> where T : CoreProductPackSizeDb
+    internal class ProductPackSizeBuilder<T> : AuditInfoBuilderConfiguration<T> where T : BaseProductPackSizeDb
     {
         private string hostname;
         private string tableName;

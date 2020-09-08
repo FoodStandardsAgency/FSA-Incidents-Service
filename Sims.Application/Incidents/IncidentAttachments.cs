@@ -73,5 +73,11 @@ namespace Sims.Application
         {
             return dbHost.Incidents.Attachments.Update(filePath, (int)docTagTypes);
         }
+
+        public async Task<SimsAttachmentFileInfo> Rename(string existingUrl, string fileName)
+        {
+            await attachments.RenameAttachment(fileName, existingUrl);
+            return await dbHost.Incidents.Attachments.Rename(existingUrl, fileName);
+        }
     }
 }

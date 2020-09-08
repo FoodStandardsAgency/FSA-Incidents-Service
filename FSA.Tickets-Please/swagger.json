@@ -216,7 +216,7 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/SimsAttachmentFileInfo"
+              "$ref": "#/definitions/SimsAttachmentFileInfoViewModel"
             }
           },
           "500": {
@@ -240,7 +240,7 @@
         "tags": [
           "Attachments"
         ],
-        "summary": "Download incident attachments info",
+        "summary": "Download attachments info",
         "operationId": "FetchAllAttachmentInfo",
         "produces": [
           "application/json"
@@ -266,7 +266,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/SimsAttachmentFileInfo"
+                "$ref": "#/definitions/SimsAttachmentFileInfoViewModel"
               }
             }
           }
@@ -307,17 +307,11 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/SimsAttachmentFileInfo"
+              "$ref": "#/definitions/SimsAttachmentFileInfoViewModel"
             }
           },
           "500": {
             "description": "Server Error"
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/ProblemDetails"
-            }
           },
           "403": {
             "description": "Forbidden",
@@ -365,7 +359,7 @@
         }
       }
     },
-    "/api/Attachments/Rename": {
+    "/api/Attachments/Rename/{incidentSignal}": {
       "post": {
         "tags": [
           "Attachments"
@@ -382,6 +376,12 @@
         ],
         "parameters": [
           {
+            "in": "path",
+            "name": "incidentSignal",
+            "required": true,
+            "type": "string"
+          },
+          {
             "in": "body",
             "name": "body",
             "schema": {
@@ -393,7 +393,7 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/SimsAttachmentFileInfo"
+              "$ref": "#/definitions/SimsAttachmentFileInfoViewModel"
             }
           },
           "500": {
@@ -1410,7 +1410,7 @@
         }
       }
     },
-    "/api/Signals/Status/{id}/{status}": {
+    "/api/Signals/Status/{id}/{statusId}": {
       "post": {
         "tags": [
           "Signals"
@@ -1430,9 +1430,10 @@
           },
           {
             "in": "path",
-            "name": "status",
+            "name": "statusId",
             "required": true,
-            "type": "string"
+            "type": "integer",
+            "format": "int32"
           }
         ],
         "responses": {
@@ -1498,6 +1499,43 @@
         "responses": {
           "200": {
             "description": "Success"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Signals/Dashboard": {
+      "post": {
+        "tags": [
+          "Signals"
+        ],
+        "summary": "Incident dashboard search",
+        "operationId": "GetSignalDashboard",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/DashboardSearchViewModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/SignalDashboardItem"
+            }
           },
           "500": {
             "description": "Server Error"
@@ -1725,7 +1763,7 @@
         }
       }
     },
-    "SimsAttachmentFileInfo": {
+    "SimsAttachmentFileInfoViewModel": {
       "type": "object",
       "properties": {
         "fileName": {
@@ -3271,8 +3309,9 @@
         "title": {
           "type": "string"
         },
-        "signalStatus": {
-          "type": "string"
+        "signalStatusId": {
+          "format": "int32",
+          "type": "integer"
         },
         "priority": {
           "type": "string"
@@ -3322,6 +3361,38 @@
           "type": "string"
         },
         "sourceLink": {
+          "type": "string"
+        }
+      }
+    },
+    "SignalDashboardItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "commonId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "string"
+        },
+        "notifier": {
+          "type": "string"
+        },
+        "leadOfficer": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "updated": {
+          "format": "date-time",
           "type": "string"
         }
       }

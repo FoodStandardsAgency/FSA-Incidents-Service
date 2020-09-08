@@ -9,8 +9,8 @@ namespace FSA.SIMSManagerDb.Contracts
     public interface IDbProductFboRepository
     {
         Task<IEnumerable<SimsProductFboAddress>> GetAddresses(int productId);
-        Task Add(int productId, int addressId, FboTypes types);
+        Task Add(int productId, int addressId, int types);
         Task Remove(int productId, int addressId);
-        Task Update(int productId, int addressId, FboTypes fboTypes);
+        Task Update(int productId, int addressId, int fboTypes);
     }
 }

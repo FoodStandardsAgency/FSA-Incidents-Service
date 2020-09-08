@@ -160,16 +160,21 @@ namespace FSA.SIMSManagerDb.Repositories
 
             // Logical changes.
             // Mark some differences since last update
-            // We are using simpleFlags
-            // Have we changed to unassigned, if so ensure we remove the lead officer.
-            var unassignLeadOfficer = false;
-            if (dbItem.IncidentStatusId == (int)IncidentStatusTypes.Open && incident.StatusId == (int)IncidentStatusTypes.Unassigned)
-                unassignLeadOfficer = true;
 
+            
+            // Have we changed to Status.unassigned? if so ensure we remove the lead officer.
+            if (dbItem.IncidentStatusId == (int)IncidentStatusTypes.Open && incident.StatusId == (int)IncidentStatusTypes.Unassigned)
+                incident = incident.WithLeadOfficer("");
+
+            // Have we assigned a new lead officer?
+            // so status must be set to open
+            if (String.IsNullOrEmpty(dbItem.LeadOfficer) && !String.IsNullOrEmpty(incident.LeadOfficer) && incident.StatusId != (int)IncidentStatusTypes.Closed)
+                incident = incident.WithStatus((int)IncidentStatusTypes.Open);
+                
             //Transfer our updates into the existing incident
             //incident.ToUpdateDb(dbItem);
             mapper.Map(incident, dbItem);
-            if (unassignLeadOfficer) dbItem.LeadOfficer = "";
+            
 
             // Are we closed?
             // Then ensure we update the closed date.

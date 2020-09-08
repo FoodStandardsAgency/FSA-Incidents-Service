@@ -1,8 +1,8 @@
-﻿using FSA.SIMSManagerDb.Entities.Core.Product;
+﻿using FSA.SIMSManagerDb.Entities.Core;
 
 namespace FSA.SIMSManagerDb.Entities
 {
-    class SignalProductFboDb : CoreProductFboDb
+    class SignalProductFboDb : BaseProductFboDb
     {
         public SignalProductDb Product { get; set; }
     }

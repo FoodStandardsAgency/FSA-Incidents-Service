@@ -172,6 +172,7 @@ namespace FSA.SIMSManagerDb.Utilities
                 {
                     Id = 1,
                     Title = "Unassigned",
+                    SortOrder = 100,
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
@@ -179,6 +180,7 @@ namespace FSA.SIMSManagerDb.Utilities
                 {
                     Id = 2,
                     Title = "Open",
+                    SortOrder = 200,
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
@@ -186,6 +188,7 @@ namespace FSA.SIMSManagerDb.Utilities
                 {
                     Id = 3,
                     Title = "Closed : Incident",
+                    SortOrder = 400,
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
@@ -193,9 +196,18 @@ namespace FSA.SIMSManagerDb.Utilities
                 {
                     Id = 4,
                     Title = "Closed : No Incident",
+                    SortOrder = 500,
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                }, new SignalStatusDb
+                {
+                    Id = 5,
+                    SortOrder = 300,
+                    Title = "Pending",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 });
+
         }
 
         private void ProductTypes(ModelBuilder modelBuilder)

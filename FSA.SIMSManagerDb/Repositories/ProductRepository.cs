@@ -1,12 +1,9 @@
 ﻿using AutoMapper;
 using FSA.IncidentsManagement.Root.Domain;
 using FSA.IncidentsManagement.Root.DTOS;
-using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagement.Root.Shared;
 using FSA.SIMSManagerDb.Contracts;
-using FSA.SIMSManagerDb.Entities;
-using FSA.SIMSManagerDb.Entities.Core.Product;
-using FSA.SIMSManagerDb.Entities.Lookups;
+using FSA.SIMSManagerDb.Entities.Core;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,9 +12,9 @@ using System.Threading.Tasks;
 
 namespace FSA.SIMSManagerDb.Repositories
 {
-    class ProductRepository<T, FBO, Pack, Date> : IDbProductRepository where T : CoreProductDb, ICoreProduct<FBO, Pack, Date>
-                            where FBO : CoreProductFboDb, new()
-                            where Date : CoreProductDateDb
+    class ProductRepository<T, FBO, Pack, Date> : IDbProductRepository where T : BaseProductDb, ICoreProduct<FBO, Pack, Date>
+                            where FBO : BaseProductFboDb, new()
+                            where Date : BaseProductDateDb
     {
         private readonly SimsDbContext ctx;
         private readonly DbSet<T> DbSet;

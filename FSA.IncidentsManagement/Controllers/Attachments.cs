@@ -1,4 +1,5 @@
-﻿using FSA.IncidentsManagement.Misc;
+﻿using AutoMapper;
+using FSA.IncidentsManagement.Misc;
 using FSA.IncidentsManagement.Models;
 using FSA.IncidentsManagement.Root.Domain;
 using FSA.IncidentsManagement.Root.DTOS;
@@ -27,11 +28,13 @@ namespace FSA.IncidentsManagement.Controllers
     {
         private readonly ILogger<AttachmentsController> log;
         private readonly ISIMSApplication simsApp;
+        private readonly IMapper mapper;
 
-        public AttachmentsController(ILogger<AttachmentsController> log, ISIMSApplication simsApp)
+        public AttachmentsController(ILogger<AttachmentsController> log, ISIMSApplication simsApp, IMapper mapper)
         {
             this.log = log;
             this.simsApp = simsApp;
+            this.mapper = mapper;
         }
 
         [HttpPost("EnsureLibrary/{incidentSignal}/{id}")]
@@ -50,7 +53,7 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpPost("{incidentSignal}/{id}")]
         [SwaggerOperation(Summary = "Add Attachment to incident/signal")]
-        [ProducesResponseType(typeof(SimsAttachmentFileInfo), 200)]
+        [ProducesResponseType(typeof(SimsAttachmentFileInfoViewModel), 200)]
         [ProducesResponseType(500)]
         [ProducesResponseType(400)]
         [ProducesResponseType(403)]
@@ -111,9 +114,8 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpPost("Register/{incidentSignal}")]
         [SwaggerOperation(Summary = "Register attachment to  incident/signal")]
-        [ProducesResponseType(typeof(SimsAttachmentFileInfo), 200)]
+        [ProducesResponseType(typeof(SimsAttachmentFileInfoViewModel), 200)]
         [ProducesResponseType(500)]
-        [ProducesResponseType(400)]
         [ProducesResponseType(403)]
         [Produces("application/json")]
         public async Task<IActionResult> RegisterAttachment([FromRoute] string incidentSignal, [FromBody] RegisterAttachmentModel newAttachment)
@@ -122,13 +124,14 @@ namespace FSA.IncidentsManagement.Controllers
 
             // The action to actually upload the file
             // But also validates the action without doing work
-            return incidentSignal.ToLower() switch
+            var model =  incidentSignal.ToLower() switch
             {
-                IncidentOrSignal.Incidents => new OkObjectResult(await this.simsApp.Incidents.Attachments.RegisterAttachment(docUri, newAttachment.HostId)),
-                IncidentOrSignal.Signals => new OkObjectResult(await this.simsApp.Signals.Attachments.RegisterAttachment(docUri, newAttachment.HostId)),
+                IncidentOrSignal.Incidents => await this.simsApp.Incidents.Attachments.RegisterAttachment(docUri, newAttachment.HostId),
+                IncidentOrSignal.Signals => await this.simsApp.Signals.Attachments.RegisterAttachment(docUri, newAttachment.HostId),
                 _ => throw new InvalidOperationException("Unknown route")
             };
 
+            return new OkObjectResult(this.mapper.Map<SimsAttachmentFileInfoViewModel>(model));
 
         }
 
@@ -136,8 +139,8 @@ namespace FSA.IncidentsManagement.Controllers
 
 
         [HttpGet("{incidentSignal}/{id}")]
-        [SwaggerOperation(Summary = "Download incident attachments info")]
-        [ProducesResponseType(typeof(List<SimsAttachmentFileInfo>), 200)]
+        [SwaggerOperation(Summary = "Download attachments info")]
+        [ProducesResponseType(typeof(List<SimsAttachmentFileInfoViewModel>), 200)]
         public async Task<IActionResult> FetchAllAttachmentInfo([FromRoute] string incidentSignal, [FromRoute] int id)
         {
 
@@ -149,7 +152,7 @@ namespace FSA.IncidentsManagement.Controllers
             };
 
 
-            return new OkObjectResult(fileInfo.ToList());
+            return new OkObjectResult(this.mapper.Map<List<SimsAttachmentFileInfoViewModel>>(fileInfo));
         }
 
         [HttpPost("Tags/{incidentSignal}")]
@@ -160,28 +163,34 @@ namespace FSA.IncidentsManagement.Controllers
         {
             var docUri = new Uri(updateTags.DocUrl).GetComponents(UriComponents.Scheme | UriComponents.Host | UriComponents.Path, UriFormat.UriEscaped);
 
-            return incidentSignal.ToLower() switch
+            var model = incidentSignal.ToLower() switch
             {
-                IncidentOrSignal.Incidents => new OkObjectResult(await this.simsApp.Incidents.Attachments.Update(docUri, (SimsDocumentTagTypes) updateTags.Tags.Sum())),
-                IncidentOrSignal.Signals => new OkObjectResult(await this.simsApp.Signals.Attachments.Update(docUri, (SimsDocumentTagTypes)updateTags.Tags.Sum())),
+                IncidentOrSignal.Incidents => await this.simsApp.Incidents.Attachments.Update(docUri, (SimsDocumentTagTypes) updateTags.Tags.Sum()),
+                IncidentOrSignal.Signals => await this.simsApp.Signals.Attachments.Update(docUri, (SimsDocumentTagTypes)updateTags.Tags.Sum()),
                 _ => throw new InvalidOperationException("Unknown route")
             };
+            return new OkObjectResult(this.mapper.Map<SimsAttachmentFileInfoViewModel>(model));
 
         }
 
-        [HttpPost("Rename")]
+        [HttpPost("Rename/{incidentSignal}")]
         [SwaggerOperation(Summary = "Renames an attachment.")]
-        [ProducesResponseType(typeof(SimsAttachmentFileInfo), 200)]
+        [ProducesResponseType(typeof(SimsAttachmentFileInfoViewModel), 200)]
         [ProducesResponseType(500)]
         [ProducesResponseType(400)]
         [ProducesResponseType(403)]
         [Produces("application/json")]
-        public async Task<IActionResult> RenameAttachment([FromBody] RenameFileViewModel renameFile)
+        public async Task<IActionResult> RenameAttachment([FromRoute] string incidentSignal, [FromBody] RenameFileViewModel renameFile)
         {
             try
             {
-                var fileInfo = await this.simsApp.AttachmentUpdates.Rename(renameFile.FileName, renameFile.ExistingUrl);
-                return new OkObjectResult(fileInfo);
+                var fileInfo = incidentSignal.ToLower() switch
+                {
+                    IncidentOrSignal.Incidents => await this.simsApp.Incidents.Attachments.Rename(renameFile.ExistingUrl, renameFile.FileName),
+                    IncidentOrSignal.Signals => await this.simsApp.Signals.Attachments.Rename(renameFile.ExistingUrl, renameFile.FileName),
+                    _ => throw new InvalidOperationException("Unknown route")
+                };
+                return new OkObjectResult(this.mapper.Map<SimsAttachmentFileInfoViewModel>(fileInfo));
             }
             catch (ArgumentOutOfRangeException ex) // new filename already exitst
             {

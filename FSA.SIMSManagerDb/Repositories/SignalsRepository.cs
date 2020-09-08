@@ -162,7 +162,7 @@ namespace FSA.SIMSManagerDb.Repositories
             var totalRecords = await qry.CountAsync();
             // Find the start record
             var startRecord = (startPage - 1) * pageSize;
-            var results = await qry  //.OrderByDescending(i => i.IncidentStatus.SortOrder)
+            var results = await qry .OrderByDescending(i => i.SignalStatus.SortOrder)
                                     .OrderBy(i => i.Created)
                                     .Skip(startRecord)
                                     .Take(pageSize)

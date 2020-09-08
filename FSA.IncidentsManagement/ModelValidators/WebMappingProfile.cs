@@ -3,6 +3,7 @@ using FSA.IncidentsManagement.Misc;
 using FSA.IncidentsManagement.Models;
 using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
+using FSA.IncidentsManagement.Root.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +42,10 @@ namespace FSA.IncidentsManagement.ModelValidators
                    .ConstructUsing(@this => @this.ToAutoMapper());
 
 
-
+            CreateMap<SimsAttachmentFileInfo, SimsAttachmentFileInfoViewModel>()
+                .ForMember(a => a.Tags, b => b.MapFrom(c => ((SimsDocumentTagTypes)c.Tags).SelectedFlags().Where(o => o > 0).Select(o => o)));
+            CreateMap<SimsAttachmentFileInfoViewModel, SimsAttachmentFileInfo>()
+                .ForMember(a => a.Tags, b => b.MapFrom(c => c.Tags.Sum()));
 
         }
     }

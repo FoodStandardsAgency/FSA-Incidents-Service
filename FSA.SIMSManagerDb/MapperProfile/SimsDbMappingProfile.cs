@@ -76,12 +76,13 @@ namespace FSA.SIMSManagerDb.MapperProfile
             CreateMap<IncidentAttachmentDb, SimsAttachmentFileInfo>(MemberList.Destination)
                     .ForMember(a => a.UserId, m => m.MapFrom(o => o.CreatedBy))
                     .ForMember(a => a.Url, m => m.MapFrom(o => o.DocUrl))
-                    .ForMember(a => a.Tags, m => m.MapFrom(o => o.TagFlags.SelectedFlags().Select(o=>(int)o).Where(o=>o!=0).ToList()))
+                    .ForMember(a => a.Tags, m => m.MapFrom(o => (int)o.TagFlags))
                     .ForMember(o => o.FileName, m => m.MapFrom(o => Path.GetFileName(o.DocUrl)));
 
             CreateMap<SignalAttachmentDb, SimsAttachmentFileInfo>(MemberList.Destination)
                     .ForMember(a => a.UserId, m => m.MapFrom(o => o.CreatedBy))
                     .ForMember(a => a.Url, m => m.MapFrom(o => o.DocUrl))
+                    .ForMember(a => a.Tags, m => m.MapFrom(o => (int)o.TagFlags))
                     .ForMember(o => o.FileName, m => m.MapFrom(o => Path.GetFileName(o.DocUrl)));
 
             CreateMap<IncidentDb, IncidentsDisplayModel>(MemberList.Destination)
@@ -108,8 +109,9 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForCtorParam("fBOAddressTown", o => o.MapFrom(@this => @this.PrincipalFBOId.HasValue && @this.PrincipalFBOId != 0 ? @this.PrincipalFBO.TownCity : "Unassigned"))
                 .ForCtorParam("fBOAddressPostcode", o => o.MapFrom(@this => @this.PrincipalFBOId.HasValue && @this.PrincipalFBOId != 0 ? @this.PrincipalFBO.PostCode : "Unassigned"));
 
+            CreateMap<SimsSignal, SignalDb>(MemberList.Source);
 
-
+            CreateMap<SignalDb, SimsSignal>(MemberList.Destination);
 
             CreateMap<IncidentDb, BaseIncident>(MemberList.Source)
                 .ForCtorParam("statusId", o => o.MapFrom(a => a.IncidentStatusId))
@@ -118,6 +120,7 @@ namespace FSA.SIMSManagerDb.MapperProfile
 
             CreateMap<BaseIncident, IncidentDb>(MemberList.Source)
                 .IgnoreAuditData()
+                .ForMember(a=>a.MostUniqueId, a=>a.Ignore())
                 .ForMember(a => a.Id, m => m.MapFrom(a => a.CommonId))
                 .ForMember(a => a.IncidentStatusId, m => m.MapFrom(a => a.StatusId));
 
@@ -135,14 +138,6 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForMember(a => a.CommonId, m => m.MapFrom(a => a.Id))
                 .ForMember(a => a.Status, m => m.MapFrom(a => a.SignalStatus.Title))
                 .ForMember(a => a.Updated, m => m.MapFrom(a => a.Modified));
-
-
-
-            CreateMap<IncidentsManagement.Root.DTOS.SimsSignal, SignalDb>(MemberList.Source);
-
-            CreateMap<SignalDb, IncidentsManagement.Root.DTOS.SimsSignal>(MemberList.Destination);
-                //.ForMember(a => a.SignalStatus, m => m.MapFrom(a => a.SignalStatus.Title));
-                
 
             CreateMap<IncidentProductDb, SimsProduct>(MemberList.Destination)
                 .ForMember(a => a.AdditionalInfo, m => m.MapFrom(a => String.IsNullOrEmpty(a.AdditionalInfo) ? "" : a.AdditionalInfo))
@@ -256,23 +251,6 @@ namespace FSA.SIMSManagerDb.MapperProfile
             .ForMember(a => a.ModifiedBy, m => m.UseDestinationValue())
             .ForMember(a => a.Timestamp, m => m.UseDestinationValue());
         }
-
-        public static IEnumerable<T> DecomposeEnum<T>() where T : System.Enum
-        {
-            var arr = Enum.GetValues(typeof(T));
-            return new List<T>(arr.OfType<T>());
-        }
-
-        public static IEnumerable<ENUM> SelectedFlags<ENUM>(this ENUM input) where ENUM : System.Enum
-        {
-            var enumValues = DecomposeEnum<ENUM>();
-            foreach (var item in enumValues)
-            {
-                if (input.HasFlag(item))
-                    yield return item;
-            }
-        }
-
     }
 
 }

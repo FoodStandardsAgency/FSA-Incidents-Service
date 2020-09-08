@@ -25,7 +25,7 @@ namespace FSA.Attachments
             {
                  FileName =itm.fileName,
                  Url = itm.url,
-                 Tags = new List<int>()
+                 Tags = 0
             };
         }
     }

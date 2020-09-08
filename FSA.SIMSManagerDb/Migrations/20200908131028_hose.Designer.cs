@@ -4,14 +4,16 @@ using FSA.SIMSManagerDb;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FSA.SIMSManagerDb.Migrations
 {
     [DbContext(typeof(SimsDbContext))]
-    partial class SimsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200908131028_hose")]
+    partial class hose
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -7133,7 +7135,8 @@ namespace FSA.SIMSManagerDb.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SignalStatusId");
+                    b.HasIndex("SignalStatusId")
+                        .IsUnique();
 
                     b.ToTable("Signals");
                 });
@@ -7746,8 +7749,8 @@ namespace FSA.SIMSManagerDb.Migrations
             modelBuilder.Entity("FSA.SIMSManagerDb.Entities.SignalDb", b =>
                 {
                     b.HasOne("FSA.SIMSManagerDb.Entities.Lookups.SignalStatusDb", "SignalStatus")
-                        .WithMany()
-                        .HasForeignKey("SignalStatusId")
+                        .WithOne()
+                        .HasForeignKey("FSA.SIMSManagerDb.Entities.SignalDb", "SignalStatusId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });

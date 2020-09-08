@@ -61,13 +61,13 @@ namespace FSA.IncidentsManagement.Controllers
         {
             try
             {
-                _ = incidentSignal.ToLower() switch
+                return incidentSignal.ToLower() switch
                 {
-                    IncidentOrSignal.Incidents => await this.simsApp.Incidents.Notes.GetAll(id),
-                    IncidentOrSignal.Signals => await this.simsApp.Signals.Notes.GetAll(id),
+                    IncidentOrSignal.Incidents => new OkObjectResult(await this.simsApp.Incidents.Notes.GetAll(id)),
+                    IncidentOrSignal.Signals => new OkObjectResult(await this.simsApp.Signals.Notes.GetAll(id)),
                     _ => throw new InvalidOperationException()
                 };
-                return new OkResult();
+             
             }
             catch (InvalidOperationException)
             {

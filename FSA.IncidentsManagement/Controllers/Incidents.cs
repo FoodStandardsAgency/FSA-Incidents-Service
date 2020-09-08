@@ -112,9 +112,14 @@ namespace FSA.IncidentsManagement.Controllers
             log.LogInformation($"search terms : {dashboard.Search} {dashboard.PageNo} {dashboard.PageSize}", "GetIncidentsDashboard");
 
             if (dashboard.PageNo < 1 || dashboard.PageSize < 0)
-                return new OkObjectResult(new PagedResult<IncidentDashboardItem>(Enumerable.Empty<IncidentDashboardItem>(), 0));
+                return new OkObjectResult(new
+                {
+                    Results = Enumerable.Empty<IncidentDashboardItem>(),
+                    TotalRecords = 0
+                });
 
-            var dashBoard = dashboard.PageSize.HasValue && dashboard.PageSize>0 ? await this.simsApp.Incidents.DashboardSearch(search: dashboard.Search ?? "", startPage: dashboard.PageNo, pageSize: dashboard.PageSize.Value) 
+            var dashBoard = dashboard.PageSize.HasValue && dashboard.PageSize>0 
+                                                ? await this.simsApp.Incidents.DashboardSearch(search: dashboard.Search ?? "", startPage: dashboard.PageNo, pageSize: dashboard.PageSize.Value) 
                                                 : await this.simsApp.Incidents.DashboardSearch(search: dashboard.Search ?? "", startPage: dashboard.PageNo);
             return new OkObjectResult(new
             {

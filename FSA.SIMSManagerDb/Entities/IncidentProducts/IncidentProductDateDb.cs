@@ -1,8 +1,8 @@
-﻿using FSA.SIMSManagerDb.Entities.Core.Product;
+﻿using FSA.SIMSManagerDb.Entities.Core;
 
 namespace FSA.SIMSManagerDb.Entities
 {
-    internal class IncidentProductDateDb : CoreProductDateDb
+    internal class IncidentProductDateDb : BaseProductDateDb
     {
         public IncidentProductDb Product { get; set; }
     }

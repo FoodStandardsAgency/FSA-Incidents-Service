@@ -1,11 +1,8 @@
-﻿using FSA.SIMSManagerDb.Entities.Core.Product;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using FSA.SIMSManagerDb.Entities.Core;
 
 namespace FSA.SIMSManagerDb.Entities
 {
-    internal class SignalProductPackSizeDb : CoreProductPackSizeDb
+    internal class SignalProductPackSizeDb : BaseProductPackSizeDb
     {
         public SignalProductDb Product { get; set; }
     }

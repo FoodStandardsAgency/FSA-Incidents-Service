@@ -312,7 +312,7 @@ namespace FSA.Attachments
             {
                 // Load the file, but then we need to check to make sure the new file name does not already exist.
                 var file = ctx.Web.GetFileByUrl(url);
-                ctx.Load(file, f => f.ListItemAllFields["FileDirRef"]);
+                ctx.Load(file, f => f.ListItemAllFields["FileDirRef"], f=>f.ListItemAllFields["EncodedAbsUrl"]);
                 await ctx.ExecuteQueryAsync();
                 if (file != null)
                 {

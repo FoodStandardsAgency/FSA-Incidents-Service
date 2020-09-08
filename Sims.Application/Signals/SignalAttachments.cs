@@ -1,10 +1,8 @@
 ﻿using FSA.IncidentsManagement.Root.Domain;
 using FSA.IncidentsManagement.Root.DTOS;
 using FSA.SIMSManagerDb.Contracts;
-using Microsoft.Graph;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 
 namespace Sims.Application
@@ -66,6 +64,12 @@ namespace Sims.Application
         public Task<SimsAttachmentFileInfo> Update(string filePath, SimsDocumentTagTypes docTagTypes)
         {
             return dbHost.Signals.Attachments.Update(filePath, (int)docTagTypes);
+        }
+
+        public async Task<SimsAttachmentFileInfo> Rename(string existingUrl, string fileName)
+        {
+            await attachments.RenameAttachment(fileName, existingUrl);
+            return await dbHost.Signals.Attachments.Rename(existingUrl, fileName);
         }
     }
 }

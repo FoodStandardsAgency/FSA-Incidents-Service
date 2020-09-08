@@ -10,5 +10,6 @@ namespace FSA.SIMSManagerDb.Contracts
         Task<SimsAttachmentFileInfo> Add(string docUrl, int hostId);
         Task<IEnumerable<SimsAttachmentFileInfo>> Get(int hostId);
         Task<SimsAttachmentFileInfo> Update(string docUrl, int tags);
+        Task<SimsAttachmentFileInfo> Rename(string existingUrl, string fileName);
     }
 }

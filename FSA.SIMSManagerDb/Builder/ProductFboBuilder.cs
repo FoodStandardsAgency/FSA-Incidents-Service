@@ -1,13 +1,12 @@
-﻿using FSA.IncidentsManagement.Root.Models;
-using FSA.SIMSManagerDb.Builders;
-using FSA.SIMSManagerDb.Entities.Core.Product;
+﻿using FSA.SIMSManagerDb.Builders;
+using FSA.SIMSManagerDb.Entities.Core;
 using FSA.SIMSManagerDbEntities.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FSA.SIMSManagerDb.Builder
 {
-    internal class ProductFboBuilder<T> : AuditInfoBuilderConfiguration<T> where T : CoreProductFboDb
+    internal class ProductFboBuilder<T> : AuditInfoBuilderConfiguration<T> where T : BaseProductFboDb
     {
         private string tableName;
 

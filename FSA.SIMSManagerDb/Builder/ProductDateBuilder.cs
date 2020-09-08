@@ -1,13 +1,12 @@
 ﻿using FSA.SIMSManagerDb.Builders;
 using FSA.SIMSManagerDb.Entities.Core;
-using FSA.SIMSManagerDb.Entities.Core.Product;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 
 namespace FSA.SIMSManagerDb.Builder
 {
-    internal class ProductDateBuilder<T> : AuditInfoBuilderConfiguration<T> where T : CoreProductDateDb
+    internal class ProductDateBuilder<T> : AuditInfoBuilderConfiguration<T> where T : BaseProductDateDb
     {
         private string hostname;
         private string tableName;

@@ -6,6 +6,7 @@ using FSA.SIMSManagerDb.Entities.Core;
 using FSA.SIMSManagerDbEntities.Helpers;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -43,6 +44,24 @@ namespace FSA.SIMSManagerDb.Repositories
             return attachments.Select(s => mapper.Map<AttachmentDb, SimsAttachmentFileInfo>(s)).ToList();
         }
 
+        public async Task<SimsAttachmentFileInfo> Rename(string existingUrl, string fileName)
+        {
+            var fileInfo = await this.DbSet.FindAsync(existingUrl);
+            var oldFileName = Path.GetFileName(existingUrl);
+            var rootUrl = existingUrl.Split(oldFileName)[0];
+
+            var newFileinfo = new AttachmentDb
+            {
+                HostId = fileInfo.HostId,
+                DocUrl = $"{rootUrl}{fileName}",
+                TagFlags = fileInfo.TagFlags
+            };
+            this.DbSet.Remove(fileInfo);
+            var newEnt = this.DbSet.Add(newFileinfo);
+            await this.ctx.SaveChangesAsync();
+            return mapper.Map<SimsAttachmentFileInfo>(newEnt.Entity);
+        }
+
         public async Task<SimsAttachmentFileInfo> Update(string docUrl, int tags)
         {
             //// Ensure we have a an incident
@@ -60,5 +79,7 @@ namespace FSA.SIMSManagerDb.Repositories
 
             return null;
         }
+
+        
     }
 }

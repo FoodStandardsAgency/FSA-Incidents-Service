@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FSA.SIMSManagerDb.Entities.Core.Product
+namespace FSA.SIMSManagerDb.Entities.Core
 {
     interface ICoreProduct< ProductFbo, ProductPackSize, ProductDate>
     {
