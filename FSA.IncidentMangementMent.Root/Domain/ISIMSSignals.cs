@@ -16,7 +16,7 @@ namespace FSA.IncidentsManagement.Root.Domain
         Task<IEnumerable<SignalDashboardItem>> DashboardLinks(int signalId);
 
         Task UpdateLeadOfficer(IEnumerable<int> id, string user);
-        Task UpdateStatus(int signalId, string status);
+        Task UpdateStatus(int signalId, int status);
 
         Task<int> PromoteToIncident(int signalId);
 

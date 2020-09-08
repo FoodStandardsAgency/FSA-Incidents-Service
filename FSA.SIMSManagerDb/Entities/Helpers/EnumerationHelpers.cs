@@ -16,6 +16,16 @@ namespace FSA.SIMSManagerDbEntities.Helpers
         Closed = 2
     }
 
+    internal enum SignalStatusTypes
+    {
+        Unassigned = 1,
+        Open = 2,
+        Pending = 3,
+        Closed_Incident = 4,
+        Closed_No_Incident = 5,
+        Unknown=0
+    };
+
     internal enum PrioritiesStatus
     {
         Unknown = 0,

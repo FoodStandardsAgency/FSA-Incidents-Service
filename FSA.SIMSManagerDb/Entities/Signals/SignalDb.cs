@@ -1,4 +1,6 @@
-﻿using FSA.SIMSManagerDb.Entities.Core;
+﻿using FSA.IncidentsManagement.Root.Models;
+using FSA.SIMSManagerDb.Entities.Core;
+using FSA.SIMSManagerDb.Entities.Lookups;
 using System;
 using System.Collections.Generic;
 
@@ -9,7 +11,8 @@ namespace FSA.SIMSManagerDb.Entities
         public int Id { get; set; }
         public int? SPTId { get; set; }
         public string Title { get; set; }
-        public string SignalStatus { get; set; }
+        public int SignalStatusId { get; set; }
+        public SignalStatusDb SignalStatus { get; set; }
         public string Priority { get; set; }
         public string LeadOfficer { get; set; }
         public string AlertType { get; set; }

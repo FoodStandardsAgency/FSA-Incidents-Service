@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using FSA.IncidentsManagement.Root.DTOS;
 using FSA.SIMSManagerDb.Repositories;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using SIMS.TestProjects.Setup;
 using System;
 using System.Text.Json;
@@ -38,7 +36,7 @@ namespace SIMS.Database
             var Signal = new SimsSignal
             {
                 Title = "Cheesecake ALERT! No Cheese too much cake. 1 Man Swooned",
-                SignalStatus = "Unknown",
+                SignalStatusId = 0,
                 Priority = "HIGH",
                 LeadOfficer = "",
                 CountryOfOrigin = "GB",
@@ -156,7 +154,7 @@ namespace SIMS.Database
                 var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 /// Get a thing and definately close it
                 var signalClose = await simsHost.Signals.Get(18);
-                signalClose.SignalStatus = "Closed";
+                signalClose.SignalStatusId = (int)SimsSignalStatusTypes.Closed_Incident;
                 await simsHost.Signals.Update(signalClose);
                 var signalClosed = await simsHost.Signals.IsClosed(18);
                 Assert.True(signalClosed);

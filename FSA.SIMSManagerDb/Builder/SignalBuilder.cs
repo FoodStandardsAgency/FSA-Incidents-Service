@@ -23,7 +23,9 @@ namespace FSA.SIMSManagerDb.Builders
             builder.Property(p => p.CountryOfOrigin).HasMaxLength(500).IsRequired(false);
             builder.Property(p => p.NotifyingCountry).HasMaxLength(500).IsRequired(false);
 
-            
+
+            builder.HasOne(p => p.SignalStatus).WithOne();
+
             builder.HasMany(p => p.FromLinks)
                    .WithOne(o => o.From)
                    .HasForeignKey(o => o.FromId).OnDelete(DeleteBehavior.NoAction);
@@ -36,7 +38,6 @@ namespace FSA.SIMSManagerDb.Builders
             builder.HasMany(p => p.Stakeholders)
                 .WithOne(p => p.Signal)
                 .HasForeignKey(k => k.HostId).OnDelete(DeleteBehavior.NoAction);
-
             builder.HasMany(p => p.Attachments)
                 .WithOne(p => p.Signal)
                 .HasForeignKey(k => k.HostId).OnDelete(DeleteBehavior.NoAction);

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.SharePoint.Client;
+using Sims.Application.Exceptions;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
@@ -56,45 +57,54 @@ namespace FSA.IncidentsManagement.Controllers
         [Produces("application/json")]
         public async Task<IActionResult> AddAttachment([FromRoute] string incidentSignal, [FromRoute] int id)
         {
-            // The action to actually upload the file
-            // But also validates the action without doing work
-            Func<string, string, int, Task<SimsAttachmentFileInfo>> UploadFile = incidentSignal.ToLower() switch
-            {
-                IncidentOrSignal.Incidents => this.simsApp.Incidents.Attachments.AddAttachment,
-                IncidentOrSignal.Signals => this.simsApp.Signals.Attachments.AddAttachment,
-                _ => throw new InvalidOperationException("Unknown route")
-            };
 
-            // Ensure a file has been added to the request
-            var file = this.Request.Form.Files.Count > 0 ? this.Request.Form.Files[0] : null;
-            if (file == null)
-                return new OkObjectResult("No files uploaded : Successfully!");
-
-            var fileTempPath = Path.GetTempFileName();
-            var fileName = file.FileName;
             try
             {
-                using (var stream = System.IO.File.OpenWrite(fileTempPath))
+                // The action to actually upload the file
+                // But also validates the action without doing work
+                Func<string, string, int, Task<SimsAttachmentFileInfo>> UploadFile = incidentSignal.ToLower() switch
                 {
-                    await file.CopyToAsync(stream);
+                    IncidentOrSignal.Incidents => this.simsApp.Incidents.Attachments.AddAttachment,
+                    IncidentOrSignal.Signals => this.simsApp.Signals.Attachments.AddAttachment,
+                    _ => throw new InvalidOperationException("Unknown route")
+                };
+
+                // Ensure a file has been added to the request
+                var file = this.Request.Form.Files.Count > 0 ? this.Request.Form.Files[0] : null;
+                if (file == null)
+                    return new OkObjectResult("No files uploaded : Successfully!");
+
+                var fileTempPath = Path.GetTempFileName();
+                var fileName = file.FileName;
+                try
+                {
+                    using (var stream = System.IO.File.OpenWrite(fileTempPath))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+                    // Where the delegate is finally used.
+                    var attachedFile = await UploadFile(fileTempPath, fileName, id);
+                    return new OkObjectResult(attachedFile);
                 }
-                // Where the delegate is finally used.
-                var attachedFile = await UploadFile(fileTempPath, fileName, id);
-                return new OkObjectResult(attachedFile);
+                catch (System.IO.IOException ex)
+                {
+                    this.log.LogWarning(ex, "error during Attachment upload.");
+                    return this.StatusCode(500, "Error during upload.");
+                }
+                catch (ServerException)
+                {
+                    this.log.LogWarning("Duplicate file attempt");
+                    return this.StatusCode(500, "Duplicate file cannot be added.");
+                }
+                finally
+                {
+                    System.IO.File.Delete(fileTempPath);
+                }
             }
-            catch (System.IO.IOException ex)
+            catch(SIMSException ex)
             {
-                this.log.LogWarning(ex, "error during Attachment upload.");
-                return this.StatusCode(500, "Error during upload.");
-            }
-            catch (ServerException)
-            {
-                this.log.LogWarning("Duplicate file attempt");
-                return this.StatusCode(500, "Duplicate file cannot be added.");
-            }
-            finally
-            {
-                System.IO.File.Delete(fileTempPath);
+                this.log.LogInformation(nameof(AddAttachment),ex);
+                return this.StatusCode(500, ex.Message);
             }
         }
 

@@ -60,14 +60,14 @@ namespace FSA.SignalsManagement.Controllers
             return new OkObjectResult(createdSignal);
         }
 
-        [HttpPost("Status/{id}/{status}")]
+        [HttpPost("Status/{id}/{statusId}")]
         [SwaggerOperation(Summary = "Update status of an Signal")]
         [ProducesResponseType(typeof(SimsSignal), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
-        public async Task<IActionResult> UpdateSignalStatus([FromRoute] int id, [FromRoute] string status)
+        public async Task<IActionResult> UpdateSignalStatus([FromRoute] int id, [FromRoute] int statusId)
         {
-            await simsApp.Signals.UpdateStatus(id, status);
+            await simsApp.Signals.UpdateStatus(id, statusId);
             return new OkResult();
         }
 

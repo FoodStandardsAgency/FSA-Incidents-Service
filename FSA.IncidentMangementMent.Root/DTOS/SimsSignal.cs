@@ -7,7 +7,8 @@ namespace FSA.IncidentsManagement.Root.DTOS
         public int Id { get; set; }
         public int? SPTId { get; set; }
         public string Title { get; set; }
-        public string SignalStatus { get; set; }
+        public int SignalStatusId { get; set; }
+        //public string SignalStatus { get; set; }
         public string Priority { get; set; }
         public string LeadOfficer { get; set; }
         public string AlertType { get; set; }
