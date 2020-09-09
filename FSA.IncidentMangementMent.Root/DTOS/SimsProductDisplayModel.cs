@@ -13,7 +13,7 @@ namespace FSA.IncidentsManagement.Root.DTOS
         
         public int DataSourceId { get; set; }
         public string SignalUrl { get; set; }
-
+        public string SignalDataSource { get; set; }
 
     }
 }

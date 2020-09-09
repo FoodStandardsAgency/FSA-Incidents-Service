@@ -2,7 +2,6 @@
 using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Shared;
 using FSA.SIMSManagerDb.Contracts;
-using FSA.SIMSManagerDbEntities.Helpers;
 using Sims.Application.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -66,6 +65,8 @@ namespace Sims.Application
 
         public Task<IEnumerable<SimsProductFboAddress>> GetAddress(int SimsProductId)
         {
+
+            if (SimsProductId == 0) throw new SimsItemMissing("No product Id present.");
             return dbHost.Incidents.Products.Fbos.GetAddresses(SimsProductId);
         }
 

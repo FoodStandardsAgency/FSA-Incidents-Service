@@ -27,8 +27,8 @@ namespace SIMS.TestProjects.Seeeds
                 else
                     isEU = (line["Eu/non-EU Country of Origin"] == "EU" ? true : false);
                 var manu = line["Manufacturer"];
-                var DateOfPublishing = String.IsNullOrEmpty(line["Date of Publishing"]) ? DateTime.Parse(line["Date of Publishing"]) : DateTime.MinValue;
-                var DateAdded = String.IsNullOrEmpty(line["Date Added"]) ? DateTime.Parse(line["Date of Publishing"]) : DateTime.MinValue;
+                var DateOfPublishing = !String.IsNullOrEmpty(line["Date of Publishing"]) ? DateTime.Parse(line["Date of Publishing"]) : DateTime.MinValue;
+                var DateAdded = !String.IsNullOrEmpty(line["Date Added"]) ? DateTime.Parse(line["Date Added"]) : DateTime.MinValue;
                 var lnk = line["Link"];
 
                 var newSIgnal = new SimsSignal
