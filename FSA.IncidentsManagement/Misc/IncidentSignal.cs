@@ -8,7 +8,7 @@ namespace FSA.IncidentsManagement.Misc
     public class IncidentOrSignal
     {
         public const string Incidents = "incident";
-        public const string Signals = "signals";
+        public const string Signals = "signal";
 
     }
 }

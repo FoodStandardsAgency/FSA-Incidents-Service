@@ -27,5 +27,6 @@ namespace FSA.IncidentsManagement.Root.DTOS
         public DateTime PublishedDate { get; set; }
         public DateTime InsertedDate { get; set; }
         public string SourceLink { get; set; }
+        public DateTime LastUpdated { get; set; }
     }
 }

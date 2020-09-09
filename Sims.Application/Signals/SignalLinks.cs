@@ -17,12 +17,13 @@ namespace Sims.Application
 
         public Task<IEnumerable<SimsLinkedRecord>> Add(int from, IEnumerable<int> to, string reason)
         {
-            throw new System.NotImplementedException();
+            return this.dbHost.Signals.Links.Add(from, to, reason);
         }
 
         public Task<SimsLinkedRecord> Remove(int from, int to)
         {
-            throw new System.NotImplementedException();
+            return this.dbHost.Signals.Links.Remove(from, to);
+
         }
     }
 }

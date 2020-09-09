@@ -19,47 +19,47 @@ namespace Sims.Application
 
         public Task<SimsProduct> Add(int hostId, SimsProduct newSimsProduct)
         {
-            throw new System.NotImplementedException();
+            return dbHost.Signals.Products.Add(hostId, newSimsProduct);
         }
 
         public Task AssignFbo(int SimsProductId, int addressId, SimsFboTypes types)
         {
-            throw new System.NotImplementedException();
+            return dbHost.Signals.Products.Fbos.Add(SimsProductId, addressId, (int)types);
         }
 
         public Task<IPaging<SimsProductDashboard>> DashboardItems(int hostId, int pageSize = 10, int startPage = 1)
         {
-            throw new System.NotImplementedException();
+            return dbHost.Signals.Products.DashboardItems(hostId, pageSize, startPage);
         }
 
         public Task<SimsProductDisplayModel> Get(int SimsProductId)
         {
-            throw new System.NotImplementedException();
+            return dbHost.Signals.Products.Get(SimsProductId);
         }
 
         public Task<IEnumerable<SimsProductFboAddress>> GetAddress(int SimsProductId)
         {
-            throw new System.NotImplementedException();
+            return dbHost.Signals.Products.Fbos.GetAddresses(SimsProductId);
         }
 
-        public Task<IEnumerable<SimsProduct>> GetAll(int incidentId)
+        public Task<IEnumerable<SimsProduct>> GetAll(int hostId)
         {
-            throw new System.NotImplementedException();
+            return dbHost.Signals.Products.HostProducts(hostId);
         }
 
         public Task RemoveFbo(int SimsProductId, int addressId)
         {
-            throw new System.NotImplementedException();
+            return dbHost.Signals.Products.Fbos.Remove(SimsProductId, addressId);
         }
 
         public Task<SimsProduct> Update(SimsProduct SimsProduct)
         {
-            throw new System.NotImplementedException();
+            return dbHost.Signals.Products.Update(SimsProduct);
         }
 
         public Task UpdateFbo(int SimsProductId, int addressId, SimsFboTypes fboTypes)
         {
-            throw new System.NotImplementedException();
+            return dbHost.Signals.Products.Fbos.Update(SimsProductId, addressId, (int)fboTypes);
         }
     }
 }

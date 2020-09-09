@@ -17,12 +17,12 @@ namespace Sims.Application
 
         public Task<SimsNote> Add(int hostId, string note)
         {
-            throw new System.NotImplementedException();
+            return dbHost.Signals.Notes.Add(hostId, note);
         }
 
         public Task<IEnumerable<SimsNote>> GetAll(int hostId)
         {
-            throw new System.NotImplementedException();
+            return dbHost.Signals.Notes.GetAll(hostId);
         }
     }
 }

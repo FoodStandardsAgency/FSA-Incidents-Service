@@ -83,7 +83,7 @@ namespace FSA.SignalsManagement.Controllers
 
 
         [HttpPost("Promote/{id}")]
-        [SwaggerOperation(Summary = "Update Signal(s) lead officer")]
+        [SwaggerOperation(Summary = "Promote to Signal")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> PromoteToSignal([FromRoute] int id)

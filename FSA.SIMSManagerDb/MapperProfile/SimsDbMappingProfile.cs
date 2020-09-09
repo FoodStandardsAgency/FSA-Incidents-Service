@@ -110,10 +110,14 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForCtorParam("fBOAddressPostcode", o => o.MapFrom(@this => @this.PrincipalFBOId.HasValue && @this.PrincipalFBOId != 0 ? @this.PrincipalFBO.PostCode : "Unassigned"));
 
             CreateMap<SimsSignal, SignalDb>(MemberList.Source)
-                .ForMember(a => a.Id, m => m.MapFrom(a => a.CommonId));
+                .ForMember(a => a.Id, m => m.MapFrom(a => a.CommonId))
+                .ForSourceMember(a => a.LastUpdated, m => m.DoNotValidate());
 
             CreateMap<SignalDb, SimsSignal>(MemberList.Destination)
-                .ForMember(a => a.CommonId, m => m.MapFrom(a => a.Id));
+                .ForMember(a => a.CommonId, m => m.MapFrom(a => a.Id))
+                .ForMember(a=>a.SignalStatusId, m=>m.MapFrom(o=>o.SignalStatusId))
+                .ForMember(a => a.LastUpdated, m => m.MapFrom(o => o.Modified))
+                .ForMember(a => a.LastUpdated, m => m.MapFrom(a => a.Modified));
 
             CreateMap<IncidentDb, BaseIncident>(MemberList.Source)
                 .ForCtorParam("statusId", o => o.MapFrom(a => a.IncidentStatusId))
@@ -140,7 +144,7 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForMember(a => a.CommonId, m => m.MapFrom(a => a.Id))
                 .ForMember(a => a.Status, m => m.MapFrom(a => a.SignalStatus.Title))
                 .ForMember(a => a.Updated, m => m.MapFrom(a => a.Modified))
-                .ForMember(a => a.DateRecieved, m => m.MapFrom(a => a.InsertedDate))
+                .ForMember(a => a.DateReceived, m => m.MapFrom(a => a.InsertedDate))
                 .ForMember(a => a.Links, m => m.MapFrom(a => a.ToLinks.Select(o => o.FromId)
                 .Concat(a.FromLinks.Select(o => o.ToId).ToList())));
 

@@ -21,7 +21,7 @@ namespace FSA.SIMSManagerDb.Repositories
         private readonly SimsDbContext ctx;
         private readonly IMapper mapper;
 
-        public IDbNotesRepository Notes => new NotesRepository<SignalNoteDb>(ctx, mapper);
+        public IDbNotesRepository Notes => new SignalNotesRepository(ctx, mapper);
 
         public IDbLinkedRecordsRepository Links => new LinkedRecordsRepository<SignalLinkDb, SignalNoteDb>(ctx, mapper);
 
@@ -134,6 +134,8 @@ namespace FSA.SIMSManagerDb.Repositories
             if (startPage < 1 || pageSize < 1) return new PagedResult<SignalDashboardItem>(Enumerable.Empty<SignalDashboardItem>(), 0);
 
             var qry = this.ctx.Signals
+                                .Include(o=>o.FromLinks)
+                                .Include(o=>o.ToLinks)
                                 .Include(o => o.SignalStatus)
                                 .AsNoTracking().AsQueryable();
 

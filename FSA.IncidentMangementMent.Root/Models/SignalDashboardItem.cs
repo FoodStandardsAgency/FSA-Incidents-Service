@@ -14,7 +14,7 @@ namespace FSA.IncidentsManagement.Root.Models
         public string Hazard { get; set; }
         public string BaseProduct { get; set; }
         public string Status { get; set; }
-        public DateTime DateRecieved { get; set; }
+        public DateTime DateReceived { get; set; }
         public DateTime Updated { get; set; }
         public IEnumerable<int> Links { get; set; }
 
