@@ -13,13 +13,13 @@ namespace FSA.SIMSManagerDb.Builder
 
             builder.HasMany(o => o.RelatedFBOs)
                    .WithOne(o => o.Product)
-                   .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction);
+                   .OnDelete(DeleteBehavior.NoAction);
 
             builder.Property(p => p.Name).IsRequired();
             
             builder.HasOne(p => p.Host)
                    .WithMany(i => i.Products)
-                   .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction);
+                   .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(i => i.ProductType)
                     .WithMany()

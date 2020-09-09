@@ -33,7 +33,7 @@ namespace SIMS.TestProjects.Seeeds
 
                 var newSIgnal = new SimsSignal
                 {
-                    Id = 0,
+                    CommonId = 0,
                     SPTId = sptId,
                     Title = title,
                     SignalStatusId = 1,
@@ -42,6 +42,7 @@ namespace SIMS.TestProjects.Seeeds
                     CountryOfOrigin = cofO,
                     NotifyingCountry = notifiedBy,
                     IsEu = isEU,
+                    AlertType = line["Alert Type"],
                     Hazard = line["Hazard Description"],
                     HazardGroup = line["Hazard Group"],
                     BaseProduct = line["Commodity / Product"],

@@ -109,9 +109,11 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForCtorParam("fBOAddressTown", o => o.MapFrom(@this => @this.PrincipalFBOId.HasValue && @this.PrincipalFBOId != 0 ? @this.PrincipalFBO.TownCity : "Unassigned"))
                 .ForCtorParam("fBOAddressPostcode", o => o.MapFrom(@this => @this.PrincipalFBOId.HasValue && @this.PrincipalFBOId != 0 ? @this.PrincipalFBO.PostCode : "Unassigned"));
 
-            CreateMap<SimsSignal, SignalDb>(MemberList.Source);
+            CreateMap<SimsSignal, SignalDb>(MemberList.Source)
+                .ForMember(a => a.Id, m => m.MapFrom(a => a.CommonId));
 
-            CreateMap<SignalDb, SimsSignal>(MemberList.Destination);
+            CreateMap<SignalDb, SimsSignal>(MemberList.Destination)
+                .ForMember(a => a.CommonId, m => m.MapFrom(a => a.Id));
 
             CreateMap<IncidentDb, BaseIncident>(MemberList.Source)
                 .ForCtorParam("statusId", o => o.MapFrom(a => a.IncidentStatusId))
@@ -137,7 +139,14 @@ namespace FSA.SIMSManagerDb.MapperProfile
             CreateMap<SignalDb, SignalDashboardItem>(MemberList.Destination)
                 .ForMember(a => a.CommonId, m => m.MapFrom(a => a.Id))
                 .ForMember(a => a.Status, m => m.MapFrom(a => a.SignalStatus.Title))
-                .ForMember(a => a.Updated, m => m.MapFrom(a => a.Modified));
+                .ForMember(a => a.Updated, m => m.MapFrom(a => a.Modified))
+                .ForMember(a => a.DateRecieved, m => m.MapFrom(a => a.InsertedDate))
+                .ForMember(a => a.Links, m => m.MapFrom(a => a.ToLinks.Select(o => o.FromId)
+                .Concat(a.FromLinks.Select(o => o.ToId).ToList())));
+
+
+
+
 
             CreateMap<IncidentProductDb, SimsProduct>(MemberList.Destination)
                 .ForMember(a => a.AdditionalInfo, m => m.MapFrom(a => String.IsNullOrEmpty(a.AdditionalInfo) ? "" : a.AdditionalInfo))
@@ -199,7 +208,8 @@ namespace FSA.SIMSManagerDb.MapperProfile
 
             CreateMap<IncidentProductDb, SimsProductDashboard>(MemberList.Destination)
                 .ForMember(a => a.ProductType, m => m.MapFrom(a => a.ProductType.Title))
-                .ForMember(a => a.AddressNames, m => m.MapFrom(a => a.RelatedFBOs != null ? a.RelatedFBOs.Select(p => p.Address.Title).ToList() : new List<string>()));
+                .ForMember(a => a.AddressNames, m => m.MapFrom(a => a.RelatedFBOs != null ? a.RelatedFBOs.Select(p => p.Address.Title).ToList() : new List<string>()))
+                .ForMember(a => a.LastUpdated, m => m.MapFrom(b => b.Modified));
 
             CreateMap<SignalProductDb, SimsProductDashboard>(MemberList.Destination)
                 .ForMember(a => a.ProductType, m => m.MapFrom(a => a.ProductType.Title))

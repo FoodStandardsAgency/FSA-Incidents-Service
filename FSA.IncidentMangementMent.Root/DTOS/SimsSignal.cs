@@ -4,7 +4,8 @@ namespace FSA.IncidentsManagement.Root.DTOS
 {
     public class SimsSignal
     {
-        public int Id { get; set; }
+        public string Id => GeneralExtensions.GenerateSignalsId(this.CommonId);
+        public int CommonId { get; set; }
         public int? SPTId { get; set; }
         public string Title { get; set; }
         public int SignalStatusId { get; set; }

@@ -1511,7 +1511,7 @@
         "tags": [
           "Signals"
         ],
-        "summary": "Incident dashboard search",
+        "summary": "Signals dashboard search",
         "operationId": "GetSignalDashboard",
         "consumes": [
           "application/json",
@@ -3299,6 +3299,10 @@
       "type": "object",
       "properties": {
         "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "commonId": {
           "format": "int32",
           "type": "integer"
         },
@@ -3382,18 +3386,35 @@
         "priority": {
           "type": "string"
         },
-        "notifier": {
+        "leadOfficer": {
           "type": "string"
         },
-        "leadOfficer": {
+        "countryOfOrigin": {
+          "type": "string"
+        },
+        "hazard": {
+          "type": "string"
+        },
+        "baseProduct": {
           "type": "string"
         },
         "status": {
           "type": "string"
         },
+        "dateRecieved": {
+          "format": "date-time",
+          "type": "string"
+        },
         "updated": {
           "format": "date-time",
           "type": "string"
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
         }
       }
     },

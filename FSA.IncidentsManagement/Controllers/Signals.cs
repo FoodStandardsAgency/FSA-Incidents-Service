@@ -31,7 +31,7 @@ namespace FSA.SignalsManagement.Controllers
         [ProducesResponseType(typeof(SimsSignal), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
-        public async Task<IActionResult> GetSignal([FromRoute]int id)
+        public async Task<IActionResult> GetSignal(int id)
         {
             if (id == 0) return BadRequest("No signal Id was passed");
             return new OkObjectResult(await this.simsApp.Signals.Get(id));
@@ -93,7 +93,7 @@ namespace FSA.SignalsManagement.Controllers
         }
 
         [HttpPost("Dashboard")]
-        [SwaggerOperation(Summary = "Incident dashboard search")]
+        [SwaggerOperation(Summary = "Signals dashboard search")]
         [ProducesResponseType(typeof(SignalDashboardItem), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]

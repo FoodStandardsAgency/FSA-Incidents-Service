@@ -65,7 +65,7 @@ namespace FSA.SIMSManagerDb.Repositories
 
         public async Task<SimsSignal> Update(SimsSignal signal)
         {
-            var dbItem = this.ctx.Signals.Find(signal.Id);
+            var dbItem = this.ctx.Signals.Find(signal.CommonId);
             if (dbItem.SPTId is null && signal.SPTId.HasValue || (dbItem.SPTId != signal.SPTId))
                 throw new ArgumentOutOfRangeException("Cannot update SPTid.");
 

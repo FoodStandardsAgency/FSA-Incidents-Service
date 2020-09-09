@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace FSA.IncidentsManagement.Root.Models
 {
@@ -8,9 +9,18 @@ namespace FSA.IncidentsManagement.Root.Models
         public int CommonId { get; set; }
         public string Title { get; set; }
         public string Priority { get; set; }
-        public string Notifier { get; set; }
         public string LeadOfficer { get; set; }
+        public string CountryOfOrigin { get; set; }
+        public string Hazard { get; set; }
+        public string BaseProduct { get; set; }
         public string Status { get; set; }
+        public DateTime DateRecieved { get; set; }
         public DateTime Updated { get; set; }
+        public IEnumerable<int> Links { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Id} {Title} {Priority} {Status} {LeadOfficer}";
+        }
     }
 }

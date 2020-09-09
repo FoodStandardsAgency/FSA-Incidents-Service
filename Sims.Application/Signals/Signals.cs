@@ -33,7 +33,7 @@ namespace Sims.Application
 
         public Task<SimsSignal> Add(SimsSignal signal)
         {
-            if (signal.Id !=0) throw new SimsItemExists("Signal already exists!");
+            if (signal.CommonId !=0) throw new SimsItemExists("Signal already exists!");
             return dbHost.Signals.Add(signal);
         }
 
