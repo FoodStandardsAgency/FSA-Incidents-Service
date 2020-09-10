@@ -96,10 +96,14 @@ namespace FSA.SIMSManagerDb.Repositories
         {
             var hostIncident = await this.ctx.Signals
                         .Include(o => o.FromLinks)
+                        .Include(o=>o.SignalStatus)
                         .Include(o => o.ToLinks).AsNoTracking().FirstAsync(f => f.Id == signalId);
 
 
-            var signalQry = this.ctx.Signals;
+            var signalQry = this.ctx.Signals
+                         .Include(o => o.FromLinks)
+                        .Include(o => o.SignalStatus)
+                        .Include(o => o.ToLinks).AsNoTracking();
             // Where signal was assigned too. SignalId->to
             var fromIds = this.ctx
                                 .SignalLinks.AsNoTracking().Where(o => o.ToId == signalId);

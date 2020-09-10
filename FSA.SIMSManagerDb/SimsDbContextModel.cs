@@ -36,6 +36,8 @@ namespace FSA.SIMSManagerDb
         internal DbSet<SignalProductFboDb> SignalProductFbos { get; set; }
         internal DbSet<SignalProductPackSizeDb> SignalProductPackSizes { get; set; }
 
+        internal DbSet<CloseSignalNoIncident> SignalClosedNoIncident { get; set; }
+
         #endregion
 
         internal DbSet<AddressDb> Addresses { get; set; }
@@ -60,6 +62,8 @@ namespace FSA.SIMSManagerDb
         internal DbSet<UnitQuantityDb> UnitQuantities { get; set; }
         internal DbSet<FBOTypeDb> FBOTypes { get; set; }
         internal DbSet<DocumentTagDb> DocumentTags { get; set; }
+        internal DbSet<CloseSignalReasonDb> ClosedSignalReasons { get; set; }
+        internal DbSet<CloseSignalTeamDb> ClosedSignalTeams { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -88,6 +92,7 @@ namespace FSA.SIMSManagerDb
             modelBuilder.ApplyConfiguration(new ProductPackSizeBuilder<SignalProductPackSizeDb>(nameof(this.SignalProductPackSizes), "SignalId"));
             modelBuilder.ApplyConfiguration(new ProductDateBuilder<SignalProductDateDb>(nameof(this.SignalProductDates), "SignalId"));
             modelBuilder.ApplyConfiguration(new ProductFboBuilder<SignalProductFboDb>(nameof(this.SignalProductFbos)));
+            modelBuilder.ApplyConfiguration(new CloseSignalNoIncidentBuilder());
 
             #region Lookups           
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<CategoryDb>());
@@ -106,6 +111,8 @@ namespace FSA.SIMSManagerDb
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<UnitQuantityDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<FBOTypeDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<DocumentTagDb>());
+            modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<CloseSignalReasonDb>());
+            modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<CloseSignalTeamDb>());
             #endregion
 
             var seeds = new Seeder();
