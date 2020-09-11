@@ -19,7 +19,7 @@ namespace FSA.SIMSManagerDb.Repositories
             this.mapper = mapper;
         }
 
-        private ISimsReferenceData<Category> Categories => new ReferenceDataRepo<Category, CategoryDb>(ctx, mapper);
+        private ISimsReferenceData<HazardGroup> Categories => new ReferenceDataRepo<HazardGroup, HazardGroupDb>(ctx, mapper);
         private ISimsReferenceData<Classification> Classifications => new ReferenceDataRepo<Classification, ClassificationDb>(ctx, mapper);
         private ISimsReferenceData<Priority> Priorities => new ReferenceDataRepo<Priority, PriorityDb>(ctx, mapper);
         private ISimsReferenceData<IncidentStatusLkUp> IncidentStatus => new ReferenceDataRepo<IncidentStatusLkUp, IncidentStatusDb>(ctx, mapper);

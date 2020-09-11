@@ -48,7 +48,7 @@ namespace FSA.SIMSManagerDb
         internal DbSet<NotifierTypeDb> NotifierTypes { get; set; }
 
         #region Lookups
-        internal DbSet<CategoryDb> Categories { get; set; }
+        internal DbSet<HazardGroupDb> HazardGroups { get; set; }
         internal DbSet<ClassificationDb> Classifications { get; set; }
         internal DbSet<PriorityDb> Priorities { get; set; }
         internal DbSet<ContactMethodDb> ContactMethods { get; set; }
@@ -99,7 +99,7 @@ namespace FSA.SIMSManagerDb
             modelBuilder.ApplyConfiguration(new SignalIncidentLinkBuilder());
 
             #region Lookups           
-            modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<CategoryDb>());
+            modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<HazardGroupDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<ClassificationDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<PriorityDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<ContactMethodDb>());

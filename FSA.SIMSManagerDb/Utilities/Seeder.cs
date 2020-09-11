@@ -4237,328 +4237,252 @@ namespace FSA.SIMSManagerDb.Utilities
 
         private void Categories(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<CategoryDb>()
-                 .HasData(new CategoryDb
-                 {
-                     Id = 1,
-                     Title = "Adulteration / Fraud",
-                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                 }, new CategoryDb
-                 {
-                     Id = 2,
-                     Title = "ALLERGEN: Multiple Allergens",
-                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                 },
-                    new CategoryDb
-                    {
-                        Id = 3,
-                        Title = "ALLERGEN: Cereals containing gluten",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 4,
-                        Title = "ALLERGEN: Celery",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 5,
-                        Title = "ALLERGEN: Crustaceans",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 6,
-                        Title = "ALLERGEN: Eggs",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 7,
-                        Title = "ALLERGEN: Fish",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 8,
-                        Title = "ALLERGEN: Lupin",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 9,
-                        Title = "ALLERGEN: Milk",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 10,
-                        Title = "ALLERGEN: Molluscs",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 11,
-                        Title = "ALLERGEN: Mustard",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 12,
-                        Title = "ALLERGEN: Nuts",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 13,
-                        Title = "ALLERGEN: Peanuts",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 14,
-                        Title = "ALLERGEN: Sesame seeds",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 15,
-                        Title = "ALLERGEN: Soya",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 16,
-                        Title = "ALLERGEN: Sulphur dioxide / Sulphites",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 17,
-                        Title = "ALLERGEN: Non-regulated allergen reactions",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 18,
-                        Title = "Allergens",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 19,
-                        Title = "Biocontaminants",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 20,
-                        Title = "Biotoxins (other)",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 21,
-                        Title = "Clandestine Detection",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 22,
-                        Title = "CHEMET",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 23,
-                        Title = "Chemical Contamination (other)",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 24,
-                        Title = "Composition",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 25,
-                        Title = "Feed Additives",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 26,
-                        Title = "Food Additives & Flavourings",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 27,
-                        Title = "Foreign Bodies",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 28,
-                        Title = "Heavy Metals",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 29,
-                        Title = "Industrial Contaminants",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 30,
-                        Title = "Labelling Absent / Incomplete / Incorrect",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 31,
-                        Title = "Migration",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 32,
-                        Title = "Mycotoxins",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 33,
-                        Title = "Non-Pathogenic Micro-Organisims",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 34,
-                        Title = "Not Determined / Other",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 35,
-                        Title = "Novel Food",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 36,
-                        Title = "Organoleptic Aspects",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 37,
-                        Title = "Packaging Defective / Incorrect",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 38,
-                        Title = "Parasitic Infestation",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 39,
-                        Title = "Pathogenic Micro-Organisms",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 40,
-                        Title = "Pesticide Residues",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 41,
-                        Title = "Poor or Insufficient Controls",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 42,
-                        Title = "Radiation",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 43,
-                        Title = "Residues of Veterinary Medicinal Products",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 44,
-                        Title = "TSE`s",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 45,
-                        Title = "Undefined",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new CategoryDb
-                    {
-                        Id = 46,
-                        Title = "Unmapped SPT Signal Value",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    });
+            modelBuilder.Entity<HazardGroupDb>()
+               .HasData(new HazardGroupDb
+               {
+                   Id = 1,
+                   Title = "Adulteration",
+                   CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                   ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+               },
+                new HazardGroupDb
+                {
+                    Id = 2,
+                    Title = "allergens",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 3,
+                    Title = "biological contaminants (other)",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 4,
+                    Title = "chemical contamination",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 5,
+                    Title = "composition",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 6,
+                    Title = "environmental pollutants",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 7,
+                    Title = "feed additives",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 8,
+                    Title = "food additives and flavourings",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 9,
+                    Title = "foreign bodies",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 10,
+                    Title = "Fraud",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 11,
+                    Title = "genetically modified food or feed",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 12,
+                    Title = "heavy metals",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 13,
+                    Title = "industrial contaminants",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 14,
+                    Title = "labelling absent/incomplete/incorrect",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 15,
+                    Title = "microbial contaminants (other)",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 16,
+                    Title = "migration",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 17,
+                    Title = "mycotoxins",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 18,
+                    Title = "natural toxins (other)",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 19,
+                    Title = "Non-compliance",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 20,
+                    Title = "not determined / other",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 21,
+                    Title = "novel food",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 22,
+                    Title = "organoleptic aspects",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 23,
+                    Title = "packaging defective / food contact material",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 24,
+                    Title = "parasitic infestation",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 25,
+                    Title = "pathogenic micro-organisms",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 26,
+                    Title = "pesticide residues",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 27,
+                    Title = "poor or insufficient controls",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 28,
+                    Title = "process contaminants",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 29,
+                    Title = "Radiation",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 30,
+                    Title = "residues of veterinary medicinal products",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 31,
+                    Title = "Supplements: Unauthorised substance",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 32,
+                    Title = "TSEs",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 33,
+                    Title = "Unauthorised Pesticides",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 34,
+                    Title = "unclassified",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 35,
+                    Title = "Use-by date exceeded",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                });
         }
 
         private void AdminLeads(ModelBuilder modelBuilder)

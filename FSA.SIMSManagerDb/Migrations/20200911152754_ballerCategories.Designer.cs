@@ -4,14 +4,16 @@ using FSA.SIMSManagerDb;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FSA.SIMSManagerDb.Migrations
 {
     [DbContext(typeof(SimsDbContext))]
-    partial class SimsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200911152754_ballerCategories")]
+    partial class ballerCategories
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -144,57 +146,6 @@ namespace FSA.SIMSManagerDb.Migrations
                     b.HasIndex("CountryId");
 
                     b.ToTable("Addresses");
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.CloseSignalNoIncident", b =>
-                {
-                    b.Property<int>("SignalId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<int>("ReasonId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TeamId")
-                        .HasColumnType("int");
-
-                    b.Property<byte[]>("Timestamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<string>("UserReason")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("SignalId");
-
-                    b.HasIndex("ReasonId");
-
-                    b.HasIndex("TeamId");
-
-                    b.ToTable("SignalClosedNoIncident");
                 });
 
             modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentAttachmentDb", b =>
@@ -900,218 +851,6 @@ namespace FSA.SIMSManagerDb.Migrations
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Title = "Non-Routine"
-                        });
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.Lookups.CloseSignalReasonDb", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<byte[]>("Timestamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ClosedSignalReasons");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "Czech Republic sampling"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "Duplicate of..."
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "FDA alert re US border rejection"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "Japanese Import alert"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "No UK distribution"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "No useful information"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "RASFF notification"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "Research on MySupermarket, Amazon and Google negative for distribution to the UK"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "UK RASFF"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "UK Govt. Quarterly Report"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "UK Recall"
-                        });
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.Lookups.CloseSignalTeamDb", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<byte[]>("Timestamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ClosedSignalTeams");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "NFCU"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "Relevant Policy lead"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "Imported foods"
                         });
                 });
 
@@ -7681,49 +7420,6 @@ namespace FSA.SIMSManagerDb.Migrations
                     b.ToTable("SignalStakeholders");
                 });
 
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.Signals.SignalIncidentLinkDb", b =>
-                {
-                    b.Property<int>("SignalId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IncidentId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<DateTime>("Modified")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(70)")
-                        .HasMaxLength(70);
-
-                    b.Property<byte[]>("Timestamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.HasKey("SignalId", "IncidentId");
-
-                    b.HasIndex("IncidentId");
-
-                    b.HasIndex("SignalId")
-                        .IsUnique();
-
-                    b.ToTable("SignalIncidentLinks");
-                });
-
             modelBuilder.Entity("FSA.SIMSManagerDb.Entities.AddressContactDb", b =>
                 {
                     b.HasOne("FSA.SIMSManagerDb.Entities.AddressDb", "Address")
@@ -7744,21 +7440,6 @@ namespace FSA.SIMSManagerDb.Migrations
                     b.HasOne("FSA.SIMSManagerDb.Entities.Lookups.CountryDb", "Country")
                         .WithMany()
                         .HasForeignKey("CountryId");
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.CloseSignalNoIncident", b =>
-                {
-                    b.HasOne("FSA.SIMSManagerDb.Entities.Lookups.CloseSignalReasonDb", "Reason")
-                        .WithMany()
-                        .HasForeignKey("ReasonId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("FSA.SIMSManagerDb.Entities.Lookups.CloseSignalTeamDb", "Team")
-                        .WithMany()
-                        .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("FSA.SIMSManagerDb.Entities.IncidentAttachmentDb", b =>
@@ -8085,21 +7766,6 @@ namespace FSA.SIMSManagerDb.Migrations
                     b.HasOne("FSA.SIMSManagerDb.Entities.Lookups.StakeholderDiscriminatorDb", "StakeholderDiscriminator")
                         .WithMany()
                         .HasForeignKey("StakeholderDiscriminatorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FSA.SIMSManagerDb.Entities.Signals.SignalIncidentLinkDb", b =>
-                {
-                    b.HasOne("FSA.SIMSManagerDb.Entities.IncidentDb", "Incident")
-                        .WithMany("IncidentSignalLinks")
-                        .HasForeignKey("IncidentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FSA.SIMSManagerDb.Entities.SignalDb", "Signal")
-                        .WithOne("SignalIncidentLinks")
-                        .HasForeignKey("FSA.SIMSManagerDb.Entities.Signals.SignalIncidentLinkDb", "SignalId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
