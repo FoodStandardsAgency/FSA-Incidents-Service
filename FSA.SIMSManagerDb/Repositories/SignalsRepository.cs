@@ -7,6 +7,7 @@ using FSA.SIMSManagerDb.Contracts;
 using FSA.SIMSManagerDb.Entities;
 using FSA.SIMSManagerDbEntities.Helpers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -307,14 +308,14 @@ namespace FSA.SIMSManagerDb.Repositories
         /// </summary>
         /// <param name="hostId"></param>
         /// <returns></returns>
-        public async Task CloseLinkIncident(int signalId,int incidentId)
+        public async Task CloseLinkIncident(int signalId, int incidentId)
         {
             var signal = this.ctx.Signals.Find(signalId);
             if (signal.SignalStatusId != (int)SignalStatusTypes.Closed_Incident || signal.SignalStatusId != (int)SignalStatusTypes.Closed_No_Incident)
             {
                 this.ctx.SignalIncidentLinks.Add(new Entities.Signals.SignalIncidentLinkDb
                 {
-                    SignalId = signalId, 
+                    SignalId = signalId,
                     IncidentId = incidentId
                 });
                 signal.SignalStatusId = (int)SignalStatusTypes.Closed_Incident;
@@ -329,16 +330,22 @@ namespace FSA.SIMSManagerDb.Repositories
         public async Task CloseCreateIncident(int hostId)
         {
             // Create
-            var signal = this.ctx.Signals.AsNoTracking().First(a=>a.Id==hostId);
+            var signal = this.ctx.Signals.AsNoTracking().First(a => a.Id == hostId);
             if (signal.SignalStatusId != (int)SignalStatusTypes.Closed_Incident || signal.SignalStatusId != (int)SignalStatusTypes.Closed_No_Incident)
             {
-
-
+                // Signals are text all the way
+                // But the info should match with our stored lookups.
+                var hazardGroup = signal.HazardGroup ?? "";
+                var countryOfOrigin = signal.CountryOfOrigin ?? "";
+                var DataSource = signal.DataSource ?? "";
+                var leadOfficer = signal.LeadOfficer ?? "";
+                var statusId = signal.SignalStatusId;
+                var priority = signal.Priority;
 
                 // Create new Incidents and accutrements.
                 //var newIncident = new IncidentDb
                 //{
-                     
+
                 //}
             }
         }

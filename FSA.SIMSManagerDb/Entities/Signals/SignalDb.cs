@@ -1,5 +1,4 @@
-﻿using FSA.IncidentsManagement.Root.Models;
-using FSA.SIMSManagerDb.Entities.Core;
+﻿using FSA.SIMSManagerDb.Entities.Core;
 using FSA.SIMSManagerDb.Entities.Lookups;
 using FSA.SIMSManagerDb.Entities.Signals;
 using System;
