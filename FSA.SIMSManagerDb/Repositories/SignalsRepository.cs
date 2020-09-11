@@ -329,6 +329,18 @@ namespace FSA.SIMSManagerDb.Repositories
         public async Task CloseCreateIncident(int hostId)
         {
             // Create
+            var signal = this.ctx.Signals.AsNoTracking().First(a=>a.Id==hostId);
+            if (signal.SignalStatusId != (int)SignalStatusTypes.Closed_Incident || signal.SignalStatusId != (int)SignalStatusTypes.Closed_No_Incident)
+            {
+
+
+
+                // Create new Incidents and accutrements.
+                //var newIncident = new IncidentDb
+                //{
+                     
+                //}
+            }
         }
     }
 }
