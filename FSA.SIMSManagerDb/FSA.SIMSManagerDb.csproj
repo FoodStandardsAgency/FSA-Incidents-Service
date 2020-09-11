@@ -36,6 +36,8 @@
     <Compile Remove="Migrations\20200907115753_statusIdPtOneFool.Designer.cs" />
     <Compile Remove="Migrations\20200908130709_hose.cs" />
     <Compile Remove="Migrations\20200908130709_hose.Designer.cs" />
+    <Compile Remove="Migrations\20200911152658_ballerCategories.cs" />
+    <Compile Remove="Migrations\20200911152658_ballerCategories.Designer.cs" />
     <Compile Remove="Repositories\SignalsLinkedRecords.cs" />
   </ItemGroup>
 

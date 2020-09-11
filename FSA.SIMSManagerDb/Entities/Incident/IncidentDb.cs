@@ -18,7 +18,7 @@ namespace FSA.SIMSManagerDb.Entities
         public string IncidentTitle { get; set; }
 
         public int IncidentTypeId { get; set; }
-        public CategoryDb IncidentType { get; set; }
+        public HazardGroupDb IncidentType { get; set; }
         public int ContactMethodId { get; set; }
         public ContactMethodDb ContactMethod { get; set; }
         public int? SignalStatusId { get; set; }

@@ -18,7 +18,7 @@ namespace FSA.SIMSManagerDb.MapperProfile
         public SimsDbMappingProfile()
         {
 
-            CreateMap<CategoryDb, Category>(MemberList.Destination);
+            CreateMap<HazardGroupDb, HazardGroup>(MemberList.Destination);
             CreateMap<ClassificationDb, Classification>(MemberList.Destination);
             CreateMap<PriorityDb, Priority>(MemberList.Destination);
             CreateMap<IncidentStatusDb, IncidentStatusLkUp>(MemberList.Destination);
