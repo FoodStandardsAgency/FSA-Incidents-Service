@@ -40,7 +40,7 @@ namespace FSA.SIMSManagerDb.Builders
             builder.HasMany(p => p.Attachments)
                     .WithOne(p => p.Incident)
                     .HasForeignKey(k => k.HostId).OnDelete(DeleteBehavior.NoAction);
-
+            builder.HasMany(o => o.IncidentSignalLinks);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using FSA.SIMSManagerDb.Entities.Core;
 using FSA.SIMSManagerDb.Entities.Lookups;
+using FSA.SIMSManagerDb.Entities.Signals;
 using System;
 using System.Collections.Generic;
 
@@ -64,5 +65,7 @@ namespace FSA.SIMSManagerDb.Entities
         public ICollection<IncidentLinkDb> FromLinks { get; set; }
         public ICollection<IncidentLinkDb> ToLinks { get; set; }
         public ICollection<IncidentStakeholderDb> Stakeholders { get; set; }
+
+        public ICollection<SignalIncidentLinkDb> IncidentSignalLinks { get; set; }
     }
 }

@@ -2,8 +2,10 @@
 using FSA.SIMSManagerDb.Builders;
 using FSA.SIMSManagerDb.Entities;
 using FSA.SIMSManagerDb.Entities.Lookups;
+using FSA.SIMSManagerDb.Entities.Signals;
 using FSA.SIMSManagerDb.Utilities;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace FSA.SIMSManagerDb
 {
@@ -27,7 +29,7 @@ namespace FSA.SIMSManagerDb
         internal DbSet<SignalDb> Signals { get; set; }
         internal DbSet<SignalLinkDb> SignalLinks { get; set; }
         internal DbSet<SignalNoteDb> SignalNotes { get; set; }
-        
+
         internal DbSet<SignalStakeholderDb> SignalStakeholders { get; set; }
         internal DbSet<SignalAttachmentDb> SignalAttachments { get; set; }
 
@@ -37,6 +39,7 @@ namespace FSA.SIMSManagerDb
         internal DbSet<SignalProductPackSizeDb> SignalProductPackSizes { get; set; }
 
         internal DbSet<CloseSignalNoIncident> SignalClosedNoIncident { get; set; }
+        internal DbSet<SignalIncidentLinkDb> SignalIncidentLinks { get; set; }
 
         #endregion
 
@@ -67,7 +70,7 @@ namespace FSA.SIMSManagerDb
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {         
+        {
             modelBuilder.ApplyConfiguration(new AddressBuilder());
             modelBuilder.ApplyConfiguration(new AddressContactBuilder());
 
@@ -93,6 +96,7 @@ namespace FSA.SIMSManagerDb
             modelBuilder.ApplyConfiguration(new ProductDateBuilder<SignalProductDateDb>(nameof(this.SignalProductDates), "SignalId"));
             modelBuilder.ApplyConfiguration(new ProductFboBuilder<SignalProductFboDb>(nameof(this.SignalProductFbos)));
             modelBuilder.ApplyConfiguration(new CloseSignalNoIncidentBuilder());
+            modelBuilder.ApplyConfiguration(new SignalIncidentLinkBuilder());
 
             #region Lookups           
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<CategoryDb>());

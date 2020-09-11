@@ -25,5 +25,7 @@ namespace FSA.SIMSManagerDb.Contracts
         Task<IPaging<SignalDashboardItem>> DashboardSearch(string search = null, int pageSize = 500, int startPage = 1);
         Task UpdateLeadOfficer(IEnumerable<int> ids, string user);
         Task<SimsSignal> UpdateStatus(int signalId, int status);
+        Task CloseNoIncident(SimsSignalCloseNoIncident closeDetails);
+        Task CloseLinkIncident(int signalId, int incidentId);
     }
 }

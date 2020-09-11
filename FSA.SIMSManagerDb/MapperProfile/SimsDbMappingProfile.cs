@@ -111,14 +111,14 @@ namespace FSA.SIMSManagerDb.MapperProfile
 
             CreateMap<SimsSignal, SignalDb>(MemberList.Source)
                 .ForMember(a => a.Id, m => m.MapFrom(a => a.CommonId))
-                .ForMember(a=>a.SPTId, m=>m.Ignore())
+                .ForMember(a => a.SPTId, m => m.Ignore())
                 .ForMember(a => a.PublishedDate, m => m.Ignore())
                 .ForMember(a => a.InsertedDate, m => m.Ignore())
                 .ForSourceMember(a => a.LastUpdated, m => m.DoNotValidate());
 
             CreateMap<SignalDb, SimsSignal>(MemberList.Destination)
                 .ForMember(a => a.CommonId, m => m.MapFrom(a => a.Id))
-                .ForMember(a=>a.SignalStatusId, m=>m.MapFrom(o=>o.SignalStatusId))
+                .ForMember(a => a.SignalStatusId, m => m.MapFrom(o => o.SignalStatusId))
                 .ForMember(a => a.LastUpdated, m => m.MapFrom(a => a.Modified));
 
 
@@ -129,7 +129,7 @@ namespace FSA.SIMSManagerDb.MapperProfile
 
             CreateMap<BaseIncident, IncidentDb>(MemberList.Source)
                 .IgnoreAuditData()
-                .ForMember(a=>a.MostUniqueId, a=>a.Ignore())
+                .ForMember(a => a.MostUniqueId, a => a.Ignore())
                 .ForMember(a => a.Id, m => m.MapFrom(a => a.CommonId))
                 .ForMember(a => a.IncidentStatusId, m => m.MapFrom(a => a.StatusId));
 
@@ -248,6 +248,8 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForMember(a => a.Contacts, m => m.MapFrom(m => m.Address.Contacts));
 
 
+            CreateMap<SimsSignalCloseNoIncident, CloseSignalNoIncident>(MemberList.Source);
+            CreateMap<CloseSignalNoIncident, SimsSignalCloseNoIncident>(MemberList.Destination);
 
         }
 

@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -96,7 +97,7 @@ namespace FSA.SIMSManagerDb.Repositories
         {
             var hostIncident = await this.ctx.Signals
                         .Include(o => o.FromLinks)
-                        .Include(o=>o.SignalStatus)
+                        .Include(o => o.SignalStatus)
                         .Include(o => o.ToLinks).AsNoTracking().FirstAsync(f => f.Id == signalId);
 
 
@@ -138,8 +139,8 @@ namespace FSA.SIMSManagerDb.Repositories
             if (startPage < 1 || pageSize < 1) return new PagedResult<SignalDashboardItem>(Enumerable.Empty<SignalDashboardItem>(), 0);
 
             var qry = this.ctx.Signals
-                                .Include(o=>o.FromLinks)
-                                .Include(o=>o.ToLinks)
+                                .Include(o => o.FromLinks)
+                                .Include(o => o.ToLinks)
                                 .Include(o => o.SignalStatus)
                                 .AsNoTracking().AsQueryable();
 
@@ -168,7 +169,7 @@ namespace FSA.SIMSManagerDb.Repositories
             var totalRecords = await qry.CountAsync();
             // Find the start record
             var startRecord = (startPage - 1) * pageSize;
-            var results = await qry .OrderByDescending(i => i.SignalStatus.SortOrder)
+            var results = await qry.OrderByDescending(i => i.SignalStatus.SortOrder)
                                     .OrderBy(i => i.Created)
                                     .Skip(startRecord)
                                     .Take(pageSize)
@@ -282,6 +283,52 @@ namespace FSA.SIMSManagerDb.Repositories
                 dbItem.LeadOfficer = "";
             await ctx.SaveChangesAsync();
             return mapper.Map<SignalDb, SimsSignal>(dbItem);
+        }
+        /// <summary>
+        /// Simple closing of an signal.
+        /// Must include details
+        /// </summary>
+        /// <param name="closeDetails"></param>
+        /// <returns></returns>
+        public async Task CloseNoIncident(SimsSignalCloseNoIncident closeDetails)
+        {
+            var signal = this.ctx.Signals.Find(closeDetails.HostId);
+            if (signal.SignalStatusId != (int)SignalStatusTypes.Closed_Incident || signal.SignalStatusId != (int)SignalStatusTypes.Closed_No_Incident)
+            {
+                signal.SignalStatusId = (int)SignalStatusTypes.Closed_No_Incident;
+                var dbClosedDetails = this.mapper.Map<CloseSignalNoIncident>(closeDetails);
+                this.ctx.Add(closeDetails);
+                await this.ctx.SaveChangesAsync();
+            }
+        }
+
+        /// <summary>
+        /// Close the signal and associate to an incident
+        /// </summary>
+        /// <param name="hostId"></param>
+        /// <returns></returns>
+        public async Task CloseLinkIncident(int signalId,int incidentId)
+        {
+            var signal = this.ctx.Signals.Find(signalId);
+            if (signal.SignalStatusId != (int)SignalStatusTypes.Closed_Incident || signal.SignalStatusId != (int)SignalStatusTypes.Closed_No_Incident)
+            {
+                this.ctx.SignalIncidentLinks.Add(new Entities.Signals.SignalIncidentLinkDb
+                {
+                    SignalId = signalId, 
+                    IncidentId = incidentId
+                });
+                signal.SignalStatusId = (int)SignalStatusTypes.Closed_Incident;
+                await ctx.SaveChangesAsync();
+            }
+        }
+        /// <summary>
+        /// Close the signal, and create a new incident by copying the data over.
+        /// </summary>
+        /// <param name="hostId"></param>
+        /// <returns></returns>
+        public async Task CloseCreateIncident(int hostId)
+        {
+            // Create
         }
     }
 }
