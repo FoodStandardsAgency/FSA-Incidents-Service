@@ -5,6 +5,7 @@ using FSA.IncidentsManagement.Root.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Identity.Client;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace FSA.SignalsManagement.Controllers
     [Produces("application/json")]
     [ApiController]
     [Authorize]
-    public class SignalsController:ControllerBase
+    public class SignalsController : ControllerBase
     {
         private readonly ILogger<SignalsController> log;
         private ISIMSApplication simsApp;
@@ -35,7 +36,7 @@ namespace FSA.SignalsManagement.Controllers
         {
             if (id == 0) return BadRequest("No signal Id was passed");
             return new OkObjectResult(await this.simsApp.Signals.Get(id));
-            
+
         }
 
         [HttpPut()]
@@ -82,16 +83,6 @@ namespace FSA.SignalsManagement.Controllers
         }
 
 
-        [HttpPost("Promote/{id}")]
-        [SwaggerOperation(Summary = "Promote to Signal")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(500)]
-        public async Task<IActionResult> PromoteToSignal([FromRoute] int id)
-        {
-            await this.simsApp.Signals.PromoteToIncident(id);
-            return new OkResult();
-        }
-
         [HttpPost("Dashboard")]
         [SwaggerOperation(Summary = "Signals dashboard search")]
         [ProducesResponseType(typeof(SignalDashboardItem), 200)]
@@ -108,7 +99,7 @@ namespace FSA.SignalsManagement.Controllers
                     TotalRecords = 0
                 });
 
-            var dashBoard = dashboard.PageSize.HasValue && dashboard.PageSize > 0 
+            var dashBoard = dashboard.PageSize.HasValue && dashboard.PageSize > 0
                                                 ? await this.simsApp.Signals.DashboardSearch(search: dashboard.Search ?? "", startPage: dashboard.PageNo, pageSize: dashboard.PageSize.Value)
                                                 : await this.simsApp.Signals.DashboardSearch(search: dashboard.Search ?? "", startPage: dashboard.PageNo);
             return new OkObjectResult(new
@@ -116,6 +107,40 @@ namespace FSA.SignalsManagement.Controllers
                 Results = dashBoard,
                 TotalRecords = dashBoard.TotalResults
             });
+        }
+
+        [HttpPost("Close/NoIncident")]
+        [SwaggerOperation(Summary = "Close no incident")]
+        [ProducesResponseType(typeof(SignalDashboardItem), 200)]
+        [ProducesResponseType(500)]
+        [Produces("application/json")]
+        public async Task<IActionResult> CloseNoIncident(SimsSignalCloseNoIncident closeNoIncident)
+        {
+            await this.simsApp.Signals.CloseNoIncident(closeNoIncident);
+            return this.Ok();
+        }
+
+        [HttpPost("Close/Create")]
+        [SwaggerOperation(Summary = "Close create incident")]
+        [ProducesResponseType(typeof(SignalDashboardItem), 200)]
+        [ProducesResponseType(500)]
+        [Produces("application/json")]
+        public async Task<IActionResult> CloseCreateIncident(SimsSignalCloseCreateIncident closeCreate)
+        {
+            var incidentId = await this.simsApp.Signals.CloseCreateIncident(closeCreate);
+            return new OkObjectResult(incidentId);
+
+        }
+
+        [HttpPost("Close/Link")]
+        [SwaggerOperation(Summary = "Close link incident")]
+        [ProducesResponseType(typeof(SignalDashboardItem), 200)]
+        [ProducesResponseType(500)]
+        [Produces("application/json")]
+        public async Task<IActionResult> CloseLinkIncident(SimsSignalCloseLinkIncident closeLink)
+        {
+            await this.simsApp.Signals.CloseLinkIncident(closeLink);
+            return this.Ok();
         }
     }
 }

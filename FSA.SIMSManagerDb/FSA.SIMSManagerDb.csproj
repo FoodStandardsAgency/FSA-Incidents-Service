@@ -38,6 +38,20 @@
     <Compile Remove="Migrations\20200908130709_hose.Designer.cs" />
     <Compile Remove="Migrations\20200911152658_ballerCategories.cs" />
     <Compile Remove="Migrations\20200911152658_ballerCategories.Designer.cs" />
+    <Compile Remove="Migrations\20200915073016_fixCloseNoIncindet.cs" />
+    <Compile Remove="Migrations\20200915073016_fixCloseNoIncindet.Designer.cs" />
+    <Compile Remove="Migrations\20200915073343_fixCloseNoIncindet.cs" />
+    <Compile Remove="Migrations\20200915073343_fixCloseNoIncindet.Designer.cs" />
+    <Compile Remove="Migrations\20200915073617_fixCloseNoIncindet.cs" />
+    <Compile Remove="Migrations\20200915073617_fixCloseNoIncindet.Designer.cs" />
+    <Compile Remove="Migrations\20200915073743_fixCloseNoIncindet.cs" />
+    <Compile Remove="Migrations\20200915073743_fixCloseNoIncindet.Designer.cs" />
+    <Compile Remove="Migrations\20200915073932_fixCloseNoIncindet.cs" />
+    <Compile Remove="Migrations\20200915073932_fixCloseNoIncindet.Designer.cs" />
+    <Compile Remove="Migrations\20200915074102_fixCloseNoIncindet.cs" />
+    <Compile Remove="Migrations\20200915074102_fixCloseNoIncindet.Designer.cs" />
+    <Compile Remove="Migrations\20200915075612_fixCloseNoIncindet.cs" />
+    <Compile Remove="Migrations\20200915075612_fixCloseNoIncindet.Designer.cs" />
     <Compile Remove="Repositories\SignalsLinkedRecords.cs" />
   </ItemGroup>
 

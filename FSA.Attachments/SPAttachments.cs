@@ -360,5 +360,10 @@ namespace FSA.Attachments
                 };
             }
         }
+
+        public Task MigrateToIncident(int incidentId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

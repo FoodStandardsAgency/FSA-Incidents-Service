@@ -1,4 +1,5 @@
-﻿using FSA.IncidentsManagement.Root.Domain;
+﻿using FSA.IncidentsManagement.Root;
+using FSA.IncidentsManagement.Root.Domain;
 using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagement.Root.Shared;
@@ -33,7 +34,7 @@ namespace Sims.Application
 
         public Task<SimsSignal> Add(SimsSignal signal)
         {
-            if (signal.CommonId !=0) throw new SimsItemExists("Signal already exists!");
+            if (signal.CommonId != 0) throw new SimsItemExists("Signal already exists!");
             return dbHost.Signals.Add(signal);
         }
 
@@ -56,18 +57,13 @@ namespace Sims.Application
             return dbHost.Signals.Get(signalId);
         }
 
-        public Task<int> PromoteToIncident(int signalId)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public Task<SimsSignal> Update(SimsSignal signal)
         {
             try
             {
                 return dbHost.Signals.Update(signal);
             }
-            catch(ArgumentOutOfRangeException ex)
+            catch (ArgumentOutOfRangeException ex)
             {
                 throw new SIMSException(ex.Message);
             }
@@ -81,6 +77,26 @@ namespace Sims.Application
         public Task UpdateStatus(int signalId, int status)
         {
             return dbHost.Signals.UpdateStatus(signalId, status);
+        }
+
+        public Task CloseLinkIncident(SimsSignalCloseLinkIncident close)
+        {
+            return dbHost.Signals.CloseLinkIncident(close.SignalId, close.IncidentId);
+        }
+
+        public async Task<int> CloseCreateIncident(SimsSignalCloseCreateIncident close)
+        {
+            var incidentId = await dbHost.Signals.CloseCreateIncident(close.ReasonNote, close.SignalId);
+            var libInfo =await this.attachments.Incidents.EnsureLibrary(GeneralExtensions.GenerateIncidentId(incidentId));
+
+          //  await this.attachments.Signals.MigrateToIncident(incidentId);
+            return incidentId;
+        }
+
+        public Task CloseNoIncident(SimsSignalCloseNoIncident close)
+        {
+            return dbHost.Signals.CloseNoIncident(close);
+
         }
     }
 

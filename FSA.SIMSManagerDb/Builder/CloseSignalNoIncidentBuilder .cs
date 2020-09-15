@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Conventions.Infrastructure;
 
 namespace FSA.SIMSManagerDb.Builder
 {
-    internal class CloseSignalNoIncidentBuilder : AuditInfoBuilderConfiguration<CloseSignalNoIncident>
+    internal class CloseSignalNoIncidentBuilder : AuditInfoBuilderConfiguration<CloseSignalNoIncidentDb>
     {
-        public override void Configure(EntityTypeBuilder<CloseSignalNoIncident> builder)
+        public override void Configure(EntityTypeBuilder<CloseSignalNoIncidentDb> builder)
         {
             base.Configure(builder);
-            builder.HasKey(a => a.SignalId);
-
+            builder.HasKey (a => a.SignalId);
+            //builder.Property(a => a.SignalId).ValueGeneratedNever();
             builder.HasOne(a => a.Team).WithMany().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(a => a.Reason).WithMany().OnDelete(DeleteBehavior.NoAction);
 

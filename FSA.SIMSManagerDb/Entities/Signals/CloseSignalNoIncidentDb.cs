@@ -6,9 +6,10 @@ using System.Text;
 
 namespace FSA.SIMSManagerDb.Entities
 {
-    internal class CloseSignalNoIncident : BaseEntityDb
+    internal class CloseSignalNoIncidentDb : BaseEntityDb
     {
         public int SignalId { get; set; }
+        public SignalDb Signal { get; set; }
         public int TeamId { get; set; }
         public CloseSignalTeamDb Team { get; set; }
         public int ReasonId { get; set; }

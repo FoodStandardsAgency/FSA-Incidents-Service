@@ -38,7 +38,7 @@ namespace FSA.SIMSManagerDb
         internal DbSet<SignalProductFboDb> SignalProductFbos { get; set; }
         internal DbSet<SignalProductPackSizeDb> SignalProductPackSizes { get; set; }
 
-        internal DbSet<CloseSignalNoIncident> SignalClosedNoIncident { get; set; }
+        internal DbSet<CloseSignalNoIncidentDb> SignalClosedNoIncident { get; set; }
         internal DbSet<SignalIncidentLinkDb> SignalIncidentLinks { get; set; }
 
         #endregion

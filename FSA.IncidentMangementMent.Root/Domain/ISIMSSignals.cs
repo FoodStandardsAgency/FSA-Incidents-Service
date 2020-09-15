@@ -18,7 +18,10 @@ namespace FSA.IncidentsManagement.Root.Domain
         Task UpdateLeadOfficer(IEnumerable<int> id, string user);
         Task UpdateStatus(int signalId, int status);
 
-        Task<int> PromoteToIncident(int signalId);
+        
+        Task CloseNoIncident(SimsSignalCloseNoIncident closeIncident);
+        Task<int> CloseCreateIncident(SimsSignalCloseCreateIncident createIncident);
+        Task CloseLinkIncident(SimsSignalCloseLinkIncident closeLink);
 
         ISIMSLinks Links { get; }
         ISIMSNotes Notes { get; }

@@ -248,8 +248,8 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForMember(a => a.Contacts, m => m.MapFrom(m => m.Address.Contacts));
 
 
-            CreateMap<SimsSignalCloseNoIncident, CloseSignalNoIncident>(MemberList.Source);
-            CreateMap<CloseSignalNoIncident, SimsSignalCloseNoIncident>(MemberList.Destination);
+            CreateMap<SimsSignalCloseNoIncident, CloseSignalNoIncidentDb>(MemberList.Source);
+            CreateMap<CloseSignalNoIncidentDb, SimsSignalCloseNoIncident>(MemberList.Destination);
 
         }
 

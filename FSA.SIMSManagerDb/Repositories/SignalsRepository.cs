@@ -293,12 +293,12 @@ namespace FSA.SIMSManagerDb.Repositories
         /// <returns></returns>
         public async Task CloseNoIncident(SimsSignalCloseNoIncident closeDetails)
         {
-            var signal = this.ctx.Signals.Find(closeDetails.HostId);
+            var signal = this.ctx.Signals.Find(closeDetails.SignalId);
             if (signal.SignalStatusId != (int)SignalStatusTypes.Closed_Incident || signal.SignalStatusId != (int)SignalStatusTypes.Closed_No_Incident)
             {
                 signal.SignalStatusId = (int)SignalStatusTypes.Closed_No_Incident;
-                var dbClosedDetails = this.mapper.Map<CloseSignalNoIncident>(closeDetails);
-                this.ctx.Add(closeDetails);
+                var dbClosedDetails = this.mapper.Map<CloseSignalNoIncidentDb>(closeDetails);
+                this.ctx.Add(dbClosedDetails);
                 await this.ctx.SaveChangesAsync();
             }
         }
@@ -327,7 +327,7 @@ namespace FSA.SIMSManagerDb.Repositories
         /// </summary>
         /// <param name="hostId"></param>
         /// <returns></returns>
-        public async Task CloseCreateIncident(int hostId)
+        public async Task<int> CloseCreateIncident(string reason, int hostId)
         {
             // Create
             var signal = this.ctx.Signals.AsNoTracking().First(a => a.Id == hostId);
@@ -336,18 +336,40 @@ namespace FSA.SIMSManagerDb.Repositories
                 // Signals are text all the way
                 // But the info should match with our stored lookups.
                 var hazardGroup = signal.HazardGroup ?? "";
-                var countryOfOrigin = signal.CountryOfOrigin ?? "";
-                var DataSource = signal.DataSource ?? "";
-                var leadOfficer = signal.LeadOfficer ?? "";
-                var statusId = signal.SignalStatusId;
-                var priority = signal.Priority;
+                var title = signal.Title;
 
-                // Create new Incidents and accutrements.
-                //var newIncident = new IncidentDb
-                //{
+                var stakeholders = this.mapper.Map<List<IncidentStakeholderDb>>(signal.Stakeholders);
+                var products = this.mapper.Map<List<IncidentProductDb>>(signal.Products);
+                var notes = this.mapper.Map<List<IncidentNoteDb>>(signal.Notes);
 
-                //}
+                // fetch the relevant lookupIds
+                var incidentType = this.ctx.HazardGroups.FirstOrDefault(a => a.Title == hazardGroup);
+                incidentType = (incidentType == null) ? this.ctx.HazardGroups.FirstOrDefault(a => a.Title == "unclassified") : incidentType;
+                var otherDatasource = this.ctx.DataSources.FirstOrDefault(a => a.Title == "Other");
+                var productType = this.ctx.ProductTypes.First(a => a.Title == "Undefined");
+                var newIncident = new IncidentDb
+                {
+                    IncidentTitle = signal.Title,
+                    PriorityId = (int)PrioritiesStatus.TBC,
+                    ProductTypeId = productType.Id,
+                    IncidentStatusId = (int)IncidentStatusTypes.Unassigned,
+                    DataSourceId = otherDatasource.Id,
+                    IncidentTypeId = incidentType.Id,
+                    SignalUrl = signal.SourceLink,
+                    LeadOfficer = "",
+                    IncidentCreated = DateTime.Now,
+                    ReceivedOn = DateTime.Now,
+                    Stakeholders = stakeholders,
+                    Products = products,
+                    Notes = notes.Concat(new List<IncidentNoteDb> { new IncidentNoteDb { Note = reason } }).ToList(),
+                };
+
+                var savedIncident = ctx.Incidents.Add(newIncident);
+                await ctx.SaveChangesAsync();
+                return savedIncident.Entity.Id;
             }
+
+            return -1;
         }
     }
 }
