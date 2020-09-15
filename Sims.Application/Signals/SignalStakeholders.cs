@@ -3,6 +3,7 @@ using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb.Contracts;
 using Sims.Application.Exceptions;
+using Sims.Application.Helpers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -17,16 +18,19 @@ namespace Sims.Application
             this.dbHost = dbHost;
         }
 
-        public Task<SimsStakeholder> Add(int hostId, SimsStakeholder SimsStakeholder)
+        public async Task<SimsStakeholder> Add(int hostId, SimsStakeholder SimsStakeholder)
         {
-            return this.dbHost.Signals.Stakeholders.Add(hostId, SimsStakeholder);
-
+            if (await dbHost.Signals.IsClosed(hostId)) throw new SimsSignalClosedException("Signal closed.");
+            if (SimsStakeholder.DiscriminatorId == (int)SimsStakeholderAddressTypes.FSA && SimsStakeholder.AddressId > 0)
+                throw new SIMSException("FSA Member cannot have an address assigned");
+            if (SimsStakeholder.AddressId == 0) SimsStakeholder.AddressId = null;
+            return await this.dbHost.Signals.Stakeholders.Add(hostId, SimsStakeholder);
         }
 
-        public async Task<IEnumerable<SimsStakeholder>> GetAll(int incidentId)
+        public async Task<IEnumerable<SimsStakeholder>> GetAll(int signalId)
         {
-            if (incidentId == 0) throw new SimsItemMissing("incident id missing");
-            return await this.dbHost.Signals.Stakeholders.GetAll(incidentId);
+            if (signalId == 0) throw new SimsItemMissing("incident id missing");
+            return await this.dbHost.Signals.Stakeholders.GetAll(signalId);
         }
 
         public Task Remove(int stakeholderId)
@@ -37,6 +41,7 @@ namespace Sims.Application
 
         public async Task<SimsStakeholder> Update(SimsStakeholder SimsStakeholder)
         {
+            if (await dbHost.Signals.IsClosed(SimsStakeholder.HostId)) throw new SimsSignalClosedException("Signal closed.");
             if (SimsStakeholder.Id == 0) throw new SimsItemMissing("Stakeholder id missing");
             if (SimsStakeholder.HostId == 0) throw new SimsSignalMissingException("Signal id missing");
             return await this.dbHost.Signals.Stakeholders.Update(SimsStakeholder);

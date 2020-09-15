@@ -1,6 +1,5 @@
 ﻿using FSA.IncidentsManagement.Root.Domain;
 using FSA.IncidentsManagement.Root.DTOS;
-using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb.Contracts;
 using Sims.Application.Exceptions;
 using Sims.Application.Helpers;
