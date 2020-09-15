@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
@@ -18,40 +18,6 @@
     <Compile Remove="Entities\IncidentProducts\xSignalProductDb.cs" />
     <Compile Remove="Entities\IncidentProducts\xSignalProductFboDb.cs" />
     <Compile Remove="Entities\IncidentProducts\xSignalProductPackSizeDb.cs" />
-    <Compile Remove="Migrations\20200828211711_justChecking.cs" />
-    <Compile Remove="Migrations\20200828211711_justChecking.Designer.cs" />
-    <Compile Remove="Migrations\20200828230945_LessDiscriminatingNote.cs" />
-    <Compile Remove="Migrations\20200828230945_LessDiscriminatingNote.Designer.cs" />
-    <Compile Remove="Migrations\20200829104144_AddressAttachments.cs" />
-    <Compile Remove="Migrations\20200829104144_AddressAttachments.Designer.cs" />
-    <Compile Remove="Migrations\20200830231359_yelp.cs" />
-    <Compile Remove="Migrations\20200830231359_yelp.Designer.cs" />
-    <Compile Remove="Migrations\20200830232528_yelp.cs" />
-    <Compile Remove="Migrations\20200830232528_yelp.Designer.cs" />
-    <Compile Remove="Migrations\20200830233920_yelp.cs" />
-    <Compile Remove="Migrations\20200830233920_yelp.Designer.cs" />
-    <Compile Remove="Migrations\20200907115143_statusIdPtOneFool.cs" />
-    <Compile Remove="Migrations\20200907115143_statusIdPtOneFool.Designer.cs" />
-    <Compile Remove="Migrations\20200907115753_statusIdPtOneFool.cs" />
-    <Compile Remove="Migrations\20200907115753_statusIdPtOneFool.Designer.cs" />
-    <Compile Remove="Migrations\20200908130709_hose.cs" />
-    <Compile Remove="Migrations\20200908130709_hose.Designer.cs" />
-    <Compile Remove="Migrations\20200911152658_ballerCategories.cs" />
-    <Compile Remove="Migrations\20200911152658_ballerCategories.Designer.cs" />
-    <Compile Remove="Migrations\20200915073016_fixCloseNoIncindet.cs" />
-    <Compile Remove="Migrations\20200915073016_fixCloseNoIncindet.Designer.cs" />
-    <Compile Remove="Migrations\20200915073343_fixCloseNoIncindet.cs" />
-    <Compile Remove="Migrations\20200915073343_fixCloseNoIncindet.Designer.cs" />
-    <Compile Remove="Migrations\20200915073617_fixCloseNoIncindet.cs" />
-    <Compile Remove="Migrations\20200915073617_fixCloseNoIncindet.Designer.cs" />
-    <Compile Remove="Migrations\20200915073743_fixCloseNoIncindet.cs" />
-    <Compile Remove="Migrations\20200915073743_fixCloseNoIncindet.Designer.cs" />
-    <Compile Remove="Migrations\20200915073932_fixCloseNoIncindet.cs" />
-    <Compile Remove="Migrations\20200915073932_fixCloseNoIncindet.Designer.cs" />
-    <Compile Remove="Migrations\20200915074102_fixCloseNoIncindet.cs" />
-    <Compile Remove="Migrations\20200915074102_fixCloseNoIncindet.Designer.cs" />
-    <Compile Remove="Migrations\20200915075612_fixCloseNoIncindet.cs" />
-    <Compile Remove="Migrations\20200915075612_fixCloseNoIncindet.Designer.cs" />
     <Compile Remove="Repositories\SignalsLinkedRecords.cs" />
   </ItemGroup>
 

@@ -361,9 +361,9 @@ namespace FSA.Attachments
             }
         }
 
-        public Task MigrateToIncident(int incidentId)
+        public async Task MigrateToIncident(int incidentId, int signalId)
         {
-            throw new NotImplementedException();
+            // throw new NotImplementedException();
         }
     }
 }

@@ -171,6 +171,39 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForMember(a => a.AdditionalInfo, m => m.MapFrom(a => String.IsNullOrEmpty(a.AdditionalInfo) ? "" : a.AdditionalInfo))
                 .IgnoreAuditData();
 
+
+            CreateMap<SignalProductDb, IncidentProductDb>(MemberList.Source)
+                  .IgnoreAuditData()
+                .ForMember(a => a.Id, m => m.Ignore())
+                .ForMember(a => a.Host, m => m.Ignore())
+                .ForMember(a => a.ProductType, m => m.Ignore())
+                .ForMember(a => a.CountryOfOrigin, m => m.Ignore())
+                .ForMember(a => a.AmountUnitType, m => m.Ignore())
+                .ForMember(a => a.HostId, m => m.Ignore());
+
+            CreateMap<SignalProductFboDb, IncidentProductFboDb>(MemberList.Source)
+                  .IgnoreAuditData()
+                  .ForMember(a => a.Product, m => m.Ignore())
+                  .ForMember(a => a.ProductId, m => m.Ignore());
+
+            CreateMap<SignalProductPackSizeDb, IncidentProductPackSizeDb>(MemberList.Source)
+                .IgnoreAuditData()
+                .ForMember(a => a.Id, m => m.Ignore())
+                 .ForMember(a => a.Product, m => m.Ignore())
+                 .ForMember(a => a.Unit, m => m.Ignore())
+                .ForMember(a => a.ProductId, m => m.Ignore());
+
+            CreateMap<SignalProductDateDb, IncidentProductDateDb>(MemberList.Source)
+                .IgnoreAuditData()
+                .ForMember(a => a.Id, m => m.Ignore())
+                .ForMember(a => a.Product, m => m.Ignore())
+                .ForMember(a => a.ProductId, m => m.Ignore());
+
+            CreateMap<SignalNoteDb, IncidentNoteDb>(MemberList.Source)
+                .IgnoreAuditData()
+                .ForMember(a => a.Id, m => m.Ignore())
+                .ForMember(a => a.HostId, m => m.Ignore());
+
             CreateMap<SimsProductPackSize, IncidentProductPackSizeDb>(MemberList.Source)
                     .EqualityComparison((dto, o) => dto.Id == o.Id)
                     .IgnoreAuditData();

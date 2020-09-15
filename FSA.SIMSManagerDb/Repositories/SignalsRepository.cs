@@ -12,7 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -330,16 +329,28 @@ namespace FSA.SIMSManagerDb.Repositories
         public async Task<int> CloseCreateIncident(string reason, int hostId)
         {
             // Create
-            var signal = this.ctx.Signals.AsNoTracking().First(a => a.Id == hostId);
+            var signal = this.ctx.Signals
+                                        .Include(a => a.Notes)
+                                        .First(a => a.Id == hostId);
+
+
+            var signalProds = this.ctx.SignalProducts.AsNoTracking()
+                                        .Include(a => a.ProductDates)
+                                        .Include(a => a.RelatedFBOs)
+                                        .Include(a => a.ProductType)
+                                        .Include(a => a.PackSizes)
+                                        .Where(o => o.HostId == hostId).ToList();
+
+
+
             if (signal.SignalStatusId != (int)SignalStatusTypes.Closed_Incident || signal.SignalStatusId != (int)SignalStatusTypes.Closed_No_Incident)
             {
                 // Signals are text all the way
                 // But the info should match with our stored lookups.
                 var hazardGroup = signal.HazardGroup ?? "";
-                var title = signal.Title;
-
+                var prods = mapper.Map<List<IncidentProductDb>>(signalProds);
                 var stakeholders = this.mapper.Map<List<IncidentStakeholderDb>>(signal.Stakeholders);
-                var products = this.mapper.Map<List<IncidentProductDb>>(signal.Products);
+               
                 var notes = this.mapper.Map<List<IncidentNoteDb>>(signal.Notes);
 
                 // fetch the relevant lookupIds
@@ -347,6 +358,7 @@ namespace FSA.SIMSManagerDb.Repositories
                 incidentType = (incidentType == null) ? this.ctx.HazardGroups.FirstOrDefault(a => a.Title == "unclassified") : incidentType;
                 var otherDatasource = this.ctx.DataSources.FirstOrDefault(a => a.Title == "Other");
                 var productType = this.ctx.ProductTypes.First(a => a.Title == "Undefined");
+
                 var newIncident = new IncidentDb
                 {
                     IncidentTitle = signal.Title,
@@ -357,14 +369,18 @@ namespace FSA.SIMSManagerDb.Repositories
                     IncidentTypeId = incidentType.Id,
                     SignalUrl = signal.SourceLink,
                     LeadOfficer = "",
+                    ClassificationId = 1,
+                    ContactMethodId =4,
+                    DeathIllnessId=1,
                     IncidentCreated = DateTime.Now,
                     ReceivedOn = DateTime.Now,
                     Stakeholders = stakeholders,
-                    Products = products,
+                    Products = prods,
                     Notes = notes.Concat(new List<IncidentNoteDb> { new IncidentNoteDb { Note = reason } }).ToList(),
                 };
 
                 var savedIncident = ctx.Incidents.Add(newIncident);
+                signal.SignalStatusId = (int)SignalStatusTypes.Closed_Incident;
                 await ctx.SaveChangesAsync();
                 return savedIncident.Entity.Id;
             }

@@ -87,16 +87,23 @@ namespace Sims.Application
         public async Task<int> CloseCreateIncident(SimsSignalCloseCreateIncident close)
         {
             var incidentId = await dbHost.Signals.CloseCreateIncident(close.ReasonNote, close.SignalId);
-            var libInfo =await this.attachments.Incidents.EnsureLibrary(GeneralExtensions.GenerateIncidentId(incidentId));
-
-          //  await this.attachments.Signals.MigrateToIncident(incidentId);
-            return incidentId;
+            if (incidentId != -1)
+            {
+                // fetch all the signal documents info
+                //var allDocs = await this.attachments.Signals.FetchAllAttchmentsLinks(GeneralExtensions.GenerateIncidentId(close.SignalId));
+                var libInfo = await this.attachments.Incidents.EnsureLibrary(GeneralExtensions.GenerateIncidentId(incidentId));
+                await this.attachments.Incidents.MigrateToIncident(incidentId, close.SignalId);
+                return incidentId;
+            }
+            else
+            {
+                throw new SIMSException("Signal already closed.");
+            }
         }
 
         public Task CloseNoIncident(SimsSignalCloseNoIncident close)
         {
             return dbHost.Signals.CloseNoIncident(close);
-
         }
     }
 

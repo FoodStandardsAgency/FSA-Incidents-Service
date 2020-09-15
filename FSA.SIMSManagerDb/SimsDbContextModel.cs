@@ -107,8 +107,10 @@ namespace FSA.SIMSManagerDb
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<DataSourceDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<DeathIllnessDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<StakeholderIncidentRoleDb>());
+            modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<StakeholderDiscriminatorDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<AdminLeadDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<ProductTypeDb>());
+            modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<NotifierTypeDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<DateTypeDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<IncidentStatusDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<SignalStatusDb>());

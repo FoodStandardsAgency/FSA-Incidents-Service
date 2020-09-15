@@ -1,10 +1,4 @@
-﻿using AutoMapper.Configuration;
-using SIMS.TestProjects.Setup;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SIMS.TestProjects.Setup;
 using Xunit;
 
 namespace SIMS.TestProjects

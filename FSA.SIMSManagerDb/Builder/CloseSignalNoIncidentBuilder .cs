@@ -12,10 +12,10 @@ namespace FSA.SIMSManagerDb.Builder
         {
             base.Configure(builder);
             builder.HasKey (a => a.SignalId);
-            //builder.Property(a => a.SignalId).ValueGeneratedNever();
+            builder.Property(a => a.SignalId).ValueGeneratedNever();
             builder.HasOne(a => a.Team).WithMany().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(a => a.Reason).WithMany().OnDelete(DeleteBehavior.NoAction);
-
+            builder.HasOne(a => a.Signal).WithOne();
             builder.Property(a => a.UserReason).IsRequired();
 
         }
