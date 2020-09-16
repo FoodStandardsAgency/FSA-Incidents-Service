@@ -14,19 +14,9 @@ namespace FSA.Attachments
             this.Signals = new SPAttachments(clientId, tenantId, cert, hostUrl, Signals.SiteUrl, Signals.ContentTypeId);
         }
 
-        public ISimsAttachments Incidents { get; }
-        public ISimsAttachments Signals { get; }
+        public ISPAttachmentManagement Incidents { get; }
+        public ISPAttachmentManagement Signals { get; }
 
-        public async Task<SimsAttachmentFileInfo> RenameFile(string filename, string fileUrl)
-        {
-            var itm = await this.Incidents.RenameAttachment(filename, fileUrl);
-
-            return new SimsAttachmentFileInfo
-            {
-                 FileName =itm.fileName,
-                 Url = itm.url,
-                 Tags = 0
-            };
-        }
+ 
     }
 }

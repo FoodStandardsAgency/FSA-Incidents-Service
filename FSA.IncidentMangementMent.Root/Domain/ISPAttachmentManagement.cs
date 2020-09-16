@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Root.Domain
 {
-    public interface ISimsAttachments
+    public interface ISPAttachmentManagement
     {
         Task<(string fileName, string url)> RenameAttachment(string fileName, string url);
         Task<(string filename, string url)> AddAttachment(string filePath, string filename, string library);
         Task<IEnumerable<SimsAttachmentFileInfo>> FetchAllAttchmentsLinks(string hostId);
         //Task<IncidentAttachment> FetchAttachment(string url);
         Task<SimsAttachmentLibraryInfo> EnsureLibrary(string hostId);
-        Task MigrateToIncident(int incidentId, int signalId);
+        Task<IEnumerable<SimsSignalIncidentMigratedFile>> MigrateToLibrary(string incidentId, string signalId);
     }
 }

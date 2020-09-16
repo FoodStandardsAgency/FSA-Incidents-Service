@@ -1,6 +1,7 @@
 ﻿using FSA.IncidentsManagement.Root.Domain;
 using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
+using Microsoft.Graph;
 using Microsoft.SharePoint.Client;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace FSA.Attachments
     /// <summary>
     /// Manage the attachments to a particular incident
     /// </summary>
-    public class SPAttachments : ISimsAttachments
+    public class SPAttachments : ISPAttachmentManagement
     {
 
         private readonly X509Certificate2 cert;
@@ -23,7 +24,7 @@ namespace FSA.Attachments
         private readonly string contentTypeId;
 
         private readonly Func<Task<string>> fetchAccessToken;
-        
+
         private readonly string[] scopes;
         public SPAttachments(string clientId, string tenantId, X509Certificate2 cert, string hostUrl, string siteUrl, string contentTypeId)
         {
@@ -31,7 +32,7 @@ namespace FSA.Attachments
             this.cert = cert;
             this.siteUrl = siteUrl;
             this.contentTypeId = contentTypeId;
-            
+
             //this.tenantId = tenantId;
             this.scopes = new string[] { $"https://{hostUrl}/.default" }; // "https://{hostUrl}.com/TermStore.ReadWrite.All" };
             this.fetchAccessToken = () => SpContextHelper.GetApplicationAuthenticatedClient(clientId, this.cert, this.scopes, tenantId);
@@ -85,7 +86,7 @@ namespace FSA.Attachments
             }
 
         }
-        
+
         public async Task<(string filename, string url)> AddAttachment(string filePath, string fileName, string hostIdentifier)
         {
             var accessToken = await fetchAccessToken();
@@ -132,7 +133,7 @@ namespace FSA.Attachments
                 }
             }
         }
-       
+
         /// <summary>
         /// Based on docs
         /// https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/upload-large-files-sample-app-for-sharepoint
@@ -273,13 +274,13 @@ namespace FSA.Attachments
             {
                 var theLib = await EnsureList(listName, ctx);
                 var files = theLib.RootFolder.Files;
-                ctx.Load(files, o=>o.Include(p=>p.ListItemAllFields["EncodedAbsUrl"], p=>p.Name));
+                ctx.Load(files, o => o.Include(p => p.ListItemAllFields["EncodedAbsUrl"], p => p.Name));
                 await ctx.ExecuteQueryAsync();
                 return files.Select(p => new SimsAttachmentFileInfo { FileName = p.Name, Url = p.ListItemAllFields["EncodedAbsUrl"] as string }).ToList();
             }
         }
 
-        public async Task< IncidentAttachment> FetchAttachment(string url)
+        public async Task<IncidentAttachment> FetchAttachment(string url)
         {
             var accessToken = await fetchAccessToken();
             using (var ctx = SpContextHelper.GetClientContextWithAccessToken(this.siteUrl, accessToken))
@@ -312,7 +313,7 @@ namespace FSA.Attachments
             {
                 // Load the file, but then we need to check to make sure the new file name does not already exist.
                 var file = ctx.Web.GetFileByUrl(url);
-                ctx.Load(file, f => f.ListItemAllFields["FileDirRef"], f=>f.ListItemAllFields["EncodedAbsUrl"]);
+                ctx.Load(file, f => f.ListItemAllFields["FileDirRef"], f => f.ListItemAllFields["EncodedAbsUrl"]);
                 await ctx.ExecuteQueryAsync();
                 if (file != null)
                 {
@@ -323,10 +324,10 @@ namespace FSA.Attachments
                         var existingFile = ctx.Web.GetFileByServerRelativeUrl(newFilename);
                         ctx.Load(existingFile);
                         await ctx.ExecuteQueryAsync();
-                        if (existingFile.ServerObjectIsNull.HasValue? !existingFile.ServerObjectIsNull.Value: false ) 
-                            { throw new ArgumentOutOfRangeException("File already exists"); };
+                        if (existingFile.ServerObjectIsNull.HasValue ? !existingFile.ServerObjectIsNull.Value : false)
+                        { throw new ArgumentOutOfRangeException("File already exists"); };
                     }
-                    catch(ServerException e) when (e.Message.Contains("File Not Found."))
+                    catch (ServerException e) when (e.Message.Contains("File Not Found."))
                     {
                         file.MoveTo(newFilename, MoveOperations.RetainEditorAndModifiedOnMove);
                         ctx.Load(file, f => f.ListItemAllFields["EncodedAbsUrl"]);
@@ -361,9 +362,57 @@ namespace FSA.Attachments
             }
         }
 
-        public async Task MigrateToIncident(int incidentId, int signalId)
+        public async Task<IEnumerable<SimsSignalIncidentMigratedFile>> MigrateToLibrary(string incidentId, string signalId)
         {
-            // throw new NotImplementedException();
+            var accessToken = await fetchAccessToken();
+            using (var ctx = SpContextHelper.GetClientContextWithAccessToken(this.siteUrl, accessToken))
+            {
+                var incidentLib = ctx.Web.Lists.GetByTitle(incidentId);
+                var signalLib = ctx.Web.Lists.GetByTitle(signalId);
+                ctx.Load(incidentLib, a => a.RootFolder);
+                ctx.Load(signalLib, a => a.RootFolder, a=>a.RootFolder.Files);
+                await ctx.ExecuteQueryAsync();
+
+                // Get all the signal files and their names
+                var signalDictionary = new Dictionary<string, string>();
+                foreach(var file in signalLib.RootFolder.Files)
+                {
+                    signalDictionary.Add(file.Name, file.ServerRelativeUrl);
+                }
+
+                // Moves the files over to incidents
+                foreach(var file in signalLib.RootFolder.Files)
+                {
+                    file.MoveTo(Path.Combine(incidentLib.RootFolder.ServerRelativeUrl, file.Name), MoveOperations.Overwrite | MoveOperations.RetainEditorAndModifiedOnMove);
+                    file.Update();
+                }
+                
+                await ctx.ExecuteQueryAsync();
+
+                // Once all the files have been moved, we need to update all the files to have the incident id
+                ctx.Load(incidentLib, a => a.RootFolder,a=>a.RootFolder.Files,  a => a.RootFolder.Files.Include(o => o.ListItemAllFields));
+                await ctx.ExecuteQueryAsync();
+                var incidentDictionary = new Dictionary<string, string>();
+                foreach(var file in incidentLib.RootFolder.Files)
+                {
+                    ctx.Load(file, a => a.ListItemAllFields);
+                    var fileItem = file.ListItemAllFields;
+                    fileItem["ContentTypeId"] = this.contentTypeId;
+                    fileItem["SIMSIncidentId"] = incidentId;
+                    fileItem.Update();
+
+                    incidentDictionary.Add(file.Name, file.ServerRelativeUrl);
+                }
+
+                await ctx.ExecuteQueryAsync();
+
+                return incidentDictionary.Select(a => new SimsSignalIncidentMigratedFile
+                {
+                    SignalUrl = signalDictionary[a.Key],
+                    IncidentUrl = a.Value,
+                    FileName= a.Key
+                }).ToList();
+            }
         }
     }
 }

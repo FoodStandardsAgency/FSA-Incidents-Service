@@ -10,9 +10,9 @@ namespace Sims.Application
     internal class SignalAttachments : ISIMSAttachments
     {
         private ISimsDbHost dbHost;
-        private readonly ISimsAttachments attachments;
+        private readonly ISPAttachmentManagement attachments;
 
-        public SignalAttachments(ISimsDbHost dbHost, ISimsAttachments attachments)
+        public SignalAttachments(ISimsDbHost dbHost, ISPAttachmentManagement attachments)
         {
             this.dbHost = dbHost;
             this.attachments = attachments;
@@ -21,7 +21,7 @@ namespace Sims.Application
         {
             var signalLibrary = AppExtensions.GenerateSignalsId(hostId);
             var item = await attachments.AddAttachment(filePath, filename, signalLibrary);
-            return await dbHost.Incidents.Attachments.Add(item.url, hostId);
+            return await dbHost.Incidents.Attachments.Add(hostId, item.url);
         }
 
         public Task<SimsAttachmentLibraryInfo> EnsureLibrary(int hostId)
@@ -58,7 +58,7 @@ namespace Sims.Application
 
         public Task<SimsAttachmentFileInfo> RegisterAttachment(string fileUrl, int hostId)
         {
-            return dbHost.Signals.Attachments.Add(fileUrl, hostId);
+            return dbHost.Signals.Attachments.Add(hostId, fileUrl);
         }
 
         public Task<SimsAttachmentFileInfo> Update(string filePath, SimsDocumentTagTypes docTagTypes)

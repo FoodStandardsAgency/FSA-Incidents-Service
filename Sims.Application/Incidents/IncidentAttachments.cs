@@ -11,9 +11,9 @@ namespace Sims.Application
     internal class IncidentAttachments : ISIMSAttachments
     {
         private ISimsDbHost dbHost;
-        private readonly ISimsAttachments attachments;
+        private readonly ISPAttachmentManagement attachments;
 
-        public IncidentAttachments(ISimsDbHost dbHost, ISimsAttachments attachments)
+        public IncidentAttachments(ISimsDbHost dbHost, ISPAttachmentManagement attachments)
         {
             this.dbHost = dbHost;
             this.attachments = attachments;
@@ -25,7 +25,7 @@ namespace Sims.Application
             {
                 var incidentLibrary = AppExtensions.GenerateIncidentId(hostId);
                 var item = await attachments.AddAttachment(filePath, filename, incidentLibrary);
-                return await dbHost.Incidents.Attachments.Add(item.url, hostId);
+                return await dbHost.Incidents.Attachments.Add(hostId, item.url);
             }
             else
                 throw new SimsIncidentClosedException("Incident closed, cannot upload attachment");
@@ -60,12 +60,12 @@ namespace Sims.Application
 
         public Task<IEnumerable<SimsAttachmentFileInfo>> GetAllTags(int hostId)
         {
-            return dbHost.Incidents.Attachments.Get(hostId);   
+            return dbHost.Incidents.Attachments.Get(hostId);
         }
 
         public Task<SimsAttachmentFileInfo> RegisterAttachment(string fileUrl, int hostId)
         {
-            return dbHost.Incidents.Attachments.Add(fileUrl,hostId);
+            return dbHost.Incidents.Attachments.Add(hostId, fileUrl);
 
         }
 

@@ -25,17 +25,34 @@ namespace FSA.SIMSManagerDb.Repositories
             this.mapper = mapper;
         }
 
-        public async Task<SimsAttachmentFileInfo> Add(string docUrl, int hostId)
+        public async Task<SimsAttachmentFileInfo> Add(int hostId, string docUrl, int tags = 0)
         {
             var newItem = this.DbSet.Add(new AttachmentDb
             {
                 DocUrl = docUrl,
                 HostId = hostId,
-                TagFlags = DocumentTagTypes.Unknown
+                TagFlags = (DocumentTagTypes)tags
             });
 
             await ctx.SaveChangesAsync();
             return mapper.Map<AttachmentDb, SimsAttachmentFileInfo>(newItem.Entity);
+        }
+
+        public Task BulkAdd(int hostId, Dictionary<string, int> UrlTags)
+        {
+            var newFileRegistrations = new List<AttachmentDb>();
+
+            foreach (var itm in UrlTags)
+            {
+                newFileRegistrations.Add(new AttachmentDb
+                {
+                    DocUrl = itm.Key,
+                    HostId = hostId,
+                    TagFlags = (DocumentTagTypes)itm.Value
+                });
+            }
+            this.DbSet.AddRange(newFileRegistrations);
+            return ctx.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<SimsAttachmentFileInfo>> Get(int hostId)
@@ -80,6 +97,6 @@ namespace FSA.SIMSManagerDb.Repositories
             return null;
         }
 
-        
+
     }
 }

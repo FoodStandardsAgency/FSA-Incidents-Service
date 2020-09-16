@@ -8,6 +8,7 @@ using Sims.Application.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sims.Application
@@ -85,15 +86,28 @@ namespace Sims.Application
             return dbHost.Signals.CloseLinkIncident(close.SignalId, close.IncidentId);
         }
 
+
+
         public async Task<int> CloseCreateIncident(SimsSignalCloseCreateIncident close)
         {
+            if (await dbHost.Signals.IsClosed(close.SignalId))
+                throw new SimsSignalClosedException("Signal closed");
             var incidentId = await dbHost.Signals.CloseCreateIncident(close.ReasonNote, close.SignalId);
             if (incidentId != -1)
             {
-                // fetch all the signal documents info
-                //var allDocs = await this.attachments.Signals.FetchAllAttchmentsLinks(GeneralExtensions.GenerateIncidentId(close.SignalId));
+                // Once an incident is created, then we can migrate all the documents.
+                // Createing library just breaks down the task
+                // Then we need to migrate any tags that have been applied.
                 var libInfo = await this.attachments.Incidents.EnsureLibrary(GeneralExtensions.GenerateIncidentId(incidentId));
-                await this.attachments.Incidents.MigrateToIncident(incidentId, close.SignalId);
+                var currentDocInfo = (await dbHost.Signals.Attachments.Get(close.SignalId)).ToHashSet();
+                var allFileUrls = await this.attachments.Signals.MigrateToLibrary(GeneralExtensions.GenerateIncidentId(incidentId), GeneralExtensions.GenerateSignalsId(close.SignalId));
+
+                var mergedTags = allFileUrls
+                                .ToDictionary(a => a.IncidentUrl, b => currentDocInfo.First(f => f.FileName == b.FileName).Tags);
+
+                await this.dbHost.Incidents.Attachments.BulkAdd(incidentId, mergedTags);
+
+
                 return incidentId;
             }
             else

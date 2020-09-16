@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="AttachmentUpdates.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\FSA.Attachments\FSA.Attachments.csproj" />
     <ProjectReference Include="..\FSA.IncidentMangementMent.Root\FSA.IncidentsManagement.Root.csproj" />
     <ProjectReference Include="..\FSA.SIMSManagerDb\FSA.SIMSManagerDb.csproj" />

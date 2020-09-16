@@ -17,7 +17,7 @@ namespace Sims.Application
         }
         public Task<SimsAddress> Add(SimsAddress address)
         {
-            if (address.Id != 0) throw new SimsItemExists("SimsAddressalready exists");
+            if (address.Id != 0) throw new SimsItemExists("SimsAddress already exists");
             return dbHost.Addresses.Add(address);
         }
 

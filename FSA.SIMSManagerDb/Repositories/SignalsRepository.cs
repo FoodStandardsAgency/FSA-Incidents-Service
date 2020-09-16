@@ -91,13 +91,6 @@ namespace FSA.SIMSManagerDb.Repositories
         public async Task<SimsSignal> Update(SimsSignal signal)
         {
             var dbItem = this.ctx.Signals.Find(signal.CommonId);
-            //if (dbItem.SPTId is null && signal.SPTId.HasValue || (dbItem.SPTId != signal.SPTId))
-            //    throw new ArgumentOutOfRangeException("Cannot update SPTid.");
-
-            //if (dbItem.PublishedDate != signal.PublishedDate)
-            //    throw new ArgumentOutOfRangeException("Cannot update Published date.");
-            //if (dbItem.InsertedDate != signal.InsertedDate)
-            //    throw new ArgumentOutOfRangeException("Cannot update Inserted date.");
 
             mapper.Map(signal, dbItem);
             var updatedEnt = ctx.Signals.Update(dbItem);
@@ -277,8 +270,6 @@ namespace FSA.SIMSManagerDb.Repositories
             }
             return completeSearch;
         }
-
-
 
         public async Task UpdateLeadOfficer(IEnumerable<int> ids, string user)
         {
