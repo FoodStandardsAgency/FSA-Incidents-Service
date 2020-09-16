@@ -29,7 +29,7 @@ namespace Sims.Application
 
         public async Task<IEnumerable<SimsStakeholder>> GetAll(int signalId)
         {
-            if (signalId == 0) throw new SimsItemMissing("incident id missing");
+            if (signalId == 0) throw new SimsItemMissing("signal id missing");
             return await this.dbHost.Signals.Stakeholders.GetAll(signalId);
         }
 
@@ -41,9 +41,9 @@ namespace Sims.Application
 
         public async Task<SimsStakeholder> Update(SimsStakeholder SimsStakeholder)
         {
+            if (SimsStakeholder.HostId == 0) throw new SimsSignalMissingException("Signal id missing");
             if (await dbHost.Signals.IsClosed(SimsStakeholder.HostId)) throw new SimsSignalClosedException("Signal closed.");
             if (SimsStakeholder.Id == 0) throw new SimsItemMissing("Stakeholder id missing");
-            if (SimsStakeholder.HostId == 0) throw new SimsSignalMissingException("Signal id missing");
             return await this.dbHost.Signals.Stakeholders.Update(SimsStakeholder);
         }
     }

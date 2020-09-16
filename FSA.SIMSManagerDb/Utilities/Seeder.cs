@@ -285,6 +285,14 @@ namespace FSA.SIMSManagerDb.Utilities
                 new SignalStatusDb
                 {
                     Id = 3,
+                    SortOrder = 300,
+                    Title = "Pending",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new SignalStatusDb
+                {
+                    Id = 50,
                     Title = "Closed : Incident",
                     SortOrder = 400,
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
@@ -292,16 +300,17 @@ namespace FSA.SIMSManagerDb.Utilities
                 },
                 new SignalStatusDb
                 {
-                    Id = 4,
+                    Id = 100,
                     Title = "Closed : No Incident",
                     SortOrder = 500,
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                }, new SignalStatusDb
+                },
+                new SignalStatusDb
                 {
-                    Id = 5,
-                    SortOrder = 300,
-                    Title = "Pending",
+                    Id = 150,
+                    Title = "Closed : Referral (Offline)",
+                    SortOrder = 600,
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 });

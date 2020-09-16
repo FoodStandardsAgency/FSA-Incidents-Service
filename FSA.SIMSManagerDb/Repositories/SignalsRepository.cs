@@ -84,7 +84,7 @@ namespace FSA.SIMSManagerDb.Repositories
         public async Task<bool> IsClosed(int signalId)
         {
             var dbItem = await this.ctx.Signals.AsNoTracking().FirstAsync(o => o.Id == signalId);
-            return dbItem.SignalStatusId == (int)SignalStatusTypes.Closed_Incident || dbItem.SignalStatusId == (int)SignalStatusTypes.Closed_No_Incident;
+            return dbItem.SignalStatusId >= 50;
         }
 
         public async Task<bool> Exists(int signalId)
@@ -293,7 +293,7 @@ namespace FSA.SIMSManagerDb.Repositories
         public async Task CloseNoIncident(SimsSignalCloseNoIncident closeDetails)
         {
             var signal = this.ctx.Signals.Find(closeDetails.SignalId);
-            if (signal.SignalStatusId != (int)SignalStatusTypes.Closed_Incident || signal.SignalStatusId != (int)SignalStatusTypes.Closed_No_Incident)
+            if (signal.SignalStatusId <50)
             {
                 signal.SignalStatusId = (int)SignalStatusTypes.Closed_No_Incident;
                 var dbClosedDetails = this.mapper.Map<CloseSignalNoIncidentDb>(closeDetails);
@@ -310,7 +310,7 @@ namespace FSA.SIMSManagerDb.Repositories
         public async Task CloseLinkIncident(int signalId, int incidentId)
         {
             var signal = this.ctx.Signals.Find(signalId);
-            if (signal.SignalStatusId != (int)SignalStatusTypes.Closed_Incident || signal.SignalStatusId != (int)SignalStatusTypes.Closed_No_Incident)
+            if (signal.SignalStatusId <50)
             {
                 this.ctx.SignalIncidentLinks.Add(new Entities.Signals.SignalIncidentLinkDb
                 {
@@ -341,9 +341,7 @@ namespace FSA.SIMSManagerDb.Repositories
                                         .Include(a => a.PackSizes)
                                         .Where(o => o.HostId == hostId).ToList();
 
-
-
-            if (signal.SignalStatusId != (int)SignalStatusTypes.Closed_Incident || signal.SignalStatusId != (int)SignalStatusTypes.Closed_No_Incident)
+            if (signal.SignalStatusId <50)
             {
                 // Signals are text all the way
                 // But the info should match with our stored lookups.

@@ -43,8 +43,9 @@ namespace FSA.IncidentsManagement.Root.DTOS
         Unassigned = 1,
         Open = 2,
         Pending = 3,
-        Closed_Incident = 4,
-        Closed_No_Incident = 5,
+        Closed_Incident = 50,
+        Closed_No_Incident = 100,
+        Closed_Referrel_Offline=150,
         Unknown = 0
     };
 
