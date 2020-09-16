@@ -27,7 +27,7 @@ namespace FSA.IncidentsManagement.Models
         public int? AdminLeadId { get; set; }
         public string FieldOfficer { get; set; }
         public bool LAAdvised { get; set; }
-        public int DeathIllnessId { get; set; }
+        public int? DeathIllnessId { get; set; }
         //public Guid MostUniqueId { get; set; }
         //public DateTime? ReceivedOn { get; set; }
         //public DateTime IncidentCreated { get; set; }

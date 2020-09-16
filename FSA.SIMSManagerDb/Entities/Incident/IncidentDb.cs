@@ -53,7 +53,7 @@ namespace FSA.SIMSManagerDb.Entities
         public int? LeadLocalAuthorityId { get; set; }
         public AddressDb LeadLocalAuthority { get; set; }
         public bool LAAdvised { get; set; }
-        public int DeathIllnessId { get; set; }
+        public int? DeathIllnessId { get; set; }
         public DeathIllnessDb DeathIllness { get; set; }
         public DateTime? ReceivedOn { get; set; }
         public DateTime IncidentCreated { get; set; }

@@ -11,7 +11,7 @@ namespace FSA.IncidentsManagement.Root.Models
         private readonly int _Id;
 
         ///Full record
-        public BaseIncident(int id, Guid mostUniqueId, string incidentTitle, int incidentTypeId, int contactMethodId, int statusId, int? signalStatusId, int? notifierId, int? principalFBOId, int priorityId, int classificationId, int dataSourceId, string signalUrl, int productTypeId, string leadOfficer, string leadOffice, int? adminLeadId, string fieldOfficer, int? leadLocalAuthorityId, bool lAAdvised, int deathIllnessId, DateTime? receivedOn, DateTime incidentCreated, DateTime? incidentClosed, string lastChangedBy, DateTime lastChangedDate)
+        public BaseIncident(int id, Guid mostUniqueId, string incidentTitle, int incidentTypeId, int contactMethodId, int statusId, int? signalStatusId, int? notifierId, int? principalFBOId, int priorityId, int classificationId, int dataSourceId, string signalUrl, int productTypeId, string leadOfficer, string leadOffice, int? adminLeadId, string fieldOfficer, int? leadLocalAuthorityId, bool lAAdvised, int? deathIllnessId, DateTime? receivedOn, DateTime incidentCreated, DateTime? incidentClosed, string lastChangedBy, DateTime lastChangedDate)
         {
             _Id = id;
             MostUniqueId = mostUniqueId;
@@ -42,13 +42,13 @@ namespace FSA.IncidentsManagement.Root.Models
         }
 
         // New record
-        public BaseIncident(string incidentTitle, int incidentTypeId, int contactMethodId, int statusId, int? signalStatusId, int? notifierId, int? principalFBOId, int priorityId, int classificationId, int dataSourceId, string signalUrl, int productTypeId, string leadOfficer, string leadOffice, int? adminLeadId, string fieldOfficer, int? leadLocalAuthorityId, bool lAAdvised, int deathIllnessId, DateTime? receivedOn, DateTime incidentCreated, DateTime? incidentClosed, string lastChangedBy, DateTime lastChangedDate) : this(0, Guid.Empty, incidentTitle, incidentTypeId, contactMethodId, statusId, signalStatusId, notifierId, principalFBOId, priorityId, classificationId, dataSourceId, signalUrl, productTypeId, leadOfficer, leadOffice, adminLeadId, fieldOfficer, leadLocalAuthorityId, lAAdvised, deathIllnessId, receivedOn, incidentCreated, incidentClosed, lastChangedBy, lastChangedDate)
+        public BaseIncident(string incidentTitle, int incidentTypeId, int contactMethodId, int statusId, int? signalStatusId, int? notifierId, int? principalFBOId, int priorityId, int classificationId, int dataSourceId, string signalUrl, int productTypeId, string leadOfficer, string leadOffice, int? adminLeadId, string fieldOfficer, int? leadLocalAuthorityId, bool lAAdvised, int? deathIllnessId, DateTime? receivedOn, DateTime incidentCreated, DateTime? incidentClosed, string lastChangedBy, DateTime lastChangedDate) : this(0, Guid.Empty, incidentTitle, incidentTypeId, contactMethodId, statusId, signalStatusId, notifierId, principalFBOId, priorityId, classificationId, dataSourceId, signalUrl, productTypeId, leadOfficer, leadOffice, adminLeadId, fieldOfficer, leadLocalAuthorityId, lAAdvised, deathIllnessId, receivedOn, incidentCreated, incidentClosed, lastChangedBy, lastChangedDate)
         {
 
         }
 
         // Friendly new record
-        public BaseIncident(string incidentTitle, int incidentTypeId, int contactMethodId, int statusId, int? signalStatusId, int? notifierId, int? principalFBOId, int priorityId, int classificationId, int dataSourceId, string signalUrl, int productTypeId, string leadOfficer, string leadOffice, int? adminLeadId, string fieldOfficer, int? leadLocalAuthorityId, bool lAAdvised, int deathIllnessId, DateTime? receivedOn, DateTime? incidentClosed) : this(0, Guid.Empty, incidentTitle, incidentTypeId, contactMethodId, statusId, signalStatusId, notifierId, principalFBOId, priorityId, classificationId, dataSourceId, signalUrl, productTypeId, leadOfficer, leadOffice, adminLeadId, fieldOfficer, leadLocalAuthorityId, lAAdvised, deathIllnessId, receivedOn, DateTime.MinValue, incidentClosed, "", DateTime.MinValue)
+        public BaseIncident(string incidentTitle, int incidentTypeId, int contactMethodId, int statusId, int? signalStatusId, int? notifierId, int? principalFBOId, int priorityId, int classificationId, int dataSourceId, string signalUrl, int productTypeId, string leadOfficer, string leadOffice, int? adminLeadId, string fieldOfficer, int? leadLocalAuthorityId, bool lAAdvised, int? deathIllnessId, DateTime? receivedOn, DateTime? incidentClosed) : this(0, Guid.Empty, incidentTitle, incidentTypeId, contactMethodId, statusId, signalStatusId, notifierId, principalFBOId, priorityId, classificationId, dataSourceId, signalUrl, productTypeId, leadOfficer, leadOffice, adminLeadId, fieldOfficer, leadLocalAuthorityId, lAAdvised, deathIllnessId, receivedOn, DateTime.MinValue, incidentClosed, "", DateTime.MinValue)
         {
 
         }
@@ -78,7 +78,7 @@ namespace FSA.IncidentsManagement.Root.Models
         public string FieldOfficer { get; }
         public int? LeadLocalAuthorityId { get; }
         public bool LAAdvised { get; }
-        public int DeathIllnessId { get; }
+        public int? DeathIllnessId { get; }
         public DateTime? ReceivedOn { get; }
         public DateTime IncidentCreated { get; }
         public DateTime? IncidentClosed { get; }

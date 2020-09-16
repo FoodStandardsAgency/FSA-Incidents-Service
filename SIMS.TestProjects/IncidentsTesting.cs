@@ -78,6 +78,45 @@ namespace SIMS.Database
         }
 
 
+        [Fact(DisplayName = "Add incident with no death illness")]
+        public async Task AddIncidentNoDeathIllness()
+        {
+            var incident = new BaseIncident(
+                   incidentTitle: "New Incident (no death illness)",
+                   incidentTypeId: 1,
+                   contactMethodId: 2,
+                   statusId: (int)SimsIncidentStatusTypes.Open,
+                   priorityId: 2,
+                   classificationId: 1,
+                   dataSourceId: 1,
+                   signalUrl: "",
+                   productTypeId: 3,
+                   leadOfficer: this.userId3,
+                   adminLeadId: 1,
+                   leadOffice: "",
+                   fieldOfficer: "",
+                   lAAdvised: false,
+                   deathIllnessId: null,
+                   receivedOn: null,
+                   incidentCreated: DateTime.Now,
+                   lastChangedBy: this.miller,
+                   lastChangedDate: DateTime.Now,
+                   signalStatusId: null,
+                   notifierId: null,
+                   principalFBOId: null,
+                   leadLocalAuthorityId: null,
+                   incidentClosed: null
+       );
+            using (var ctx = SeedingConfigData.GetDbContext(this.conn))
+            {
+                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
+                var savedIncident = await simsHost.Incidents.Add(incident);
+                Assert.True(savedIncident.MostUniqueId != Guid.Empty);
+            }
+
+        }
+
+
 
         [Fact(DisplayName = "Add incident with lead officer")]
         public async Task AddIncidentLeadOfficer()

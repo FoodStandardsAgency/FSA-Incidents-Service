@@ -7,6 +7,7 @@ using FSA.SIMSManagerDb.Contracts;
 using Sims.Application.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Threading.Tasks;
 
 namespace Sims.Application
@@ -47,26 +48,19 @@ namespace Sims.Application
         public Task<IPaging<SignalDashboardItem>> DashboardSearch(string search = null, int pageSize = 500, int startPage = 1)
         {
             return dbHost.Signals.DashboardSearch(search, pageSize, startPage);
-
         }
 
         public Task<SimsSignal> Get(int signalId)
         {
-
             if (signalId == 0) throw new SIMSException("Unknown signal Id.");
             return dbHost.Signals.Get(signalId);
         }
 
-        public Task<SimsSignal> Update(SimsSignal signal)
+        public async Task<SimsSignal> Update(SimsSignal signal)
         {
-            try
-            {
-                return dbHost.Signals.Update(signal);
-            }
-            catch (ArgumentOutOfRangeException ex)
-            {
-                throw new SIMSException(ex.Message);
-            }
+            if (await dbHost.Signals.IsClosed(signal.CommonId))
+                throw new SimsSignalClosedException("Signal closed");
+            return await dbHost.Signals.Update(signal);
         }
 
         public Task UpdateLeadOfficer(IEnumerable<int> ids, string user)
@@ -74,13 +68,20 @@ namespace Sims.Application
             return dbHost.Signals.UpdateLeadOfficer(ids, user);
         }
 
-        public Task UpdateStatus(int signalId, int status)
+        public async Task UpdateStatus(int signalId, int status)
         {
-            return dbHost.Signals.UpdateStatus(signalId, status);
+            if (await dbHost.Signals.IsClosed(signalId))
+                throw new SimsSignalClosedException("Signal closed");
+            if (status == 0)
+                throw new SimsItemMissing("Invalid status id");
+
+            await dbHost.Signals.UpdateStatus(signalId, status);
         }
 
         public Task CloseLinkIncident(SimsSignalCloseLinkIncident close)
         {
+            if (close.SignalId == 0) throw new SimsSignalMissingException("Signal id missing");
+            if (close.IncidentId == 0) throw new SimsSignalMissingException("Incident id missing");
             return dbHost.Signals.CloseLinkIncident(close.SignalId, close.IncidentId);
         }
 
@@ -103,6 +104,13 @@ namespace Sims.Application
 
         public Task CloseNoIncident(SimsSignalCloseNoIncident close)
         {
+            if (close.ReasonId == 0) throw new SIMSException("Close reason id is invalid");
+            if (close.TeamId == 0) throw new SIMSException("Close Team Id id is invalid");
+            if (close.SignalId == 0) throw new SimsSignalMissingException("Signal id missing");
+            if (close.StatusCloseId != (int)SimsSignalStatusTypes.Closed_No_Incident
+            || close.StatusCloseId != (int)SimsSignalStatusTypes.Closed_Referrel_Offline)
+                throw new SimsItemMissing("Incorrect close message");
+
             return dbHost.Signals.CloseNoIncident(close);
         }
     }

@@ -38,11 +38,35 @@ namespace FSA.SIMSManagerDb.Repositories
             this.mapper = mapper;
         }
 
+        private SignalDb ToDb(SimsSignal ent) => new SignalDb
+        {
+            Id = 0,
+            SPTId = ent.SPTId,
+            SourceLink = ent.SourceLink,
+            SourceType = ent.SourceType,
+            DataSource = ent.DataSource,
+            BaseProduct = ent.BaseProduct,
+            Manufacturer = ent.Manufacturer,
+            LeadOfficer = ent.LeadOfficer,
+            AlertType = ent.AlertType,
+            CountryOfOrigin = ent.CountryOfOrigin,
+            FoodOrFeed = ent.FoodOrFeed,
+            Hazard = ent.Hazard,
+            HazardGroup = ent.HazardGroup,
+            IsEu = ent.IsEu,
+            InsertedDate = ent.InsertedDate,
+            PublishedDate = ent.PublishedDate,
+            NotifyingCountry = ent.NotifyingCountry,
+            Priority = ent.Priority,
+            Title = ent.Title,
+            SignalStatusId = ent.SignalStatusId,
+        };
+
         public async Task AddBatch(IEnumerable<SimsSignal> signals)
         {
             foreach (var signal in signals)
             {
-                var dbItem = this.mapper.Map<SimsSignal, SignalDb>(signal);
+                var dbItem = this.ToDb(signal);
                 this.ctx.Signals.Add(dbItem);
             }
             await ctx.SaveChangesAsync();
@@ -50,7 +74,7 @@ namespace FSA.SIMSManagerDb.Repositories
 
         public async Task<SimsSignal> Add(SimsSignal signal)
         {
-            var dbItem = this.mapper.Map<SimsSignal, SignalDb>(signal);
+            var dbItem = this.ToDb(signal);
             this.ctx.Signals.Add(dbItem);
             await ctx.SaveChangesAsync();
             return this.mapper.Map<SignalDb, SimsSignal>(dbItem);
@@ -369,7 +393,6 @@ namespace FSA.SIMSManagerDb.Repositories
                     LeadOfficer = "",
                     ClassificationId = 1,
                     ContactMethodId =4,
-                    DeathIllnessId=1,
                     IncidentCreated = DateTime.Now,
                     ReceivedOn = DateTime.Now,
                     Stakeholders = stakeholders,

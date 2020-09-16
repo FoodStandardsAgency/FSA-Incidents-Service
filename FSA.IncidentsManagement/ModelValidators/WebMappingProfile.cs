@@ -74,7 +74,7 @@ namespace FSA.IncidentsManagement.ModelValidators
                 fieldOfficer: @this.FieldOfficer,
                 leadLocalAuthorityId: @this.LeadLocalAuthorityId == 0 ? new Nullable<int>() : @this.LeadLocalAuthorityId,
                 lAAdvised: @this.LAAdvised,
-                deathIllnessId: @this.DeathIllnessId,
+                deathIllnessId: @this.DeathIllnessId == 0 ? null : @this.DeathIllnessId,
                 mostUniqueId: Guid.Empty,
                 incidentClosed: null,
                 lastChangedBy: null,
@@ -105,7 +105,7 @@ namespace FSA.IncidentsManagement.ModelValidators
            fieldOfficer: @this.FieldOfficer,
            leadLocalAuthorityId: @this.LeadLocalAuthorityId.HasValue && @this.LeadLocalAuthorityId.Value != 0 ? @this.LeadLocalAuthorityId : null, // 0 used as an ordinal due to powerapp limitiaion
            lAAdvised: @this.LAAdvised,
-           deathIllnessId: @this.DeathIllnessId,
+           deathIllnessId: @this.DeathIllnessId==0? null : @this.DeathIllnessId,
            receivedOn: @this.ReceivedOn,
            incidentCreated: @this.IncidentCreated,
            incidentClosed: null,
