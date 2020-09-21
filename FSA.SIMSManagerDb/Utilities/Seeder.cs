@@ -36,67 +36,31 @@ namespace FSA.SIMSManagerDb.Utilities
               .HasData(new CloseSignalReasonDb
               {
                   Id = 1,
-                  Title = "Czech Republic sampling",
-                  CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                  ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-              }, new CloseSignalReasonDb
-              {
-                  Id = 2,
-                  Title = "Duplicate of...",
-                  CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                  ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-              }, new CloseSignalReasonDb
-              {
-                  Id = 3,
-                  Title = "FDA alert re US border rejection",
-                  CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                  ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-              }, new CloseSignalReasonDb
-              {
-                  Id = 4,
-                  Title = "Japanese Import alert",
-                  CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                  ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-              }, new CloseSignalReasonDb
-              {
-                  Id = 5,
                   Title = "No UK distribution",
                   CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                   ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
               }, new CloseSignalReasonDb
               {
-                  Id = 6,
-                  Title = "No useful information",
+                  Id = 2,
+                  Title = "Duplicate Signal - Same Source",
                   CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                   ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
               }, new CloseSignalReasonDb
               {
-                  Id = 7,
-                  Title = "RASFF notification",
+                  Id = 3,
+                  Title = "Duplicate Signal - Different Source",
                   CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                   ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
               }, new CloseSignalReasonDb
               {
-                  Id = 8,
-                  Title = "Research on MySupermarket, Amazon and Google negative for distribution to the UK",
+                  Id = 4,
+                  Title = "RASFF - No UK Distribution",
                   CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                   ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
               }, new CloseSignalReasonDb
               {
-                  Id = 9,
-                  Title = "UK RASFF",
-                  CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                  ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-              }, new CloseSignalReasonDb
-              {
-                  Id = 10,
-                  Title = "UK Govt. Quarterly Report",
-                  CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                  ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-              }, new CloseSignalReasonDb
-              {
-                  Id = 11,
-                  Title = "UK Recall",
+                  Id = 5,
+                  Title = "Not Enough Information for  Follow-Up",
                   CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                   ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
               });
@@ -108,13 +72,13 @@ namespace FSA.SIMSManagerDb.Utilities
                .HasData(new CloseSignalTeamDb
                {
                    Id = 1,
-                   Title = "NFCU",
+                   Title = "National Food Crime Unit (NFCU)",
                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                }, new CloseSignalTeamDb
                {
                    Id = 2,
-                   Title = "Relevant Policy lead",
+                   Title = "Food Policy lead",
                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                }, new CloseSignalTeamDb
@@ -123,8 +87,33 @@ namespace FSA.SIMSManagerDb.Utilities
                    Title = "Imported foods",
                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+               }, new CloseSignalTeamDb
+               {
+                   Id = 4,
+                   Title = "Food Industry Liasion Group (FILG)",
+                   CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                   ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+               }, new CloseSignalTeamDb
+               {
+                   Id = 5,
+                   Title = "Comms",
+                   CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                   ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+               }, new CloseSignalTeamDb
+               {
+                   Id = 6,
+                   Title = "Referred to LA/PA for Information only",
+                   CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                   ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+               }, new CloseSignalTeamDb
+               {
+                   Id = 7,
+                   Title = "Incident Team",
+                   CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                   ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                });
         }
+
         private void UnitQuants(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UnitQuantityDb>()

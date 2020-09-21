@@ -17,7 +17,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
-using Microsoft.Identity.Web.TokenCacheProviders.InMemory;
 using Microsoft.OpenApi.Models;
 using Sims.Application;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -45,8 +44,8 @@ namespace FSA.IncidentsManagement
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddMicrosoftWebApiAuthentication(Configuration, subscribeToJwtBearerMiddlewareDiagnosticsEvents: true)
-                    .AddMicrosoftWebApiCallsWebApi(Configuration)
+            services.AddMicrosoftIdentityWebApiAuthentication(Configuration, subscribeToJwtBearerMiddlewareDiagnosticsEvents: true)
+                    .EnableTokenAcquisitionToCallDownstreamApi()
                     .AddInMemoryTokenCaches();
 
             services.Configure<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme, options =>
@@ -96,14 +95,12 @@ namespace FSA.IncidentsManagement
 
             services.AddScoped<X509Certificate2>((o) => new X509Certificate2(Convert.FromBase64String(Configuration["SharePointAccess"])));
 
-
             services.AddAutoMapper((cfg)=> {
                 cfg.AddProfile<SimsDbMappingProfile>();
                 cfg.AddProfile<WebMappingProfile>();
                 cfg.AddCollectionMappers();
             });
 
-            
             var simsConn = Configuration.GetConnectionString("SIMSDbConn");
 
             services.AddDbContext<SimsDbContext>((provider, opts) => opts
@@ -160,7 +157,6 @@ namespace FSA.IncidentsManagement
 
             app.UseHttpsRedirection();
             app.UseRouting();
-
 
             app.UseAuthentication();
             app.UseAuthorization();

@@ -95,6 +95,8 @@ namespace Sims.Application
             var incidentId = await dbHost.Signals.CloseCreateIncident(close.ReasonNote, close.SignalId);
             if (incidentId != -1)
             {
+               // var signInfo = await this.attachments.Incidents.EnsureLibrary(GeneralExtensions.GenerateSignalsId(close.SignalId));
+
                 // Once an incident is created, then we can migrate all the documents.
                 // Createing library just breaks down the task
                 // Then we need to migrate any tags that have been applied.
@@ -107,7 +109,6 @@ namespace Sims.Application
 
                 await this.dbHost.Incidents.Attachments.BulkAdd(incidentId, mergedTags);
 
-
                 return incidentId;
             }
             else
@@ -118,14 +119,15 @@ namespace Sims.Application
 
         public Task CloseNoIncident(SimsSignalCloseNoIncident close)
         {
-            if (close.ReasonId == 0) throw new SIMSException("Close reason id is invalid");
-            if (close.TeamId == 0) throw new SIMSException("Close Team Id id is invalid");
+            if (close.ReasonId == 0 && close.TeamId == 0) throw new SIMSException("Reason/Team is invalid");
+
             if (close.SignalId == 0) throw new SimsSignalMissingException("Signal id missing");
-            if (close.StatusCloseId != (int)SimsSignalStatusTypes.Closed_No_Incident
-            || close.StatusCloseId != (int)SimsSignalStatusTypes.Closed_Referrel_Offline)
+            if (close.StatusCloseId == (int)SimsSignalStatusTypes.Closed_No_Incident
+            || close.StatusCloseId == (int)SimsSignalStatusTypes.Closed_Referrel_Offline)
+                return dbHost.Signals.CloseNoIncident(close);
+            else
                 throw new SimsItemMissing("Incorrect close message");
 
-            return dbHost.Signals.CloseNoIncident(close);
         }
     }
 

@@ -1529,9 +1529,6 @@
           "text/json",
           "application/*+json"
         ],
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "body",
@@ -1543,10 +1540,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/SignalDashboardItem"
-            }
+            "description": "Success"
           },
           "500": {
             "description": "Server Error"
@@ -1582,7 +1576,7 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/SignalDashboardItem"
+              "$ref": "#/definitions/IncidentIdViewModel"
             }
           },
           "500": {
@@ -1603,9 +1597,6 @@
           "text/json",
           "application/*+json"
         ],
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "body",
@@ -1617,10 +1608,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/SignalDashboardItem"
-            }
+            "description": "Success"
           },
           "500": {
             "description": "Server Error"
@@ -2799,6 +2787,30 @@
         }
       }
     },
+    "CloseSignalReason": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "CloseSignalTeam": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
     "LookupsHost": {
       "type": "object",
       "properties": {
@@ -2908,6 +2920,18 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/StakeholderIncidentRole"
+          }
+        },
+        "closeSignalReasons": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CloseSignalReason"
+          }
+        },
+        "closeSignalTeams": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CloseSignalTeam"
           }
         }
       }
@@ -3525,6 +3549,10 @@
           "format": "int32",
           "type": "integer"
         },
+        "statusCloseId": {
+          "format": "int32",
+          "type": "integer"
+        },
         "userReason": {
           "type": "string"
         }
@@ -3537,6 +3565,15 @@
           "type": "string"
         },
         "signalId": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "IncidentIdViewModel": {
+      "type": "object",
+      "properties": {
+        "incidentId": {
           "format": "int32",
           "type": "integer"
         }

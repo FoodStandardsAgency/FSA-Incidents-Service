@@ -367,12 +367,28 @@ namespace FSA.Attachments
             var accessToken = await fetchAccessToken();
             using (var ctx = SpContextHelper.GetClientContextWithAccessToken(this.siteUrl, accessToken))
             {
-                var incidentLib = ctx.Web.Lists.GetByTitle(incidentId);
-                var signalLib = ctx.Web.Lists.GetByTitle(signalId);
-                ctx.Load(incidentLib, a => a.RootFolder);
+                // ensure we actually have a signals library
+                List signalLib = null;
+                try
+                {
+                signalLib = ctx.Web.Lists.GetByTitle(signalId);
                 ctx.Load(signalLib, a => a.RootFolder, a=>a.RootFolder.Files);
-                await ctx.ExecuteQueryAsync();
+                    await ctx.ExecuteQueryAsync();
 
+                }
+                catch(ServerException ex)
+                {
+                    return Enumerable.Empty<SimsSignalIncidentMigratedFile>();
+                }
+                
+                // If we actually have no files, then we can return
+                if(signalLib.RootFolder.Files.Count==0) return Enumerable.Empty<SimsSignalIncidentMigratedFile>(); 
+
+                // othewise continue with the incident
+                var incidentLib = ctx.Web.Lists.GetByTitle(incidentId);
+                ctx.Load(incidentLib, a => a.RootFolder);
+                await ctx.ExecuteQueryAsync();
+                
                 // Get all the signal files and their names
                 var signalDictionary = new Dictionary<string, string>();
                 foreach(var file in signalLib.RootFolder.Files)

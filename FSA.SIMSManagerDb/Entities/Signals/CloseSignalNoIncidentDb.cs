@@ -10,9 +10,9 @@ namespace FSA.SIMSManagerDb.Entities
     {
         public int SignalId { get; set; }
         public SignalDb Signal { get; set; }
-        public int TeamId { get; set; }
+        public int? TeamId { get; set; }
         public CloseSignalTeamDb Team { get; set; }
-        public int ReasonId { get; set; }
+        public int? ReasonId { get; set; }
         public CloseSignalReasonDb Reason { get; set; }
         public string UserReason { get; set; }
     }

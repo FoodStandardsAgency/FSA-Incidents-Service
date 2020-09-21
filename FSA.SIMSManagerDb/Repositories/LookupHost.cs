@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FSA.IncidentsManagement.Root.Contracts;
+using FSA.IncidentsManagement.Root.DTOS.Lookups;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb.Contracts;
 using FSA.SIMSManagerDb.Entities.Lookups;
@@ -36,6 +37,8 @@ namespace FSA.SIMSManagerDb.Repositories
         private ISimsReferenceData<AdminLead> AdminLeads => new ReferenceDataRepo<AdminLead, AdminLeadDb>(ctx, mapper);
         private ISimsReferenceData<ProductDateType> ProductDateTypes => new ReferenceDataRepo<ProductDateType, DateTypeDb>(ctx, mapper);
         private ISimsReferenceData<StakeholderType> StakeholderTypes => new ReferenceDataRepo<StakeholderType, StakeholderDiscriminatorDb>(ctx, mapper);
+        private ISimsReferenceData<CloseSignalTeam> CloseSignalTeams => new ReferenceDataRepo<CloseSignalTeam, CloseSignalTeamDb>(ctx, mapper);
+        private ISimsReferenceData<CloseSignalReason> CloseSignalReasons => new ReferenceDataRepo<CloseSignalReason, CloseSignalReasonDb>(ctx, mapper);
         private ISimsReferenceData<StakeholderIncidentRole> StakeholderIncidentRoles => new ReferenceDataRepo<StakeholderIncidentRole, StakeholderIncidentRoleDb>(ctx, mapper);
         public LookupsHost GetAll() => new LookupsHost
         {
@@ -56,7 +59,9 @@ namespace FSA.SIMSManagerDb.Repositories
             AdminLeads = this.AdminLeads.GetAll(),
             ProductDateTypes = this.ProductDateTypes.GetAll(),
             StakeholderTypes = this.StakeholderTypes.GetAll(),
-            StakeholderIncidentRoles = this.StakeholderIncidentRoles.GetAll()
+            StakeholderIncidentRoles = this.StakeholderIncidentRoles.GetAll(),
+            CloseSignalTeams = this.CloseSignalTeams.GetAll(),
+            CloseSignalReasons = this.CloseSignalReasons.GetAll(),
         };
     }
 }

@@ -111,7 +111,7 @@ namespace FSA.SignalsManagement.Controllers
 
         [HttpPost("Close/NoIncident")]
         [SwaggerOperation(Summary = "Close no incident")]
-        [ProducesResponseType(typeof(SignalDashboardItem), 200)]
+        [ProducesResponseType( 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
         public async Task<IActionResult> CloseNoIncident(SimsSignalCloseNoIncident closeNoIncident)
@@ -122,19 +122,19 @@ namespace FSA.SignalsManagement.Controllers
 
         [HttpPost("Close/Create")]
         [SwaggerOperation(Summary = "Close create incident")]
-        [ProducesResponseType(typeof(SignalDashboardItem), 200)]
+        [ProducesResponseType(typeof(IncidentIdViewModel), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
         public async Task<IActionResult> CloseCreateIncident(SimsSignalCloseCreateIncident closeCreate)
         {
             var incidentId = await this.simsApp.Signals.CloseCreateIncident(closeCreate);
-            return new OkObjectResult(incidentId);
+            return new OkObjectResult(new IncidentIdViewModel { IncidentId = incidentId });
 
         }
 
         [HttpPost("Close/Link")]
         [SwaggerOperation(Summary = "Close link incident")]
-        [ProducesResponseType(typeof(SignalDashboardItem), 200)]
+        [ProducesResponseType( 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
         public async Task<IActionResult> CloseLinkIncident(SimsSignalCloseLinkIncident closeLink)

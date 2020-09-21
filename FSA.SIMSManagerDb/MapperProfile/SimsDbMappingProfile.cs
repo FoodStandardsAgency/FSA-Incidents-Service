@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.EquivalencyExpression;
 using FSA.IncidentsManagement.Root.DTOS;
+using FSA.IncidentsManagement.Root.DTOS.Lookups;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb.Entities;
 using FSA.SIMSManagerDb.Entities.Core;
@@ -39,6 +40,8 @@ namespace FSA.SIMSManagerDb.MapperProfile
             CreateMap<StakeholderDiscriminatorDb, StakeholderType>(MemberList.Destination);
             CreateMap<StakeholderIncidentRoleDb, StakeholderIncidentRole>(MemberList.Destination);
 
+            CreateMap<CloseSignalReasonDb, CloseSignalReason>(MemberList.Destination);
+            CreateMap<CloseSignalTeamDb, CloseSignalTeam>(MemberList.Destination);
 
             CreateMap<IncidentLinkDb, SimsLinkedRecord>()
                     .ForMember(o => o.From, m => m.MapFrom(a => a.FromId))
@@ -281,7 +284,10 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForMember(a => a.Contacts, m => m.MapFrom(m => m.Address.Contacts));
 
 
-            CreateMap<SimsSignalCloseNoIncident, CloseSignalNoIncidentDb>(MemberList.Source);
+            CreateMap<SimsSignalCloseNoIncident, CloseSignalNoIncidentDb>(MemberList.Source)
+                .ForMember(a => a.TeamId, m => m.MapFrom(b => b.TeamId == 0 ? null : b.TeamId))
+                .ForMember(a => a.ReasonId, m => m.MapFrom(b => b.ReasonId == 0 ? null : b.ReasonId));
+
             CreateMap<CloseSignalNoIncidentDb, SimsSignalCloseNoIncident>(MemberList.Destination);
 
         }

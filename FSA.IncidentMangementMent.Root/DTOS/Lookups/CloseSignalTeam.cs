@@ -1,6 +1,6 @@
-﻿namespace FSA.IncidentsManagement.Root.Models
+﻿namespace FSA.IncidentsManagement.Root.DTOS.Lookups
 {
-    public class StakeholderType
+    public class CloseSignalTeam
     {
         public int Id { get; set; }
         public string Title { get; set; }
