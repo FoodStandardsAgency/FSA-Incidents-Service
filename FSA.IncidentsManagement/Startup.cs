@@ -57,6 +57,7 @@ namespace FSA.IncidentsManagement
                         options.Audience, $"api://{options.Audience}", $"https://{options.Audience}"
                 };
             });
+
             services.AddScoped<UserInfo>();
             // grabbing current userInfo
             services.AddHttpContextAccessor();

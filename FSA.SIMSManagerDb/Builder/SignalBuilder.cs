@@ -17,11 +17,14 @@ namespace FSA.SIMSManagerDb.Builders
 
             builder.Property(p => p.Title).HasMaxLength(500);
             builder.Property(p => p.DataSource).IsRequired(true);
-
-            builder.Property(p => p.FoodOrFeed).HasMaxLength(500);
+            builder.Property(p => p.LeadOfficer).HasMaxLength(36);
+            builder.Property(p => p.Priority).HasMaxLength(10);
+            builder.Property(p => p.FoodOrFeed).HasMaxLength(25);
+            builder.Property(p => p.HazardGroup).HasMaxLength(100);
+            builder.Property(p => p.Hazard).HasMaxLength(255);
             builder.Property(p => p.BaseProduct).HasMaxLength(500);
-            builder.Property(p => p.CountryOfOrigin).HasMaxLength(500).IsRequired(false);
-            builder.Property(p => p.NotifyingCountry).HasMaxLength(500).IsRequired(false);
+            builder.Property(p => p.CountryOfOrigin).HasMaxLength(255).IsRequired(false);
+            builder.Property(p => p.NotifyingCountry).HasMaxLength(255).IsRequired(false);
 
             builder.HasOne(o => o.SignalStatus).WithMany().OnDelete(DeleteBehavior.NoAction);
 

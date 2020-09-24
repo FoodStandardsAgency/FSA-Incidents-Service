@@ -4,14 +4,16 @@ using FSA.SIMSManagerDb;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FSA.SIMSManagerDb.Migrations
 {
     [DbContext(typeof(SimsDbContext))]
-    partial class SimsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200923082941_GildaBurp")]
+    partial class GildaBurp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -288,8 +290,7 @@ namespace FSA.SIMSManagerDb.Migrations
                         .HasDefaultValue(4);
 
                     b.Property<string>("IncidentTitle")
-                        .HasColumnType("nvarchar(250)")
-                        .HasMaxLength(250);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("IncidentTypeId")
                         .HasColumnType("int");
@@ -304,8 +305,7 @@ namespace FSA.SIMSManagerDb.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LeadOfficer")
-                        .HasColumnType("nvarchar(36)")
-                        .HasMaxLength(36);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Modified")
                         .ValueGeneratedOnAdd()
@@ -343,8 +343,7 @@ namespace FSA.SIMSManagerDb.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("SignalUrl")
-                        .HasColumnType("nvarchar(600)")
-                        .HasMaxLength(600);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("Timestamp")
                         .IsConcurrencyToken()
@@ -7230,8 +7229,8 @@ namespace FSA.SIMSManagerDb.Migrations
                         .HasMaxLength(500);
 
                     b.Property<string>("CountryOfOrigin")
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
 
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
@@ -7266,8 +7265,7 @@ namespace FSA.SIMSManagerDb.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("LeadOfficer")
-                        .HasColumnType("nvarchar(36)")
-                        .HasMaxLength(36);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Manufacturer")
                         .HasColumnType("nvarchar(max)");
@@ -7283,8 +7281,8 @@ namespace FSA.SIMSManagerDb.Migrations
                         .HasMaxLength(70);
 
                     b.Property<string>("NotifyingCountry")
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
 
                     b.Property<string>("Priority")
                         .HasColumnType("nvarchar(10)")

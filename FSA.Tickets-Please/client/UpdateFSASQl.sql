@@ -1,4 +1,3 @@
-USe [fsa.testdata]
 select LEadofficer from 
 Incidents
 group by LeadOfficer
@@ -59,4 +58,10 @@ update Incidents
 set CreatedBy = '34b97e9d-eb28-444f-87cb-2c6311af8009'
 Where CreatedBy = '51b75a03-4bb1-4e03-bd91-469fe7a1e6e9';
 
+--Signals
 
+update Signals
+set CreatedBy = '34b97e9d-eb28-444f-87cb-2c6311af8009'
+
+update Signals
+set ModifiedBy = '48f6dca0-bfa3-4196-bd0d-117271335f99'

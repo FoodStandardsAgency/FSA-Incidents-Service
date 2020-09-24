@@ -23,7 +23,10 @@ namespace FSA.SIMSManagerDb.Builders
                                                 .HasConversion(b => b, b => DateTime.SpecifyKind(b, DateTimeKind.Utc));
             builder.Property(p => p.IncidentStatusId).HasDefaultValue(4);    // UNassigned
             builder.Property(p => p.PriorityId).HasDefaultValue(1);   // TBC
-            
+            builder.Property(p => p.IncidentTitle).HasMaxLength(250);
+            builder.Property(p => p.LeadOfficer).HasMaxLength(36);
+            builder.Property(p => p.SignalUrl).HasMaxLength(600);
+
             builder.HasMany(p => p.FromLinks)
                    .WithOne(o => o.From)
                    .HasForeignKey(o => o.FromId).OnDelete(DeleteBehavior.NoAction);

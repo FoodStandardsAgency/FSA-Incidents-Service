@@ -92,8 +92,20 @@ namespace FSA.SIMSManagerDb.Repositories
         {
             var dbItem = this.ctx.Signals.Find(signal.CommonId);
 
+            if (dbItem == null) throw new NullReferenceException("No incident was found");
+            if (dbItem.SignalStatusId > 50) throw new ArgumentOutOfRangeException("Cannot update a closed signal!");
+
+            // Status changed to un assigned, ensure the officer is taken out.
+            if (dbItem.SignalStatusId == (int)SignalStatusTypes.Open && signal.SignalStatusId == (int)SignalStatusTypes.Unassigned)
+                signal.LeadOfficer = "";
+            // new officer assigned, assure we are open
+            if (String.IsNullOrEmpty(dbItem.LeadOfficer) && !String.IsNullOrEmpty(signal.LeadOfficer))
+                signal.SignalStatusId = (int)SignalStatusTypes.Open;
+
+
             mapper.Map(signal, dbItem);
             var updatedEnt = ctx.Signals.Update(dbItem);
+
             await ctx.SaveChangesAsync();
             return this.mapper.Map<SignalDb, SimsSignal>(updatedEnt.Entity);
         }
@@ -186,8 +198,8 @@ namespace FSA.SIMSManagerDb.Repositories
             var totalRecords = await qry.CountAsync();
             // Find the start record
             var startRecord = (startPage - 1) * pageSize;
-            var results = await qry.OrderByDescending(i => i.SignalStatus.SortOrder)
-                                    .OrderBy(i => i.Created)
+            var results = await qry.OrderBy(i => i.SignalStatus.SortOrder)
+                                    .ThenBy(i => i.Created)
                                     .Skip(startRecord)
                                     .Take(pageSize)
                                     .Select(i => mapper.Map<SignalDb, SignalDashboardItem>(i)).ToListAsync();
@@ -308,7 +320,7 @@ namespace FSA.SIMSManagerDb.Repositories
         public async Task CloseNoIncident(SimsSignalCloseNoIncident closeDetails)
         {
             var signal = this.ctx.Signals.Find(closeDetails.SignalId);
-            if (signal.SignalStatusId <50)
+            if (signal.SignalStatusId < 50)
             {
                 signal.SignalStatusId = (int)SignalStatusTypes.Closed_No_Incident;
                 var dbClosedDetails = this.mapper.Map<CloseSignalNoIncidentDb>(closeDetails);
@@ -325,7 +337,7 @@ namespace FSA.SIMSManagerDb.Repositories
         public async Task CloseLinkIncident(int signalId, int incidentId)
         {
             var signal = this.ctx.Signals.Find(signalId);
-            if (signal.SignalStatusId <50)
+            if (signal.SignalStatusId < 50)
             {
                 this.ctx.SignalIncidentLinks.Add(new Entities.Signals.SignalIncidentLinkDb
                 {
@@ -356,14 +368,14 @@ namespace FSA.SIMSManagerDb.Repositories
                                         .Include(a => a.PackSizes)
                                         .Where(o => o.HostId == hostId).ToList();
 
-            if (signal.SignalStatusId <50)
+            if (signal.SignalStatusId < 50)
             {
                 // Signals are text all the way
                 // But the info should match with our stored lookups.
                 var hazardGroup = signal.HazardGroup ?? "";
                 var prods = mapper.Map<List<IncidentProductDb>>(signalProds);
                 var stakeholders = this.mapper.Map<List<IncidentStakeholderDb>>(signal.Stakeholders);
-               
+
                 var notes = this.mapper.Map<List<IncidentNoteDb>>(signal.Notes);
 
                 // fetch the relevant lookupIds
@@ -383,7 +395,7 @@ namespace FSA.SIMSManagerDb.Repositories
                     SignalUrl = signal.SourceLink,
                     LeadOfficer = "",
                     ClassificationId = 1,
-                    ContactMethodId =4,
+                    ContactMethodId = 4,
                     IncidentCreated = DateTime.Now,
                     ReceivedOn = DateTime.Now,
                     Stakeholders = stakeholders,
