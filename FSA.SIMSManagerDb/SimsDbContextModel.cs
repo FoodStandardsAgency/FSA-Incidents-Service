@@ -47,6 +47,8 @@ namespace FSA.SIMSManagerDb
         internal DbSet<AddressContactDb> AddressContacts { get; set; }
         internal DbSet<NotifierTypeDb> NotifierTypes { get; set; }
 
+        internal DbSet<UserAccessAuditDb> UserAccessLog { get; set; }
+
         #region Lookups
         internal DbSet<HazardGroupDb> HazardGroups { get; set; }
         internal DbSet<ClassificationDb> Classifications { get; set; }
@@ -97,6 +99,8 @@ namespace FSA.SIMSManagerDb
             modelBuilder.ApplyConfiguration(new ProductFboBuilder<SignalProductFboDb>(nameof(this.SignalProductFbos)));
             modelBuilder.ApplyConfiguration(new CloseSignalNoIncidentBuilder());
             modelBuilder.ApplyConfiguration(new SignalIncidentLinkBuilder());
+
+            modelBuilder.ApplyConfiguration(new UserAccessAuditBuilder());
 
             #region Lookups           
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<HazardGroupDb>());

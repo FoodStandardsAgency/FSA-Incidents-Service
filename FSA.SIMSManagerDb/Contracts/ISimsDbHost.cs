@@ -4,7 +4,8 @@
     {
         IDbAddressRepository Addresses { get; }
         IDbIncidentsRepository Incidents { get; }
-        IDbLookups Lookups { get; set; }
+        IDbLookups Lookups { get; }
         IDbSignalsRepository Signals { get; }
+        IDbUserAudit Audit { get; }
     }
 }
