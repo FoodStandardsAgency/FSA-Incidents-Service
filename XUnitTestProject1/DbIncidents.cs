@@ -46,7 +46,7 @@ namespace FSA.UnitTests.Db
                    incidentTitle: "New Incident",
                    incidentTypeId: 1,
                    contactMethodId: 2,
-                   statusId: (int)IncidentStatus.Unassigned,
+                   statusId: (int)IncidentStatusTypes.Unassigned,
                    priorityId: 2,
                    classificationId: 1,
                    dataSourceId: 1,
@@ -72,18 +72,18 @@ namespace FSA.UnitTests.Db
             {
                 ISIMSManager incidents = new SIMSDataManager(ctx, userId);
                 var savedIncident = await incidents.Incidents.Add(incident);
-                Assert.True(savedIncident.MostUniqueId != Guid.Empty && savedIncident.StatusId == (int)IncidentStatus.Unassigned);
+                Assert.True(savedIncident.MostUniqueId != Guid.Empty && savedIncident.StatusId == (int)IncidentStatusTypes.Unassigned);
             }
         }
 
-        [Fact(DisplayName = "Add incindet with lead officer")]
+        [Fact(DisplayName = "Add incidnet with lead officer")]
         public async Task AddIncidentLeadOfficer()
         {
             var incident = new BaseIncident(
                    incidentTitle: "Peanuts",
                    incidentTypeId: 1,
                    contactMethodId: 2,
-                   statusId: (int)IncidentStatus.Unassigned,
+                   statusId: (int)IncidentStatusTypes.Unassigned,
                    priorityId: 2,
                    classificationId: 1,
                    dataSourceId: 1,
@@ -179,11 +179,11 @@ namespace FSA.UnitTests.Db
 
                 // Ensure we have a lead officer and we are open
                 var changedIncident = incident
-                                        .WithStatus((int)IncidentStatus.Open)
+                                        .WithStatus((int)IncidentStatusTypes.Open)
                                         .WithLeadOfficer(this.userId3);
 
                 var updateIncident = await incidents.Incidents.Update(changedIncident);
-                Assert.True(updateIncident.LeadOfficer == userId3 && updateIncident.StatusId == (int)IncidentStatus.Open);
+                Assert.True(updateIncident.LeadOfficer == userId3 && updateIncident.StatusId == (int)IncidentStatusTypes.Open);
             }
         }
 
@@ -218,13 +218,14 @@ namespace FSA.UnitTests.Db
 
                 // Closing shall replace the leadOfficer
                 var changedIncident = incident
-                                        .WithStatus((int)IncidentStatus.Closed);
+                                        .WithStatus((int)IncidentStatusTypes.Closed);
                 //.WithLeadOfficer(this.userId3);
 
                 var updateIncident = await incidents.Incidents.Update(changedIncident);
-                Assert.True(updateIncident.StatusId == (int)IncidentStatus.Closed);
+                Assert.True(updateIncident.StatusId == (int)IncidentStatusTypes.Closed);
             }
         }
+
 
         [Fact]
         public async Task DashboardSearchPeanut()
@@ -294,9 +295,9 @@ namespace FSA.UnitTests.Db
             {
                 ISIMSManager incidents = new SIMSDataManager(ctx, userId);
                 var data = await incidents.Incidents.Get(59);
-                var updated = data.WithIncidentStatus((int)IncidentStatus.Closed);
+                var updated = data.WithStatus((int)IncidentStatusTypes.Closed);
                 var item = await incidents.Incidents.Update(updated);
-                Assert.True(item.IncidentClosed != null && item.StatusId == (int)IncidentStatus.Closed);
+                Assert.True(item.IncidentClosed != null && item.StatusId == (int)IncidentStatusTypes.Closed);
             }
         }
 
@@ -312,6 +313,7 @@ namespace FSA.UnitTests.Db
             }
         }
 
+
         [Fact]
         public async Task LinkToClosed()
         {
@@ -323,7 +325,7 @@ namespace FSA.UnitTests.Db
             {
                 ISIMSManager sims = new SIMSDataManager(ctx, userId);
                 var data = await sims.Incidents.Get(incidentId);
-                await Assert.ThrowsAsync<IncidentClosedException>(async () => await sims.Incidents.Update(data.WithIncidentStatus(2)));
+                await Assert.ThrowsAsync<IncidentClosedException>(async () => await sims.Incidents.Update(data.WithStatus(2)));
 
             }
 
@@ -360,7 +362,7 @@ namespace FSA.UnitTests.Db
                 var i82 = (await simsApp.Incidents.Get(82));
                 var Officer82 = i82.LeadOfficer;
                 Assert.True(Officer39 == userId3 && Officer102 == userId3 && Officer55 == userId3 && Officer82 != userId3);
-                Assert.True(i82.StatusId == (int)IncidentStatus.Closed);
+                Assert.True(i82.StatusId == (int)IncidentStatusTypes.Closed);
             }
         }
 
@@ -370,7 +372,7 @@ namespace FSA.UnitTests.Db
             var newStakeHolder = new Stakeholder
             {
                 DiscriminatorId = 3,
-                IncidentId = 5517,
+                HostId = 5517,
                 Name = "Pickle pie",
                 GovDept = "Crusty",
                 Phone = "012345 789",
@@ -380,7 +382,7 @@ namespace FSA.UnitTests.Db
             {
                 var simsApp = new SIMSDataManager(ctx, userId3);
                 var createdStakeHolder = await simsApp.Incidents.AddStakeholder(newStakeHolder);
-                Assert.True(createdStakeHolder.Name == newStakeHolder.Name && createdStakeHolder.IncidentId == 5517);
+                Assert.True(createdStakeHolder.Name == newStakeHolder.Name && createdStakeHolder.HostId == 5517);
             }
         }
         [Fact]

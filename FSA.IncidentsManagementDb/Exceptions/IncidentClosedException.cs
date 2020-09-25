@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FSA.IncidentsManagementDb.Exceptions
 {
-    public class IncidentClosedException : SIMSException
+    public class IncidentClosedException : OldSIMSException
     {
         public IncidentClosedException()
         {

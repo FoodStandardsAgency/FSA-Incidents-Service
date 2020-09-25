@@ -22,16 +22,16 @@ namespace FSA.IncidentsManagement.Root.Contracts
         /// <param name="id"></param>
         /// <returns></returns>
         Task<IncidentsDisplayModel> GetDisplayItem(int id);
+        
         Task<BaseIncident> UpdateStatus(int Id, int statusId);
         Task<BaseIncident> UpdateClassification(int id, int ClassificationId);
-
         Task AssignLeadOfficer(IEnumerable<int> id, string user);
         
         Task AddLinks(int from, IEnumerable<int> to, string reason);
         Task RemoveLink(int fromIncidentId, int toIncidentId);
         
-        Task<IncidentNote> AddNote(int incidentId, string note);
-        Task<IEnumerable<IncidentNote>>GetNotes(int incidentId);
+        Task<SimsNote> AddNote(int incidentId, string note);
+        Task<IEnumerable<SimsNote>>GetNotes(int incidentId);
 
         Task<IPaging<IncidentDashboardView>> DashboardSearch(string search = null, int pageSize = 500, int startPage = 1);
         Task<IEnumerable<IncidentDashboardView>> DashboardIncidentLinks(int incidentId);

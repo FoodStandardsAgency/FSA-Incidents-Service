@@ -8,13 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-
-using IncidentStatus = FSA.IncidentsManagementDb.Entities.Helpers.IncidentStatus;
 
 namespace FSA.IncidentsManagementDb.Repositories
 {
@@ -76,8 +73,8 @@ namespace FSA.IncidentsManagementDb.Repositories
         public async Task AssignLeadOfficer(IEnumerable<int> ids, string user)
         {
             // I dislike plus 4!
-            var openStatus = (int)IncidentStatus.Open;
-            var closeStatus = (int)IncidentStatus.Closed;
+            var openStatus = (int)IncidentStatusTypes.Open;
+            var closeStatus = (int)IncidentStatusTypes.Closed;
 
             var WhereClause = String.Join(" OR ", ids.Select(o => $"Id={o}"));
             // Grab the incidents, as long as they are not closed.
@@ -129,9 +126,9 @@ namespace FSA.IncidentsManagementDb.Repositories
                 var fromIncident = ctx.Incidents.Find(link.FromIncidentId);
                 var toincident = ctx.Incidents.Find(link.ToIncidentId);
 
-                if (fromIncident.IncidentStatusId != (int)IncidentStatus.Closed)
+                if (fromIncident.IncidentStatusId != (int)IncidentStatusTypes.Closed)
                     ctx.Incidents.Update(fromIncident);
-                if (toincident.IncidentStatusId != (int)IncidentStatus.Closed)
+                if (toincident.IncidentStatusId != (int)IncidentStatusTypes.Closed)
                     ctx.Incidents.Update(toincident);
 
                 await ctx.SaveChangesAsync();
@@ -182,7 +179,7 @@ namespace FSA.IncidentsManagementDb.Repositories
                         // Update the destination incident, if the incident has NOT been closed.
                         // This is not a sensible option.
                         var toIncident = ctx.Incidents.Find(to);
-                        if (toIncident.IncidentStatusId != (int)IncidentStatus.Closed)
+                        if (toIncident.IncidentStatusId != (int)IncidentStatusTypes.Closed)
                         {
                             ctx.Incidents.Update(toIncident);
                         }
@@ -236,8 +233,8 @@ namespace FSA.IncidentsManagementDb.Repositories
         {
             var dbItem = this.ctx.Incidents.Find(incident.CommonId);
 
-            if (dbItem == null) throw new SIMSException("No incident was found");
-            if (dbItem.IncidentStatusId == (int)IncidentStatus.Closed) throw new IncidentClosedException("Cannot update a closed incident!");
+            if (dbItem == null) throw new OldSIMSException("No incident was found");
+            if (dbItem.IncidentStatusId == (int)IncidentStatusTypes.Closed) throw new IncidentClosedException("Cannot update a closed incident!");
 
             // If the incoming is unanassigned, but has a lead officer then we open the case (Close has already been taken care of)
             if (incident.StatusId == (int)IncidentStatus.Unassigned && !String.IsNullOrEmpty(incident.LeadOfficer))
@@ -250,7 +247,7 @@ namespace FSA.IncidentsManagementDb.Repositories
             // We are using simpleFlags
             // Have we changed to unassigned, if so ensure we remove the lead officer.
             var unassignLeadOfficer = false;
-            if (dbItem.IncidentStatusId == (int)IncidentStatus.Open && incident.StatusId == (int)IncidentStatus.Unassigned)
+            if (dbItem.IncidentStatusId == (int)IncidentStatusTypes.Open && incident.StatusId == (int)IncidentStatusTypes.Unassigned)
                 unassignLeadOfficer = true;
 
 
@@ -261,7 +258,7 @@ namespace FSA.IncidentsManagementDb.Repositories
 
             // Are we closed?
             // Then ensure we update the closed date.
-            if (dbItem.IncidentStatusId == (int)IncidentStatus.Closed)
+            if (dbItem.IncidentStatusId == (int)IncidentStatusTypes.Closed)
                 dbItem.IncidentClosed = DateTime.UtcNow;
 
             var updatedDbItem = this.ctx.Incidents.Update(dbItem);
@@ -284,7 +281,7 @@ namespace FSA.IncidentsManagementDb.Repositories
             if (dbItem.IncidentClosed != null) throw new IncidentClosedException("Cannot update a closed incident!");
 
             dbItem.IncidentStatusId = statusId;
-            if (statusId == (int)IncidentStatus.Unassigned)
+            if (statusId == (int)IncidentStatusTypes.Unassigned)
                 dbItem.LeadOfficer = "";
 
             await ctx.SaveChangesAsync();
@@ -301,7 +298,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         {
             var WhereClause = String.Join(" OR ", incidentIds.Select(o => $"Id={o}"));
             var items = ctx.Incidents.FromSqlRaw($"SELECT * from Incidents where {WhereClause}");
-            var closeStatus = (int)IncidentStatus.Closed;
+            var closeStatus = (int)IncidentStatusTypes.Closed;
 
             foreach (var incident in items)
             {
@@ -341,7 +338,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         /// <param name="incidentId"></param>
         /// <param name="note"></param>
         /// <returns></returns>
-        public async Task<IncidentNote> AddNote(int incidentId, string note)
+        public async Task<SimsNote> AddNote(int incidentId, string note)
         {
             var newComment = new IncidentCommentDb { Comment = note, IncidentId = incidentId };
             ctx.IncidentComments.Add(newComment);
@@ -357,7 +354,6 @@ namespace FSA.IncidentsManagementDb.Repositories
         public async Task<bool> Exists(int incidentId)
         {
             var isReal  = await this.ctx.Incidents.AsNoTracking().FirstOrDefaultAsync(f => f.Id == incidentId) == null;
-
             return !isReal;
         }
 
@@ -563,7 +559,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         /// </summary>
         /// <param name="incidentId"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<IncidentNote>> GetNotes(int incidentId)
+        public async Task<IEnumerable<SimsNote>> GetNotes(int incidentId)
         {
             var allNotes = await ctx.IncidentComments.Where(o => o.IncidentId == incidentId).Select(s => s.ToClient()).ToListAsync();
             return allNotes;
@@ -578,7 +574,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         public async Task<bool> IsClosed(int incidentId)
         {
             return (await ctx.Incidents.AsNoTracking().SingleAsync(i => i.Id == incidentId))
-                           .IncidentStatusId == (int)IncidentStatus.Closed;
+                           .IncidentStatusId == (int)IncidentStatusTypes.Closed;
         }
 
         public async Task UpdateAttachmentTags(int id, string docUrl, DocumentTagTypes tags)
@@ -587,7 +583,7 @@ namespace FSA.IncidentsManagementDb.Repositories
             // tHE DOCUment is taken on faith alas.
             var existing = this.ctx.Incidents.Find(id);
             if (existing==null) throw new IncidentMissingException("Incident does not exist");
-            if (existing.IncidentStatusId == (int)IncidentStatus.Closed) throw new IncidentClosedException("Incident is closed.");
+            if (existing.IncidentStatusId == (int)IncidentStatusTypes.Closed) throw new IncidentClosedException("Incident is closed.");
             var existingAttachment  = ctx.TaggedAttachements.Find(id, docUrl);
             if(existingAttachment != null)
             {
@@ -616,14 +612,14 @@ namespace FSA.IncidentsManagementDb.Repositories
 
         public async Task<Stakeholder> AddStakeholder(Stakeholder stakeholder)
         {
-            if(stakeholder.IncidentId==0) throw new IncidentMissingException("Incident Id Missing");
+            if(stakeholder.HostId==0) throw new IncidentMissingException("Incident Id Missing");
 
-            var isClosed = await this.IsClosed(stakeholder.IncidentId);
+            var isClosed = await this.IsClosed(stakeholder.HostId);
             if (isClosed) throw new IncidentClosedException("Incident is closed");
-            if (stakeholder.Id > 0) throw new SIMSException("Stakeholder already exists.");
+            if (stakeholder.Id > 0) throw new OldSIMSException("Stakeholder already exists.");
             // Cannot add an FSA member with an address, this is an application error.
             if (stakeholder.AddressId.HasValue && stakeholder.DiscriminatorId == (int)StakeholderTypes.FSA)
-                throw new SIMSException("FSA Stakeholder must not have an address");
+                throw new OldSIMSException("FSA Stakeholder must not have an address");
 
             var dbItem = ctx.Stakeholders.Add(stakeholder.ToDb());
 
@@ -634,10 +630,10 @@ namespace FSA.IncidentsManagementDb.Repositories
         public async Task RemoveStakeholder(int stakeholderId)
         {
             var dbItem = ctx.Stakeholders.Include(o=>o.Incident).SingleOrDefault(s=>s.Id==stakeholderId);
-            if (dbItem== null) throw new SIMSException("Stakeholder must exist.");
+            if (dbItem== null) throw new OldSIMSException("Stakeholder must exist.");
 
             //if (stakeholder.IncidentId == 0) throw new IncidentMissingException("Incident Id Missing");
-            var isClosed = (dbItem.Incident.IncidentStatusId == (int)IncidentStatus.Closed);
+            var isClosed = (dbItem.Incident.IncidentStatusId == (int)IncidentStatusTypes.Closed);
             if (isClosed) throw new IncidentClosedException("Incident is closed. cannot remove stakeholder");
             ctx.Remove(dbItem);
             await ctx.SaveChangesAsync();
@@ -645,13 +641,13 @@ namespace FSA.IncidentsManagementDb.Repositories
 
         public async Task<Stakeholder> UpdateStakeholder(Stakeholder stakeholder)
         {
-            if(stakeholder.IncidentId==0) throw new IncidentMissingException("Incident Id Missing");
-            var isClosed = await this.IsClosed(stakeholder.IncidentId);
+            if(stakeholder.HostId==0) throw new IncidentMissingException("Incident Id Missing");
+            var isClosed = await this.IsClosed(stakeholder.HostId);
             if (isClosed) throw new IncidentClosedException("Incident is closed");
-            if (stakeholder.Id == 0) throw new SIMSException("Stakeholder must exist.");
+            if (stakeholder.Id == 0) throw new OldSIMSException("Stakeholder must exist.");
 
             if (stakeholder.AddressId.HasValue && stakeholder.DiscriminatorId == (int)StakeholderTypes.FSA)
-                throw new SIMSException("FSA Stakeholder must not have an address");
+                throw new OldSIMSException("FSA Stakeholder must not have an address");
 
             var dbItem = ctx.Stakeholders.Find(stakeholder.Id);
             stakeholder.ToUpdateDb(dbItem);

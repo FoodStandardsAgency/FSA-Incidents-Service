@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <UserSecretsId>182c7758-05ac-499d-aa91-d87eab09ea04</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Entities\Core\Product\BaseProductDateDb.cs" />
+    <Compile Remove="Entities\Core\Product\BaseProductDb.cs" />
+    <Compile Remove="Entities\Core\Product\BaseProductFboDb.cs" />
+    <Compile Remove="Entities\Core\Product\BaseProductPackSizeDb.cs" />
+    <Compile Remove="Entities\IncidentProducts\SignalProductDateDb.cs" />
+    <Compile Remove="Entities\IncidentProducts\SignalProductDb.cs" />
+    <Compile Remove="Entities\IncidentProducts\SignalProductFboDb.cs" />
+    <Compile Remove="Entities\IncidentProducts\SignalProductPackSizeDb.cs" />
+    <Compile Remove="Entities\IncidentProducts\xSignalProductDateDb.cs" />
+    <Compile Remove="Entities\IncidentProducts\xSignalProductDb.cs" />
+    <Compile Remove="Entities\IncidentProducts\xSignalProductFboDb.cs" />
+    <Compile Remove="Entities\IncidentProducts\xSignalProductPackSizeDb.cs" />
+    <Compile Remove="Migrations\20200917102327_Slap.cs" />
+    <Compile Remove="Migrations\20200917102327_Slap.Designer.cs" />
+    <Compile Remove="Repositories\SignalsLinkedRecords.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.0.0" />
+    <PackageReference Include="AutoMapper.Collection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EntityFrameworkCore.TemporalTables\EntityFrameworkCore.TemporalTables\EntityFrameworkCore.TemporalTables.csproj" />
+    <ProjectReference Include="..\FSA.IncidentMangementMent.Root\FSA.IncidentsManagement.Root.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Entities\Core\Product\" />
+  </ItemGroup>
+
+</Project>

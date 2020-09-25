@@ -77,7 +77,7 @@ namespace FSA.IncidentsManagementDb
             Title = @this.Title,
         };
 
-        public static IEnumerable<AddressDb> ToDb(this IEnumerable<SimsAddress> @this)
+        public static IEnumerable<AddressDb> ToDb(this IEnumerable<Address> @this)
         {
             foreach (var itm in @this)
             {
@@ -85,7 +85,7 @@ namespace FSA.IncidentsManagementDb
             }
         }
 
-        public static IEnumerable<SimsAddress> ToDb(this IEnumerable<AddressDb> @this)
+        public static IEnumerable<Address> ToDb(this IEnumerable<AddressDb> @this)
         {
             foreach (var itm in @this)
             {
@@ -102,7 +102,7 @@ namespace FSA.IncidentsManagementDb
         //}
 
 
-        public static SimsAddress ToClient(this AddressDb @this) => new SimsAddress
+        public static Address ToClient(this AddressDb @this) => new Address
         {
             Id = @this.Id,
             Title = @this.Title,
@@ -147,7 +147,7 @@ namespace FSA.IncidentsManagementDb
         }
 
 
-        public static AddressDb ToDb(this SimsAddress @this) => new AddressDb
+        public static AddressDb ToDb(this Address @this) => new AddressDb
         {
             Id = @this.Id,
             Title = @this.Title,
@@ -162,7 +162,7 @@ namespace FSA.IncidentsManagementDb
             Contacts = @this.Contacts.ToDb().ToList()
         };
 
-        public static SimsAddressContact ToClient(this AddressContactDb @this) => new SimsAddressContact
+        public static AddressContact ToClient(this AddressContactDb @this) => new AddressContact
         {
             Id = @this.Id,
             AddressId = @this.AddressId,
@@ -173,7 +173,7 @@ namespace FSA.IncidentsManagementDb
         };
 
 
-        public static IEnumerable<SimsAddressContact> ToClient(this IEnumerable<AddressContactDb> @this)
+        public static IEnumerable<AddressContact> ToClient(this IEnumerable<AddressContactDb> @this)
         {
             foreach (var itm in @this)
             {
@@ -181,7 +181,7 @@ namespace FSA.IncidentsManagementDb
             }
         }
 
-        public static AddressContactDb ToDb(this SimsAddressContact @this) => new AddressContactDb
+        public static AddressContactDb ToDb(this AddressContact @this) => new AddressContactDb
         {
             Id = @this.Id,
             AddressId = @this.AddressId,
@@ -196,7 +196,7 @@ namespace FSA.IncidentsManagementDb
         /// </summary>
         /// <param name="this"></param>
         /// <param name="entity"></param>
-        public static void ToDb(this SimsAddressContact @this, AddressContactDb entity)
+        public static void ToDb(this AddressContact @this, AddressContactDb entity)
         {
             //entity.AddressId = @this.AddressId;
             entity.EmailAddress = @this.EmailAddress;
@@ -205,7 +205,7 @@ namespace FSA.IncidentsManagementDb
             entity.IsMain = @this.IsMain;
         }
 
-        public static IEnumerable<AddressContactDb> ToDb(this IEnumerable<SimsAddressContact> @this)
+        public static IEnumerable<AddressContactDb> ToDb(this IEnumerable<AddressContact> @this)
         {
             foreach (var itm in @this)
             {
@@ -213,7 +213,7 @@ namespace FSA.IncidentsManagementDb
             }
         }
 
-        public static void ToDb(this SimsAddress @this, AddressDb entity)
+        public static void ToDb(this Address @this, AddressDb entity)
         {
             entity.Title = @this.Title;
             //entity.MainContact = @this.MainContact;
@@ -304,7 +304,6 @@ namespace FSA.IncidentsManagementDb
                 @this.Id,
                 mostUniqueId: @this.MostUniqueId,
                 incidentTitle: @this.IncidentTitle,
-
                 incidentTypeId: @this.IncidentTypeId,
                 contactMethodId: @this.ContactMethodId,
                 statusId: @this.IncidentStatusId,
@@ -441,7 +440,7 @@ namespace FSA.IncidentsManagementDb
             return new ProductDb
             {
                 Id = @this.Id,
-                IncidentId = @this.IncidentId,
+                IncidentId = @this.HostId,
                 Brand = @this.Brand,
                 Name = @this.Name,
                 ProductTypeId = @this.ProductTypeId,
@@ -460,7 +459,7 @@ namespace FSA.IncidentsManagementDb
         {
             Id = @this.Id,
             Name = @this.Name,
-            IncidentId = @this.IncidentId,
+            HostId = @this.IncidentId,
             AdditionalInfo = @this.AdditionalInfo ?? "",
             AmountUnitTypeId = @this.AmountUnitTypeId,
             Amount = @this.Amount,
@@ -480,7 +479,7 @@ namespace FSA.IncidentsManagementDb
         {
             Id = @this.Id,
             Name = @this.Name,
-            IncidentId = @this.IncidentId,
+            HostId = @this.IncidentId,
             AdditionalInfo = @this.AdditionalInfo ?? "",
             AmountUnitTypeId = @this.AmountUnitTypeId,
             Amount = @this.Amount,
@@ -519,7 +518,7 @@ namespace FSA.IncidentsManagementDb
         public static void ToUpdateDb(this Product @this, ProductDb product)
         {
             product.Id = @this.Id;
-            product.IncidentId = @this.IncidentId;
+            product.IncidentId = @this.HostId;
             product.AdditionalInfo = @this.AdditionalInfo ?? "";
             product.AmountUnitTypeId = @this.AmountUnitTypeId;
             product.Amount = @this.Amount;
@@ -655,13 +654,13 @@ namespace FSA.IncidentsManagementDb
             return sourceItem;
         }
 
-        public static IncidentNote ToClient(this IncidentCommentDb @this) => new IncidentNote
+        public static SimsNote ToClient(this IncidentCommentDb @this) => new SimsNote
         {
             Id = @this.Id,
             Note = @this.Comment,
             Created = @this.Created,
             CreatedBy = @this.CreatedBy,
-            IncidentId = @this.IncidentId
+            HostId = @this.IncidentId
         };
 
         public static IncidentDashboardView ToDashboard(this IncidentDb @this)
@@ -728,7 +727,7 @@ namespace FSA.IncidentsManagementDb
             Phone = @this.Phone,
             Name = @this.Name,
             GovDept = @this.GovDept,
-            IncidentId = @this.IncidentId,
+            HostId = @this.IncidentId,
             Role = @this.Role,
             Id = @this.Id,
             AddressId = @this.AddressId
@@ -741,7 +740,7 @@ namespace FSA.IncidentsManagementDb
             entity.Phone = @this.Phone;
             entity.Name = @this.Name;
             entity.GovDept = @this.GovDept;
-            entity.IncidentId = @this.IncidentId;
+            entity.IncidentId = @this.HostId;
             entity.Role = @this.Role;
             entity.Id = @this.Id;
         }
@@ -753,7 +752,7 @@ namespace FSA.IncidentsManagementDb
             Phone = @this.Phone,
             Name = @this.Name,
             GovDept = @this.GovDept,
-            IncidentId = @this.IncidentId,
+            IncidentId = @this.HostId,
             Role = @this.Role,
             Id = @this.Id,
             AddressId = @this.AddressId

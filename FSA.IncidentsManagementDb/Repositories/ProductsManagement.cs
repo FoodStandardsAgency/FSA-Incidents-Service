@@ -95,7 +95,7 @@ namespace FSA.IncidentsManagementDb.Repositories
         {
             // ensure we can update the incident.
             // need to check to see if the incident has already been closed.
-            var isClosed = IsIncidentClosed(product.IncidentId);
+            var isClosed = IsIncidentClosed(product.HostId);
             if (!isClosed)
             {
                 var productDb = ctx.Products
@@ -136,8 +136,8 @@ namespace FSA.IncidentsManagementDb.Repositories
         public async Task AssignFbo(int productId, int addressId, FboTypes types)
         {
 
-            if (productId == 0) throw new SIMSException("Product Id missing");
-            if (addressId == 0) throw new SIMSException("Address Id missing");
+            if (productId == 0) throw new OldSIMSException("Product Id missing");
+            if (addressId == 0) throw new OldSIMSException("Address Id missing");
             // need to check to see if the incident has already been closed.
             if (IsProductIncidentClosed(productId)) throw new IncidentClosedException("This incident is closed.");
 
@@ -153,8 +153,8 @@ namespace FSA.IncidentsManagementDb.Repositories
 
         public async Task UpdateFbo(int productId, int addressId, FboTypes fboTypes)
         {
-            if (productId == 0) throw new SIMSException("Product Id missing");
-            if (addressId == 0) throw new SIMSException("Address Id missing");
+            if (productId == 0) throw new OldSIMSException("Product Id missing");
+            if (addressId == 0) throw new OldSIMSException("Address Id missing");
             //if ((int)fboTypes == 0) throw new SIMSException("No Fbo types selected");
 
             // need to check to see if the incident has already been closed.
@@ -169,15 +169,15 @@ namespace FSA.IncidentsManagementDb.Repositories
             }
             else
             {
-                throw new SIMSException("Product Fbo Address not found");
+                throw new OldSIMSException("Product Fbo Address not found");
             }
 
         }
 
         public async Task RemoveFbo(int productId, int addressId)
         {
-            if (productId == 0) throw new SIMSException("Product Id missing");
-            if (addressId == 0) throw new SIMSException("Address Id missing");
+            if (productId == 0) throw new OldSIMSException("Product Id missing");
+            if (addressId == 0) throw new OldSIMSException("Address Id missing");
             if (IsProductIncidentClosed(productId)) throw new IncidentClosedException("Incident is closed");
 
             var item = ctx.ProductFBOItems.Find(productId, addressId);
@@ -189,19 +189,20 @@ namespace FSA.IncidentsManagementDb.Repositories
         /// </summary>
         /// <param name="productId"></param>
         /// <returns></returns>
+ 
         private bool IsProductIncidentClosed(int productId)
         {
             return ctx.Products.AsNoTracking()
                     .Include(o => o.Incident)
                     .Single(p => p.Id == productId)
-                    .Incident.IncidentStatusId == (int)IncidentStatus.Closed;
+                    .Incident.IncidentStatusId == (int)IncidentStatusTypes.Closed;
         }
 
         private bool IsIncidentClosed(int incidentId)
         {
             return ctx.Incidents
                       .Single(i => i.Id == incidentId)
-                      .IncidentStatusId == (int)IncidentStatus.Closed;
+                      .IncidentStatusId == (int)IncidentStatusTypes.Closed;
         }
     }
 }

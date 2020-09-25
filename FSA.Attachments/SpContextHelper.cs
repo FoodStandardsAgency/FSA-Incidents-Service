@@ -1,13 +1,13 @@
 ﻿using Microsoft.Identity.Client;
 using Microsoft.SharePoint.Client;
-using System;
-using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FSA.Attachments
 {
+    /// <summary>
+    /// Managees the connetion to sharepoint and the requiste cert.
+    /// </summary>
     internal static class SpContextHelper
     {
         internal static async Task<string> GetApplicationAuthenticatedClient(string clientId, X509Certificate2 cert, string[] scopes, string tenantId)

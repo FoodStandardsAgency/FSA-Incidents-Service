@@ -8,7 +8,7 @@ namespace FSA.IncidentsManagementDb.Entities.Helpers
     /// This is a helper to stop having to do unwise lookups
     /// Remember DB IncidentStatus Id values and these MUST BE THE SAME!!
     /// </summary>
-    public enum IncidentStatus
+    public enum IncidentStatusTypes
     {
         Unknown = 0,
         Unassigned = 4,

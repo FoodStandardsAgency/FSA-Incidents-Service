@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Mail;
-using System.Text;
 
 namespace FSA.IncidentsManagement.Root.Models
 {
@@ -15,7 +11,7 @@ namespace FSA.IncidentsManagement.Root.Models
         private readonly int _Id;
 
         ///Full record
-        public BaseIncident(int id, Guid mostUniqueId, string incidentTitle, int incidentTypeId, int contactMethodId, int statusId, int? signalStatusId, int? notifierId, int? principalFBOId, int priorityId, int classificationId, int dataSourceId, string signalUrl, int productTypeId, string leadOfficer, string leadOffice, int? adminLeadId, string fieldOfficer, int? leadLocalAuthorityId, bool lAAdvised, int deathIllnessId, DateTime? receivedOn, DateTime incidentCreated, DateTime? incidentClosed, string lastChangedBy, DateTime lastChangedDate)
+        public BaseIncident(int id, Guid mostUniqueId, string incidentTitle, int incidentTypeId, int contactMethodId, int statusId, int? signalStatusId, int? notifierId, int? principalFBOId, int priorityId, int classificationId, int dataSourceId, string signalUrl, int productTypeId, string leadOfficer, string leadOffice, int? adminLeadId, string fieldOfficer, int? leadLocalAuthorityId, bool lAAdvised, int? deathIllnessId, DateTime? receivedOn, DateTime incidentCreated, DateTime? incidentClosed, string lastChangedBy, DateTime lastChangedDate)
         {
             _Id = id;
             MostUniqueId = mostUniqueId;
@@ -46,13 +42,13 @@ namespace FSA.IncidentsManagement.Root.Models
         }
 
         // New record
-        public BaseIncident(string incidentTitle, int incidentTypeId, int contactMethodId, int statusId, int? signalStatusId, int? notifierId, int? principalFBOId, int priorityId, int classificationId, int dataSourceId, string signalUrl, int productTypeId, string leadOfficer, string leadOffice, int? adminLeadId, string fieldOfficer, int? leadLocalAuthorityId, bool lAAdvised, int deathIllnessId, DateTime? receivedOn, DateTime incidentCreated, DateTime? incidentClosed, string lastChangedBy, DateTime lastChangedDate) : this(0, Guid.Empty, incidentTitle, incidentTypeId, contactMethodId, statusId, signalStatusId, notifierId, principalFBOId, priorityId, classificationId, dataSourceId, signalUrl, productTypeId, leadOfficer, leadOffice, adminLeadId, fieldOfficer, leadLocalAuthorityId, lAAdvised, deathIllnessId, receivedOn, incidentCreated, incidentClosed, lastChangedBy, lastChangedDate)
+        public BaseIncident(string incidentTitle, int incidentTypeId, int contactMethodId, int statusId, int? signalStatusId, int? notifierId, int? principalFBOId, int priorityId, int classificationId, int dataSourceId, string signalUrl, int productTypeId, string leadOfficer, string leadOffice, int? adminLeadId, string fieldOfficer, int? leadLocalAuthorityId, bool lAAdvised, int? deathIllnessId, DateTime? receivedOn, DateTime incidentCreated, DateTime? incidentClosed, string lastChangedBy, DateTime lastChangedDate) : this(0, Guid.Empty, incidentTitle, incidentTypeId, contactMethodId, statusId, signalStatusId, notifierId, principalFBOId, priorityId, classificationId, dataSourceId, signalUrl, productTypeId, leadOfficer, leadOffice, adminLeadId, fieldOfficer, leadLocalAuthorityId, lAAdvised, deathIllnessId, receivedOn, incidentCreated, incidentClosed, lastChangedBy, lastChangedDate)
         {
 
         }
 
         // Friendly new record
-        public BaseIncident(string incidentTitle, int incidentTypeId, int contactMethodId, int statusId, int? signalStatusId, int? notifierId, int? principalFBOId, int priorityId, int classificationId, int dataSourceId, string signalUrl, int productTypeId, string leadOfficer, string leadOffice, int? adminLeadId, string fieldOfficer, int? leadLocalAuthorityId, bool lAAdvised, int deathIllnessId, DateTime? receivedOn, DateTime? incidentClosed) : this(0, Guid.Empty, incidentTitle, incidentTypeId, contactMethodId, statusId, signalStatusId, notifierId, principalFBOId, priorityId, classificationId, dataSourceId, signalUrl, productTypeId, leadOfficer, leadOffice, adminLeadId, fieldOfficer, leadLocalAuthorityId, lAAdvised, deathIllnessId, receivedOn, DateTime.MinValue, incidentClosed, "", DateTime.MinValue)
+        public BaseIncident(string incidentTitle, int incidentTypeId, int contactMethodId, int statusId, int? signalStatusId, int? notifierId, int? principalFBOId, int priorityId, int classificationId, int dataSourceId, string signalUrl, int productTypeId, string leadOfficer, string leadOffice, int? adminLeadId, string fieldOfficer, int? leadLocalAuthorityId, bool lAAdvised, int? deathIllnessId, DateTime? receivedOn, DateTime? incidentClosed) : this(0, Guid.Empty, incidentTitle, incidentTypeId, contactMethodId, statusId, signalStatusId, notifierId, principalFBOId, priorityId, classificationId, dataSourceId, signalUrl, productTypeId, leadOfficer, leadOffice, adminLeadId, fieldOfficer, leadLocalAuthorityId, lAAdvised, deathIllnessId, receivedOn, DateTime.MinValue, incidentClosed, "", DateTime.MinValue)
         {
 
         }
@@ -82,7 +78,7 @@ namespace FSA.IncidentsManagement.Root.Models
         public string FieldOfficer { get; }
         public int? LeadLocalAuthorityId { get; }
         public bool LAAdvised { get; }
-        public int DeathIllnessId { get; }
+        public int? DeathIllnessId { get; }
         public DateTime? ReceivedOn { get; }
         public DateTime IncidentCreated { get; }
         public DateTime? IncidentClosed { get; }
@@ -307,35 +303,35 @@ namespace FSA.IncidentsManagement.Root.Models
                    lastChangedDate: @this.LastChangedDate
                    );
 
-        public static BaseIncident WithIncidentStatus(this BaseIncident @this, int incidentStatus) => new BaseIncident(
-           @this.CommonId,
-          mostUniqueId: @this.MostUniqueId,
-          incidentTitle: @this.IncidentTitle,
+        //public static BaseIncident WithIncidentStatus(this BaseIncident @this, int incidentStatus) => new BaseIncident(
+        //   @this.CommonId,
+        //  mostUniqueId: @this.MostUniqueId,
+        //  incidentTitle: @this.IncidentTitle,
           
-          incidentTypeId: @this.IncidentTypeId,
-          contactMethodId: @this.ContactMethodId,
-          statusId: incidentStatus,
-          signalStatusId: @this.SignalStatusId,
-          notifierId: @this.NotifierId,
-          principalFBOId: @this.PrincipalFBOId,
-          priorityId: @this.PriorityId,
-          classificationId: @this.ClassificationId,
-          dataSourceId: @this.DataSourceId,
-                  signalUrl: @this.SignalUrl,
-          productTypeId: @this.ProductTypeId,
-          leadOfficer: @this.LeadOfficer,
-          leadOffice: @this.LeadOffice,
-          adminLeadId: @this.AdminLeadId,
-          fieldOfficer: @this.FieldOfficer,
-          leadLocalAuthorityId: @this.LeadLocalAuthorityId,
-          lAAdvised: @this.LAAdvised,
-          deathIllnessId: @this.DeathIllnessId,
-          receivedOn: @this.ReceivedOn,
-          incidentCreated: @this.IncidentCreated,
-          incidentClosed: @this.IncidentClosed,
-          lastChangedBy: @this.LastChangedBy,
-           lastChangedDate: @this.LastChangedDate
-           );
+        //  incidentTypeId: @this.IncidentTypeId,
+        //  contactMethodId: @this.ContactMethodId,
+        //  statusId: incidentStatus,
+        //  signalStatusId: @this.SignalStatusId,
+        //  notifierId: @this.NotifierId,
+        //  principalFBOId: @this.PrincipalFBOId,
+        //  priorityId: @this.PriorityId,
+        //  classificationId: @this.ClassificationId,
+        //  dataSourceId: @this.DataSourceId,
+        //          signalUrl: @this.SignalUrl,
+        //  productTypeId: @this.ProductTypeId,
+        //  leadOfficer: @this.LeadOfficer,
+        //  leadOffice: @this.LeadOffice,
+        //  adminLeadId: @this.AdminLeadId,
+        //  fieldOfficer: @this.FieldOfficer,
+        //  leadLocalAuthorityId: @this.LeadLocalAuthorityId,
+        //  lAAdvised: @this.LAAdvised,
+        //  deathIllnessId: @this.DeathIllnessId,
+        //  receivedOn: @this.ReceivedOn,
+        //  incidentCreated: @this.IncidentCreated,
+        //  incidentClosed: @this.IncidentClosed,
+        //  lastChangedBy: @this.LastChangedBy,
+        //   lastChangedDate: @this.LastChangedDate
+        //   );
 
         public static BaseIncident WithPrincipalFbo(this BaseIncident @this, int? addressId) => new BaseIncident(
                                @this.CommonId,

@@ -5,21 +5,22 @@ using System.Text;
 
 namespace FSA.IncidentsManagementDb.Exceptions
 {
-    public class SIMSException : Exception
+    [Obsolete]
+    public class OldSIMSException : Exception
     {
-        public SIMSException()
+        public OldSIMSException()
         {
         }
 
-        public SIMSException(string message) : base(message)
+        public OldSIMSException(string message) : base(message)
         {
         }
 
-        public SIMSException(string message, Exception innerException) : base(message, innerException)
+        public OldSIMSException(string message, Exception innerException) : base(message, innerException)
         {
         }
 
-        protected SIMSException(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected OldSIMSException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
     }

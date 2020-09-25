@@ -1,13 +1,13 @@
+.+ModifiedBy = table.Column<string>\(maxLength: 70, nullable: false\),.+\n.+Modified = table.Column<DateTime>\(nullable: false, defaultValueSql: "getutcdate\(\)"\),.+\n.+CreatedBy = table.Column<string>\(maxLength: 70, nullable: false\),.+\n.+Created = table.Column<DateTime>\(nullable: false, defaultValueSql: "getutcdate\(\)"\),.+\n.+Timestamp = table.Column<byte\[\]>\(rowVersion: true, nullable: true\),?.+\n
 
 
 (\)),?.\n.+(},.+\n.+constraints)
                    $1,\n ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),\nModified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),\nCreatedBy = table.Column<string>(maxLength: 70, nullable: false),\nCreated = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),\nTimestamp = table.Column<byte[]>(rowVersion: true, nullable: true)$2
 
+
+
                    INcidentLinks
                    ProductFBOItems
-
-.+ModifiedBy = table.Column<string>\(maxLength: 70, nullable: false\),.+\n.+Modified = table.Column<DateTime>\(nullable: false, defaultValueSql: "getutcdate\(\)"\),.+\n.+CreatedBy = table.Column<string>\(maxLength: 70, nullable: false\),.+\n.+Created = table.Column<DateTime>\(nullable: false, defaultValueSql: "getutcdate\(\)"\),.+\n.+Timestamp = table.Column<byte\[\]>\(rowVersion: true, nullable: true\),?.+\n
-
 Data Source=tcp:devfsadbdbserver.database.windows.net,1433;Initial Catalog=FSA.ConcurrencyToken;User Id=fsaadmin@devfsadbdbserver;Password=12Fingers34
 
 
@@ -19,7 +19,7 @@ client_id=78085c96-db80-49fc-b3a2-229671cb7f8e
 &scope=/.default
 &state=12345
 
-https://techcommunity.microsoft.com/t5/sharepoint-developer/send-an-interactive-authorization-request-for-this-user-and/m-p/1091867
+https://techcommunity.microsoft.com/t5/ arepoint-developer/send-an-interactive-authorization-request-for-this-user-and/m-p/1091867
 
 https://login.microsoftonline.com/aac34e6c-7ad5-4ef6-b592-96ca17cebd94/oauth2/v2.0/authorize?
 client_id=d3b8ffd6-7813-4ac7-a6ff-c85d623e8778
@@ -42,3 +42,6 @@ client_id=7be2c147-f9da-4a43-8024-9928b12157f4
 
 https://graph.microsoft.com/calendars.read
 https://graph.microsoft.com/mail.send
+
+
+QoXnAz5I~-J4.-9At-3xJ6U0vNA4JbkJzf

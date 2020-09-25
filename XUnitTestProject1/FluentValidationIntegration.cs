@@ -54,7 +54,7 @@ namespace FSA.IntegrationTesting
                 // Remove the lead officer and make it open.
                 // This should not save
                 incident.LeadOfficer = "";
-                incident.StatusId = (int)IncidentStatus.Open;
+                incident.StatusId = (int)IncidentStatusTypes.Open;
                
                 var postedResponse = await _client.PutAsJsonAsync("api/Incidents?id=21", incident);
                 postedResponse.EnsureSuccessStatusCode();
@@ -83,7 +83,7 @@ namespace FSA.IntegrationTesting
                 // Remove the lead officer and make it open.
                 // This should not save
                 incident.LeadOfficer = this.Users[0];
-                incident.StatusId = (int)IncidentStatus.Open;
+                incident.StatusId = (int)IncidentStatusTypes.Open;
 
                 var inci = System.Text.Json.JsonSerializer.Serialize(incident);
                 var postedResponse = await _client.PutAsJsonAsync("api/Incidents?id=21", incident);

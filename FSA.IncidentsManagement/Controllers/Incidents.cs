@@ -1,14 +1,11 @@
-﻿using FSA.IncidentsManagement.Models;
-using FSA.IncidentsManagement.Root;
-using FSA.IncidentsManagement.Root.Contracts;
+﻿using AutoMapper;
+using FSA.IncidentsManagement.Models;
+using FSA.IncidentsManagement.Root.Domain;
 using FSA.IncidentsManagement.Root.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,22 +13,24 @@ using System.Threading.Tasks;
 namespace FSA.IncidentsManagement.Controllers
 {
     [Route("api/[controller]")]
+    [Produces("application/json")]
     [ApiController]
     [Authorize]
     public class IncidentsController : ControllerBase
     {
         private readonly ILogger<IncidentsController> log;
-        private readonly ISIMSManager fsaData;
-        private readonly IFSAAttachments attachments;
+        private readonly IMapper mapper;
+        private readonly ISIMSApplication simsApp;
 
-        public IncidentsController(ILogger<IncidentsController> log, ISIMSManager fsaData, IFSAAttachments attachments)
+
+        public IncidentsController(ILogger<IncidentsController> log, IMapper mapper, ISIMSApplication simsApp)
         {
             this.log = log;
-            this.fsaData = fsaData;
-            this.attachments = attachments;
+            this.mapper = mapper;
+            this.simsApp = simsApp;
         }
 
-        [HttpGet()]
+        [HttpGet("{id}")]
         [SwaggerOperation(Summary = "Get incident by id")]
         [ProducesResponseType(typeof(IncidentsDisplayModel), 200)]
         [ProducesResponseType(500)]
@@ -39,235 +38,94 @@ namespace FSA.IncidentsManagement.Controllers
         public async Task<IActionResult> GetIncident(int id)
         {
             if (id == 0) return BadRequest("No Incident Id was passed");
-            return new OkObjectResult(await this.fsaData.Incidents.GetDisplayItem(id));
-        }
-
-        [HttpGet("Dashboard")]
-        [SwaggerOperation(Summary = "Incident dashboard search")]
-        [ProducesResponseType(typeof(IncidentDashboardView), 200)]
-        [ProducesResponseType(500)]
-        [Produces("application/json")]
-        public async Task<IActionResult> GetIncidentDashboard(string search, int pageNo, int? pageSize)
-        {
-            log.LogInformation($"search terms : {search} {pageNo} {pageSize}", "GetIncidentsDashboard");
-
-            if (pageNo < 1 || pageSize < 1)
-                return new OkObjectResult(new PagedResult<IncidentDashboardView>(Enumerable.Empty<IncidentDashboardView>(), 0));
-
-            var dashBoard = pageSize.HasValue ? await this.fsaData.Incidents.DashboardSearch(search: search ?? "", startPage: pageNo, pageSize: pageSize.Value) : await this.fsaData.Incidents.DashboardSearch(search: search ?? "", startPage: pageNo);
-            return new OkObjectResult(new
-            {
-                Results = dashBoard,
-                TotalRecords = dashBoard.TotalResults
-            });
+            return new OkObjectResult(await this.simsApp.Incidents.GetDisplayItem(id));
         }
 
         [HttpPut()]
-        [SwaggerOperation(Summary = "Replace an existing incident")]
+        [SwaggerOperation(Summary = "Replace an incident")]
         [ProducesResponseType(typeof(BaseIncident), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
         public async Task<IActionResult> UpdateIncident([FromBody, SwaggerParameter("Updated Incident", Required = true)] IncidentUpdateModel incident)
         {
-
-            return new OkObjectResult(await this.fsaData.Incidents.Update(incident.ToClient()));
+            var mappedIncindet = mapper.Map<IncidentUpdateModel, BaseIncident>(incident);
+            return new OkObjectResult(await this.simsApp.Incidents.Update(mappedIncindet));
         }
 
         [HttpPost()]
-        [SwaggerOperation(Summary = "Create an existing incident")]
+        [SwaggerOperation(Summary = "Create an incident")]
         [ProducesResponseType(typeof(BaseIncident), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
         public async Task<IActionResult> CreateIncident([FromBody, SwaggerParameter("Create Incident", Required = true)] IncidentCreateModel incident)
         {
-            return new OkObjectResult(await this.fsaData.Incidents.Add(incident.ToClient()));
+            return new OkObjectResult(await this.simsApp.Incidents.Add(mapper.Map<BaseIncident>(incident)));
         }
 
-        [HttpPost("Classification")]
+        [HttpPost("Classification/{id}/{classificationId}")]
         [SwaggerOperation(Summary = "Update classification of an incident")]
         [ProducesResponseType(typeof(BaseIncident), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
-        public async Task<IActionResult> UpdateClassification([Required] int incidentId, [Required] int classificationId)
+        public async Task<IActionResult> UpdateClassification([FromRoute] int id, [FromRoute] int classificationId)
         {
-            return new OkObjectResult(await this.fsaData.Incidents.UpdateClassification(incidentId, classificationId));
+            return new OkObjectResult(await this.simsApp.Incidents.UpdateClassification(id, classificationId));
         }
 
-        [HttpPost("Status")]
+        [HttpPost("Status/{id}/{statusId}")]
         [SwaggerOperation(Summary = "Update status of an incident")]
         [ProducesResponseType(typeof(BaseIncident), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
-        public async Task<IActionResult> UpdateStatus([Required] int incidentId, [Required] int statusId)
+        public async Task<IActionResult> UpdateStatus([FromRoute] int id, [FromRoute] int statusId)
         {
-            return new OkObjectResult(await this.fsaData.Incidents.UpdateStatus(incidentId, statusId));
+            return new OkObjectResult(await this.simsApp.Incidents.UpdateStatus(id, statusId));
         }
 
         [HttpPost("CloseAll")]
-        [SwaggerOperation(Summary = "Update status of an incident")]
+        [SwaggerOperation(Summary = "Close list of incidents")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> CloseAll([Required] int[] incidentIds)
+        public async Task<IActionResult> CloseAll([Required] IncidentCloseViewModel incidentClose)
         {
-            await this.fsaData.Incidents.BulkClose(incidentIds);
+            await this.simsApp.Incidents.BulkClose(incidentClose.IncidentIds);
             return new OkResult();
         }
 
         [HttpPost("LeadOfficer")]
-        [SwaggerOperation(Summary = "Assign lead officer")]
+        [SwaggerOperation(Summary = "Update incident(s) lead officer")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> UpdateLeadOfficer([FromBody, SwaggerParameter("Update Lead officer entries", Required = true)] UpdateLeadOfficer officer)
+        public async Task<IActionResult> UpdateLeadOfficer([FromBody, SwaggerParameter("Update Lead officer entries", Required = true)] UpdateLeadOfficerModel officer)
         {
-            await this.fsaData.Incidents.AssignLeadOfficer(officer.IncidentIds, officer.Officer);
+            await this.simsApp.Incidents.UpdateLeadOfficer(officer.Ids, officer.Officer);
             return new OkResult();
         }
 
-        [HttpPost("AddLinks")]
-        [SwaggerOperation(Summary = "Link two or moreincidents")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(500)]
-        public async Task<IActionResult> AddIncidentLink([FromBody] LinkIncidents addIncident)
-        {
-            await this.fsaData.Incidents.AddLinks(addIncident.FromIncidentId, addIncident.ToIncidentIds, addIncident.Comment);
-            return new OkResult();
-        }
-
-        [HttpPost("RemoveLink")]
-        [SwaggerOperation(Summary = "Remove link between two incidents")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(500)]
-        public async Task<IActionResult> RemoveIncidentLink([FromBody] UnlinkIncident removeIncident)
-        {
-            await this.fsaData.Incidents.RemoveLink(removeIncident.FromIncidentId, removeIncident.ToIncidentId);
-            return new OkResult();
-        }
-
-        [HttpGet("GetIncidentLinks")]
-        [SwaggerOperation(Summary = "Dashboard info for an incidents links")]
-        [ProducesResponseType(typeof(IEnumerable<IncidentDashboardView>), 200)]
-        [ProducesResponseType(500)]
-        public async Task<IActionResult> GetIncidentLinks([FromQuery] int incidentId)
-        {
-            return new OkObjectResult(await this.fsaData.Incidents.DashboardIncidentLinks(incidentId));
-        }
-
-        [HttpPost("AddNote")]
-        [SwaggerOperation(Summary = "Add note to an incident")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(500)]
-        public async Task<IActionResult> AddNote([FromBody, SwaggerParameter(Required = true)] IncidentComment addIncident)
-        {
-            await this.fsaData.Incidents.AddNote(addIncident.IncidentId, addIncident.Note);
-            return new OkResult();
-        }
-
-        [HttpGet("GetNotes")]
-        [SwaggerOperation(Summary = "Get notes for an incident")]
-        [ProducesResponseType(typeof(IEnumerable<IncidentNote>), 200)]
-        [ProducesResponseType(500)]
-        public async Task<IActionResult> GetNotes([FromQuery] int incidentId)
-        {
-            return new OkObjectResult(await this.fsaData.Incidents.GetNotes(incidentId));
-        }
-
-        [HttpPost("EnsureLibrary")]
-        [SwaggerOperation(Summary = "Ensure library exists for incident")]
-        [ProducesResponseType(typeof(IncidentLibraryInfo), 200)]
-        [ProducesResponseType(500)]
-        public async Task<IActionResult> EnsureLibrary([FromQuery] int Id)
-        {
-            var stringId = GeneralExtensions.GenerateIncidentId(Id);
-            if (await this.fsaData.Incidents.Exists(Id))
-            {
-                var listInfo = await this.attachments.EnsureLibrary(stringId);
-                return new OkObjectResult(listInfo);
-            }
-            return new OkObjectResult(null);
-
-        }
-
-        [HttpGet("Stakeholders")]
-        [SwaggerOperation(Summary = "Get all stakeholder for an incident")]
-        [ProducesResponseType(typeof(List<StakeholderModel>), 200)]
+        [HttpPost("Dashboard")]
+        [SwaggerOperation(Summary = "Incident dashboard search")]
+        [ProducesResponseType(typeof(IncidentDashboardItem), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
-        public async Task<IActionResult> GetStakeholder([FromQuery] int incidentId)
+        public async Task<IActionResult> GetIncidentDashboard(DashboardSearchViewModel dashboard)
         {
-            var stakeholders = await this.fsaData.Incidents.GetStakeholders(incidentId);
-            var addressItems = stakeholders.Where(o => o.AddressId.HasValue).Select(o => new { Id = o.Id, AddressId = o.AddressId.Value });
+            log.LogInformation($"search terms : {dashboard.Search} {dashboard.PageNo} {dashboard.PageSize}", "GetIncidentsDashboard");
 
-            var addressList = new List<SimsAddress>();
-            foreach (var item in addressItems)
-            {
-                var address = await fsaData.Addresses.Get(item.AddressId);
-                addressList.Add(address);
-            }
+            if (dashboard.PageNo < 1 || dashboard.PageSize < 0)
+                return new OkObjectResult(new
+                {
+                    Results = Enumerable.Empty<IncidentDashboardItem>(),
+                    TotalRecords = 0
+                });
 
-            var completedStakeholders = stakeholders.Select(o =>
+            var dashBoard = dashboard.PageSize.HasValue && dashboard.PageSize>0 
+                                                ? await this.simsApp.Incidents.DashboardSearch(search: dashboard.Search ?? "", startPage: dashboard.PageNo, pageSize: dashboard.PageSize.Value) 
+                                                : await this.simsApp.Incidents.DashboardSearch(search: dashboard.Search ?? "", startPage: dashboard.PageNo);
+            return new OkObjectResult(new
             {
-                var sHolder = o.ToWeb();
-                if (sHolder.AddressId.HasValue)
-                    sHolder.AddressTitle = addressList.FirstOrDefault(o => o.Id == sHolder.AddressId)?.Title ?? "";
-                return sHolder;
-            }).ToList();
-                return new OkObjectResult(completedStakeholders);
-
-        }
-
-        [HttpPost("Stakeholders")]
-        [SwaggerOperation(Summary = "Add a new stakeholder to an incident")]
-        [ProducesResponseType(typeof(StakeholderModel), 200)]
-        [ProducesResponseType(500)]
-        [Produces("application/json")]
-        public async Task<IActionResult> AddStakeholder([FromBody] StakeholderModel stakeholder)
-        {
-            try
-            {
-                var newStakeholder = await this.fsaData.Incidents.AddStakeholder(stakeholder.ToClient());
-                return new OkObjectResult(newStakeholder);
-            }
-            catch (ArgumentOutOfRangeException ex)
-            {
-                return new BadRequestObjectResult(ex.Message);
-            }
-        }
-
-        [HttpPut("Stakeholders")]
-        [SwaggerOperation(Summary = "Update a  stakeholder to an incident")]
-        [ProducesResponseType(typeof(StakeholderModel), 200)]
-        [ProducesResponseType(500)]
-        [Produces("application/json")]
-        public async Task<IActionResult> UpdateStakeholder([FromBody] StakeholderModel stakeholder)
-        {
-            try
-            {
-                var updatedStakeholder = await this.fsaData.Incidents.UpdateStakeholder(stakeholder.ToClient());
-                return new OkObjectResult(updatedStakeholder);
-            }
-            catch (ArgumentOutOfRangeException ex)
-            {
-                return new BadRequestObjectResult(ex.Message);
-            }
-        }
-
-
-        [HttpDelete("Stakeholders")]
-        [SwaggerOperation(Summary = "Remove a stakeholder to an incident")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(500)]
-        [Produces("application/json")]
-        public async Task<IActionResult> DeleteStakeholder([FromQuery] int stakeholderId)
-        {
-            try
-            {
-                await this.fsaData.Incidents.RemoveStakeholder(stakeholderId);
-                return new OkResult();
-            }
-            catch (ArgumentOutOfRangeException ex)
-            {
-                return new BadRequestObjectResult(ex.Message);
-            }
+                Results = dashBoard,
+                TotalRecords = dashBoard.TotalResults
+            });
         }
 
     }

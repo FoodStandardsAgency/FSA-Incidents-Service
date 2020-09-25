@@ -27,7 +27,7 @@ namespace FSA.IncidentsManagement.Models
         public string FieldOfficer { get; set; }
         public int? LeadLocalAuthorityId { get; set; } // organisations // 0 for Powerapps is un assigned
         public bool LAAdvised { get; set; }
-        public int DeathIllnessId { get; set; }
+        public int? DeathIllnessId { get; set; }
         //public Guid MostUniqueId { get; set; }
         public DateTime? ReceivedOn { get; set; }
         public DateTime IncidentCreated { get; set; }

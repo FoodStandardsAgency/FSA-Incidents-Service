@@ -9,11 +9,10 @@ namespace FSA.IncidentsManagement.Root.Contracts
 {
     public interface IFSAAttachments
     {
-        Task<bool> ReplaceAttachment(FileStream filem, string url);
         Task<(string fileName, string url)> RenameAttachment(string fileName, string url);
         Task<(string filename, string url)> AddAttachment(string filePath, string filename, string incidentId);
         Task<IEnumerable<AttachmentFileInfo>> FetchAllAttchmentsLinks(string incidentId);
         Task<IncidentAttachment> FetchAttachment(string url);
-        Task<IncidentLibraryInfo> EnsureLibrary(string stringId);
+        Task<AttachmentLibraryInfo> EnsureLibrary(string stringId);
     }
 }
