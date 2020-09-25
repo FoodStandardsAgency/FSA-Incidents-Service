@@ -18,10 +18,11 @@ namespace FSA.SIMSManagerDb.Repositories
         {
             ctx.UserAccessLog.Add(new UserAccessAuditDb
             {
+                UserId = ctx.Editor,
                 Scope = IncidentOrSignal,
                 Page = PageRef,
                 ScopeId = ItemId
-            });
+            }) ;
 
             return ctx.SaveChangesAsync();
         }

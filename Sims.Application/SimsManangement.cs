@@ -2,8 +2,6 @@
 using FSA.IncidentsManagement.Root.Domain;
 using FSA.SIMSManagerDb;
 using FSA.SIMSManagerDb.Contracts;
-using FSA.SIMSManagerDb.Repositories;
-using System;
 
 namespace Sims.Application
 {
@@ -27,6 +25,7 @@ namespace Sims.Application
 
         public ISIMSAddress Addresses => new AddressManagment(this.SimsDbHost);
 
+        public ISIMSUserAuditLogger AuditLog => new UserAuditLogger(this.SimsDbHost);
        // public ISIMSAppAttachment AttachmentUpdates => new AttachmentUpdates(attachments, SimsDbHost);
     }
 }

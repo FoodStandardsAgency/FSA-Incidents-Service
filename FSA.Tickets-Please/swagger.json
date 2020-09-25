@@ -1770,6 +1770,45 @@
           }
         }
       }
+    },
+    "/api/UserAudit/{incidentSignal}/{pageName}/{id}": {
+      "post": {
+        "tags": [
+          "UserAudit"
+        ],
+        "summary": "Log user",
+        "description": "Adds user info to the log for explict action",
+        "operationId": "AddUserLogEntry",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "incidentSignal",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "pageName",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
     }
   },
   "definitions": {

@@ -5,7 +5,6 @@ using FSA.SIMSManagerDb.Entities.Lookups;
 using FSA.SIMSManagerDb.Entities.Signals;
 using FSA.SIMSManagerDb.Utilities;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 
 namespace FSA.SIMSManagerDb
 {

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace FSA.SIMSManagerDb
 {
+    /// <summary>
+    /// The complete DbContext defintion is split between two files.
+    /// </summary>
     public partial class SimsDbContext : DbContext
     {
         private string _Editor;
@@ -19,6 +22,8 @@ namespace FSA.SIMSManagerDb
         {
             this._Editor = editor ?? throw new ArgumentNullException("Must have an editor name.");
         }
+
+        internal String Editor => _Editor;
 
         private void SetAuditData()
         {
