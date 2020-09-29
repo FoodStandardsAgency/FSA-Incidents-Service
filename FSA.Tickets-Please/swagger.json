@@ -1734,6 +1734,12 @@
           },
           "500": {
             "description": "Server Error"
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "type": "string"
+            }
           }
         }
       },
@@ -1743,6 +1749,9 @@
         ],
         "summary": "Remove a stakeholder to an incident",
         "operationId": "RemoveStakeholder",
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "path",
@@ -1761,6 +1770,12 @@
         "responses": {
           "200": {
             "description": "Success"
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "type": "string"
+            }
           },
           "500": {
             "description": "Server Error"
@@ -1805,6 +1820,12 @@
               "$ref": "#/definitions/SimsStakeholder"
             }
           },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "type": "string"
+            }
+          },
           "500": {
             "description": "Server Error"
           }
@@ -1844,6 +1865,12 @@
             "description": "Success",
             "schema": {
               "$ref": "#/definitions/SimsStakeholder"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "type": "string"
             }
           },
           "500": {
