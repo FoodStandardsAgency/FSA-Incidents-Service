@@ -238,8 +238,8 @@ namespace FSA.SIMSManagerDb.MapperProfile
             CreateMap<SignalProductDb, SimsProductDisplayModel>(MemberList.Destination)
                 .ForMember(a => a.DataSourceId, m => m.Ignore())
                 .ForMember(a => a.SignalUrl, m => m.Ignore())
-                .ForMember(a => a.LastUpdated, m => m.MapFrom(a => a.Host.Modified))
-                .ForMember(a => a.LastUpdatedBy, m => m.MapFrom(a => a.Host.ModifiedBy))
+                .ForMember(a => a.LastUpdated, m => m.MapFrom(a => a.Modified))
+                .ForMember(a => a.LastUpdatedBy, m => m.MapFrom(a => a.ModifiedBy))
                 .ForMember(a => a.Added, m => m.MapFrom(a => a.Created));
 
             CreateMap<IncidentProductDb, SimsProductDetail>(MemberList.Destination);
