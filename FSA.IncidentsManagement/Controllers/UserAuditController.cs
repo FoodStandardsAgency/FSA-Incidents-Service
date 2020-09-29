@@ -37,13 +37,18 @@ namespace FSA.IncidentsManagement.Controllers
                 {
                     IncidentOrSignal.Incidents => this.simsApp.AuditLog.AddIncidentLog(pageName, id),
                     IncidentOrSignal.Signals => this.simsApp.AuditLog.AddIncidentLog(pageName, id),
-                    _ => throw new ArgumentOutOfRangeException("Incident/Signal missing")
+                    _ => throw new InvalidOperationException("Incident/Signal missing")
                 };
 
             }
             catch (SIMSException ex)
             {
                 log.LogError(ex.Message, ex);
+                return Task.CompletedTask;
+            }
+            catch (InvalidOperationException ex)
+            {
+                log.LogError(nameof(AddUserLogEntry), ex);
                 return Task.CompletedTask;
             }
 

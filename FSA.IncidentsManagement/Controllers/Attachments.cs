@@ -3,7 +3,6 @@ using FSA.IncidentsManagement.Misc;
 using FSA.IncidentsManagement.Models;
 using FSA.IncidentsManagement.Root.Domain;
 using FSA.IncidentsManagement.Root.DTOS;
-using FSA.IncidentsManagement.Root.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -15,7 +14,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace FSA.IncidentsManagement.Controllers
 {
@@ -23,6 +21,7 @@ namespace FSA.IncidentsManagement.Controllers
     [Route("api/[controller]")]
     [Produces("application/json")]
     [ApiController]
+    [ApiConventionType(typeof(DefaultApiConventions))]
     [Authorize]
     public class AttachmentsController : ControllerBase
     {
@@ -40,6 +39,7 @@ namespace FSA.IncidentsManagement.Controllers
         [HttpPost("EnsureLibrary/{incidentSignal}/{id}")]
         [SwaggerOperation(Summary = "Ensure library exists")]
         [ProducesResponseType(typeof(SimsAttachmentLibraryInfo), 200)]
+        [ProducesResponseType(typeof(string), 403)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> EnsureLibrary([FromRoute] string incidentSignal, [FromRoute] int id)
         {
@@ -54,9 +54,8 @@ namespace FSA.IncidentsManagement.Controllers
         [HttpPost("{incidentSignal}/{id}")]
         [SwaggerOperation(Summary = "Add Attachment to incident/signal")]
         [ProducesResponseType(typeof(SimsAttachmentFileInfoViewModel), 200)]
+        [ProducesResponseType(typeof(string), 403)]
         [ProducesResponseType(500)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(403)]
         [Produces("application/json")]
         public async Task<IActionResult> AddAttachment([FromRoute] string incidentSignal, [FromRoute] int id)
         {
@@ -116,7 +115,7 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "Register attachment to  incident/signal")]
         [ProducesResponseType(typeof(SimsAttachmentFileInfoViewModel), 200)]
         [ProducesResponseType(500)]
-        [ProducesResponseType(403)]
+        [ProducesResponseType(typeof(string), 403)]
         [Produces("application/json")]
         public async Task<IActionResult> RegisterAttachment([FromRoute] string incidentSignal, [FromBody] RegisterAttachmentModel newAttachment)
         {
@@ -141,35 +140,47 @@ namespace FSA.IncidentsManagement.Controllers
         [HttpGet("{incidentSignal}/{id}")]
         [SwaggerOperation(Summary = "Download attachments info")]
         [ProducesResponseType(typeof(List<SimsAttachmentFileInfoViewModel>), 200)]
+        [ProducesResponseType(typeof(string), 403)]
         public async Task<IActionResult> FetchAllAttachmentInfo([FromRoute] string incidentSignal, [FromRoute] int id)
         {
-
-            var fileInfo = incidentSignal.ToLower() switch
+            try
             {
-                IncidentOrSignal.Incidents => await this.simsApp.Incidents.Attachments.FetchAllAttchmentsLinks(id),
-                IncidentOrSignal.Signals => await this.simsApp.Signals.Attachments.FetchAllAttchmentsLinks(id),
-                _ => throw new InvalidOperationException("Unknown route")
-            };
-
-
-            return new OkObjectResult(this.mapper.Map<List<SimsAttachmentFileInfoViewModel>>(fileInfo));
+                var fileInfo = incidentSignal.ToLower() switch
+                {
+                    IncidentOrSignal.Incidents => await this.simsApp.Incidents.Attachments.FetchAllAttchmentsLinks(id),
+                    IncidentOrSignal.Signals => await this.simsApp.Signals.Attachments.FetchAllAttchmentsLinks(id),
+                    _ => throw new InvalidOperationException("Unknown route")
+                };
+                return new OkObjectResult(this.mapper.Map<List<SimsAttachmentFileInfoViewModel>>(fileInfo));
+            }
+            catch(InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost("Tags/{incidentSignal}")]
         [SwaggerOperation(Summary = "Update tags for for an attachment.")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
+        [ProducesResponseType(typeof(string), 403)]
         public async Task<IActionResult> UpdateAttachmentTags([FromRoute] string incidentSignal, [FromBody] UpdateDocumentTagsModel updateTags)
         {
-            var docUri = new Uri(updateTags.DocUrl).GetComponents(UriComponents.Scheme | UriComponents.Host | UriComponents.Path, UriFormat.UriEscaped);
-
-            var model = incidentSignal.ToLower() switch
+            try
             {
-                IncidentOrSignal.Incidents => await this.simsApp.Incidents.Attachments.Update(docUri, (SimsDocumentTagTypes) updateTags.Tags.Sum()),
-                IncidentOrSignal.Signals => await this.simsApp.Signals.Attachments.Update(docUri, (SimsDocumentTagTypes)updateTags.Tags.Sum()),
-                _ => throw new InvalidOperationException("Unknown route")
-            };
-            return new OkObjectResult(this.mapper.Map<SimsAttachmentFileInfoViewModel>(model));
+                var docUri = new Uri(updateTags.DocUrl).GetComponents(UriComponents.Scheme | UriComponents.Host | UriComponents.Path, UriFormat.UriEscaped);
+                var model = incidentSignal.ToLower() switch
+                {
+                    IncidentOrSignal.Incidents => await this.simsApp.Incidents.Attachments.Update(docUri, (SimsDocumentTagTypes)updateTags.Tags.Sum()),
+                    IncidentOrSignal.Signals => await this.simsApp.Signals.Attachments.Update(docUri, (SimsDocumentTagTypes)updateTags.Tags.Sum()),
+                    _ => throw new InvalidOperationException("Unknown route")
+                };
+                return new OkObjectResult(this.mapper.Map<SimsAttachmentFileInfoViewModel>(model));
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
         }
 
@@ -177,8 +188,8 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "Renames an attachment.")]
         [ProducesResponseType(typeof(SimsAttachmentFileInfoViewModel), 200)]
         [ProducesResponseType(500)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(403)]
+        [ProducesResponseType(409)]
+        [ProducesResponseType(typeof(string), 403)]
         [Produces("application/json")]
         public async Task<IActionResult> RenameAttachment([FromRoute] string incidentSignal, [FromBody] RenameFileViewModel renameFile)
         {
@@ -196,6 +207,10 @@ namespace FSA.IncidentsManagement.Controllers
             {
                 log.LogError(nameof(RenameAttachment), ex);
                 return new ConflictResult();
+            }
+            catch(InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
 

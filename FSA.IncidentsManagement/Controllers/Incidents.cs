@@ -15,6 +15,7 @@ namespace FSA.IncidentsManagement.Controllers
     [Route("api/[controller]")]
     [Produces("application/json")]
     [ApiController]
+    [ApiConventionType(typeof(DefaultApiConventions))]
     [Authorize]
     public class IncidentsController : ControllerBase
     {

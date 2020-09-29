@@ -35,6 +35,7 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "Get All Stakeholders")]
         [ProducesResponseType(typeof(List<SimsStakeholder>), 200)]
         [ProducesResponseType(500)]
+        [ProducesResponseType(typeof(string), 403)]
         [Produces("application/json")]
         public async Task<IActionResult> GetStakeholder([FromRoute] string incidentSignal, [FromRoute] int id)
         {
@@ -50,6 +51,7 @@ namespace FSA.IncidentsManagement.Controllers
         [HttpPost("{incidentSignal}")]
         [SwaggerOperation(Summary = "Add a new stakeholder to an incident")]
         [ProducesResponseType(typeof(SimsStakeholder), 200)]
+        [ProducesResponseType(typeof(string), 403)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
         public async Task<IActionResult> AddStakeholder([FromRoute] string incidentSignal, [FromBody] SimsStakeholder stakeholder)
@@ -74,6 +76,7 @@ namespace FSA.IncidentsManagement.Controllers
         [HttpPut("{incidentSignal}")]
         [SwaggerOperation(Summary = "Update a stakeholder")]
         [ProducesResponseType(typeof(SimsStakeholder), 200)]
+        [ProducesResponseType(typeof(string), 403)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
         public async Task<IActionResult> UpdateStakeholder([FromRoute] string incidentSignal, [FromBody] SimsStakeholder stakeholder)
@@ -101,6 +104,7 @@ namespace FSA.IncidentsManagement.Controllers
         [HttpDelete("{incidentSignal}/{id}")]
         [SwaggerOperation(Summary = "Remove a stakeholder to an incident")]
         [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(string), 403)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
         public async Task<IActionResult> RemoveStakeholder([FromRoute] string incidentSignal, [FromRoute] int id)
@@ -120,7 +124,7 @@ namespace FSA.IncidentsManagement.Controllers
             catch (ArgumentOutOfRangeException ex)
             {
                 log.LogError(nameof(RemoveStakeholder), ex);
-                return new BadRequestObjectResult(ex.Message);
+                return BadRequest(ex.Message);
             }
             catch (InvalidOperationException)
             {

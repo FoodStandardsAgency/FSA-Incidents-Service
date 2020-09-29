@@ -14,6 +14,7 @@ namespace FSA.IncidentsManagement.Controllers
     [Route("api/[controller]")]
     [Produces("application/json")]
     [ApiController]
+    [ApiConventionType(typeof(DefaultApiConventions))]
     [Authorize]
     public class AddressesController : ControllerBase
     {
@@ -75,7 +76,6 @@ namespace FSA.IncidentsManagement.Controllers
         {
             var address = await simsApp.Addresses.Get(addressId);
             return new OkObjectResult(mapper.Map<SimsAddress, SimsAddressViewModel>(address));
-
         }
     }
 }

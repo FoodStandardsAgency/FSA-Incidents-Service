@@ -16,6 +16,7 @@ namespace FSA.IncidentsManagement.Controllers
     [Route("api/[controller]")]
     [Produces("application/json")]
     [ApiController]
+    [ApiConventionType(typeof(DefaultApiConventions))]
     [Authorize]
     public class NotesController : ControllerBase
     {
@@ -31,6 +32,7 @@ namespace FSA.IncidentsManagement.Controllers
         [HttpPost("{incidentSignal}")]
         [SwaggerOperation(Summary = "Add note to an incident/signal")]
         [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(string), 403)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> AddNote([FromRoute] string incidentSignal, [FromBody, SwaggerParameter(Required = true)] SimsNoteModel addIncident)
         {
@@ -56,6 +58,7 @@ namespace FSA.IncidentsManagement.Controllers
         [HttpGet("{incidentSignal}/{id}")]
         [SwaggerOperation(Summary = "Get notes for an incident/signal")]
         [ProducesResponseType(typeof(IEnumerable<SimsNote>), 200)]
+        [ProducesResponseType(typeof(string), 403)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetNotes([FromRoute] string incidentSignal, [FromRoute] int id)
         {

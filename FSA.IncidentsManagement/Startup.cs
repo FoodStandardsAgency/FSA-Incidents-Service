@@ -78,7 +78,7 @@ namespace FSA.IncidentsManagement
                     return apiDesc.TryGetMethodInfo(out MethodInfo methodInfo) ? methodInfo.Name : null;
                 });
 
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "fsa incident management", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "SIMS incident/signals management API", Version = "v1" });
                 c.EnableAnnotations();
             });
 
@@ -140,6 +140,10 @@ namespace FSA.IncidentsManagement
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+            app.UseStaticFiles();
+            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -151,10 +155,11 @@ namespace FSA.IncidentsManagement
             app.UseSwagger(opts => opts.SerializeAsV2 = true);
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "FSA Incident Management v1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "SIMS Incident/Signal Management API v1");
+                c.RoutePrefix = string.Empty;
             });
+
             app.UseDefaultFiles();
-            app.UseStaticFiles();
 
             app.UseHttpsRedirection();
             app.UseRouting();

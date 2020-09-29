@@ -78,7 +78,7 @@ namespace FSA.SignalsManagement.Controllers
         public async Task<IActionResult> UpdateSignalLeadOfficer([FromBody, SwaggerParameter("Update Lead officer entries", Required = true)] UpdateLeadOfficerModel officer)
         {
             await simsApp.Signals.UpdateLeadOfficer(officer.Ids, officer.Officer);
-            return new OkResult();
+            return Ok();
         }
 
 

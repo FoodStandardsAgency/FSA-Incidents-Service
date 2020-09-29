@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "fsa incident management",
+    "title": "SIMS incident/signals management API",
     "version": "v1"
   },
   "paths": {
@@ -181,6 +181,12 @@
               "$ref": "#/definitions/SimsAttachmentLibraryInfo"
             }
           },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "type": "string"
+            }
+          },
           "500": {
             "description": "Server Error"
           }
@@ -219,20 +225,14 @@
               "$ref": "#/definitions/SimsAttachmentFileInfoViewModel"
             }
           },
-          "500": {
-            "description": "Server Error"
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/ProblemDetails"
-            }
-          },
           "403": {
             "description": "Forbidden",
             "schema": {
-              "$ref": "#/definitions/ProblemDetails"
+              "type": "string"
             }
+          },
+          "500": {
+            "description": "Server Error"
           }
         }
       },
@@ -268,6 +268,12 @@
               "items": {
                 "$ref": "#/definitions/SimsAttachmentFileInfoViewModel"
               }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "type": "string"
             }
           }
         }
@@ -316,7 +322,7 @@
           "403": {
             "description": "Forbidden",
             "schema": {
-              "$ref": "#/definitions/ProblemDetails"
+              "type": "string"
             }
           }
         }
@@ -333,6 +339,9 @@
           "application/json",
           "text/json",
           "application/*+json"
+        ],
+        "produces": [
+          "application/json"
         ],
         "parameters": [
           {
@@ -355,6 +364,12 @@
           },
           "500": {
             "description": "Server Error"
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "type": "string"
+            }
           }
         }
       }
@@ -399,8 +414,8 @@
           "500": {
             "description": "Server Error"
           },
-          "400": {
-            "description": "Bad Request",
+          "409": {
+            "description": "Conflict",
             "schema": {
               "$ref": "#/definitions/ProblemDetails"
             }
@@ -408,7 +423,7 @@
           "403": {
             "description": "Forbidden",
             "schema": {
-              "$ref": "#/definitions/ProblemDetails"
+              "type": "string"
             }
           }
         }
@@ -703,6 +718,9 @@
         ],
         "summary": "Get All links for incident/signal",
         "operationId": "GetLinks",
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "path",
@@ -722,6 +740,12 @@
           "200": {
             "description": "Success"
           },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "type": "string"
+            }
+          },
           "500": {
             "description": "Server Error"
           }
@@ -739,6 +763,9 @@
           "application/json",
           "text/json",
           "application/*+json"
+        ],
+        "produces": [
+          "application/json"
         ],
         "parameters": [
           {
@@ -761,6 +788,12 @@
           },
           "500": {
             "description": "Server Error"
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "type": "string"
+            }
           }
         }
       },
@@ -774,6 +807,9 @@
           "application/json",
           "text/json",
           "application/*+json"
+        ],
+        "produces": [
+          "application/json"
         ],
         "parameters": [
           {
@@ -793,6 +829,12 @@
         "responses": {
           "200": {
             "description": "Success"
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "type": "string"
+            }
           },
           "500": {
             "description": "Server Error"
@@ -835,6 +877,9 @@
           "text/json",
           "application/*+json"
         ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "path",
@@ -853,6 +898,12 @@
         "responses": {
           "200": {
             "description": "Success"
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "type": "string"
+            }
           },
           "500": {
             "description": "Server Error"
@@ -895,6 +946,12 @@
               }
             }
           },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "type": "string"
+            }
+          },
           "500": {
             "description": "Server Error"
           }
@@ -907,6 +964,7 @@
           "Products"
         ],
         "summary": "Create new Product",
+        "description": "Create new Product",
         "operationId": "AddProduct",
         "consumes": [
           "application/json",
@@ -954,6 +1012,7 @@
           "Products"
         ],
         "summary": "Update Product",
+        "description": "Update Product",
         "operationId": "UpdateProduct",
         "consumes": [
           "application/json",
@@ -1003,6 +1062,7 @@
           "Products"
         ],
         "summary": "Fetch product",
+        "description": "Fetch product",
         "operationId": "GetProduct",
         "produces": [
           "application/json"
@@ -1041,6 +1101,7 @@
           "Products"
         ],
         "summary": "Fetch products",
+        "description": "Fetch products",
         "operationId": "GetAllProducts",
         "produces": [
           "application/json"
@@ -1082,6 +1143,7 @@
           "Products"
         ],
         "summary": "Fetch product addresses",
+        "description": "Fetch product addresses",
         "operationId": "GetProductAddresses",
         "produces": [
           "application/json"
@@ -1114,7 +1176,7 @@
           "403": {
             "description": "Forbidden",
             "schema": {
-              "$ref": "#/definitions/ProblemDetails"
+              "type": "string"
             }
           },
           "500": {
@@ -1129,6 +1191,7 @@
           "Products"
         ],
         "summary": "Assign fbo to product",
+        "description": "Assign fbo to product",
         "operationId": "AddFbo",
         "consumes": [
           "application/json",
@@ -1161,7 +1224,7 @@
           "403": {
             "description": "Forbidden",
             "schema": {
-              "$ref": "#/definitions/ProblemDetails"
+              "type": "string"
             }
           },
           "500": {
@@ -1174,6 +1237,7 @@
           "Products"
         ],
         "summary": "Remove fbo from product",
+        "description": "Remove fbo from product",
         "operationId": "RemoveFbo",
         "consumes": [
           "application/json",
@@ -1206,7 +1270,7 @@
           "403": {
             "description": "Forbidden",
             "schema": {
-              "$ref": "#/definitions/ProblemDetails"
+              "type": "string"
             }
           },
           "500": {
@@ -1219,11 +1283,15 @@
           "Products"
         ],
         "summary": "Update fbo to product",
+        "description": "Update fbo to product",
         "operationId": "UpdateFbo",
         "consumes": [
           "application/json",
           "text/json",
           "application/*+json"
+        ],
+        "produces": [
+          "application/json"
         ],
         "parameters": [
           {
@@ -1245,6 +1313,12 @@
           "200": {
             "description": "Success"
           },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "type": "string"
+            }
+          },
           "500": {
             "description": "Server Error"
           }
@@ -1257,6 +1331,7 @@
           "Products"
         ],
         "summary": "Product dashboard",
+        "description": "Product dashboard",
         "operationId": "GetProductDashboard",
         "produces": [
           "application/json"
@@ -1302,6 +1377,12 @@
           },
           "500": {
             "description": "Server Error"
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "type": "string"
+            }
           }
         }
       }
@@ -1900,30 +1981,6 @@
         }
       }
     },
-    "ProblemDetails": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string"
-        },
-        "status": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "detail": {
-          "type": "string"
-        },
-        "instance": {
-          "type": "string"
-        }
-      },
-      "additionalProperties": {
-        "type": "object"
-      }
-    },
     "RegisterAttachmentModel": {
       "type": "object",
       "properties": {
@@ -1964,6 +2021,30 @@
         "existingUrl": {
           "type": "string"
         }
+      }
+    },
+    "ProblemDetails": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "status": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "detail": {
+          "type": "string"
+        },
+        "instance": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {
+        "type": "object"
       }
     },
     "IncidentsDisplayModel": {

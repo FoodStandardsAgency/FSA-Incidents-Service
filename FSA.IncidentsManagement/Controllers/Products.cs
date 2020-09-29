@@ -19,6 +19,7 @@ namespace FSA.IncidentsManagement.Controllers
 {
     [Route("api/[controller]")]
     [Produces("application/json")]
+    [ApiConventionType(typeof(DefaultApiConventions))]
     [ApiController]
     [Authorize]
     public class ProductsController : ControllerBase
@@ -35,7 +36,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPost("{incidentSignal}")]
-        [SwaggerOperation(Summary = "Create new Product")]
+        [SwaggerOperation(Summary = "Create new Product", Description = "Create new Product")]
         [ProducesResponseType(typeof(SimsProduct), 200)]
         [ProducesResponseType(403)]
         [ProducesResponseType(500)]
@@ -59,7 +60,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPut("{incidentSignal}")]
-        [SwaggerOperation(Summary = "Update Product")]
+        [SwaggerOperation(Summary = "Update Product", Description = "Update Product")]
         [ProducesResponseType(typeof(SimsProduct), 200)]
         [ProducesResponseType(500)]
         [ProducesResponseType(403)]
@@ -85,7 +86,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpGet("{incidentSignal}/{productId}")]
-        [SwaggerOperation(Summary = "Fetch product")]
+        [SwaggerOperation(Summary = "Fetch product", Description = "Fetch product")]
         [ProducesResponseType(typeof(SimsProductDisplayModel), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetProduct([FromRoute] string incidentSignal, [FromRoute] int productId)
@@ -100,7 +101,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpGet("all/{incidentSignal}/{id}")]
-        [SwaggerOperation(Summary = "Fetch products")]
+        [SwaggerOperation(Summary = "Fetch products", Description = "Fetch products")]
         [ProducesResponseType(typeof(List<SimsProduct>), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetAllProducts([FromRoute] string incidentSignal, [FromRoute] int id)
@@ -114,9 +115,9 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpGet("Addresses/{incidentSignal}/{productId}")]
-        [SwaggerOperation(Summary = "Fetch product addresses")]
+        [SwaggerOperation(Summary = "Fetch product addresses", Description = "Fetch product addresses")]
         [ProducesResponseType(typeof(List<ProductFboAddressViewModel>), 200)]
-        [ProducesResponseType(403)]
+        [ProducesResponseType(typeof(string), 403)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetProductAddresses([FromRoute] string incidentSignal, [FromRoute] int productId)
         {
@@ -132,9 +133,9 @@ namespace FSA.IncidentsManagement.Controllers
 
 
         [HttpPost("Fbo/{incidentSignal}")]
-        [SwaggerOperation(Summary = "Assign fbo to product")]
+        [SwaggerOperation(Summary = "Assign fbo to product", Description = "Assign fbo to product")]
         [ProducesResponseType(200)]
-        [ProducesResponseType(403)]
+        [ProducesResponseType(typeof(string), 403)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> AddFbo([FromRoute] string incidentSignal, [Required] ProductFboInfoViewModel assignObj)
         {
@@ -158,9 +159,9 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpDelete("Fbo/{incidentSignal}")]
-        [SwaggerOperation(Summary = "Remove fbo from product")]
+        [SwaggerOperation(Summary = "Remove fbo from product", Description = "Remove fbo from product")]
         [ProducesResponseType(200)]
-        [ProducesResponseType(403)]
+        [ProducesResponseType(typeof(string), 403)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> RemoveFbo([FromRoute] string incidentSignal, [Required] ProductFboInfoViewModel assignObj)
         {
@@ -185,8 +186,9 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPut("Fbo/{incidentSignal}")]
-        [SwaggerOperation(Summary = "Update fbo to product")]
+        [SwaggerOperation(Summary = "Update fbo to product", Description = "Update fbo to product")]
         [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(string), 403)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> UpdateFbo([FromRoute] string incidentSignal, [Required] ProductFboInfoViewModel assignObj)
         {
@@ -211,9 +213,10 @@ namespace FSA.IncidentsManagement.Controllers
 
 
         [HttpGet("Dashboard/{incidentSignal}/{id}")]
-        [SwaggerOperation(Summary = "Product dashboard")]
+        [SwaggerOperation(Summary = "Product dashboard", Description = "Product dashboard")]
         [ProducesResponseType(typeof(PagedResult<SimsProductDashboard>), 200)]
         [ProducesResponseType(500)]
+        [ProducesResponseType(typeof(string), 403)]
         public async Task<IActionResult> GetProductDashboard([FromRoute] string incidentSignal, [FromRoute] int id, [FromQuery] int pageSize = 10, [FromQuery] int pageNo = 1)
         {
             try
