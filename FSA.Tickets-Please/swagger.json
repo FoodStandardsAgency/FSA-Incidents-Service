@@ -999,7 +999,7 @@
           "403": {
             "description": "Forbidden",
             "schema": {
-              "$ref": "#/definitions/ProblemDetails"
+              "type": "string"
             }
           },
           "500": {
@@ -1050,7 +1050,7 @@
           "403": {
             "description": "Forbidden",
             "schema": {
-              "$ref": "#/definitions/ProblemDetails"
+              "type": "string"
             }
           }
         }

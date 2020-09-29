@@ -38,7 +38,7 @@ namespace FSA.IncidentsManagement.Controllers
         [HttpPost("{incidentSignal}")]
         [SwaggerOperation(Summary = "Create new Product", Description = "Create new Product")]
         [ProducesResponseType(typeof(SimsProduct), 200)]
-        [ProducesResponseType(403)]
+        [ProducesResponseType(typeof(string), 403)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> AddProduct([FromRoute] string incidentSignal, [FromBody] ProductViewModel newProduct)
         {
@@ -55,7 +55,7 @@ namespace FSA.IncidentsManagement.Controllers
             catch (Sims.Application.Exceptions.SIMSException ex)
             {
                 log.LogWarning(ex, ex.Message);
-                return new BadRequestObjectResult(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
@@ -63,7 +63,7 @@ namespace FSA.IncidentsManagement.Controllers
         [SwaggerOperation(Summary = "Update Product", Description = "Update Product")]
         [ProducesResponseType(typeof(SimsProduct), 200)]
         [ProducesResponseType(500)]
-        [ProducesResponseType(403)]
+        [ProducesResponseType(typeof(string), 403)]
         public async Task<IActionResult> UpdateProduct([FromRoute] string incidentSignal,[FromBody] ProductViewModel product)
         {
             try
@@ -81,7 +81,7 @@ namespace FSA.IncidentsManagement.Controllers
             catch (SIMSException ex)
             {
                 log.LogWarning(ex, ex.Message);
-                return new BadRequestObjectResult(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
