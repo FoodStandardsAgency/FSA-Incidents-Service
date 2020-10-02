@@ -6,10 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Entities\Core\Product\BaseProductDateDb.cs" />
-    <Compile Remove="Entities\Core\Product\BaseProductDb.cs" />
-    <Compile Remove="Entities\Core\Product\BaseProductFboDb.cs" />
-    <Compile Remove="Entities\Core\Product\BaseProductPackSizeDb.cs" />
     <Compile Remove="Entities\IncidentProducts\SignalProductDateDb.cs" />
     <Compile Remove="Entities\IncidentProducts\SignalProductDb.cs" />
     <Compile Remove="Entities\IncidentProducts\SignalProductFboDb.cs" />
@@ -35,10 +31,6 @@
   <ItemGroup>
     <ProjectReference Include="..\EntityFrameworkCore.TemporalTables\EntityFrameworkCore.TemporalTables\EntityFrameworkCore.TemporalTables.csproj" />
     <ProjectReference Include="..\FSA.IncidentMangementMent.Root\FSA.IncidentsManagement.Root.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Entities\Core\Product\" />
   </ItemGroup>
 
 </Project>

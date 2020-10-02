@@ -45,8 +45,9 @@ namespace FSA.SIMSManagerDb
         internal DbSet<AddressDb> Addresses { get; set; }
         internal DbSet<AddressContactDb> AddressContacts { get; set; }
         internal DbSet<NotifierTypeDb> NotifierTypes { get; set; }
-
+        #region Audi
         internal DbSet<UserAccessAuditDb> UserAccessLog { get; set; }
+        #endregion
 
         #region Lookups
         internal DbSet<HazardGroupDb> HazardGroups { get; set; }
@@ -58,6 +59,7 @@ namespace FSA.SIMSManagerDb
         internal DbSet<DeathIllnessDb> DeathIllnesss { get; set; }
 
         internal DbSet<StakeholderIncidentRoleDb> StakeholderIncidentRoles { get; set; }
+        internal DbSet<StakeholderDiscriminatorDb> StakeholderDiscriminators { get; set; }
         internal DbSet<AdminLeadDb> AdminLeads { get; set; }
         internal DbSet<ProductTypeDb> ProductTypes { get; set; }
         internal DbSet<DateTypeDb> ProductDateTypes { get; set; }

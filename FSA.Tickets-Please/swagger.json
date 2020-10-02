@@ -2077,7 +2077,7 @@
     "IncidentsDisplayModel": {
       "type": "object",
       "properties": {
-        "category": {
+        "incidentType": {
           "type": "string",
           "readOnly": true
         },

@@ -9,10 +9,8 @@ namespace FSA.SIMSManagerDb.Builders
         public override void Configure(EntityTypeBuilder<AddressContactDb> builder)
         {
             base.Configure(builder);
-
             builder.Property(p => p.Name).HasMaxLength(255).IsRequired();
             builder.UseTemporalTable();
-
         }
     }
 
