@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FSA.SIMSManagerDb.Repositories
 {
-    class NotesRepository<NoteDb> : IDbNotesRepository where NoteDb : BaseNoteDb, new()
+   internal class NotesRepository<NoteDb> : IDbNotesRepository where NoteDb : BaseNoteDb, new()
     {
         private SimsDbContext ctx;
         private DbSet<NoteDb> NoteSet;

@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace FSA.SIMSManagerDb.Repositories
 {
-    public class IncidentsRepository : IDbIncidentsRepository
+    internal class IncidentsRepository : IDbIncidentsRepository
     {
         private SimsDbContext ctx;
         private readonly IMapper mapper;
@@ -252,7 +252,6 @@ namespace FSA.SIMSManagerDb.Repositories
             return mapper.Map<IncidentDb, IncidentsDisplayModel>(dbIncident);
 
         }
-
 
         public async Task<bool> Exists(int incidentId)
         {

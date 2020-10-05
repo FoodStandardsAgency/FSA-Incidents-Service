@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using FSA.IncidentsManagement.Root.DTOS;
-using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb.Contracts;
 using FSA.SIMSManagerDb.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -44,9 +42,10 @@ namespace FSA.SIMSManagerDb.Repositories
         {
             var addr = await ctx.Addresses.
                 Include(o => o.Contacts)
-                .AsNoTracking().FirstAsync(a => a.Id == addressId);
+               .AsNoTracking().FirstAsync(a => a.Id == addressId);
             return mapper.Map<AddressDb, SimsAddress>(addr);
         }
+        
         /// <summary>
         /// TO DO !!!!
         /// </summary>
@@ -95,6 +94,5 @@ namespace FSA.SIMSManagerDb.Repositories
 
             return await qryAddr.Select(o => mapper.Map<AddressDb, SimsAddress>(o)).ToListAsync();
         }
-
     }
 }

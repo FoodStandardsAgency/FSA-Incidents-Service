@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FSA.SIMSManagerDb.Repositories
 {
-    class UserAuditLoggerRepository : IDbUserAudit
+    internal class UserAuditLoggerRepository : IDbUserAudit
     {
         private SimsDbContext ctx;
 

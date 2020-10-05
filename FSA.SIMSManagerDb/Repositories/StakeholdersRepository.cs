@@ -53,6 +53,11 @@ namespace FSA.SIMSManagerDb.Repositories
             return this.mapper.Map<T, SimsStakeholder>(dbItem.Entity);
         }
 
+        /// <summary>
+        /// Deletes a stakeholder from the db.
+        /// </summary>
+        /// <param name="stakeholderId"></param>
+        /// <returns></returns>
         public async Task Remove(int stakeholderId)
         {
             if (stakeholderId == 0) throw new ArgumentOutOfRangeException("stakeholderId mising");

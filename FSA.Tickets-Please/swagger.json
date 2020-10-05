@@ -2070,85 +2070,11 @@
           "type": "string"
         }
       },
-      "additionalProperties": {
-        "type": "object"
-      }
+      "additionalProperties": { }
     },
     "IncidentsDisplayModel": {
       "type": "object",
       "properties": {
-        "incidentType": {
-          "type": "string",
-          "readOnly": true
-        },
-        "signalStatus": {
-          "type": "string",
-          "readOnly": true
-        },
-        "incidentStatus": {
-          "type": "string",
-          "readOnly": true
-        },
-        "notifier": {
-          "type": "string",
-          "readOnly": true
-        },
-        "principalFBO": {
-          "type": "string",
-          "readOnly": true
-        },
-        "fboEmail": {
-          "type": "string",
-          "readOnly": true
-        },
-        "fboPhone": {
-          "type": "string",
-          "readOnly": true
-        },
-        "fboAddressLine1": {
-          "type": "string",
-          "readOnly": true
-        },
-        "fboAddressLine2": {
-          "type": "string",
-          "readOnly": true
-        },
-        "fboAddressTown": {
-          "type": "string",
-          "readOnly": true
-        },
-        "fboAddressPostcode": {
-          "type": "string",
-          "readOnly": true
-        },
-        "priority": {
-          "type": "string",
-          "readOnly": true
-        },
-        "classification": {
-          "type": "string",
-          "readOnly": true
-        },
-        "dataSource": {
-          "type": "string",
-          "readOnly": true
-        },
-        "productType": {
-          "type": "string",
-          "readOnly": true
-        },
-        "leadLocalAuthority": {
-          "type": "string",
-          "readOnly": true
-        },
-        "deathIllness": {
-          "type": "string",
-          "readOnly": true
-        },
-        "adminLead": {
-          "type": "string",
-          "readOnly": true
-        },
         "id": {
           "type": "string",
           "readOnly": true
@@ -2273,6 +2199,78 @@
         },
         "lastChangedDate": {
           "format": "date-time",
+          "type": "string",
+          "readOnly": true
+        },
+        "incidentType": {
+          "type": "string",
+          "readOnly": true
+        },
+        "signalStatus": {
+          "type": "string",
+          "readOnly": true
+        },
+        "incidentStatus": {
+          "type": "string",
+          "readOnly": true
+        },
+        "notifier": {
+          "type": "string",
+          "readOnly": true
+        },
+        "principalFBO": {
+          "type": "string",
+          "readOnly": true
+        },
+        "fboEmail": {
+          "type": "string",
+          "readOnly": true
+        },
+        "fboPhone": {
+          "type": "string",
+          "readOnly": true
+        },
+        "fboAddressLine1": {
+          "type": "string",
+          "readOnly": true
+        },
+        "fboAddressLine2": {
+          "type": "string",
+          "readOnly": true
+        },
+        "fboAddressTown": {
+          "type": "string",
+          "readOnly": true
+        },
+        "fboAddressPostcode": {
+          "type": "string",
+          "readOnly": true
+        },
+        "priority": {
+          "type": "string",
+          "readOnly": true
+        },
+        "classification": {
+          "type": "string",
+          "readOnly": true
+        },
+        "dataSource": {
+          "type": "string",
+          "readOnly": true
+        },
+        "productType": {
+          "type": "string",
+          "readOnly": true
+        },
+        "leadLocalAuthority": {
+          "type": "string",
+          "readOnly": true
+        },
+        "deathIllness": {
+          "type": "string",
+          "readOnly": true
+        },
+        "adminLead": {
           "type": "string",
           "readOnly": true
         }
@@ -3324,16 +3322,6 @@
     "SimsProductDisplayModel": {
       "type": "object",
       "properties": {
-        "dataSourceId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "signalUrl": {
-          "type": "string"
-        },
-        "signalDataSource": {
-          "type": "string"
-        },
         "id": {
           "format": "int32",
           "type": "integer"
@@ -3394,6 +3382,41 @@
         },
         "lastUpdatedBy": {
           "type": "string"
+        },
+        "dataSourceId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "signalUrl": {
+          "type": "string"
+        },
+        "signalDataSource": {
+          "type": "string"
+        }
+      }
+    },
+    "SimsAddressContact": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "addressId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "telephoneNumber": {
+          "type": "string"
+        },
+        "emailAddress": {
+          "type": "string"
+        },
+        "isMain": {
+          "type": "boolean"
         }
       }
     },
@@ -3421,50 +3444,9 @@
       ],
       "type": "integer"
     },
-    "SimsAddressContact": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "addressId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "name": {
-          "type": "string"
-        },
-        "telephoneNumber": {
-          "type": "string"
-        },
-        "emailAddress": {
-          "type": "string"
-        },
-        "isMain": {
-          "type": "boolean"
-        }
-      }
-    },
     "ProductFboAddressViewModel": {
       "type": "object",
       "properties": {
-        "productId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "fboTypes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/SimsFboTypes"
-          }
-        },
-        "mainContact": {
-          "type": "string"
-        },
-        "emailAddress": {
-          "type": "string"
-        },
         "id": {
           "format": "int32",
           "type": "integer"
@@ -3503,6 +3485,22 @@
           "items": {
             "$ref": "#/definitions/SimsAddressContact"
           }
+        },
+        "productId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "fboTypes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SimsFboTypes"
+          }
+        },
+        "mainContact": {
+          "type": "string"
+        },
+        "emailAddress": {
+          "type": "string"
         }
       }
     },
