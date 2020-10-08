@@ -28,8 +28,6 @@ namespace FSA.IncidentsManagement.ModelValidators
             CreateMap<ProductPackSizeModel, SimsProductPackSize>();
             CreateMap<ProductDateModel, SimsProductDate>();
 
-
-
             CreateMap<SimsProductFboAddress, ProductFboAddressViewModel>(MemberList.Destination)
                  .ForMember(o => o.MainContact, a => a.MapFrom(sa => sa.Contacts.Count() > 0 ? sa.Contacts.First().Name : ""))
                  .ForMember(o => o.EmailAddress, a => a.MapFrom(sa => sa.Contacts.Count() > 0 ? sa.Contacts.First().EmailAddress : ""))
@@ -40,7 +38,6 @@ namespace FSA.IncidentsManagement.ModelValidators
                    .ConstructUsing(@this => @this.ToAutoMapper());
             CreateMap<IncidentUpdateModel, BaseIncident>()
                    .ConstructUsing(@this => @this.ToAutoMapper());
-
 
             CreateMap<SimsAttachmentFileInfo, SimsAttachmentFileInfoViewModel>()
                 .ForMember(a => a.Tags, b => b.MapFrom(c => ((SimsDocumentTagTypes)c.Tags).SelectedFlags().Where(o => o > 0).Select(o => o)));

@@ -1,8 +1,7 @@
-﻿using FSA.IncidentsManagement.Root.Shared;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace FSA.IncidentsManagement.Root.Domain
+namespace FSA.IncidentsManagement.Root.Shared
 {
     public class PagedResult<T> : IPaging<T>
     {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Models
 {
-    public class LinkModel
+    public class LinkViewModel
     {
         [Required]
         public int FromId { get; set; }

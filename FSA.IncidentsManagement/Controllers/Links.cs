@@ -63,7 +63,7 @@ namespace FSA.IncidentsManagement.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(typeof(string), 403)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> AddLink([FromRoute] string incidentSignal, [FromBody] LinkModel links)
+        public async Task<IActionResult> AddLink([FromRoute] string incidentSignal, [FromBody] LinkViewModel links)
         {
             return incidentSignal.ToLower() switch
             {
