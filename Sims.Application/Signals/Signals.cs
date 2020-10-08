@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Sims.Application
 {
-    class Signals : ISIMSSignals
+    internal class Signals : ISIMSSignals
     {
         private readonly ISimsDbHost dbHost;
         private readonly ISIMSAttachmentHost attachments;
@@ -85,8 +85,6 @@ namespace Sims.Application
             if (close.IncidentId == 0) throw new SimsSignalMissingException("Incident id missing");
             return dbHost.Signals.CloseLinkIncident(close.SignalId, close.IncidentId);
         }
-
-
 
         public async Task<int> CloseCreateIncident(SimsSignalCloseCreateIncident close)
         {

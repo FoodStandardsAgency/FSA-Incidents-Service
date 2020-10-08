@@ -1,8 +1,5 @@
 ﻿using FSA.IncidentsManagement.Root.Domain;
-using FSA.IncidentsManagement.Root.DTOS;
-using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
 
 namespace FSA.Attachments
 {

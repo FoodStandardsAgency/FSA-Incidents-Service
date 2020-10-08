@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace FSA.SIMSManagerDb.Repositories
 {
-    class ProductFboRepository<ProductFBO> : IDbProductFboRepository where ProductFBO : BaseProductFboDb, new()
+   internal class ProductFboRepository<ProductFBO> : IDbProductFboRepository where ProductFBO : BaseProductFboDb, new()
     {
         private readonly SimsDbContext ctx;
         private readonly DbSet<ProductFBO> DbSet;

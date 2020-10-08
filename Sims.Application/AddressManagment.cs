@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Sims.Application
 {
-    class AddressManagment : ISIMSAddress
+    internal class AddressManagment : ISIMSAddress
     {
         private readonly ISimsDbHost dbHost;
 

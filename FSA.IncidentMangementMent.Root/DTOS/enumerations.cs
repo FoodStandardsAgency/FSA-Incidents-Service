@@ -36,7 +36,6 @@ namespace FSA.IncidentsManagement.Root.DTOS
         Medium = 3,
         Low = 4
     }
-
     
     public enum SimsSignalStatusTypes
     {

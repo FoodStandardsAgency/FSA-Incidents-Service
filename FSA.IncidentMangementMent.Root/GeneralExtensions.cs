@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FSA.IncidentsManagement.Root
+﻿namespace FSA.IncidentsManagement.Root
 {
     public static class GeneralExtensions
     {

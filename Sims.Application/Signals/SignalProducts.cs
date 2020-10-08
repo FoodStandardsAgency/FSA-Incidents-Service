@@ -26,23 +26,6 @@ namespace Sims.Application
                 throw new SimsIncidentClosedException("Signal  closed");
         }
 
-        public async Task AssignFbo(int productId, int addressId, SimsFboTypes types)
-        {
-            if (productId == 0) throw new SimsItemMissing("Prouct Id missing");
-            if (addressId == 0) throw new SimsItemMissing("address Id missing");
-
-            if (!await dbHost.Signals.IsClosed(productId))
-                await dbHost.Signals.Products.Fbos.Add(productId, addressId, (int)types);
-            else
-                throw new SimsIncidentClosedException("Signal  closed");
-        }
-
-        public Task<IPaging<SimsProductDashboard>> DashboardItems(int hostId, int pageSize = 10, int startPage = 1)
-        {
-            if (hostId == 0) throw new SimsItemMissing("No Host id present.");
-            return dbHost.Signals.Products.DashboardItems(hostId, pageSize, startPage);
-        }
-
         public async Task<SimsProductDisplayModel> Get(int productId)
         {
             var productDispModel = await dbHost.Signals.Products.Get(productId);
@@ -63,6 +46,23 @@ namespace Sims.Application
                 return await dbHost.Signals.Products.Update((SimsProduct)product);
             else
                 throw new SimsSignalClosedException("Signal closed");
+        }
+
+        public async Task AssignFbo(int productId, int addressId, SimsFboTypes types)
+        {
+            if (productId == 0) throw new SimsItemMissing("Prouct Id missing");
+            if (addressId == 0) throw new SimsItemMissing("address Id missing");
+
+            if (!await dbHost.Signals.IsClosed(productId))
+                await dbHost.Signals.Products.Fbos.Add(productId, addressId, (int)types);
+            else
+                throw new SimsIncidentClosedException("Signal  closed");
+        }
+
+        public Task<IPaging<SimsProductDashboard>> DashboardItems(int hostId, int pageSize = 10, int startPage = 1)
+        {
+            if (hostId == 0) throw new SimsItemMissing("No Host id present.");
+            return dbHost.Signals.Products.DashboardItems(hostId, pageSize, startPage);
         }
 
 

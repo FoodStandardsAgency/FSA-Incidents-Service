@@ -10,4 +10,9 @@
     <None Remove="Contracts\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Models\IncidentAttachment.cs" />
+    <Compile Remove="Models\ProductDashboard.cs" />
+  </ItemGroup>
+
 </Project>

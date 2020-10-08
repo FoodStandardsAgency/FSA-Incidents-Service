@@ -17,6 +17,7 @@ namespace Sims.Application
             this.dbHost = dbHost;
             this.attachments = attachments;
         }
+
         public async Task<SimsAttachmentFileInfo> AddAttachment(string filePath, string filename, int hostId)
         {
             var signalLibrary = AppExtensions.GenerateSignalsId(hostId);

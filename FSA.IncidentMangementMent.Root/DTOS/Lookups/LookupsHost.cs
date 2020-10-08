@@ -1,7 +1,5 @@
 ﻿using FSA.IncidentsManagement.Root.DTOS.Lookups;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace FSA.IncidentsManagement.Root.Models
 {

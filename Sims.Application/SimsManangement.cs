@@ -26,6 +26,5 @@ namespace Sims.Application
         public ISIMSAddress Addresses => new AddressManagment(this.SimsDbHost);
 
         public ISIMSUserAuditLogger AuditLog => new UserAuditLogger(this.SimsDbHost);
-       // public ISIMSAppAttachment AttachmentUpdates => new AttachmentUpdates(attachments, SimsDbHost);
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace FSA.IncidentsManagement.Root.Models
+﻿namespace FSA.IncidentsManagement.Root.DTOS
 {
     public class SimsSignalIncidentMigratedFile
     {

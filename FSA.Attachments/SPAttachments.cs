@@ -280,32 +280,6 @@ namespace FSA.Attachments
             }
         }
 
-        public async Task<IncidentAttachment> FetchAttachment(string url)
-        {
-            var accessToken = await fetchAccessToken();
-            using (var ctx = SpContextHelper.GetClientContextWithAccessToken(this.siteUrl, accessToken))
-            {
-                var file = ctx.Web.GetFileByLinkingUrl(url);
-
-                ctx.Load(file, f => f.ListId);
-                await ctx.ExecuteQueryAsync();
-
-                var list = ctx.Web.Lists.GetById(file.ListId);
-
-                var incidentAttachment = new IncidentAttachment();
-
-                if (file != null)
-                {
-                    var fileData = file.OpenBinaryStream();
-                    fileData.Value.CopyTo(incidentAttachment.Document);
-                    incidentAttachment.IncidentId = list.Title;
-                    incidentAttachment.FileName = file.Name;
-                    return incidentAttachment;
-                }
-                return incidentAttachment;
-            }
-        }
-
         public async Task<(string fileName, string url)> RenameAttachment(string fileName, string url)
         {
             var accessToken = await fetchAccessToken();
