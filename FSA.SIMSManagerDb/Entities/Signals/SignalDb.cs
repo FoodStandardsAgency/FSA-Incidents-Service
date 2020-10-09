@@ -30,7 +30,7 @@ namespace FSA.SIMSManagerDb.Entities
         public DateTime PublishedDate { get; set; }
         public DateTime InsertedDate { get; set; }
         public string SourceLink { get; set; }
-
+        public bool SensitiveInfo { get; set; }
         public ICollection<SignalAttachmentDb> Attachments { get; set; }
         public ICollection<SignalNoteDb> Notes { get; set; }
         public ICollection<SignalProductDb> Products { get; set; }
