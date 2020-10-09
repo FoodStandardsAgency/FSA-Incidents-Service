@@ -1,7 +1,5 @@
 ﻿using FluentValidation;
 using FSA.IncidentsManagement.Models;
-using FSA.IncidentsManagement.Root.DTOS;
-using System;
 
 namespace FSA.IncidentsManagement.ModelValidators
 {

@@ -381,7 +381,8 @@ namespace FSA.SIMSManagerDb.Repositories
                 // fetch the relevant lookupIds
                 var incidentType = this.ctx.HazardGroups.FirstOrDefault(a => a.Title == hazardGroup);
                 incidentType = (incidentType == null) ? this.ctx.HazardGroups.FirstOrDefault(a => a.Title == "unclassified") : incidentType;
-                var otherDatasource = this.ctx.DataSources.FirstOrDefault(a => a.Title == "Other");
+                
+                var otherDatasource = this.ctx.DataSources.FirstOrDefault(a => a.Title == "FSA RAM Referral");
                 var productType = this.ctx.ProductTypes.First(a => a.Title == "Undefined");
 
                 var newIncident = new IncidentDb
