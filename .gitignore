@@ -344,3 +344,5 @@ healthchecksdb
 FSA.Tickets-Please/client/ModifiedPain.txt
 /FSA.IncidentsManagementDb.Migrations/appsettings.json
 /SIMS.TestProjects/Setup/appsettings.json
+/SIMS.TestProjects/Setup/signals.csv
+/SIMS.TestProjects/Setup/orgs.json
