@@ -342,3 +342,4 @@ healthchecksdb
 /FSA.IncidentsManagement/swagger.json
 /XUnitTestProject1/config.json
 FSA.Tickets-Please/client/ModifiedPain.txt
+/FSA.IncidentsManagementDb.Migrations/appsettings.json
