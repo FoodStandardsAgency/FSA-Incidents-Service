@@ -822,7 +822,7 @@
             "in": "body",
             "name": "body",
             "schema": {
-              "$ref": "#/definitions/LinkModel"
+              "$ref": "#/definitions/LinkViewModel"
             }
           }
         ],
@@ -2683,7 +2683,7 @@
         }
       }
     },
-    "LinkModel": {
+    "LinkViewModel": {
       "required": [
         "fromId",
         "toIds"
