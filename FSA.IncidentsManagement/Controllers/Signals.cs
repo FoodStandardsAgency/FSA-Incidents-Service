@@ -27,7 +27,7 @@ namespace FSA.SignalsManagement.Controllers
         }
 
         [HttpGet("{id}")]
-        [SwaggerOperation(Summary = "Get Signal by id")]
+        [SwaggerOperation(Summary = "Get Signal by id", Description = "Get Signal by id" )]
         [ProducesResponseType(typeof(SimsSignal), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
@@ -39,7 +39,7 @@ namespace FSA.SignalsManagement.Controllers
         }
 
         [HttpPut()]
-        [SwaggerOperation(Summary = "Replace an Signal")]
+        [SwaggerOperation(Summary = "Replace an Signal", Description = "Replaces a Signal")]
         [ProducesResponseType(typeof(SimsSignal), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
@@ -50,18 +50,18 @@ namespace FSA.SignalsManagement.Controllers
         }
 
         [HttpPost()]
-        [SwaggerOperation(Summary = "Create an Signal")]
+        [SwaggerOperation(Summary = "Create an Signal", Description ="Creates a new Signal")]
         [ProducesResponseType(typeof(SimsSignal), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
-        public async Task<IActionResult> CreateSignal([FromBody, SwaggerParameter("Create Signal", Required = true)] SimsSignal signal)
+        public async Task<IActionResult> CreateSignal([FromBody, SwaggerParameter("Signal", Required = true)] SimsSignal signal)
         {
             var createdSignal = await simsApp.Signals.Add(signal);
             return new OkObjectResult(createdSignal);
         }
 
         [HttpPost("Status/{id}/{statusId}")]
-        [SwaggerOperation(Summary = "Update status of an Signal")]
+        [SwaggerOperation(Summary = "Update status of an Signal", Description = "Update status of an Signal")]
         [ProducesResponseType(typeof(SimsSignal), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
@@ -72,7 +72,7 @@ namespace FSA.SignalsManagement.Controllers
         }
 
         [HttpPost("LeadOfficer")]
-        [SwaggerOperation(Summary = "Update Signal(s) lead officer")]
+        [SwaggerOperation(Summary = "Update Signal(s) lead officer",Description = "Update Signal(s) lead officer")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> UpdateSignalLeadOfficer([FromBody, SwaggerParameter("Update Lead officer entries", Required = true)] UpdateLeadOfficerModel officer)
@@ -83,7 +83,7 @@ namespace FSA.SignalsManagement.Controllers
 
 
         [HttpPost("Dashboard")]
-        [SwaggerOperation(Summary = "Signals dashboard search")]
+        [SwaggerOperation(Summary = "Signals dashboard search", Description = "Signals dashboard search")]
         [ProducesResponseType(typeof(SignalDashboardItem), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
@@ -109,7 +109,7 @@ namespace FSA.SignalsManagement.Controllers
         }
 
         [HttpPost("Close/NoIncident")]
-        [SwaggerOperation(Summary = "Close no incident")]
+        [SwaggerOperation(Summary = "Close no incident", Description = "Close no incident")]
         [ProducesResponseType( 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
@@ -120,7 +120,7 @@ namespace FSA.SignalsManagement.Controllers
         }
 
         [HttpPost("Close/Create")]
-        [SwaggerOperation(Summary = "Close create incident")]
+        [SwaggerOperation(Summary = "Close create incident", Description =  "Close Create incident")]
         [ProducesResponseType(typeof(IncidentIdViewModel), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
@@ -132,7 +132,7 @@ namespace FSA.SignalsManagement.Controllers
         }
 
         [HttpPost("Close/Link")]
-        [SwaggerOperation(Summary = "Close link incident")]
+        [SwaggerOperation(Summary = "Close link incident", Description = "Close link incident")]
         [ProducesResponseType( 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]

@@ -19,7 +19,7 @@ namespace FSA.IncidentsManagement.Root.DTOS
         public string FoodOrFeed { get; set; }
         public string BaseProduct { get; set; }
         public string Manufacturer { get; set; }
-
+        public bool SensitiveInfo { get; set; }
         public string Hazard { get; set; }
         public string HazardGroup { get; set; }
         public string DataSource { get; set; }

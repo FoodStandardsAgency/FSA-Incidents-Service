@@ -64,6 +64,7 @@ namespace SIMS.Database
                 lastChangedBy: this.userId,
                 lastChangedDate: DateTime.Now,
                 signalStatusId: null,
+                sensitiveInfo: true,
                 notifierId: null,
                 principalFBOId: null,
                 leadLocalAuthorityId: null,
@@ -97,7 +98,8 @@ namespace SIMS.Database
                    fieldOfficer: "",
                    lAAdvised: false,
                    deathIllnessId: null,
-                   receivedOn: DateTime.Parse("25/09/2020"),
+                   receivedOn: null,
+                   sensitiveInfo: true,
                    incidentCreated: DateTime.Now,
                    lastChangedBy: this.miller,
                    lastChangedDate: DateTime.Now,
@@ -143,6 +145,8 @@ namespace SIMS.Database
                    lastChangedDate: DateTime.Now,
                    signalStatusId: null,
                    notifierId: null,
+                sensitiveInfo: false,
+
                    principalFBOId: null,
                    leadLocalAuthorityId: null,
                    incidentClosed: null

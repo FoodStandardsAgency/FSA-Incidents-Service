@@ -11,7 +11,7 @@ namespace FSA.IncidentsManagement.Root.Models
         private readonly int _Id;
 
         ///Full record
-        public BaseIncident(int id, Guid mostUniqueId, string incidentTitle, int incidentTypeId, int contactMethodId, int statusId, int? signalStatusId, int? notifierId, int? principalFBOId, int priorityId, int classificationId, int dataSourceId, string signalUrl, int productTypeId, string leadOfficer, string leadOffice, int? adminLeadId, string fieldOfficer, int? leadLocalAuthorityId, bool lAAdvised, int? deathIllnessId, DateTime? receivedOn, DateTime incidentCreated, DateTime? incidentClosed, string lastChangedBy, DateTime lastChangedDate)
+        public BaseIncident(int id, Guid mostUniqueId, string incidentTitle, int incidentTypeId, int contactMethodId, int statusId, int? signalStatusId, int? notifierId, int? principalFBOId, int priorityId, int classificationId, int dataSourceId, string signalUrl, int productTypeId, string leadOfficer, string leadOffice, int? adminLeadId, string fieldOfficer, int? leadLocalAuthorityId, bool lAAdvised, int? deathIllnessId, bool sensitiveInfo, DateTime? receivedOn, DateTime incidentCreated, DateTime? incidentClosed, string lastChangedBy, DateTime lastChangedDate)
         {
             _Id = id;
             MostUniqueId = mostUniqueId;
@@ -34,6 +34,7 @@ namespace FSA.IncidentsManagement.Root.Models
             LeadLocalAuthorityId = leadLocalAuthorityId;
             LAAdvised = lAAdvised;
             DeathIllnessId = deathIllnessId;
+            SensitiveInfo = sensitiveInfo;
             ReceivedOn = receivedOn;
             IncidentCreated = incidentCreated;
             IncidentClosed = incidentClosed;
@@ -42,13 +43,13 @@ namespace FSA.IncidentsManagement.Root.Models
         }
 
         // New record
-        public BaseIncident(string incidentTitle, int incidentTypeId, int contactMethodId, int statusId, int? signalStatusId, int? notifierId, int? principalFBOId, int priorityId, int classificationId, int dataSourceId, string signalUrl, int productTypeId, string leadOfficer, string leadOffice, int? adminLeadId, string fieldOfficer, int? leadLocalAuthorityId, bool lAAdvised, int? deathIllnessId, DateTime? receivedOn, DateTime incidentCreated, DateTime? incidentClosed, string lastChangedBy, DateTime lastChangedDate) : this(0, Guid.Empty, incidentTitle, incidentTypeId, contactMethodId, statusId, signalStatusId, notifierId, principalFBOId, priorityId, classificationId, dataSourceId, signalUrl, productTypeId, leadOfficer, leadOffice, adminLeadId, fieldOfficer, leadLocalAuthorityId, lAAdvised, deathIllnessId, receivedOn, incidentCreated, incidentClosed, lastChangedBy, lastChangedDate)
+        public BaseIncident(string incidentTitle, int incidentTypeId, int contactMethodId, int statusId, int? signalStatusId, int? notifierId, int? principalFBOId, int priorityId, int classificationId, int dataSourceId, string signalUrl, int productTypeId, string leadOfficer, string leadOffice, int? adminLeadId, string fieldOfficer, int? leadLocalAuthorityId, bool lAAdvised, int? deathIllnessId, bool sensitiveInfo, DateTime? receivedOn, DateTime incidentCreated, DateTime? incidentClosed, string lastChangedBy, DateTime lastChangedDate) : this(0, Guid.Empty, incidentTitle, incidentTypeId, contactMethodId, statusId, signalStatusId, notifierId, principalFBOId, priorityId, classificationId, dataSourceId, signalUrl, productTypeId, leadOfficer, leadOffice, adminLeadId, fieldOfficer, leadLocalAuthorityId, lAAdvised, deathIllnessId, sensitiveInfo, receivedOn, incidentCreated, incidentClosed, lastChangedBy, lastChangedDate)
         {
 
         }
 
         // Friendly new record
-        public BaseIncident(string incidentTitle, int incidentTypeId, int contactMethodId, int statusId, int? signalStatusId, int? notifierId, int? principalFBOId, int priorityId, int classificationId, int dataSourceId, string signalUrl, int productTypeId, string leadOfficer, string leadOffice, int? adminLeadId, string fieldOfficer, int? leadLocalAuthorityId, bool lAAdvised, int? deathIllnessId, DateTime? receivedOn, DateTime? incidentClosed) : this(0, Guid.Empty, incidentTitle, incidentTypeId, contactMethodId, statusId, signalStatusId, notifierId, principalFBOId, priorityId, classificationId, dataSourceId, signalUrl, productTypeId, leadOfficer, leadOffice, adminLeadId, fieldOfficer, leadLocalAuthorityId, lAAdvised, deathIllnessId, receivedOn, DateTime.MinValue, incidentClosed, "", DateTime.MinValue)
+        public BaseIncident(string incidentTitle, int incidentTypeId, int contactMethodId, int statusId, int? signalStatusId, int? notifierId, int? principalFBOId, int priorityId, int classificationId, int dataSourceId, string signalUrl, int productTypeId, string leadOfficer, string leadOffice, int? adminLeadId, string fieldOfficer, int? leadLocalAuthorityId, bool lAAdvised, int? deathIllnessId, bool sensitiveInfo, DateTime? receivedOn, DateTime? incidentClosed) : this(0, Guid.Empty, incidentTitle, incidentTypeId, contactMethodId, statusId, signalStatusId, notifierId, principalFBOId, priorityId, classificationId, dataSourceId, signalUrl, productTypeId, leadOfficer, leadOffice, adminLeadId, fieldOfficer, leadLocalAuthorityId, lAAdvised, deathIllnessId, sensitiveInfo, receivedOn, DateTime.MinValue, incidentClosed, "", DateTime.MinValue)
         {
 
         }
@@ -72,9 +73,10 @@ namespace FSA.IncidentsManagement.Root.Models
         public int ProductTypeId { get; }
         public string LeadOfficer { get; }
         public string LeadOffice { get; }
-        
+        public bool SensitiveInfo { get; }
+
         public int? AdminLeadId { get; }
-        
+
         public string FieldOfficer { get; }
         public int? LeadLocalAuthorityId { get; }
         public bool LAAdvised { get; }
@@ -98,7 +100,7 @@ namespace FSA.IncidentsManagement.Root.Models
                  @this.CommonId,
                 mostUniqueId: @this.MostUniqueId,
                 incidentTitle: @this.IncidentTitle,
-                
+
                 incidentTypeId: @this.IncidentTypeId,
                 contactMethodId: @this.ContactMethodId,
                 statusId: newStatusId,
@@ -117,6 +119,7 @@ namespace FSA.IncidentsManagement.Root.Models
                 leadLocalAuthorityId: @this.LeadLocalAuthorityId,
                 lAAdvised: @this.LAAdvised,
                 deathIllnessId: @this.DeathIllnessId,
+                sensitiveInfo: @this.SensitiveInfo,
                 receivedOn: @this.ReceivedOn,
                 incidentCreated: @this.IncidentCreated,
                 incidentClosed: @this.IncidentClosed,
@@ -128,7 +131,7 @@ namespace FSA.IncidentsManagement.Root.Models
                 @this.CommonId,
                mostUniqueId: @this.MostUniqueId,
                incidentTitle: @this.IncidentTitle,
-               
+
                incidentTypeId: @this.IncidentTypeId,
                contactMethodId: @this.ContactMethodId,
                statusId: @this.StatusId,
@@ -147,6 +150,7 @@ namespace FSA.IncidentsManagement.Root.Models
                leadLocalAuthorityId: @this.LeadLocalAuthorityId,
                lAAdvised: @this.LAAdvised,
                deathIllnessId: @this.DeathIllnessId,
+               sensitiveInfo: @this.SensitiveInfo,
                receivedOn: @this.ReceivedOn,
                incidentCreated: @this.IncidentCreated,
                incidentClosed: @this.IncidentClosed,
@@ -158,7 +162,7 @@ namespace FSA.IncidentsManagement.Root.Models
                 @this.CommonId,
                mostUniqueId: newGuid,
                incidentTitle: @this.IncidentTitle,
-               
+
                incidentTypeId: @this.IncidentTypeId,
                contactMethodId: @this.ContactMethodId,
                statusId: @this.StatusId,
@@ -177,6 +181,7 @@ namespace FSA.IncidentsManagement.Root.Models
                leadLocalAuthorityId: @this.LeadLocalAuthorityId,
                lAAdvised: @this.LAAdvised,
                deathIllnessId: @this.DeathIllnessId,
+               sensitiveInfo: @this.SensitiveInfo,
                receivedOn: @this.ReceivedOn,
                incidentCreated: @this.IncidentCreated,
                incidentClosed: @this.IncidentClosed,
@@ -188,7 +193,7 @@ namespace FSA.IncidentsManagement.Root.Models
                 @this.CommonId,
                mostUniqueId: @this.MostUniqueId,
                incidentTitle: @this.IncidentTitle,
-               
+
                incidentTypeId: @this.IncidentTypeId,
                contactMethodId: @this.ContactMethodId,
                statusId: @this.StatusId,
@@ -207,6 +212,7 @@ namespace FSA.IncidentsManagement.Root.Models
                leadLocalAuthorityId: @this.LeadLocalAuthorityId,
                lAAdvised: @this.LAAdvised,
                deathIllnessId: @this.DeathIllnessId,
+               sensitiveInfo: @this.SensitiveInfo,
                receivedOn: @this.ReceivedOn,
                incidentCreated: @this.IncidentCreated,
                incidentClosed: @this.IncidentClosed,
@@ -218,7 +224,7 @@ namespace FSA.IncidentsManagement.Root.Models
                                 @this.CommonId,
                                mostUniqueId: @this.MostUniqueId,
                                incidentTitle: @this.IncidentTitle,
-                               
+
                                incidentTypeId: @this.IncidentTypeId,
                                contactMethodId: @this.ContactMethodId,
                                statusId: @this.StatusId,
@@ -237,7 +243,8 @@ namespace FSA.IncidentsManagement.Root.Models
                                leadLocalAuthorityId: localAuthorityId,
                                lAAdvised: @this.LAAdvised,
                                deathIllnessId: @this.DeathIllnessId,
-                               receivedOn: @this.ReceivedOn,
+               sensitiveInfo: @this.SensitiveInfo,
+               receivedOn: @this.ReceivedOn,
                                incidentCreated: @this.IncidentCreated,
                                incidentClosed: @this.IncidentClosed,
                                lastChangedBy: @this.LastChangedBy,
@@ -265,7 +272,8 @@ namespace FSA.IncidentsManagement.Root.Models
                        fieldOfficer: @this.FieldOfficer,
                        leadLocalAuthorityId: @this.LeadLocalAuthorityId,
                        lAAdvised: @this.LAAdvised,
-                       deathIllnessId: @this.DeathIllnessId,
+               sensitiveInfo: @this.SensitiveInfo,
+               deathIllnessId: @this.DeathIllnessId,
                        receivedOn: @this.ReceivedOn,
                        incidentCreated: @this.IncidentCreated,
                        incidentClosed: @this.IncidentClosed,
@@ -277,7 +285,7 @@ namespace FSA.IncidentsManagement.Root.Models
                    @this.CommonId,
                   mostUniqueId: @this.MostUniqueId,
                   incidentTitle: title,
-                  
+
                   incidentTypeId: @this.IncidentTypeId,
                   contactMethodId: @this.ContactMethodId,
                   statusId: @this.StatusId,
@@ -295,7 +303,8 @@ namespace FSA.IncidentsManagement.Root.Models
                   fieldOfficer: @this.FieldOfficer,
                   leadLocalAuthorityId: @this.LeadLocalAuthorityId,
                   lAAdvised: @this.LAAdvised,
-                  deathIllnessId: @this.DeathIllnessId,
+               sensitiveInfo: @this.SensitiveInfo,
+               deathIllnessId: @this.DeathIllnessId,
                   receivedOn: @this.ReceivedOn,
                   incidentCreated: @this.IncidentCreated,
                   incidentClosed: @this.IncidentClosed,
@@ -381,6 +390,7 @@ namespace FSA.IncidentsManagement.Root.Models
                               leadOffice: @this.LeadOffice,
                               adminLeadId: @this.AdminLeadId,
                               fieldOfficer: @this.FieldOfficer,
+                              sensitiveInfo: @this.SensitiveInfo,
                               leadLocalAuthorityId: @this.LeadLocalAuthorityId,
                               lAAdvised: @this.LAAdvised,
                               deathIllnessId: @this.DeathIllnessId,
