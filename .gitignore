@@ -343,3 +343,4 @@ healthchecksdb
 /XUnitTestProject1/config.json
 FSA.Tickets-Please/client/ModifiedPain.txt
 /FSA.IncidentsManagementDb.Migrations/appsettings.json
+/SIMS.TestProjects/Setup/appsettings.json
