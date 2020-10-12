@@ -29,7 +29,7 @@ namespace FSA.IncidentsManagement.Models
         public bool LAAdvised { get; set; }
         public int? DeathIllnessId { get; set; }
         //public Guid MostUniqueId { get; set; }
-        //public DateTime? ReceivedOn { get; set; }
+        public DateTime? ReceivedOn { get; set; }
         //public DateTime IncidentCreated { get; set; }
         //public DateTime? IncidentClosed { get; set; }
         //public string LastChangedBy { get; set; }

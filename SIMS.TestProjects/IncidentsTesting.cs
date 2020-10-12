@@ -97,7 +97,7 @@ namespace SIMS.Database
                    fieldOfficer: "",
                    lAAdvised: false,
                    deathIllnessId: null,
-                   receivedOn: null,
+                   receivedOn: DateTime.Parse("25/09/2020"),
                    incidentCreated: DateTime.Now,
                    lastChangedBy: this.miller,
                    lastChangedDate: DateTime.Now,
@@ -173,6 +173,28 @@ namespace SIMS.Database
 
                 await Assert.ThrowsAsync<InvalidOperationException>(async() => await incidents.Update(updated));
                 //savedIncident.MostUniqueId == fakeId && savedIncident.PriorityId == (int)PrioritiesStatus.Medium);
+            }
+        }
+
+        [Fact(DisplayName = "Update product Type")]
+        public async Task UpdateProductType()
+        {
+
+            using (var ctx = SeedingConfigData.GetDbContext(this.conn))
+            {
+
+                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
+                var incidents = simsHost.Incidents;
+                var incident = await incidents.Get(19);
+                var updated = incident.WithProductType(23);
+
+                var updateDb = await incidents.Update(updated);
+
+                Assert.True(updateDb.ProductTypeId == 23);
+
+                //await Assert.ThrowsAsync<InvalidOperationException>(async () => );
+                //savedIncident.MostUniqueId == fakeId && savedIncident.PriorityId == (int)PrioritiesStatus.Medium);
+
             }
         }
 

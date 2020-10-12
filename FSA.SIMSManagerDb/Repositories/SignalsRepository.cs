@@ -199,7 +199,7 @@ namespace FSA.SIMSManagerDb.Repositories
             // Find the start record
             var startRecord = (startPage - 1) * pageSize;
             var results = await qry.OrderBy(i => i.SignalStatus.SortOrder)
-                                    .ThenBy(i => i.Created)
+                                    .ThenBy(i => i.InsertedDate)
                                     .Skip(startRecord)
                                     .Take(pageSize)
                                     .Select(i => mapper.Map<SignalDb, SignalDashboardItem>(i)).ToListAsync();

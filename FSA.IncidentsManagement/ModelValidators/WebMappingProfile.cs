@@ -76,7 +76,7 @@ namespace FSA.IncidentsManagement.ModelValidators
                 incidentClosed: null,
                 lastChangedBy: null,
                 lastChangedDate: DateTime.Now,
-                receivedOn: null,
+                receivedOn: @this.ReceivedOn,
                 incidentCreated: DateTime.Now
                 );
         }
