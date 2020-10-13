@@ -5,6 +5,7 @@ using FSA.SIMSManagerDb.Contracts;
 using FSA.SIMSManagerDb.Entities.Core;
 using FSA.SIMSManagerDbEntities.Helpers;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -70,7 +71,7 @@ namespace FSA.SIMSManagerDb.Repositories
             var newFileinfo = new AttachmentDb
             {
                 HostId = fileInfo.HostId,
-                DocUrl = $"{rootUrl}{fileName}",
+                DocUrl = Uri.EscapeUriString($"{rootUrl}{fileName}"),
                 TagFlags = fileInfo.TagFlags
             };
             this.DbSet.Remove(fileInfo);

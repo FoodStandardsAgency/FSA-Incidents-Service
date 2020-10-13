@@ -333,6 +333,8 @@ namespace FSA.IncidentsManagement.Root.Models
                            fieldOfficer: @this.FieldOfficer,
                            leadLocalAuthorityId: @this.LeadLocalAuthorityId,
                            lAAdvised: @this.LAAdvised,
+               sensitiveInfo: @this.SensitiveInfo,
+    
                            deathIllnessId: @this.DeathIllnessId,
                            receivedOn: @this.ReceivedOn,
                            incidentCreated: @this.IncidentCreated,

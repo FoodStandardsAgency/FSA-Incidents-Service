@@ -117,7 +117,7 @@ namespace FSA.Attachments
                         fileItem["SIMSIncidentId"] = hostIdentifier; // Custom Column
                         fileItem.Update();
                         await ctx.ExecuteQueryAsync();
-                        return (uploadedFile.Name, String.IsNullOrEmpty(uploadedFile.LinkingUrl) ? fileFields.ListItemAllFields["EncodedAbsUrl"] as string : uploadedFile.LinkingUrl);
+                        return (uploadedFile.Name, String.IsNullOrEmpty(uploadedFile.LinkingUrl) ?Uri.EscapeUriString( fileFields.ListItemAllFields["EncodedAbsUrl"] as string) : Uri.EscapeUriString( uploadedFile.LinkingUrl));
                     }
 
                     throw new ArgumentNullException("No file has been uploaded");

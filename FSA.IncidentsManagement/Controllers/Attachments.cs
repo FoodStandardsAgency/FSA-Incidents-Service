@@ -134,9 +134,6 @@ namespace FSA.IncidentsManagement.Controllers
 
         }
 
-
-
-
         [HttpGet("{incidentSignal}/{id}")]
         [SwaggerOperation(Summary = "Download attachments info")]
         [ProducesResponseType(typeof(List<SimsAttachmentFileInfoViewModel>), 200)]
