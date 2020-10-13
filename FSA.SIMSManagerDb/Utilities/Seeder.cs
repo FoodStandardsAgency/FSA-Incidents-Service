@@ -83,31 +83,31 @@ namespace FSA.SIMSManagerDb.Utilities
                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                }, new CloseSignalTeamDb
                {
-                   Id = 3,
+                   Id = 4,
                    Title = "Imported foods",
                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                }, new CloseSignalTeamDb
                {
-                   Id = 4,
+                   Id = 8,
                    Title = "Food Industry Liasion Group (FILG)",
                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                }, new CloseSignalTeamDb
                {
-                   Id = 5,
+                   Id = 16,
                    Title = "Comms",
                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                }, new CloseSignalTeamDb
                {
-                   Id = 6,
+                   Id = 32,
                    Title = "Referred to LA/PA for Information only",
                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                }, new CloseSignalTeamDb
                {
-                   Id = 7,
+                   Id = 64,
                    Title = "Incident Team",
                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"

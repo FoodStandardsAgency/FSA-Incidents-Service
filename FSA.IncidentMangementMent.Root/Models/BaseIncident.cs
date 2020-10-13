@@ -64,7 +64,6 @@ namespace FSA.IncidentsManagement.Root.Models
         public int StatusId { get; }
         public int? SignalStatusId { get; }
         public int? NotifierId { get; }
-
         public int? PrincipalFBOId { get; }
         public int PriorityId { get; }
         public int ClassificationId { get; }
@@ -325,7 +324,7 @@ namespace FSA.IncidentsManagement.Root.Models
                            priorityId: @this.PriorityId,
                            classificationId: @this.ClassificationId,
                            dataSourceId: @this.DataSourceId,
-                                   signalUrl: @this.SignalUrl,
+                           signalUrl: @this.SignalUrl,
                            productTypeId: productTypeId,
                            leadOfficer: @this.LeadOfficer,
                            leadOffice: @this.LeadOffice,
@@ -333,6 +332,7 @@ namespace FSA.IncidentsManagement.Root.Models
                            fieldOfficer: @this.FieldOfficer,
                            leadLocalAuthorityId: @this.LeadLocalAuthorityId,
                            lAAdvised: @this.LAAdvised,
+                            sensitiveInfo: @this.SensitiveInfo,
                            deathIllnessId: @this.DeathIllnessId,
                            receivedOn: @this.ReceivedOn,
                            incidentCreated: @this.IncidentCreated,

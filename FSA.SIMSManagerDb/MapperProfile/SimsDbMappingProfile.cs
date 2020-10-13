@@ -285,7 +285,7 @@ namespace FSA.SIMSManagerDb.MapperProfile
 
 
             CreateMap<SimsSignalCloseNoIncident, CloseSignalNoIncidentDb>(MemberList.Source)
-                .ForMember(a => a.TeamId, m => m.MapFrom(b => b.TeamId == 0 ? null : b.TeamId))
+                .ForMember(a => a.TeamIds, m => m.MapFrom(b => b.TeamIds.Length == 0 ? null : new Nullable<int>(b.TeamIds.Sum())))
                 .ForMember(a => a.ReasonId, m => m.MapFrom(b => b.ReasonId == 0 ? null : b.ReasonId));
 
             CreateMap<CloseSignalNoIncidentDb, SimsSignalCloseNoIncident>(MemberList.Destination);

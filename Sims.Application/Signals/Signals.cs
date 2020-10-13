@@ -93,7 +93,7 @@ namespace Sims.Application
             var incidentId = await dbHost.Signals.CloseCreateIncident(close.ReasonNote, close.SignalId);
             if (incidentId != -1)
             {
-               // var signInfo = await this.attachments.Incidents.EnsureLibrary(GeneralExtensions.GenerateSignalsId(close.SignalId));
+                // var signInfo = await this.attachments.Incidents.EnsureLibrary(GeneralExtensions.GenerateSignalsId(close.SignalId));
 
                 // Once an incident is created, then we can migrate all the documents.
                 // Createing library just breaks down the task
@@ -117,7 +117,7 @@ namespace Sims.Application
 
         public Task CloseNoIncident(SimsSignalCloseNoIncident close)
         {
-            if (close.ReasonId == 0 && close.TeamId == 0) throw new SIMSException("Reason/Team is invalid");
+            if (close.ReasonId == 0 && close.TeamIds.Length == 0) throw new SIMSException("Reason/Team is invalid");
 
             if (close.SignalId == 0) throw new SimsSignalMissingException("Signal id missing");
             if (close.StatusCloseId == (int)SimsSignalStatusTypes.Closed_No_Incident

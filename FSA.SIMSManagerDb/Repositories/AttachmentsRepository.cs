@@ -5,6 +5,7 @@ using FSA.SIMSManagerDb.Contracts;
 using FSA.SIMSManagerDb.Entities.Core;
 using FSA.SIMSManagerDbEntities.Helpers;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -63,14 +64,14 @@ namespace FSA.SIMSManagerDb.Repositories
 
         public async Task<SimsAttachmentFileInfo> Rename(string existingUrl, string fileName)
         {
-            var fileInfo = await this.DbSet.FindAsync(existingUrl);
+            var fileInfo = await this.DbSet.FindAsync(Uri.EscapeUriString(existingUrl));
             var oldFileName = Path.GetFileName(existingUrl);
             var rootUrl = existingUrl.Split(oldFileName)[0];
 
             var newFileinfo = new AttachmentDb
             {
                 HostId = fileInfo.HostId,
-                DocUrl = $"{rootUrl}{fileName}",
+                DocUrl = Uri.EscapeUriString($"{rootUrl}{fileName}"),
                 TagFlags = fileInfo.TagFlags
             };
             this.DbSet.Remove(fileInfo);

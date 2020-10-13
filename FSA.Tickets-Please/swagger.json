@@ -1393,6 +1393,7 @@
           "Signals"
         ],
         "summary": "Get Signal by id",
+        "description": "Get Signal by id",
         "operationId": "GetSignal",
         "produces": [
           "application/json"
@@ -1425,6 +1426,7 @@
           "Signals"
         ],
         "summary": "Replace an Signal",
+        "description": "Replaces a Signal",
         "operationId": "UpdateSignal",
         "consumes": [
           "application/json",
@@ -1460,6 +1462,7 @@
           "Signals"
         ],
         "summary": "Create an Signal",
+        "description": "Creates a new Signal",
         "operationId": "CreateSignal",
         "consumes": [
           "application/json",
@@ -1497,6 +1500,7 @@
           "Signals"
         ],
         "summary": "Update status of an Signal",
+        "description": "Update status of an Signal",
         "operationId": "UpdateSignalStatus",
         "produces": [
           "application/json"
@@ -1536,6 +1540,7 @@
           "Signals"
         ],
         "summary": "Update Signal(s) lead officer",
+        "description": "Update Signal(s) lead officer",
         "operationId": "UpdateSignalLeadOfficer",
         "consumes": [
           "application/json",
@@ -1567,6 +1572,7 @@
           "Signals"
         ],
         "summary": "Signals dashboard search",
+        "description": "Signals dashboard search",
         "operationId": "GetSignalDashboard",
         "consumes": [
           "application/json",
@@ -1604,6 +1610,7 @@
           "Signals"
         ],
         "summary": "Close no incident",
+        "description": "Close no incident",
         "operationId": "CloseNoIncident",
         "consumes": [
           "application/json",
@@ -1635,6 +1642,7 @@
           "Signals"
         ],
         "summary": "Close create incident",
+        "description": "Close Create incident",
         "operationId": "CloseCreateIncident",
         "consumes": [
           "application/json",
@@ -1672,6 +1680,7 @@
           "Signals"
         ],
         "summary": "Close link incident",
+        "description": "Close link incident",
         "operationId": "CloseLinkIncident",
         "consumes": [
           "application/json",
@@ -2155,6 +2164,10 @@
           "type": "string",
           "readOnly": true
         },
+        "sensitiveInfo": {
+          "type": "boolean",
+          "readOnly": true
+        },
         "adminLeadId": {
           "format": "int32",
           "type": "integer",
@@ -2355,6 +2368,10 @@
         "deathIllnessId": {
           "format": "int32",
           "type": "integer"
+        },
+        "receivedOn": {
+          "format": "date-time",
+          "type": "string"
         }
       }
     },
@@ -2439,6 +2456,10 @@
         },
         "leadOffice": {
           "type": "string",
+          "readOnly": true
+        },
+        "sensitiveInfo": {
+          "type": "boolean",
           "readOnly": true
         },
         "adminLeadId": {
@@ -3600,6 +3621,9 @@
         },
         "manufacturer": {
           "type": "string"
+        },
+        "sensitiveInfo": {
+          "type": "boolean"
         },
         "hazard": {
           "type": "string"
