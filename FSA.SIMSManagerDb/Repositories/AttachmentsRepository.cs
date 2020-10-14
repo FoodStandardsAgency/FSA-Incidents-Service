@@ -64,7 +64,7 @@ namespace FSA.SIMSManagerDb.Repositories
 
         public async Task<SimsAttachmentFileInfo> Rename(string existingUrl, string fileName)
         {
-            var fileInfo = await this.DbSet.FindAsync(existingUrl);
+            var fileInfo = await this.DbSet.FindAsync(Uri.EscapeUriString(existingUrl));
             var oldFileName = Path.GetFileName(existingUrl);
             var rootUrl = existingUrl.Split(oldFileName)[0];
 

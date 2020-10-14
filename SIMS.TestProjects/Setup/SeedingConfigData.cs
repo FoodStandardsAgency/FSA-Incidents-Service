@@ -72,7 +72,7 @@ namespace SIMS.TestProjects.Setup
                    signalStatusId: null,
                    notifierId: null,
                    principalFBOId: null,
-                sensitiveInfo: true,
+                sensitiveInfo: false,
 
                    leadLocalAuthorityId: null,
                    incidentClosed: null),
@@ -122,7 +122,7 @@ namespace SIMS.TestProjects.Setup
                    signalStatusId: null,
                    notifierId: null,
                    principalFBOId: null,
-                sensitiveInfo: false,
+                  sensitiveInfo: false,
                    leadLocalAuthorityId: null,
                    incidentClosed: null),
 
@@ -144,7 +144,7 @@ namespace SIMS.TestProjects.Setup
                    deathIllnessId: 2,
                    receivedOn: DateTime.Now.ToUniversalTime(),
                    signalStatusId: null,
-                sensitiveInfo: true,
+                    sensitiveInfo: false,
                    notifierId: null,
                    principalFBOId: null,
                    leadLocalAuthorityId: null,

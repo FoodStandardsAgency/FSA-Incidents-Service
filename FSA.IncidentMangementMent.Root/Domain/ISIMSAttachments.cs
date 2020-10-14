@@ -1,5 +1,4 @@
 ﻿using FSA.IncidentsManagement.Root.DTOS;
-using FSA.IncidentsManagement.Root.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

@@ -83,32 +83,44 @@ namespace FSA.SIMSManagerDb.Utilities
                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                }, new CloseSignalTeamDb
                {
-                   Id = 3,
+                   Id = 4,
                    Title = "Imported foods",
                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                }, new CloseSignalTeamDb
                {
-                   Id = 4,
+                   Id = 8,
                    Title = "Food Industry Liasion Group (FILG)",
                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                }, new CloseSignalTeamDb
                {
-                   Id = 5,
+                   Id = 16,
                    Title = "Comms",
                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                }, new CloseSignalTeamDb
                {
-                   Id = 6,
+                   Id = 32,
                    Title = "Referred to LA/PA for Information only",
                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                }, new CloseSignalTeamDb
                {
-                   Id = 7,
+                   Id = 64,
                    Title = "Incident Team",
+                   CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                   ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+               }, new CloseSignalTeamDb
+               {
+                   Id = 128,
+                   Title = "Other Government Department",
+                   CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                   ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+               }, new CloseSignalTeamDb
+               {
+                   Id = 256,
+                   Title = "Other",
                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                });
@@ -600,6 +612,12 @@ namespace FSA.SIMSManagerDb.Utilities
                         Title = "Display Until",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    }, new DateTypeDb
+                    {
+                        Id = 5,
+                        Title = "Undefined",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     });
         }
 
@@ -632,6 +650,12 @@ namespace FSA.SIMSManagerDb.Utilities
              {
                  Id = 4,
                  Title = "Low",
+                 CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                 ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+             }, new PriorityDb
+             {
+                 Id = 5,
+                 Title = "Undefined",
                  CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                  ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
              });
@@ -893,7 +917,14 @@ namespace FSA.SIMSManagerDb.Utilities
                    Title = "Food/Feed Business Operator (FBO/FeBO)",
                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-               });
+               },
+             new StakeholderDiscriminatorDb
+             {
+                 Id = 5,
+                 Title = "Food/Feed Business Operator (FBO/FeBO)",
+                 CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                 ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+             });
         }
 
         private void NotifierType(ModelBuilder modelBuilder)
@@ -925,6 +956,12 @@ namespace FSA.SIMSManagerDb.Utilities
                     Title = "Manufacturer",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                }, new NotifierTypeDb
+                {
+                    Id = 5,
+                    Title = "Undefined",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 });
         }
 
@@ -935,6 +972,13 @@ namespace FSA.SIMSManagerDb.Utilities
                 {
                     Id = 1,
                     Title = "Abdominal Pain",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new DeathIllnessDb
+                {
+                    Id = 4,
+                    Title = "Undefined",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
@@ -1353,6 +1397,12 @@ namespace FSA.SIMSManagerDb.Utilities
                 {
                     Id = 57,
                     Title = "Unmapped SPT Signal Value",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                }, new DataSourceDb
+                {
+                    Id = 58,
+                    Title = "Undefined",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 });
@@ -4185,6 +4235,14 @@ namespace FSA.SIMSManagerDb.Utilities
                         KeyField = "territory",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+                    new CountryDb
+                    {
+                        Id = 315,
+                        Title = "Undefined",
+                        KeyField = "Undefined",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     });
         }
 
@@ -4211,6 +4269,13 @@ namespace FSA.SIMSManagerDb.Utilities
                     Title = "No Preference",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new ContactMethodDb
+                {
+                    Id = 5,
+                    Title = "Undefined",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 });
 
         }
@@ -4230,7 +4295,15 @@ namespace FSA.SIMSManagerDb.Utilities
                     Title = "Non-Routine",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                });
+                }
+                , new ClassificationDb
+                {
+                    Id = 3,
+                    Title = "Undefined",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                }
+                );
         }
 
         private void Categories(ModelBuilder modelBuilder)
@@ -4480,7 +4553,14 @@ namespace FSA.SIMSManagerDb.Utilities
                     Title = "Use-by date exceeded",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                } ,new HazardGroupDb
+                {
+                    Id = 36,
+                    Title = "Undefined",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 });
+
         }
 
         private void AdminLeads(ModelBuilder modelBuilder)
@@ -4508,6 +4588,12 @@ namespace FSA.SIMSManagerDb.Utilities
                  {
                      Id = 4,
                      Title = "Incidents Food Standards Scotland",
+                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                 }, new AdminLeadDb
+                 {
+                     Id = 5,
+                     Title = "Undefined",
                      CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                      ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                  });
@@ -4801,6 +4887,13 @@ namespace FSA.SIMSManagerDb.Utilities
                 {
                     Id = 37,
                     Title = "Stakeholder Engagement (SHE) Officer",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 38,
+                    Title = "Undefined",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 });
