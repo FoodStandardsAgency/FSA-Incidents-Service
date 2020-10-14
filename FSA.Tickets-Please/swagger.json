@@ -1622,7 +1622,7 @@
             "in": "body",
             "name": "body",
             "schema": {
-              "$ref": "#/definitions/SimsSignalCloseNoIncidentViewModel"
+              "$ref": "#/definitions/SimsSignalCloseNoIncident"
             }
           }
         ],
@@ -3703,16 +3703,19 @@
         }
       }
     },
-    "SimsSignalCloseNoIncidentViewModel": {
+    "SimsSignalCloseNoIncident": {
       "type": "object",
       "properties": {
         "signalId": {
           "format": "int32",
           "type": "integer"
         },
-        "teamId": {
-          "format": "int32",
-          "type": "integer"
+        "teamIds": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
         },
         "reasonId": {
           "format": "int32",

@@ -10,7 +10,7 @@ namespace FSA.IncidentsManagement.Root.Models
         public string Title { get; set; }
         public string Priority { get; set; }
         public string LeadOfficer { get; set; }
-        public string CountryOfOrigin { get; set; }
+        public string DataSource { get; set; }
         public string Hazard { get; set; }
         public string BaseProduct { get; set; }
         public string Status { get; set; }

@@ -114,18 +114,9 @@ namespace FSA.SignalsManagement.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
-        public async Task<IActionResult> CloseNoIncident(SimsSignalCloseNoIncidentViewModel closeNoIncident)
+        public async Task<IActionResult> CloseNoIncident(SimsSignalCloseNoIncident closeNoIncident)
         {
-            var cNo = new SimsSignalCloseNoIncident
-            {
-                SignalId = closeNoIncident.SignalId,
-                TeamIds = new int[] { closeNoIncident.TeamId },
-                ReasonId = closeNoIncident.ReasonId,
-                UserReason = closeNoIncident.UserReason,
-                StatusCloseId = closeNoIncident.StatusCloseId
-            };
-
-            await this.simsApp.Signals.CloseNoIncident(cNo);
+            await this.simsApp.Signals.CloseNoIncident(closeNoIncident);
             return this.Ok();
         }
 
