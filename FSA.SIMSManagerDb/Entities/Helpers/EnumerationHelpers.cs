@@ -4,8 +4,9 @@ namespace FSA.SIMSManagerDbEntities.Helpers
 {
     /// <summary>
     /// This is a helper to stop having to do unwise lookups
-    /// Remember DB IncidentStatus Id values and these MUST BE THE SAME!!
+    /// ALL ENUMERATIONS MUST BE KEPT IN STEP WITH THE DB!
     /// </summary>
+
     internal enum IncidentStatusTypes
     {
         Unknown = 0,
