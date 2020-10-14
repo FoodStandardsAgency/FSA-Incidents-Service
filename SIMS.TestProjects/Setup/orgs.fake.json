@@ -1,0 +1,15 @@
+[
+  {
+    "Id": 0,
+    "Title": "Fakse Adddress example",
+    "AddressLine1": "AddressLine1",
+    "AddressLine2": "AddressLine2",
+    "TownCity": "TownCity",
+    "County": "County",
+    "CountryId": 105,
+    "PostCode": "PostCode",
+    "TelephoneNumber": "01234 567890",
+    "EmailAddress": "user@email.com",
+    "ContactMethodId": 4
+  }
+]
