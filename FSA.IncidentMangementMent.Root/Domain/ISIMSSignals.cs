@@ -28,5 +28,7 @@ namespace FSA.IncidentsManagement.Root.Domain
         ISIMSProducts Products { get; }
         ISIMSAttachments Attachments { get; }
         ISIMSStakeholders Stakeholders { get; }
+
+        Task<IEnumerable<SimsLinkedCase>> GetLinkedIncidents(int id);
     }
 }

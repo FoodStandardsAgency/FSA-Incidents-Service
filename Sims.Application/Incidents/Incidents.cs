@@ -1,4 +1,6 @@
-﻿using FSA.IncidentsManagement.Root.Domain;
+﻿using FSA.IncidentsManagement.Root;
+using FSA.IncidentsManagement.Root.Domain;
+using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagement.Root.Shared;
 using FSA.SIMSManagerDb.Contracts;
@@ -6,6 +8,7 @@ using Sims.Application.Exceptions;
 using Sims.Application.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sims.Application
@@ -35,13 +38,13 @@ namespace Sims.Application
         {
             if (incident.CommonId != 0) throw new SimsIncidentExistsException("This incident has already been added.");
 
-             // IF we have an officer, and status is not open...
+            // IF we have an officer, and status is not open...
             if (!String.IsNullOrEmpty(incident.LeadOfficer) && incident.StatusId != (int)SimsIncidentStatusTypes.Open)
                 incident = incident.WithStatus((int)SimsIncidentStatusTypes.Open);
             // if we don't have an officer status must be unsassigned
             if (String.IsNullOrEmpty(incident.LeadOfficer))
                 incident = incident.WithStatus((int)SimsIncidentStatusTypes.Unassigned);
-                return dbHost.Incidents.Add(incident);
+            return dbHost.Incidents.Add(incident);
         }
 
         public Task BulkClose(IEnumerable<int> incidentIds) => dbHost.Incidents.BulkClose(incidentIds);
@@ -74,6 +77,19 @@ namespace Sims.Application
         /// <param name="id"></param>
         /// <returns></returns>
         public Task<IncidentsDisplayModel> GetDisplayItem(int id) => dbHost.Incidents.GetDisplayItem(id);
+
+        public async Task<IEnumerable<SimsLinkedCase>> GetLinkedSignals(int id)
+        {
+            if (id == 0) throw new SimsIncidentMissingException();
+
+            var items = await this.dbHost.Incidents.Links.GetRelatedCases(id);
+            return items.Select(a => new SimsLinkedCase
+            {
+                CommonId = a,
+                Id = GeneralExtensions.GenerateSignalsId(a)
+            }).ToList();
+
+        }
 
         public Task<bool> IsClosed(int incidentId)
         {

@@ -13,7 +13,7 @@ namespace SIMS.TestProjects
         public DbSimsContextFixture Fixture { get; }
 
         [Fact]
-        public void CauseRuckus()
+        public void LoadData()
         {
             Assert.True(true);
         }

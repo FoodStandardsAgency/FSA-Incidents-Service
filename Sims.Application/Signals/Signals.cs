@@ -5,9 +5,7 @@ using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagement.Root.Shared;
 using FSA.SIMSManagerDb.Contracts;
 using Sims.Application.Exceptions;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -126,6 +124,18 @@ namespace Sims.Application
             else
                 throw new SimsItemMissing("Incorrect close message");
 
+        }
+
+        public async Task<IEnumerable<SimsLinkedCase>> GetLinkedIncidents(int id)
+        {
+            if (id == 0) throw new SimsIncidentMissingException();
+
+            var items = await this.dbHost.Signals.Links.GetRelatedCases(id);
+            return items.Select(a => new SimsLinkedCase
+            {
+                CommonId = a,
+                Id = GeneralExtensions.GenerateIncidentId(a)
+            }).ToList();
         }
     }
 

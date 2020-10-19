@@ -27,15 +27,14 @@ namespace Sims.Application
 
         private Task LogEntry(string incidentOrSignal, string page, int id)
         {
-            try
+
+            if (incidentOrSignal.ToLowerInvariant() == "incident" || incidentOrSignal.ToLowerInvariant() == "signal")
             {
-                if (incidentOrSignal != "Incident" || incidentOrSignal != "Signal") throw new SIMSException("Incident/Signal missing from db");
+
                 return this.DbHost.Audit.LogEntry(incidentOrSignal, page, id);
             }
-            catch (Exception ex)
-            {
-                throw new SIMSException("User Auditing failed", ex);
-            }
+            else
+                throw new SIMSException("Incident/Signal missing from db");
         }
     }
 }

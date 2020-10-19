@@ -9,5 +9,6 @@ namespace FSA.SIMSManagerDb.Contracts
         Task<IEnumerable<SimsLinkedRecord>> Add(int from, IEnumerable<int> tos, string reason);
         Task<SimsLinkedRecord> Remove(int from, int to);
         Task<IEnumerable<SimsLinkedRecord>> GetForHost(int hostId);
+        Task<IEnumerable<int>> GetRelatedCases(int hostId); // Incidents for Signals/Signals for incidents
     }
 }

@@ -4,13 +4,13 @@ using System.Text;
 
 namespace Sims.Application.Helpers
 {
-    internal enum SimsIncidentStatusTypes
-    {
-        Unknown = 0,
-        Unassigned = 4,
-        Open = 1,
-        Closed = 2
-    }
+    //internal enum SimsIncidentStatusTypes
+    //{
+    //    Unknown = 0,
+    //    Unassigned = 4,
+    //    Open = 1,
+    //    Closed = 2
+    //}
 
     internal enum SimsPrioritiesStatusTypes
     {

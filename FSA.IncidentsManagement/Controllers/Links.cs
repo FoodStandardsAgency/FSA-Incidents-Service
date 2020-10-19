@@ -1,10 +1,13 @@
 ﻿using FSA.IncidentsManagement.Misc;
 using FSA.IncidentsManagement.Models;
 using FSA.IncidentsManagement.Root.Domain;
+using FSA.IncidentsManagement.Root.DTOS;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Controllers
@@ -27,7 +30,7 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpGet("{incidentSignal}/{id}")]
-        [SwaggerOperation(Summary = "Get All links for incident/signal")]
+        [SwaggerOperation(Summary = "Get All links for incident/signal", Description = "Get All links for incident/signal")]
         [ProducesResponseType(200)]
         [ProducesResponseType(typeof(string), 403)]
         [ProducesResponseType(500)]
@@ -38,6 +41,22 @@ namespace FSA.IncidentsManagement.Controllers
             {
                 IncidentOrSignal.Incidents => new OkObjectResult(await simsApp.Incidents.DashboardLinks(id)),
                 IncidentOrSignal.Signals => new OkObjectResult(await simsApp.Signals.DashboardLinks(id)),
+                _ => BadRequest("Route not found")
+            };
+        }
+
+        [HttpGet("Cases/{incidentSignal}/{id}")]
+        [SwaggerOperation(Summary = "Get linked cases for incident/signal", Description ="Get linked cases for incident/signal")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(List<SimsLinkedCase>), 403)]
+        [ProducesResponseType(500)]
+        [Produces("application/json")]
+        public async Task<IActionResult> GetLinkedCases([FromRoute] string incidentSignal, [FromRoute] int id)
+        {
+            return incidentSignal.ToLower() switch
+            {
+                IncidentOrSignal.Incidents => new OkObjectResult(await simsApp.Incidents.GetLinkedSignals(id)),
+                IncidentOrSignal.Signals => new OkObjectResult(await simsApp.Signals.GetLinkedIncidents(id)),
                 _ => BadRequest("Route not found")
             };
         }
@@ -72,5 +91,7 @@ namespace FSA.IncidentsManagement.Controllers
                 _ => BadRequest("Route not found")
             };
         }
+
+
     }
 }

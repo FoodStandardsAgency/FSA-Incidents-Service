@@ -717,6 +717,7 @@
           "Links"
         ],
         "summary": "Get All links for incident/signal",
+        "description": "Get All links for incident/signal",
         "operationId": "GetLinks",
         "produces": [
           "application/json"
@@ -744,6 +745,51 @@
             "description": "Forbidden",
             "schema": {
               "type": "string"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Links/Cases/{incidentSignal}/{id}": {
+      "get": {
+        "tags": [
+          "Links"
+        ],
+        "summary": "Get linked cases for incident/signal",
+        "description": "Get linked cases for incident/signal",
+        "operationId": "GetLinkedCases",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "incidentSignal",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SimsLinkedCase"
+              }
             }
           },
           "500": {
@@ -2684,6 +2730,18 @@
             "format": "int32",
             "type": "integer"
           }
+        }
+      }
+    },
+    "SimsLinkedCase": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "commonId": {
+          "format": "int32",
+          "type": "integer"
         }
       }
     },

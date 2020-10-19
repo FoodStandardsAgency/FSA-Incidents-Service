@@ -267,7 +267,8 @@ namespace FSA.SIMSManagerDb.Utilities
         private void SignalStatus(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<SignalStatusDb>()
-                .HasData(new SignalStatusDb
+                .HasData(
+                new SignalStatusDb
                 {
                     Id = 1,
                     Title = "Unassigned",
@@ -294,7 +295,7 @@ namespace FSA.SIMSManagerDb.Utilities
                 new SignalStatusDb
                 {
                     Id = 50,
-                    Title = "Closed : Incident",
+                    Title = "Closed : New Incident",
                     SortOrder = 400,
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
@@ -311,6 +312,14 @@ namespace FSA.SIMSManagerDb.Utilities
                 {
                     Id = 150,
                     Title = "Closed : Referral (Offline)",
+                    SortOrder = 700,
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new SignalStatusDb
+                {
+                    Id = 200,
+                    Title = "Closed : Linked Incident",
                     SortOrder = 600,
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"

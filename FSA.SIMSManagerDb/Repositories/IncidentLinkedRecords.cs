@@ -69,5 +69,11 @@ namespace FSA.SIMSManagerDb.Repositories
         }
 
         public Task<IEnumerable<SimsLinkedRecord>> GetForHost(int hostId) => LinksManager.GetForHost(hostId);
+
+        public async Task<IEnumerable<int>> GetRelatedCases(int hostId)
+        {
+            var itm = await this.ctx.SignalIncidentLinks.Where(a => a.IncidentId == hostId).Select(a => a.SignalId).ToListAsync();
+            return itm;
+        }
     }
 }

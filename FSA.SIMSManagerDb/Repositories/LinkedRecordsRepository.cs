@@ -117,5 +117,11 @@ namespace FSA.SIMSManagerDb.Repositories
             return mapper.Map<IEnumerable<SimsLinkedRecord>>(allLinks);
 
         }
+
+        public virtual async Task<IEnumerable<int>> GetRelatedCases(int hostId)
+        {
+            var itm = await this.ctx.SignalIncidentLinks.Where(a => a.SignalId == hostId).Select(a => a.IncidentId).ToListAsync();
+            return itm;
+        }
     }
 }

@@ -23,6 +23,7 @@ namespace FSA.SIMSManagerDbEntities.Helpers
         Closed_Incident = 50,
         Closed_No_Incident = 100,
         Closed_Referrel_Offline = 150,
+        Closed_Linked_Incident=200,
         Unknown = 0
     };
 

@@ -199,7 +199,7 @@ namespace FSA.SIMSManagerDb.Repositories
             // Find the start record
             var startRecord = (startPage - 1) * pageSize;
             var results = await qry.OrderBy(i => i.SignalStatus.SortOrder)
-                                    .ThenBy(i => i.InsertedDate)
+                                    .ThenByDescending(i => i.InsertedDate)
                                     .Skip(startRecord)
                                     .Take(pageSize)
                                     .Select(i => mapper.Map<SignalDb, SignalDashboardItem>(i)).ToListAsync();
@@ -344,7 +344,7 @@ namespace FSA.SIMSManagerDb.Repositories
                     SignalId = signalId,
                     IncidentId = incidentId
                 });
-                signal.SignalStatusId = (int)SignalStatusTypes.Closed_Incident;
+                signal.SignalStatusId = (int)SignalStatusTypes.Closed_Linked_Incident;
                 await ctx.SaveChangesAsync();
             }
         }
@@ -407,6 +407,16 @@ namespace FSA.SIMSManagerDb.Repositories
                 var savedIncident = ctx.Incidents.Add(newIncident);
                 signal.SignalStatusId = (int)SignalStatusTypes.Closed_Incident;
                 await ctx.SaveChangesAsync();
+
+                this.ctx.SignalIncidentLinks.Add(new Entities.Signals.SignalIncidentLinkDb
+                {
+                    SignalId = signal.Id,
+                    IncidentId = savedIncident.Entity.Id
+                });
+
+                await ctx.SaveChangesAsync();
+
+
                 return savedIncident.Entity.Id;
             }
 

@@ -1,4 +1,5 @@
-﻿using FSA.IncidentsManagement.Root.Models;
+﻿using FSA.IncidentsManagement.Root.DTOS;
+using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagement.Root.Shared;
 using System;
 using System.Collections.Generic;
@@ -51,6 +52,8 @@ namespace FSA.IncidentsManagement.Root.Domain
         ISIMSProducts Products { get; }
         ISIMSAttachments Attachments { get; }
         ISIMSStakeholders Stakeholders { get; }
+
+        Task<IEnumerable<SimsLinkedCase>> GetLinkedSignals(int id);
     }
 
 }
