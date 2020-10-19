@@ -14,12 +14,6 @@
     <Compile Remove="Entities\IncidentProducts\xSignalProductDb.cs" />
     <Compile Remove="Entities\IncidentProducts\xSignalProductFboDb.cs" />
     <Compile Remove="Entities\IncidentProducts\xSignalProductPackSizeDb.cs" />
-    <Compile Remove="Migrations\20200917102327_Slap.cs" />
-    <Compile Remove="Migrations\20200917102327_Slap.Designer.cs" />
-    <Compile Remove="Migrations\20200929101309_refgf.cs" />
-    <Compile Remove="Migrations\20200929101309_refgf.Designer.cs" />
-    <Compile Remove="Migrations\20201016114026_killian.cs" />
-    <Compile Remove="Migrations\20201016114026_killian.Designer.cs" />
     <Compile Remove="Repositories\SignalsLinkedRecords.cs" />
   </ItemGroup>
 

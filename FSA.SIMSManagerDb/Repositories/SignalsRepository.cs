@@ -268,6 +268,7 @@ namespace FSA.SIMSManagerDb.Repositories
             {
                 var capturedId = id;
                 allClauses.Add(i => i.Id == capturedId);
+                allClauses.Add(i => i.SPTId == capturedId);
             }
 
             var wordStack = new Stack<Expression<Func<SignalDb, bool>>>(allClauses);
