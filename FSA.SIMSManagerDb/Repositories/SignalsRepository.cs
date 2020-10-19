@@ -184,7 +184,7 @@ namespace FSA.SIMSManagerDb.Repositories
                 // 2. Search
                 // 3. Person
                 Expression<Func<SignalDb, bool>> searchExpression = null;
-                searchExpression = this.DashboardGeneralSearch(searchTerms, incidentIds);
+                searchExpression = this.DashboarGenerateSearchExpression(searchTerms, incidentIds);
 
                 if (searchExpression != null)
                     qry = qry.Where(searchExpression);
@@ -251,7 +251,7 @@ namespace FSA.SIMSManagerDb.Repositories
         /// <param name="allWords"></param>
         /// <param name="allIds"></param>
         /// <returns></returns>
-        private Expression<Func<SignalDb, bool>> DashboardGeneralSearch(IEnumerable<string> allWords, IEnumerable<int> allIds)
+        private Expression<Func<SignalDb, bool>> DashboarGenerateSearchExpression(IEnumerable<string> allWords, IEnumerable<int> allIds)
         {
             List<Expression<Func<SignalDb, bool>>> allClauses = new List<Expression<Func<SignalDb, bool>>>();
             // The Full list of searches per word
@@ -262,12 +262,14 @@ namespace FSA.SIMSManagerDb.Repositories
                 allClauses.Add(i => EF.Functions.Like(i.Priority, wrd));
                 allClauses.Add(i => EF.Functions.Like(i.BaseProduct, wrd));
                 allClauses.Add(i => EF.Functions.Like(i.SignalStatus.Title, wrd));
+
             }
             // full list of serches on id
             foreach (var id in allIds)
             {
                 var capturedId = id;
                 allClauses.Add(i => i.Id == capturedId);
+                allClauses.Add(i => i.SPTId == capturedId);
             }
 
             var wordStack = new Stack<Expression<Func<SignalDb, bool>>>(allClauses);
