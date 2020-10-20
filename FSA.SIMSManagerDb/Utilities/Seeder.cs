@@ -926,14 +926,7 @@ namespace FSA.SIMSManagerDb.Utilities
                    Title = "Food/Feed Business Operator (FBO/FeBO)",
                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-               },
-             new StakeholderDiscriminatorDb
-             {
-                 Id = 5,
-                 Title = "Food/Feed Business Operator (FBO/FeBO)",
-                 CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                 ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-             });
+               });
         }
 
         private void NotifierType(ModelBuilder modelBuilder)

@@ -405,7 +405,7 @@ namespace FSA.SIMSManagerDb.Repositories
                     Products = prods,
                     Notes = notes.Concat(new List<IncidentNoteDb> { new IncidentNoteDb { Note = reason } }).ToList(),
                 };
-
+                signal.Notes.Add(new SignalNoteDb { Note = reason });
                 var savedIncident = ctx.Incidents.Add(newIncident);
                 signal.SignalStatusId = (int)SignalStatusTypes.Closed_Incident;
                 await ctx.SaveChangesAsync();
