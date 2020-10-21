@@ -379,7 +379,6 @@ namespace FSA.SIMSManagerDb.Repositories
                 var stakeholders = this.mapper.Map<List<IncidentStakeholderDb>>(signal.Stakeholders);
 
                 var notes = this.mapper.Map<List<IncidentNoteDb>>(signal.Notes);
-
                 // fetch the relevant lookupIds
                 var incidentType = this.ctx.HazardGroups.FirstOrDefault(a => a.Title == hazardGroup);
                 incidentType = (incidentType == null) ? this.ctx.HazardGroups.FirstOrDefault(a => a.Title == "unclassified") : incidentType;
@@ -403,7 +402,7 @@ namespace FSA.SIMSManagerDb.Repositories
                     ReceivedOn = DateTime.Now,
                     Stakeholders = stakeholders,
                     Products = prods,
-                    Notes = notes.Concat(new List<IncidentNoteDb> { new IncidentNoteDb { Note = reason } }).ToList(),
+                    Notes = notes.Reverse<IncidentNoteDb>().Concat(new List<IncidentNoteDb> { new IncidentNoteDb { Note = reason } }).ToList(),
                 };
                 signal.Notes.Add(new SignalNoteDb { Note = reason });
                 var savedIncident = ctx.Incidents.Add(newIncident);
