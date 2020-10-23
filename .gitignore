@@ -346,3 +346,7 @@ FSA.Tickets-Please/client/ModifiedPain.txt
 /SIMS.TestProjects/Setup/appsettings.json
 /SIMS.TestProjects/Setup/signals.csv
 /SIMS.TestProjects/Setup/orgs.json
+SQLQuery2.sql
+FSA.Tickets-Please/ColumnOrdering.txt
+FSA.Tickets-Please/Misc/tableColOdering.txt
+FSA.Tickets-Please/Misc/UpdateFSASQl.sql
