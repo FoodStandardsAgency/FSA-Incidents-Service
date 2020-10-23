@@ -1,9 +1,0 @@
-
-
-(\))\n.+(},)
-                   $1,\n ModifiedBy = table.Column<string>(maxLength: 70, nullable: false),\nModified = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),\nCreatedBy = table.Column<string>(maxLength: 70, nullable: false),\nCreated = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()")\nTimestamp = table.Column<byte[]>(rowVersion: true, nullable: true)$2
-
-                   INcidentLinks
-                   ProductFBOItems
-
-.+ModifiedBy = table.Column<string>\(maxLength: 70, nullable: false\),.+\n.+Modified = table.Column<DateTime>\(nullable: false, defaultValueSql: "getutcdate\(\)"\),.+\n.+CreatedBy = table.Column<string>\(maxLength: 70, nullable: false\),.+\n.+Created = table.Column<DateTime>\(nullable: false, defaultValueSql: "getutcdate\(\)"\),.+\n.+Timestamp = table.Column<byte\[\]>\(rowVersion: true, nullable: true\)?,.+\n
