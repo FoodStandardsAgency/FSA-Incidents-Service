@@ -30,5 +30,6 @@ namespace FSA.IncidentsManagement.Root.Domain
         ISIMSStakeholders Stakeholders { get; }
 
         Task<IEnumerable<SimsLinkedCase>> GetLinkedIncidents(int id);
+        Task UpdateSensitiveInfoStatus(int hostId, bool isSensitive);
     }
 }

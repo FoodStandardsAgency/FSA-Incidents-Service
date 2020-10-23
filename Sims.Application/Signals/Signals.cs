@@ -92,7 +92,6 @@ namespace Sims.Application
             if (incidentId != -1)
             {
                 // var signInfo = await this.attachments.Incidents.EnsureLibrary(GeneralExtensions.GenerateSignalsId(close.SignalId));
-
                 // Once an incident is created, then we can migrate all the documents.
                 // Createing library just breaks down the task
                 // Then we need to migrate any tags that have been applied.
@@ -123,7 +122,6 @@ namespace Sims.Application
                 return dbHost.Signals.CloseNoIncident(close);
             else
                 throw new SimsItemMissing("Incorrect close message");
-
         }
 
         public async Task<IEnumerable<SimsLinkedCase>> GetLinkedIncidents(int id)
@@ -137,6 +135,8 @@ namespace Sims.Application
                 Id = GeneralExtensions.GenerateIncidentId(a)
             }).ToList();
         }
+
+        public Task UpdateSensitiveInfoStatus(int signalId, bool isSensitive)=> this.dbHost.Signals.UpdateSensitiveInfo(signalId, isSensitive);
     }
 
 }

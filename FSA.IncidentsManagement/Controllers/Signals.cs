@@ -142,5 +142,16 @@ namespace FSA.SignalsManagement.Controllers
             await this.simsApp.Signals.CloseLinkIncident(closeLink);
             return this.Ok();
         }
+
+        [HttpPost("Sensitive")]
+        [SwaggerOperation(Summary = "Signals sensitive info")]
+        [ProducesResponseType(typeof(IncidentDashboardItem), 200)]
+        [ProducesResponseType(500)]
+        [Produces("application/json")]
+        public async Task<IActionResult> UpdateSignalSensitiveInfo(SensitiveInfoViewModel sensitiveInfo)
+        {
+            await this.simsApp.Signals.UpdateSensitiveInfoStatus(sensitiveInfo.HostId, sensitiveInfo.IsSensitive);
+            return new OkResult();
+        }
     }
 }

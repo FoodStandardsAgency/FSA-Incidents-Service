@@ -149,15 +149,15 @@ namespace FSA.IncidentsManagement
                 app.UseDeveloperExceptionPage();
 
             }
+            app.UseSwagger(opts => opts.SerializeAsV2 = true);
 #if DEBUG 
             Microsoft.IdentityModel.Logging.IdentityModelEventSource.ShowPII = true;
-#endif
-            app.UseSwagger(opts => opts.SerializeAsV2 = true);
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "SIMS Incident/Signal Management API v1");
                 c.RoutePrefix = string.Empty;
             });
+#endif
 
             app.UseDefaultFiles();
 

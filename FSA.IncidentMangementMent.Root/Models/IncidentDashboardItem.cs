@@ -13,6 +13,7 @@ namespace FSA.IncidentsManagement.Root.Models
         public string Notifier { get; set; }
         public string LeadOfficer { get; set; }
         public string Status { get; set; }
+        public bool SensitiveInfo { get; set; }
         public DateTime Updated { get; set; }
         public IEnumerable<int> Links { get; set; }
 

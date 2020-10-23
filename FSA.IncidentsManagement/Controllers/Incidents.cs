@@ -129,5 +129,15 @@ namespace FSA.IncidentsManagement.Controllers
             });
         }
 
+        [HttpPost("Sensitive")]
+        [SwaggerOperation(Summary = "Incident sensitive info")]
+        [ProducesResponseType(typeof(IncidentDashboardItem), 200)]
+        [ProducesResponseType(500)]
+        [Produces("application/json")]
+        public async Task<IActionResult> UpdateIncidentSensitiveInfo(SensitiveInfoViewModel sensitiveInfo)
+        {
+            await this.simsApp.Incidents.UpdateSensitiveInfoStatus(sensitiveInfo.HostId, sensitiveInfo.IsSensitive);
+            return new OkResult();
+        }
     }
 }

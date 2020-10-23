@@ -711,6 +711,43 @@
         }
       }
     },
+    "/api/Incidents/Sensitive": {
+      "post": {
+        "tags": [
+          "Incidents"
+        ],
+        "summary": "Incident sensitive info",
+        "operationId": "UpdateIncidentSensitiveInfo",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/SensitiveInfoViewModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/IncidentDashboardItem"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
     "/api/Links/{incidentSignal}/{id}": {
       "get": {
         "tags": [
@@ -1752,6 +1789,43 @@
         }
       }
     },
+    "/api/Signals/Sensitive": {
+      "post": {
+        "tags": [
+          "Signals"
+        ],
+        "summary": "Signals sensitive info",
+        "operationId": "UpdateSignalSensitiveInfo",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/SensitiveInfoViewModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/IncidentDashboardItem"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
     "/api/Stakeholders/{incidentSignal}/{id}": {
       "get": {
         "tags": [
@@ -2720,6 +2794,9 @@
         "status": {
           "type": "string"
         },
+        "sensitiveInfo": {
+          "type": "boolean"
+        },
         "updated": {
           "format": "date-time",
           "type": "string"
@@ -2730,6 +2807,18 @@
             "format": "int32",
             "type": "integer"
           }
+        }
+      }
+    },
+    "SensitiveInfoViewModel": {
+      "type": "object",
+      "properties": {
+        "hostId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "isSensitive": {
+          "type": "boolean"
         }
       }
     },
@@ -3734,6 +3823,9 @@
         },
         "dataSource": {
           "type": "string"
+        },
+        "sensitiveInfo": {
+          "type": "boolean"
         },
         "hazard": {
           "type": "string"

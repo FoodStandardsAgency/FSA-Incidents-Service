@@ -28,5 +28,6 @@ namespace FSA.SIMSManagerDb.Contracts
         Task CloseNoIncident(SimsSignalCloseNoIncident closeDetails);
         Task CloseLinkIncident(int signalId, int incidentId);
         Task<int> CloseCreateIncident(string reason, int hostId);
+        Task UpdateSensitiveInfo(int signalId, bool isSensitive);
     }
 }

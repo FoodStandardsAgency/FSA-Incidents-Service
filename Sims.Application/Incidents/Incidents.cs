@@ -5,7 +5,6 @@ using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagement.Root.Shared;
 using FSA.SIMSManagerDb.Contracts;
 using Sims.Application.Exceptions;
-using Sims.Application.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -141,6 +140,8 @@ namespace Sims.Application
         /// <param name="user"></param>
         /// <returns></returns>
         public Task UpdateLeadOfficer(IEnumerable<int> ids, string user) => dbHost.Incidents.UpdateLeadOfficer(ids, user);
+
+        public Task UpdateSensitiveInfoStatus(int incidentId, bool isSensitive)=> this.dbHost.Incidents.UpdateSensitiveInfo(incidentId, isSensitive);
 
         public Task<BaseIncident> UpdateStatus(int id, int statusId) => dbHost.Incidents.UpdateStatus(id, statusId);
     }

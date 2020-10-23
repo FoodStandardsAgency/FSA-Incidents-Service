@@ -29,5 +29,7 @@ namespace FSA.SIMSManagerDb.Contracts
         IDbProductRepository Products { get; }
         IDbAttachmentsRepository Attachments { get; }
         IDbStakeholdersRepository Stakeholders { get; }
+
+        Task UpdateSensitiveInfo(int incidentId, bool isSensitive);
     }
 }

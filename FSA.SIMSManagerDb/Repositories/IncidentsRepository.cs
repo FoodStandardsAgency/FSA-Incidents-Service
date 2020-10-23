@@ -444,5 +444,12 @@ namespace FSA.SIMSManagerDb.Repositories
             return (await ctx.Incidents.AsNoTracking().SingleAsync(i => i.Id == incidentId))
                            .IncidentStatusId == (int)IncidentStatusTypes.Closed;
         }
+
+        public async Task UpdateSensitiveInfo(int signalId, bool isSensitive)
+        {
+            var item = await this.ctx.Incidents.FindAsync(signalId);
+            item.SensitiveInfo = isSensitive;
+            await ctx.SaveChangesAsync();
+        }
     }
 }

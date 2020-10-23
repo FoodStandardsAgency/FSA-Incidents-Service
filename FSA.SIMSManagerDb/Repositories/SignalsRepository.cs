@@ -423,5 +423,12 @@ namespace FSA.SIMSManagerDb.Repositories
 
             return -1;
         }
+
+        public async Task UpdateSensitiveInfo(int signalId, bool isSensitive)
+        {
+            var item = await this.ctx.Signals.FindAsync(signalId);
+            item.SensitiveInfo = isSensitive;
+            await ctx.SaveChangesAsync();
+        }
     }
 }
