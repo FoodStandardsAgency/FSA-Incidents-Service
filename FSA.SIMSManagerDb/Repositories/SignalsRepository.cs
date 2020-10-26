@@ -326,6 +326,8 @@ namespace FSA.SIMSManagerDb.Repositories
             {
                 signal.SignalStatusId = (int)SignalStatusTypes.Closed_No_Incident;
                 var dbClosedDetails = this.mapper.Map<CloseSignalNoIncidentDb>(closeDetails);
+                // duplicatre reason in the notes field.
+                ctx.SignalNotes.Add(new SignalNoteDb { HostId = closeDetails.SignalId, Note = closeDetails.UserReason });
                 this.ctx.Add(dbClosedDetails);
                 await this.ctx.SaveChangesAsync();
             }
