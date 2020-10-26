@@ -382,7 +382,7 @@ namespace FSA.SIMSManagerDb.Repositories
                 // fetch the relevant lookupIds
                 var incidentType = this.ctx.HazardGroups.FirstOrDefault(a => a.Title == hazardGroup);
                 incidentType = (incidentType == null) ? this.ctx.HazardGroups.FirstOrDefault(a => a.Title == "unclassified") : incidentType;
-                
+
                 var otherDatasource = this.ctx.DataSources.FirstOrDefault(a => a.Title == "FSA RAM Referral");
                 var productType = this.ctx.ProductTypes.First(a => a.Title == "Undefined");
 
@@ -402,7 +402,7 @@ namespace FSA.SIMSManagerDb.Repositories
                     ReceivedOn = DateTime.Now,
                     Stakeholders = stakeholders,
                     Products = prods,
-                    Notes = notes.Reverse<IncidentNoteDb>().Concat(new List<IncidentNoteDb> { new IncidentNoteDb { Note = reason } }).ToList(),
+                    Notes = new List<IncidentNoteDb> { new IncidentNoteDb { Note = reason } }.Concat(notes.Reverse<IncidentNoteDb>()).ToList(),
                 };
                 signal.Notes.Add(new SignalNoteDb { Note = reason });
                 var savedIncident = ctx.Incidents.Add(newIncident);

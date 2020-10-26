@@ -117,6 +117,7 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForMember(a => a.SPTId, m => m.Ignore())
                 .ForMember(a => a.PublishedDate, m => m.Ignore())
                 .ForMember(a => a.InsertedDate, m => m.Ignore())
+                .ForMember(a=>a.SourceLink, m=>m.Ignore())
                 .ForSourceMember(a => a.LastUpdated, m => m.DoNotValidate());
 
             CreateMap<SignalDb, SimsSignal>(MemberList.Destination)

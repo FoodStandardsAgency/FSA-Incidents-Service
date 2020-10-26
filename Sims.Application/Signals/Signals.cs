@@ -41,7 +41,6 @@ namespace Sims.Application
         public async Task<IEnumerable<SignalDashboardItem>> DashboardLinks(int signalId)
         {
             return await dbHost.Signals.DashboardLinks(signalId);
-
         }
 
         public Task<IPaging<SignalDashboardItem>> DashboardSearch(string search = null, int pageSize = 500, int startPage = 1)
