@@ -16,7 +16,7 @@ namespace FSA.IncidentsManagement.Root.Models
         public IEnumerable<Country> Countries { get; set; }
         public IEnumerable<DeathIllness> DeathIllnesses { get; set; }
         public IEnumerable<DataSource> DataSources { get; set; }
-        //public IEnumerable<OrganisationRole> OrganisationRoles { get; set; }
+        public IEnumerable<IncidentSource> IncidentSources { get; set; }
         public IEnumerable<UnitQuantity> Units { get; set; }
         public IEnumerable<SignalStatus> SignalStatus { get; set; }
         public IEnumerable<ProductType> ProductTypes { get; set; }

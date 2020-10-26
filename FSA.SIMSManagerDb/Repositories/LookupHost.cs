@@ -34,12 +34,15 @@ namespace FSA.SIMSManagerDb.Repositories
         private ISimsReferenceData<AttachmentTagLkup> AttachmentTags => new ReferenceDataRepo<AttachmentTagLkup, DocumentTagDb>(ctx, mapper);
         private ISimsReferenceData<FBOType> FBOTypes => new ReferenceDataRepo<FBOType, FBOTypeDb>(ctx, mapper);
         private ISimsReferenceData<NotifierType> NotifierTypes => new ReferenceDataRepo<NotifierType, NotifierTypeDb>(ctx, mapper);
+        private ISimsReferenceData<IncidentSource> IncidentSources => new ReferenceDataRepo<IncidentSource, IncidentSourceDb>(ctx, mapper);
         private ISimsReferenceData<AdminLead> AdminLeads => new ReferenceDataRepo<AdminLead, AdminLeadDb>(ctx, mapper);
         private ISimsReferenceData<ProductDateType> ProductDateTypes => new ReferenceDataRepo<ProductDateType, DateTypeDb>(ctx, mapper);
         private ISimsReferenceData<StakeholderType> StakeholderTypes => new ReferenceDataRepo<StakeholderType, StakeholderDiscriminatorDb>(ctx, mapper);
         private ISimsReferenceData<CloseSignalTeam> CloseSignalTeams => new ReferenceDataRepo<CloseSignalTeam, CloseSignalTeamDb>(ctx, mapper);
         private ISimsReferenceData<CloseSignalReason> CloseSignalReasons => new ReferenceDataRepo<CloseSignalReason, CloseSignalReasonDb>(ctx, mapper);
         private ISimsReferenceData<StakeholderIncidentRole> StakeholderIncidentRoles => new ReferenceDataRepo<StakeholderIncidentRole, StakeholderIncidentRoleDb>(ctx, mapper);
+
+
         public LookupsHost GetAll() => new LookupsHost
         {
             Categories = this.Categories.GetAll(),
@@ -62,6 +65,7 @@ namespace FSA.SIMSManagerDb.Repositories
             StakeholderIncidentRoles = this.StakeholderIncidentRoles.GetAll(),
             CloseSignalTeams = this.CloseSignalTeams.GetAll(),
             CloseSignalReasons = this.CloseSignalReasons.GetAll(),
+            IncidentSources = this.IncidentSources.GetAll()
         };
     }
 }

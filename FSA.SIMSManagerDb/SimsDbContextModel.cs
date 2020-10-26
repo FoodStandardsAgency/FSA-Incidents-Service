@@ -63,6 +63,7 @@ namespace FSA.SIMSManagerDb
         internal DbSet<AdminLeadDb> AdminLeads { get; set; }
         internal DbSet<ProductTypeDb> ProductTypes { get; set; }
         internal DbSet<DateTypeDb> ProductDateTypes { get; set; }
+        internal DbSet<IncidentSourceDb> IncidentSources { get; set; }
         internal DbSet<IncidentStatusDb> IncidentStatus { get; set; }
         internal DbSet<SignalStatusDb> SignalStatus { get; set; }
         internal DbSet<UnitQuantityDb> UnitQuantities { get; set; }
@@ -122,6 +123,7 @@ namespace FSA.SIMSManagerDb
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<UnitQuantityDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<FBOTypeDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<DocumentTagDb>());
+            modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<IncidentSourceDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<CloseSignalReasonDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<CloseSignalTeamDb>());
             #endregion

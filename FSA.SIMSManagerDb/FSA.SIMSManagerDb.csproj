@@ -16,6 +16,8 @@
     <Compile Remove="Entities\IncidentProducts\xSignalProductPackSizeDb.cs" />
     <Compile Remove="Migrations\20201020114346_seedIssues.cs" />
     <Compile Remove="Migrations\20201020114346_seedIssues.Designer.cs" />
+    <Compile Remove="Migrations\20201026152919_incidentSourceLkUp.cs" />
+    <Compile Remove="Migrations\20201026152919_incidentSourceLkUp.Designer.cs" />
     <Compile Remove="Repositories\SignalsLinkedRecords.cs" />
   </ItemGroup>
 

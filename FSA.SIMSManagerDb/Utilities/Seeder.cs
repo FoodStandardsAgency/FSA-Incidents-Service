@@ -1,5 +1,6 @@
 ﻿using FSA.SIMSManagerDb.Entities.Lookups;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 
 namespace FSA.SIMSManagerDb.Utilities
@@ -17,6 +18,7 @@ namespace FSA.SIMSManagerDb.Utilities
             DeathIllness(modelBuilder);
             FBOType(modelBuilder);
             IncidentStatus(modelBuilder);
+            IncidentSource(modelBuilder);
             NotifierType(modelBuilder);
             Priorities(modelBuilder);
             ProductDateDb(modelBuilder);
@@ -28,6 +30,158 @@ namespace FSA.SIMSManagerDb.Utilities
             StakeholderIncidentRoles(modelBuilder);
             CloseSignalTeams(modelBuilder);
             CloseSignalReasons(modelBuilder);
+        }
+
+        private void IncidentSource(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<IncidentSourceDb>()
+                .HasData(new IncidentSourceDb
+                {
+                    Id = 1,
+                    Title = "Animal Feed",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                }, new IncidentSourceDb
+                {
+                    Id = 2,
+                    Title = "Biocides",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new IncidentSourceDb
+                {
+                    Id = 3,
+                    Title = "Fire",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new IncidentSourceDb
+                {
+                    Id = 4,
+                    Title = "Fraud",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new IncidentSourceDb
+                {
+                    Id = 5,
+                    Title = "Human Error",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new IncidentSourceDb
+                {
+                    Id = 6,
+                    Title = "Illegal Import/Export",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new IncidentSourceDb
+                {
+                    Id = 7,
+                    Title = "Investigation Ongoing",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new IncidentSourceDb
+                {
+                    Id = 8,
+                    Title = "Labelling Packaging Error",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new IncidentSourceDb
+                {
+                    Id = 9,
+                    Title = "Malicious Tampering",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new IncidentSourceDb
+                {
+                    Id = 10,
+                    Title = "Metals - Geochemical",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new IncidentSourceDb
+                {
+                    Id = 11,
+                    Title = "Metals - Other",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new IncidentSourceDb
+                {
+                    Id = 12,
+                    Title = "Microbiological Contamination",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new IncidentSourceDb
+                {
+                    Id = 13,
+                    Title = "Migration of Chemicals",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new IncidentSourceDb
+                {
+                    Id = 14,
+                    Title = "Natural Chemical Contamination",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new IncidentSourceDb
+                {
+                    Id = 15,
+                    Title = "Pesticides",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+
+                new IncidentSourceDb
+                {
+                    Id = 16,
+                    Title = "Production Fault",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new IncidentSourceDb
+                {
+                    Id = 17,
+                    Title = "Spill/Leak",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new IncidentSourceDb
+                {
+                    Id = 18,
+                    Title = "Unauthorised Premises/Process",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new IncidentSourceDb
+                {
+                    Id = 19,
+                    Title = "Unknown",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new IncidentSourceDb
+                {
+                    Id = 20,
+                    Title = "Use of Unauthorised Ingredient",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new IncidentSourceDb
+                {
+                    Id = 21,
+                    Title = "Veterinary Medicine",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                });
         }
 
         private void CloseSignalReasons(ModelBuilder modelBuilder)
