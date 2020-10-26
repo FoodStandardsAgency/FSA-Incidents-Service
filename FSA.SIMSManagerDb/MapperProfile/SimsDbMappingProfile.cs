@@ -95,6 +95,7 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForCtorParam("lastChangedDate", o => o.MapFrom(a => a.Modified))
                 .ForCtorParam("incidentTypeId", o => o.MapFrom(@this => @this.IncidentTypeId))
                 .ForCtorParam("signalStatus", o => o.MapFrom(a => a.IncidentStatus.Title))
+                .ForCtorParam("incidentType", o => o.MapFrom(a => a.IncidentType.Title))
                 .ForCtorParam("incidentStatus", o => o.MapFrom(a => a.IncidentStatus.Title))
                 .ForCtorParam("notifier", o => o.MapFrom(a => a.NotifierId.HasValue ? a.Notifier.Title : "Unassigned"))
                 .ForCtorParam("priority", o => o.MapFrom(a => a.Priority != null ? a.Priority.Title : ""))
