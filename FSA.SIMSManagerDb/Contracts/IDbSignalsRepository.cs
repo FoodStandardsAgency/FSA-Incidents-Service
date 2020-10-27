@@ -26,7 +26,7 @@ namespace FSA.SIMSManagerDb.Contracts
         Task UpdateLeadOfficer(IEnumerable<int> ids, string user);
         Task<SimsSignal> UpdateStatus(int signalId, int status);
         Task CloseNoIncident(SimsSignalCloseNoIncident closeDetails);
-        Task CloseLinkIncident(int signalId, int incidentId);
+        Task CloseLinkIncident(string reason, int signalId, int incidentId);
         Task<int> CloseCreateIncident(string reason, int hostId);
         Task UpdateSensitiveInfo(int signalId, bool isSensitive);
     }

@@ -80,7 +80,8 @@ namespace Sims.Application
         {
             if (close.SignalId == 0) throw new SimsSignalMissingException("Signal id missing");
             if (close.IncidentId == 0) throw new SimsSignalMissingException("Incident id missing");
-            return dbHost.Signals.CloseLinkIncident(close.SignalId, close.IncidentId);
+            if (string.IsNullOrEmpty(close.ReasonNote)) throw new SimsSignalMissingException("Incident id missing");
+            return dbHost.Signals.CloseLinkIncident(close.ReasonNote, close.SignalId, close.IncidentId);
         }
 
         public async Task<int> CloseCreateIncident(SimsSignalCloseCreateIncident close)

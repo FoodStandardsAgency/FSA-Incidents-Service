@@ -332,13 +332,14 @@ namespace FSA.SIMSManagerDb.Repositories
                 await this.ctx.SaveChangesAsync();
             }
         }
-
         /// <summary>
         /// Close the signal and associate to an incident
         /// </summary>
-        /// <param name="hostId"></param>
+        /// <param name="reason">Added to the notes record for the signal</param>
+        /// <param name="signalId">required signal</param>
+        /// <param name="incidentId">required incident.</param>
         /// <returns></returns>
-        public async Task CloseLinkIncident(int signalId, int incidentId)
+        public async Task CloseLinkIncident(string reason, int signalId, int incidentId)
         {
             var signal = this.ctx.Signals.Find(signalId);
             if (signal.SignalStatusId < 50)
@@ -349,6 +350,13 @@ namespace FSA.SIMSManagerDb.Repositories
                     IncidentId = incidentId
                 });
                 signal.SignalStatusId = (int)SignalStatusTypes.Closed_Linked_Incident;
+
+                this.ctx.SignalNotes.Add(new Entities.SignalNoteDb
+                {
+                    HostId = signalId,
+                    Note = reason
+                });
+
                 await ctx.SaveChangesAsync();
             }
         }

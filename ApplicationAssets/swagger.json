@@ -2970,6 +2970,18 @@
         }
       }
     },
+    "IncidentSource": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
     "UnitQuantity": {
       "type": "object",
       "properties": {
@@ -3173,6 +3185,12 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/DataSource"
+          }
+        },
+        "incidentSources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/IncidentSource"
           }
         },
         "units": {
@@ -3911,6 +3929,9 @@
         "incidentId": {
           "format": "int32",
           "type": "integer"
+        },
+        "reasonNote": {
+          "type": "string"
         }
       }
     },

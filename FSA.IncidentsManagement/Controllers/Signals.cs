@@ -5,6 +5,7 @@ using FSA.IncidentsManagement.Root.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Sims.Application.Exceptions;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Linq;
@@ -139,8 +140,15 @@ namespace FSA.SignalsManagement.Controllers
         [Produces("application/json")]
         public async Task<IActionResult> CloseLinkIncident(SimsSignalCloseLinkIncident closeLink)
         {
-            await this.simsApp.Signals.CloseLinkIncident(closeLink);
-            return this.Ok();
+            try
+            {
+                await this.simsApp.Signals.CloseLinkIncident(closeLink);
+                return this.Ok();
+            }
+            catch(SIMSException ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
         [HttpPost("Sensitive")]

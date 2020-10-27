@@ -8,5 +8,6 @@ namespace FSA.IncidentsManagement.Root.DTOS
     {
         public int SignalId { get; set; }
         public int IncidentId { get; set; }
+        public string ReasonNote { get; set; }
     }
 }
