@@ -7,8 +7,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Sockets;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using System.Web;
 using List = Microsoft.SharePoint.Client.List;
 
 namespace FSA.Attachments
@@ -117,7 +119,7 @@ namespace FSA.Attachments
                         fileItem["SIMSIncidentId"] = hostIdentifier; // Custom Column
                         fileItem.Update();
                         await ctx.ExecuteQueryAsync();
-                        return (uploadedFile.Name, String.IsNullOrEmpty(uploadedFile.LinkingUrl) ?Uri.EscapeUriString( fileFields.ListItemAllFields["EncodedAbsUrl"] as string) : Uri.EscapeUriString( uploadedFile.LinkingUrl));
+                        return (uploadedFile.Name, String.IsNullOrEmpty(uploadedFile.LinkingUrl) ? Uri.EscapeUriString(fileFields.ListItemAllFields["EncodedAbsUrl"] as string) : Uri.EscapeUriString(uploadedFile.LinkingUrl));
                     }
 
                     throw new ArgumentNullException("No file has been uploaded");
@@ -341,49 +343,54 @@ namespace FSA.Attachments
             var accessToken = await fetchAccessToken();
             using (var ctx = SpContextHelper.GetClientContextWithAccessToken(this.siteUrl, accessToken))
             {
+                var hostWeb= ctx.Web;
+                var rootWeb = ctx.Site.RootWeb;
+                var site = ctx.Site;
+                ctx.Load(hostWeb);
+                ctx.Load(rootWeb);
+                ctx.Load(site);
                 // ensure we actually have a signals library
                 List signalLib = null;
                 try
                 {
-                signalLib = ctx.Web.Lists.GetByTitle(signalId);
-                ctx.Load(signalLib, a => a.RootFolder, a=>a.RootFolder.Files);
+                    signalLib = ctx.Web.Lists.GetByTitle(signalId);
+                    ctx.Load(signalLib, a => a.RootFolder, a => a.RootFolder.Files);
                     await ctx.ExecuteQueryAsync();
 
                 }
-                catch(ServerException ex)
+                catch (ServerException ex)
                 {
                     return Enumerable.Empty<SimsSignalIncidentMigratedFile>();
                 }
-                
+
                 // If we actually have no files, then we can return
-                if(signalLib.RootFolder.Files.Count==0) return Enumerable.Empty<SimsSignalIncidentMigratedFile>(); 
+                if (signalLib.RootFolder.Files.Count == 0) return Enumerable.Empty<SimsSignalIncidentMigratedFile>();
 
                 // othewise continue with the incident
                 var incidentLib = ctx.Web.Lists.GetByTitle(incidentId);
                 ctx.Load(incidentLib, a => a.RootFolder);
                 await ctx.ExecuteQueryAsync();
-                
+
                 // Get all the signal files and their names
                 var signalDictionary = new Dictionary<string, string>();
-                foreach(var file in signalLib.RootFolder.Files)
+                foreach (var file in signalLib.RootFolder.Files)
                 {
                     signalDictionary.Add(file.Name, file.ServerRelativeUrl);
                 }
 
                 // Moves the files over to incidents
-                foreach(var file in signalLib.RootFolder.Files)
+                foreach (var file in signalLib.RootFolder.Files)
                 {
-                    file.MoveTo(Path.Combine(incidentLib.RootFolder.ServerRelativeUrl, file.Name), MoveOperations.Overwrite | MoveOperations.RetainEditorAndModifiedOnMove);
-                    file.Update();
+                    file.CopyTo(Path.Combine(incidentLib.RootFolder.ServerRelativeUrl, file.Name), true);
                 }
-                
+
                 await ctx.ExecuteQueryAsync();
 
                 // Once all the files have been moved, we need to update all the files to have the incident id
-                ctx.Load(incidentLib, a => a.RootFolder,a=>a.RootFolder.Files,  a => a.RootFolder.Files.Include(o => o.ListItemAllFields));
+                ctx.Load(incidentLib, a => a.RootFolder, a => a.RootFolder.Files, a => a.RootFolder.Files.Include(o => o.ListItemAllFields));
                 await ctx.ExecuteQueryAsync();
                 var incidentDictionary = new Dictionary<string, string>();
-                foreach(var file in incidentLib.RootFolder.Files)
+                foreach (var file in incidentLib.RootFolder.Files)
                 {
                     ctx.Load(file, a => a.ListItemAllFields);
                     var fileItem = file.ListItemAllFields;
@@ -391,16 +398,22 @@ namespace FSA.Attachments
                     fileItem["SIMSIncidentId"] = incidentId;
                     fileItem.Update();
 
-                    incidentDictionary.Add(file.Name, file.ServerRelativeUrl);
+                    // Create a complete  uri
+                    Uri outUri = null;
+                    if (Uri.TryCreate(new Uri(site.Url), file.ServerRelativeUrl, out outUri))
+                    {
+                        incidentDictionary.Add(file.Name, outUri.ToString());
+                    }
                 }
 
                 await ctx.ExecuteQueryAsync();
-
+                // Values are UrlPath encoded so we don't have to futz about converting values
+                // At Rest(in db) all paths MUST be URL encoded.
                 return incidentDictionary.Select(a => new SimsSignalIncidentMigratedFile
                 {
                     SignalUrl = signalDictionary[a.Key],
-                    IncidentUrl = a.Value,
-                    FileName= a.Key
+                    IncidentUrl = HttpUtility.UrlPathEncode(a.Value),
+                    FileName = HttpUtility.UrlPathEncode(a.Key)
                 }).ToList();
             }
         }

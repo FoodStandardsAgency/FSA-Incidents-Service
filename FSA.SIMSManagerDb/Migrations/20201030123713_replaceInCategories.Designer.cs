@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FSA.SIMSManagerDb.Migrations
 {
     [DbContext(typeof(SimsDbContext))]
-    [Migration("20201026154534_incidentSourceLkUp")]
-    partial class incidentSourceLkUp
+    [Migration("20201030123713_replaceInCategories")]
+    partial class replaceInCategories
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -282,6 +282,9 @@ namespace FSA.SIMSManagerDb.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
+                    b.Property<int>("IncidentSourceId")
+                        .HasColumnType("int");
+
                     b.Property<int>("IncidentStatusId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
@@ -325,6 +328,9 @@ namespace FSA.SIMSManagerDb.Migrations
                     b.Property<int?>("NotifierId")
                         .HasColumnType("int");
 
+                    b.Property<string>("OIMTGroups")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("PrincipalFBOId")
                         .HasColumnType("int");
 
@@ -365,6 +371,8 @@ namespace FSA.SIMSManagerDb.Migrations
                     b.HasIndex("DataSourceId");
 
                     b.HasIndex("DeathIllnessId");
+
+                    b.HasIndex("IncidentSourceId");
 
                     b.HasIndex("IncidentStatusId");
 
@@ -1195,6 +1203,15 @@ namespace FSA.SIMSManagerDb.Migrations
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Title = "Telephone"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Title = "Web Form"
                         },
                         new
                         {
@@ -4149,15 +4166,6 @@ namespace FSA.SIMSManagerDb.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "Web Form"
-                        },
-                        new
-                        {
                             Id = 2,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
@@ -4190,7 +4198,7 @@ namespace FSA.SIMSManagerDb.Migrations
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "Department of Agriculture & Rural Development (DARD)"
+                            Title = "Department of Agriculture, Environment and Rural Affairs (DAERA)"
                         },
                         new
                         {
@@ -5246,259 +5254,358 @@ namespace FSA.SIMSManagerDb.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = 36,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "Adulteration"
+                            Title = "Undefined"
                         },
                         new
                         {
-                            Id = 2,
+                            Id = 37,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "allergens"
+                            Title = "ALLERGEN: Cereals containing gluten"
                         },
                         new
                         {
-                            Id = 3,
+                            Id = 38,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "biological contaminants (other)"
+                            Title = "ALLERGEN: Celery"
                         },
                         new
                         {
-                            Id = 4,
+                            Id = 39,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "chemical contamination"
+                            Title = "ALLERGEN: Crustaceans"
                         },
                         new
                         {
-                            Id = 5,
+                            Id = 40,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "composition"
+                            Title = "ALLERGEN: Eggs"
                         },
                         new
                         {
-                            Id = 6,
+                            Id = 41,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "environmental pollutants"
+                            Title = "ALLERGEN: Fish"
                         },
                         new
                         {
-                            Id = 7,
+                            Id = 42,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "feed additives"
+                            Title = "ALLERGEN: Lupin"
                         },
                         new
                         {
-                            Id = 8,
+                            Id = 43,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "food additives and flavourings"
+                            Title = "ALLERGEN: Milk"
                         },
                         new
                         {
-                            Id = 9,
+                            Id = 44,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "foreign bodies"
+                            Title = "ALLERGEN: Molluscs"
                         },
                         new
                         {
-                            Id = 10,
+                            Id = 45,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "Fraud"
+                            Title = "ALLERGEN: Mustard"
                         },
                         new
                         {
-                            Id = 11,
+                            Id = 46,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "genetically modified food or feed"
+                            Title = "ALLERGEN: Nuts"
                         },
                         new
                         {
-                            Id = 12,
+                            Id = 47,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "heavy metals"
+                            Title = "ALLERGEN: Peanuts"
                         },
                         new
                         {
-                            Id = 13,
+                            Id = 48,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "industrial contaminants"
+                            Title = "ALLERGEN: Sesame seeds"
                         },
                         new
                         {
-                            Id = 14,
+                            Id = 49,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "labelling absent/incomplete/incorrect"
+                            Title = "ALLERGEN: Soya"
                         },
                         new
                         {
-                            Id = 15,
+                            Id = 50,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "microbial contaminants (other)"
+                            Title = "ALLERGEN: Sulphur dioxide / Sulphites"
                         },
                         new
                         {
-                            Id = 16,
+                            Id = 51,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "migration"
+                            Title = "ALLERGEN: Non-regulated allergen reactions"
                         },
                         new
                         {
-                            Id = 17,
+                            Id = 53,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "mycotoxins"
+                            Title = "Biocontaminants"
                         },
                         new
                         {
-                            Id = 18,
+                            Id = 54,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "natural toxins (other)"
+                            Title = "Biotoxins (other)"
                         },
                         new
                         {
-                            Id = 19,
+                            Id = 55,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "Non-compliance"
+                            Title = "Clandestine Detection"
                         },
                         new
                         {
-                            Id = 20,
+                            Id = 56,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "not determined / other"
+                            Title = "CHEMET"
                         },
                         new
                         {
-                            Id = 21,
+                            Id = 57,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "novel food"
+                            Title = "Chemical Contamination (other)"
                         },
                         new
                         {
-                            Id = 22,
+                            Id = 58,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "organoleptic aspects"
+                            Title = "Composition"
                         },
                         new
                         {
-                            Id = 23,
+                            Id = 59,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "packaging defective / food contact material"
+                            Title = "Feed Additives"
                         },
                         new
                         {
-                            Id = 24,
+                            Id = 60,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "parasitic infestation"
+                            Title = "Food Additives & Flavourings"
                         },
                         new
                         {
-                            Id = 25,
+                            Id = 61,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "pathogenic micro-organisms"
+                            Title = "Foreign Bodies"
                         },
                         new
                         {
-                            Id = 26,
+                            Id = 62,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "pesticide residues"
+                            Title = "Heavy Metals"
                         },
                         new
                         {
-                            Id = 27,
+                            Id = 63,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "poor or insufficient controls"
+                            Title = "Industrial Contaminants"
                         },
                         new
                         {
-                            Id = 28,
+                            Id = 64,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "process contaminants"
+                            Title = "Labelling Absent / Incomplete / Incorrect"
                         },
                         new
                         {
-                            Id = 29,
+                            Id = 65,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Title = "Migration"
+                        },
+                        new
+                        {
+                            Id = 66,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Title = "Mycotoxins"
+                        },
+                        new
+                        {
+                            Id = 67,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Title = "Non-Pathogenic Micro-Organisims"
+                        },
+                        new
+                        {
+                            Id = 68,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Title = "Not Determined / Other"
+                        },
+                        new
+                        {
+                            Id = 69,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Title = "Novel Food"
+                        },
+                        new
+                        {
+                            Id = 70,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Title = "Organoleptic Aspects"
+                        },
+                        new
+                        {
+                            Id = 71,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Title = "Packaging Defective / Incorrect"
+                        },
+                        new
+                        {
+                            Id = 72,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Title = "Parasitic Infestation"
+                        },
+                        new
+                        {
+                            Id = 73,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Title = "Pathogenic Micro-Organisms"
+                        },
+                        new
+                        {
+                            Id = 74,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Title = "Pesticide Residues"
+                        },
+                        new
+                        {
+                            Id = 75,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Title = "Poor or Insufficient Controls"
+                        },
+                        new
+                        {
+                            Id = 76,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -5507,66 +5614,21 @@ namespace FSA.SIMSManagerDb.Migrations
                         },
                         new
                         {
-                            Id = 30,
+                            Id = 77,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "residues of veterinary medicinal products"
+                            Title = "Residues of Veterinary Medicinal Products"
                         },
                         new
                         {
-                            Id = 31,
+                            Id = 78,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "Supplements: Unauthorised substance"
-                        },
-                        new
-                        {
-                            Id = 32,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "TSEs"
-                        },
-                        new
-                        {
-                            Id = 33,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "Unauthorised Pesticides"
-                        },
-                        new
-                        {
-                            Id = 34,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "unclassified"
-                        },
-                        new
-                        {
-                            Id = 35,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "Use-by date exceeded"
-                        },
-                        new
-                        {
-                            Id = 36,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "Undefined"
+                            Title = "TSE's"
                         });
                 });
 
@@ -7924,6 +7986,12 @@ namespace FSA.SIMSManagerDb.Migrations
                     b.HasOne("FSA.SIMSManagerDb.Entities.Lookups.DeathIllnessDb", "DeathIllness")
                         .WithMany()
                         .HasForeignKey("DeathIllnessId");
+
+                    b.HasOne("FSA.SIMSManagerDb.Entities.Lookups.IncidentSourceDb", "IncidentSource")
+                        .WithMany()
+                        .HasForeignKey("IncidentSourceId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("FSA.SIMSManagerDb.Entities.Lookups.IncidentStatusDb", "IncidentStatus")
                         .WithMany()

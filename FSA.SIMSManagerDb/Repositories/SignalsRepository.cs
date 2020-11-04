@@ -370,6 +370,7 @@ namespace FSA.SIMSManagerDb.Repositories
             // Create
             var signal = this.ctx.Signals
                                         .Include(a => a.Notes)
+                                        .Include(a=>a.Stakeholders)
                                         .First(a => a.Id == hostId);
 
 
@@ -391,11 +392,11 @@ namespace FSA.SIMSManagerDb.Repositories
                 var notes = this.mapper.Map<List<IncidentNoteDb>>(signal.Notes);
                 // fetch the relevant lookupIds
                 var incidentType = this.ctx.HazardGroups.FirstOrDefault(a => a.Title == hazardGroup);
-                incidentType = (incidentType == null) ? this.ctx.HazardGroups.FirstOrDefault(a => a.Title == "unclassified") : incidentType;
+                incidentType = (incidentType == null) ? this.ctx.HazardGroups.FirstOrDefault(a => a.Id == 36) : incidentType;
 
                 var otherDatasource = this.ctx.DataSources.FirstOrDefault(a => a.Title == "FSA RAM Referral");
                 var productType = this.ctx.ProductTypes.First(a => a.Title == "Undefined");
-
+                var incidentSource = this.ctx.IncidentSources.First(a => a.Title == "Unknown");
                 var newIncident = new IncidentDb
                 {
                     IncidentTitle = signal.Title,
@@ -406,8 +407,10 @@ namespace FSA.SIMSManagerDb.Repositories
                     IncidentTypeId = incidentType.Id,
                     SignalUrl = signal.SourceLink,
                     LeadOfficer = "",
-                    ClassificationId = 1,
-                    ContactMethodId = 4,
+                    OIMTGroups = "",
+                    ClassificationId = 1, //Routine
+                    ContactMethodId = 4, //No Preference
+                    IncidentSourceId = incidentSource.Id,
                     IncidentCreated = DateTime.Now,
                     ReceivedOn = DateTime.Now,
                     Stakeholders = stakeholders,
@@ -417,6 +420,7 @@ namespace FSA.SIMSManagerDb.Repositories
                 signal.Notes.Add(new SignalNoteDb { Note = reason });
                 var savedIncident = ctx.Incidents.Add(newIncident);
                 signal.SignalStatusId = (int)SignalStatusTypes.Closed_Incident;
+                
                 await ctx.SaveChangesAsync();
 
                 this.ctx.SignalIncidentLinks.Add(new Entities.Signals.SignalIncidentLinkDb

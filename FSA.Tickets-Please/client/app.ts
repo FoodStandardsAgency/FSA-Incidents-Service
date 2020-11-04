@@ -37,7 +37,6 @@ let hashParams = {} as any;
 
 })();
 
-
 function getCode() {
     // get the auth code
     var clientId = (document.getElementById("clientId") as HTMLInputElement).value;

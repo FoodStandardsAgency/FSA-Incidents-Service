@@ -16,8 +16,16 @@
     <Compile Remove="Entities\IncidentProducts\xSignalProductPackSizeDb.cs" />
     <Compile Remove="Migrations\20201020114346_seedIssues.cs" />
     <Compile Remove="Migrations\20201020114346_seedIssues.Designer.cs" />
+    <Compile Remove="Migrations\20201020114520_seedIssues.cs" />
+    <Compile Remove="Migrations\20201020114520_seedIssues.Designer.cs" />
     <Compile Remove="Migrations\20201026152919_incidentSourceLkUp.cs" />
     <Compile Remove="Migrations\20201026152919_incidentSourceLkUp.Designer.cs" />
+    <Compile Remove="Migrations\20201026154534_incidentSourceLkUp.cs" />
+    <Compile Remove="Migrations\20201026154534_incidentSourceLkUp.Designer.cs" />
+    <Compile Remove="Migrations\20201027090138_incidentUpdates.cs" />
+    <Compile Remove="Migrations\20201027090138_incidentUpdates.Designer.cs" />
+    <Compile Remove="Migrations\20201027090725_Datafixes.cs" />
+    <Compile Remove="Migrations\20201027090725_Datafixes.Designer.cs" />
     <Compile Remove="Repositories\SignalsLinkedRecords.cs" />
   </ItemGroup>
 

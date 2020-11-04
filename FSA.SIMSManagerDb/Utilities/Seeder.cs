@@ -10,7 +10,7 @@ namespace FSA.SIMSManagerDb.Utilities
         public void SeedLookups(ModelBuilder modelBuilder)
         {
             AdminLeads(modelBuilder);
-            Categories(modelBuilder);
+            IncidentCategories(modelBuilder);
             Classifications(modelBuilder);
             ContactMethods(modelBuilder);
             Countries(modelBuilder);
@@ -1159,13 +1159,6 @@ namespace FSA.SIMSManagerDb.Utilities
             modelBuilder.Entity<DataSourceDb>()
                 .HasData(new DataSourceDb
                 {
-                    Id = 1,
-                    Title = "Web Form",
-                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                },
-                new DataSourceDb
-                {
                     Id = 2,
                     Title = "Administrative Assistance & Cooperation System (AAC)",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
@@ -1188,7 +1181,7 @@ namespace FSA.SIMSManagerDb.Utilities
                 new DataSourceDb
                 {
                     Id = 5,
-                    Title = "Department of Agriculture & Rural Development (DARD)",
+                    Title = "Department of Agriculture, Environment and Rural Affairs (DAERA)",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
@@ -3860,6 +3853,13 @@ namespace FSA.SIMSManagerDb.Utilities
                 },
                 new ContactMethodDb
                 {
+                    Id = 3,
+                    Title = "Web Form",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new ContactMethodDb
+                {
                     Id = 4,
                     Title = "No Preference",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
@@ -3901,260 +3901,303 @@ namespace FSA.SIMSManagerDb.Utilities
                 );
         }
 
-        private void Categories(ModelBuilder modelBuilder)
+        private void IncidentCategories(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<HazardGroupDb>()
                .HasData(new HazardGroupDb
                {
-                   Id = 1,
-                   Title = "Adulteration",
+                   Id = 36,
+                   Title = "Undefined",
+                   CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                   ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+               }, new HazardGroupDb
+               {
+                   Id = 37,
+                   Title = "ALLERGEN: Cereals containing gluten",
                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                },
                 new HazardGroupDb
                 {
-                    Id = 2,
-                    Title = "allergens",
+                    Id = 38,
+                    Title = "ALLERGEN: Celery",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new HazardGroupDb
                 {
-                    Id = 3,
-                    Title = "biological contaminants (other)",
+                    Id = 39,
+                    Title = "ALLERGEN: Crustaceans",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new HazardGroupDb
                 {
-                    Id = 4,
-                    Title = "chemical contamination",
+                    Id = 40,
+                    Title = "ALLERGEN: Eggs",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new HazardGroupDb
                 {
-                    Id = 5,
-                    Title = "composition",
+                    Id = 41,
+                    Title = "ALLERGEN: Fish",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new HazardGroupDb
                 {
-                    Id = 6,
-                    Title = "environmental pollutants",
+                    Id = 42,
+                    Title = "ALLERGEN: Lupin",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new HazardGroupDb
                 {
-                    Id = 7,
-                    Title = "feed additives",
+                    Id = 43,
+                    Title = "ALLERGEN: Milk",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new HazardGroupDb
                 {
-                    Id = 8,
-                    Title = "food additives and flavourings",
+                    Id = 44,
+                    Title = "ALLERGEN: Molluscs",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new HazardGroupDb
                 {
-                    Id = 9,
-                    Title = "foreign bodies",
+                    Id = 45,
+                    Title = "ALLERGEN: Mustard",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new HazardGroupDb
                 {
-                    Id = 10,
-                    Title = "Fraud",
+                    Id = 46,
+                    Title = "ALLERGEN: Nuts",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new HazardGroupDb
                 {
-                    Id = 11,
-                    Title = "genetically modified food or feed",
+                    Id = 47,
+                    Title = "ALLERGEN: Peanuts",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new HazardGroupDb
                 {
-                    Id = 12,
-                    Title = "heavy metals",
+                    Id = 48,
+                    Title = "ALLERGEN: Sesame seeds",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new HazardGroupDb
                 {
-                    Id = 13,
-                    Title = "industrial contaminants",
+                    Id = 49,
+                    Title = "ALLERGEN: Soya",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new HazardGroupDb
                 {
-                    Id = 14,
-                    Title = "labelling absent/incomplete/incorrect",
+                    Id = 50,
+                    Title = "ALLERGEN: Sulphur dioxide / Sulphites",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new HazardGroupDb
                 {
-                    Id = 15,
-                    Title = "microbial contaminants (other)",
+                    Id = 51,
+                    Title = "ALLERGEN: Non-regulated allergen reactions",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new HazardGroupDb
                 {
-                    Id = 16,
-                    Title = "migration",
+                    Id = 53,
+                    Title = "Biocontaminants",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new HazardGroupDb
                 {
-                    Id = 17,
-                    Title = "mycotoxins",
+                    Id = 54,
+                    Title = "Biotoxins (other)",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new HazardGroupDb
                 {
-                    Id = 18,
-                    Title = "natural toxins (other)",
+                    Id = 55,
+                    Title = "Clandestine Detection",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new HazardGroupDb
                 {
-                    Id = 19,
-                    Title = "Non-compliance",
+                    Id = 56,
+                    Title = "CHEMET",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new HazardGroupDb
                 {
-                    Id = 20,
-                    Title = "not determined / other",
+                    Id = 57,
+                    Title = "Chemical Contamination (other)",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new HazardGroupDb
                 {
-                    Id = 21,
-                    Title = "novel food",
+                    Id = 58,
+                    Title = "Composition",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new HazardGroupDb
                 {
-                    Id = 22,
-                    Title = "organoleptic aspects",
+                    Id = 59,
+                    Title = "Feed Additives",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new HazardGroupDb
                 {
-                    Id = 23,
-                    Title = "packaging defective / food contact material",
+                    Id = 60,
+                    Title = "Food Additives & Flavourings",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new HazardGroupDb
                 {
-                    Id = 24,
-                    Title = "parasitic infestation",
+                    Id = 61,
+                    Title = "Foreign Bodies",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new HazardGroupDb
                 {
-                    Id = 25,
-                    Title = "pathogenic micro-organisms",
+                    Id = 62,
+                    Title = "Heavy Metals",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new HazardGroupDb
                 {
-                    Id = 26,
-                    Title = "pesticide residues",
+                    Id = 63,
+                    Title = "Industrial Contaminants",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new HazardGroupDb
                 {
-                    Id = 27,
-                    Title = "poor or insufficient controls",
+                    Id = 64,
+                    Title = "Labelling Absent / Incomplete / Incorrect",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new HazardGroupDb
                 {
-                    Id = 28,
-                    Title = "process contaminants",
+                    Id = 65,
+                    Title = "Migration",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new HazardGroupDb
                 {
-                    Id = 29,
+                    Id = 66,
+                    Title = "Mycotoxins",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 67,
+                    Title = "Non-Pathogenic Micro-Organisims",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 68,
+                    Title = "Not Determined / Other",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 69,
+                    Title = "Novel Food",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 70,
+                    Title = "Organoleptic Aspects",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 71,
+                    Title = "Packaging Defective / Incorrect",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 72,
+                    Title = "Parasitic Infestation",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 73,
+                    Title = "Pathogenic Micro-Organisms",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 74,
+                    Title = "Pesticide Residues",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 75,
+                    Title = "Poor or Insufficient Controls",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new HazardGroupDb
+                {
+                    Id = 76,
                     Title = "Radiation",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new HazardGroupDb
                 {
-                    Id = 30,
-                    Title = "residues of veterinary medicinal products",
+                    Id = 77,
+                    Title = "Residues of Veterinary Medicinal Products",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new HazardGroupDb
                 {
-                    Id = 31,
-                    Title = "Supplements: Unauthorised substance",
-                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                },
-                new HazardGroupDb
-                {
-                    Id = 32,
-                    Title = "TSEs",
-                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                },
-                new HazardGroupDb
-                {
-                    Id = 33,
-                    Title = "Unauthorised Pesticides",
-                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                },
-                new HazardGroupDb
-                {
-                    Id = 34,
-                    Title = "unclassified",
-                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                },
-                new HazardGroupDb
-                {
-                    Id = 35,
-                    Title = "Use-by date exceeded",
-                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                }, new HazardGroupDb
-                {
-                    Id = 36,
-                    Title = "Undefined",
+                    Id = 78,
+                    Title = "TSE's",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 });
+
 
         }
 

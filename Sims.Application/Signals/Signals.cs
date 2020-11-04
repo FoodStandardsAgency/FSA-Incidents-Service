@@ -5,6 +5,7 @@ using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagement.Root.Shared;
 using FSA.SIMSManagerDb.Contracts;
 using Sims.Application.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -97,10 +98,15 @@ namespace Sims.Application
                 // Then we need to migrate any tags that have been applied.
                 var libInfo = await this.attachments.Incidents.EnsureLibrary(GeneralExtensions.GenerateIncidentId(incidentId));
                 var currentDocInfo = (await dbHost.Signals.Attachments.Get(close.SignalId)).ToHashSet();
+                // All files found, might not totally refelect whats in the signals
+                // There could be more
                 var allFileUrls = await this.attachments.Signals.MigrateToLibrary(GeneralExtensions.GenerateIncidentId(incidentId), GeneralExtensions.GenerateSignalsId(close.SignalId));
-
-                var mergedTags = allFileUrls
-                                .ToDictionary(a => a.IncidentUrl, b => currentDocInfo.First(f => f.FileName == b.FileName).Tags);
+                var mergedTags = new Dictionary<string, int>();
+                foreach(var fileItem in allFileUrls)
+                {
+                    var signal = currentDocInfo.FirstOrDefault(f => f.FileName == fileItem.FileName);
+                    mergedTags.Add(fileItem.IncidentUrl, signal != null ? signal.Tags : 0);
+                }
 
                 await this.dbHost.Incidents.Attachments.BulkAdd(incidentId, mergedTags);
 

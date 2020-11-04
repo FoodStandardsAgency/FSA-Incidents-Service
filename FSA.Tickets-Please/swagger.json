@@ -2227,6 +2227,11 @@
           "type": "integer",
           "readOnly": true
         },
+        "incidentSourceId": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
         "contactMethodId": {
           "format": "int32",
           "type": "integer",
@@ -2294,6 +2299,10 @@
           "readOnly": true
         },
         "fieldOfficer": {
+          "type": "string",
+          "readOnly": true
+        },
+        "oimtGroups": {
           "type": "string",
           "readOnly": true
         },
@@ -2406,12 +2415,19 @@
         "adminLead": {
           "type": "string",
           "readOnly": true
+        },
+        "incidentSource": {
+          "type": "string",
+          "readOnly": true
         }
       }
     },
     "IncidentUpdateModel": {
       "type": "object",
       "properties": {
+        "oimtGroups": {
+          "type": "string"
+        },
         "id": {
           "format": "int32",
           "type": "integer"
@@ -2489,9 +2505,16 @@
           "format": "int32",
           "type": "integer"
         },
+        "sensitiveInfo": {
+          "type": "boolean"
+        },
         "receivedOn": {
           "format": "date-time",
           "type": "string"
+        },
+        "incidentSourceId": {
+          "format": "int32",
+          "type": "integer"
         }
       }
     },
@@ -2517,6 +2540,11 @@
           "readOnly": true
         },
         "incidentTypeId": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "incidentSourceId": {
           "format": "int32",
           "type": "integer",
           "readOnly": true
@@ -2588,6 +2616,10 @@
           "readOnly": true
         },
         "fieldOfficer": {
+          "type": "string",
+          "readOnly": true
+        },
+        "oimtGroups": {
           "type": "string",
           "readOnly": true
         },
@@ -2718,6 +2750,16 @@
         "incidentCreated": {
           "format": "date-time",
           "type": "string"
+        },
+        "incidentSourceId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "oimtGroups": {
+          "type": "string"
+        },
+        "sensitiveInfo": {
+          "type": "boolean"
         }
       }
     },

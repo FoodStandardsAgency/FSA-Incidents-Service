@@ -13,7 +13,7 @@ namespace FSA.SIMSManagerDb.Contracts
         /// Allows registering multiple files at once.
         /// </summary>
         /// <param name="hostId"></param>
-        /// <param name="UrlTags"></param>
+        /// <param name="UrlTags">Url and value of the tags. Assumed to be url encoded if required.</param>
         /// <returns></returns>
         Task BulkAdd(int hostId, Dictionary<string, int> UrlTags);
 

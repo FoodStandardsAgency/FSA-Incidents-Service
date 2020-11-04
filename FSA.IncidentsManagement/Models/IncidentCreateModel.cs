@@ -12,14 +12,14 @@ namespace FSA.IncidentsManagement.Models
         public string IncidentDescription { get; set; }
         public int IncidentTypeId { get; set; }
         public int ContactMethodId { get; set; }
-        public int StatusId { get; set; }           // Not signal status
-        public int? SignalStatusId { get; set; }    // Not signal status
+        public int StatusId { get; set; }
+        public int? SignalStatusId { get; set; }
         public int? NotifierId { get; set; }        // organisations // 0 for Powerapps is un assigned
         public int? PrincipalFBOId { get; set; }    // Organisations // 0 for Powerapps is un assigned
         public int ClassificationId { get; set; }
         public int PriorityId { get; set; }
         public int DataSourceId { get; set; }
-        public string SignalUrl { get;  set; }
+        public string SignalUrl { get; set; }
         public int ProductTypeId { get; set; }
         public string LeadOfficer { get; set; }
         public string LeadOffice { get; set; }
@@ -31,6 +31,9 @@ namespace FSA.IncidentsManagement.Models
         //public Guid MostUniqueId { get; set; }
         public DateTime? ReceivedOn { get; set; }
         public DateTime IncidentCreated { get; set; }
+        public int IncidentSourceId { get; set; }
+        public string OIMTGroups { get; set; }
+        public bool SensitiveInfo { get; set; }
         //public DateTime? IncidentClosed { get; set; }
         //public string LastChangedBy { get; set; }
         //public DateTime LastChangedDate { get; set; }

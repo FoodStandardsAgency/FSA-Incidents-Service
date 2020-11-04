@@ -6,13 +6,13 @@ namespace FSA.IncidentsManagement.Root.Models
 {
     public class IncidentsDisplayModel : BaseIncident
     {
-        public IncidentsDisplayModel(int id, Guid mostUniqueId, string incidentTitle, int incidentTypeId, int contactMethodId, int statusId,
+        public IncidentsDisplayModel(int id, Guid mostUniqueId, string incidentTitle, int incidentTypeId, int incidentSourceId, int contactMethodId, int statusId,
                                     int? signalStatusId, int? notifierId, int? principalFBOId, int priorityId, int classificationId, int dataSourceId, string signalUrl,
-                                    int productTypeId, string leadOfficer, string leadOffice, int adminLeadId, string fieldOfficer, int? leadLocalAuthorityId,
+                                    int productTypeId, string leadOfficer, string leadOffice, int adminLeadId, string fieldOfficer, string oimtGroups, int? leadLocalAuthorityId,
                                     bool lAAdvised, int? deathIllnessId, DateTime? receivedOn, DateTime incidentCreated, DateTime? incidentClosed,
                                     string lastChangedBy, DateTime lastChangedDate, string incidentType, string signalStatus, string incidentStatus, string notifier,
-                                    string priority, string classification, string dataSource, string productType, string leadLocalAuthority, string deathIllness, string principalFBO, string fBOEmail, string fBOPhone, string fBOAddressLine1, string fBOAddressLine2, string fBOAddressTown, string fBOAddressPostcode, string adminLead, bool sensitiveInfo)
-             : base(id, mostUniqueId, incidentTitle, incidentTypeId, contactMethodId, statusId, signalStatusId, notifierId, principalFBOId, priorityId, classificationId, dataSourceId, signalUrl, productTypeId, leadOfficer, leadOffice, adminLeadId, fieldOfficer, leadLocalAuthorityId, lAAdvised, deathIllnessId, sensitiveInfo, receivedOn, incidentCreated, incidentClosed, lastChangedBy, lastChangedDate)
+                                    string priority, string classification, string dataSource, string productType, string leadLocalAuthority, string deathIllness, string principalFBO, string fBOEmail, string fBOPhone, string fBOAddressLine1, string fBOAddressLine2, string fBOAddressTown, string fBOAddressPostcode, string adminLead, string incidentSource,  bool sensitiveInfo)
+             : base(id, mostUniqueId, incidentTitle, incidentTypeId, incidentSourceId, contactMethodId, statusId, signalStatusId, notifierId, principalFBOId, priorityId, classificationId, dataSourceId, signalUrl, productTypeId, leadOfficer, leadOffice, adminLeadId, fieldOfficer, oimtGroups, leadLocalAuthorityId, lAAdvised, deathIllnessId, sensitiveInfo, receivedOn, incidentCreated, incidentClosed, lastChangedBy, lastChangedDate)
         {
             IncidentType = incidentType;
             SignalStatus = signalStatus;
@@ -32,6 +32,7 @@ namespace FSA.IncidentsManagement.Root.Models
             LeadLocalAuthority = leadLocalAuthority;
             DeathIllness = deathIllness;
             AdminLead = adminLead;
+            IncidentSource = incidentSource;
         }
 
         public string IncidentType { get; }
@@ -53,5 +54,6 @@ namespace FSA.IncidentsManagement.Root.Models
         public string LeadLocalAuthority { get; }
         public string DeathIllness { get; }
         public string AdminLead { get; }
+        public string IncidentSource { get; }
     }
 }

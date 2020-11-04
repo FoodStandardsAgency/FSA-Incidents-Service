@@ -245,6 +245,7 @@ namespace FSA.SIMSManagerDb.Repositories
                         .Include(i => i.LeadLocalAuthority) //.ThenInclude(o => o.Organisation)
                         .Include(i => i.PrincipalFBO)
                         .Include(i => i.ContactMethod)
+                        .Include(i=>i.IncidentSource)
                         .Include(i => i.IncidentStatus)
                         .SingleAsync(p => p.Id == id);
 
@@ -310,7 +311,7 @@ namespace FSA.SIMSManagerDb.Repositories
             // Find the start record
             var startRecord = (StartPage - 1) * PageSize;
             var results = await qry.OrderByDescending(i => i.IncidentStatus.SortOrder)
-                                    .ThenBy(i => i.IncidentCreated)
+                                    .ThenByDescending(i => i.IncidentCreated)
                                     .Skip(startRecord)
                                     .Take(PageSize)
                                     .Select(i => mapper.Map<IncidentDb, IncidentDashboardItem>(i)).ToListAsync();

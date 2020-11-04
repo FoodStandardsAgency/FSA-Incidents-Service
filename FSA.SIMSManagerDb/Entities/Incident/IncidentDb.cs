@@ -18,13 +18,15 @@ namespace FSA.SIMSManagerDb.Entities
         public Guid MostUniqueId { get; set; }
         public string IncidentTitle { get; set; }
 
+        public int IncidentSourceId { get; set; }
+        public IncidentSourceDb IncidentSource { get; set; }
         public int IncidentTypeId { get; set; }
         public HazardGroupDb IncidentType { get; set; }
         public int ContactMethodId { get; set; }
         public ContactMethodDb ContactMethod { get; set; }
         public int? SignalStatusId { get; set; }
         public SignalStatusDb SignalStatus { get; set; }
-        
+
         public string SignalUrl { get; set; }
 
         public int IncidentStatusId { get; set; }
@@ -45,6 +47,8 @@ namespace FSA.SIMSManagerDb.Entities
 
         public int? AdminLeadId { get; set; }
         public AdminLeadDb AdminLead { get; set; }
+
+        public string OIMTGroups { get; set; }
 
         public string LeadOfficer { get; set; }
         public string LeadOffice { get; set; }

@@ -31,6 +31,7 @@ namespace FSA.SIMSManagerDb.MapperProfile
             CreateMap<ProductTypeDb, ProductType>(MemberList.Destination);
             CreateMap<SignalStatusDb, SignalStatus>(MemberList.Destination);
             CreateMap<UnitQuantityDb, UnitQuantity>(MemberList.Destination);
+            CreateMap<IncidentSourceDb, IncidentSource>(MemberList.Destination);
             CreateMap<DocumentTagDb, AttachmentTagLkup>(MemberList.Destination);
 
             CreateMap<FBOTypeDb, FBOType>(MemberList.Destination);
@@ -50,6 +51,7 @@ namespace FSA.SIMSManagerDb.MapperProfile
                     .ForMember(o => o.From, m => m.MapFrom(a => a.FromId))
                     .ForMember(o => o.To, m => m.MapFrom(a => a.ToId));
 
+
             CreateMap<SignalStakeholderDb, SimsStakeholder>(MemberList.Destination)
                 .ForMember(a => a.DiscriminatorId, m => m.MapFrom(a => a.StakeholderDiscriminatorId))
                 .ForMember(a => a.AddressTitle, m => m.MapFrom(a => $"{(a.Address != null ? a.Address.AddressLine1 : String.Empty)} {(a.Address != null ? a.Address.PostCode : String.Empty)}"));
@@ -59,6 +61,10 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForMember(a => a.AddressTitle, m => m.MapFrom(a => $"{(a.Address != null ? a.Address.AddressLine1 : String.Empty)} {(a.Address != null ? a.Address.PostCode : String.Empty)}"));
 
             CreateMap<IncidentNoteDb, SimsNote>(MemberList.Destination);
+
+            CreateMap<SignalStakeholderDb, IncidentStakeholderDb>(MemberList.Destination)
+                .ForMember(a => a.Timestamp, m => m.Ignore())
+                .ForMember(a => a.Id, m => m.Ignore());
 
             CreateMap<SignalNoteDb, SimsNote>(MemberList.Destination);
 
@@ -97,6 +103,7 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForCtorParam("signalStatus", o => o.MapFrom(a => a.IncidentStatus.Title))
                 .ForCtorParam("incidentType", o => o.MapFrom(a => a.IncidentType.Title))
                 .ForCtorParam("incidentStatus", o => o.MapFrom(a => a.IncidentStatus.Title))
+                .ForCtorParam("incidentSource", o => o.MapFrom(a => a.IncidentSource.Title))
                 .ForCtorParam("notifier", o => o.MapFrom(a => a.NotifierId.HasValue ? a.Notifier.Title : "Unassigned"))
                 .ForCtorParam("priority", o => o.MapFrom(a => a.Priority != null ? a.Priority.Title : ""))
                 .ForCtorParam("classification", o => o.MapFrom(a => a.Classification != null ? a.Classification.Title : ""))

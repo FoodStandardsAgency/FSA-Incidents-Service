@@ -7,6 +7,8 @@ namespace FSA.IncidentsManagement.Models
 {
     public class IncidentUpdateModel
     {
+        public string OIMTGroups { get; set; }
+
         public int Id { get; set; }
         public string IncidentTitle { get; set; }
         public string IncidentDescription { get; set; }
@@ -28,8 +30,10 @@ namespace FSA.IncidentsManagement.Models
         public string FieldOfficer { get; set; }
         public bool LAAdvised { get; set; }
         public int? DeathIllnessId { get; set; }
+        public bool SensitiveInfo { get; set; }
         //public Guid MostUniqueId { get; set; }
         public DateTime? ReceivedOn { get; set; }
+        public int IncidentSourceId { get; set; }
         //public DateTime IncidentCreated { get; set; }
         //public DateTime? IncidentClosed { get; set; }
         //public string LastChangedBy { get; set; }

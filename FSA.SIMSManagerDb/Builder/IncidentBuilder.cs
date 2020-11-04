@@ -27,6 +27,10 @@ namespace FSA.SIMSManagerDb.Builders
             builder.Property(p => p.LeadOfficer).HasMaxLength(36);
             builder.Property(p => p.SignalUrl).HasMaxLength(600);
 
+
+            builder.HasOne(p => p.IncidentSource)
+                    .WithMany().OnDelete(DeleteBehavior.NoAction);
+
             builder.HasMany(p => p.FromLinks)
                    .WithOne(o => o.From)
                    .HasForeignKey(o => o.FromId).OnDelete(DeleteBehavior.NoAction);
