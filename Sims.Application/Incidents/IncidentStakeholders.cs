@@ -40,6 +40,7 @@ namespace Sims.Application
 
         public async Task<SimsStakeholder> Update(SimsStakeholder stakeHolder)
         {
+            if (stakeHolder.AddressId == 0) stakeHolder.AddressId = null;
             if (stakeHolder.DiscriminatorId == (int)SimsStakeholderAddressTypes.FSA && stakeHolder.AddressId > 0)
                 throw new SIMSException("FSA Member cannot have an address assigned");
             if (stakeHolder.Id == 0) throw new SimsItemMissing("Stakeholder id missing");

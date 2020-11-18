@@ -54,7 +54,7 @@ namespace SIMS.TestProjects.Setup
         {
                  new BaseIncident(
                    incidentTitle: "New Incident",
-                   incidentTypeId: 1,
+                   incidentTypeId: 36,
                    incidentSourceId:8,
                    contactMethodId: 2,
                    statusId: (int)SimsIncidentStatusTypes.Unassigned,
@@ -81,7 +81,7 @@ namespace SIMS.TestProjects.Setup
 
                 new BaseIncident(
                    incidentTitle: "Mislabelled ingredients omit peanuts",
-                   incidentTypeId: 1,
+                   incidentTypeId: 72,
                    contactMethodId: 4,
                    incidentSourceId:8,
                    statusId: (int)SimsIncidentStatusTypes.Open,
@@ -107,7 +107,7 @@ namespace SIMS.TestProjects.Setup
 
                 new BaseIncident(
                    incidentTitle: "Salmonella poisoning cases at local GP",
-                   incidentTypeId: 1,
+                   incidentTypeId: 55,
                    contactMethodId: 1,
                    incidentSourceId: 8,
                    statusId: (int)SimsIncidentStatusTypes.Open,
@@ -133,7 +133,7 @@ namespace SIMS.TestProjects.Setup
 
                 new BaseIncident(
                    incidentTitle: "Chinese Restaurant takeaway pinpointed as likely source for salmonella poisoning (unverified)",
-                   incidentTypeId: 1,
+                   incidentTypeId: 77,
                    contactMethodId: 2,
                    statusId: (int)SimsIncidentStatusTypes.Open,
                    priorityId: 1,
@@ -172,7 +172,7 @@ namespace SIMS.TestProjects.Setup
                 ProductTypeId =8,
                 BatchCodes = "bb1, bb2, bb3",
                 AdditionalInfo = "Some more info",
-                PackSizes = new List<SimsProductPackSize> { new SimsProductPackSize { Size = "12", UnitId = 9 } },
+                PackSizes = new List<SimsProductPackSize> { new SimsProductPackSize { Size = "12", UnitId = 24} },
                 ProductDates = new List<SimsProductDate> { new SimsProductDate { DateTypeId = 1, Date = DateTime.Now } }
             },
             new SimsProduct
@@ -180,7 +180,7 @@ namespace SIMS.TestProjects.Setup
                 Name = "Sticky biscuits",
                 Brand = "McBiscuits",
                 Amount = "8",
-                AmountUnitTypeId = 4,
+                AmountUnitTypeId = 8,
                 PackDescription = "mmmm sticky biscuits",
                 HostId = 17,
                 CountryOfOriginId = 47,
@@ -188,7 +188,7 @@ namespace SIMS.TestProjects.Setup
                 ProductTypeId =12,
                 //DataSourceId = 2,
                 AdditionalInfo = "Some more info",
-                PackSizes = new List<SimsProductPackSize> { new SimsProductPackSize { Size = "1", UnitId = 14 } },
+                PackSizes = new List<SimsProductPackSize> { new SimsProductPackSize { Size = "1", UnitId = 23 } },
                 ProductDates = new List<SimsProductDate> { new SimsProductDate { DateTypeId = 1, Date = DateTime.Now } }
             },
             new SimsProduct
@@ -203,7 +203,9 @@ namespace SIMS.TestProjects.Setup
                 CountryOfOriginId = 28,
                 BatchCodes = "cbasdasd-1212, cb-2332423324-1231212",
                 AdditionalInfo = "eomthing",
-                PackSizes = new List<SimsProductPackSize> { new SimsProductPackSize { Size = "12", UnitId = 7 },new SimsProductPackSize { Size = "8", UnitId = 19 },new SimsProductPackSize { Size = "0.1", UnitId = 5 } },
+                PackSizes = new List<SimsProductPackSize> { new SimsProductPackSize { Size = "12", UnitId = 21 },
+                    new SimsProductPackSize { Size = "8", UnitId = 19 },
+                                new SimsProductPackSize { Size = "0.1", UnitId = 22 } },
                 ProductDates = new List<SimsProductDate> {
                         new SimsProductDate { DateTypeId = 1, Date = DateTime.Now }
                         ,new SimsProductDate { DateTypeId = 2, Date = DateTime.Now }
@@ -215,14 +217,16 @@ namespace SIMS.TestProjects.Setup
                 Name = "Blue ham",
                 Brand = "Ham man",
                 Amount = "47",
-                AmountUnitTypeId = 2,
+                AmountUnitTypeId = 9,
                 PackDescription = "Long john ham gone",
                 HostId = 23,
                 ProductTypeId =10,
                 CountryOfOriginId = 18,
                 BatchCodes = "Code 01, ode02",
                 AdditionalInfo = "",
-                PackSizes = new List<SimsProductPackSize> { new SimsProductPackSize { Size = "12", UnitId = 7 },new SimsProductPackSize { Size = "8", UnitId = 19 },new SimsProductPackSize { Size = "0.1", UnitId = 5 } },
+                PackSizes = new List<SimsProductPackSize> { new SimsProductPackSize { Size = "12", UnitId = 11 },
+                    new SimsProductPackSize { Size = "8", UnitId = 19 },
+                    new SimsProductPackSize { Size = "0.1", UnitId = 20 } },
                 ProductDates = new List<SimsProductDate> {
                         new SimsProductDate { DateTypeId = 1, Date = DateTime.Now }
                         ,new SimsProductDate { DateTypeId = 2, Date = DateTime.Now }

@@ -39,12 +39,13 @@ namespace Sims.Application
             return this.dbHost.Signals.Stakeholders.Remove(stakeholderId);
         }
 
-        public async Task<SimsStakeholder> Update(SimsStakeholder SimsStakeholder)
+        public async Task<SimsStakeholder> Update(SimsStakeholder stakeHolder)
         {
-            if (SimsStakeholder.HostId == 0) throw new SimsSignalMissingException("Signal id missing");
-            if (await dbHost.Signals.IsClosed(SimsStakeholder.HostId)) throw new SimsSignalClosedException("Signal closed.");
-            if (SimsStakeholder.Id == 0) throw new SimsItemMissing("Stakeholder id missing");
-            return await this.dbHost.Signals.Stakeholders.Update(SimsStakeholder);
+            if (stakeHolder.AddressId == 0) stakeHolder.AddressId = null;
+            if (stakeHolder.HostId == 0) throw new SimsSignalMissingException("Signal id missing");
+            if (await dbHost.Signals.IsClosed(stakeHolder.HostId)) throw new SimsSignalClosedException("Signal closed.");
+            if (stakeHolder.Id == 0) throw new SimsItemMissing("Stakeholder id missing");
+            return await this.dbHost.Signals.Stakeholders.Update(stakeHolder);
         }
     }
 }

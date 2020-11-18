@@ -26,6 +26,10 @@
     <Compile Remove="Migrations\20201027090138_incidentUpdates.Designer.cs" />
     <Compile Remove="Migrations\20201027090725_Datafixes.cs" />
     <Compile Remove="Migrations\20201027090725_Datafixes.Designer.cs" />
+    <Compile Remove="Migrations\20201104140750_0411_units.cs" />
+    <Compile Remove="Migrations\20201104140750_0411_units.Designer.cs" />
+    <Compile Remove="Migrations\20201104141147_0411_signalCloseReasons.cs" />
+    <Compile Remove="Migrations\20201104141147_0411_signalCloseReasons.Designer.cs" />
     <Compile Remove="Repositories\SignalsLinkedRecords.cs" />
   </ItemGroup>
 

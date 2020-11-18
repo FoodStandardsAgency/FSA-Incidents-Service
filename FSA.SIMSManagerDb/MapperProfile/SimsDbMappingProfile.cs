@@ -54,11 +54,11 @@ namespace FSA.SIMSManagerDb.MapperProfile
 
             CreateMap<SignalStakeholderDb, SimsStakeholder>(MemberList.Destination)
                 .ForMember(a => a.DiscriminatorId, m => m.MapFrom(a => a.StakeholderDiscriminatorId))
-                .ForMember(a => a.AddressTitle, m => m.MapFrom(a => $"{(a.Address != null ? a.Address.AddressLine1 : String.Empty)} {(a.Address != null ? a.Address.PostCode : String.Empty)}"));
+                .ForMember(a => a.AddressTitle, m => m.MapFrom(a => $"{(a.Address != null ? a.Address.Title : String.Empty)}"));
 
             CreateMap<IncidentStakeholderDb, SimsStakeholder>(MemberList.Destination)
                 .ForMember(a => a.DiscriminatorId, m => m.MapFrom(a => a.StakeholderDiscriminatorId))
-                .ForMember(a => a.AddressTitle, m => m.MapFrom(a => $"{(a.Address != null ? a.Address.AddressLine1 : String.Empty)} {(a.Address != null ? a.Address.PostCode : String.Empty)}"));
+                .ForMember(a => a.AddressTitle, m => m.MapFrom(a => $"{(a.Address != null ? a.Address.Title : String.Empty)}"));
 
             CreateMap<IncidentNoteDb, SimsNote>(MemberList.Destination);
 
@@ -73,7 +73,7 @@ namespace FSA.SIMSManagerDb.MapperProfile
             CreateMap<AddressDb, SimsAddress>(MemberList.Destination);
 
             CreateMap<SimsAddressContact, AddressContactDb>(MemberList.Source);
-            CreateMap<AddressContactDb, IncidentsManagement.Root.DTOS.SimsAddressContact>(MemberList.Destination);
+            CreateMap<AddressContactDb, SimsAddressContact>(MemberList.Destination);
 
             CreateMap<SimsStakeholder, IncidentStakeholderDb>(MemberList.Source)
                 .ForMember(a => a.StakeholderDiscriminatorId, m => m.MapFrom(a => a.DiscriminatorId));

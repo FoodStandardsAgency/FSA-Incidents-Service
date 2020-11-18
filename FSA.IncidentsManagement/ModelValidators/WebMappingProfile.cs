@@ -15,10 +15,10 @@ namespace FSA.IncidentsManagement.ModelValidators
         public WebMappingProfile()
         {
             CreateMap<SimsAddressViewModel, SimsAddress>()
-                .ForMember(a => a.Contacts, a => a.MapFrom(B => string.IsNullOrEmpty(B.MainContact)
+                .ForMember(a => a.Contacts, a => a.MapFrom(B => string.IsNullOrEmpty(B.MainContact) && string.IsNullOrEmpty(B.EmailAddress)
                                                                 ? new List<SimsAddressContact>()
                                                                 : new List<SimsAddressContact>
-                                                                { new SimsAddressContact{ AddressId= B.Id, EmailAddress=B.EmailAddress, IsMain = true, Name=B.MainContact, TelephoneNumber = B.TelephoneNumber } }));
+                                                                { new SimsAddressContact{ AddressId= B.Id, EmailAddress=B.EmailAddress, IsMain = true, Name= string.IsNullOrEmpty(B.MainContact)? "No Contact" : B.MainContact , TelephoneNumber = B.TelephoneNumber } }));
             CreateMap<SimsAddress, SimsAddressViewModel>()
                  .ForMember(o => o.MainContact, a => a.MapFrom(sa => sa.Contacts.Count() > 0 ? sa.Contacts.First().Name : ""))
                  .ForMember(o => o.EmailAddress, a => a.MapFrom(sa => sa.Contacts.Count() > 0 ? sa.Contacts.First().EmailAddress : ""));

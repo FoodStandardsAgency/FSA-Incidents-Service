@@ -214,7 +214,13 @@ namespace FSA.SIMSManagerDb.Utilities
               }, new CloseSignalReasonDb
               {
                   Id = 5,
-                  Title = "Not Enough Information for  Follow-Up",
+                  Title = "Not Enough Information for Follow-Up",
+                  CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                  ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+              }, new CloseSignalReasonDb
+              {
+                  Id = 6,
+                  Title = "Not a food or feed safety issue",
                   CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                   ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
               });
@@ -292,127 +298,69 @@ namespace FSA.SIMSManagerDb.Utilities
                 },
                 new UnitQuantityDb
                 {
-                    Id = 2,
-                    Title = "µg/kg",
-                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                },
-                new UnitQuantityDb
-                {
-                    Id = 3,
-                    Title = "µSv",
-                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                },
-                new UnitQuantityDb
-                {
-                    Id = 4,
-                    Title = "Bq/Kg",
-                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                },
-                new UnitQuantityDb
-                {
-                    Id = 5,
-                    Title = "Bq/l",
-                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                },
-                new UnitQuantityDb
-                {
-                    Id = 6,
-                    Title = "Bq/M2",
-                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                },
-                new UnitQuantityDb
-                {
-                    Id = 7,
-                    Title = "Bq/M3",
-                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                },
-                new UnitQuantityDb
-                {
                     Id = 8,
-                    Title = "Gallons",
+                    Title = "Gallons (gal)",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new UnitQuantityDb
                 {
                     Id = 9,
-                    Title = "Grams",
+                    Title = "Grams (g)",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new UnitQuantityDb
                 {
                     Id = 10,
-                    Title = "kg",
+                    Title = "Kilograms (kg)",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new UnitQuantityDb
                 {
                     Id = 11,
-                    Title = "Litres",
-                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                },
-                new UnitQuantityDb
-                {
-                    Id = 12,
-                    Title = "mg/kg",
-                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                },
-                new UnitQuantityDb
-                {
-                    Id = 13,
-                    Title = "mg/litre",
-                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                },
-                new UnitQuantityDb
-                {
-                    Id = 14,
-                    Title = "mSv",
-                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                },
-                new UnitQuantityDb
-                {
-                    Id = 15,
-                    Title = "nSv",
-                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                },
-                new UnitQuantityDb
-                {
-                    Id = 16,
-                    Title = "ppb",
-                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                },
-                new UnitQuantityDb
-                {
-                    Id = 17,
-                    Title = "ppm",
-                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                },
-                new UnitQuantityDb
-                {
-                    Id = 18,
-                    Title = "ppt",
+                    Title = "Litres (l)",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new UnitQuantityDb
                 {
                     Id = 19,
-                    Title = "tonnes",
+                    Title = "Tonnes (t)",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                }, new UnitQuantityDb
+                {
+                    Id = 20,
+                    Title = "Millilitres (ml)",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                }, new UnitQuantityDb
+                {
+                    Id = 21,
+                    Title = "Ounces (oz)",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 22,
+                    Title = "Pints (pt)",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 23,
+                    Title = "Pounds (lb)",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new UnitQuantityDb
+                {
+                    Id = 24,
+                    Title = "Units",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 });
@@ -4377,14 +4325,14 @@ namespace FSA.SIMSManagerDb.Utilities
                 new StakeholderIncidentRoleDb
                 {
                     Id = 16,
-                    Title = "Incident Lead?",
+                    Title = "Incident Lead",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },
                 new StakeholderIncidentRoleDb
                 {
                     Id = 17,
-                    Title = "Incident Support?",
+                    Title = "Incident Support",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 },

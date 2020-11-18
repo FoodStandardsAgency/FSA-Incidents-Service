@@ -4,14 +4,16 @@ using FSA.SIMSManagerDb;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FSA.SIMSManagerDb.Migrations
 {
     [DbContext(typeof(SimsDbContext))]
-    partial class SimsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201111120226_0411")]
+    partial class _0411
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
