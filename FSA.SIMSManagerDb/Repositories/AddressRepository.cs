@@ -92,7 +92,7 @@ namespace FSA.SIMSManagerDb.Repositories
                                 || EF.Functions.Like(o.PostCode, $"%{search}%")
                                 || o.Contacts.Any(ac => EF.Functions.Like(ac.Name, $"%{search}")));
 
-            return await qryAddr.Select(o => mapper.Map<AddressDb, SimsAddress>(o)).OrderBy(a=>a.Title).ToListAsync();
+            return (await qryAddr.Select(o => mapper.Map<AddressDb, SimsAddress>(o)).ToListAsync()).OrderBy(a => a.Title);
         }
     }
 }
