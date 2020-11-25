@@ -22,6 +22,7 @@ namespace FSA.SIMSManagerDb.Repositories
             this.Audit = new UserAuditLoggerRepository(ctx);
             this.Addresses = new AddressRepository(ctx, mapper);
             this.Lookups = new LookupHost(ctx, mapper);
+            this.OnlineForms = new OnlineFormRepository(ctx, mapper);
         }
 
         public IDbIncidentsRepository Incidents { get; }
@@ -29,6 +30,7 @@ namespace FSA.SIMSManagerDb.Repositories
         public IDbUserAudit Audit { get; }
         public IDbLookups Lookups { get; set; }
         public IDbAddressRepository Addresses { get; }
+        public IDbOnlineFormRepository OnlineForms { get; }
 
         public static ISimsDbHost CreateHost(SimsDbContext ctx, IMapper mapper, string userId)
         {

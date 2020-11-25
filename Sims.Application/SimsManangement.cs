@@ -21,6 +21,8 @@ namespace Sims.Application
 
         public ISIMSSignals Signals => new Signals(this.SimsDbHost, attachments);
 
+        public ISIMSOnlineForms OnlineForms => new OnlineForms(this.SimsDbHost);
+
         public ISIMSLookups Lookups => new Lookups(this.SimsDbHost);
 
         public ISIMSAddress Addresses => new AddressManagment(this.SimsDbHost);

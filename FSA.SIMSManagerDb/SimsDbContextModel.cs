@@ -42,6 +42,18 @@ namespace FSA.SIMSManagerDb
 
         #endregion
 
+        #region OnlineForm
+        internal DbSet<OnlineFormDb> OnlineForms { get; set; }
+        internal DbSet<OnlineFormNoteDb> OnlineFormNotes{ get; set; }
+        internal DbSet<OnlineFormStakeholderDb> OnlineFormStakeholders { get; set; }
+
+        internal DbSet<OnlineFormProductDb> OnlineFormProducts { get; set; }
+        internal DbSet<OnlineFormProductDateDb> OnlineFormProductDates { get; set; }
+        internal DbSet<OnlineFormProductFboDb> OnlineFormProductFbos { get; set; }
+        internal DbSet<OnlineFormProductPackSizeDb> OnlineFormProductPackSizes { get; set; }
+        #endregion
+
+
         internal DbSet<AddressDb> Addresses { get; set; }
         internal DbSet<AddressContactDb> AddressContacts { get; set; }
         internal DbSet<NotifierTypeDb> NotifierTypes { get; set; }
@@ -94,6 +106,15 @@ namespace FSA.SIMSManagerDb
             modelBuilder.ApplyConfiguration(new AttachmentBuilder<SignalAttachmentDb>(nameof(this.SignalAttachments), "SignalId"));
             modelBuilder.ApplyConfiguration(new StakeholderBuilder<SignalStakeholderDb>("SignalId"));
             modelBuilder.ApplyConfiguration(new NotesBuilder<SignalNoteDb>(nameof(this.SignalNotes), "SignalId"));
+
+            modelBuilder.ApplyConfiguration(new OnlineFormBuilder());
+            modelBuilder.ApplyConfiguration(new StakeholderBuilder<OnlineFormStakeholderDb>("OnlineFormId"));
+            modelBuilder.ApplyConfiguration(new NotesBuilder<OnlineFormNoteDb>(nameof(this.OnlineFormNotes), "OnlineFormId"));
+
+            modelBuilder.ApplyConfiguration(new OnlineFormProductBuilder());
+            modelBuilder.ApplyConfiguration(new ProductPackSizeBuilder<OnlineFormProductPackSizeDb>(nameof(this.OnlineFormProductPackSizes), "OnlineFormId"));
+            modelBuilder.ApplyConfiguration(new ProductDateBuilder<OnlineFormProductDateDb>(nameof(this.OnlineFormProductDates), "OnlineFormId"));
+            modelBuilder.ApplyConfiguration(new ProductFboBuilder<OnlineFormProductFboDb>(nameof(this.OnlineFormProductFbos)));
 
             modelBuilder.ApplyConfiguration(new SignalProductBuilder());
             modelBuilder.ApplyConfiguration(new ProductPackSizeBuilder<SignalProductPackSizeDb>(nameof(this.SignalProductPackSizes), "SignalId"));

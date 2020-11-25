@@ -45,7 +45,7 @@ namespace FSA.SIMSManagerDb.Repositories
             // Cannot add an FSA member with an address, this is an application error.
             //if (stakeholder.AddressId.HasValue && stakeholder.DiscriminatorId == (int)StakeholderTypes.FSA)
             //throw new SIMSException("FSA Stakeholder must not have an address");
-            
+            stakeholder.HostId = hostId;
             var toDb = mapper.Map<SimsStakeholder, T>(stakeholder);
             var dbItem = this.DbSet.Add(toDb);
 

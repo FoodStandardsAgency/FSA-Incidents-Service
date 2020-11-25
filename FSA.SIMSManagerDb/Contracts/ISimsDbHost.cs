@@ -6,6 +6,7 @@
         IDbIncidentsRepository Incidents { get; }
         IDbLookups Lookups { get; }
         IDbSignalsRepository Signals { get; }
+        IDbOnlineFormRepository OnlineForms { get; }
         IDbUserAudit Audit { get; }
     }
 }

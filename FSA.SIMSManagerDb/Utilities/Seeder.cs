@@ -1,7 +1,5 @@
 ﻿using FSA.SIMSManagerDb.Entities.Lookups;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using System;
 
 namespace FSA.SIMSManagerDb.Utilities
 {

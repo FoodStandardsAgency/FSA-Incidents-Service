@@ -60,15 +60,23 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForMember(a => a.DiscriminatorId, m => m.MapFrom(a => a.StakeholderDiscriminatorId))
                 .ForMember(a => a.AddressTitle, m => m.MapFrom(a => $"{(a.Address != null ? a.Address.Title : String.Empty)}"));
 
-            CreateMap<IncidentNoteDb, SimsNote>(MemberList.Destination);
+            CreateMap<OnlineFormStakeholderDb, SimsStakeholder>(MemberList.Destination)
+                .ForMember(a => a.DiscriminatorId, m => m.MapFrom(a => a.StakeholderDiscriminatorId))
+               .ForMember(a => a.AddressTitle, m => m.MapFrom(a => $"{(a.Address != null ? a.Address.Title : String.Empty)}"));
+
 
             CreateMap<SignalStakeholderDb, IncidentStakeholderDb>(MemberList.Destination)
                 .ForMember(a => a.Timestamp, m => m.Ignore())
                 .ForMember(a => a.Id, m => m.Ignore());
 
-            CreateMap<SignalNoteDb, SimsNote>(MemberList.Destination);
+            CreateMap<OnlineFormStakeholderDb, IncidentStakeholderDb>(MemberList.Destination)
+                .ForMember(a => a.Timestamp, m => m.Ignore())
+                .ForMember(a => a.Id, m => m.Ignore());
 
-            CreateMap<SimsAddress, AddressDb>(MemberList.Source);
+            CreateMap<IncidentNoteDb, SimsNote>(MemberList.Destination);
+            CreateMap<SignalNoteDb, SimsNote>(MemberList.Destination);
+            CreateMap<OnlineFormNoteDb, SimsNote>(MemberList.Destination);
+
             CreateMap<SimsAddress, AddressDb>(MemberList.Source);
             CreateMap<AddressDb, SimsAddress>(MemberList.Destination);
 
@@ -78,8 +86,10 @@ namespace FSA.SIMSManagerDb.MapperProfile
             CreateMap<SimsStakeholder, IncidentStakeholderDb>(MemberList.Source)
                 .ForMember(a => a.StakeholderDiscriminatorId, m => m.MapFrom(a => a.DiscriminatorId));
 
-
             CreateMap<SimsStakeholder, SignalStakeholderDb>(MemberList.Source)
+                .ForMember(a => a.StakeholderDiscriminatorId, m => m.MapFrom(a => a.DiscriminatorId));
+
+            CreateMap<SimsStakeholder, OnlineFormStakeholderDb>(MemberList.Source)
                 .ForMember(a => a.StakeholderDiscriminatorId, m => m.MapFrom(a => a.DiscriminatorId));
 
             CreateMap<IncidentAttachmentDb, SimsAttachmentFileInfo>(MemberList.Destination)
@@ -125,25 +135,34 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForMember(a => a.SPTId, m => m.Ignore())
                 .ForMember(a => a.PublishedDate, m => m.Ignore())
                 .ForMember(a => a.InsertedDate, m => m.Ignore())
-                .ForMember(a=>a.SourceLink, m=>m.Ignore())
+                .ForMember(a => a.SourceLink, m => m.Ignore())
                 .ForSourceMember(a => a.LastUpdated, m => m.DoNotValidate());
+
+            CreateMap<SimsOnlineForm, OnlineFormDb>(MemberList.Source)
+                 .ForMember(a => a.Id, m => m.MapFrom(a => a.CommonId));
+
 
             CreateMap<SignalDb, SimsSignal>(MemberList.Destination)
                 .ForMember(a => a.CommonId, m => m.MapFrom(a => a.Id))
                 .ForMember(a => a.SignalStatusId, m => m.MapFrom(o => o.SignalStatusId))
                 .ForMember(a => a.LastUpdated, m => m.MapFrom(a => a.Modified));
 
-
             CreateMap<IncidentDb, BaseIncident>(MemberList.Source)
                 .ForCtorParam("statusId", o => o.MapFrom(a => a.IncidentStatusId))
                 .ForCtorParam("lastChangedBy", o => o.MapFrom(a => a.ModifiedBy))
                 .ForCtorParam("lastChangedDate", o => o.MapFrom(a => a.Modified));
+
+
 
             CreateMap<BaseIncident, IncidentDb>(MemberList.Source)
                 .IgnoreAuditData()
                 .ForMember(a => a.MostUniqueId, a => a.Ignore())
                 .ForMember(a => a.Id, m => m.MapFrom(a => a.CommonId))
                 .ForMember(a => a.IncidentStatusId, m => m.MapFrom(a => a.StatusId));
+
+            CreateMap<OnlineFormDb, SimsOnlineForm>(MemberList.Source)
+                .ForMember(a => a.CommonId, m => m.MapFrom(a => a.Id));
+
 
             CreateMap<IncidentDb, IncidentDashboardItem>()
                 .ForMember(a => a.Title, m => m.MapFrom(b => b.IncidentTitle))
@@ -175,6 +194,14 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForMember(a => a.LastUpdated, m => m.MapFrom(a => a.Modified))
                 .ForMember(a => a.LastUpdatedBy, m => m.MapFrom(a => a.ModifiedBy));
 
+
+            CreateMap<OnlineFormProductDb, SimsProduct>(MemberList.Destination)
+                .ForMember(a => a.AdditionalInfo, m => m.MapFrom(a => String.IsNullOrEmpty(a.AdditionalInfo) ? "" : a.AdditionalInfo))
+                .ForMember(a => a.Added, m => m.MapFrom(a => a.Created))
+                .ForMember(a => a.LastUpdated, m => m.MapFrom(a => a.Modified))
+                .ForMember(a => a.LastUpdatedBy, m => m.MapFrom(a => a.ModifiedBy));
+
+
             CreateMap<SimsProduct, IncidentProductDb>(MemberList.Source)
                 .ForMember(a => a.AdditionalInfo, m => m.MapFrom(a => String.IsNullOrEmpty(a.AdditionalInfo) ? "" : a.AdditionalInfo))
                 .IgnoreAuditData();
@@ -183,6 +210,9 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForMember(a => a.AdditionalInfo, m => m.MapFrom(a => String.IsNullOrEmpty(a.AdditionalInfo) ? "" : a.AdditionalInfo))
                 .IgnoreAuditData();
 
+            CreateMap<SimsProduct, OnlineFormProductDb>(MemberList.Source)
+                .ForMember(a => a.AdditionalInfo, m => m.MapFrom(a => String.IsNullOrEmpty(a.AdditionalInfo) ? "" : a.AdditionalInfo))
+                .IgnoreAuditData();
 
             CreateMap<SignalProductDb, IncidentProductDb>(MemberList.Source)
                   .IgnoreAuditData()
@@ -193,7 +223,21 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForMember(a => a.AmountUnitType, m => m.Ignore())
                 .ForMember(a => a.HostId, m => m.Ignore());
 
+            CreateMap<OnlineFormProductDb, IncidentProductDb>(MemberList.Source)
+                      .IgnoreAuditData()
+                    .ForMember(a => a.Id, m => m.Ignore())
+                    .ForMember(a => a.Host, m => m.Ignore())
+                    .ForMember(a => a.ProductType, m => m.Ignore())
+                    .ForMember(a => a.CountryOfOrigin, m => m.Ignore())
+                    .ForMember(a => a.AmountUnitType, m => m.Ignore())
+                    .ForMember(a => a.HostId, m => m.Ignore());
+
             CreateMap<SignalProductFboDb, IncidentProductFboDb>(MemberList.Source)
+                  .IgnoreAuditData()
+                  .ForMember(a => a.Product, m => m.Ignore())
+                  .ForMember(a => a.ProductId, m => m.Ignore());
+
+            CreateMap<OnlineFormProductFboDb, IncidentProductFboDb>(MemberList.Source)
                   .IgnoreAuditData()
                   .ForMember(a => a.Product, m => m.Ignore())
                   .ForMember(a => a.ProductId, m => m.Ignore());
@@ -205,13 +249,32 @@ namespace FSA.SIMSManagerDb.MapperProfile
                  .ForMember(a => a.Unit, m => m.Ignore())
                 .ForMember(a => a.ProductId, m => m.Ignore());
 
+            CreateMap<OnlineFormProductPackSizeDb, IncidentProductPackSizeDb>(MemberList.Source)
+                    .IgnoreAuditData()
+                    .ForMember(a => a.Id, m => m.Ignore())
+                     .ForMember(a => a.Product, m => m.Ignore())
+                     .ForMember(a => a.Unit, m => m.Ignore())
+                    .ForMember(a => a.ProductId, m => m.Ignore());
+
             CreateMap<SignalProductDateDb, IncidentProductDateDb>(MemberList.Source)
                 .IgnoreAuditData()
                 .ForMember(a => a.Id, m => m.Ignore())
                 .ForMember(a => a.Product, m => m.Ignore())
                 .ForMember(a => a.ProductId, m => m.Ignore());
 
+            CreateMap<OnlineFormProductDateDb, IncidentProductDateDb>(MemberList.Source)
+                    .IgnoreAuditData()
+                    .ForMember(a => a.Id, m => m.Ignore())
+                    .ForMember(a => a.Product, m => m.Ignore())
+                    .ForMember(a => a.ProductId, m => m.Ignore());
+
+
             CreateMap<SignalNoteDb, IncidentNoteDb>(MemberList.Source)
+                .IgnoreAuditData()
+                .ForMember(a => a.Id, m => m.Ignore())
+                .ForMember(a => a.HostId, m => m.Ignore());
+            
+            CreateMap<OnlineFormNoteDb, IncidentNoteDb>(MemberList.Source)
                 .IgnoreAuditData()
                 .ForMember(a => a.Id, m => m.Ignore())
                 .ForMember(a => a.HostId, m => m.Ignore());
@@ -219,23 +282,34 @@ namespace FSA.SIMSManagerDb.MapperProfile
             CreateMap<SimsProductPackSize, IncidentProductPackSizeDb>(MemberList.Source)
                     .EqualityComparison((dto, o) => dto.Id == o.Id)
                     .IgnoreAuditData();
+
             CreateMap<SimsProductPackSize, SignalProductPackSizeDb>(MemberList.Source)
+                    .EqualityComparison((dto, o) => dto.Id == o.Id)
+                    .IgnoreAuditData();
+
+            CreateMap<SimsProductPackSize, OnlineFormProductPackSizeDb>(MemberList.Source)
                     .EqualityComparison((dto, o) => dto.Id == o.Id)
                     .IgnoreAuditData();
 
             CreateMap<IncidentProductPackSizeDb, SimsProductPackSize>(MemberList.Destination);
             CreateMap<SignalProductPackSizeDb, SimsProductPackSize>(MemberList.Destination);
+            CreateMap<OnlineFormProductPackSizeDb, SimsProductPackSize>(MemberList.Destination);
 
             CreateMap<SimsProductDate, IncidentProductDateDb>(MemberList.Source)
                 .EqualityComparison((dto, o) => dto.Id == o.Id)
                 .IgnoreAuditData();
-            //.IgnoreAuditData();
+
             CreateMap<SimsProductDate, SignalProductDateDb>(MemberList.Source)
+                .EqualityComparison((dto, o) => dto.Id == o.Id)
+                .IgnoreAuditData();
+
+            CreateMap<SimsProductDate, OnlineFormProductDateDb>(MemberList.Source)
                 .EqualityComparison((dto, o) => dto.Id == o.Id)
                 .IgnoreAuditData();
 
             CreateMap<IncidentProductDateDb, SimsProductDate>(MemberList.Destination);
             CreateMap<SignalProductDateDb, SimsProductDate>(MemberList.Destination);
+            CreateMap<OnlineFormProductDateDb, SimsProductDate>(MemberList.Destination);
 
             CreateMap<IncidentProductDb, SimsProductDisplayModel>(MemberList.Destination)
                 .ForMember(a => a.DataSourceId, m => m.Ignore())
@@ -251,8 +325,18 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForMember(a => a.LastUpdatedBy, m => m.MapFrom(a => a.ModifiedBy))
                 .ForMember(a => a.Added, m => m.MapFrom(a => a.Created));
 
+
+            CreateMap<OnlineFormProductDb, SimsProductDisplayModel>(MemberList.Destination)
+                .ForMember(a => a.DataSourceId, m => m.Ignore())
+                .ForMember(a => a.SignalUrl, m => m.Ignore())
+                .ForMember(a => a.LastUpdated, m => m.MapFrom(a => a.Modified))
+                .ForMember(a => a.LastUpdatedBy, m => m.MapFrom(a => a.ModifiedBy))
+                .ForMember(a => a.Added, m => m.MapFrom(a => a.Created));
+
+
             CreateMap<IncidentProductDb, SimsProductDetail>(MemberList.Destination);
             CreateMap<SignalProductDb, SimsProductDetail>(MemberList.Destination);
+            CreateMap<OnlineFormProductDb, SimsProductDetail>(MemberList.Destination);
 
             CreateMap<IncidentProductDb, SimsProductDashboard>(MemberList.Destination)
                 .ForMember(a => a.ProductType, m => m.MapFrom(a => a.ProductType.Title))
@@ -279,6 +363,21 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForMember(a => a.Contacts, m => m.MapFrom(m => m.Address.Contacts));
 
             CreateMap<SignalProductFboDb, SimsProductFboAddress>(MemberList.Destination)
+                .ForMember(a => a.Id, m => m.MapFrom(m => m.AddressId))
+                .ForMember(a => a.Title, m => m.MapFrom(m => m.Address.Title))
+                .ForMember(a => a.AddressLine1, m => m.MapFrom(m => m.Address.AddressLine1))
+                .ForMember(a => a.AddressLine2, m => m.MapFrom(m => m.Address.AddressLine2))
+                .ForMember(a => a.PostCode, m => m.MapFrom(m => m.Address.PostCode))
+                .ForMember(a => a.County, m => m.MapFrom(m => m.Address.County))
+                .ForMember(a => a.CountryId, m => m.MapFrom(m => m.Address.CountryId))
+                .ForMember(a => a.CountryId, m => m.MapFrom(m => m.Address.CountryId))
+                .ForMember(a => a.TownCity, m => m.MapFrom(m => m.Address.TownCity))
+                .ForMember(a => a.TelephoneNumber, m => m.MapFrom(m => m.Address.TelephoneNumber))
+                .ForMember(a => a.ContactMethodId, m => m.MapFrom(m => m.Address.ContactMethodId))
+                .ForMember(a => a.Contacts, m => m.MapFrom(m => m.Address.Contacts));
+
+
+            CreateMap<OnlineFormProductFboDb, SimsProductFboAddress>(MemberList.Destination)
                 .ForMember(a => a.Id, m => m.MapFrom(m => m.AddressId))
                 .ForMember(a => a.Title, m => m.MapFrom(m => m.Address.Title))
                 .ForMember(a => a.AddressLine1, m => m.MapFrom(m => m.Address.AddressLine1))

@@ -8,6 +8,7 @@ namespace FSA.IncidentsManagement.Root.Domain
     {
         ISIMSIncidents Incidents { get; }
         ISIMSSignals Signals { get; }
+        ISIMSOnlineForms OnlineForms { get; }
         ISIMSLookups Lookups { get; }
         ISIMSAddress Addresses { get; }
         ISIMSUserAuditLogger AuditLog { get; }
