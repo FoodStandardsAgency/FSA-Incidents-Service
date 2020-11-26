@@ -12,7 +12,7 @@ namespace FSA.SIMSManagerDb.Builder
             base.Configure(builder);
             builder.Property(p => p.Title).HasMaxLength(250);
             builder.Property(p => p.NotifierType).HasMaxLength(250);
-            builder.Property(p => p.NotifierType).HasMaxLength(250);
+            builder.Property(p => p.ReferenceNo).IsRequired().HasMaxLength(200);
 
             builder.HasMany(p => p.Notes)
                     .WithOne(p => p.OnlineForm)

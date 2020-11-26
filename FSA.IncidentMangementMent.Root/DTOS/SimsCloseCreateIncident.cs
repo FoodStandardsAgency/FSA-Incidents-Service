@@ -1,8 +1,8 @@
 ﻿namespace FSA.IncidentsManagement.Root.DTOS
 {
-    public class SimsSignalCloseCreateIncident
+    public class SimsCloseCreateIncident
     {
         public string ReasonNote { get; set; }
-        public int SignalId { get; set; }
+        public int HostId { get; set; }
     }
 }

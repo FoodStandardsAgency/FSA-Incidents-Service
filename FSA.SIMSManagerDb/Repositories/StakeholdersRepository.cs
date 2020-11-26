@@ -37,14 +37,8 @@ namespace FSA.SIMSManagerDb.Repositories
         {
             if (hostId == 0) throw new ArgumentOutOfRangeException("Host Id missing.");
 
-            //if (stakeholder.HostId == 0) throw new IncidentMissingException("Incident Id Missing");
-
-            //var isClosed = await this.IsClosed(stakeholder.HostId);
-            //if (isClosed) throw new IncidentClosedException("Incident is closed");
             if (stakeholder.Id > 0) throw new ArgumentException("Stakeholder already exists.");
             // Cannot add an FSA member with an address, this is an application error.
-            //if (stakeholder.AddressId.HasValue && stakeholder.DiscriminatorId == (int)StakeholderTypes.FSA)
-            //throw new SIMSException("FSA Stakeholder must not have an address");
             stakeholder.HostId = hostId;
             var toDb = mapper.Map<SimsStakeholder, T>(stakeholder);
             var dbItem = this.DbSet.Add(toDb);

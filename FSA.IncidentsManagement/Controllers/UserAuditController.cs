@@ -35,8 +35,8 @@ namespace FSA.IncidentsManagement.Controllers
             {
                 return incidentSignal.ToLowerInvariant() switch
                 {
-                    IncidentOrSignal.Incidents => this.simsApp.AuditLog.AddIncidentLog(pageName, id),
-                    IncidentOrSignal.Signals => this.simsApp.AuditLog.AddSignalLog(pageName, id),
+                    IncidentOrSignalOrOnlineForm.Incidents => this.simsApp.AuditLog.AddIncidentLog(pageName, id),
+                    IncidentOrSignalOrOnlineForm.Signals => this.simsApp.AuditLog.AddSignalLog(pageName, id),
                     _ => throw new InvalidOperationException("Incident/Signal missing")
                 };
 

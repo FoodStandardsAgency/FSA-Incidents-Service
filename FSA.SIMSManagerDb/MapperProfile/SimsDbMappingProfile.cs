@@ -139,7 +139,8 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForSourceMember(a => a.LastUpdated, m => m.DoNotValidate());
 
             CreateMap<SimsOnlineForm, OnlineFormDb>(MemberList.Source)
-                 .ForMember(a => a.Id, m => m.MapFrom(a => a.CommonId));
+                 .ForMember(a => a.Id, m => m.MapFrom(a => a.CommonId))
+                 .ForMember(a => a.IsClosed, m => m.Ignore());
 
 
             CreateMap<SignalDb, SimsSignal>(MemberList.Destination)
@@ -181,6 +182,11 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForMember(a => a.DateReceived, m => m.MapFrom(a => a.InsertedDate))
                 .ForMember(a => a.Links, m => m.MapFrom(a => a.ToLinks.Select(o => o.FromId)
                 .Concat(a.FromLinks.Select(o => o.ToId).ToList())));
+
+            CreateMap<OnlineFormDb, SimsOnlineFormDashboardItem>(MemberList.Destination)
+                .ForMember(a => a.CommonId, m => m.MapFrom(a => a.Id))
+                .ForMember(a => a.Updated, m => m.MapFrom(a => a.Modified))
+                .ForMember(a => a.DateReceived, m => m.MapFrom(a => a.Created));
 
             CreateMap<IncidentProductDb, SimsProduct>(MemberList.Destination)
                 .ForMember(a => a.AdditionalInfo, m => m.MapFrom(a => String.IsNullOrEmpty(a.AdditionalInfo) ? "" : a.AdditionalInfo))

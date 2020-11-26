@@ -85,11 +85,11 @@ namespace Sims.Application
             return dbHost.Signals.CloseLinkIncident(close.ReasonNote, close.SignalId, close.IncidentId);
         }
 
-        public async Task<int> CloseCreateIncident(SimsSignalCloseCreateIncident close)
+        public async Task<int> CloseCreateIncident(SimsCloseCreateIncident close)
         {
-            if (await dbHost.Signals.IsClosed(close.SignalId))
+            if (await dbHost.Signals.IsClosed(close.HostId))
                 throw new SimsSignalClosedException("Signal closed");
-            var incidentId = await dbHost.Signals.CloseCreateIncident(close.ReasonNote, close.SignalId);
+            var incidentId = await dbHost.Signals.CloseCreateIncident(close.ReasonNote, close.HostId);
             if (incidentId != -1)
             {
                 // var signInfo = await this.attachments.Incidents.EnsureLibrary(GeneralExtensions.GenerateSignalsId(close.SignalId));
@@ -97,10 +97,10 @@ namespace Sims.Application
                 // Createing library just breaks down the task
                 // Then we need to migrate any tags that have been applied.
                 var libInfo = await this.attachments.Incidents.EnsureLibrary(GeneralExtensions.GenerateIncidentId(incidentId));
-                var currentDocInfo = (await dbHost.Signals.Attachments.Get(close.SignalId)).ToHashSet();
+                var currentDocInfo = (await dbHost.Signals.Attachments.Get(close.HostId)).ToHashSet();
                 // All files found, might not totally refelect whats in the signals
                 // There could be more
-                var allFileUrls = await this.attachments.Signals.MigrateToLibrary(GeneralExtensions.GenerateIncidentId(incidentId), GeneralExtensions.GenerateSignalsId(close.SignalId));
+                var allFileUrls = await this.attachments.Signals.MigrateToLibrary(GeneralExtensions.GenerateIncidentId(incidentId), GeneralExtensions.GenerateSignalsId(close.HostId));
                 var mergedTags = new Dictionary<string, int>();
                 foreach(var fileItem in allFileUrls)
                 {

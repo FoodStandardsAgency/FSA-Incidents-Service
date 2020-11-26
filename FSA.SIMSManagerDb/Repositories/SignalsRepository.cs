@@ -218,32 +218,32 @@ namespace FSA.SIMSManagerDb.Repositories
             var reg = new Regex("(^|-)(?<number>[0-9]+)");// [I-i]?(?<number>[0-9]{1,})");
 
             // We build the final search terms from this
-            var allTerms = new List<string>();
+            var AllTerms = new List<string>();
             // any and all matching ids
-            var idTerms = new List<int>();
+            var IdTerms = new List<int>();
             var totalTerms = search.ToLowerInvariant().Split(" ", StringSplitOptions.RemoveEmptyEntries).ToList();
             // Get the person out of the way first, as it can trip up the idmatches 
             var person = totalTerms.Where(o => o.ToLowerInvariant().StartsWith(personClause)).FirstOrDefault();
             if (!string.IsNullOrEmpty(person)) totalTerms.Remove(person);
-            // Any matches for the reg ex are added to the idterms
-            // Non matches are added to the total terms
+
+            // Non matches are added to the AllTerms object
+            // Any matches for the reg ex are added to the IdTems
             foreach (var term in totalTerms)
             {
                 var matches = reg.Matches(term);
                 if (matches.Count == 0)
-                    allTerms.Add(term);
+                    AllTerms.Add(term);
                 else
                 {
                     int id = 0;
                     if (int.TryParse(String.Join("", matches.Select(o => o.Groups["number"].Value)), out id))
-                        idTerms.Add(id);
+                        IdTerms.Add(id);
                 }
             }
 
-            return (allTerms.Where(o => o.ToLowerInvariant().StartsWith(personClause) == false).ToList(), person != null ? person.Substring(personClause.Length) : person, idTerms);
+            return (AllTerms.Where(o => o.ToLowerInvariant().StartsWith(personClause) == false).ToList(), person != null ? person.Substring(personClause.Length) : person, IdTerms);
+
         }
-
-
         /// <summary>
         /// A very lazy copy paste from rhe Incidents.
         /// This (all Dashboard methods) needs, needs needs to be broken out to thieor s own Class.
@@ -370,7 +370,7 @@ namespace FSA.SIMSManagerDb.Repositories
             // Create
             var signal = this.ctx.Signals
                                         .Include(a => a.Notes)
-                                        .Include(a=>a.Stakeholders)
+                                        .Include(a => a.Stakeholders)
                                         .First(a => a.Id == hostId);
 
 
@@ -420,7 +420,7 @@ namespace FSA.SIMSManagerDb.Repositories
                 signal.Notes.Add(new SignalNoteDb { Note = reason });
                 var savedIncident = ctx.Incidents.Add(newIncident);
                 signal.SignalStatusId = (int)SignalStatusTypes.Closed_Incident;
-                
+
                 await ctx.SaveChangesAsync();
 
                 this.ctx.SignalIncidentLinks.Add(new Entities.Signals.SignalIncidentLinkDb

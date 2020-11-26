@@ -126,7 +126,7 @@ namespace FSA.SignalsManagement.Controllers
         [ProducesResponseType(typeof(IncidentIdViewModel), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
-        public async Task<IActionResult> CloseCreateIncident(SimsSignalCloseCreateIncident closeCreate)
+        public async Task<IActionResult> CloseCreateIncident(SimsCloseCreateIncident closeCreate)
         {
             var incidentId = await this.simsApp.Signals.CloseCreateIncident(closeCreate);
             return new OkObjectResult(new IncidentIdViewModel { IncidentId = incidentId });

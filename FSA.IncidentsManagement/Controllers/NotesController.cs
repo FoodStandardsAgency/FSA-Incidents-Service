@@ -40,8 +40,9 @@ namespace FSA.IncidentsManagement.Controllers
             {
                 _ = incidentSignal.ToLower() switch
                 {
-                    IncidentOrSignal.Incidents => await this.simsApp.Incidents.Notes.Add(addIncident.HostId, addIncident.Note),
-                    IncidentOrSignal.Signals => await this.simsApp.Signals.Notes.Add(addIncident.HostId, addIncident.Note),
+                    IncidentOrSignalOrOnlineForm.Incidents => await this.simsApp.Incidents.Notes.Add(addIncident.HostId, addIncident.Note),
+                    IncidentOrSignalOrOnlineForm.Signals => await this.simsApp.Signals.Notes.Add(addIncident.HostId, addIncident.Note),
+                    IncidentOrSignalOrOnlineForm.OnlineForm  => await this.simsApp.OnlineForms.Notes.Add(addIncident.HostId, addIncident.Note),
                     _ => throw new InvalidOperationException()
             };
                 return new OkResult();
@@ -66,8 +67,9 @@ namespace FSA.IncidentsManagement.Controllers
             {
                 return incidentSignal.ToLower() switch
                 {
-                    IncidentOrSignal.Incidents => new OkObjectResult(await this.simsApp.Incidents.Notes.GetAll(id)),
-                    IncidentOrSignal.Signals => new OkObjectResult(await this.simsApp.Signals.Notes.GetAll(id)),
+                    IncidentOrSignalOrOnlineForm.Incidents => new OkObjectResult(await this.simsApp.Incidents.Notes.GetAll(id)),
+                    IncidentOrSignalOrOnlineForm.Signals => new OkObjectResult(await this.simsApp.Signals.Notes.GetAll(id)),
+                    IncidentOrSignalOrOnlineForm.OnlineForm  => new OkObjectResult(await this.simsApp.OnlineForms.Notes.GetAll(id)),
                     _ => throw new InvalidOperationException()
                 };
              

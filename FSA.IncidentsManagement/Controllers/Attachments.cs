@@ -45,8 +45,8 @@ namespace FSA.IncidentsManagement.Controllers
         {
             return incidentSignal.ToLower() switch
             {
-                IncidentOrSignal.Incidents => new OkObjectResult(await this.simsApp.Incidents.Attachments.EnsureLibrary(id)),
-                IncidentOrSignal.Signals => new OkObjectResult(await this.simsApp.Signals.Attachments.EnsureLibrary(id)),
+                IncidentOrSignalOrOnlineForm.Incidents => new OkObjectResult(await this.simsApp.Incidents.Attachments.EnsureLibrary(id)),
+                IncidentOrSignalOrOnlineForm.Signals => new OkObjectResult(await this.simsApp.Signals.Attachments.EnsureLibrary(id)),
                 _ => BadRequest("Unknown route")
             };
         }
@@ -66,8 +66,8 @@ namespace FSA.IncidentsManagement.Controllers
                 // But also validates the action without doing work
                 Func<string, string, int, Task<SimsAttachmentFileInfo>> UploadFile = incidentSignal.ToLower() switch
                 {
-                    IncidentOrSignal.Incidents => this.simsApp.Incidents.Attachments.AddAttachment,
-                    IncidentOrSignal.Signals => this.simsApp.Signals.Attachments.AddAttachment,
+                    IncidentOrSignalOrOnlineForm.Incidents => this.simsApp.Incidents.Attachments.AddAttachment,
+                    IncidentOrSignalOrOnlineForm.Signals => this.simsApp.Signals.Attachments.AddAttachment,
                     _ => throw new InvalidOperationException("Unknown route")
                 };
 
@@ -125,8 +125,8 @@ namespace FSA.IncidentsManagement.Controllers
             // But also validates the action without doing work
             var model =  incidentSignal.ToLower() switch
             {
-                IncidentOrSignal.Incidents => await this.simsApp.Incidents.Attachments.RegisterAttachment(docUri, newAttachment.HostId),
-                IncidentOrSignal.Signals => await this.simsApp.Signals.Attachments.RegisterAttachment(docUri, newAttachment.HostId),
+                IncidentOrSignalOrOnlineForm.Incidents => await this.simsApp.Incidents.Attachments.RegisterAttachment(docUri, newAttachment.HostId),
+                IncidentOrSignalOrOnlineForm.Signals => await this.simsApp.Signals.Attachments.RegisterAttachment(docUri, newAttachment.HostId),
                 _ => throw new InvalidOperationException("Unknown route")
             };
 
@@ -144,8 +144,8 @@ namespace FSA.IncidentsManagement.Controllers
             {
                 var fileInfo = incidentSignal.ToLower() switch
                 {
-                    IncidentOrSignal.Incidents => await this.simsApp.Incidents.Attachments.FetchAllAttchmentsLinks(id),
-                    IncidentOrSignal.Signals => await this.simsApp.Signals.Attachments.FetchAllAttchmentsLinks(id),
+                    IncidentOrSignalOrOnlineForm.Incidents => await this.simsApp.Incidents.Attachments.FetchAllAttchmentsLinks(id),
+                    IncidentOrSignalOrOnlineForm.Signals => await this.simsApp.Signals.Attachments.FetchAllAttchmentsLinks(id),
                     _ => throw new InvalidOperationException("Unknown route")
                 };
                 return new OkObjectResult(this.mapper.Map<List<SimsAttachmentFileInfoViewModel>>(fileInfo));
@@ -168,8 +168,8 @@ namespace FSA.IncidentsManagement.Controllers
                 var docUri = new Uri(updateTags.DocUrl).GetComponents(UriComponents.Scheme | UriComponents.Host | UriComponents.Path, UriFormat.UriEscaped);
                 var model = incidentSignal.ToLower() switch
                 {
-                    IncidentOrSignal.Incidents => await this.simsApp.Incidents.Attachments.Update(docUri, (SimsDocumentTagTypes)updateTags.Tags.Sum()),
-                    IncidentOrSignal.Signals => await this.simsApp.Signals.Attachments.Update(docUri, (SimsDocumentTagTypes)updateTags.Tags.Sum()),
+                    IncidentOrSignalOrOnlineForm.Incidents => await this.simsApp.Incidents.Attachments.Update(docUri, (SimsDocumentTagTypes)updateTags.Tags.Sum()),
+                    IncidentOrSignalOrOnlineForm.Signals => await this.simsApp.Signals.Attachments.Update(docUri, (SimsDocumentTagTypes)updateTags.Tags.Sum()),
                     _ => throw new InvalidOperationException("Unknown route")
                 };
                 return new OkObjectResult(this.mapper.Map<SimsAttachmentFileInfoViewModel>(model));
@@ -194,8 +194,8 @@ namespace FSA.IncidentsManagement.Controllers
             {
                 var fileInfo = incidentSignal.ToLower() switch
                 {
-                    IncidentOrSignal.Incidents => await this.simsApp.Incidents.Attachments.Rename(renameFile.ExistingUrl, renameFile.FileName),
-                    IncidentOrSignal.Signals => await this.simsApp.Signals.Attachments.Rename(renameFile.ExistingUrl, renameFile.FileName),
+                    IncidentOrSignalOrOnlineForm.Incidents => await this.simsApp.Incidents.Attachments.Rename(renameFile.ExistingUrl, renameFile.FileName),
+                    IncidentOrSignalOrOnlineForm.Signals => await this.simsApp.Signals.Attachments.Rename(renameFile.ExistingUrl, renameFile.FileName),
                     _ => throw new InvalidOperationException("Unknown route")
                 };
                 return new OkObjectResult(this.mapper.Map<SimsAttachmentFileInfoViewModel>(fileInfo));

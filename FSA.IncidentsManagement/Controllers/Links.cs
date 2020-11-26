@@ -39,8 +39,8 @@ namespace FSA.IncidentsManagement.Controllers
         {
             return incidentSignal.ToLower() switch
             {
-                IncidentOrSignal.Incidents => new OkObjectResult(await simsApp.Incidents.DashboardLinks(id)),
-                IncidentOrSignal.Signals => new OkObjectResult(await simsApp.Signals.DashboardLinks(id)),
+                IncidentOrSignalOrOnlineForm.Incidents => new OkObjectResult(await simsApp.Incidents.DashboardLinks(id)),
+                IncidentOrSignalOrOnlineForm.Signals => new OkObjectResult(await simsApp.Signals.DashboardLinks(id)),
                 _ => BadRequest("Route not found")
             };
         }
@@ -55,8 +55,8 @@ namespace FSA.IncidentsManagement.Controllers
         {
             return incidentSignal.ToLower() switch
             {
-                IncidentOrSignal.Incidents => new OkObjectResult(await simsApp.Incidents.GetLinkedSignals(id)),
-                IncidentOrSignal.Signals => new OkObjectResult(await simsApp.Signals.GetLinkedIncidents(id)),
+                IncidentOrSignalOrOnlineForm.Incidents => new OkObjectResult(await simsApp.Incidents.GetLinkedSignals(id)),
+                IncidentOrSignalOrOnlineForm.Signals => new OkObjectResult(await simsApp.Signals.GetLinkedIncidents(id)),
                 _ => BadRequest("Route not found")
             };
         }
@@ -71,8 +71,8 @@ namespace FSA.IncidentsManagement.Controllers
         {
             return incidentSignal.ToLower() switch
             {
-                IncidentOrSignal.Incidents => new OkObjectResult(await simsApp.Incidents.Links.Remove(unlink.FromId, unlink.ToId)),
-                IncidentOrSignal.Signals => new OkObjectResult(await simsApp.Signals.Links.Remove(unlink.FromId, unlink.ToId)),
+                IncidentOrSignalOrOnlineForm.Incidents => new OkObjectResult(await simsApp.Incidents.Links.Remove(unlink.FromId, unlink.ToId)),
+                IncidentOrSignalOrOnlineForm.Signals => new OkObjectResult(await simsApp.Signals.Links.Remove(unlink.FromId, unlink.ToId)),
                 _ => BadRequest("Route not found")
             };
         }
@@ -86,8 +86,8 @@ namespace FSA.IncidentsManagement.Controllers
         {
             return incidentSignal.ToLower() switch
             {
-                IncidentOrSignal.Incidents => new OkObjectResult(await simsApp.Incidents.Links.Add(links.FromId, links.ToIds, links.Comment)),
-                IncidentOrSignal.Signals => new OkObjectResult(await simsApp.Signals.Links.Add(links.FromId, links.ToIds, links.Comment)),
+                IncidentOrSignalOrOnlineForm.Incidents => new OkObjectResult(await simsApp.Incidents.Links.Add(links.FromId, links.ToIds, links.Comment)),
+                IncidentOrSignalOrOnlineForm.Signals => new OkObjectResult(await simsApp.Signals.Links.Add(links.FromId, links.ToIds, links.Comment)),
                 _ => BadRequest("Route not found")
             };
         }

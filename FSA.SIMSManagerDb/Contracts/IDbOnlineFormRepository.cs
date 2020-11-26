@@ -1,4 +1,5 @@
 ﻿using FSA.IncidentsManagement.Root.DTOS;
+using FSA.IncidentsManagement.Root.Shared;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -17,7 +18,8 @@ namespace FSA.SIMSManagerDb.Contracts
         IDbNotesRepository Notes { get; }
         IDbStakeholdersRepository Stakeholders { get; }
 
-        Task CloseCreateIncident(int onlineFormId, string reason);
         Task CloseNoIncident(int onlineFormId, string reason);
+        Task<IPaging<SimsOnlineFormDashboardItem>> DashboardSearch(string search = null, int pageSize = 500, int startPage = 1);
+        Task<int> CloseCreateIncident(int onlineFormId, string reason);
     }
 }

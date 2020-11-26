@@ -48,8 +48,8 @@ namespace FSA.IncidentsManagement.Controllers
                 var newSimsProduct = mapper.Map<SimsProduct>(newProduct);
                 return incidentSignal.ToLower() switch
                 {
-                    IncidentOrSignal.Incidents => new OkObjectResult(await this.simsApp.Incidents.Products.Add(newProduct.HostId, newSimsProduct)),
-                    IncidentOrSignal.Signals => new OkObjectResult(await this.simsApp.Signals.Products.Add(newProduct.HostId, newSimsProduct)),
+                    IncidentOrSignalOrOnlineForm.Incidents => new OkObjectResult(await this.simsApp.Incidents.Products.Add(newProduct.HostId, newSimsProduct)),
+                    IncidentOrSignalOrOnlineForm.Signals => new OkObjectResult(await this.simsApp.Signals.Products.Add(newProduct.HostId, newSimsProduct)),
                     _ => BadRequest("Unknown route")
                 };
             }
@@ -73,8 +73,8 @@ namespace FSA.IncidentsManagement.Controllers
 
                 return incidentSignal.ToLower() switch
                 {
-                    IncidentOrSignal.Incidents => new OkObjectResult(await this.simsApp.Incidents.Products.Update(updatedProduct)),
-                    IncidentOrSignal.Signals => new OkObjectResult(await this.simsApp.Signals.Products.Update(updatedProduct)),
+                    IncidentOrSignalOrOnlineForm.Incidents => new OkObjectResult(await this.simsApp.Incidents.Products.Update(updatedProduct)),
+                    IncidentOrSignalOrOnlineForm.Signals => new OkObjectResult(await this.simsApp.Signals.Products.Update(updatedProduct)),
                     _ => BadRequest("Unknown route")
                 };
 
@@ -95,8 +95,8 @@ namespace FSA.IncidentsManagement.Controllers
 
             return incidentSignal.ToLower() switch
             {
-                IncidentOrSignal.Incidents => new OkObjectResult(await this.simsApp.Incidents.Products.Get(productId)),
-                IncidentOrSignal.Signals => new OkObjectResult(await this.simsApp.Signals.Products.Get(productId)),
+                IncidentOrSignalOrOnlineForm.Incidents => new OkObjectResult(await this.simsApp.Incidents.Products.Get(productId)),
+                IncidentOrSignalOrOnlineForm.Signals => new OkObjectResult(await this.simsApp.Signals.Products.Get(productId)),
                 _ => BadRequest("Unknown route")
             };
         }
@@ -109,8 +109,8 @@ namespace FSA.IncidentsManagement.Controllers
         {
             return incidentSignal.ToLower() switch
             {
-                IncidentOrSignal.Incidents => new OkObjectResult(await this.simsApp.Incidents.Products.GetAll(id)),
-                IncidentOrSignal.Signals => new OkObjectResult(await this.simsApp.Signals.Products.GetAll(id)),
+                IncidentOrSignalOrOnlineForm.Incidents => new OkObjectResult(await this.simsApp.Incidents.Products.GetAll(id)),
+                IncidentOrSignalOrOnlineForm.Signals => new OkObjectResult(await this.simsApp.Signals.Products.GetAll(id)),
                 _ => BadRequest("Unknown route")
             };
         }
@@ -124,8 +124,8 @@ namespace FSA.IncidentsManagement.Controllers
         {
             var addresses = incidentSignal.ToLower() switch
             {
-                IncidentOrSignal.Incidents => await this.simsApp.Incidents.Products.GetAddress(productId),
-                IncidentOrSignal.Signals => await this.simsApp.Signals.Products.GetAddress(productId),
+                IncidentOrSignalOrOnlineForm.Incidents => await this.simsApp.Incidents.Products.GetAddress(productId),
+                IncidentOrSignalOrOnlineForm.Signals => await this.simsApp.Signals.Products.GetAddress(productId),
                 _ => throw new InvalidOperationException("Unknow Route")
             };
             var mapped = mapper.Map<IEnumerable<SimsProductFboAddress>, List<ProductFboAddressViewModel>>(addresses);
@@ -145,8 +145,8 @@ namespace FSA.IncidentsManagement.Controllers
 
                 var t = incidentSignal.ToLower() switch
                 {
-                    IncidentOrSignal.Incidents => this.simsApp.Incidents.Products.AssignFbo(assignObj.Id, assignObj.AddressId, (SimsFboTypes)assignObj.FboTypes.Sum()),
-                    IncidentOrSignal.Signals => this.simsApp.Signals.Products.AssignFbo(assignObj.Id, assignObj.AddressId, (SimsFboTypes)assignObj.FboTypes.Sum()),
+                    IncidentOrSignalOrOnlineForm.Incidents => this.simsApp.Incidents.Products.AssignFbo(assignObj.Id, assignObj.AddressId, (SimsFboTypes)assignObj.FboTypes.Sum()),
+                    IncidentOrSignalOrOnlineForm.Signals => this.simsApp.Signals.Products.AssignFbo(assignObj.Id, assignObj.AddressId, (SimsFboTypes)assignObj.FboTypes.Sum()),
                     _ => throw new InvalidOperationException("Unknow Route")
                 };
                 await t;
@@ -170,8 +170,8 @@ namespace FSA.IncidentsManagement.Controllers
             {
                 var t = incidentSignal.ToLower() switch
                 {
-                    IncidentOrSignal.Incidents => this.simsApp.Incidents.Products.RemoveFbo(assignObj.Id, assignObj.AddressId),
-                    IncidentOrSignal.Signals => this.simsApp.Signals.Products.RemoveFbo(assignObj.Id, assignObj.AddressId),
+                    IncidentOrSignalOrOnlineForm.Incidents => this.simsApp.Incidents.Products.RemoveFbo(assignObj.Id, assignObj.AddressId),
+                    IncidentOrSignalOrOnlineForm.Signals => this.simsApp.Signals.Products.RemoveFbo(assignObj.Id, assignObj.AddressId),
                     _ => throw new InvalidOperationException("Unknow Route")
                 };
 
@@ -197,8 +197,8 @@ namespace FSA.IncidentsManagement.Controllers
             {
                 var t = incidentSignal.ToLower() switch
                 {
-                    IncidentOrSignal.Incidents => this.simsApp.Incidents.Products.UpdateFbo(assignObj.Id, assignObj.AddressId, (SimsFboTypes)assignObj.FboTypes.Sum()),
-                    IncidentOrSignal.Signals => this.simsApp.Signals.Products.UpdateFbo(assignObj.Id, assignObj.AddressId, (SimsFboTypes)assignObj.FboTypes.Sum()),
+                    IncidentOrSignalOrOnlineForm.Incidents => this.simsApp.Incidents.Products.UpdateFbo(assignObj.Id, assignObj.AddressId, (SimsFboTypes)assignObj.FboTypes.Sum()),
+                    IncidentOrSignalOrOnlineForm.Signals => this.simsApp.Signals.Products.UpdateFbo(assignObj.Id, assignObj.AddressId, (SimsFboTypes)assignObj.FboTypes.Sum()),
                     _ => throw new InvalidOperationException("Unknow Route")
                 };
                 await t;
@@ -224,8 +224,8 @@ namespace FSA.IncidentsManagement.Controllers
             {
                 var items = incidentSignal.ToLower() switch
                 {
-                    IncidentOrSignal.Incidents => await this.simsApp.Incidents.Products.DashboardItems(id, pageSize, pageNo),
-                    IncidentOrSignal.Signals => await this.simsApp.Signals.Products.DashboardItems(id, pageSize, pageNo),
+                    IncidentOrSignalOrOnlineForm.Incidents => await this.simsApp.Incidents.Products.DashboardItems(id, pageSize, pageNo),
+                    IncidentOrSignalOrOnlineForm.Signals => await this.simsApp.Signals.Products.DashboardItems(id, pageSize, pageNo),
                     _ => throw new InvalidOperationException("Unknown route")
                 };
 

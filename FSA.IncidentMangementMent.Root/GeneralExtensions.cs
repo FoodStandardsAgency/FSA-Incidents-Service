@@ -6,7 +6,7 @@ namespace FSA.IncidentsManagement.Root
     {
         public static string GenerateIncidentId(int Id)=> GetFormattedNumber("I", Id.ToString("D6"));
 
-        internal static string GenerateOnlineId(int Id) => GetFormattedNumber("O", Id.ToString("D6"));
+        internal static string GenerateOnlineId(int Id) => GetFormattedNumber("R", Id.ToString("D6"));
 
         public static string GenerateSignalsId(int Id)=> GetFormattedNumber("S", Id.ToString("D6"));
 

@@ -20,7 +20,7 @@ namespace FSA.IncidentsManagement.Root.Domain
 
         
         Task CloseNoIncident(SimsSignalCloseNoIncident closeIncident);
-        Task<int> CloseCreateIncident(SimsSignalCloseCreateIncident createIncident);
+        Task<int> CloseCreateIncident(SimsCloseCreateIncident createIncident);
         Task CloseLinkIncident(SimsSignalCloseLinkIncident closeLink);
 
         ISIMSLinks Links { get; }

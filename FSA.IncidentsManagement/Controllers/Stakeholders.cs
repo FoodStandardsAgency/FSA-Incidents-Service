@@ -42,8 +42,8 @@ namespace FSA.IncidentsManagement.Controllers
 
             return incidentSignal.ToLower() switch
             {
-                IncidentOrSignal.Incidents => new OkObjectResult(await this.simsApp.Incidents.Stakeholders.GetAll(id)),
-                IncidentOrSignal.Signals => new OkObjectResult(await this.simsApp.Signals.Stakeholders.GetAll(id)),
+                IncidentOrSignalOrOnlineForm.Incidents => new OkObjectResult(await this.simsApp.Incidents.Stakeholders.GetAll(id)),
+                IncidentOrSignalOrOnlineForm.Signals => new OkObjectResult(await this.simsApp.Signals.Stakeholders.GetAll(id)),
                 _ => BadRequest("Unknown route")
             };
         }
@@ -60,8 +60,8 @@ namespace FSA.IncidentsManagement.Controllers
             {
                 return incidentSignal.ToLower() switch
                 {
-                    IncidentOrSignal.Incidents => new OkObjectResult(await this.simsApp.Incidents.Stakeholders.Add(stakeholder.HostId, stakeholder)),
-                    IncidentOrSignal.Signals => new OkObjectResult(await this.simsApp.Signals.Stakeholders.Add(stakeholder.HostId, stakeholder)),
+                    IncidentOrSignalOrOnlineForm.Incidents => new OkObjectResult(await this.simsApp.Incidents.Stakeholders.Add(stakeholder.HostId, stakeholder)),
+                    IncidentOrSignalOrOnlineForm.Signals => new OkObjectResult(await this.simsApp.Signals.Stakeholders.Add(stakeholder.HostId, stakeholder)),
                     _ => BadRequest("Unknown route")
                 };
             }
@@ -86,8 +86,8 @@ namespace FSA.IncidentsManagement.Controllers
 
                 return  incidentSignal.ToLower() switch
                 {
-                    IncidentOrSignal.Incidents => new OkObjectResult(await this.simsApp.Incidents.Stakeholders.Update(stakeholder)),
-                    IncidentOrSignal.Signals => new OkObjectResult(await this.simsApp.Signals.Stakeholders.Update(stakeholder)),
+                    IncidentOrSignalOrOnlineForm.Incidents => new OkObjectResult(await this.simsApp.Incidents.Stakeholders.Update(stakeholder)),
+                    IncidentOrSignalOrOnlineForm.Signals => new OkObjectResult(await this.simsApp.Signals.Stakeholders.Update(stakeholder)),
                     _ => BadRequest("Unknown route")
                 };
                 
@@ -114,8 +114,8 @@ namespace FSA.IncidentsManagement.Controllers
 
                 var t = incidentSignal.ToLower() switch
                 {
-                    IncidentOrSignal.Incidents => this.simsApp.Incidents.Stakeholders.Remove(id),
-                    IncidentOrSignal.Signals => this.simsApp.Signals.Stakeholders.Remove(id),
+                    IncidentOrSignalOrOnlineForm.Incidents => this.simsApp.Incidents.Stakeholders.Remove(id),
+                    IncidentOrSignalOrOnlineForm.Signals => this.simsApp.Signals.Stakeholders.Remove(id),
                     _ => throw new InvalidOperationException(),
                 };
                 await t;

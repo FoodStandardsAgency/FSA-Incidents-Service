@@ -4,6 +4,7 @@
     {
         public string Id => GeneralExtensions.GenerateOnlineId(this.CommonId);
         public int CommonId { get; set; }
+        public string ReferenceNo { get; set; }
         public string Title { get; set; }
         public string NotifierType { get; set; }
         public string Description { get; set; } // Nature of problem
@@ -12,6 +13,7 @@
         public string DeathIllness { get; set; }
         public string LADetails { get; set; }
         public string AdditionalInformation { get; set; }
+        public int? IncidentId { get; set; }
         public int IncidentTypeId { get; set; }
         public bool IsClosed { get; set; }
     }

@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Misc
 {
-    public class IncidentOrSignal
+    public class IncidentOrSignalOrOnlineForm
     {
         public const string Incidents = "incident";
         public const string Signals = "signal";
+        public const string OnlineForm = "onlineform";
 
     }
 }
