@@ -80,20 +80,16 @@ namespace SIMS.TestProjects.Setup
         {
             var viewAddressModels = System.Text.Json.JsonSerializer.Deserialize<List<SimsAddressViewModel>>(File.OpenText("./Setup/orgs.json").ReadToEnd());
             var addresses = map.Map<List<SimsAddress>>(viewAddressModels);
-            await sims.Addresses.Add(addresses.GetRange(0, addresses.Count - 9));
+            await sims.Addresses.Add(addresses);
 
-            var Not1 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 9));
-            var Not2 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 8));
-            var Not3 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 7));
+            var cString = ((JsonElement)Config["ConnectionStrings:FSADbConn"]).ToString();
+            var conn = new SqlConnection(cString);
+            conn.Open();
+            var sqlFile = File.ReadAllText("./Setup/LaFiles.sql");
 
-            var add1 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 6));
-            var add2 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 5));
-            var add3 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 4));
-            var add4 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 3));
-            var add5 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 2));
-            var add6 = await sims.Addresses.Add(addresses.ElementAt(addresses.Count - 1));
-
-
+            var sqlCmd = new SqlCommand(sqlFile, conn);
+            sqlCmd.ExecuteNonQuery();
+            conn.Close();
         }
 
         private async Task CreateIncidents(ISimsDbHost sims, SimsDbContext ctx, SeedingConfigData seeder)

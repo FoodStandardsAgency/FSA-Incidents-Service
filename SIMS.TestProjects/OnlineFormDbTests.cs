@@ -102,19 +102,10 @@ namespace SIMS.Database
         {
             var factCheck = "Record to be updated";
             var updatedIncidentType = 71;
-            var newOnlineForm = new SimsOnlineForm
-            {
-                Title = factCheck,
-                NotifierType = "Notifiier type",
-                Description = "Nature of the problem",
-                Action = "Action to be placed, or has been placed",
-                DeathIllness = "Death illness",
-                DistributionDetails = "Where did this get done didded",
-                AdditionalInformation = "Anything else I added",
-                IsClosed = false,
-                IncidentTypeId = 70,
-                LADetails = "Update able record.!"
-            };
+
+            var newOnlineForm = BasicForm();
+            newOnlineForm.Title = factCheck;
+            newOnlineForm.ReferenceNo = "REf No um bah";
 
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
@@ -275,7 +266,7 @@ namespace SIMS.Database
             }
         }
 
-        [Fact(DisplayName ="Add Note")]
+        [Fact(DisplayName = "Add Note")]
         public async Task AddNoteOnlineForm()
         {
 
@@ -299,7 +290,7 @@ namespace SIMS.Database
             {
                 var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var dashboardSearch = await simsHost.OnlineForms.DashboardSearch("R000-001 bulk title");
-                Assert.True(dashboardSearch.Count()>0);
+                Assert.True(dashboardSearch.Count() > 0);
             }
         }
 
@@ -310,7 +301,7 @@ namespace SIMS.Database
             {
                 var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var dashboardSearch = await simsHost.OnlineForms.DashboardSearch();
-                Assert.True(dashboardSearch.Count()>0);
+                Assert.True(dashboardSearch.Count() > 0);
             }
         }
 
