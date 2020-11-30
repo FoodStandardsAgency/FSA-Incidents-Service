@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace FSA.SIMSManagerDb.Repositories
 {
-    class ProductRepository<T, FBO, Pack, Date> : IDbProductRepository where T : BaseProductDb, ICoreProduct<FBO, Pack, Date>
+    internal class ProductRepository<T, FBO, Pack, Date> : IDbProductRepository where T : BaseProductDb, ICoreProduct<FBO, Pack, Date>
                             where FBO : BaseProductFboDb, new()
                             where Date : BaseProductDateDb
     {

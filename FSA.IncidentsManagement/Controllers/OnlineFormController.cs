@@ -62,7 +62,7 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpPost("Dashboard")]
         [SwaggerOperation(Summary = "OnlineForm dashboard search", Description = "OnlineForm dashboard search")]
-        [ProducesResponseType(typeof(IEnumerable<SimsOnlineFormDashboardItem>), 200)]
+        [ProducesResponseType(typeof(PagedResultsViewModel<SimsOnlineFormDashboardItem>), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
         public async Task<IActionResult> GetOnlineDashboard(DashboardSearchViewModel dashboard)
@@ -73,16 +73,16 @@ namespace FSA.IncidentsManagement.Controllers
                 if (dashboard.PageNo < 1 || dashboard.PageSize < 0)
                     return new OkObjectResult(new
                     {
-                        Results = Enumerable.Empty<SignalDashboardItem>(),
+                        Results = Enumerable.Empty<SignalDashboardItem>().ToList(),
                         TotalRecords = 0
                     });
 
                 var dashBoard = dashboard.PageSize.HasValue && dashboard.PageSize > 0
                                                     ? await this.simsApp.OnlineForms.DashboardSearch(search: dashboard.Search ?? "", startPage: dashboard.PageNo, pageSize: dashboard.PageSize.Value)
                                                     : await this.simsApp.OnlineForms.DashboardSearch(search: dashboard.Search ?? "", startPage: dashboard.PageNo);
-                return new OkObjectResult(new
+                return new OkObjectResult(new PagedResultsViewModel<SimsOnlineFormDashboardItem>
                 {
-                    Results = dashBoard,
+                    Results = dashBoard.ToList(),
                     TotalRecords = dashBoard.TotalResults
                 });
             }
@@ -93,14 +93,25 @@ namespace FSA.IncidentsManagement.Controllers
         }
 
         [HttpPost("Close/Create")]
-        [SwaggerOperation(Summary = "Close create incident", Description = "Close Create incident")]
+        [SwaggerOperation(Summary = "Close form create incident", Description = "Close form  Create incident")]
         [ProducesResponseType(typeof(IncidentIdViewModel), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
-        public async Task<IActionResult> CloseCreateIncident(SimsCloseCreateIncident closeCreate)
+        public async Task<IActionResult> CloseOnlineFormCreateIncident(SimsCloseCreateIncident closeCreate)
         {
             var incidentId = await this.simsApp.OnlineForms.CloseCreateIncident(closeCreate.HostId, closeCreate.ReasonNote);
             return new OkObjectResult(new IncidentIdViewModel { IncidentId = incidentId });
+        }
+
+        [HttpPost("Close/NoIncident")]
+        [SwaggerOperation(Summary = "Close form no incident", Description = "Close form no incident")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        [Produces("application/json")]
+        public async Task<IActionResult> CloseOnlineFormNoIncident(SimsCloseCreateIncident closeCreate)
+        {
+            await this.simsApp.OnlineForms.CloseNoIncident(closeCreate.HostId, closeCreate.ReasonNote);
+            return Ok();
         }
     }
 }

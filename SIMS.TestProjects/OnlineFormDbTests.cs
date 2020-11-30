@@ -45,7 +45,7 @@ namespace SIMS.Database
             return new SimsOnlineForm
             {
                 Title = "Basic Title",
-                NotifierType = "Notifiier type",
+                NotifierTypeId = 1,
                 Description = "Nature of the problem",
                 Action = "Action to be placed, or has placed",
                 DeathIllness = "Death illness",
@@ -147,8 +147,6 @@ namespace SIMS.Database
                 var savedForm = await simsHost.OnlineForms.Add(newOnlineForm);
                 savedForm.IsClosed = true;
                 await Assert.ThrowsAsync<DataMisalignedException>(async () => await simsHost.OnlineForms.Update(savedForm));
-                //var isclosed = await simsHost.OnlineForms.IsClosed(updatedForm.CommonId);
-                //Assert.True(isclosed);
             }
         }
 

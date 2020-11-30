@@ -135,7 +135,7 @@ namespace SIMS.TestProjects.Setup
 
             var signalCount = signals.Count;
             int lastRound = 0;
-            while(signalCount>0)
+            while (signalCount > 0)
             {
                 var thisRound = 400;
 
@@ -169,6 +169,73 @@ namespace SIMS.TestProjects.Setup
             await sims.Signals.Stakeholders.Add(stakeholders[3].HostId, stakeholders[3]);
         }
 
+        private async Task CreateOnlineFormEntries(ISimsDbHost sims, SeedingConfigData seeder)
+        {
+            var forms = seeder.GetOnlineFormData.ToList();
+            var stakeholders = seeder.GetOnlineFormStakeholders.ToList();
+            var products = seeder.GetOnlineFormProducts.ToList();
+            await sims.OnlineForms.AddBatch(forms);
+            await sims.OnlineForms.Stakeholders.Add(1, stakeholders[0]);
+            await sims.OnlineForms.Stakeholders.Add(2, stakeholders[1]);
+            await sims.OnlineForms.Stakeholders.Add(3, stakeholders[2]);
+            await sims.OnlineForms.Stakeholders.Add(4, stakeholders[3]);
+            await sims.OnlineForms.Stakeholders.Add(5, stakeholders[4]);
+
+            await sims.OnlineForms.Stakeholders.Add(6, stakeholders[5]);
+            await sims.OnlineForms.Stakeholders.Add(7, stakeholders[6]);
+            await sims.OnlineForms.Stakeholders.Add(8, stakeholders[7]);
+            await sims.OnlineForms.Stakeholders.Add(9, stakeholders[8]);
+            await sims.OnlineForms.Stakeholders.Add(10, stakeholders[9]);
+
+            await sims.OnlineForms.Stakeholders.Add(11, stakeholders[10]);
+            await sims.OnlineForms.Stakeholders.Add(12, stakeholders[11]);
+            await sims.OnlineForms.Stakeholders.Add(13, stakeholders[12]);
+            await sims.OnlineForms.Stakeholders.Add(14, stakeholders[13]);
+            await sims.OnlineForms.Stakeholders.Add(15, stakeholders[14]);
+
+            await sims.OnlineForms.Products.Add(1, products[0]);
+            await sims.OnlineForms.Products.Add(2, products[1]);
+            await sims.OnlineForms.Products.Add(3, products[2]);
+            await sims.OnlineForms.Products.Add(4, products[3]);
+            await sims.OnlineForms.Products.Add(5, products[4]);
+
+            await sims.OnlineForms.Products.Add(6, products[1]);
+            await sims.OnlineForms.Products.Add(7, products[2]);
+            await sims.OnlineForms.Products.Add(8, products[3]);
+            await sims.OnlineForms.Products.Add(9, products[4]);
+            await sims.OnlineForms.Products.Add(10, products[0]);
+
+
+            await sims.OnlineForms.Notes.Add(1,  @"Stakeholder Address
+                        Sally Stakeholder
+                        AddressLine1,
+                        AddressLine2
+                        Town
+                        County
+                        PostCode");
+            await sims.OnlineForms.Notes.Add(3, @"Stakeholder Address
+                        Henry plate
+                        AddressLine1,
+                        AddressLine2
+                        Town
+                        County
+                        PostCode");
+            await sims.OnlineForms.Notes.Add(4, @"Stakeholder Address
+                        Mavis Coupe
+                        AddressLine1,
+                        AddressLine2
+                        Town
+                        County
+                        PostCode");
+            await sims.OnlineForms.Notes.Add(5, @"Stakeholder Address
+                        Jame Flan
+                        AddressLine1,
+                        AddressLine2
+                        Town
+                        County
+                        PostCode");
+        }
+
         private void Seed()
         {
             lock (_lock)
@@ -179,7 +246,7 @@ namespace SIMS.TestProjects.Setup
                     {
                         ctx.Database.EnsureDeleted();
                         ctx.Database.Migrate();
-                        
+
                         var seeder = new SeedingConfigData();
                         var mapper = seeder.GetDbAutoMapper();
 
@@ -259,9 +326,6 @@ namespace SIMS.TestProjects.Setup
                         try
                         {
                             t4.Wait();
-
-                            //Task.WhenAll(TaskList.ToArray());
-
                         }
                         catch (AggregateException ex)
                         {
@@ -269,6 +333,18 @@ namespace SIMS.TestProjects.Setup
                             Debug.WriteLine(res);
                             throw (ex);
                         }
+                        var t9 = CreateOnlineFormEntries(SIMS, seeder);
+                        try
+                        {
+                            t9.Wait();
+                        }
+                        catch (AggregateException ex)
+                        {
+                            var res = ex.Flatten();
+                            Debug.WriteLine(res);
+                            throw (ex);
+                        }
+
 
                     }
                     _databaseInit = true;

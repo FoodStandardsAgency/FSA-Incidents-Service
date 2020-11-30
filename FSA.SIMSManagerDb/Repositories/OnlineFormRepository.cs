@@ -79,7 +79,7 @@ namespace FSA.SIMSManagerDb.Repositories
                 var wrd = $"%{itm}%";
                 allClauses.Add(i => EF.Functions.Like(i.Title, wrd));
                 allClauses.Add(i => EF.Functions.Like(i.ReferenceNo, wrd));
-                allClauses.Add(i => EF.Functions.Like(i.NotifierType, wrd));
+                //allClauses.Add(i => EF.Functions.Like(i.NotifierType, wrd));
                 allClauses.Add(i => EF.Functions.Like(i.LADetails, wrd));
 
             }
