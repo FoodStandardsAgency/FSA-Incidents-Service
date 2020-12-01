@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Controllers
 {
@@ -31,6 +32,13 @@ namespace FSA.IncidentsManagement.Controllers
         public IActionResult GetAll()
         {
             return new OkObjectResult(this.simsApp.Lookups.GetAll());
+        }
+
+        [HttpGet("external")]
+        [Authorize(Policy = "OnlineFormOnly")]
+        public async Task<IActionResult> GetExternalLookups()
+        {
+            return new OkObjectResult(simsApp.Lookups.GetExternalLookups());
         }
     }
 }

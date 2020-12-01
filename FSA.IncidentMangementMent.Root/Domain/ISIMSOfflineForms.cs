@@ -1,5 +1,6 @@
 ﻿using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Shared;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Root.Domain
@@ -17,5 +18,6 @@ namespace FSA.IncidentsManagement.Root.Domain
         ISIMSProducts Products { get; }
         ISIMSStakeholders Stakeholders { get; }
 
+        Task ImportNewForm(JsonDocument formDocument);
     }
 }

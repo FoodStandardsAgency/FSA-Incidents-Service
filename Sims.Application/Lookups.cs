@@ -1,4 +1,5 @@
 ﻿using FSA.IncidentsManagement.Root.Domain;
+using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb.Contracts;
 
@@ -14,5 +15,7 @@ namespace Sims.Application
         }
 
         public LookupsHost GetAll() => this.simsDbHOst.Lookups.GetAll();
+
+        public SimsExternalLookups GetExternalLookups() => this.simsDbHOst.Lookups.GetExternalLookups();
     }
 }

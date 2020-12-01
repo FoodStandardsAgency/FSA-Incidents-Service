@@ -15,4 +15,8 @@
     <Compile Remove="Models\ProductDashboard.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="5.0.0" />
+  </ItemGroup>
+
 </Project>

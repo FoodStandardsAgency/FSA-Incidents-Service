@@ -71,6 +71,14 @@ namespace FSA.IncidentsManagement
 
             services.AddControllers();
 
+            services.AddAuthorization(config =>
+            {
+                config.AddPolicy("OnlineFormOnly", policy =>
+                    policy.RequireRole("Lookup.Get")
+                    .RequireRole("Form.Create"));
+                
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.CustomOperationIds(apiDesc =>

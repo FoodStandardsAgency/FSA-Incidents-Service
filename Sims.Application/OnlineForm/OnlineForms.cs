@@ -3,7 +3,9 @@ using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Shared;
 using FSA.SIMSManagerDb.Contracts;
 using Sims.Application.Exceptions;
+using Sims.Application.OnlineForm;
 using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Sims.Application
@@ -53,6 +55,22 @@ namespace Sims.Application
         {
             if (onlineFormId == 0) throw new SimsItemMissing("Incorrect Id");
             return await dbHost.OnlineForms.Get(onlineFormId);
+        }
+
+        public async Task ImportNewForm(JsonDocument formDocument)
+        {
+            // Check the reference number 1. Exists, and has not already been added.
+            var refNo = formDocument.RootElement.GetProperty("ReferenceNo").GetString();
+
+            if (!await dbHost.OnlineForms.ReferenceNoExists(refNo))
+            {
+                OnlineFormImporter formImporter = new OnlineFormImporter(this.dbHost);
+                await formImporter.Process(formDocument);
+            }
+            else
+            {
+                throw new SimsOnlineFormMissingException($"{refNo} : Already exists");
+            }
         }
 
         public async Task<SimsOnlineForm> Update(SimsOnlineForm onlineForm)

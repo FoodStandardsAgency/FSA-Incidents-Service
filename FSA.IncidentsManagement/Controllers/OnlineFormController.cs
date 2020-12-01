@@ -59,7 +59,6 @@ namespace FSA.IncidentsManagement.Controllers
 
         }
 
-
         [HttpPost("Dashboard")]
         [SwaggerOperation(Summary = "OnlineForm dashboard search", Description = "OnlineForm dashboard search")]
         [ProducesResponseType(typeof(PagedResultsViewModel<SimsOnlineFormDashboardItem>), 200)]
@@ -113,5 +112,8 @@ namespace FSA.IncidentsManagement.Controllers
             await this.simsApp.OnlineForms.CloseNoIncident(closeCreate.HostId, closeCreate.ReasonNote);
             return Ok();
         }
+
+
+
     }
 }

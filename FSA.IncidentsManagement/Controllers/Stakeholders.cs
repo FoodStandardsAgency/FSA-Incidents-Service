@@ -44,6 +44,7 @@ namespace FSA.IncidentsManagement.Controllers
             {
                 IncidentOrSignalOrOnlineForm.Incidents => new OkObjectResult(await this.simsApp.Incidents.Stakeholders.GetAll(id)),
                 IncidentOrSignalOrOnlineForm.Signals => new OkObjectResult(await this.simsApp.Signals.Stakeholders.GetAll(id)),
+                IncidentOrSignalOrOnlineForm.OnlineForm => new OkObjectResult(await this.simsApp.OnlineForms.Stakeholders.GetAll(id)),
                 _ => BadRequest("Unknown route")
             };
         }
@@ -62,6 +63,8 @@ namespace FSA.IncidentsManagement.Controllers
                 {
                     IncidentOrSignalOrOnlineForm.Incidents => new OkObjectResult(await this.simsApp.Incidents.Stakeholders.Add(stakeholder.HostId, stakeholder)),
                     IncidentOrSignalOrOnlineForm.Signals => new OkObjectResult(await this.simsApp.Signals.Stakeholders.Add(stakeholder.HostId, stakeholder)),
+                    IncidentOrSignalOrOnlineForm.OnlineForm => new OkObjectResult(await this.simsApp.OnlineForms.Stakeholders.Add(stakeholder.HostId, stakeholder)),
+
                     _ => BadRequest("Unknown route")
                 };
             }
@@ -88,6 +91,7 @@ namespace FSA.IncidentsManagement.Controllers
                 {
                     IncidentOrSignalOrOnlineForm.Incidents => new OkObjectResult(await this.simsApp.Incidents.Stakeholders.Update(stakeholder)),
                     IncidentOrSignalOrOnlineForm.Signals => new OkObjectResult(await this.simsApp.Signals.Stakeholders.Update(stakeholder)),
+                    IncidentOrSignalOrOnlineForm.OnlineForm => new OkObjectResult(await this.simsApp.OnlineForms.Stakeholders.Update(stakeholder)),
                     _ => BadRequest("Unknown route")
                 };
                 
@@ -116,6 +120,7 @@ namespace FSA.IncidentsManagement.Controllers
                 {
                     IncidentOrSignalOrOnlineForm.Incidents => this.simsApp.Incidents.Stakeholders.Remove(id),
                     IncidentOrSignalOrOnlineForm.Signals => this.simsApp.Signals.Stakeholders.Remove(id),
+                    IncidentOrSignalOrOnlineForm.OnlineForm => this.simsApp.OnlineForms.Stakeholders.Remove(id),
                     _ => throw new InvalidOperationException(),
                 };
                 await t;

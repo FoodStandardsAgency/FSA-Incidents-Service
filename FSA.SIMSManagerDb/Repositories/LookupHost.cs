@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FSA.IncidentsManagement.Root.Contracts;
+using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.DTOS.Lookups;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb.Contracts;
@@ -66,6 +67,15 @@ namespace FSA.SIMSManagerDb.Repositories
             CloseSignalTeams = this.CloseSignalTeams.GetAll(),
             CloseSignalReasons = this.CloseSignalReasons.GetAll(),
             IncidentSources = this.IncidentSources.GetAll()
+        };
+
+        public SimsExternalLookups GetExternalLookups() => new SimsExternalLookups
+        {
+            Countries = this.Countries.GetAll(),
+            ProductTypes = this.ProductTypes.GetAll(),
+            FBOTypes = this.FBOTypes.GetAll(),
+            Units = this.Units.GetAll(),
+            NotifierTypes = this.NotifierTypes.GetAll(),
         };
     }
 }

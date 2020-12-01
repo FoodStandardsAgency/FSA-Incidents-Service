@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using FSA.IncidentsManagement.Root.DTOS;
-using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagement.Root.Shared;
 using FSA.SIMSManagerDb.Contracts;
 using FSA.SIMSManagerDb.Entities;
@@ -10,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -169,16 +168,15 @@ namespace FSA.SIMSManagerDb.Repositories
                 dbEnt.IsClosed = true;
 
                 // Now create an incident
-                var signalProds = this.ctx.SignalProducts.AsNoTracking()
+                var onlineProds = this.ctx.OnlineFormProducts.AsNoTracking()
                                             .Include(a => a.ProductDates)
                                             .Include(a => a.RelatedFBOs)
                                             .Include(a => a.ProductType)
                                             .Include(a => a.PackSizes)
                                             .Where(o => o.HostId == onlineFormId).ToList();
 
-                // Signals are text all the way
-                // But the info should match with our stored lookups.
-                var prods = mapper.Map<List<IncidentProductDb>>(signalProds);
+
+                var prods = mapper.Map<List<IncidentProductDb>>(onlineProds);
                 var stakeholders = this.mapper.Map<List<IncidentStakeholderDb>>(dbEnt.Stakeholders);
 
                 var notes = this.mapper.Map<List<IncidentNoteDb>>(dbEnt.Notes);
@@ -192,6 +190,7 @@ namespace FSA.SIMSManagerDb.Repositories
                     IncidentStatusId = (int)IncidentStatusTypes.Unassigned,
                     DataSourceId = 46, // Other
                     IncidentTypeId = 36,
+                    NotifierId = dbEnt.NotifierTypeId,
                     SignalUrl = "",
                     LeadOfficer = "",
                     OIMTGroups = "",
@@ -255,6 +254,18 @@ namespace FSA.SIMSManagerDb.Repositories
             await ctx.SaveChangesAsync();
             return this.mapper.Map<SimsOnlineForm>(dbEnt);
 
+        }
+
+        public async Task<bool> ReferenceNoExists(string refNo)=> (await this.ctx.OnlineForms.FirstOrDefaultAsync(a => a.ReferenceNo == refNo))!=null;
+
+        public async Task AddFromExternalSource(JsonDocument formDocument)
+        {
+            //Break this out into it's constituent chunks.
+            // ReferenceNo : string
+            // Incidents : object
+            // IncidentStakeholders : object (Addresse
+            // Addresses : object ACtually 1 address for stakeholder to become notes
+            // IncidentProducts : object Graph, Sames as incident proces except for datw
         }
     }
 }

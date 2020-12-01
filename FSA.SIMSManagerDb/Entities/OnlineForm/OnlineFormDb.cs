@@ -17,10 +17,10 @@ namespace FSA.SIMSManagerDb.Entities
         public string DeathIllness { get; set; }
         public string LADetails { get; set; }
         public string AdditionalInformation { get; set; }
-        public int IncidentTypeId { get; set; }
         public bool IsClosed { get; set; }
         public int? IncidentId { get; set; }
-        public HazardGroupDb IncidentType { get; set; }
+        //public int IncidentTypeId { get; set; }
+        //public HazardGroupDb IncidentType { get; set; }
         public ICollection<OnlineFormStakeholderDb> Stakeholders { get; set; }
         public ICollection<OnlineFormNoteDb> Notes { get; set; }
         public ICollection<OnlineFormProductDb> Products { get; set; }
