@@ -44,8 +44,8 @@ namespace Sims.Application
 
         public async Task AssignFbo(int productId, int addressId, SimsFboTypes types)
         {
-            if (productId == 0) throw new SimsItemMissing("Prouct Id missing");
-            if (addressId == 0) throw new SimsItemMissing("address Id missing");
+            if (productId == 0) throw new SimsItemMissing("Product Id missing");
+            if (addressId == 0) throw new SimsItemMissing("Address Id missing");
 
             if (!await dbHost.OnlineForms.IsClosed(productId))
                 await dbHost.OnlineForms.Products.Fbos.Add(productId, addressId, (int)types);

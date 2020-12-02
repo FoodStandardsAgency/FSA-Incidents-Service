@@ -1,4 +1,5 @@
-﻿using FSA.SIMSManagerDb.Contracts;
+﻿using FSA.IncidentsManagement.Root.DTOS;
+using FSA.SIMSManagerDb.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -27,6 +28,7 @@ namespace Sims.Application.OnlineForm
                 IgnoreReadOnlyFields = true,
                 IgnoreReadOnlyProperties = true
             };
+            // Nullable date times are used in the ProductDates
             jsonOpts.Converters.Add(new NullableDateTimeConverter());
             // Create a new Online form!
             // convert into local objects, and then transgorm into SIMS.. objects for pushing into the db.
@@ -42,10 +44,20 @@ namespace Sims.Application.OnlineForm
                 var newProduct = JsonSerializer.Deserialize<ExternalProducts>(product.GetRawText(), jsonOpts);
                 allProducts.Add(newProduct);
             }
-            
 
 
-
+            //this.host.OnlineForms.Add()
         }
+
+        public SimsOnlineForm ToOnlineForm(ExternalOnlineForm onlineForm, string refId) => new SimsOnlineForm
+        {
+            Title = refId,
+            Action = onlineForm.ActionTaken,
+            AdditionalInformation = onlineForm.AdditionalInformation,
+            LADetails = onlineForm.LocalAuthorityNotified,
+            DeathIllness = onlineForm.IllnessDetails,
+            IsClosed = false,
+            NotifierTypeId = onlineForm.NotifierTypeId
+        };
     }
 }

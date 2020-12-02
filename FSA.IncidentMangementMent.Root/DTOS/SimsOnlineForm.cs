@@ -14,7 +14,6 @@
         public string LADetails { get; set; }
         public string AdditionalInformation { get; set; }
         public int? IncidentId { get; set; }
-        public int IncidentTypeId { get; set; }
         public bool IsClosed { get; set; }
     }
 }

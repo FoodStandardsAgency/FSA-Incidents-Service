@@ -1,0 +1,71 @@
+{
+    "ReferenceNo": "Keira Knightly",
+    "Incidents": {
+      "IncidentTitle":"Get this in to the database stat!",
+      "NatureOfProblem": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vestibulum lacus elit, et consequat sem euismod non. Vestibulum sed ultrices dolor, a mollis ex. Curabitur feugiat felis id tellus tempus convallis. Vivamus tincidunt enim eget leo venenatis, mattis porttitor neque suscipit. Curabitur interdum eu erat quis gravida. Proin eros ante, iaculis ut scelerisque ac, porta eu erat. Nunc mauris felis, dapibus sed dictum et, laoreet eget diam. Aliquam eu nunc quis arcu tincidunt dignissim.",
+      "NotifierTypeid":3,
+      "ActionTaken": "",
+      "DistributionDetails": "Cras imperdiet eros in ante dignissim, pellentesque laoreet enim dignissim. Phasellus luctus feugiat sollicitudin. Suspendisse tincidunt massa a tortor euismod mattis.",
+      "IllnessDetails": "unknown",
+      "LocalAuthorityNotified": "",
+      "AdditionalInformation": "Nec auctor eros tincidunt. Nam consequat neque sit amet rhoncus luctus. Nunc at tortor posuere, porttitor nisi ac, lacinia eros. Nam accumsan augue ac arcu tristique volutpat gravida at erat. Etiam at nibh sem. Nam nec turpis nisi. Curabitur a orci nec libero elementum commodo."
+    },
+    "IncidentStakeholders": {
+      "Name": "timmy tester",
+      "Role": "Technical manager",
+      "GovDept": "My company name Ltd.",
+      "Email": "timmy@example.com",
+      "Phone": "+44 1772 123 456"
+    },
+    "Addresses": {
+      "AddressLine1": "123 Fake test street",
+      "AddressLine2": "",
+      "TownCity": "Any text here",
+      "County": "",
+      "Postcode": "",
+      "CountryID": 17
+    },
+    "IncidentProducts": [
+      {
+        "Name": "example product name",
+        "Brand": "",
+        "ProductTypeId": 25,
+        "BatchCodes": [
+          "11-22-33",
+          "any text is fine here"
+        ],
+        "CountryOfOriginId": 11,
+        "Amount": "",
+        "AmountUnitTypeId": 3,
+        "IncidentProductDates": {
+          "BestBeforeDate": "",
+          "UseByDate": "2020-10-13T11:18:40.217Z",
+          "DisplayUntil": ""
+        },
+        "IncidentProductPackSizes": {
+          "Size": "pack of 6"
+        },
+        "PackDescription": "",
+        "AdditionalInfo": "Nec auctor eros tincidunt. Nam consequat neque sit amet rhoncus luctus. Nunc at tortor posuere, porttitor nisi ac, lacinia eros. Nam accumsan augue ac arcu tristique volutpat gravida at erat. Etiam at nibh sem. Nam nec turpis nisi. Curabitur a orci nec libero elementum commodo.",
+        "companies": [
+          {
+            "FBOSTypes": [],
+            "Name": "An affected company Ltd.",
+            "Contact": {
+              "Name": "johnny example",
+              "EmailAddress": "johnny@example.com",
+              "TelephoneNumber": ""
+            },
+            "Addresses": {
+              "AddressLine1": "123 Fake test street",
+              "AddressLine2": "",
+              "TownCity": "Any text here",
+              "County": "",
+              "Postcode": "",
+              "CountryID": 17
+            }
+          }
+        ]
+      }
+    ]
+  }

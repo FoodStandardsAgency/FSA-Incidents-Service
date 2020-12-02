@@ -5,7 +5,7 @@ namespace FSA.IncidentsManagement.Root.DTOS
 {
     public class SimsOnlineFormDashboardItem
     {
-        public string Id { get => GeneralExtensions.GenerateSignalsId(CommonId); }
+        public string Id { get => GeneralExtensions.GenerateOnlineId(CommonId); }
         public int CommonId { get; set; }
         public string Title { get; set; }
         public bool IsClosed { get; set; }

@@ -201,6 +201,7 @@ namespace FSA.SIMSManagerDb.Repositories
                     ReceivedOn = DateTime.Now,
                     Stakeholders = stakeholders,
                     Products = prods,
+                    OnlineFormReference = dbEnt.ReferenceNo,
                     Notes = new List<IncidentNoteDb> { new IncidentNoteDb { Note = reason } }.Concat(notes.Reverse<IncidentNoteDb>()).ToList(),
                 };
                 var savedIncident = ctx.Incidents.Add(newIncident);

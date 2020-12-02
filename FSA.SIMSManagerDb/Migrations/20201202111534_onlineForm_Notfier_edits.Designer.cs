@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FSA.SIMSManagerDb.Migrations
 {
     [DbContext(typeof(SimsDbContext))]
-    [Migration("20201130091130_onlineform_notifierType")]
-    partial class onlineform_notifierType
+    [Migration("20201202111534_onlineForm_Notfier_edits")]
+    partial class onlineForm_Notfier_edits
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -85,10 +85,12 @@ namespace FSA.SIMSManagerDb.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("AddressLine1")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(400)")
+                        .HasMaxLength(400);
 
                     b.Property<string>("AddressLine2")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(400)")
+                        .HasMaxLength(400);
 
                     b.Property<int>("ContactMethodId")
                         .HasColumnType("int");
@@ -97,7 +99,8 @@ namespace FSA.SIMSManagerDb.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("County")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(80)")
+                        .HasMaxLength(80);
 
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
@@ -120,7 +123,8 @@ namespace FSA.SIMSManagerDb.Migrations
                         .HasMaxLength(70);
 
                     b.Property<string>("PostCode")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
 
                     b.Property<string>("TelephoneNumber")
                         .HasColumnType("nvarchar(max)");
@@ -329,6 +333,9 @@ namespace FSA.SIMSManagerDb.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("OIMTGroups")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OnlineFormReference")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("PrincipalFBOId")
@@ -7258,9 +7265,6 @@ namespace FSA.SIMSManagerDb.Migrations
                     b.Property<int?>("IncidentId")
                         .HasColumnType("int");
 
-                    b.Property<int>("IncidentTypeId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsClosed")
                         .HasColumnType("bit");
 
@@ -7295,8 +7299,6 @@ namespace FSA.SIMSManagerDb.Migrations
                         .HasMaxLength(250);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IncidentTypeId");
 
                     b.HasIndex("NotifierTypeId");
 
@@ -8510,12 +8512,6 @@ namespace FSA.SIMSManagerDb.Migrations
 
             modelBuilder.Entity("FSA.SIMSManagerDb.Entities.OnlineFormDb", b =>
                 {
-                    b.HasOne("FSA.SIMSManagerDb.Entities.Lookups.HazardGroupDb", "IncidentType")
-                        .WithMany()
-                        .HasForeignKey("IncidentTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("FSA.SIMSManagerDb.Entities.Lookups.NotifierTypeDb", "NotifierType")
                         .WithMany()
                         .HasForeignKey("NotifierTypeId")

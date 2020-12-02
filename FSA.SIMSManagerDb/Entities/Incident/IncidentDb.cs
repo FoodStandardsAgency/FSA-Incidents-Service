@@ -63,6 +63,7 @@ namespace FSA.SIMSManagerDb.Entities
         public DateTime IncidentCreated { get; set; }
         public DateTime? IncidentClosed { get; set; }
         public bool SensitiveInfo { get; set; }
+        public string OnlineFormReference { get; set; }
 
         public ICollection<IncidentAttachmentDb> Attachments { get; set; }
         public ICollection<IncidentNoteDb> Notes { get; set; }

@@ -21,9 +21,9 @@ namespace Sims.Application
 
         public ISIMSNotes Notes => new OnlineFormNotes(dbHost);
 
-        public ISIMSProducts Products => throw new NotImplementedException();
+        public ISIMSProducts Products => new OnlineFormProducts(dbHost);
 
-        public ISIMSStakeholders Stakeholders => throw new NotImplementedException();
+        public ISIMSStakeholders Stakeholders => new OnlineFormStakeholders(dbHost);
 
         public async Task<SimsOnlineForm> Add(SimsOnlineForm onlineForm)
         {

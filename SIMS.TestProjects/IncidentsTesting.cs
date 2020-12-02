@@ -45,13 +45,13 @@ namespace SIMS.Database
         {
             var incident = new BaseIncident(
                 incidentTitle: "New Incident (no Lead officer)",
-                incidentTypeId: 1,
+                incidentTypeId: 36,
                 contactMethodId: 2,
                 incidentSourceId:14,
                 statusId: (int)SimsIncidentStatusTypes.Unassigned,
                 priorityId: 2,
                 classificationId: 1,
-                dataSourceId: 1,
+                dataSourceId:9,
                 signalUrl: "",
                 productTypeId: 3,
                 leadOfficer: "",
@@ -86,13 +86,13 @@ namespace SIMS.Database
         {
             var incident = new BaseIncident(
                    incidentTitle: "New Incident (no death illness)",
-                   incidentTypeId: 1,
+                   incidentTypeId: 36,
                    contactMethodId: 2,
                    incidentSourceId:1,
                    statusId: (int)SimsIncidentStatusTypes.Open,
                    priorityId: 2,
                    classificationId: 1,
-                   dataSourceId: 1,
+                   dataSourceId: 9,
                    signalUrl: "",
                    productTypeId: 3,
                    leadOfficer: this.userId3,
@@ -129,13 +129,13 @@ namespace SIMS.Database
         {
             var incident = new BaseIncident(
                    incidentTitle: "New Incident (Lead officer)",
-                   incidentTypeId: 1,
+                   incidentTypeId: 36,
                    incidentSourceId:4,
                    contactMethodId: 2,
                    statusId: (int)SimsIncidentStatusTypes.Unassigned,
                    priorityId: 2,
                    classificationId: 1,
-                   dataSourceId: 1,
+                   dataSourceId: 9,
                    oimtGroups: "OimtGroups, OimitGroups 2",
                    signalUrl: "",
                    productTypeId: 3,

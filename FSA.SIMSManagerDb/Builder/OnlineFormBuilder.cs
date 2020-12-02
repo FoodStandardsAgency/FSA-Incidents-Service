@@ -19,6 +19,10 @@ namespace FSA.SIMSManagerDb.Builder
             builder.HasMany(p => p.Stakeholders)
                     .WithOne(p => p.OnlineForm)
                     .HasForeignKey(k => k.HostId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(a => a.NotifierType)
+                    .WithMany()
+                    .OnDelete(DeleteBehavior.NoAction);
+
         }
     }
 }

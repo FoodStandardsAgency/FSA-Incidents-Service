@@ -175,6 +175,7 @@ namespace SIMS.TestProjects.Setup
             var stakeholders = seeder.GetOnlineFormStakeholders.ToList();
             var products = seeder.GetOnlineFormProducts.ToList();
             await sims.OnlineForms.AddBatch(forms);
+
             await sims.OnlineForms.Stakeholders.Add(1, stakeholders[0]);
             await sims.OnlineForms.Stakeholders.Add(2, stakeholders[1]);
             await sims.OnlineForms.Stakeholders.Add(3, stakeholders[2]);
@@ -194,8 +195,18 @@ namespace SIMS.TestProjects.Setup
             await sims.OnlineForms.Stakeholders.Add(15, stakeholders[14]);
 
             await sims.OnlineForms.Products.Add(1, products[0]);
+
             await sims.OnlineForms.Products.Add(2, products[1]);
+            await sims.OnlineForms.Products.Add(2, products[2]);
+
+            await sims.OnlineForms.Products.Add(3, products[3]);
             await sims.OnlineForms.Products.Add(3, products[2]);
+            await sims.OnlineForms.Products.Add(3, products[4]);
+
+            await sims.OnlineForms.Products.Add(4, products[2]);
+            await sims.OnlineForms.Products.Add(4, products[0]);
+            await sims.OnlineForms.Products.Add(4, products[1]);
+            await sims.OnlineForms.Products.Add(4, products[4]);
             await sims.OnlineForms.Products.Add(4, products[3]);
             await sims.OnlineForms.Products.Add(5, products[4]);
 

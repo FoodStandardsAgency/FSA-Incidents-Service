@@ -52,7 +52,6 @@ namespace SIMS.Database
                 DistributionDetails = "Where did this get done didded",
                 AdditionalInformation = "Anything else I added",
                 IsClosed = false,
-                IncidentTypeId = 70,
                 ReferenceNo = "R1234",
                 LADetails = "HA AHAHAHAHAHAH!"
             };
@@ -111,9 +110,8 @@ namespace SIMS.Database
             {
                 var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var savedForm = await simsHost.OnlineForms.Add(newOnlineForm);
-                savedForm.IncidentTypeId = updatedIncidentType;
                 var updatedForm = await simsHost.OnlineForms.Update(savedForm);
-                Assert.True(updatedForm.Title == factCheck && updatedForm.IncidentTypeId == updatedIncidentType);
+                Assert.True(updatedForm.Title == factCheck);
             }
         }
 
@@ -215,7 +213,7 @@ namespace SIMS.Database
             {
                 var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var savedForm = await simsHost.OnlineForms.Add(newOnlineForm);
-                savedForm.IncidentTypeId = updatedIncidentType;
+                
                 var stakeHolders = await simsHost.OnlineForms.Stakeholders.Add(savedForm.CommonId, new SimsStakeholder
                 {
                     AddressId = 42,
