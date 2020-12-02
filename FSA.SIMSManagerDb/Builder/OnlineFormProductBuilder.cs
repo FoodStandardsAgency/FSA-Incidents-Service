@@ -28,7 +28,9 @@ namespace FSA.SIMSManagerDb.Builder
             builder.HasOne(o => o.AmountUnitType)
                    .WithMany()
                    .OnDelete(DeleteBehavior.NoAction);
+
             builder.Property(o => o.Amount).HasDefaultValue("0.00");
+
         }
     }
 }

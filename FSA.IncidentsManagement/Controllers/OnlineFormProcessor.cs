@@ -2,8 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.IO;
+using Sims.Application.Exceptions;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -25,9 +24,19 @@ namespace FSA.IncidentsManagement.Controllers
         [Authorize(Policy = "OnlineFormOnly")]
         public async Task AddOnlineForm()
         {
-            var formDocument= await JsonDocument.ParseAsync(this.Request.Body);
-            await simsApp.OnlineForms.ImportNewForm(formDocument);
-            logger.LogInformation("");
+            try
+            {
+                var formDocument = await JsonDocument.ParseAsync(this.Request.Body);
+                await simsApp.OnlineForms.ImportNewForm(formDocument);
+            }
+            catch(SimsOnlineFormAlreadyImportedException ex)
+            {
+                logger.LogCritical(ex, "Online form already added.");
+            }
+            catch (SIMSException ex)
+            {
+                logger.LogCritical(ex, "Online form adding eerror");
+            }
         }
     }
 }

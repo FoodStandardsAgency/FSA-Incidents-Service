@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Sims.Application.OnlineForm
+﻿namespace Sims.Application.OnlineForm
 {
-    internal class ExternalAddress
+    internal class ExternalProductAddress
     {
+        public string ProductName { get; set; }
+        public string ContactName { get; set; }
         public string AddressLine1 { get; set; }
         public string AddressLine2 { get; set; }
         public string TownCity { get; set; }

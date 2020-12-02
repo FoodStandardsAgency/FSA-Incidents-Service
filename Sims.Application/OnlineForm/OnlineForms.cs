@@ -69,7 +69,7 @@ namespace Sims.Application
             }
             else
             {
-                throw new SimsOnlineFormMissingException($"{refNo} : Already exists");
+                throw new SimsOnlineFormAlreadyImportedException($"{refNo} : Already exists");
             }
         }
 

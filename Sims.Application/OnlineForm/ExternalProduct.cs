@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Sims.Application.OnlineForm
 {
-    internal class ExternalProducts
+    internal class ExternalProduct
     {
         public string Name { get; set; }
         public string Brand { get; set; }
