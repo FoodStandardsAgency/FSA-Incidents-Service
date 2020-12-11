@@ -1,10 +1,10 @@
 ﻿using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb.Contracts;
+using Sims.Application.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -28,10 +28,13 @@ namespace Sims.Application.OnlineForm
                 PropertyNameCaseInsensitive = true,
                 AllowTrailingCommas = false,
                 IgnoreReadOnlyFields = true,
-                IgnoreReadOnlyProperties = true
+                IgnoreReadOnlyProperties = true,
+                 
+                
             };
             // Nullable date times are used in the ProductDates
             jsonOpts.Converters.Add(new NullableDateTimeConverter());
+            
             // Create a new Online form!
             // convert into local objects, and then transgorm into SIMS.. objects for pushing into the db.
             var newForm = JsonSerializer.Deserialize<ExternalOnlineForm>(formDocument.RootElement.GetProperty("Incidents").GetRawText(), jsonOpts);
@@ -47,7 +50,7 @@ namespace Sims.Application.OnlineForm
                 var newProduct = JsonSerializer.Deserialize<ExternalProduct>(product.GetRawText(), jsonOpts);
                 foreach (var address in product.GetProperty("companies").EnumerateArray())
                 {
-                    var companyContact = JsonSerializer.Deserialize<ExternalCompany>(address.GetRawText());
+                    var companyContact = JsonSerializer.Deserialize<ExternalCompany>(address.GetRawText(), jsonOpts);
                     companyContact.ProductName = newProduct.Name;
                     companyContactBing.Add(companyContact);
                 }
@@ -63,11 +66,23 @@ namespace Sims.Application.OnlineForm
             var newForm = ToOnlineForm(externalFrom, refId);
             var stakeHolder = ToOnlineStakeHolder(notifier);
             var stakeholderAddressNote = NotifierAddress(notifierAddress);
-            var prouducts = allProducts.Select(p => ToOnlineProduct(p));
+            var products = allProducts.Select(p => ToOnlineProduct(p));
 
             var addedForm = await this.host.OnlineForms.Add(newForm);
             var stakeholders = await this.host.OnlineForms.Stakeholders.Add(addedForm.CommonId, stakeHolder);
             await this.host.OnlineForms.Notes.Add(addedForm.CommonId, stakeholderAddressNote.Note);
+            await this.host.OnlineForms.Products.BulkAdd(addedForm.CommonId, products);
+            // unfurl the FBO Types
+            var contactNotes = new List<string>();
+            foreach (var contact in contacts)
+            {
+                var contactAddressNote = NotifierAddress(contact.Addresses);
+                var FboTypes = String.Join("\n", host.OnlineForms.Products.Fbos.GetNamesFromId(contact.FbosTypes.ToList()));
+                var updatedNoteText = $"Product : {contact.ProductName}\nFBOTypes:{FboTypes}\nAddress: {contactAddressNote.Note}";
+                contactNotes.Add(updatedNoteText);
+            }
+            await this.host.OnlineForms.Notes.BulkAdd(addedForm.CommonId, contactNotes);
+
         }
 
         public SimsNote NotifierAddress(ExternalAddress externalAddress) => new SimsNote
@@ -138,7 +153,9 @@ namespace Sims.Application.OnlineForm
             LADetails = onlineForm.LocalAuthorityNotified,
             DeathIllness = onlineForm.IllnessDetails,
             IsClosed = false,
-            NotifierTypeId = onlineForm.NotifierTypeId
+            NotifierTypeId = onlineForm.NotifierTypeId,
+            Description = onlineForm.NatureOfProblem,
+            DistributionDetails = onlineForm.DistributionDetails
         };
     }
 }

@@ -175,7 +175,6 @@ namespace FSA.SIMSManagerDb.Repositories
                                             .Include(a => a.PackSizes)
                                             .Where(o => o.HostId == onlineFormId).ToList();
 
-
                 var prods = mapper.Map<List<IncidentProductDb>>(onlineProds);
                 var stakeholders = this.mapper.Map<List<IncidentStakeholderDb>>(dbEnt.Stakeholders);
 
@@ -202,7 +201,7 @@ namespace FSA.SIMSManagerDb.Repositories
                     Stakeholders = stakeholders,
                     Products = prods,
                     OnlineFormReference = dbEnt.ReferenceNo,
-                    Notes = new List<IncidentNoteDb> { new IncidentNoteDb { Note = reason } }.Concat(notes.Reverse<IncidentNoteDb>()).ToList(),
+                    Notes = notes.Reverse<IncidentNoteDb>().ToList()
                 };
                 var savedIncident = ctx.Incidents.Add(newIncident);
 
@@ -258,15 +257,5 @@ namespace FSA.SIMSManagerDb.Repositories
         }
 
         public async Task<bool> ReferenceNoExists(string refNo)=> (await this.ctx.OnlineForms.FirstOrDefaultAsync(a => a.ReferenceNo == refNo))!=null;
-
-        public async Task AddFromExternalSource(JsonDocument formDocument)
-        {
-            //Break this out into it's constituent chunks.
-            // ReferenceNo : string
-            // Incidents : object
-            // IncidentStakeholders : object (Addresse
-            // Addresses : object ACtually 1 address for stakeholder to become notes
-            // IncidentProducts : object Graph, Sames as incident proces except for datw
-        }
     }
 }

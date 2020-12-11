@@ -30,6 +30,15 @@ namespace FSA.SIMSManagerDb.Repositories
             return addedNote;
         }
 
+        public async Task BulkAdd(int signalId, IEnumerable<string> notes)
+        {
+            await this.SignalNotes.BulkAdd(signalId, notes);
+            // If the Signal is *not* closed we upate it.
+            var dbItem = await this.ctx.Signals.FirstOrDefaultAsync(o => o.Id == signalId && o.SignalStatusId < 50);
+            if (dbItem != null)
+                this.ctx.Signals.Update(dbItem);
+        }
+
         public Task<IEnumerable<SimsNote>> GetAll(int SignalId) => this.SignalNotes.GetAll(SignalId);
     }
 }

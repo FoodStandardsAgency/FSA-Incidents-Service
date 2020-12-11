@@ -34,6 +34,15 @@ namespace FSA.SIMSManagerDb.Repositories
             return addedNote;
         }
 
+        public async Task BulkAdd(int incidentId, IEnumerable<string> notes)
+        {
+            await this.incidentNotes.BulkAdd(incidentId, notes);
+            // If the incident is *not* closed we upate it.
+            var dbItem = await this.ctx.Incidents.FirstOrDefaultAsync(o => o.Id == incidentId && o.IncidentStatusId != (int)IncidentStatusTypes.Closed);
+            if (dbItem != null)
+                this.ctx.Incidents.Update(dbItem);
+        }
+
         public Task<IEnumerable<SimsNote>> GetAll(int incidentId) => this.incidentNotes.GetAll(incidentId);
     }
 }

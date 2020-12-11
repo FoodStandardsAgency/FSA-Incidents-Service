@@ -36,6 +36,8 @@
     <Compile Remove="Migrations\20201202111231_onlineForm_edits.Designer.cs" />
     <Compile Remove="Migrations\20201202111720_NotfierFK_edits.cs" />
     <Compile Remove="Migrations\20201202111720_NotfierFK_edits.Designer.cs" />
+    <Compile Remove="Migrations\20201209121906_didi_forgetSomething.cs" />
+    <Compile Remove="Migrations\20201209121906_didi_forgetSomething.Designer.cs" />
     <Compile Remove="Repositories\SignalsLinkedRecords.cs" />
   </ItemGroup>
 

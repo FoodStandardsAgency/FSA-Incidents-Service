@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIMS.TestProjects", "SIMS.T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sims.Application", "Sims.Application\Sims.Application.csproj", "{A67F316F-51F5-4628-BC5B-7F62699FD459}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIMS.OnlineForm.Functions", "SIMS.OnlineForm.Functions\SIMS.OnlineForm.Functions.csproj", "{42B57B9A-552B-4C98-B0FC-41A00A43EC95}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIMS.OnlineForm.Functions", "SIMS.OnlineForm.Functions\SIMS.OnlineForm.Functions.csproj", "{42B57B9A-552B-4C98-B0FC-41A00A43EC95}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

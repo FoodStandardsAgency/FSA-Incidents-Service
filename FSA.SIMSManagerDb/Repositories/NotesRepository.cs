@@ -53,5 +53,25 @@ namespace FSA.SIMSManagerDb.Repositories
             return mapper.Map<NoteDb, SimsNote>(newComment);
         }
 
+        /// <summary>
+        /// INserting a bunch of notes
+        /// </summary>
+        /// <param name="hostId"></param>
+        /// <param name="note"></param>
+        /// <returns></returns>
+        public async Task BulkAdd(int hostId, IEnumerable<string> notes)
+        {
+
+            foreach (var note in notes)
+            {
+                var newComment = new NoteDb { Note = note, HostId = hostId };
+                this.NoteSet.Add(newComment);
+            }
+
+
+            await ctx.SaveChangesAsync();
+        }
+
+
     }
 }

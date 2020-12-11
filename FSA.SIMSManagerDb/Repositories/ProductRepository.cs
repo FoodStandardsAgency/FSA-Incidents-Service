@@ -43,6 +43,21 @@ namespace FSA.SIMSManagerDb.Repositories
             return mapper.Map<T, SimsProduct>(dbCreated.Entity);
         }
 
+        public async Task BulkAdd(int HostId, IEnumerable<SimsProduct> newProducts)
+        {
+            if (HostId == 0) throw new ArgumentOutOfRangeException("No host selected.");
+            var dbItems = mapper.Map<IEnumerable<SimsProduct>, List<T>>(newProducts.ToList());
+            foreach (var dbItem in dbItems)
+            {
+
+            dbItem.HostId = HostId;
+            var dbCreated = DbSet.Add(dbItem);
+            }
+            await ctx.SaveChangesAsync();
+//            return mapper.Map<T, SimsProduct>(dbCreated.Entity);
+        }
+
+
         public async Task<SimsProduct> Update(SimsProduct product)
         {
             var productDb = this.DbSet

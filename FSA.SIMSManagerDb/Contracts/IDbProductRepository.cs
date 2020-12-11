@@ -13,6 +13,8 @@ namespace FSA.SIMSManagerDb.Contracts
         Task<SimsProductDetail> GetDetail(int productId);
         Task<IEnumerable<SimsProduct>> HostProducts(int hostId);
         Task<SimsProduct> Update(SimsProduct product);
+        Task BulkAdd(int HostId, IEnumerable<SimsProduct> newProducts);
+
         IDbProductFboRepository Fbos { get; }
     }
 }

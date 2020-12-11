@@ -28,9 +28,7 @@ namespace SIMS.OnlineForm.Functions
         {
             var request = new HttpRequestMessage(HttpMethod.Post, Environment.GetEnvironmentVariable("OnlineFormDestination"));
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            //request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            request.Content = new StringContent(rawBody, Encoding.UTF8);//, "text/plain; charset=utf-8");
-            //request.Content = new ByteArrayContent()
+            request.Content = new StringContent(rawBody, Encoding.UTF8);
             var result = await _client.SendAsync(request);
             if(!result.IsSuccessStatusCode)
             {

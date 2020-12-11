@@ -4,8 +4,8 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using SIMS.OnlineForm.Functions.Models;
+using StackExchange.Redis;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -16,22 +16,53 @@ namespace SIMS.OnlineForm.Functions
     public static class SimsLookups
     {
         private static HttpClient client = new HttpClient();
+        private static string KeyName = "simslookups";
+        private static ConnectionMultiplexer RedisConn;
 
         [FunctionName("SimsLookups")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
+
             ILogger log)
         {
+            var cacheConn = Environment.GetEnvironmentVariable("CacheConnection") ?? Environment.GetEnvironmentVariable("ConnectionStrings:CacheConnection");
+
+            RedisConn =  ConnectionMultiplexer.Connect(cacheConn);
+            log.LogInformation("Welcome to info logginger");
+            log.LogInformation($"lookup time out; {Environment.GetEnvironmentVariable("LookupTimeout")}");
+            log.LogInformation($"cache conn  : {cacheConn}");
+ 
             try
             {
-                log.LogInformation("Requesting Online form lookups.");
-                var token = await TokenFetcherHelper.FetchToken(client, log);
-                var lookups = await FetchLookups(client, token, log);
-                return new OkObjectResult(lookups); // new { ClientId = Environment.GetEnvironmentVariable("ClientId"), ClientSecret = Environment.GetEnvironmentVariable("ClientSecret") });
+                var redisDb = RedisConn.GetDatabase();
+                var lookupData = redisDb.StringGet(SimsLookups.KeyName);
+                var lookupTimeoutMins = int.Parse(Environment.GetEnvironmentVariable("LookupTimeout"));
+                if (lookupData == RedisValue.Null)
+                {
+                    log.LogInformation("Requesting Online form lookups.");
+                    var token = await TokenFetcherHelper.FetchToken(client, log);
+                    var lookups = await FetchLookups(client, token, log);
+                    redisDb.StringSet(KeyName, System.Text.Json.JsonSerializer.Serialize(lookups));
+                    redisDb.KeyExpire(KeyName, TimeSpan.FromMinutes(lookupTimeoutMins));
+                    return new OkObjectResult(lookups);
+                }
+                else
+                {
+                    log.LogInformation("Fetching from cache.");
+                    return new OkObjectResult(System.Text.Json.JsonSerializer.Deserialize<SimsLookupsHost>(lookupData));
+                }
+
             }
-            catch (NullReferenceException)
+            catch(RedisException ex)
             {
-                return new BadRequestErrorMessageResult("Failed to fetch token");
+                log.LogCritical("Redis Error", ex);
+                return new BadRequestErrorMessageResult("Failed to fetch lookups.");
+
+            }
+            catch (NullReferenceException ex)
+            {
+                log.LogCritical("Token error", ex);
+                return new BadRequestErrorMessageResult("Failed to fetch lookups.");
             }
 
         }

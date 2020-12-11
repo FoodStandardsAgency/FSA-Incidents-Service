@@ -23,6 +23,5 @@ namespace FSA.SIMSManagerDb.Contracts
         Task<IPaging<SimsOnlineFormDashboardItem>> DashboardSearch(string search = null, int pageSize = 500, int startPage = 1);
         Task<int> CloseCreateIncident(int onlineFormId, string reason);
         Task<bool> ReferenceNoExists(string refNo);
-        Task AddFromExternalSource(JsonDocument formDocument);
     }
 }
