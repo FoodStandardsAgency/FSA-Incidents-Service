@@ -60,7 +60,9 @@ namespace Sims.Application
         public async Task ImportNewForm(JsonDocument formDocument)
         {
             // Check the reference number 1. Exists, and has not already been added.
-            var refNo = formDocument.RootElement.GetProperty("ReferenceNo").GetString();
+            var refNo = formDocument.RootElement
+                            .GetProperty("Incidents")
+                                .GetProperty("IncidentTitle").GetRawText();
 
             if (!await dbHost.OnlineForms.ReferenceNoExists(refNo))
             {

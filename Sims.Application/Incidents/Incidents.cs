@@ -101,7 +101,8 @@ namespace Sims.Application
             try
             {
                 if (incident.CommonId == 0) throw new SimsItemMissing("Incident Id missing");
-                return await dbHost.Incidents.Update(incident);
+
+                return await dbHost.Incidents.Update(incident.SignalStatusId==0 ? incident.WithSignalStatusId(null): incident);
             }
             catch (NullReferenceException)
             {

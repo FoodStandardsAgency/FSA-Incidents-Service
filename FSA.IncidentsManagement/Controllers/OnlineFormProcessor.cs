@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sims.Application.Exceptions;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -26,8 +27,8 @@ namespace FSA.IncidentsManagement.Controllers
         {
             try
             {
-                var formDocument = await JsonDocument.ParseAsync(this.Request.Body);
-                await simsApp.OnlineForms.ImportNewForm(formDocument);
+                using (var formDocument = await JsonDocument.ParseAsync(this.Request.Body))
+                    await simsApp.OnlineForms.ImportNewForm(formDocument);
             }
             catch(SimsOnlineFormAlreadyImportedException ex)
             {
@@ -36,6 +37,10 @@ namespace FSA.IncidentsManagement.Controllers
             catch (SIMSException ex)
             {
                 logger.LogCritical(ex, "Online form adding eerror");
+            }
+            catch(KeyNotFoundException ex)
+            {
+                logger.LogCritical(ex, "Online form, cannot find key.");
             }
         }
     }

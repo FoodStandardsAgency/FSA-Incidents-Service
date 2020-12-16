@@ -170,10 +170,15 @@ namespace FSA.SIMSManagerDb.Repositories
             // so status must be set to open
             if (String.IsNullOrEmpty(dbItem.LeadOfficer) && !String.IsNullOrEmpty(incident.LeadOfficer) && incident.StatusId != (int)IncidentStatusTypes.Closed)
                 incident = incident.WithStatus((int)IncidentStatusTypes.Open);
-                
+
             //Transfer our updates into the existing incident
             //incident.ToUpdateDb(dbItem);
+            var receivedOn = dbItem.ReceivedOn;
             mapper.Map(incident, dbItem);
+            // This can be cleared out by faulty data from the client.
+            // It should not be replaced once set.
+            if (receivedOn.HasValue)
+                dbItem.ReceivedOn = receivedOn;
             
 
             // Are we closed?

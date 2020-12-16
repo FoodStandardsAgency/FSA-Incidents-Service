@@ -18,7 +18,7 @@ namespace SIMS.OnlineForm.Functions
         {
             try
             {
-                log.LogInformation("Online form receivied from website.");
+                log.LogInformation("Online form received from website.");
                 string onlineFormRaw = await new StreamReader(req.Body).ReadToEndAsync();
                 return onlineFormRaw;
             }

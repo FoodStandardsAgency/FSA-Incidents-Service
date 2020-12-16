@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 
 namespace FSA.IncidentsManagement.Root.Models
 {
@@ -131,6 +132,40 @@ namespace FSA.IncidentsManagement.Root.Models
                 lastChangedBy: @this.LastChangedBy,
                 lastChangedDate: @this.LastChangedDate
                 );
+
+        public static BaseIncident WithSignalStatusId(this BaseIncident @this, int? newSignalStatusId) => new BaseIncident(
+                 @this.CommonId,
+                mostUniqueId: @this.MostUniqueId,
+                incidentTitle: @this.IncidentTitle,
+
+                incidentTypeId: @this.IncidentTypeId,
+                incidentSourceId: @this.IncidentSourceId,
+                contactMethodId: @this.ContactMethodId,
+                statusId: @this.StatusId,
+                signalStatusId: newSignalStatusId,
+                notifierId: @this.NotifierId,
+                principalFBOId: @this.PrincipalFBOId,
+                priorityId: @this.PriorityId,
+                classificationId: @this.ClassificationId,
+                dataSourceId: @this.DataSourceId,
+                  signalUrl: @this.SignalUrl,
+                productTypeId: @this.ProductTypeId,
+                leadOfficer: @this.LeadOfficer,
+                leadOffice: @this.LeadOffice,
+                adminLeadId: @this.AdminLeadId,
+                oimtGroups: @this.OIMTGroups,
+                fieldOfficer: @this.FieldOfficer,
+                leadLocalAuthorityId: @this.LeadLocalAuthorityId,
+                lAAdvised: @this.LAAdvised,
+                deathIllnessId: @this.DeathIllnessId,
+                sensitiveInfo: @this.SensitiveInfo,
+                receivedOn: @this.ReceivedOn,
+                incidentCreated: @this.IncidentCreated,
+                incidentClosed: @this.IncidentClosed,
+                lastChangedBy: @this.LastChangedBy,
+                lastChangedDate: @this.LastChangedDate
+                );
+
 
         public static BaseIncident WithLeadOfficer(this BaseIncident @this, string officer) => new BaseIncident(
                 @this.CommonId,

@@ -21,7 +21,7 @@ namespace Sims.Application.OnlineForm
 
         public async Task Process(JsonDocument formDocument)
         {
-            var refNo = formDocument.RootElement.GetProperty("ReferenceNo").GetString();
+            var refNo = formDocument.RootElement.GetProperty("Incidents").GetProperty("IncidentTitle").GetRawText();
 
             var jsonOpts = new JsonSerializerOptions()
             {
@@ -48,7 +48,7 @@ namespace Sims.Application.OnlineForm
             foreach (var product in formDocument.RootElement.GetProperty("IncidentProducts").EnumerateArray())
             {
                 var newProduct = JsonSerializer.Deserialize<ExternalProduct>(product.GetRawText(), jsonOpts);
-                foreach (var address in product.GetProperty("companies").EnumerateArray())
+                foreach (var address in product.GetProperty("Companies").EnumerateArray())
                 {
                     var companyContact = JsonSerializer.Deserialize<ExternalCompany>(address.GetRawText(), jsonOpts);
                     companyContact.ProductName = newProduct.Name;
@@ -94,9 +94,9 @@ namespace Sims.Application.OnlineForm
         {
             Added = DateTime.Now,
             AdditionalInfo = product.AdditionalInfo,
-            Amount = product.Amount,
+            Amount = product.Amount.ToString(),
             AmountUnitTypeId = product.AmountUnitTypeId,
-            BatchCodes = String.Join(", ", product.BatchCodes),
+            BatchCodes = product.BatchCodes,
             Brand = product.Brand,
             CountryOfOriginId = product.CountryOfOriginId,
             Name = product.Name,
@@ -153,7 +153,7 @@ namespace Sims.Application.OnlineForm
             LADetails = onlineForm.LocalAuthorityNotified,
             DeathIllness = onlineForm.IllnessDetails,
             IsClosed = false,
-            NotifierTypeId = onlineForm.NotifierTypeId,
+            NotifierTypeId = onlineForm.Notifierid,
             Description = onlineForm.NatureOfProblem,
             DistributionDetails = onlineForm.DistributionDetails
         };

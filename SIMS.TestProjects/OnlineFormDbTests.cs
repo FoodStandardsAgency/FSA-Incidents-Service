@@ -53,7 +53,7 @@ namespace SIMS.Database
                 AdditionalInformation = "Anything else I added",
                 IsClosed = false,
                 ReferenceNo = "R1234",
-                LADetails = "HA AHAHAHAHAHAH!"
+                LADetails = "Local Authority"
             };
         }
 

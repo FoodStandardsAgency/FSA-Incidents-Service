@@ -3,7 +3,7 @@
     internal class ExternalOnlineForm
     {
         public string ReferenceNo { get; set; }
-        public int NotifierTypeId { get; set; }
+        public int Notifierid { get; set; }
         public string NatureOfProblem { get; set; } // Nature of problem
         public string ActionTaken { get; set; }
         public string DistributionDetails { get; set; }
