@@ -107,6 +107,7 @@ namespace FSA.SIMSManagerDb.MapperProfile
             CreateMap<IncidentDb, IncidentsDisplayModel>(MemberList.Destination)
                 .ForCtorParam("statusId", o => o.MapFrom(a => a.IncidentStatusId))
                 .ForCtorParam("adminLeadId", o => o.MapFrom(@this => @this.AdminLeadId ?? 0))
+                .ForCtorParam("onlineFormId", o=>o.MapFrom(@this=>@this.OnlineFormId))
                 .ForCtorParam("lastChangedBy", o => o.MapFrom(a => a.ModifiedBy))
                 .ForCtorParam("lastChangedDate", o => o.MapFrom(a => a.Modified))
                 .ForCtorParam("incidentTypeId", o => o.MapFrom(@this => @this.IncidentTypeId))
@@ -151,7 +152,9 @@ namespace FSA.SIMSManagerDb.MapperProfile
             CreateMap<IncidentDb, BaseIncident>(MemberList.Source)
                 .ForCtorParam("statusId", o => o.MapFrom(a => a.IncidentStatusId))
                 .ForCtorParam("lastChangedBy", o => o.MapFrom(a => a.ModifiedBy))
+                //.ForCtorParam("referenceNo", o => o.MapFrom(a => a.OnlineFormId))
                 .ForCtorParam("lastChangedDate", o => o.MapFrom(a => a.Modified));
+                
 
 
 

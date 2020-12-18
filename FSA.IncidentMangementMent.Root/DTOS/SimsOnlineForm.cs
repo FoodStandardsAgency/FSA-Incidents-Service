@@ -15,5 +15,6 @@
         public string AdditionalInformation { get; set; }
         public int? IncidentId { get; set; }
         public bool IsClosed { get; set; }
+        public string FormattedIncidentId { get => this.IncidentId.HasValue ? GeneralExtensions.GenerateIncidentId(this.IncidentId.Value) : ""; }
     }
 }

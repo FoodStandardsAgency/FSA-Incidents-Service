@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
 using Sims.Application;
@@ -128,7 +129,7 @@ namespace FSA.IncidentsManagement
                 var map = srv.GetRequiredService<IMapper>();
                 var userInfo = srv.GetRequiredService<UserInfo>();
                 var attachments = srv.GetRequiredService<ISIMSAttachmentHost>();
-                return new SimsManangement(db, map, attachments, userInfo.GetUserId());
+                return new SimsManangement(db, map, attachments, userInfo.GetUserId(), srv.GetRequiredService<ILoggerFactory>());
             });
 
             services.AddScoped<ISIMSAttachmentHost, SimsAttachments>((o) =>

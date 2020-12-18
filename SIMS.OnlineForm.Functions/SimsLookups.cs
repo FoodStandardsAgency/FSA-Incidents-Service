@@ -28,9 +28,6 @@ namespace SIMS.OnlineForm.Functions
             var cacheConn = Environment.GetEnvironmentVariable("CacheConnection") ?? Environment.GetEnvironmentVariable("ConnectionStrings:CacheConnection");
 
             RedisConn =  ConnectionMultiplexer.Connect(cacheConn);
-            log.LogInformation("Welcome to info logginger");
-            log.LogInformation($"lookup time out; {Environment.GetEnvironmentVariable("LookupTimeout")}");
-            log.LogInformation($"cache conn  : {cacheConn}");
  
             try
             {
@@ -77,7 +74,8 @@ namespace SIMS.OnlineForm.Functions
             var result = await client.SendAsync(request);
 
             var lookups = await result.Content.ReadAsAsync<SimsLookupsHost>();
-
+            if (lookups == null)
+                lookups = new SimsLookupsHost();
             return lookups;
         }
 

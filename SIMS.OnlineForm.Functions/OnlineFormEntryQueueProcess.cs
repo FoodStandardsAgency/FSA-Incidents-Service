@@ -26,7 +26,7 @@ namespace SIMS.OnlineForm.Functions
             {
                 var doc = JsonDocument.Parse(rawForm);
                 // Extract the recetly generated reference no.
-                var refNo = doc.RootElement.GetProperty("Incidents").GetProperty("IncidentTitle").GetRawText();
+                var refNo = doc.RootElement.GetProperty("Incidents").GetProperty("IncidentTitle").GetString();
 #if DEBUG
                 try
                 {

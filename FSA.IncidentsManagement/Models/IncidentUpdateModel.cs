@@ -34,6 +34,7 @@ namespace FSA.IncidentsManagement.Models
         //public Guid MostUniqueId { get; set; }
         public DateTime? ReceivedOn { get; set; }
         public int IncidentSourceId { get; set; }
+        public int? OnlineFormId { get; set; }
         //public DateTime IncidentCreated { get; set; }
         //public DateTime? IncidentClosed { get; set; }
         //public string LastChangedBy { get; set; }

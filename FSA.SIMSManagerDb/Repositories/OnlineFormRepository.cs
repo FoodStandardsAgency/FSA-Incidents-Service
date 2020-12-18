@@ -200,11 +200,12 @@ namespace FSA.SIMSManagerDb.Repositories
                     ReceivedOn = DateTime.Now,
                     Stakeholders = stakeholders,
                     Products = prods,
-                    OnlineFormReference = dbEnt.ReferenceNo,
+                    OnlineFormId = dbEnt.Id,
                     Notes = notes.Reverse<IncidentNoteDb>().ToList()
                 };
                 var savedIncident = ctx.Incidents.Add(newIncident);
-
+                await ctx.SaveChangesAsync();
+                dbEnt.IncidentId = savedIncident.Entity.Id;
                 await ctx.SaveChangesAsync();
                 return savedIncident.Entity.Id;
             }

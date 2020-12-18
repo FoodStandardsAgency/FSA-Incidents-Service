@@ -12,7 +12,7 @@ namespace FSA.IncidentsManagement.Root.Models
         private readonly int _Id;
 
         ///Full record
-        public BaseIncident(int id, Guid mostUniqueId, string incidentTitle, int incidentTypeId, int incidentSourceId,  int contactMethodId, int statusId, int? signalStatusId, int? notifierId, int? principalFBOId, int priorityId, int classificationId, int dataSourceId, string signalUrl, int productTypeId, string leadOfficer, string leadOffice, int? adminLeadId, string fieldOfficer, string oimtGroups, int? leadLocalAuthorityId, bool lAAdvised, int? deathIllnessId, bool sensitiveInfo, DateTime? receivedOn, DateTime incidentCreated, DateTime? incidentClosed, string lastChangedBy, DateTime lastChangedDate)
+        public BaseIncident(int id, Guid mostUniqueId, string incidentTitle, int incidentTypeId, int incidentSourceId,  int contactMethodId, int statusId, int? signalStatusId, int? notifierId, int? principalFBOId, int priorityId, int classificationId, int dataSourceId, string signalUrl, int productTypeId, string leadOfficer, string leadOffice, int? adminLeadId, string fieldOfficer, string oimtGroups, int? onlineFormId, int? leadLocalAuthorityId, bool lAAdvised, int? deathIllnessId, bool sensitiveInfo, DateTime? receivedOn, DateTime incidentCreated, DateTime? incidentClosed, string lastChangedBy, DateTime lastChangedDate)
         {
             _Id = id;
             MostUniqueId = mostUniqueId;
@@ -38,6 +38,7 @@ namespace FSA.IncidentsManagement.Root.Models
             LAAdvised = lAAdvised;
             DeathIllnessId = deathIllnessId;
             SensitiveInfo = sensitiveInfo;
+            OnlineFormId = onlineFormId;
             ReceivedOn = receivedOn;
             IncidentCreated = incidentCreated;
             IncidentClosed = incidentClosed;
@@ -46,13 +47,13 @@ namespace FSA.IncidentsManagement.Root.Models
         }
 
         // New record
-        public BaseIncident(string incidentTitle, int incidentTypeId, int incidentSourceId,  int contactMethodId, int statusId, int? signalStatusId, int? notifierId, int? principalFBOId, int priorityId, int classificationId, int dataSourceId, string signalUrl, int productTypeId, string leadOfficer, string leadOffice, int? adminLeadId,  string fieldOfficer, string oimtGroups, int? leadLocalAuthorityId, bool lAAdvised, int? deathIllnessId, bool sensitiveInfo, DateTime? receivedOn, DateTime incidentCreated, DateTime? incidentClosed, string lastChangedBy, DateTime lastChangedDate) : this(0, Guid.Empty, incidentTitle, incidentTypeId, incidentSourceId, contactMethodId, statusId, signalStatusId, notifierId, principalFBOId, priorityId, classificationId, dataSourceId, signalUrl, productTypeId, leadOfficer, leadOffice, adminLeadId, fieldOfficer, oimtGroups, leadLocalAuthorityId, lAAdvised, deathIllnessId, sensitiveInfo, receivedOn, incidentCreated, incidentClosed, lastChangedBy, lastChangedDate)
+        public BaseIncident(string incidentTitle, int incidentTypeId, int incidentSourceId,  int contactMethodId, int statusId, int? signalStatusId, int? notifierId, int? principalFBOId, int priorityId, int classificationId, int dataSourceId, string signalUrl, int productTypeId, string leadOfficer, string leadOffice, int? adminLeadId,  string fieldOfficer, string oimtGroups, int? onlineFormId,  int? leadLocalAuthorityId, bool lAAdvised, int? deathIllnessId, bool sensitiveInfo, DateTime? receivedOn, DateTime incidentCreated, DateTime? incidentClosed, string lastChangedBy, DateTime lastChangedDate) : this(0, Guid.Empty, incidentTitle, incidentTypeId, incidentSourceId, contactMethodId, statusId, signalStatusId, notifierId, principalFBOId, priorityId, classificationId, dataSourceId, signalUrl, productTypeId, leadOfficer, leadOffice, adminLeadId, fieldOfficer, oimtGroups, onlineFormId, leadLocalAuthorityId, lAAdvised, deathIllnessId, sensitiveInfo, receivedOn, incidentCreated, incidentClosed, lastChangedBy, lastChangedDate)
         {
 
         }
 
         // Friendly new record
-        public BaseIncident(string incidentTitle, int incidentTypeId, int incidentSourceId, int contactMethodId, int statusId, int? signalStatusId, int? notifierId, int? principalFBOId, int priorityId, int classificationId, int dataSourceId, string signalUrl, int productTypeId, string leadOfficer, string leadOffice, int? adminLeadId, string fieldOfficer, string oimtGroups, int? leadLocalAuthorityId, bool lAAdvised, int? deathIllnessId, bool sensitiveInfo, DateTime? receivedOn, DateTime? incidentClosed) : this(0, Guid.Empty, incidentTitle, incidentTypeId, incidentSourceId, contactMethodId, statusId, signalStatusId, notifierId, principalFBOId, priorityId, classificationId, dataSourceId, signalUrl, productTypeId, leadOfficer, leadOffice, adminLeadId, fieldOfficer, oimtGroups, leadLocalAuthorityId, lAAdvised, deathIllnessId, sensitiveInfo, receivedOn, DateTime.MinValue, incidentClosed, "", DateTime.MinValue)
+        public BaseIncident(string incidentTitle, int incidentTypeId, int incidentSourceId, int contactMethodId, int statusId, int? signalStatusId, int? notifierId, int? principalFBOId, int priorityId, int classificationId, int dataSourceId, string signalUrl, int productTypeId, string leadOfficer, string leadOffice, int? adminLeadId, string fieldOfficer, string oimtGroups, int? onlineFormId, int? leadLocalAuthorityId, bool lAAdvised, int? deathIllnessId, bool sensitiveInfo, DateTime? receivedOn, DateTime? incidentClosed) : this(0, Guid.Empty, incidentTitle, incidentTypeId, incidentSourceId, contactMethodId, statusId, signalStatusId, notifierId, principalFBOId, priorityId, classificationId, dataSourceId, signalUrl, productTypeId, leadOfficer, leadOffice, adminLeadId, fieldOfficer, oimtGroups, onlineFormId, leadLocalAuthorityId, lAAdvised, deathIllnessId, sensitiveInfo, receivedOn, DateTime.MinValue, incidentClosed, "", DateTime.MinValue)
         {
 
         }
@@ -77,7 +78,7 @@ namespace FSA.IncidentsManagement.Root.Models
         public string LeadOfficer { get; }
         public string LeadOffice { get; }
         public bool SensitiveInfo { get; }
-
+        public int? OnlineFormId { get; }
         public int? AdminLeadId { get; }
 
         public string FieldOfficer { get; }
@@ -123,6 +124,7 @@ namespace FSA.IncidentsManagement.Root.Models
                 oimtGroups:@this.OIMTGroups,
                 fieldOfficer: @this.FieldOfficer,
                 leadLocalAuthorityId: @this.LeadLocalAuthorityId,
+                onlineFormId:@this.OnlineFormId,                
                 lAAdvised: @this.LAAdvised,
                 deathIllnessId: @this.DeathIllnessId,
                 sensitiveInfo: @this.SensitiveInfo,
@@ -156,7 +158,7 @@ namespace FSA.IncidentsManagement.Root.Models
                 oimtGroups: @this.OIMTGroups,
                 fieldOfficer: @this.FieldOfficer,
                 leadLocalAuthorityId: @this.LeadLocalAuthorityId,
-                lAAdvised: @this.LAAdvised,
+onlineFormId:@this.OnlineFormId,                lAAdvised: @this.LAAdvised,
                 deathIllnessId: @this.DeathIllnessId,
                 sensitiveInfo: @this.SensitiveInfo,
                 receivedOn: @this.ReceivedOn,
@@ -190,7 +192,7 @@ namespace FSA.IncidentsManagement.Root.Models
                 oimtGroups:@this.OIMTGroups,
                fieldOfficer: @this.FieldOfficer,
                leadLocalAuthorityId: @this.LeadLocalAuthorityId,
-               lAAdvised: @this.LAAdvised,
+onlineFormId:@this.OnlineFormId,               lAAdvised: @this.LAAdvised,
                deathIllnessId: @this.DeathIllnessId,
                sensitiveInfo: @this.SensitiveInfo,
                receivedOn: @this.ReceivedOn,
@@ -223,7 +225,8 @@ namespace FSA.IncidentsManagement.Root.Models
                 oimtGroups:@this.OIMTGroups,
                fieldOfficer: @this.FieldOfficer,
                leadLocalAuthorityId: @this.LeadLocalAuthorityId,
-               lAAdvised: @this.LAAdvised,
+                onlineFormId:@this.OnlineFormId,
+                lAAdvised: @this.LAAdvised,
                deathIllnessId: @this.DeathIllnessId,
                sensitiveInfo: @this.SensitiveInfo,
                receivedOn: @this.ReceivedOn,
@@ -256,7 +259,8 @@ namespace FSA.IncidentsManagement.Root.Models
                 oimtGroups:@this.OIMTGroups,
                fieldOfficer: @this.FieldOfficer,
                leadLocalAuthorityId: @this.LeadLocalAuthorityId,
-               lAAdvised: @this.LAAdvised,
+                onlineFormId:@this.OnlineFormId,             
+                lAAdvised: @this.LAAdvised,
                deathIllnessId: @this.DeathIllnessId,
                sensitiveInfo: @this.SensitiveInfo,
                receivedOn: @this.ReceivedOn,
@@ -288,6 +292,7 @@ namespace FSA.IncidentsManagement.Root.Models
                                adminLeadId: @this.AdminLeadId,
                                fieldOfficer: @this.FieldOfficer,
                                 oimtGroups:@this.OIMTGroups,
+                               onlineFormId: @this.OnlineFormId,
                                leadLocalAuthorityId: localAuthorityId,
                                lAAdvised: @this.LAAdvised,
                                deathIllnessId: @this.DeathIllnessId,
@@ -321,7 +326,9 @@ namespace FSA.IncidentsManagement.Root.Models
                        oimtGroups:@this.OIMTGroups,
                        fieldOfficer: @this.FieldOfficer,
                        leadLocalAuthorityId: @this.LeadLocalAuthorityId,
-                       lAAdvised: @this.LAAdvised,
+                      onlineFormId: @this.OnlineFormId,
+                lAAdvised: @this.LAAdvised,
+
                sensitiveInfo: @this.SensitiveInfo,
                deathIllnessId: @this.DeathIllnessId,
                        receivedOn: @this.ReceivedOn,
@@ -354,7 +361,8 @@ namespace FSA.IncidentsManagement.Root.Models
                  oimtGroups:@this.OIMTGroups,
                   fieldOfficer: @this.FieldOfficer,
                   leadLocalAuthorityId: @this.LeadLocalAuthorityId,
-                  lAAdvised: @this.LAAdvised,
+                onlineFormId: @this.OnlineFormId,
+                lAAdvised: @this.LAAdvised,
                sensitiveInfo: @this.SensitiveInfo,
                deathIllnessId: @this.DeathIllnessId,
                   receivedOn: @this.ReceivedOn,
@@ -365,30 +373,31 @@ namespace FSA.IncidentsManagement.Root.Models
                    );
 
         public static BaseIncident WithProductType(this BaseIncident @this, int productTypeId) => new BaseIncident(
-                            @this.CommonId,
-                           mostUniqueId: @this.MostUniqueId,
-                           incidentTitle: @this.IncidentTitle,
+                @this.CommonId,
+                mostUniqueId: @this.MostUniqueId,
+                incidentTitle: @this.IncidentTitle,
                 incidentSourceId:@this.IncidentSourceId,
-                           incidentTypeId: @this.IncidentTypeId,
-                           contactMethodId: @this.ContactMethodId,
-                           statusId: @this.StatusId,
-                           signalStatusId: @this.SignalStatusId,
-                           notifierId: @this.NotifierId,
-                           principalFBOId: @this.PrincipalFBOId,
-                           priorityId: @this.PriorityId,
-                           classificationId: @this.ClassificationId,
-                           dataSourceId: @this.DataSourceId,
-                           signalUrl: @this.SignalUrl,
-                           productTypeId: productTypeId,
-                           leadOfficer: @this.LeadOfficer,
-                           leadOffice: @this.LeadOffice,
-                           adminLeadId: @this.AdminLeadId,
-                           oimtGroups:@this.OIMTGroups,
-                           fieldOfficer: @this.FieldOfficer,
-                           leadLocalAuthorityId: @this.LeadLocalAuthorityId,
-                           lAAdvised: @this.LAAdvised,
-               sensitiveInfo: @this.SensitiveInfo,
-    
+                incidentTypeId: @this.IncidentTypeId,
+                contactMethodId: @this.ContactMethodId,
+                statusId: @this.StatusId,
+                signalStatusId: @this.SignalStatusId,
+                notifierId: @this.NotifierId,
+                principalFBOId: @this.PrincipalFBOId,
+                priorityId: @this.PriorityId,
+                classificationId: @this.ClassificationId,
+                dataSourceId: @this.DataSourceId,
+                signalUrl: @this.SignalUrl,
+                productTypeId: productTypeId,
+                leadOfficer: @this.LeadOfficer,
+                leadOffice: @this.LeadOffice,
+                adminLeadId: @this.AdminLeadId,
+                oimtGroups:@this.OIMTGroups,
+                fieldOfficer: @this.FieldOfficer,
+                leadLocalAuthorityId: @this.LeadLocalAuthorityId,
+                    onlineFormId: @this.OnlineFormId,
+                    lAAdvised: @this.LAAdvised,
+                   sensitiveInfo: @this.SensitiveInfo,
+   
                            deathIllnessId: @this.DeathIllnessId,
                            receivedOn: @this.ReceivedOn,
                            incidentCreated: @this.IncidentCreated,
@@ -418,7 +427,7 @@ namespace FSA.IncidentsManagement.Root.Models
         //  adminLeadId: @this.AdminLeadId,
         //  fieldOfficer: @this.FieldOfficer,
         //  leadLocalAuthorityId: @this.LeadLocalAuthorityId,
-        //  lAAdvised: @this.LAAdvised,
+                // referenceNo:@this.OnlineFormReference,        //  lAAdvised: @this.LAAdvised,
         //  deathIllnessId: @this.DeathIllnessId,
         //  receivedOn: @this.ReceivedOn,
         //  incidentCreated: @this.IncidentCreated,
@@ -428,35 +437,36 @@ namespace FSA.IncidentsManagement.Root.Models
         //   );
 
         public static BaseIncident WithPrincipalFbo(this BaseIncident @this, int? addressId) => new BaseIncident(
-                               @this.CommonId,
-                              mostUniqueId: @this.MostUniqueId,
-                              incidentTitle: @this.IncidentTitle,
-                              incidentTypeId: @this.IncidentTypeId,
-                              incidentSourceId:@this.IncidentSourceId,
-                              contactMethodId: @this.ContactMethodId,
-                              statusId: @this.StatusId,
-                              signalStatusId: @this.SignalStatusId,
-                              notifierId: @this.NotifierId,
-                              principalFBOId: addressId,
-                              priorityId: @this.PriorityId,
-                              classificationId: @this.ClassificationId,
-                              dataSourceId: @this.DataSourceId,
-                                      signalUrl: @this.SignalUrl,
-                              productTypeId: @this.ProductTypeId,
-                              leadOfficer: @this.LeadOfficer,
-                              leadOffice: @this.LeadOffice,
-                              adminLeadId: @this.AdminLeadId,
-                              oimtGroups:@this.OIMTGroups,
-                              fieldOfficer: @this.FieldOfficer,
-                              sensitiveInfo: @this.SensitiveInfo,
-                              leadLocalAuthorityId: @this.LeadLocalAuthorityId,
-                              lAAdvised: @this.LAAdvised,
-                              deathIllnessId: @this.DeathIllnessId,
-                              receivedOn: @this.ReceivedOn,
-                              incidentCreated: @this.IncidentCreated,
-                              incidentClosed: @this.IncidentClosed,
-                              lastChangedBy: @this.LastChangedBy,
-                               lastChangedDate: @this.LastChangedDate
+                @this.CommonId,
+                mostUniqueId: @this.MostUniqueId,
+                incidentTitle: @this.IncidentTitle,
+                incidentTypeId: @this.IncidentTypeId,
+                incidentSourceId:@this.IncidentSourceId,
+                contactMethodId: @this.ContactMethodId,
+                statusId: @this.StatusId,
+                signalStatusId: @this.SignalStatusId,
+                notifierId: @this.NotifierId,
+                principalFBOId: addressId,
+                priorityId: @this.PriorityId,
+                classificationId: @this.ClassificationId,
+                dataSourceId: @this.DataSourceId,
+                signalUrl: @this.SignalUrl,
+                productTypeId: @this.ProductTypeId,
+                leadOfficer: @this.LeadOfficer,
+                leadOffice: @this.LeadOffice,
+                adminLeadId: @this.AdminLeadId,
+                oimtGroups:@this.OIMTGroups,
+                fieldOfficer: @this.FieldOfficer,
+                sensitiveInfo: @this.SensitiveInfo,
+                leadLocalAuthorityId: @this.LeadLocalAuthorityId,
+                onlineFormId: @this.OnlineFormId,
+                lAAdvised: @this.LAAdvised,
+                deathIllnessId: @this.DeathIllnessId,
+                receivedOn: @this.ReceivedOn,
+                incidentCreated: @this.IncidentCreated,
+                incidentClosed: @this.IncidentClosed,
+                lastChangedBy: @this.LastChangedBy,
+                lastChangedDate: @this.LastChangedDate
                                );
 
     }

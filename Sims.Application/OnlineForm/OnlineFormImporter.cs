@@ -1,6 +1,7 @@
 ﻿using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb.Contracts;
+using Microsoft.Extensions.Logging;
 using Sims.Application.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -13,15 +14,17 @@ namespace Sims.Application.OnlineForm
     internal class OnlineFormImporter
     {
         private readonly ISimsDbHost host;
+        private readonly ILogger<OnlineFormImporter> logger;
 
-        internal OnlineFormImporter(ISimsDbHost host)
+        internal OnlineFormImporter(ISimsDbHost host, ILogger<OnlineFormImporter> logger)
         {
             this.host = host;
+            this.logger = logger;
         }
 
         public async Task Process(JsonDocument formDocument)
         {
-            var refNo = formDocument.RootElement.GetProperty("Incidents").GetProperty("IncidentTitle").GetRawText();
+            var refNo = formDocument.RootElement.GetProperty("Incidents").GetProperty("IncidentTitle").GetString();
 
             var jsonOpts = new JsonSerializerOptions()
             {
@@ -34,9 +37,10 @@ namespace Sims.Application.OnlineForm
             };
             // Nullable date times are used in the ProductDates
             jsonOpts.Converters.Add(new NullableDateTimeConverter());
-            
+
             // Create a new Online form!
             // convert into local objects, and then transgorm into SIMS.. objects for pushing into the db.
+            logger.LogInformation("Processing form input");
             var newForm = JsonSerializer.Deserialize<ExternalOnlineForm>(formDocument.RootElement.GetProperty("Incidents").GetRawText(), jsonOpts);
             newForm.ReferenceNo = refNo;
             var stakeHolder = JsonSerializer.Deserialize<ExternalStakeholder>(formDocument.RootElement.GetProperty("IncidentStakeholders").GetRawText(), jsonOpts);
@@ -57,31 +61,73 @@ namespace Sims.Application.OnlineForm
 
                 allProducts.Add(newProduct);
             }
+
             await CreateNewOnlineForm(refNo, newForm, stakeHolder, stakeHolderAddress, allProducts, companyContactBing);
             //this.host.OnlineForms.Add()
         }
 
         private async Task CreateNewOnlineForm(string refId, ExternalOnlineForm externalFrom, ExternalStakeholder notifier, ExternalAddress notifierAddress, List<ExternalProduct> allProducts, List<ExternalCompany> contacts)
         {
+            logger.LogDebug("Creating new online form.");
+
             var newForm = ToOnlineForm(externalFrom, refId);
             var stakeHolder = ToOnlineStakeHolder(notifier);
             var stakeholderAddressNote = NotifierAddress(notifierAddress);
             var products = allProducts.Select(p => ToOnlineProduct(p));
+            SimsOnlineForm addedForm = null;
+            try
+            {
+                logger.LogDebug("Adding onlineform - base");
+                addedForm = await this.host.OnlineForms.Add(newForm);
+            }
+            catch(Exception ex)
+            {
+                logger.LogCritical("Failed to add basic form", ex);
+                throw ex;
+            }
+            try
+            {
+                logger.LogDebug("Adding onlineform - stakeholders");
+                var stakeholders = await this.host.OnlineForms.Stakeholders.Add(addedForm.CommonId, stakeHolder);
+                await this.host.OnlineForms.Notes.Add(addedForm.CommonId, "Stakeholder Address\n" + stakeholderAddressNote.Note);
+            }
+            catch(Exception ex)
+            {
+                logger.LogCritical("Failed to add stakeholders", ex);
+                throw ex;
+            }
+            try
+            {
+                logger.LogDebug($"Adding onlineform - products {products.Count()}");
+                await this.host.OnlineForms.Products.BulkAdd(addedForm.CommonId, products);
+            }
+            catch(Exception ex)
+            {
+                logger.LogCritical("Failed to add products", ex);
+                throw ex;
 
-            var addedForm = await this.host.OnlineForms.Add(newForm);
-            var stakeholders = await this.host.OnlineForms.Stakeholders.Add(addedForm.CommonId, stakeHolder);
-            await this.host.OnlineForms.Notes.Add(addedForm.CommonId, stakeholderAddressNote.Note);
-            await this.host.OnlineForms.Products.BulkAdd(addedForm.CommonId, products);
+            }
+
             // unfurl the FBO Types
             var contactNotes = new List<string>();
             foreach (var contact in contacts)
             {
                 var contactAddressNote = NotifierAddress(contact.Addresses);
                 var FboTypes = String.Join("\n", host.OnlineForms.Products.Fbos.GetNamesFromId(contact.FbosTypes.ToList()));
-                var updatedNoteText = $"Product : {contact.ProductName}\nFBOTypes:{FboTypes}\nAddress: {contactAddressNote.Note}";
+                var updatedNoteText = $"Product Address\nProduct : {contact.ProductName}\nFBOTypes : {FboTypes}\nAddress : {contactAddressNote.Note}";
                 contactNotes.Add(updatedNoteText);
             }
-            await this.host.OnlineForms.Notes.BulkAdd(addedForm.CommonId, contactNotes);
+
+            try
+            {
+                logger.LogDebug($"Adding onlineform - notes");
+                await this.host.OnlineForms.Notes.BulkAdd(addedForm.CommonId, contactNotes);
+            }
+            catch (Exception ex)
+            {
+                logger.LogCritical("Failed to add notes", ex);
+                throw ex;
+            }
 
         }
 

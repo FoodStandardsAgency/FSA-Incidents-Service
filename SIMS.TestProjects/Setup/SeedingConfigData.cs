@@ -75,7 +75,7 @@ namespace SIMS.TestProjects.Setup
                    notifierId: null,
                    principalFBOId: null,
                 sensitiveInfo: false,
-
+                    onlineFormId:null,
                    leadLocalAuthorityId: null,
                    incidentClosed: null),
 
@@ -101,6 +101,7 @@ namespace SIMS.TestProjects.Setup
                    notifierId: null,
                    sensitiveInfo: false,
                    oimtGroups:"OimtGroups, OimitGroups 2",
+                    onlineFormId:null,
                    principalFBOId: null,
                    leadLocalAuthorityId: null,
                    incidentClosed: null),
@@ -119,6 +120,7 @@ namespace SIMS.TestProjects.Setup
                    leadOffice: "",
                    adminLeadId: 1,
                    leadOfficer: this.userIds[2],
+                    onlineFormId:null,
                    fieldOfficer: "",
                    lAAdvised: false,
                    deathIllnessId: 2,
@@ -141,6 +143,7 @@ namespace SIMS.TestProjects.Setup
                    classificationId: 1,
                    dataSourceId: 2,
                    signalUrl:"https://signalUrl.com",
+                   onlineFormId:null,
                    productTypeId: 3,
                    leadOffice: "",
                    adminLeadId: 2,

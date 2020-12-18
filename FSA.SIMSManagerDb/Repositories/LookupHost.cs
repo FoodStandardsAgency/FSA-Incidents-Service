@@ -5,6 +5,8 @@ using FSA.IncidentsManagement.Root.DTOS.Lookups;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb.Contracts;
 using FSA.SIMSManagerDb.Entities.Lookups;
+using System.Linq;
+
 namespace FSA.SIMSManagerDb.Repositories
 {
     /// <summary>
@@ -75,7 +77,7 @@ namespace FSA.SIMSManagerDb.Repositories
             ProductTypes = this.ProductTypes.GetAll(),
             FBOTypes = this.FBOTypes.GetAll(),
             Units = this.Units.GetAll(),
-            NotifierTypes = this.NotifierTypes.GetAll(),
+            NotifierTypes = this.NotifierTypes.GetAll().Where(a=>a.Id<3).ToList() // Public Individual and local authority are being selected for the onine form.
         };
     }
 }

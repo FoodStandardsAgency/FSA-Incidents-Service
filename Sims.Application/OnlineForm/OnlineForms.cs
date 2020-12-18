@@ -2,6 +2,7 @@
 using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Shared;
 using FSA.SIMSManagerDb.Contracts;
+using Microsoft.Extensions.Logging;
 using Sims.Application.Exceptions;
 using Sims.Application.OnlineForm;
 using System;
@@ -13,10 +14,14 @@ namespace Sims.Application
     internal class OnlineForms : ISIMSOnlineForms
     {
         private ISimsDbHost dbHost;
+        private readonly OnlineFormImporter formImporter;
+        private readonly ILogger<OnlineForms> logger;
 
-        public OnlineForms(ISimsDbHost simsDbHost)
+        public OnlineForms(ISimsDbHost simsDbHost, OnlineFormImporter formImporter, ILogger<OnlineForms> logger)
         {
             this.dbHost = simsDbHost;
+            this.formImporter = formImporter;
+            this.logger = logger;
         }
 
         public ISIMSNotes Notes => new OnlineFormNotes(dbHost);
@@ -66,11 +71,13 @@ namespace Sims.Application
 
             if (!await dbHost.OnlineForms.ReferenceNoExists(refNo))
             {
-                OnlineFormImporter formImporter = new OnlineFormImporter(this.dbHost);
-                await formImporter.Process(formDocument);
+                logger.LogWarning($"{refNo} creating newForm");
+                
+                await this.formImporter.Process(formDocument);
             }
             else
             {
+                logger.LogWarning($"{refNo} already exists");
                 throw new SimsOnlineFormAlreadyImportedException($"{refNo} : Already exists");
             }
         }
