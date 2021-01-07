@@ -8,6 +8,8 @@ namespace FSA.SIMSManagerDb.Contracts
 {
     public interface IDbLookups
     {
+        IEnumerable<Country> Countries { get; }
+
         LookupsHost GetAll();
         SimsExternalLookups GetExternalLookups();
     }

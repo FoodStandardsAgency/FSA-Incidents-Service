@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -39,7 +38,7 @@ namespace FSA.SIMSManagerDb.Repositories
             var qry = this.ctx.OnlineForms
                       .AsNoTracking().AsQueryable();
 
-            if(!String.IsNullOrEmpty(search))
+            if (!String.IsNullOrEmpty(search))
             {
                 (var generalTerms, var idTokens) = this.ParseSearchTerms(search);
                 Expression<Func<OnlineFormDb, bool>> searchExpression = null;
@@ -53,7 +52,7 @@ namespace FSA.SIMSManagerDb.Repositories
             var totalRecords = await qry.CountAsync();
             // Find the start record
             var startRecord = (startPage - 1) * pageSize;
-            var results = await qry.OrderBy(i => i.IsClosed== false)
+            var results = await qry.OrderBy(i => i.IsClosed == false)
                                     .ThenByDescending(i => i.Created)
                                     .Skip(startRecord)
                                     .Take(pageSize)
@@ -61,7 +60,7 @@ namespace FSA.SIMSManagerDb.Repositories
             return new PagedResult<SimsOnlineFormDashboardItem>(results, totalRecords);
 
         }
-      
+
         /// <summary>
         /// A very lazy copy paste from Signals.
         /// This (all Dashboard methods) needs, needs needs to be broken out to thieor s own Class.
@@ -136,7 +135,7 @@ namespace FSA.SIMSManagerDb.Repositories
             return (AllTerms, IdTerms);
         }
 
-            public async Task<SimsOnlineForm> Add(SimsOnlineForm onlineForm)
+        public async Task<SimsOnlineForm> Add(SimsOnlineForm onlineForm)
         {
             var newEntity = mapper.Map<OnlineFormDb>(onlineForm);
             var ent = await ctx.AddAsync(newEntity);
@@ -189,7 +188,7 @@ namespace FSA.SIMSManagerDb.Repositories
                     IncidentStatusId = (int)IncidentStatusTypes.Unassigned,
                     DataSourceId = 46, // Other
                     IncidentTypeId = 36,
-                    NotifierId = dbEnt.NotifierTypeId,
+                    NotifierId = null,
                     SignalUrl = "",
                     LeadOfficer = "",
                     OIMTGroups = "",
@@ -245,9 +244,9 @@ namespace FSA.SIMSManagerDb.Repositories
 
         public async Task<SimsOnlineForm> Update(SimsOnlineForm onlineForm)
         {
-            
+
             var dbEnt = this.ctx.OnlineForms.Find(onlineForm.CommonId);
-            if(dbEnt==null) throw new NullReferenceException("Cannot find Online form");
+            if (dbEnt == null) throw new NullReferenceException("Cannot find Online form");
             if (dbEnt.IsClosed) throw new AccessViolationException("Online form closed.");
             if (!dbEnt.IsClosed && onlineForm.IsClosed == true) throw new DataMisalignedException("Cannot close Online form. Incorrect method.");
             mapper.Map(onlineForm, dbEnt);
@@ -257,6 +256,6 @@ namespace FSA.SIMSManagerDb.Repositories
 
         }
 
-        public async Task<bool> ReferenceNoExists(string refNo)=> (await this.ctx.OnlineForms.FirstOrDefaultAsync(a => a.ReferenceNo == refNo))!=null;
+        public async Task<bool> ReferenceNoExists(string refNo) => (await this.ctx.OnlineForms.FirstOrDefaultAsync(a => a.ReferenceNo == refNo)) != null;
     }
 }

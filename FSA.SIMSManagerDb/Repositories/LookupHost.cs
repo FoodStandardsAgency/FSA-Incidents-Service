@@ -5,6 +5,7 @@ using FSA.IncidentsManagement.Root.DTOS.Lookups;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb.Contracts;
 using FSA.SIMSManagerDb.Entities.Lookups;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace FSA.SIMSManagerDb.Repositories
@@ -23,12 +24,12 @@ namespace FSA.SIMSManagerDb.Repositories
             this.mapper = mapper;
         }
 
-        private ISimsReferenceData<HazardGroup> Categories => new ReferenceDataRepo<HazardGroup, HazardGroupDb>(ctx, mapper);
-        private ISimsReferenceData<Classification> Classifications => new ReferenceDataRepo<Classification, ClassificationDb>(ctx, mapper);
-        private ISimsReferenceData<Priority> Priorities => new ReferenceDataRepo<Priority, PriorityDb>(ctx, mapper);
+        private ISimsReferenceData<HazardGroup> mCategories => new ReferenceDataRepo<HazardGroup, HazardGroupDb>(ctx, mapper);
+        private ISimsReferenceData<Classification> mClassifications => new ReferenceDataRepo<Classification, ClassificationDb>(ctx, mapper);
+        private ISimsReferenceData<Priority> mPriorities => new ReferenceDataRepo<Priority, PriorityDb>(ctx, mapper);
         private ISimsReferenceData<IncidentStatusLkUp> IncidentStatus => new ReferenceDataRepo<IncidentStatusLkUp, IncidentStatusDb>(ctx, mapper);
         private ISimsReferenceData<ContactMethod> ContactMethods => new ReferenceDataRepo<ContactMethod, ContactMethodDb>(ctx, mapper);
-        private ISimsReferenceData<Country> Countries => new ReferenceDataRepo<Country, CountryDb>(ctx, mapper);
+        private ISimsReferenceData<Country> mCountries => new ReferenceDataRepo<Country, CountryDb>(ctx, mapper);
         private ISimsReferenceData<DataSource> DataSources => new ReferenceDataRepo<DataSource, DataSourceDb>(ctx, mapper);
         private ISimsReferenceData<DeathIllness> DeathIllnesses => new ReferenceDataRepo<DeathIllness, DeathIllnessDb>(ctx, mapper);
         private ISimsReferenceData<ProductType> ProductTypes => new ReferenceDataRepo<ProductType, ProductTypeDb>(ctx, mapper);
@@ -46,14 +47,16 @@ namespace FSA.SIMSManagerDb.Repositories
         private ISimsReferenceData<StakeholderIncidentRole> StakeholderIncidentRoles => new ReferenceDataRepo<StakeholderIncidentRole, StakeholderIncidentRoleDb>(ctx, mapper);
 
 
+        public IEnumerable<Country> Countries => this.mCountries.GetAll();
+
         public LookupsHost GetAll() => new LookupsHost
         {
-            Categories = this.Categories.GetAll(),
-            Classifications = this.Classifications.GetAll(),
-            Priorites = this.Priorities.GetAll(),
+            Categories = this.mCategories.GetAll(),
+            Classifications = this.mClassifications.GetAll(),
+            Priorites = this.mPriorities.GetAll(),
             IncidentStatus = this.IncidentStatus.GetAll(),
             ContactMethods = this.ContactMethods.GetAll(),
-            Countries = this.Countries.GetAll(),
+            Countries = this.mCountries.GetAll(),
             DataSources = this.DataSources.GetAll(),
             DeathIllnesses = this.DeathIllnesses.GetAll(),
             ProductTypes = this.ProductTypes.GetAll(),
@@ -73,7 +76,7 @@ namespace FSA.SIMSManagerDb.Repositories
 
         public SimsExternalLookups GetExternalLookups() => new SimsExternalLookups
         {
-            Countries = this.Countries.GetAll(),
+            Countries = this.mCountries.GetAll(),
             ProductTypes = this.ProductTypes.GetAll(),
             FBOTypes = this.FBOTypes.GetAll(),
             Units = this.Units.GetAll(),

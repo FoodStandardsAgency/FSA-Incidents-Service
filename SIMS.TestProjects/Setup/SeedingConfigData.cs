@@ -347,7 +347,7 @@ namespace SIMS.TestProjects.Setup
             new SimsOnlineForm
             {
                 Title = "Basic Complaint",
-                NotifierTypeId=3,
+                NotifierTypeId=1,
                 Description = "Description of basic complaint",
                 Action = "Action to be placed, or has placed",
                 DeathIllness = "Death illness Text",
@@ -361,7 +361,7 @@ namespace SIMS.TestProjects.Setup
             new SimsOnlineForm
             {
                 Title = "Next Complaint",
-                NotifierTypeId=5,
+                NotifierTypeId=1,
                 Description = @"Columbo is a shrewd but inelegant blue-collar homicide detective whose trademarks include his rumpled beige raincoat, unassuming demeanor, cigar, old Peugeot 403 car, unseen wife (whom he mentions regularly), and catchphrase 'Just one more thing.'
 
 The recurring plot's homicide suspects are uniformly clever, wealthy, and elite, setting up a class conflict as part of each episode.[4] Suspects carefully cover their tracks and are initially dismissive of Columbo's circumstantial speech and apparent ineptitude. They become increasingly unsettled as his pestering behavior teases out incriminating evidence. [4] His relentless approach often leads to self-incrimination or outright confession. ",
@@ -392,7 +392,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
             new SimsOnlineForm
             {
                 Title = "More data",
-                NotifierTypeId=5,
+                NotifierTypeId=2,
                 Description = @"Specifies the name of the new storage account used by your function app (which does not need to match the globally unique name that you specified for your function). Storage account names must be between 3 and 24 characters in length and may contain numbers and lowercase letters only. This dialog automatically populates the field with a unique name that is dynamically generated. However, feel free to use a different name or even an existing account.",
                 Action = "Action to be placed, or has placed",
                 DeathIllness = "Death illness Text",
@@ -406,7 +406,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
             new SimsOnlineForm
             {
                 Title = "Basic Complaint",
-                NotifierTypeId=3,
+                NotifierTypeId=1,
                 Description = @"Murder, She Wrote is an American crime drama television series starring Angela Lansbury as mystery writer and amateur detective Jessica Fletcher.[4][5] The series aired for 12 seasons with 264 episodes from 1984 to 1996 on the CBS network. It was followed by four TV films. Among the most successful and longest-running television shows in history, it averaged more than 30 million viewers per week in its prime (sometimes hitting above 40 million viewers), and was a staple of the CBS Sunday night lineup for a decade.[6] In syndication, the series is still highly successful throughout the world. ",
                 Action = @"For her work on Murder, She Wrote, Lansbury was nominated for ten Golden Globes and 12 Emmy Awards, winning four Golden Globe awards. She holds the record for the most Golden Globe nominations and wins for Best Actress in a television drama series and the most Emmy nominations for Outstanding Lead Actress in a Drama Series. The series received three Emmy nominations for Outstanding Drama Series. It was nominated for a Golden Globe in the same category six times and won twice. ",
                 DeathIllness = "Death illness Text",
@@ -420,7 +420,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
             new SimsOnlineForm
             {
                 Title = "Second Series Complaint",
-                NotifierTypeId=3,
+                NotifierTypeId=1,
                 Description = "Description of basic complaint",
                 Action = "Action to be placed, or has placed",
                 DeathIllness = "Death illness Text",
@@ -434,7 +434,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
             new SimsOnlineForm
             {
                 Title = "Second Next Complaint",
-                NotifierTypeId=5,
+                NotifierTypeId=2,
                 Description = @"Columbo is a shrewd but inelegant blue-collar homicide detective whose trademarks include his rumpled beige raincoat, unassuming demeanor, cigar, old Peugeot 403 car, unseen wife (whom he mentions regularly), and catchphrase 'Just one more thing.'
 
 The recurring plot's homicide suspects are uniformly clever, wealthy, and elite, setting up a class conflict as part of each episode.[4] Suspects carefully cover their tracks and are initially dismissive of Columbo's circumstantial speech and apparent ineptitude. They become increasingly unsettled as his pestering behavior teases out incriminating evidence. [4] His relentless approach often leads to self-incrimination or outright confession. ",
@@ -465,7 +465,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
             new SimsOnlineForm
             {
                 Title = "Sedond round",
-                NotifierTypeId=5,
+                NotifierTypeId=2,
                 Description = @"Specifies the name of the new storage account used by your function app (which does not need to match the globally unique name that you specified for your function). Storage account names must be between 3 and 24 characters in length and may contain numbers and lowercase letters only. This dialog automatically populates the field with a unique name that is dynamically generated. However, feel free to use a different name or even an existing account.",
                 Action = "Action to be placed, or has placed",
                 DeathIllness = "Death illness Text",
@@ -479,7 +479,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
             new SimsOnlineForm
             {
                 Title = "More Complatin",
-                NotifierTypeId=3,
+                NotifierTypeId=1,
                 Description = @"Murder, She Wrote is an American crime drama television series starring Angela Lansbury as mystery writer and amateur detective Jessica Fletcher.[4][5] The series aired for 12 seasons with 264 episodes from 1984 to 1996 on the CBS network. It was followed by four TV films. Among the most successful and longest-running television shows in history, it averaged more than 30 million viewers per week in its prime (sometimes hitting above 40 million viewers), and was a staple of the CBS Sunday night lineup for a decade.[6] In syndication, the series is still highly successful throughout the world. ",
                 Action = @"For her work on Murder, She Wrote, Lansbury was nominated for ten Golden Globes and 12 Emmy Awards, winning four Golden Globe awards. She holds the record for the most Golden Globe nominations and wins for Best Actress in a television drama series and the most Emmy nominations for Outstanding Lead Actress in a Drama Series. The series received three Emmy nominations for Outstanding Drama Series. It was nominated for a Golden Globe in the same category six times and won twice. ",
                 DeathIllness = "Death illness Text",
@@ -493,7 +493,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
             new SimsOnlineForm
             {
                 Title = "Third round of the problems",
-                NotifierTypeId=3,
+                NotifierTypeId=1,
                 Description = "Description of basic complaint",
                 Action = "Action to be placed, or has placed",
                 DeathIllness = "Death illness Text",
@@ -507,7 +507,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
             new SimsOnlineForm
             {
                 Title = "This is something from the online wqorld",
-                NotifierTypeId=5,
+                NotifierTypeId=2,
                 Description = @"Columbo is a shrewd but inelegant blue-collar homicide detective whose trademarks include his rumpled beige raincoat, unassuming demeanor, cigar, old Peugeot 403 car, unseen wife (whom he mentions regularly), and catchphrase 'Just one more thing.'
 
 The recurring plot's homicide suspects are uniformly clever, wealthy, and elite, setting up a class conflict as part of each episode.[4] Suspects carefully cover their tracks and are initially dismissive of Columbo's circumstantial speech and apparent ineptitude. They become increasingly unsettled as his pestering behavior teases out incriminating evidence. [4] His relentless approach often leads to self-incrimination or outright confession. ",
@@ -538,7 +538,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
             new SimsOnlineForm
             {
                 Title = "Set the more data to stun",
-                NotifierTypeId=5,
+                NotifierTypeId=2,
                 Description = @"Specifies the name of the new storage account used by your function app (which does not need to match the globally unique name that you specified for your function). Storage account names must be between 3 and 24 characters in length and may contain numbers and lowercase letters only. This dialog automatically populates the field with a unique name that is dynamically generated. However, feel free to use a different name or even an existing account.",
                 Action = "Action to be placed, or has placed",
                 DeathIllness = "Death illness Text",
@@ -552,7 +552,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
             new SimsOnlineForm
             {
                 Title = "Right said fred",
-                NotifierTypeId=3,
+                NotifierTypeId=1,
                 Description = @"Murder, She Wrote is an American crime drama television series starring Angela Lansbury as mystery writer and amateur detective Jessica Fletcher.[4][5] The series aired for 12 seasons with 264 episodes from 1984 to 1996 on the CBS network. It was followed by four TV films. Among the most successful and longest-running television shows in history, it averaged more than 30 million viewers per week in its prime (sometimes hitting above 40 million viewers), and was a staple of the CBS Sunday night lineup for a decade.[6] In syndication, the series is still highly successful throughout the world. ",
                 Action = @"For her work on Murder, She Wrote, Lansbury was nominated for ten Golden Globes and 12 Emmy Awards, winning four Golden Globe awards. She holds the record for the most Golden Globe nominations and wins for Best Actress in a television drama series and the most Emmy nominations for Outstanding Lead Actress in a Drama Series. The series received three Emmy nominations for Outstanding Drama Series. It was nominated for a Golden Globe in the same category six times and won twice. ",
                 DeathIllness = "Death illness Text",
@@ -566,7 +566,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
             new SimsOnlineForm
             {
                 Title = "Incautious db updates",
-                NotifierTypeId=3,
+                NotifierTypeId=1,
                 Description = "Description of basic complaint",
                 Action = "Action to be placed, or has placed",
                 DeathIllness = "Death illness Text",
@@ -580,7 +580,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
             new SimsOnlineForm
             {
                 Title = "This is a problem I dfoundd",
-                NotifierTypeId=5,
+                NotifierTypeId=2,
                 Description = @"Columbo is a shrewd but inelegant blue-collar homicide detective whose trademarks include his rumpled beige raincoat, unassuming demeanor, cigar, old Peugeot 403 car, unseen wife (whom he mentions regularly), and catchphrase 'Just one more thing.'
 
 The recurring plot's homicide suspects are uniformly clever, wealthy, and elite, setting up a class conflict as part of each episode.[4] Suspects carefully cover their tracks and are initially dismissive of Columbo's circumstantial speech and apparent ineptitude. They become increasingly unsettled as his pestering behavior teases out incriminating evidence. [4] His relentless approach often leads to self-incrimination or outright confession. ",
@@ -611,7 +611,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
             new SimsOnlineForm
             {
                 Title = "Cellophane",
-                NotifierTypeId=5,
+                NotifierTypeId=2,
                 Description = @"Specifies the name of the new storage account used by your function app (which does not need to match the globally unique name that you specified for your function). Storage account names must be between 3 and 24 characters in length and may contain numbers and lowercase letters only. This dialog automatically populates the field with a unique name that is dynamically generated. However, feel free to use a different name or even an existing account.",
                 Action = "Action to be placed, or has placed",
                 DeathIllness = "Death illness Text",
@@ -625,7 +625,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
             new SimsOnlineForm
             {
                 Title = "Broken food item in closet",
-                NotifierTypeId=3,
+                NotifierTypeId=1,
                 Description = @"Murder, She Wrote is an American crime drama television series starring Angela Lansbury as mystery writer and amateur detective Jessica Fletcher.[4][5] The series aired for 12 seasons with 264 episodes from 1984 to 1996 on the CBS network. It was followed by four TV films. Among the most successful and longest-running television shows in history, it averaged more than 30 million viewers per week in its prime (sometimes hitting above 40 million viewers), and was a staple of the CBS Sunday night lineup for a decade.[6] In syndication, the series is still highly successful throughout the world. ",
                 Action = @"For her work on Murder, She Wrote, Lansbury was nominated for ten Golden Globes and 12 Emmy Awards, winning four Golden Globe awards. She holds the record for the most Golden Globe nominations and wins for Best Actress in a television drama series and the most Emmy nominations for Outstanding Lead Actress in a Drama Series. The series received three Emmy nominations for Outstanding Drama Series. It was nominated for a Golden Globe in the same category six times and won twice. ",
                 DeathIllness = "Death illness Text",

@@ -26,14 +26,11 @@ namespace Sims.Application.OnlineForm
         {
             var refNo = formDocument.RootElement.GetProperty("Incidents").GetProperty("IncidentTitle").GetString();
 
-            var jsonOpts = new JsonSerializerOptions()
-            {
+            var jsonOpts = new JsonSerializerOptions(){
                 PropertyNameCaseInsensitive = true,
                 AllowTrailingCommas = false,
                 IgnoreReadOnlyFields = true,
                 IgnoreReadOnlyProperties = true,
-                 
-                
             };
             // Nullable date times are used in the ProductDates
             jsonOpts.Converters.Add(new NullableDateTimeConverter());
@@ -69,10 +66,10 @@ namespace Sims.Application.OnlineForm
         private async Task CreateNewOnlineForm(string refId, ExternalOnlineForm externalFrom, ExternalStakeholder notifier, ExternalAddress notifierAddress, List<ExternalProduct> allProducts, List<ExternalCompany> contacts)
         {
             logger.LogDebug("Creating new online form.");
-
+            var countries = this.host.Lookups.Countries.ToList();
             var newForm = ToOnlineForm(externalFrom, refId);
             var stakeHolder = ToOnlineStakeHolder(notifier);
-            var stakeholderAddressNote = NotifierAddress(notifierAddress);
+            var stakeholderAddressNote = NotifierAddress(notifierAddress, countries);
             var products = allProducts.Select(p => ToOnlineProduct(p));
             SimsOnlineForm addedForm = null;
             try
@@ -88,8 +85,8 @@ namespace Sims.Application.OnlineForm
             try
             {
                 logger.LogDebug("Adding onlineform - stakeholders");
-                var stakeholders = await this.host.OnlineForms.Stakeholders.Add(addedForm.CommonId, stakeHolder);
-                await this.host.OnlineForms.Notes.Add(addedForm.CommonId, "Stakeholder Address\n" + stakeholderAddressNote.Note);
+              //  var stakeholders = await this.host.OnlineForms.Stakeholders.Add(addedForm.CommonId, stakeHolder);
+                await this.host.OnlineForms.Notes.Add(addedForm.CommonId, $"Stakeholder Address\n{stakeHolder.Name}\n{stakeHolder.Role}\n{stakeHolder.Phone}\n{stakeholderAddressNote.Note}");
             }
             catch(Exception ex)
             {
@@ -112,7 +109,7 @@ namespace Sims.Application.OnlineForm
             var contactNotes = new List<string>();
             foreach (var contact in contacts)
             {
-                var contactAddressNote = NotifierAddress(contact.Addresses);
+                var contactAddressNote = NotifierAddress(contact.Addresses,countries);
                 var FboTypes = String.Join("\n", host.OnlineForms.Products.Fbos.GetNamesFromId(contact.FbosTypes.ToList()));
                 var updatedNoteText = $"Product Address\nProduct : {contact.ProductName}\nFBOTypes : {FboTypes}\nAddress : {contactAddressNote.Note}";
                 contactNotes.Add(updatedNoteText);
@@ -131,9 +128,9 @@ namespace Sims.Application.OnlineForm
 
         }
 
-        public SimsNote NotifierAddress(ExternalAddress externalAddress) => new SimsNote
+        public SimsNote NotifierAddress(ExternalAddress externalAddress, List<Country> countries) => new SimsNote
         {
-            Note = $"{externalAddress.AddressLine1}\n{externalAddress.AddressLine2}\n{externalAddress.County}\n{externalAddress.TownCity}\n{externalAddress.Postcode}\n{externalAddress.CountryId}"
+            Note = $"{externalAddress.AddressLine1}\n{externalAddress.AddressLine2}\n{externalAddress.County}\n{externalAddress.TownCity}\n{externalAddress.Postcode}\n{countries.FirstOrDefault(cnt=>cnt.Id== externalAddress.CountryId)?.Title}"
         };
 
         public SimsProduct ToOnlineProduct(ExternalProduct product) => new SimsProduct
@@ -149,8 +146,7 @@ namespace Sims.Application.OnlineForm
             PackDescription = product.PackDescription,
             ProductTypeId = product.ProductTypeId,
             ProductDates = ToOnlineProductDates(product.IncidentProductDates),
-            PackSizes = new[]{new SimsProductPackSize
-            {
+            PackSizes = new[]{new SimsProductPackSize{
                  Size = product.IncidentProductPackSizes.Size,
                  UnitId=1
             }}
@@ -190,18 +186,19 @@ namespace Sims.Application.OnlineForm
             Phone = notifier.Phone,
             Role = notifier.Role
         };
+  
         public SimsOnlineForm ToOnlineForm(ExternalOnlineForm onlineForm, string refId) => new SimsOnlineForm
         {
             Title = refId,
             ReferenceNo = refId,
+            Description = onlineForm.NatureOfProblem,
             Action = onlineForm.ActionTaken,
+            DistributionDetails = onlineForm.DistributionDetails,
             AdditionalInformation = onlineForm.AdditionalInformation,
-            LADetails = onlineForm.LocalAuthorityNotified,
             DeathIllness = onlineForm.IllnessDetails,
+            LADetails = onlineForm.LocalAuthorityNotified,
             IsClosed = false,
             NotifierTypeId = onlineForm.Notifierid,
-            Description = onlineForm.NatureOfProblem,
-            DistributionDetails = onlineForm.DistributionDetails
         };
     }
 }

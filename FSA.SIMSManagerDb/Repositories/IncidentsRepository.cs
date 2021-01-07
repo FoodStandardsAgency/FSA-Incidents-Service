@@ -203,7 +203,6 @@ namespace FSA.SIMSManagerDb.Repositories
         public async Task<BaseIncident> UpdateStatus(int id, int statusId)
         {
             var dbItem = await ctx.Incidents.FindAsync(id);
-            //if (dbItem.IncidentClosed != null) throw new IncidentClosedException("Cannot update a closed incident!");
 
             dbItem.IncidentStatusId = statusId;
             if (statusId == (int)IncidentStatusTypes.Unassigned)

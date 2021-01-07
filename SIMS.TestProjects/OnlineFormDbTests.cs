@@ -148,6 +148,26 @@ namespace SIMS.Database
             }
         }
 
+
+        [Fact(DisplayName = "Close No incident - With Message")]
+        public async Task CloseOnlineFormessage()
+        {
+
+            var factCheck = "Close form (No Incident) With Message";
+            var newOnlineForm = this.BasicForm();
+            newOnlineForm.Title = factCheck;
+
+            using (var ctx = SeedingConfigData.GetDbContext(this.conn))
+            {
+                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
+                var savedForm = await simsHost.OnlineForms.Add(newOnlineForm);
+                await simsHost.OnlineForms.CloseNoIncident(savedForm.CommonId, "Closed form no incident");
+                var frm = await simsHost.OnlineForms.Get(savedForm.CommonId);
+                //await Assert.ThrowsAsync<DataMisalignedException>(async () => await simsHost.OnlineForms.Update(savedForm));
+                Assert.True(frm.IsClosed == true);
+            }
+        }
+
         [Fact(DisplayName = "Close New incident")]
         public async Task CloseNewIncidentOnlineForm()
         {
