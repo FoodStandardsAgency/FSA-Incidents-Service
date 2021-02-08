@@ -44,6 +44,9 @@ namespace FSA.IncidentsManagement.ModelValidators
             CreateMap<SimsAttachmentFileInfoViewModel, SimsAttachmentFileInfo>()
                 .ForMember(a => a.Tags, b => b.MapFrom(c => c.Tags.Sum()));
 
+            CreateMap<SimsNote, SimsNoteViewModel>()
+                .ForMember(a => a.Tags, b => b.MapFrom(a => (a.Tags).SelectedFlags()));
+
         }
     }
 

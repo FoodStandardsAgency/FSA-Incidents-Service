@@ -33,6 +33,7 @@ namespace FSA.SIMSManagerDb.MapperProfile
             CreateMap<UnitQuantityDb, UnitQuantity>(MemberList.Destination);
             CreateMap<IncidentSourceDb, IncidentSource>(MemberList.Destination);
             CreateMap<DocumentTagDb, AttachmentTagLkup>(MemberList.Destination);
+            CreateMap<NoteTagDb, NoteTag>(MemberList.Destination);
 
             CreateMap<FBOTypeDb, FBOType>(MemberList.Destination);
             CreateMap<NotifierTypeDb, NotifierType>(MemberList.Destination);
@@ -73,9 +74,14 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForMember(a => a.Timestamp, m => m.Ignore())
                 .ForMember(a => a.Id, m => m.Ignore());
 
-            CreateMap<IncidentNoteDb, SimsNote>(MemberList.Destination);
-            CreateMap<SignalNoteDb, SimsNote>(MemberList.Destination);
-            CreateMap<OnlineFormNoteDb, SimsNote>(MemberList.Destination);
+            CreateMap<IncidentNoteDb, SimsNote>(MemberList.Destination)
+                    .ForMember(a => a.Tags, m => m.MapFrom(o => (SimsNoteTagTypes)o.TagFlags));
+
+            CreateMap<SignalNoteDb, SimsNote>(MemberList.Destination)
+                    .ForMember(a => a.Tags, m => m.MapFrom(o => (SimsNoteTagTypes)o.TagFlags));
+
+            CreateMap<OnlineFormNoteDb, SimsNote>(MemberList.Destination)
+                    .ForMember(a => a.Tags, m => m.MapFrom(o => (SimsNoteTagTypes)o.TagFlags));
 
             CreateMap<SimsAddress, AddressDb>(MemberList.Source);
             CreateMap<AddressDb, SimsAddress>(MemberList.Destination);
@@ -107,7 +113,7 @@ namespace FSA.SIMSManagerDb.MapperProfile
             CreateMap<IncidentDb, IncidentsDisplayModel>(MemberList.Destination)
                 .ForCtorParam("statusId", o => o.MapFrom(a => a.IncidentStatusId))
                 .ForCtorParam("adminLeadId", o => o.MapFrom(@this => @this.AdminLeadId ?? 0))
-                .ForCtorParam("onlineFormId", o=>o.MapFrom(@this=>@this.OnlineFormId))
+                .ForCtorParam("onlineFormId", o => o.MapFrom(@this => @this.OnlineFormId))
                 .ForCtorParam("lastChangedBy", o => o.MapFrom(a => a.ModifiedBy))
                 .ForCtorParam("lastChangedDate", o => o.MapFrom(a => a.Modified))
                 .ForCtorParam("incidentTypeId", o => o.MapFrom(@this => @this.IncidentTypeId))
@@ -154,7 +160,7 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForCtorParam("lastChangedBy", o => o.MapFrom(a => a.ModifiedBy))
                 //.ForCtorParam("referenceNo", o => o.MapFrom(a => a.OnlineFormId))
                 .ForCtorParam("lastChangedDate", o => o.MapFrom(a => a.Modified));
-                
+
 
 
 
@@ -282,7 +288,7 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .IgnoreAuditData()
                 .ForMember(a => a.Id, m => m.Ignore())
                 .ForMember(a => a.HostId, m => m.Ignore());
-            
+
             CreateMap<OnlineFormNoteDb, IncidentNoteDb>(MemberList.Source)
                 .IgnoreAuditData()
                 .ForMember(a => a.Id, m => m.Ignore())

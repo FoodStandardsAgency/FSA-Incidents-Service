@@ -83,6 +83,15 @@ namespace FSA.SignalsManagement.Controllers
             return Ok();
         }
 
+        [HttpPost("SignalsPriority")]
+        [SwaggerOperation(Summary = "Update Signals(s) priority")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> UpdateSignalPriority([FromBody, SwaggerParameter("Signal Entries and priority to change", Required = true)] UpdateSignalPriorityStatusModel officer)
+        {
+            await this.simsApp.Signals.UpdatePriorityStatus(officer.Ids, officer.Priority);
+            return new OkResult();
+        }
 
         [HttpPost("Dashboard")]
         [SwaggerOperation(Summary = "Signals dashboard search", Description = "Signals dashboard search")]

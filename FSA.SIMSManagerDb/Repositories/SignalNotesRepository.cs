@@ -20,9 +20,9 @@ namespace FSA.SIMSManagerDb.Repositories
             this.SignalNotes = new NotesRepository<SignalNoteDb>(ctx, mapper);
         }
 
-        public async Task<SimsNote> Add(int SignalId, string note)
+        public async Task<SimsNote> Add(int SignalId, string note, int tags=0)
         {
-            var addedNote = await this.SignalNotes.Add(SignalId, note);
+            var addedNote = await this.SignalNotes.Add(SignalId, note, tags);
             // If the Signal is *not* closed we upate it.
             var dbItem = await this.ctx.Signals.FirstOrDefaultAsync(o => o.Id == SignalId && o.SignalStatusId < 50);
             if (dbItem != null)
@@ -30,13 +30,23 @@ namespace FSA.SIMSManagerDb.Repositories
             return addedNote;
         }
 
-        public async Task BulkAdd(int signalId, IEnumerable<string> notes)
+        public async Task BulkAdd(int signalId, IEnumerable<(string text, int tags)> notes)
         {
             await this.SignalNotes.BulkAdd(signalId, notes);
             // If the Signal is *not* closed we upate it.
             var dbItem = await this.ctx.Signals.FirstOrDefaultAsync(o => o.Id == signalId && o.SignalStatusId < 50);
             if (dbItem != null)
                 this.ctx.Signals.Update(dbItem);
+        }
+
+
+        public async Task<SimsNote> Update(int noteId, int tags)
+        {
+            SimsNote note = await this.SignalNotes.Update(noteId, tags);
+            var dbItem = await this.ctx.Signals.FirstOrDefaultAsync(o => o.Id == note.HostId && o.SignalStatusId < 50);
+            if (dbItem != null)
+                this.ctx.Signals.Update(dbItem);
+            return note;
         }
 
         public Task<IEnumerable<SimsNote>> GetAll(int SignalId) => this.SignalNotes.GetAll(SignalId);

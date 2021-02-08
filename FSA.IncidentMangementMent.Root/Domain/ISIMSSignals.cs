@@ -15,7 +15,8 @@ namespace FSA.IncidentsManagement.Root.Domain
         Task<IPaging<SignalDashboardItem>> DashboardSearch(string search = null, int pageSize = 500, int startPage = 1);
         Task<IEnumerable<SignalDashboardItem>> DashboardLinks(int signalId);
 
-        Task UpdateLeadOfficer(IEnumerable<int> id, string user);
+        Task UpdateLeadOfficer(IEnumerable<int> ids, string user);
+        Task UpdatePriorityStatus(IEnumerable<int> ids, string priority);
         Task UpdateStatus(int signalId, int status);
 
         

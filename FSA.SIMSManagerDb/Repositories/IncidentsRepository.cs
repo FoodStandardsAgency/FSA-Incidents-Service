@@ -177,8 +177,8 @@ namespace FSA.SIMSManagerDb.Repositories
             mapper.Map(incident, dbItem);
             // This can be cleared out by faulty data from the client.
             // It should not be replaced once set.
-            if (receivedOn.HasValue)
-                dbItem.ReceivedOn = receivedOn;
+            //if (receivedOn.HasValue)
+            //    dbItem.ReceivedOn = receivedOn;
             
 
             // Are we closed?

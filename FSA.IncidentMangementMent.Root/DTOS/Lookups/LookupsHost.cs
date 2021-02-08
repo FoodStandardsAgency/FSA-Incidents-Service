@@ -1,4 +1,5 @@
-﻿using FSA.IncidentsManagement.Root.DTOS.Lookups;
+﻿using FSA.IncidentsManagement.Root.Contracts;
+using FSA.IncidentsManagement.Root.DTOS.Lookups;
 using System.Collections.Generic;
 
 namespace FSA.IncidentsManagement.Root.Models
@@ -29,5 +30,6 @@ namespace FSA.IncidentsManagement.Root.Models
         public IEnumerable<StakeholderIncidentRole> StakeholderIncidentRoles { get; set; }
         public IEnumerable<CloseSignalReason> CloseSignalReasons { get; set; }
         public IEnumerable<CloseSignalTeam> CloseSignalTeams { get; set; }
+        public IEnumerable<NoteTag> NoteTagTypes { get; set; }
     }
 }

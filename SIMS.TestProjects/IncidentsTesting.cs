@@ -169,25 +169,25 @@ namespace SIMS.Database
 
         }
 
-        [Fact(DisplayName = "Can't change most unique")]
-        public async Task UpdateIncidentsFakeGuid()
-        {
+        //[Fact(DisplayName = "Can't change most unique")]
+        //public async Task UpdateIncidentsFakeGuid()
+        //{
 
-            using (var ctx = SeedingConfigData.GetDbContext(this.conn))
-            {
+        //    using (var ctx = SeedingConfigData.GetDbContext(this.conn))
+        //    {
 
-                var fakeId = Guid.Parse("00000000-0000-0000-0000-000000000001");
-                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
-                var incidents = simsHost.Incidents;
-                var incident = await incidents.Get(1);
-                var updated = incident
-                        .WithMostUnique(Guid.Parse("00000000-0000-0000-0000-000000000001"))
-                        .WithPriority((int)SimsPrioritiesStatus.Medium);
+        //        var fakeId = Guid.Parse("00000000-0000-0000-0000-000000000001");
+        //        var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
+        //        var incidents = simsHost.Incidents;
+        //        var incident = await incidents.Get(1);
+        //        var updated = incident
+        //                .WithMostUnique(Guid.Parse("00000000-0000-0000-0000-000000000001"))
+        //                .WithPriority((int)SimsPrioritiesStatus.Medium);
 
-                await Assert.ThrowsAsync<InvalidOperationException>(async() => await incidents.Update(updated));
-                //savedIncident.MostUniqueId == fakeId && savedIncident.PriorityId == (int)PrioritiesStatus.Medium);
-            }
-        }
+        //        await Assert.ThrowsAsync<InvalidOperationException>(async() => await incidents.Update(updated));
+        //        //savedIncident.MostUniqueId == fakeId && savedIncident.PriorityId == (int)PrioritiesStatus.Medium);
+        //    }
+        //}
 
         [Fact(DisplayName = "Update product Type")]
         public async Task UpdateProductType()

@@ -69,6 +69,7 @@ namespace FSA.SIMSManagerDb
         internal DbSet<CountryDb> Countries { get; set; }
         internal DbSet<DataSourceDb> DataSources { get; set; }
         internal DbSet<DeathIllnessDb> DeathIllnesss { get; set; }
+        internal DbSet<NoteTagDb> NoteTags { get; set; }
 
         internal DbSet<StakeholderIncidentRoleDb> StakeholderIncidentRoles { get; set; }
         internal DbSet<StakeholderDiscriminatorDb> StakeholderDiscriminators { get; set; }
@@ -147,6 +148,7 @@ namespace FSA.SIMSManagerDb
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<IncidentSourceDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<CloseSignalReasonDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<CloseSignalTeamDb>());
+            modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<NoteTagDb>());
             #endregion
 
             var seeds = new Seeder();

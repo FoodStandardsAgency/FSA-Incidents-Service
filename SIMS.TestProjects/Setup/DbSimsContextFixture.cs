@@ -223,28 +223,28 @@ namespace SIMS.TestProjects.Setup
                         AddressLine2
                         Town
                         County
-                        PostCode");
+                        PostCode", 0);
             await sims.OnlineForms.Notes.Add(3, @"Stakeholder Address
                         Henry plate
                         AddressLine1,
                         AddressLine2
                         Town
                         County
-                        PostCode");
+                        PostCode",(32+128+256));
             await sims.OnlineForms.Notes.Add(4, @"Stakeholder Address
                         Mavis Coupe
                         AddressLine1,
                         AddressLine2
                         Town
                         County
-                        PostCode");
+                        PostCode",1);
             await sims.OnlineForms.Notes.Add(5, @"Stakeholder Address
                         Jame Flan
                         AddressLine1,
                         AddressLine2
                         Town
                         County
-                        PostCode");
+                        PostCode",(1+1024+4096));
         }
 
         private void Seed()

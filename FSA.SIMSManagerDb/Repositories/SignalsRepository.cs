@@ -82,7 +82,7 @@ namespace FSA.SIMSManagerDb.Repositories
 
         public async Task<SimsSignal> Get(int signalId)
         {
-            var dbItem = await this.ctx.Signals.FindAsync(signalId);
+            var dbItem = await this.ctx.Signals.Include(a=>a.SignalIncidentLinks).FirstAsync(a=>a.Id ==signalId);
             if (dbItem != null)
                 return this.mapper.Map<SignalDb, SimsSignal>(dbItem);
             else throw new ArgumentNullException();
@@ -262,7 +262,6 @@ namespace FSA.SIMSManagerDb.Repositories
                 allClauses.Add(i => EF.Functions.Like(i.Priority, wrd));
                 allClauses.Add(i => EF.Functions.Like(i.BaseProduct, wrd));
                 allClauses.Add(i => EF.Functions.Like(i.SignalStatus.Title, wrd));
-
             }
             // full list of serches on id
             foreach (var id in allIds)
@@ -304,6 +303,25 @@ namespace FSA.SIMSManagerDb.Repositories
             }
         }
 
+        public async Task UpdatePriorities(IEnumerable<int> ids, string priority)
+        {
+            var idList = ids.ToList();
+            if (idList.Count > 0)
+            {
+                var WhereClause = String.Join(" OR ", ids.Select(o => $"Id={o}"));
+
+                // Closed signal is any signal over 50 
+                var signals = ctx.Signals.FromSqlRaw($"SELECT * from signals where ({WhereClause}) AND SignalStatusId < 50");
+                // update the officer, and Ensure they are also operned too.
+                foreach (var signal in signals)
+                {
+                    signal.Priority = priority;
+                }
+
+                await this.ctx.SaveChangesAsync();
+            }
+        }
+
         public async Task<SimsSignal> UpdateStatus(int id, int status)
         {
             var dbItem = await ctx.Signals.FindAsync(id);
@@ -313,6 +331,7 @@ namespace FSA.SIMSManagerDb.Repositories
             await ctx.SaveChangesAsync();
             return mapper.Map<SignalDb, SimsSignal>(dbItem);
         }
+
         /// <summary>
         /// Simple closing of an signal.
         /// Must include details

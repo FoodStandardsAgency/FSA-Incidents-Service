@@ -1,5 +1,6 @@
 ﻿using FSA.SIMSManagerDb.Entities.Lookups;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace FSA.SIMSManagerDb.Utilities
 {
@@ -24,10 +25,113 @@ namespace FSA.SIMSManagerDb.Utilities
             SignalStatus(modelBuilder);
             UnitQuants(modelBuilder);
             DocumentTag(modelBuilder);
+            NoteTagDb(modelBuilder);
             StakeholderDiscrimatior(modelBuilder);
             StakeholderIncidentRoles(modelBuilder);
             CloseSignalTeams(modelBuilder);
             CloseSignalReasons(modelBuilder);
+        }
+
+        private void NoteTagDb(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<NoteTagDb>()
+                 .HasData(new NoteTagDb
+                 {
+                     Id = 1,
+                     Title = "CVED/CED",
+                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                 },
+                     new NoteTagDb
+                     {
+                         Id = 2,
+                         Title = "Analytical report",
+                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                     },
+                     new NoteTagDb
+                     {
+                         Id = 4,
+                         Title = "Bill / Delivery Document",
+                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                     },
+                     new NoteTagDb
+                     {
+                         Id = 8,
+                         Title = "Follow up notification",
+                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                     },
+                     new NoteTagDb
+                     {
+                         Id = 16,
+                         Title = "Health certifiacte",
+                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                     },
+                     new NoteTagDb
+                     {
+                         Id = 32,
+                         Title = "Phytosanitary Certifcate",
+                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                     },
+                     new NoteTagDb
+                     {
+                         Id = 64,
+                         Title = "Picture",
+                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                     },
+                     new NoteTagDb
+                     {
+                         Id = 128,
+                         Title = "Public warning / Press release",
+                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                     },
+                     new NoteTagDb
+                     {
+                         Id = 256,
+                         Title = "Recipients List",
+                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                     },
+                     new NoteTagDb
+                     {
+                         Id = 512,
+                         Title = "Risk assessment",
+                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                     },
+                     new NoteTagDb
+                     {
+                         Id = 1024,
+                         Title = "Screenshot",
+                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                     },
+                     new NoteTagDb
+                     {
+                         Id = 2048,
+                         Title = "Translation",
+                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                     },
+                     new NoteTagDb
+                     {
+                         Id = 4096,
+                         Title = "Video File",
+                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                     }, new NoteTagDb
+                     {
+                         Id = 8192,
+                         Title = "Other",
+                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                     });
         }
 
         private void IncidentSource(ModelBuilder modelBuilder)
@@ -219,6 +323,24 @@ namespace FSA.SIMSManagerDb.Utilities
               {
                   Id = 6,
                   Title = "Not a food or feed safety issue",
+                  CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                  ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+              }, new CloseSignalReasonDb
+              {
+                  Id = 7,
+                  Title = "RASFF - Confirmed UK Distribution",
+                  CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                  ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+              }, new CloseSignalReasonDb
+              {
+                  Id = 8,
+                  Title = "Historic Signal",
+                  CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                  ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+              }, new CloseSignalReasonDb
+              {
+                  Id = 9,
+                  Title = "Known Issue",
                   CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                   ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
               });

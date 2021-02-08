@@ -67,6 +67,11 @@ namespace Sims.Application
             return dbHost.Signals.UpdateLeadOfficer(ids, user);
         }
 
+        public Task UpdatePriorityStatus(IEnumerable<int> ids, string priority)
+        {
+            return dbHost.Signals.UpdatePriorities(ids, priority);
+        }
+
         public async Task UpdateStatus(int signalId, int status)
         {
             if (await dbHost.Signals.IsClosed(signalId))

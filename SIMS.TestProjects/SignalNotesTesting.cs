@@ -36,8 +36,8 @@ namespace SIMS.Database
                 };
 
                 var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
-                var addedNote = await simsHost.Signals.Notes.Add(1, newNote.Note);
-                Assert.True(addedNote.HostId == 1 && addedNote.Note == newNote.Note);
+                var addedNote = await simsHost.Signals.Notes.Add(1, newNote.Note,(1+2+4+32));
+                Assert.True(addedNote.HostId == 1 && addedNote.Note == newNote.Note && 39 == (int)addedNote.Tags);
             }
         }
 

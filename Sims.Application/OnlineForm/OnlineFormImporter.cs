@@ -26,7 +26,8 @@ namespace Sims.Application.OnlineForm
         {
             var refNo = formDocument.RootElement.GetProperty("Incidents").GetProperty("IncidentTitle").GetString();
 
-            var jsonOpts = new JsonSerializerOptions(){
+            var jsonOpts = new JsonSerializerOptions()
+            {
                 PropertyNameCaseInsensitive = true,
                 AllowTrailingCommas = false,
                 IgnoreReadOnlyFields = true,
@@ -77,7 +78,7 @@ namespace Sims.Application.OnlineForm
                 logger.LogDebug("Adding onlineform - base");
                 addedForm = await this.host.OnlineForms.Add(newForm);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.LogCritical("Failed to add basic form", ex);
                 throw ex;
@@ -85,10 +86,10 @@ namespace Sims.Application.OnlineForm
             try
             {
                 logger.LogDebug("Adding onlineform - stakeholders");
-              //  var stakeholders = await this.host.OnlineForms.Stakeholders.Add(addedForm.CommonId, stakeHolder);
-                await this.host.OnlineForms.Notes.Add(addedForm.CommonId, $"Stakeholder Address\n{stakeHolder.Name}\n{stakeHolder.Role}\n{stakeHolder.Phone}\n{stakeholderAddressNote.Note}");
+                //  var stakeholders = await this.host.OnlineForms.Stakeholders.Add(addedForm.CommonId, stakeHolder);
+                await this.host.OnlineForms.Notes.Add(addedForm.CommonId, $"Stakeholder Address\n{stakeHolder.Name}\n{stakeHolder.Role}\n{stakeHolder.Phone}\n{stakeholderAddressNote.Note}", 5);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.LogCritical("Failed to add stakeholders", ex);
                 throw ex;
@@ -98,7 +99,7 @@ namespace Sims.Application.OnlineForm
                 logger.LogDebug($"Adding onlineform - products {products.Count()}");
                 await this.host.OnlineForms.Products.BulkAdd(addedForm.CommonId, products);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.LogCritical("Failed to add products", ex);
                 throw ex;
@@ -106,13 +107,13 @@ namespace Sims.Application.OnlineForm
             }
 
             // unfurl the FBO Types
-            var contactNotes = new List<string>();
+            var contactNotes = new List<(string text, int tags)>();
             foreach (var contact in contacts)
             {
-                var contactAddressNote = NotifierAddress(contact.Addresses,countries);
+                var contactAddressNote = NotifierAddress(contact.Addresses, countries);
                 var FboTypes = String.Join("\n", host.OnlineForms.Products.Fbos.GetNamesFromId(contact.FbosTypes.ToList()));
                 var updatedNoteText = $"Product Address\nProduct : {contact.ProductName}\nFBOTypes : {FboTypes}\nAddress : {contactAddressNote.Note}";
-                contactNotes.Add(updatedNoteText);
+                contactNotes.Add((updatedNoteText, 0));
             }
 
             try
@@ -130,7 +131,7 @@ namespace Sims.Application.OnlineForm
 
         public SimsNote NotifierAddress(ExternalAddress externalAddress, List<Country> countries) => new SimsNote
         {
-            Note = $"{externalAddress.AddressLine1}\n{externalAddress.AddressLine2}\n{externalAddress.County}\n{externalAddress.TownCity}\n{externalAddress.Postcode}\n{countries.FirstOrDefault(cnt=>cnt.Id== externalAddress.CountryId)?.Title}"
+            Note = $"{externalAddress.AddressLine1}\n{externalAddress.AddressLine2}\n{externalAddress.County}\n{externalAddress.TownCity}\n{externalAddress.Postcode}\n{countries.FirstOrDefault(cnt => cnt.Id == externalAddress.CountryId)?.Title}"
         };
 
         public SimsProduct ToOnlineProduct(ExternalProduct product) => new SimsProduct
@@ -148,7 +149,7 @@ namespace Sims.Application.OnlineForm
             ProductDates = ToOnlineProductDates(product.IncidentProductDates),
             PackSizes = new[]{new SimsProductPackSize{
                  Size = product.IncidentProductPackSizes.Size,
-                 UnitId=1
+                 UnitId=product.IncidentProductPackSizes.UnitId
             }}
         };
 
@@ -186,7 +187,7 @@ namespace Sims.Application.OnlineForm
             Phone = notifier.Phone,
             Role = notifier.Role
         };
-  
+
         public SimsOnlineForm ToOnlineForm(ExternalOnlineForm onlineForm, string refId) => new SimsOnlineForm
         {
             Title = refId,

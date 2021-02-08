@@ -7,5 +7,6 @@ namespace Sims.Application.OnlineForm
     internal class ExternalPackSize
     {
         public string Size { get; set; }
+        public int UnitId { get; set; }
     }
 }

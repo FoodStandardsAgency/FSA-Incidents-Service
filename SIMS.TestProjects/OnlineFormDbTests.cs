@@ -294,7 +294,7 @@ namespace SIMS.Database
                 var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var savedForm = await simsHost.OnlineForms.Add(newOnlineForm);
                 var noteText = "This is a new note";
-                var note = await simsHost.OnlineForms.Notes.Add(savedForm.CommonId, noteText);
+                var note = await simsHost.OnlineForms.Notes.Add(savedForm.CommonId, noteText,(32+1+2+8+1024));
                 Assert.True(note.HostId == savedForm.CommonId && note.Note == noteText);
             }
         }
