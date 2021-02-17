@@ -82,7 +82,7 @@ namespace FSA.SIMSManagerDb.Repositories
             ProductTypes = this.ProductTypes.GetAll(),
             FBOTypes = this.FBOTypes.GetAll(),
             Units = this.Units.GetAll(),
-            NotifierTypes = this.NotifierTypes.GetAll().Where(a=>a.Id<3).ToList() // Public Individual and local authority are being selected for the onine form.
+            NotifierTypes = this.NotifierTypes.GetAll() //.Where(a=>a.Id<3).ToList() // Public Individual and local authority are being selected for the onine form.
         };
     }
 }

@@ -1174,27 +1174,7 @@ namespace FSA.SIMSManagerDb.Utilities
                     Title = "Other Government Department",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                }
-                //new NotifierTypeDb
-                //{
-                //    Id = 3,
-                //    Title = "Retailer",
-                //    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                //    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                //}, new NotifierTypeDb
-                //{
-                //    Id = 4,
-                //    Title = "Manufacturer",
-                //    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                //    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                //}, new NotifierTypeDb
-                //{
-                //    Id = 5,
-                //    Title = "Undefined",
-                //    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                //    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                //}
-                );
+                });
         }
 
         private void DeathIllness(ModelBuilder modelBuilder)

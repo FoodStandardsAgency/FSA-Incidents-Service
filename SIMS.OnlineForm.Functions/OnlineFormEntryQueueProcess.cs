@@ -16,7 +16,7 @@ namespace SIMS.OnlineForm.Functions
     {
         private static HttpClient _client = new HttpClient();
         [FunctionName("OnlineFormEntryQueueProcess")]
-        public static async Task Run([QueueTrigger("%OnlineFormQueueName%", Connection = "ConnectionStrings:SIMSOnlineFormConnection")] string rawForm, 
+        public static async Task Run([QueueTrigger("%OnlineFormQueueName%", Connection = "SIMSOnlineFormConnection")] string rawForm, 
             
             [Table("OnlineFormSequester", "ConnectionStrings:SIMSOnlineFormConnection")] IAsyncCollector<TableEntity> tblClient,
             ILogger log)
