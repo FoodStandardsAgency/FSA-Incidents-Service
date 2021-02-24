@@ -45,7 +45,7 @@ namespace FSA.SIMSManagerDb.Repositories
         /// <returns></returns>
         public async Task<SimsNote> Add(int hostId, string note, int tags)
         {
-            var newComment = new NoteDb { Note = note, HostId = hostId, TagFlags = (NoteTagTypes)tags };
+            var newComment = new NoteDb { Note = note, HostId = hostId, TagFlags = tags };
             this.NoteSet.Add(newComment);
             var incident = this.NoteSet.SingleOrDefault(p => p.Id == hostId);
             await ctx.SaveChangesAsync();
@@ -55,7 +55,7 @@ namespace FSA.SIMSManagerDb.Repositories
         public async Task<SimsNote> Update(int noteId, int tags)
         {
             var note = this.NoteSet.Find(noteId);
-            note.TagFlags = (NoteTagTypes)tags;
+            note.TagFlags = tags;
             await ctx.SaveChangesAsync();
             return mapper.Map<NoteDb, SimsNote>(note);
         }
@@ -70,7 +70,7 @@ namespace FSA.SIMSManagerDb.Repositories
         {
             foreach (var note in notes)
             {
-                var newComment = new NoteDb { Note = note.text, TagFlags = (NoteTagTypes)note.tags, HostId = hostId };
+                var newComment = new NoteDb { Note = note.text, TagFlags = note.tags, HostId = hostId };
                 this.NoteSet.Add(newComment);
             }
             await ctx.SaveChangesAsync();

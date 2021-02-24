@@ -35,103 +35,98 @@ namespace FSA.SIMSManagerDb.Utilities
         private void NoteTagDb(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<NoteTagDb>()
-                 .HasData(new NoteTagDb
-                 {
-                     Id = 1,
-                     Title = "CVED/CED",
-                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                 },
-                     new NoteTagDb
-                     {
-                         Id = 2,
-                         Title = "Analytical report",
-                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                     },
-                     new NoteTagDb
-                     {
-                         Id = 4,
-                         Title = "Bill / Delivery Document",
-                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                     },
-                     new NoteTagDb
-                     {
-                         Id = 8,
-                         Title = "Follow up notification",
-                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                     },
-                     new NoteTagDb
-                     {
-                         Id = 16,
-                         Title = "Health certifiacte",
-                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                     },
-                     new NoteTagDb
-                     {
-                         Id = 32,
-                         Title = "Phytosanitary Certifcate",
-                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                     },
-                     new NoteTagDb
-                     {
-                         Id = 64,
-                         Title = "Picture",
-                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                     },
-                     new NoteTagDb
-                     {
-                         Id = 128,
-                         Title = "Public warning / Press release",
-                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                     },
-                     new NoteTagDb
-                     {
-                         Id = 256,
-                         Title = "Recipients List",
-                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                     },
-                     new NoteTagDb
-                     {
-                         Id = 512,
-                         Title = "Risk assessment",
-                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                     },
-                     new NoteTagDb
-                     {
-                         Id = 1024,
-                         Title = "Screenshot",
-                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                     },
-                     new NoteTagDb
-                     {
-                         Id = 2048,
-                         Title = "Translation",
-                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                     },
-                     new NoteTagDb
-                     {
-                         Id = 4096,
-                         Title = "Video File",
-                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                     }, new NoteTagDb
-                     {
-                         Id = 8192,
-                         Title = "Other",
-                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                     });
+                 .HasData(
+                new NoteTagDb
+                {
+                    Id = 1,
+                    Title = "Closure Reason",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new NoteTagDb
+                {
+                    Id = 2,
+                    Title = "Distribution Information",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new NoteTagDb
+                {
+                    Id = 4,
+                    Title = "Export/Import",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new NoteTagDb
+                {
+                    Id = 8,
+                    Title = "Food Standards Scotland",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new NoteTagDb
+                {
+                    Id = 16,
+                    Title = "FSA Alert",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new NoteTagDb
+                {
+                    Id = 32,
+                    Title = "FSA England",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new NoteTagDb
+                {
+                    Id = 64,
+                    Title = "FSA Northern Ireland",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new NoteTagDb
+                {
+                    Id = 128,
+                    Title = "FSA Wales",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new NoteTagDb
+                {
+                    Id = 256,
+                    Title = "Internal Correspondence",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new NoteTagDb
+                {
+                    Id = 512,
+                    Title = "IRF / Supplementary Information",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new NoteTagDb
+                {
+                    Id = 1024,
+                    Title = "Link Reason",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new NoteTagDb
+                {
+                    Id = 2048,
+                    Title = "Product Details",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },
+                new NoteTagDb
+                {
+                    Id = 4096,
+                    Title = "Risk Assessment and Management",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                });
         }
 
         private void IncidentSource(ModelBuilder modelBuilder)

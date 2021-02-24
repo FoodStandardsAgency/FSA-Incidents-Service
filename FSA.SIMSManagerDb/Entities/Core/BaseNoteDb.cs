@@ -9,6 +9,6 @@ namespace FSA.SIMSManagerDbEntities
         public int Id{ get; set; }
         public string Note { get; set; }
         public int HostId { get; set; }
-        public NoteTagTypes TagFlags { get; set; }
+        public int TagFlags { get; set; }
     }
 }

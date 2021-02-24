@@ -45,9 +45,9 @@ namespace FSA.IncidentsManagement.Controllers
             {
                 _ = incidentSignal.ToLower() switch
                 {
-                    IncidentOrSignalOrOnlineForm.Incidents => await this.simsApp.Incidents.Notes.Add(addIncident.HostId, addIncident.Note, (SimsNoteTagTypes)addIncident.Tags.Sum()),
-                    IncidentOrSignalOrOnlineForm.Signals => await this.simsApp.Signals.Notes.Add(addIncident.HostId, addIncident.Note, (SimsNoteTagTypes)addIncident.Tags.Sum()),
-                    IncidentOrSignalOrOnlineForm.OnlineForm => await this.simsApp.OnlineForms.Notes.Add(addIncident.HostId, addIncident.Note, (SimsNoteTagTypes)addIncident.Tags.Sum()),
+                    IncidentOrSignalOrOnlineForm.Incidents => await this.simsApp.Incidents.Notes.Add(addIncident.HostId, addIncident.Note, addIncident.Tags.Sum()),
+                    IncidentOrSignalOrOnlineForm.Signals => await this.simsApp.Signals.Notes.Add(addIncident.HostId, addIncident.Note, addIncident.Tags.Sum()),
+                    IncidentOrSignalOrOnlineForm.OnlineForm => await this.simsApp.OnlineForms.Notes.Add(addIncident.HostId, addIncident.Note, addIncident.Tags.Sum()),
                     _ => throw new InvalidOperationException()
                 };
                 return new OkResult();
@@ -72,9 +72,9 @@ namespace FSA.IncidentsManagement.Controllers
             {
                 var tsk = incidentSignal.ToLower() switch
                 {
-                    IncidentOrSignalOrOnlineForm.Incidents => this.simsApp.Incidents.Notes.Update(updatedNote.NoteId, (SimsNoteTagTypes)updatedNote.Tags.Sum()),
-                    IncidentOrSignalOrOnlineForm.Signals => this.simsApp.Signals.Notes.Update(updatedNote.NoteId, (SimsNoteTagTypes)updatedNote.Tags.Sum()),
-                    IncidentOrSignalOrOnlineForm.OnlineForm => this.simsApp.OnlineForms.Notes.Update(updatedNote.NoteId, (SimsNoteTagTypes)updatedNote.Tags.Sum()),
+                    IncidentOrSignalOrOnlineForm.Incidents => this.simsApp.Incidents.Notes.Update(updatedNote.NoteId, updatedNote.Tags.Sum()),
+                    IncidentOrSignalOrOnlineForm.Signals => this.simsApp.Signals.Notes.Update(updatedNote.NoteId, updatedNote.Tags.Sum()),
+                    IncidentOrSignalOrOnlineForm.OnlineForm => this.simsApp.OnlineForms.Notes.Update(updatedNote.NoteId, updatedNote.Tags.Sum()),
                     _ => throw new InvalidOperationException()
                 };
 

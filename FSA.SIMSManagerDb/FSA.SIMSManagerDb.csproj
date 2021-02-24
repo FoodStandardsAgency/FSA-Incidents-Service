@@ -40,6 +40,10 @@
     <Compile Remove="Migrations\20201209121906_didi_forgetSomething.Designer.cs" />
     <Compile Remove="Migrations\20201222101719_seedNotifier.cs" />
     <Compile Remove="Migrations\20201222101719_seedNotifier.Designer.cs" />
+    <Compile Remove="Migrations\20210217135640_notesTagsFinal.cs" />
+    <Compile Remove="Migrations\20210217135640_notesTagsFinal.Designer.cs" />
+    <Compile Remove="Migrations\20210217154101_notesTagsFinal.cs" />
+    <Compile Remove="Migrations\20210217154101_notesTagsFinal.Designer.cs" />
     <Compile Remove="Repositories\SignalsLinkedRecords.cs" />
   </ItemGroup>
 

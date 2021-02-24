@@ -75,13 +75,13 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForMember(a => a.Id, m => m.Ignore());
 
             CreateMap<IncidentNoteDb, SimsNote>(MemberList.Destination)
-                    .ForMember(a => a.Tags, m => m.MapFrom(o => (SimsNoteTagTypes)o.TagFlags));
+                    .ForMember(a => a.Tags, m => m.MapFrom(o => o.TagFlags));
 
             CreateMap<SignalNoteDb, SimsNote>(MemberList.Destination)
-                    .ForMember(a => a.Tags, m => m.MapFrom(o => (SimsNoteTagTypes)o.TagFlags));
+                    .ForMember(a => a.Tags, m => m.MapFrom(o => o.TagFlags));
 
             CreateMap<OnlineFormNoteDb, SimsNote>(MemberList.Destination)
-                    .ForMember(a => a.Tags, m => m.MapFrom(o => (SimsNoteTagTypes)o.TagFlags));
+                    .ForMember(a => a.Tags, m => m.MapFrom(o => o.TagFlags));
 
             CreateMap<SimsAddress, AddressDb>(MemberList.Source);
             CreateMap<AddressDb, SimsAddress>(MemberList.Destination);
