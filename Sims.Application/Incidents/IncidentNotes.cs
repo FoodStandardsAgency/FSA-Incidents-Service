@@ -29,7 +29,6 @@ namespace Sims.Application
 
         }
 
-
         public Task Update(int noteId, int tags)
         {
             return dbHost.Incidents.Notes.Update(noteId, tags);

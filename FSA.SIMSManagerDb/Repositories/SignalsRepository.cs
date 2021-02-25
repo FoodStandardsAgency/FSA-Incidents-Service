@@ -6,6 +6,7 @@ using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagement.Root.Shared;
 using FSA.SIMSManagerDb.Contracts;
 using FSA.SIMSManagerDb.Entities;
+using FSA.SIMSManagerDb.Entities.Lookups;
 using FSA.SIMSManagerDbEntities.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
@@ -272,9 +273,27 @@ namespace FSA.SIMSManagerDb.Repositories
                 allClauses.Add(i => i.SPTId == capturedId);
             }
 
-            var wordStack = new Stack<Expression<Func<SignalDb, bool>>>(allClauses);
+            //var wordStack = new Stack<Expression<Func<SignalDb, bool>>>(allClauses);
+            //// we are going to OR all the clauses together.
+            //Expression<Func<SignalDb, bool>> completeSearch = null;
+            //while (wordStack.Count > 0)
+            //{
+            //    if (completeSearch == null)
+            //        completeSearch = wordStack.Pop();
+            //    else
+            //        completeSearch = completeSearch.Or(wordStack.Pop());
+            //}
+            //return completeSearch;
+
+            return BuildOrClause(allClauses);
+        }
+
+        private Expression<Func<T, bool>>BuildOrClause<T>(IEnumerable<Expression<Func<T,bool>>> clauses)
+        {
+            var wordStack = new Stack<Expression<Func<T, bool>>>(clauses);
             // we are going to OR all the clauses together.
-            Expression<Func<SignalDb, bool>> completeSearch = null;
+            Expression<Func<T, bool>> completeSearch = null;
+            // The OR method is a custom extensions method
             while (wordStack.Count > 0)
             {
                 if (completeSearch == null)
@@ -282,6 +301,7 @@ namespace FSA.SIMSManagerDb.Repositories
                 else
                     completeSearch = completeSearch.Or(wordStack.Pop());
             }
+
             return completeSearch;
         }
 
@@ -352,10 +372,32 @@ namespace FSA.SIMSManagerDb.Repositories
                 var closureReason = "Unknown reason";
                 var closeReasonId = (SignalStatusTypes)signal.SignalStatusId;
                 if (closeReasonId == SignalStatusTypes.Closed_No_Incident)
+                {
                     closureReason = "No further action";
+                    if (closeDetails.ReasonId.HasValue)
+                    {
+                        var reason = await ctx.ClosedSignalReasons.AsNoTracking().SingleOrDefaultAsync(a => a.Id == closeDetails.ReasonId);
+                        closureReason += $"\nReason\n- {reason.Title}";
+                    }
+                    
+                }
 
-                if (closeReasonId == SignalStatusTypes.Closed_Referrel_Offline)
+                if (closeReasonId == SignalStatusTypes.Closed_Referrel_Offline) {
                     closureReason = "Referral";
+                    if (closeDetails.TeamIds.Length > 0){
+                        var orAllTeams = new Stack<Expression<Func<CloseSignalTeamDb, bool>>>();
+                        // ctx.ClosedSignalTeams.Where()
+                        foreach (var id in closeDetails.TeamIds)
+                        {
+                            var capturedId = id;
+                            orAllTeams.Push(team => team.Id == capturedId);
+                        }
+                        var teamsWhereClause = BuildOrClause(orAllTeams);
+                        var allTeams = String.Join("\n- ", ctx.ClosedSignalTeams.Where(teamsWhereClause).Select(a => a.Title));
+                        closureReason += $"\nReferred to\n{allTeams}";
+                    }
+                }
+
 
                 var note = this.ClosureNote(closureReason, null,closeDetails.UserReason);
                 note.HostId = closeDetails.SignalId;
@@ -382,6 +424,8 @@ namespace FSA.SIMSManagerDb.Repositories
                     IncidentId = incidentId
                 });
                 signal.SignalStatusId = (int)SignalStatusTypes.Closed_Linked_Incident;
+
+                var reasonLinked = $"\nLinked Incident\n{GeneralExtensions.GenerateIncidentId(incidentId)}";
 
                 var note = this.ClosureNote("Link to an existing incident", GeneralExtensions.GenerateIncidentId(incidentId), reason);
                 note.HostId = signalId;
