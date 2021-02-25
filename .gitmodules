@@ -1,0 +1,3 @@
+[submodule "EntityFrameworkCore.TemporalTables"]
+	path = EntityFrameworkCore.TemporalTables
+	url = https://github.com/findulov/EntityFrameworkCore.TemporalTables.git
