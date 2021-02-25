@@ -90,8 +90,6 @@ namespace FSA.IncidentsManagement.Controllers
 
         }
 
-
-
         [HttpGet("{incidentSignal}/{id}")]
         [SwaggerOperation(Summary = "Get notes for an incident/signal")]
         [ProducesResponseType(typeof(IEnumerable<SimsNoteViewModel>), 200)]

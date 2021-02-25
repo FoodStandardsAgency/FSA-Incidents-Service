@@ -126,6 +126,12 @@ namespace FSA.SIMSManagerDb.Utilities
                     Title = "Risk Assessment and Management",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                },new NoteTagDb
+                {
+                    Id = 8192,
+                    Title = "Incident Outcome",
+                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 });
         }
 
