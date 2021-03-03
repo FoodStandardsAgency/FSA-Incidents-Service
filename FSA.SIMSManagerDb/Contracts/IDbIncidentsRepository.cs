@@ -31,5 +31,6 @@ namespace FSA.SIMSManagerDb.Contracts
         IDbStakeholdersRepository Stakeholders { get; }
 
         Task UpdateSensitiveInfo(int incidentId, bool isSensitive);
+        Task RemoveOutcome(int id);
     }
 }

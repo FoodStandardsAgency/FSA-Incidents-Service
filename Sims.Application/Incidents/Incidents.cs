@@ -96,12 +96,17 @@ namespace Sims.Application
             return dbHost.Incidents.IsClosed(incidentId);
         }
 
+        public Task RemoveIncidentOutcome(int id)
+        {
+            // This is really deleting a note from the incident notes table, that has a single tag of IncidentOutcomes
+            return dbHost.Incidents.RemoveOutcome(id);
+        }
+
         public async Task<BaseIncident> Update(BaseIncident incident)
         {
             try
             {
                 if (incident.CommonId == 0) throw new SimsItemMissing("Incident Id missing");
-
                 return await dbHost.Incidents.Update(incident.SignalStatusId==0 ? incident.WithSignalStatusId(null): incident);
             }
             catch (NullReferenceException)
@@ -122,7 +127,6 @@ namespace Sims.Application
             {
                 if (id == 0) throw new SimsIncidentMissingException("Incident not found");
                 return await dbHost.Incidents.UpdateClassification(id, ClassificationId);
-
             }
             catch (NullReferenceException)
             {

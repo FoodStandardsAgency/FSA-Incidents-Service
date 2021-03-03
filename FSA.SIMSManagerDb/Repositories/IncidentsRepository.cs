@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using FSA.IncidentsManagement.Root.Domain;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagement.Root.Shared;
 using FSA.SIMSManagerDb.Contracts;
@@ -455,6 +454,26 @@ namespace FSA.SIMSManagerDb.Repositories
             var item = await this.ctx.Incidents.FindAsync(signalId);
             item.SensitiveInfo = isSensitive;
             await ctx.SaveChangesAsync();
+        }
+        /// <summary>
+        /// Deletes a the outcome actually a note
+        /// Tests to make sure the note is an incident outcome first
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task RemoveOutcome(int id)
+        {
+            var note = this.ctx.IncidentNotes.Find(id);
+            // It's not an error to find nothing.
+            if (note == null) return;
+
+            var noteTag = await ctx.NoteTags.SingleAsync(a => a.Title == "Incident Outcome");
+            // Notes can have multiple values. Incident outcomes bucj this trend.
+            // They can only be incident outcomes otherwise it's undefined.
+            if (note.TagFlags != noteTag.Id) return;
+
+            this.ctx.IncidentNotes.Remove(note);
+            await this.ctx.SaveChangesAsync();
         }
     }
 }

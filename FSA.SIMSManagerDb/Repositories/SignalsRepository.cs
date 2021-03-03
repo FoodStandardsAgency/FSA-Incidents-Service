@@ -425,9 +425,9 @@ namespace FSA.SIMSManagerDb.Repositories
                 });
                 signal.SignalStatusId = (int)SignalStatusTypes.Closed_Linked_Incident;
 
-                var reasonLinked = $"\nLinked Incident\n{GeneralExtensions.GenerateIncidentId(incidentId)}";
+                var reasonLinked = $"{reason}\nLinked Incident\n{GeneralExtensions.GenerateIncidentId(incidentId)}";
 
-                var note = this.ClosureNote("Link to an existing incident", GeneralExtensions.GenerateIncidentId(incidentId), reason);
+                var note = this.ClosureNote("Link to an existing incident", GeneralExtensions.GenerateIncidentId(incidentId), reasonLinked);
                 note.HostId = signalId;
                 this.ctx.SignalNotes.Add(note);
 
@@ -463,7 +463,7 @@ namespace FSA.SIMSManagerDb.Repositories
                 var prods = mapper.Map<List<IncidentProductDb>>(signalProds);
                 var stakeholders = this.mapper.Map<List<IncidentStakeholderDb>>(signal.Stakeholders);
 
-                var notes = this.mapper.Map<List<IncidentNoteDb>>(signal.Notes);
+                var signalNotes = this.mapper.Map<List<IncidentNoteDb>>(signal.Notes);
                 // fetch the relevant lookupIds
                 var incidentType = this.ctx.HazardGroups.FirstOrDefault(a => a.Title == hazardGroup);
                 incidentType = (incidentType == null) ? this.ctx.HazardGroups.FirstOrDefault(a => a.Id == 36) : incidentType;
@@ -489,7 +489,7 @@ namespace FSA.SIMSManagerDb.Repositories
                     ReceivedOn = DateTime.Now,
                     Stakeholders = stakeholders,
                     Products = prods,
-                    Notes = new List<IncidentNoteDb> { new IncidentNoteDb { Note = reason } }.Concat(notes.Reverse<IncidentNoteDb>()).ToList(),
+                    Notes = new List<IncidentNoteDb> { new IncidentNoteDb { Note = reason } }.Concat(signalNotes.Reverse<IncidentNoteDb>()).ToList(),
                 };
 
                 var savedIncident = ctx.Incidents.Add(newIncident);

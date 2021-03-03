@@ -34,6 +34,7 @@ namespace FSA.SIMSManagerDb.MapperProfile
             CreateMap<IncidentSourceDb, IncidentSource>(MemberList.Destination);
             CreateMap<DocumentTagDb, AttachmentTagLkup>(MemberList.Destination);
             CreateMap<NoteTagDb, NoteTag>(MemberList.Destination);
+            CreateMap<IncidentOutcomeDb, IncidentOutcome>(MemberList.Destination);
 
             CreateMap<FBOTypeDb, FBOType>(MemberList.Destination);
             CreateMap<NotifierTypeDb, NotifierType>(MemberList.Destination);

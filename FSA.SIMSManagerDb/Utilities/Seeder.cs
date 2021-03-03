@@ -17,6 +17,7 @@ namespace FSA.SIMSManagerDb.Utilities
             DeathIllness(modelBuilder);
             FBOType(modelBuilder);
             IncidentStatus(modelBuilder);
+            IncidentOutcome(modelBuilder);
             IncidentSource(modelBuilder);
             NotifierType(modelBuilder);
             Priorities(modelBuilder);
@@ -126,13 +127,123 @@ namespace FSA.SIMSManagerDb.Utilities
                     Title = "Risk Assessment and Management",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                },new NoteTagDb
+                }, new NoteTagDb
                 {
                     Id = 8192,
                     Title = "Incident Outcome",
                     CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                     ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                 });
+        }
+
+        private void IncidentOutcome(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<IncidentOutcomeDb>()
+                   .HasData(new IncidentOutcomeDb
+                   {
+                       Id = 1,
+                       Title = "AA Issued",
+                       CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                       ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                   },
+                    new IncidentOutcomeDb
+                    {
+                        Id = 2,
+                        Title = "Distribution to England",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+                    new IncidentOutcomeDb
+                    {
+                        Id = 3,
+                        Title = "Distribution to Northern Ireland",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+                    new IncidentOutcomeDb
+                    {
+                        Id = 4,
+                        Title = "Distribution to Scotland",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+                    new IncidentOutcomeDb
+                    {
+                        Id = 5,
+                        Title = "Distribution to Wales",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+                    new IncidentOutcomeDb
+                    {
+                        Id = 6,
+                        Title = "FAFA Issued",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+                    new IncidentOutcomeDb
+                    {
+                        Id = 7,
+                        Title = "Info shared with Infosan Contact Point",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+                    new IncidentOutcomeDb
+                    {
+                        Id = 8,
+                        Title = "LA Investigations",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+                    new IncidentOutcomeDb
+                    {
+                        Id = 9,
+                        Title = "Outbreak Declared",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+                    new IncidentOutcomeDb
+                    {
+                        Id = 10,
+                        Title = "PRIN Issued",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+                    new IncidentOutcomeDb
+                    {
+                        Id = 11,
+                        Title = "Products Exported",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+                    new IncidentOutcomeDb
+                    {
+                        Id = 12,
+                        Title = "Products Imported",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+                    new IncidentOutcomeDb
+                    {
+                        Id = 13,
+                        Title = "Recorded in error/Exclude from reporting",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+                    new IncidentOutcomeDb
+                    {
+                        Id = 14,
+                        Title = "Referred to NFCU",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+                    new IncidentOutcomeDb
+                    {
+                        Id = 15,
+                        Title = "Withdrawl Instigated",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    });
         }
 
         private void IncidentSource(ModelBuilder modelBuilder)

@@ -55,6 +55,7 @@ namespace FSA.IncidentsManagement.Root.Domain
 
         Task<IEnumerable<SimsLinkedCase>> GetLinkedSignals(int id);
         Task UpdateSensitiveInfoStatus(int hostId, bool isSensitive);
+        Task RemoveIncidentOutcome(int id);
     }
 
 }

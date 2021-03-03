@@ -137,7 +137,19 @@ namespace FSA.IncidentsManagement.Controllers
         public async Task<IActionResult> UpdateIncidentSensitiveInfo(SensitiveInfoViewModel sensitiveInfo)
         {
             await this.simsApp.Incidents.UpdateSensitiveInfoStatus(sensitiveInfo.HostId, sensitiveInfo.IsSensitive);
-            return new OkResult();
+            return this.Ok();
+        }
+
+
+        [HttpPost("Outcomes/{id}")]
+        [SwaggerOperation(Summary = "Remove incident outcome")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        [Produces("application/json")]
+        public async Task<IActionResult> RemoveIncidentOutcome([FromRoute] int id)
+        {
+            await this.simsApp.Incidents.RemoveIncidentOutcome(id);
+            return this.Ok();
         }
     }
 }

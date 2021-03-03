@@ -84,6 +84,7 @@ namespace FSA.SIMSManagerDb
         internal DbSet<DocumentTagDb> DocumentTags { get; set; }
         internal DbSet<CloseSignalReasonDb> ClosedSignalReasons { get; set; }
         internal DbSet<CloseSignalTeamDb> ClosedSignalTeams { get; set; }
+        internal DbSet<IncidentOutcomeDb> IncidentOutcomes { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -149,6 +150,7 @@ namespace FSA.SIMSManagerDb
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<CloseSignalReasonDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<CloseSignalTeamDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<NoteTagDb>());
+            modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<IncidentOutcomeDb>());
             #endregion
 
             var seeds = new Seeder();

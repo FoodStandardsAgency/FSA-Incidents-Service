@@ -46,6 +46,7 @@ namespace FSA.SIMSManagerDb.Repositories
         private ISimsReferenceData<CloseSignalReason> CloseSignalReasons => new ReferenceDataRepo<CloseSignalReason, CloseSignalReasonDb>(ctx, mapper);
         private ISimsReferenceData<NoteTag> NoteTags => new ReferenceDataRepo<NoteTag, NoteTagDb>(ctx, mapper);
         private ISimsReferenceData<StakeholderIncidentRole> StakeholderIncidentRoles => new ReferenceDataRepo<StakeholderIncidentRole, StakeholderIncidentRoleDb>(ctx, mapper);
+        private ISimsReferenceData<IncidentOutcome> IncidentOutcomes => new ReferenceDataRepo<IncidentOutcome, IncidentOutcomeDb>(ctx, mapper);
 
 
         public IEnumerable<Country> Countries => this.mCountries.GetAll();
@@ -73,7 +74,8 @@ namespace FSA.SIMSManagerDb.Repositories
             CloseSignalTeams = this.CloseSignalTeams.GetAll(),
             CloseSignalReasons = this.CloseSignalReasons.GetAll(),
             IncidentSources = this.IncidentSources.GetAll(),
-            NoteTagTypes = this.NoteTags.GetAll()
+            NoteTagTypes = this.NoteTags.GetAll(),
+            IncidentOutcomes = this.IncidentOutcomes.GetAll()
         };
 
         public SimsExternalLookups GetExternalLookups() => new SimsExternalLookups

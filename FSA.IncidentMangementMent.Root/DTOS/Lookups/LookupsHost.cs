@@ -31,5 +31,6 @@ namespace FSA.IncidentsManagement.Root.Models
         public IEnumerable<CloseSignalReason> CloseSignalReasons { get; set; }
         public IEnumerable<CloseSignalTeam> CloseSignalTeams { get; set; }
         public IEnumerable<NoteTag> NoteTagTypes { get; set; }
+        public IEnumerable<IncidentOutcome> IncidentOutcomes { get; set; }
     }
 }
