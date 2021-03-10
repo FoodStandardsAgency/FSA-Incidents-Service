@@ -149,49 +149,49 @@ namespace FSA.SIMSManagerDb.Utilities
                     new IncidentOutcomeDb
                     {
                         Id = 2,
-                        Title = "Distribution to England",
+                        Title = "Enforcement Action",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
                     new IncidentOutcomeDb
                     {
                         Id = 3,
-                        Title = "Distribution to Northern Ireland",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new IncidentOutcomeDb
-                    {
-                        Id = 4,
-                        Title = "Distribution to Scotland",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new IncidentOutcomeDb
-                    {
-                        Id = 5,
-                        Title = "Distribution to Wales",
-                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
-                    },
-                    new IncidentOutcomeDb
-                    {
-                        Id = 6,
                         Title = "FAFA Issued",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
                     new IncidentOutcomeDb
                     {
-                        Id = 7,
+                        Id = 4,
                         Title = "Info shared with Infosan Contact Point",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
                     new IncidentOutcomeDb
                     {
-                        Id = 8,
+                        Id = 5,
                         Title = "LA Investigations",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+                    new IncidentOutcomeDb
+                    {
+                        Id = 6,
+                        Title = "Ministerial Briefing",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+                    new IncidentOutcomeDb
+                    {
+                        Id = 7,
+                        Title = "No Further FSA Action",
+                        CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                        ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+                    },
+                    new IncidentOutcomeDb
+                    {
+                        Id = 8,
+                        Title = "Non Routine Incident Declared",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
@@ -205,28 +205,28 @@ namespace FSA.SIMSManagerDb.Utilities
                     new IncidentOutcomeDb
                     {
                         Id = 10,
-                        Title = "PRIN Issued",
+                        Title = "Press Release/Consumer Advice",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
                     new IncidentOutcomeDb
                     {
                         Id = 11,
-                        Title = "Products Exported",
+                        Title = "PRIN Issued",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
                     new IncidentOutcomeDb
                     {
                         Id = 12,
-                        Title = "Products Imported",
+                        Title = "Recorded in error/Exclude from reporting",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
                     new IncidentOutcomeDb
                     {
                         Id = 13,
-                        Title = "Recorded in error/Exclude from reporting",
+                        Title = "Referred to LA/other organisation",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     },
@@ -240,7 +240,7 @@ namespace FSA.SIMSManagerDb.Utilities
                     new IncidentOutcomeDb
                     {
                         Id = 15,
-                        Title = "Withdrawl Instigated",
+                        Title = "Withdrawal Instigated",
                         CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                         ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                     });

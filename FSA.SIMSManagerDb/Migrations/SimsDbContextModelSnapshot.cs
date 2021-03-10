@@ -5733,7 +5733,7 @@ namespace FSA.SIMSManagerDb.Migrations
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "Distribution to England"
+                            Title = "Enforcement Action"
                         },
                         new
                         {
@@ -5742,7 +5742,7 @@ namespace FSA.SIMSManagerDb.Migrations
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "Distribution to Northern Ireland"
+                            Title = "FAFA Issued"
                         },
                         new
                         {
@@ -5751,7 +5751,7 @@ namespace FSA.SIMSManagerDb.Migrations
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "Distribution to Scotland"
+                            Title = "Info shared with Infosan Contact Point"
                         },
                         new
                         {
@@ -5760,7 +5760,7 @@ namespace FSA.SIMSManagerDb.Migrations
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "Distribution to Wales"
+                            Title = "LA Investigations"
                         },
                         new
                         {
@@ -5769,7 +5769,7 @@ namespace FSA.SIMSManagerDb.Migrations
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "FAFA Issued"
+                            Title = "Ministerial Briefing"
                         },
                         new
                         {
@@ -5778,7 +5778,7 @@ namespace FSA.SIMSManagerDb.Migrations
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "Info shared with Infosan Contact Point"
+                            Title = "No Further FSA Action"
                         },
                         new
                         {
@@ -5787,7 +5787,7 @@ namespace FSA.SIMSManagerDb.Migrations
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "LA Investigations"
+                            Title = "Non Routine Incident Declared"
                         },
                         new
                         {
@@ -5805,7 +5805,7 @@ namespace FSA.SIMSManagerDb.Migrations
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "PRIN Issued"
+                            Title = "Press Release/Consumer Advice"
                         },
                         new
                         {
@@ -5814,7 +5814,7 @@ namespace FSA.SIMSManagerDb.Migrations
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "Products Exported"
+                            Title = "PRIN Issued"
                         },
                         new
                         {
@@ -5823,7 +5823,7 @@ namespace FSA.SIMSManagerDb.Migrations
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "Products Imported"
+                            Title = "Recorded in error/Exclude from reporting"
                         },
                         new
                         {
@@ -5832,7 +5832,7 @@ namespace FSA.SIMSManagerDb.Migrations
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "Recorded in error/Exclude from reporting"
+                            Title = "Referred to LA/other organisation"
                         },
                         new
                         {
@@ -5850,7 +5850,7 @@ namespace FSA.SIMSManagerDb.Migrations
                             CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
-                            Title = "Withdrawl Instigated"
+                            Title = "Withdrawal Instigated"
                         });
                 });
 

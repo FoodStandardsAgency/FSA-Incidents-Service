@@ -46,6 +46,10 @@
     <Compile Remove="Migrations\20210217154101_notesTagsFinal.Designer.cs" />
     <Compile Remove="Migrations\20210303120515_incidentOutcomeTests.cs" />
     <Compile Remove="Migrations\20210303120515_incidentOutcomeTests.Designer.cs" />
+    <Compile Remove="Migrations\20210303120632_incidentOutcomeTests.cs" />
+    <Compile Remove="Migrations\20210303120632_incidentOutcomeTests.Designer.cs" />
+    <Compile Remove="Migrations\20210310104620_incidentOutcomeTests.cs" />
+    <Compile Remove="Migrations\20210310104620_incidentOutcomeTests.Designer.cs" />
     <Compile Remove="Repositories\SignalsLinkedRecords.cs" />
   </ItemGroup>
 
