@@ -1,6 +1,7 @@
 ﻿using FSA.SIMSManagerDb.Builder;
 using FSA.SIMSManagerDb.Builders;
 using FSA.SIMSManagerDb.Entities;
+using FSA.SIMSManagerDb.Entities.Incident;
 using FSA.SIMSManagerDb.Entities.Lookups;
 using FSA.SIMSManagerDb.Entities.Signals;
 using FSA.SIMSManagerDb.Utilities;
@@ -21,7 +22,7 @@ namespace FSA.SIMSManagerDb
         internal DbSet<IncidentProductDateDb> IncidentProductDates { get; set; }
         internal DbSet<IncidentProductFboDb> IncidentProductFbos { get; set; }
         internal DbSet<IncidentProductPackSizeDb> IncidentProductPackSizes { get; set; }
-
+        internal DbSet<IncidentCategoryJoinDb> IncidentsCategoryJoin { get; set; }
         #endregion
 
         #region Signals
@@ -85,6 +86,7 @@ namespace FSA.SIMSManagerDb
         internal DbSet<CloseSignalReasonDb> ClosedSignalReasons { get; set; }
         internal DbSet<CloseSignalTeamDb> ClosedSignalTeams { get; set; }
         internal DbSet<IncidentOutcomeDb> IncidentOutcomes { get; set; }
+        internal DbSet<IncidentCategoryDb> IncidentCategories { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -97,6 +99,7 @@ namespace FSA.SIMSManagerDb
             modelBuilder.ApplyConfiguration(new AttachmentBuilder<IncidentAttachmentDb>(nameof(this.IncidentAttachments), "IncidentId"));
             modelBuilder.ApplyConfiguration(new StakeholderBuilder<IncidentStakeholderDb>("IncidentId"));
             modelBuilder.ApplyConfiguration(new NotesBuilder<IncidentNoteDb>(nameof(this.IncidentNotes), "IncidentId"));
+            modelBuilder.ApplyConfiguration(new IncidentCategoryJoinBuilder());
 
             modelBuilder.ApplyConfiguration(new IncidentProductBuilder());
             modelBuilder.ApplyConfiguration(new ProductPackSizeBuilder<IncidentProductPackSizeDb>(nameof(this.IncidentProductPackSizes), "IncidentId"));
@@ -151,6 +154,7 @@ namespace FSA.SIMSManagerDb
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<CloseSignalTeamDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<NoteTagDb>());
             modelBuilder.ApplyConfiguration(new BasicLookupsBuilder<IncidentOutcomeDb>());
+            modelBuilder.ApplyConfiguration(new IncidentCategoryBuilder());
             #endregion
 
             var seeds = new Seeder();

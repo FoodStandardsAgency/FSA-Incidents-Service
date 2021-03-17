@@ -1,4 +1,5 @@
 ﻿using FSA.SIMSManagerDb.Entities.Core;
+using FSA.SIMSManagerDb.Entities.Incident;
 using FSA.SIMSManagerDb.Entities.Lookups;
 using FSA.SIMSManagerDb.Entities.Signals;
 using System;
@@ -64,6 +65,8 @@ namespace FSA.SIMSManagerDb.Entities
         public DateTime? IncidentClosed { get; set; }
         public bool SensitiveInfo { get; set; }
         public int? OnlineFormId { get; set; }
+
+        public ICollection<IncidentCategoryJoinDb> Categories { get; set; }
 
         public ICollection<IncidentAttachmentDb> Attachments { get; set; }
         public ICollection<IncidentNoteDb> Notes { get; set; }
