@@ -351,7 +351,10 @@ namespace FSA.SIMSManagerDb.Repositories
                 {
                     int id = 0;
                     if (int.TryParse(String.Join("", matches.Select(o => o.Groups["number"].Value)), out id))
+                    {
                         idTerms.Add(id);
+                       // allTerms.Add(term); 
+                    }
                 }
             }
 

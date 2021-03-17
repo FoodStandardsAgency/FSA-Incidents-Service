@@ -14,9 +14,6 @@ namespace SIMS.Database
     {
         private IMapper mapper;
         private string userId;
-        private string anotherId;
-        private string userId3;
-        private string miller;
         private string conn;
 
         public IncidentLinksTests()
@@ -29,15 +26,13 @@ namespace SIMS.Database
             var seedInfo = new SeedingConfigData();
 
             this.userId = seedInfo.userIds[0];
-            this.anotherId = seedInfo.userIds[1];
-            this.userId3 = seedInfo.userIds[2];
-            this.miller = seedInfo.userIds[3];
+;
             var config = seedInfo.GetConfigData();
             this.conn = ((JsonElement)config["ConnectionStrings:FSADbConn"]).ToString();
         }
 
-        [Fact]
-        public async Task AddLink()
+        [Fact(DisplayName = "Incidents - Add Link")]
+        public async Task AddIncidentLink()
         {
             var hostId = 1;
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
@@ -50,14 +45,29 @@ namespace SIMS.Database
             }
         }
 
-        [Fact]
-        public async Task RemoveLink()
+        [Fact(DisplayName = "Incidents - Remove Link")]
+        public async Task RemoveIncidentLink()
         {
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
                 var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var removedLink = await simsHost.Incidents.Links.Remove(1, 6);
                 Assert.True(removedLink.From == 1 && removedLink.To == 6);
+            }
+        }
+
+
+        [Fact(DisplayName ="Signals - Add Link")]
+        public async Task AddSignalLink()
+        {
+            var hostId = 1;
+            using (var ctx = SeedingConfigData.GetDbContext(this.conn))
+            {
+                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
+                // This returns added links
+                var addedLinks = (await simsHost.Signals.Links.Add(hostId, new int[] { 6, 100, 200 }, "Signals A bonus")).ToList();
+                var allLinksSet = await simsHost.Signals.Links.GetForHost(hostId);
+                Assert.True(allLinksSet.Count() == 3);
             }
         }
     }

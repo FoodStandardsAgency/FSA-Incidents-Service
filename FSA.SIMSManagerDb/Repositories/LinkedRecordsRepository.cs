@@ -4,6 +4,7 @@ using FSA.SIMSManagerDb.Contracts;
 using FSA.SIMSManagerDb.Entities.Core;
 using FSA.SIMSManagerDbEntities;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,13 +21,19 @@ namespace FSA.SIMSManagerDb.Repositories
         public DbSet<NoteDb> NoteSet { get; }
 
         private readonly IMapper mapper;
+        // This class is used for signals/incidents/Whatever comes next
+        // Each of them has a slightly different way of displaying the id (Prefix)
+        // When we write a note detaiing a change to a linked signal/new incident the correct public version of the id must be displayed.
+        // hence why a int->string func is injected as as service...
+        private readonly Func<int, string> publicIdGenerator;
 
-        public LinkedRecordsRepository(SimsDbContext ctx, IMapper mapper)
+        public LinkedRecordsRepository(SimsDbContext ctx, IMapper mapper, Func<int, string> publicIdGenerator)
         {
             this.ctx = ctx;
             this.LinkSet = ctx.Set<LinkDb>();
             this.NoteSet = ctx.Set<NoteDb>();
             this.mapper = mapper;
+            this.publicIdGenerator = publicIdGenerator;
         }
 
 
@@ -72,11 +79,13 @@ namespace FSA.SIMSManagerDb.Repositories
             allTo.Remove(from);
 
             List<SimsLinkedRecord> results = new List<SimsLinkedRecord>();
-
+            // This is placed at the top of every note.
+            var allStringToIds = allTo.Select(a => this.publicIdGenerator(a));
+            string reasonFromHeader = $"Linked Records\n{from}\n{String.Join("\n", allStringToIds)}\nReason\n";
             // helper
-            var isReasonPresent = string.IsNullOrEmpty(reason);
             var updatesOccured = false;
-            // not my favourite option
+            var allCreatedFrom = new HashSet<int>();
+
             foreach (var to in allTo)
             {
                 var fromTo = this.LinkSet.AsNoTracking().FirstOrDefault(a => a.FromId == from && a.ToId == to);
@@ -85,21 +94,28 @@ namespace FSA.SIMSManagerDb.Repositories
                 if (fromTo == null && toFrom == null)
                 {
                     var newLink = new LinkDb { FromId = from, ToId = to };
-                    if (!isReasonPresent)
+                    if (!string.IsNullOrEmpty(reason))
                     {
-                        var newToComment = new NoteDb { Note = reason, HostId = to };
+                        var newToComment = new NoteDb { Note = reasonFromHeader + reason, HostId = to, TagFlags = 1024 /*// Link Reason Notes Tag //*/ };
                         this.NoteSet.Add(newToComment);
                     }
                     updatesOccured = true;
                     this.LinkSet.Add(newLink);
+                    // Required to populate the note on the TO side.
+                    allCreatedFrom.Add(newLink.FromId);
                     results.Add(mapper.Map<LinkDb, SimsLinkedRecord>(newLink));
                 }
             }
             // We musht have updated something
-            // So ensure the from is updated too.
+            // So ensure the from is updated too with all the linked records
             if (allTo.Count > 0 && updatesOccured)
             {
-                var newFromComment = new NoteDb { Note = reason, HostId = from };
+
+                var allStringFromIds = allCreatedFrom.Select(a => this.publicIdGenerator(a));
+                string reasonToHeader = $"Linked Records\n{from}\n{String.Join("\n", allStringToIds)}\nReason\n";
+
+                // Linked note also incides the record ids.
+                var newFromComment = new NoteDb { Note = reasonToHeader + reason, HostId = from, TagFlags = 1024 /*// Link Reason Notes Tag //*/};
                 this.NoteSet.Add(newFromComment);
             }
             await ctx.SaveChangesAsync();

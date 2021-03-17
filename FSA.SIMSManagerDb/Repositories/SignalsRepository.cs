@@ -26,7 +26,7 @@ namespace FSA.SIMSManagerDb.Repositories
 
         public IDbNotesRepository Notes => new SignalNotesRepository(ctx, mapper);
 
-        public IDbLinkedRecordsRepository Links => new LinkedRecordsRepository<SignalLinkDb, SignalNoteDb>(ctx, mapper);
+        public IDbLinkedRecordsRepository Links => new LinkedRecordsRepository<SignalLinkDb, SignalNoteDb>(ctx, mapper, GeneralExtensions.GenerateSignalsId);
 
         public IDbProductRepository Products => new ProductRepository<SignalProductDb, SignalProductFboDb, SignalProductPackSizeDb, SignalProductDateDb>(ctx, mapper);
 
@@ -130,7 +130,6 @@ namespace FSA.SIMSManagerDb.Repositories
                         .Include(o => o.FromLinks)
                         .Include(o => o.SignalStatus)
                         .Include(o => o.ToLinks).AsNoTracking().FirstAsync(f => f.Id == signalId);
-
 
             var signalQry = this.ctx.Signals
                          .Include(o => o.FromLinks)

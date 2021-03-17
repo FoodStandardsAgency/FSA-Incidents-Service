@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FSA.IncidentsManagement.Root;
 using FSA.IncidentsManagement.Root.DTOS;
 using FSA.SIMSManagerDb.Contracts;
 using FSA.SIMSManagerDb.Entities;
@@ -20,7 +21,7 @@ namespace FSA.SIMSManagerDb.Repositories
         public IncidentLinkedRecords(SimsDbContext ctx, IMapper mapper)
         {
             this.ctx = ctx;
-            this.LinksManager = new LinkedRecordsRepository<IncidentLinkDb, IncidentNoteDb>(ctx, mapper);
+            this.LinksManager = new LinkedRecordsRepository<IncidentLinkDb, IncidentNoteDb>(ctx, mapper, GeneralExtensions.GenerateIncidentId);
         }
 
         public async Task<IEnumerable<SimsLinkedRecord>> Add(int from, IEnumerable<int> tos, string reason)

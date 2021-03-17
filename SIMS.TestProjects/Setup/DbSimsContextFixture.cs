@@ -110,6 +110,11 @@ namespace SIMS.TestProjects.Setup
                 }
             }
 
+           var numbersTest = coreIncident.WithTitle("Number Searching Test Incident 1234 1234.5678 RIM2021.123 RIM2021-123 (1234)")
+                                                   .WithStatus((int)SimsIncidentStatusTypes.Unassigned)
+                                                  .WithLeadOfficer("");
+
+            newBatch.Add(numbersTest);
             await iManager.Add(newBatch);
         }
 
