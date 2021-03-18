@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagement.Root.Shared;
 using FSA.SIMSManagerDb.Contracts;
@@ -36,15 +37,15 @@ namespace FSA.SIMSManagerDb.Repositories
             this.mapper = mapper;
         }
 
-        public async Task<BaseIncident> Add(BaseIncident incident)
+        public async Task<SIMSIncident> Add(SIMSIncident incident)
         {
             //if (incident.CommonId != 0) throw new IncidentExistsException("This item has already been added.");
-            var dbItem = mapper.Map<BaseIncident, IncidentDb>(incident);
+            var dbItem = mapper.Map<SIMSIncident, IncidentDb>(incident);
             dbItem.IncidentCreated = dbItem.Created;
             dbItem.IncidentClosed = null; // Ensure lack of shenanigans
             var dbPonder = this.ctx.Incidents.Add(dbItem);
             await this.ctx.SaveChangesAsync();
-            return mapper.Map<IncidentDb, BaseIncident>(dbPonder.Entity);
+            return mapper.Map<IncidentDb, SIMSIncident>(dbPonder.Entity);
         }
 
         /// <summary>
@@ -53,10 +54,10 @@ namespace FSA.SIMSManagerDb.Repositories
         /// </summary>
         /// <param name="incidents"></param>
         /// <returns></returns>
-        public async Task Add(IEnumerable<BaseIncident> incidents)
+        public async Task Add(IEnumerable<SIMSIncident> incidents)
         {
 
-            foreach (var dbincident in mapper.Map<IEnumerable<BaseIncident>, IEnumerable<IncidentDb>>(incidents))
+            foreach (var dbincident in mapper.Map<IEnumerable<SIMSIncident>, IEnumerable<IncidentDb>>(incidents))
             {
                 //if (incident.CommonId != 0) throw new IncidentExistsException("This item has already been added.");
 
@@ -102,10 +103,10 @@ namespace FSA.SIMSManagerDb.Repositories
         /// <param name="Id"></param>
         /// <returns>Incident</returns>
         /// <exception cref="NullReferenceException" />
-        public async Task<BaseIncident> Get(int Id)
+        public async Task<SIMSIncident> Get(int Id)
         {
             var itm = await this.ctx.Incidents.AsNoTracking().FirstAsync(f => f.Id == Id);
-            return mapper.Map<IncidentDb, BaseIncident>(itm);
+            return mapper.Map<SIMSIncident>(itm);
         }
 
         /// <summary>
@@ -114,16 +115,16 @@ namespace FSA.SIMSManagerDb.Repositories
         /// <param name="Id"></param>
         /// <returns>Incident</returns>
         /// <exception cref="NullReferenceException" />
-        public async Task<BaseIncident> Get(Guid guid)
+        public async Task<SIMSIncident> Get(Guid guid)
         {
             var itm = await this.ctx.Incidents.AsNoTracking().FirstAsync(f => f.MostUniqueId == guid);
-            return mapper.Map<IncidentDb, BaseIncident>(itm);
+            return mapper.Map<SIMSIncident>(itm);
         }
 
-        public async Task<IEnumerable<BaseIncident>> GetAll()
+        public async Task<IEnumerable<SIMSIncident>> GetAll()
         {
             var allItems = await this.ctx.Incidents.AsNoTracking().ToListAsync();
-            return mapper.Map<IEnumerable<IncidentDb>, IEnumerable<BaseIncident>>(allItems).ToList();
+            return mapper.Map<IEnumerable<IncidentDb>, IEnumerable<SIMSIncident>>(allItems).ToList();
         }
 
         /// <summary>
@@ -135,14 +136,14 @@ namespace FSA.SIMSManagerDb.Repositories
         /// The updated incident
         /// </returns>
         /// <exception cref="NullReferenceException" />
-        public async Task<BaseIncident> UpdateClassification(int id, int ClassificationId)
+        public async Task<SIMSIncident> UpdateClassification(int id, int ClassificationId)
         {
             if (await this.IsClosed(id)) throw new ArgumentOutOfRangeException("Cannot update a closed incident.");
 
             var dbItem = await ctx.Incidents.FindAsync(id);
             dbItem.ClassificationId = ClassificationId;
             await ctx.SaveChangesAsync();
-            return mapper.Map<IncidentDb, BaseIncident>(dbItem);
+            return mapper.Map<IncidentDb, SIMSIncident>(dbItem);
         }
         /// <summary>
         /// This is the basic update of direct incident fields
@@ -150,7 +151,7 @@ namespace FSA.SIMSManagerDb.Repositories
         /// </summary>
         /// <param name="incident"></param>
         /// <returns></returns>
-        public async Task<BaseIncident> Update(BaseIncident incident)
+        public async Task<SIMSIncident> Update(SIMSIncident incident)
         {
             var dbItem = this.ctx.Incidents.Find(incident.CommonId);
 
@@ -160,15 +161,15 @@ namespace FSA.SIMSManagerDb.Repositories
             // Logical changes.
             // Mark some differences since last update
 
-            
+
             // Have we changed to Status.unassigned? if so ensure we remove the lead officer.
             if (dbItem.IncidentStatusId == (int)IncidentStatusTypes.Open && incident.StatusId == (int)IncidentStatusTypes.Unassigned)
-                incident = incident.WithLeadOfficer("");
+                incident.LeadOfficer = "";
 
             // Have we assigned a new lead officer?
             // so status must be set to open
             if (String.IsNullOrEmpty(dbItem.LeadOfficer) && !String.IsNullOrEmpty(incident.LeadOfficer) && incident.StatusId != (int)IncidentStatusTypes.Closed)
-                incident = incident.WithStatus((int)IncidentStatusTypes.Open);
+                incident.StatusId = (int)IncidentStatusTypes.Open;
 
             //Transfer our updates into the existing incident
             //incident.ToUpdateDb(dbItem);
@@ -178,7 +179,7 @@ namespace FSA.SIMSManagerDb.Repositories
             // It should not be replaced once set.
             //if (receivedOn.HasValue)
             //    dbItem.ReceivedOn = receivedOn;
-            
+
 
             // Are we closed?
             // Then ensure we update the closed date.
@@ -187,7 +188,7 @@ namespace FSA.SIMSManagerDb.Repositories
 
             var updatedDbItem = this.ctx.Incidents.Update(dbItem);
             await this.ctx.SaveChangesAsync();
-            return mapper.Map<IncidentDb, BaseIncident>(updatedDbItem.Entity);
+            return mapper.Map<SIMSIncident>(updatedDbItem.Entity);
         }
 
         /// <summary>
@@ -199,7 +200,7 @@ namespace FSA.SIMSManagerDb.Repositories
         /// The updated incident
         /// </returns>
         /// <exception cref="NullReferenceException" />
-        public async Task<BaseIncident> UpdateStatus(int id, int statusId)
+        public async Task<SIMSIncident> UpdateStatus(int id, int statusId)
         {
             var dbItem = await ctx.Incidents.FindAsync(id);
 
@@ -208,7 +209,7 @@ namespace FSA.SIMSManagerDb.Repositories
                 dbItem.LeadOfficer = "";
 
             await ctx.SaveChangesAsync();
-            return mapper.Map<IncidentDb, BaseIncident>(dbItem);
+            return mapper.Map<IncidentDb, SIMSIncident>(dbItem);
         }
 
         /// <summary>
@@ -232,7 +233,7 @@ namespace FSA.SIMSManagerDb.Repositories
             await this.ctx.SaveChangesAsync();
         }
 
-        public async Task<IncidentsDisplayModel> GetDisplayItem(int id)
+        public async Task<SIMSIncidentDisplay> GetDisplayItem(int id)
         {
             // get the db version.
             // with most lookups (excluding organisations)
@@ -248,12 +249,10 @@ namespace FSA.SIMSManagerDb.Repositories
                         .Include(i => i.LeadLocalAuthority) //.ThenInclude(o => o.Organisation)
                         .Include(i => i.PrincipalFBO)
                         .Include(i => i.ContactMethod)
-                        .Include(i=>i.IncidentSource)
+                        .Include(i => i.IncidentSource)
                         .Include(i => i.IncidentStatus)
                         .SingleAsync(p => p.Id == id);
-
-            // Finally we can now build our tower of wonder
-            return mapper.Map<IncidentDb, IncidentsDisplayModel>(dbIncident);
+            return mapper.Map<SIMSIncidentDisplay>(dbIncident);
 
         }
 
@@ -353,7 +352,7 @@ namespace FSA.SIMSManagerDb.Repositories
                     if (int.TryParse(String.Join("", matches.Select(o => o.Groups["number"].Value)), out id))
                     {
                         idTerms.Add(id);
-                       // allTerms.Add(term); 
+                        // allTerms.Add(term); 
                     }
                 }
             }
@@ -393,7 +392,7 @@ namespace FSA.SIMSManagerDb.Repositories
             return completeSearch;
         }
 
-  
+
         /// <summary>
         /// Returns dashbord view for linked incidents.
         /// Excludes the parent Incident.

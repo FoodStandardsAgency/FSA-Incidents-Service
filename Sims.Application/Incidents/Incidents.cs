@@ -33,16 +33,18 @@ namespace Sims.Application
 
         public ISIMSStakeholders Stakeholders => new IncidentStakeholders(dbHost);
 
-        public Task<BaseIncident> Add(BaseIncident incident)
+        public Task<SIMSIncident> Add(SIMSIncident incident)
         {
             if (incident.CommonId != 0) throw new SimsIncidentExistsException("This incident has already been added.");
 
             // IF we have an officer, and status is not open...
             if (!String.IsNullOrEmpty(incident.LeadOfficer) && incident.StatusId != (int)SimsIncidentStatusTypes.Open)
-                incident = incident.WithStatus((int)SimsIncidentStatusTypes.Open);
-            // if we don't have an officer status must be unsassigned
-            if (String.IsNullOrEmpty(incident.LeadOfficer))
-                incident = incident.WithStatus((int)SimsIncidentStatusTypes.Unassigned);
+            {
+                incident.StatusId = (int)SimsIncidentStatusTypes.Open;
+
+            }// if we don't have an officer status must be unsassigned
+            else if (String.IsNullOrEmpty(incident.LeadOfficer))
+                incident.StatusId = (int)SimsIncidentStatusTypes.Unassigned;
             return dbHost.Incidents.Add(incident);
         }
 
@@ -58,9 +60,9 @@ namespace Sims.Application
             return dbHost.Incidents.Exists(incidentId);
         }
 
-        public Task<BaseIncident> Get(int Id) => dbHost.Incidents.Get(Id);
+        public Task<SIMSIncident> Get(int Id) => dbHost.Incidents.Get(Id);
 
-        public Task<BaseIncident> Get(Guid guid)
+        public Task<SIMSIncident> Get(Guid guid)
         {
             throw new NotImplementedException();
         }
@@ -68,14 +70,14 @@ namespace Sims.Application
         /// Literally *ALL* incidents
         /// </summary>
         /// <returns></returns>
-        public Task<IEnumerable<BaseIncident>> GetAll() => dbHost.Incidents.GetAll();
+        public Task<IEnumerable<SIMSIncident>> GetAll() => dbHost.Incidents.GetAll();
 
         /// <summary>
         /// Stuffed version of the viewmodel with all lookups accountered for
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Task<IncidentsDisplayModel> GetDisplayItem(int id) => dbHost.Incidents.GetDisplayItem(id);
+        public Task<SIMSIncidentDisplay> GetDisplayItem(int id) => dbHost.Incidents.GetDisplayItem(id);
 
         public async Task<IEnumerable<SimsLinkedCase>> GetLinkedSignals(int id)
         {
@@ -102,12 +104,12 @@ namespace Sims.Application
             return dbHost.Incidents.RemoveOutcome(id);
         }
 
-        public async Task<BaseIncident> Update(BaseIncident incident)
+        public async Task<SIMSIncident> Update(SIMSIncident incident)
         {
             try
             {
                 if (incident.CommonId == 0) throw new SimsItemMissing("Incident Id missing");
-                return await dbHost.Incidents.Update(incident.SignalStatusId==0 ? incident.WithSignalStatusId(null): incident);
+                return await dbHost.Incidents.Update(incident);
             }
             catch (NullReferenceException)
             {
@@ -120,7 +122,7 @@ namespace Sims.Application
         }
 
 
-        public async Task<BaseIncident> UpdateClassification(int id, int ClassificationId)
+        public async Task<SIMSIncident> UpdateClassification(int id, int ClassificationId)
         {
 
             try
@@ -148,6 +150,6 @@ namespace Sims.Application
 
         public Task UpdateSensitiveInfoStatus(int incidentId, bool isSensitive)=> this.dbHost.Incidents.UpdateSensitiveInfo(incidentId, isSensitive);
 
-        public Task<BaseIncident> UpdateStatus(int id, int statusId) => dbHost.Incidents.UpdateStatus(id, statusId);
+        public Task<SIMSIncident> UpdateStatus(int id, int statusId) => dbHost.Incidents.UpdateStatus(id, statusId);
     }
 }

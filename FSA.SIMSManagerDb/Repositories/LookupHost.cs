@@ -6,7 +6,6 @@ using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb.Contracts;
 using FSA.SIMSManagerDb.Entities.Lookups;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace FSA.SIMSManagerDb.Repositories
 {
@@ -47,6 +46,7 @@ namespace FSA.SIMSManagerDb.Repositories
         private ISimsReferenceData<NoteTag> NoteTags => new ReferenceDataRepo<NoteTag, NoteTagDb>(ctx, mapper);
         private ISimsReferenceData<StakeholderIncidentRole> StakeholderIncidentRoles => new ReferenceDataRepo<StakeholderIncidentRole, StakeholderIncidentRoleDb>(ctx, mapper);
         private ISimsReferenceData<IncidentOutcome> IncidentOutcomes => new ReferenceDataRepo<IncidentOutcome, IncidentOutcomeDb>(ctx, mapper);
+        private ISimsReferenceData<IncidentCategory> IncidentCategories => new ReferenceDataRepo<IncidentCategory, IncidentCategoryDb>(ctx, mapper);
 
 
         public IEnumerable<Country> Countries => this.mCountries.GetAll();
@@ -75,7 +75,8 @@ namespace FSA.SIMSManagerDb.Repositories
             CloseSignalReasons = this.CloseSignalReasons.GetAll(),
             IncidentSources = this.IncidentSources.GetAll(),
             NoteTagTypes = this.NoteTags.GetAll(),
-            IncidentOutcomes = this.IncidentOutcomes.GetAll()
+            IncidentOutcomes = this.IncidentOutcomes.GetAll(),
+            IncidentCategories = this.IncidentCategories.GetAll()
         };
 
         public SimsExternalLookups GetExternalLookups() => new SimsExternalLookups

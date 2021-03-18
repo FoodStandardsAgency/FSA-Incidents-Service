@@ -105,11 +105,12 @@ namespace FSA.IncidentsManagement
             services.AddScoped<X509Certificate2>((o) => new X509Certificate2(Convert.FromBase64String(Configuration["SharePointAccess"])));
 
             services.AddAutoMapper((cfg)=> {
+                
                 cfg.AddProfile<SimsDbMappingProfile>();
                 cfg.AddProfile<WebMappingProfile>();
                 cfg.AddCollectionMappers();
             });
-
+            
             var simsConn = Configuration.GetConnectionString("SIMSDbConn");
 
             services.AddDbContext<SimsDbContext>((provider, opts) => opts

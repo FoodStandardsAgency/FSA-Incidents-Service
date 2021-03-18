@@ -218,7 +218,7 @@ namespace SIMS.Database
             {
                 var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
 
-                BaseIncident incident = await simsHost.Incidents.Get(22);
+                SIMSIncident incident = await simsHost.Incidents.Get(22);
                 // Ensure we have a lead officer and we are open
                 var changedIncident = incident
                                         .WithPrincipalFbo(16);

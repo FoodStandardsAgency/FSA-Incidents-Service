@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FSA.IncidentsManagement.Models;
 using FSA.IncidentsManagement.Root.Domain;
+using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -44,28 +45,28 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpPut()]
         [SwaggerOperation(Summary = "Replace an incident")]
-        [ProducesResponseType(typeof(BaseIncident), 200)]
+        [ProducesResponseType(typeof(SIMSIncident), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
         public async Task<IActionResult> UpdateIncident([FromBody, SwaggerParameter("Updated Incident", Required = true)] IncidentUpdateModel incident)
         {
-            var mappedIncindet = mapper.Map<IncidentUpdateModel, BaseIncident>(incident);
-            return new OkObjectResult(await this.simsApp.Incidents.Update(mappedIncindet));
+            return new OkObjectResult(await this.simsApp.Incidents.Update(mapper.Map<SIMSIncident>(incident))); 
         }
 
         [HttpPost()]
         [SwaggerOperation(Summary = "Create an incident")]
-        [ProducesResponseType(typeof(BaseIncident), 200)]
+        [ProducesResponseType(typeof(SIMSIncident), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
         public async Task<IActionResult> CreateIncident([FromBody, SwaggerParameter("Create Incident", Required = true)] IncidentCreateModel incident)
         {
-            return new OkObjectResult(await this.simsApp.Incidents.Add(mapper.Map<BaseIncident>(incident)));
+
+            return new OkObjectResult(await this.simsApp.Incidents.Add(mapper.Map<SIMSIncident>(incident)));
         }
 
         [HttpPost("Classification/{id}/{classificationId}")]
         [SwaggerOperation(Summary = "Update classification of an incident")]
-        [ProducesResponseType(typeof(BaseIncident), 200)]
+        [ProducesResponseType(typeof(SIMSIncident), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
         public async Task<IActionResult> UpdateClassification([FromRoute] int id, [FromRoute] int classificationId)
@@ -75,7 +76,7 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpPost("Status/{id}/{statusId}")]
         [SwaggerOperation(Summary = "Update status of an incident")]
-        [ProducesResponseType(typeof(BaseIncident), 200)]
+        [ProducesResponseType(typeof(SIMSIncident), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
         public async Task<IActionResult> UpdateStatus([FromRoute] int id, [FromRoute] int statusId)

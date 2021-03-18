@@ -39,6 +39,23 @@ namespace FSA.IncidentsManagement.ModelValidators
             CreateMap<IncidentUpdateModel, BaseIncident>()
                    .ConstructUsing(@this => @this.ToAutoMapper());
 
+            CreateMap<IncidentCreateModel, SIMSIncident>()
+                .ForMember(a => a.NotifierId, b => b.MapFrom(c => c.NotifierId == 0 ? new Nullable<int>() : c.NotifierId))
+                .ForMember(a => a.PrincipalFBOId, b => b.MapFrom(c => c.PrincipalFBOId == 0 ? new Nullable<int>() : c.PrincipalFBOId))
+                .ForMember(a => a.AdminLeadId, b => b.MapFrom(c => c.AdminLeadId == 0 ? new Nullable<int>() : c.AdminLeadId))
+                .ForMember(a => a.LeadLocalAuthorityId, b => b.MapFrom(c => c.LeadLocalAuthorityId == 0 ? new Nullable<int>() : c.LeadLocalAuthorityId))
+                .ForMember(a => a.DeathIllnessId, b => b.MapFrom(c => c.DeathIllnessId == 0 ? new Nullable<int>() : c.DeathIllnessId))
+                .ForMember(a => a.SignalStatusId, b => b.MapFrom(c => c.SignalStatusId == 0 ? new Nullable<int>() : c.SignalStatusId));
+
+            CreateMap<IncidentUpdateModel, SIMSIncident>()
+                .ForMember(a=>a.CommonId, b=>b.MapFrom(c=>c.Id))
+                .ForMember(a => a.NotifierId, b => b.MapFrom(c => c.NotifierId == 0 ? new Nullable<int>() : c.NotifierId))
+                .ForMember(a => a.PrincipalFBOId, b => b.MapFrom(c => c.PrincipalFBOId == 0 ? new Nullable<int>() : c.PrincipalFBOId))
+                .ForMember(a => a.AdminLeadId, b => b.MapFrom(c => c.AdminLeadId == 0 ? new Nullable<int>() : c.AdminLeadId))
+                .ForMember(a => a.LeadLocalAuthorityId, b => b.MapFrom(c => c.LeadLocalAuthorityId == 0 ? new Nullable<int>() : c.LeadLocalAuthorityId))
+                .ForMember(a => a.DeathIllnessId, b => b.MapFrom(c => c.DeathIllnessId == 0 ? new Nullable<int>() : c.DeathIllnessId));
+
+
             CreateMap<SimsAttachmentFileInfo, SimsAttachmentFileInfoViewModel>()
                 .ForMember(a => a.Tags, b => b.MapFrom(c => ((SimsDocumentTagTypes)c.Tags).SelectedFlags().Where(o => o > 0).Select(o => o)));
             CreateMap<SimsAttachmentFileInfoViewModel, SimsAttachmentFileInfo>()
@@ -58,7 +75,7 @@ namespace FSA.IncidentsManagement.ModelValidators
                 id: @this.Id,
                 incidentTitle: @this.IncidentTitle,
                 incidentTypeId: @this.IncidentTypeId,
-                incidentSourceId:@this.IncidentSourceId,
+                incidentSourceId: @this.IncidentSourceId,
                 contactMethodId: @this.ContactMethodId,
                 statusId: @this.StatusId,
                 signalStatusId: @this.SignalStatusId,
@@ -72,9 +89,9 @@ namespace FSA.IncidentsManagement.ModelValidators
                 leadOfficer: @this.LeadOfficer,
                 leadOffice: @this.LeadOffice,
                 adminLeadId: @this.AdminLeadId == 0 ? new Nullable<int>() : @this.AdminLeadId,
-                oimtGroups:@this.OIMTGroups ?? "",
+                oimtGroups: @this.OIMTGroups ?? "",
                 fieldOfficer: @this.FieldOfficer,
-                onlineFormId:@this.OnlineFormId,
+                onlineFormId: @this.OnlineFormId,
                 leadLocalAuthorityId: @this.LeadLocalAuthorityId == 0 ? new Nullable<int>() : @this.LeadLocalAuthorityId,
                 lAAdvised: @this.LAAdvised,
                 deathIllnessId: @this.DeathIllnessId == 0 ? null : @this.DeathIllnessId,
@@ -92,7 +109,7 @@ namespace FSA.IncidentsManagement.ModelValidators
             id: @this.Id,
            mostUniqueId: Guid.Empty,
            incidentTitle: @this.IncidentTitle,
-           incidentSourceId:@this.IncidentSourceId,
+           incidentSourceId: @this.IncidentSourceId,
            incidentTypeId: @this.IncidentTypeId,
            contactMethodId: @this.ContactMethodId,
            statusId: @this.StatusId,
@@ -111,9 +128,9 @@ namespace FSA.IncidentsManagement.ModelValidators
            fieldOfficer: @this.FieldOfficer,
            leadLocalAuthorityId: @this.LeadLocalAuthorityId.HasValue && @this.LeadLocalAuthorityId.Value != 0 ? @this.LeadLocalAuthorityId : null, // 0 used as an ordinal due to powerapp limitiaion
            lAAdvised: @this.LAAdvised,
-           deathIllnessId: @this.DeathIllnessId==0? null : @this.DeathIllnessId,
+           deathIllnessId: @this.DeathIllnessId == 0 ? null : @this.DeathIllnessId,
            receivedOn: @this.ReceivedOn,
-           onlineFormId:null,
+           onlineFormId: null,
            sensitiveInfo: @this.SensitiveInfo,
            incidentCreated: @this.IncidentCreated,
            incidentClosed: null,

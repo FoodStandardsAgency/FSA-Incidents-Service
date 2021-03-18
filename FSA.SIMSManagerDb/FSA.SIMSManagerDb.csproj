@@ -58,11 +58,13 @@
     <Compile Remove="Migrations\20210317143803_incidentCategoryDef.Designer.cs" />
     <Compile Remove="Migrations\20210317145059_incidentCategoryDef.cs" />
     <Compile Remove="Migrations\20210317145059_incidentCategoryDef.Designer.cs" />
+    <Compile Remove="Migrations\20210318081653_moveHazardsToCategories.cs" />
+    <Compile Remove="Migrations\20210318081653_moveHazardsToCategories.Designer.cs" />
     <Compile Remove="Repositories\SignalsLinkedRecords.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="10.0.0" />
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="AutoMapper.Collection" Version="7.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.7" />

@@ -10,23 +10,24 @@ namespace FSA.IncidentsManagement.Root.Domain
 {
     public interface ISIMSIncidents
     {
-        Task<BaseIncident> Get(int Id);
+        Task<SIMSIncident> Get(int Id);
 
         [Obsolete]
-        Task<BaseIncident> Get(Guid guid);
-        Task<IEnumerable<BaseIncident>> GetAll();
-        Task<BaseIncident> Add(BaseIncident incident);
-        Task<BaseIncident> Update(BaseIncident incident);
+        Task<SIMSIncident> Get(Guid guid);
+
+        Task<IEnumerable<SIMSIncident>> GetAll();
+        Task<SIMSIncident> Add(SIMSIncident incident);
+        Task<SIMSIncident> Update(SIMSIncident incident);
 
         /// <summary>
         /// Display model used on the item screen
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<IncidentsDisplayModel> GetDisplayItem(int id);
+        Task<SIMSIncidentDisplay> GetDisplayItem(int id);
 
-        Task<BaseIncident> UpdateStatus(int Id, int statusId);
-        Task<BaseIncident> UpdateClassification(int id, int ClassificationId);
+        Task<SIMSIncident> UpdateStatus(int Id, int statusId);
+        Task<SIMSIncident> UpdateClassification(int id, int ClassificationId);
         Task UpdateLeadOfficer(IEnumerable<int> id, string user);
 
         Task<IPaging<IncidentDashboardItem>> DashboardSearch(string search = null, int pageSize = 500, int startPage = 1);
