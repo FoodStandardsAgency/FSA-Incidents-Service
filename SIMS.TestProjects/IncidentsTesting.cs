@@ -15,7 +15,7 @@ namespace SIMS.Database
 {
     public class IncidentsTesting
     {
-        private IMapper mapper;
+        private readonly IMapper mapper;
         private string userId;
         private string anotherId;
         private string userId3;
@@ -43,41 +43,42 @@ namespace SIMS.Database
         [Fact]
         public async Task AddNewIncidentNoLeadOfficer()
         {
-            var incident = new BaseIncident(
-                incidentTitle: "New Incident (no Lead officer)",
-                incidentTypeId: 36,
-                contactMethodId: 2,
-                incidentSourceId:14,
-                statusId: (int)SimsIncidentStatusTypes.Unassigned,
-                priorityId: 2,
-                classificationId: 1,
-                dataSourceId:9,
-                signalUrl: "",
-                productTypeId: 3,
-                leadOfficer: "",
-                adminLeadId: 1,
-                leadOffice: "",
-                oimtGroups:"",
-                fieldOfficer: "",
-                lAAdvised: false,
-                deathIllnessId: 3,
-                onlineFormId:null,
-                receivedOn: null,
-                incidentCreated: DateTime.Now,
-                lastChangedBy: this.userId,
-                lastChangedDate: DateTime.Now,
-                signalStatusId: null,
-                sensitiveInfo: true,
-                notifierId: null,
-                principalFBOId: null,
-                leadLocalAuthorityId: null,
-                incidentClosed: null
-                ); ;
+            var incident = new SIMSIncident
+            {
+                IncidentTitle = "New Incident (no Lead officer)",
+                IncidentTypeId = 36,
+                ContactMethodId = 2,
+                IncidentSourceId = 14,
+                StatusId = (int)SimsIncidentStatusTypes.Unassigned,
+                PriorityId = 2,
+                ClassificationId = 1,
+                DataSourceId = 9,
+                SignalUrl = "",
+                ProductTypeId = 3,
+                LeadOfficer = "",
+                AdminLeadId = 1,
+                LeadOffice = "",
+                OIMTGroups = "",
+                FieldOfficer = "",
+                LAAdvised = false,
+                DeathIllnessId = 3,
+                OnlineFormId = null,
+                ReceivedOn = null,
+                IncidentCreated = DateTime.Now,
+                LastChangedBy = this.userId,
+                LastChangedDate = DateTime.Now,
+                SignalStatusId = null,
+                SensitiveInfo = true,
+                NotifierId = null,
+                PrincipalFBOId = null,
+                LeadLocalAuthorityId = null,
+                IncidentClosed = null
+            }; ;
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
                 var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var savedIncident = await simsHost.Incidents.Add(incident);
-                Assert.True(savedIncident.MostUniqueId != Guid.Empty && savedIncident.StatusId == (int)SimsIncidentStatusTypes.Unassigned);
+                Assert.True(savedIncident.StatusId == (int)SimsIncidentStatusTypes.Unassigned);
             }
         }
 
@@ -85,41 +86,42 @@ namespace SIMS.Database
         [Fact(DisplayName = "Add incident with no death illness")]
         public async Task AddIncidentNoDeathIllness()
         {
-            var incident = new BaseIncident(
-                   incidentTitle: "New Incident (no death illness)",
-                   incidentTypeId: 36,
-                   contactMethodId: 2,
-                   incidentSourceId:1,
-                   statusId: (int)SimsIncidentStatusTypes.Open,
-                   priorityId: 2,
-                   classificationId: 1,
-                   dataSourceId: 9,
-                   signalUrl: "",
-                   productTypeId: 3,
-                   leadOfficer: this.userId3,
-                   adminLeadId: 1,
-                   leadOffice: "",
-                   oimtGroups:"OimtGroups, OimitGroups 2",
-                   fieldOfficer: "",
-                   lAAdvised: false,
-                   deathIllnessId: null,
-                   receivedOn: null,
-                   onlineFormId:null,
-                   sensitiveInfo: true,
-                   incidentCreated: DateTime.Now,
-                   lastChangedBy: this.miller,
-                   lastChangedDate: DateTime.Now,
-                   signalStatusId: null,
-                   notifierId: null,
-                   principalFBOId: null,
-                   leadLocalAuthorityId: null,
-                   incidentClosed: null
-       );
+            var incident = new SIMSIncident
+            {
+                IncidentTitle = "New Incident (no death illness)",
+                IncidentTypeId = 36,
+                ContactMethodId = 2,
+                IncidentSourceId = 1,
+                StatusId = (int)SimsIncidentStatusTypes.Open,
+                PriorityId = 2,
+                ClassificationId = 1,
+                DataSourceId = 9,
+                SignalUrl = "",
+                ProductTypeId = 3,
+                LeadOfficer = this.userId3,
+                AdminLeadId = 1,
+                LeadOffice = "",
+                OIMTGroups = "OimtGroups, OimitGroups 2",
+                FieldOfficer = "",
+                LAAdvised = false,
+                DeathIllnessId = null,
+                ReceivedOn = null,
+                OnlineFormId = null,
+                SensitiveInfo = true,
+                IncidentCreated = DateTime.Now,
+                LastChangedBy = this.miller,
+                LastChangedDate = DateTime.Now,
+                SignalStatusId = null,
+                NotifierId = null,
+                PrincipalFBOId = null,
+                LeadLocalAuthorityId = null,
+                IncidentClosed = null
+            };
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
                 var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var savedIncident = await simsHost.Incidents.Add(incident);
-                Assert.True(savedIncident.MostUniqueId != Guid.Empty);
+                Assert.True(true);
             }
 
         }
@@ -129,65 +131,44 @@ namespace SIMS.Database
         [Fact(DisplayName = "Add incident with lead officer")]
         public async Task AddIncidentLeadOfficer()
         {
-            var incident = new BaseIncident(
-                   incidentTitle: "New Incident (Lead officer)",
-                   incidentTypeId: 36,
-                   incidentSourceId:4,
-                   contactMethodId: 2,
-                   statusId: (int)SimsIncidentStatusTypes.Unassigned,
-                   priorityId: 2,
-                   classificationId: 1,
-                   dataSourceId: 9,
-                   oimtGroups: "OimtGroups, OimitGroups 2",
-                   signalUrl: "",
-                   productTypeId: 3,
-                   leadOfficer: this.userId3,
-                   adminLeadId: 1,
-                   leadOffice: "",
-                   fieldOfficer: "",
-                   lAAdvised: false,
-                   onlineFormId:null,
-                   deathIllnessId: 3,
-                   receivedOn: null,
-                   incidentCreated: DateTime.Now,
-                   lastChangedBy: this.miller,
-                   lastChangedDate: DateTime.Now,
-                   signalStatusId: null,
-                   notifierId: null,
-                sensitiveInfo: false,
-
-                   principalFBOId: null,
-                   leadLocalAuthorityId: null,
-                   incidentClosed: null
-       );
-            using (var ctx = SeedingConfigData.GetDbContext(this.conn))
+            var incident = new SIMSIncident
             {
-                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
-                var savedIncident = await simsHost.Incidents.Add(incident);
-                Assert.True(savedIncident.MostUniqueId != Guid.Empty);
-            }
+                IncidentTitle = "New Incident (Lead officer)",
+                IncidentTypeId = 36,
+                IncidentSourceId = 4,
+                ContactMethodId = 2,
+                StatusId = (int)SimsIncidentStatusTypes.Unassigned,
+                PriorityId = 2,
+                ClassificationId = 1,
+                DataSourceId = 9,
+                OIMTGroups = "OimtGroups, OimitGroups 2",
+                SignalUrl = "",
+                ProductTypeId = 3,
+                LeadOfficer = this.userId3,
+                AdminLeadId = 1,
+                LeadOffice = "Rred",
+                FieldOfficer = "",
+                LAAdvised = false,
+                OnlineFormId = null,
+                DeathIllnessId = 3,
+                ReceivedOn = null,
+                IncidentCreated = DateTime.Now,
+                LastChangedBy = this.miller,
+                LastChangedDate = DateTime.Now,
+                SignalStatusId = null,
+                NotifierId = null,
+                SensitiveInfo = false,
+
+                PrincipalFBOId = null,
+                LeadLocalAuthorityId = null,
+                IncidentClosed = null
+            };
+            using var ctx = SeedingConfigData.GetDbContext(this.conn);
+            var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
+            var savedIncident = await simsHost.Incidents.Add(incident);
+            Assert.True(savedIncident.LeadOfficer != "Rred");
 
         }
-
-        //[Fact(DisplayName = "Can't change most unique")]
-        //public async Task UpdateIncidentsFakeGuid()
-        //{
-
-        //    using (var ctx = SeedingConfigData.GetDbContext(this.conn))
-        //    {
-
-        //        var fakeId = Guid.Parse("00000000-0000-0000-0000-000000000001");
-        //        var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
-        //        var incidents = simsHost.Incidents;
-        //        var incident = await incidents.Get(1);
-        //        var updated = incident
-        //                .WithMostUnique(Guid.Parse("00000000-0000-0000-0000-000000000001"))
-        //                .WithPriority((int)SimsPrioritiesStatus.Medium);
-
-        //        await Assert.ThrowsAsync<InvalidOperationException>(async() => await incidents.Update(updated));
-        //        //savedIncident.MostUniqueId == fakeId && savedIncident.PriorityId == (int)PrioritiesStatus.Medium);
-        //    }
-        //}
 
         [Fact(DisplayName = "Update product Type")]
         public async Task UpdateProductType()
@@ -199,7 +180,8 @@ namespace SIMS.Database
                 var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var incidents = simsHost.Incidents;
                 var incident = await incidents.Get(19);
-                var updated = incident.WithProductType(23);
+                incident.ProductTypeId = (23);
+                var updated = incident;
 
                 var updateDb = await incidents.Update(updated);
 
@@ -217,11 +199,10 @@ namespace SIMS.Database
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
                 var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
-
                 SIMSIncident incident = await simsHost.Incidents.Get(22);
-                // Ensure we have a lead officer and we are open
-                var changedIncident = incident
-                                        .WithPrincipalFbo(16);
+                incident.PrincipalFBOId = 16;
+                var changedIncident = incident;
+
                 var updateIncident = await simsHost.Incidents.Update(changedIncident);
                 Assert.True(updateIncident.PrincipalFBOId == 16);
             }
@@ -230,23 +211,22 @@ namespace SIMS.Database
         [Fact]
         public async Task RetrieveUpdateSaveLeadOfficer()
         {
-            using (var ctx = SeedingConfigData.GetDbContext(this.conn))
-            {
-                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
+            using var ctx = SeedingConfigData.GetDbContext(this.conn);
+            var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
 
-                var incidentId = await simsHost.Incidents.Get(1);
+            var incident = await simsHost.Incidents.Get(1);
 
-                var incident = await simsHost.Incidents.Get(incidentId.MostUniqueId);
 
-                var fakeUser = Guid.NewGuid().ToString();
-                // Ensure we have a lead officer and we are open
-                var changedIncident = incident
-                                        .WithStatus((int)SimsIncidentStatusTypes.Open)
-                                        .WithLeadOfficer(fakeUser);
 
-                var updateIncident = await simsHost.Incidents.Update(changedIncident);
-                Assert.True(updateIncident.LeadOfficer == fakeUser && updateIncident.StatusId == (int)SimsIncidentStatusTypes.Open);
-            }
+            var fakeUser = Guid.NewGuid().ToString();
+            incident.StatusId = (int)SimsIncidentStatusTypes.Open;
+            incident.LeadOfficer = fakeUser;
+            // Ensure we have a lead officer and we are open
+            var changedIncident = incident;
+
+
+            var updateIncident = await simsHost.Incidents.Update(changedIncident);
+            Assert.True(updateIncident.LeadOfficer == fakeUser && updateIncident.StatusId == (int)SimsIncidentStatusTypes.Open);
         }
 
         [Fact]
@@ -256,13 +236,11 @@ namespace SIMS.Database
             {
 
                 var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
-                var incidentId = await simsHost.Incidents.Get(3);
 
-                var incident = await simsHost.Incidents.Get(incidentId.MostUniqueId);
-
+                var incident = await simsHost.Incidents.Get(3);
+                incident.NotifierId = null;
                 // Ensure we have a lead officer and we are open
-                var changedIncident = incident
-                                        .WithNotifier(null);
+                var changedIncident = incident;
 
                 var updateIncident = await simsHost.Incidents.Update(changedIncident);
                 Assert.False(updateIncident.NotifierId.HasValue);
@@ -277,10 +255,10 @@ namespace SIMS.Database
 
                 var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var incident = await simsHost.Incidents.Get(2);
-
+                incident.StatusId = (int)SimsIncidentStatusTypes.Closed;
                 // Closing shall replace the leadOfficer
-                var changedIncident = incident
-                                        .WithStatus((int)SimsIncidentStatusTypes.Closed);
+                var changedIncident = incident;
+
                 //.WithLeadOfficer(this.userId3);
 
                 var updateIncident = await simsHost.Incidents.Update(changedIncident);
@@ -347,7 +325,8 @@ namespace SIMS.Database
             {
                 var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var data = await simsHost.Incidents.Get(32);
-                var updated = data.WithLocalAuthority(5);
+                data.LeadLocalAuthorityId = 5;
+                var updated = data;
 
                 var item = await simsHost.Incidents.Update(updated);
                 Assert.True(item.LeadLocalAuthorityId == 5);
@@ -358,16 +337,15 @@ namespace SIMS.Database
         [Fact]
         public async Task NullToNullLeadLocalAuthroity()
         {
-            using (var ctx = SeedingConfigData.GetDbContext(this.conn))
-            {
-                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
-                var data = await simsHost.Incidents.Get(3);
-                var updated = data.WithLocalAuthority(null);
+            using var ctx = SeedingConfigData.GetDbContext(this.conn);
+            var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
+            var data = await simsHost.Incidents.Get(3);
+            data.LeadLocalAuthorityId = null;
+            var updated = data;
 
-                var item = await simsHost.Incidents.Update(updated);
+            var item = await simsHost.Incidents.Update(updated);
 
-                Assert.True(item.LeadLocalAuthorityId == null);
-            }
+            Assert.True(item.LeadLocalAuthorityId == null);
 
         }
 
@@ -378,21 +356,22 @@ namespace SIMS.Database
             {
                 var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var data = await simsHost.Incidents.Get(59);
-                var updated = data.WithStatus((int)SimsIncidentStatusTypes.Closed);
+                data.StatusId = (int)SimsIncidentStatusTypes.Closed;
+                var updated = data;
                 var item = await simsHost.Incidents.Update(updated);
                 Assert.True(item.IncidentClosed != null && item.StatusId == (int)SimsIncidentStatusTypes.Closed);
             }
         }
 
-        [Fact(DisplayName ="Not quite there yet")]
+        [Fact(DisplayName = "Not quite there yet")]
         public async Task UpdateClosedIncident()
         {
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
                 var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
                 var data = await simsHost.Incidents.Get(59);
-                var updated = data.WithTitle("New Title after closing");
-                //await Assert.ThrowsAsync<IncidentClosedException>(async () => await simsHost.Incidents.Update(updated));
+                data.IncidentTitle = "New Title after closing";
+                var updated = data;
             }
         }
 

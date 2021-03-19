@@ -64,12 +64,28 @@ namespace SIMS.Database
         [Fact]
         public async Task GetDisplayProduct()
         {
-            using (var ctx = SeedingConfigData.GetDbContext(this.conn))
+            using var ctx = SeedingConfigData.GetDbContext(this.conn);
+
+            var product = new SimsProduct
             {
-                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
-                var prodDisplay = await simsHost.Signals.Products.Get(1);
-                Assert.True(!String.IsNullOrEmpty(prodDisplay.Amount) && !String.IsNullOrEmpty(prodDisplay.Name));
-            }
+                Name = "New product name",
+                BatchCodes = "BC1234 BC59867",
+                Brand = "New Brand",
+                HostId = 21,
+                CountryOfOriginId = 103,
+                Amount = "7",
+                ProductTypeId = 2,
+                AmountUnitTypeId = 1,
+                AdditionalInfo = "Signal Data",
+                PackDescription = "This is descirption",
+            };
+
+            var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
+           var storedProdct =  await simsHost.Signals.Products.Add(1, product);
+
+
+            var prodDisplay = await simsHost.Signals.Products.Get(storedProdct.Id);
+            Assert.True(!String.IsNullOrEmpty(prodDisplay.Amount) && !String.IsNullOrEmpty(prodDisplay.Name));
         }
 
         [Fact]
@@ -113,13 +129,13 @@ namespace SIMS.Database
                 CountryOfOriginId = 47,
                 ProductTypeId = 2,
                 Amount = "0.0",
-                AmountUnitTypeId = 3,
+                AmountUnitTypeId = 8,
                 AdditionalInfo = "More Data needed",
                 PackDescription = "This is description",
                 PackSizes = new List<SimsProductPackSize>
                 {
-                    new SimsProductPackSize{ Size ="7", UnitId=2 },
-                    new SimsProductPackSize{ Size ="18.8", UnitId=2 },
+                    new SimsProductPackSize{ Size ="7", UnitId=9 },
+                    new SimsProductPackSize{ Size ="18.8", UnitId=10 },
                 }
             };
 
@@ -135,19 +151,17 @@ namespace SIMS.Database
         [Fact]
         public async Task UpdateProduct()
         {
-            using (var ctx = SeedingConfigData.GetDbContext(this.conn))
-            {
-                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
-                var product = await simsHost.Signals.Products.Get(1);
-                product.Name = "Updated Producted";
-                var pDates = product.ProductDates.ToList();
-                pDates.Add(new SimsProductDate { Date = DateTime.Parse("30/09/1978").ToUniversalTime(), DateTypeId = 2, });
-                product.ProductDates = pDates;
-                // product this is annoying
-                var updatedProduct = await simsHost.Signals.Products.Update(product);
-                var date = updatedProduct.ProductDates.FirstOrDefault(o => o.Date.Equals(DateTime.Parse("30/09/1978").ToUniversalTime()));
-                Assert.True(updatedProduct.Name == "Updated Producted" && date != null);
-            }
+            using var ctx = SeedingConfigData.GetDbContext(this.conn);
+            var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
+            var product = await simsHost.Signals.Products.Get(1);
+            product.Name = "Updated Producted";
+            var pDates = product.ProductDates.ToList();
+            pDates.Add(new SimsProductDate { Date = DateTime.Parse("30/09/1978").ToUniversalTime(), DateTypeId = 2, });
+            product.ProductDates = pDates;
+            // product this is annoying
+            var updatedProduct = await simsHost.Signals.Products.Update(product);
+            var date = updatedProduct.ProductDates.FirstOrDefault(o => o.Date.Equals(DateTime.Parse("30/09/1978").ToUniversalTime()));
+            Assert.True(updatedProduct.Name == "Updated Producted" && date != null);
         }
 
         [Fact]

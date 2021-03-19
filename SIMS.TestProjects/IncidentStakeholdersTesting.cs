@@ -72,18 +72,16 @@ namespace SIMS.Database
         [Fact]
         public async Task RemoveStakeholder()
         {
-            using (var ctx = SeedingConfigData.GetDbContext(this.conn))
-            {
-                var simsApp = SimsDbHost.CreateHost(ctx, mapper, this.userId);
-                var allStakeholders = await simsApp.Incidents.Stakeholders.GetAll(1);
-                var totalStakeholders = allStakeholders.Count;
-                await simsApp.Incidents.Stakeholders.Remove(2);
-                var lessStakeHolders = await simsApp.Incidents.Stakeholders.GetAll(1);
-                var s = (totalStakeholders - 1);
-                var x = (lessStakeHolders.Count == s);
-                Assert.True(x);
-                //await Assert.ThrowsAnyAsync<Exception>(async () => await simsApp.IncidentStakeholders.Add(0, newStakeHolder));
-            }
+            using var ctx = SeedingConfigData.GetDbContext(this.conn);
+            var simsApp = SimsDbHost.CreateHost(ctx, mapper, this.userId);
+            var allStakeholders = await simsApp.Incidents.Stakeholders.GetAll(1);
+            var totalStakeholders = allStakeholders.Count;
+            await simsApp.Incidents.Stakeholders.Remove(2);
+            var lessStakeHolders = await simsApp.Incidents.Stakeholders.GetAll(1);
+            var s = (totalStakeholders - 1);
+            var x = (lessStakeHolders.Count == s);
+            Assert.True(x);
+            //await Assert.ThrowsAnyAsync<Exception>(async () => await simsApp.IncidentStakeholders.Add(0, newStakeHolder));
         }
     }
 }

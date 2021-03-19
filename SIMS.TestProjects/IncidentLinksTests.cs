@@ -48,12 +48,10 @@ namespace SIMS.Database
         [Fact(DisplayName = "Incidents - Remove Link")]
         public async Task RemoveIncidentLink()
         {
-            using (var ctx = SeedingConfigData.GetDbContext(this.conn))
-            {
-                var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
-                var removedLink = await simsHost.Incidents.Links.Remove(1, 6);
-                Assert.True(removedLink.From == 1 && removedLink.To == 6);
-            }
+            using var ctx = SeedingConfigData.GetDbContext(this.conn);
+            var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
+            var removedLink = await simsHost.Incidents.Links.Remove(1, 6);
+            Assert.True(removedLink.From == 1 && removedLink.To == 6);
         }
 
 
@@ -64,10 +62,12 @@ namespace SIMS.Database
             using (var ctx = SeedingConfigData.GetDbContext(this.conn))
             {
                 var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
+                var allLinks = await simsHost.Signals.Links.GetForHost(hostId);
+
                 // This returns added links
                 var addedLinks = (await simsHost.Signals.Links.Add(hostId, new int[] { 6, 100, 200 }, "Signals A bonus")).ToList();
                 var allLinksSet = await simsHost.Signals.Links.GetForHost(hostId);
-                Assert.True(allLinksSet.Count() == 3);
+                Assert.True(allLinksSet.Count() == allLinks.Count() +3);
             }
         }
     }

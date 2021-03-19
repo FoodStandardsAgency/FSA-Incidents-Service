@@ -95,24 +95,28 @@ namespace SIMS.TestProjects.Setup
         private async Task CreateIncidents(ISimsDbHost sims, SimsDbContext ctx, SeedingConfigData seeder)
         {
             var iManager = sims.Incidents;
-            List<Task<BaseIncident>> TaskList = new List<Task<BaseIncident>>();
+            List<Task<SIMSIncident>> TaskList = new List<Task<SIMSIncident>>();
             await iManager.Add(seeder.GetNewIncidents());
             var coreIncident = seeder.GetNewIncidents().ElementAt(0);
-            var newBatch = new List<BaseIncident>();
+            var newBatch = new List<SIMSIncident>();
             for (var x = 0; x < 9000 / 20; ++x)
             {
                 foreach (var title in this.titleList)
                 {
-                    var newIncident = coreIncident.WithTitle($"{title}-{x}")
-                                                  .WithStatus((int)SimsIncidentStatusTypes.Unassigned)
-                                                  .WithLeadOfficer("");
+                    coreIncident.IncidentTitle = $"{title}-{x}";
+                    coreIncident.StatusId = (int)SimsIncidentStatusTypes.Unassigned;
+                    coreIncident.LeadOfficer = "";
+
+                    var newIncident = coreIncident;
                     newBatch.Add(newIncident);
                 }
             }
 
-           var numbersTest = coreIncident.WithTitle("Number Searching Test Incident 1234 1234.5678 RIM2021.123 RIM2021-123 (1234)")
-                                                   .WithStatus((int)SimsIncidentStatusTypes.Unassigned)
-                                                  .WithLeadOfficer("");
+            coreIncident.IncidentTitle = "Number Searching Test Incident 1234 1234.5678 RIM2021.123 RIM2021-123 (1234)";
+            coreIncident.StatusId=(int)SimsIncidentStatusTypes.Unassigned;
+            coreIncident.LeadOfficer = "";
+
+            var numbersTest = coreIncident;
 
             newBatch.Add(numbersTest);
             await iManager.Add(newBatch);
