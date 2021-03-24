@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace FSA.IncidentsManagement.Root.DTOS
 {
@@ -9,7 +11,7 @@ namespace FSA.IncidentsManagement.Root.DTOS
 
         //public Guid MostUniqueId {get;set;}
         public string IncidentTitle { get; set; }
-        public int IncidentTypeId { get; set; }
+        //public int IncidentTypeId { get; set; }
         public int IncidentSourceId { get; set; }
         public int ContactMethodId { get; set; }
         public int StatusId { get; set; }
@@ -37,6 +39,7 @@ namespace FSA.IncidentsManagement.Root.DTOS
         public DateTime? IncidentClosed { get; set; }
         public string LastChangedBy { get; set; }
         public DateTime LastChangedDate { get; set; }
+        public IEnumerable<int> Categories { get; set; }
 
         private string FormatId()
         {

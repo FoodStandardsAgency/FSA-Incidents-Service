@@ -26,7 +26,7 @@ namespace SIMS.Database
             var seedInfo = new SeedingConfigData();
 
             this.userId = seedInfo.userIds[0];
-;
+            ;
             var config = seedInfo.GetConfigData();
             this.conn = ((JsonElement)config["ConnectionStrings:FSADbConn"]).ToString();
         }
@@ -50,12 +50,13 @@ namespace SIMS.Database
         {
             using var ctx = SeedingConfigData.GetDbContext(this.conn);
             var simsHost = SimsDbHost.CreateHost(ctx, this.mapper, this.userId);
+            var addLink = await simsHost.Incidents.Links.Add(1, new[] { 6 }, "Testing across the mersey");
             var removedLink = await simsHost.Incidents.Links.Remove(1, 6);
             Assert.True(removedLink.From == 1 && removedLink.To == 6);
         }
 
 
-        [Fact(DisplayName ="Signals - Add Link")]
+        [Fact(DisplayName = "Signals - Add Link")]
         public async Task AddSignalLink()
         {
             var hostId = 1;
@@ -67,7 +68,7 @@ namespace SIMS.Database
                 // This returns added links
                 var addedLinks = (await simsHost.Signals.Links.Add(hostId, new int[] { 6, 100, 200 }, "Signals A bonus")).ToList();
                 var allLinksSet = await simsHost.Signals.Links.GetForHost(hostId);
-                Assert.True(allLinksSet.Count() == allLinks.Count() +3);
+                Assert.True(allLinksSet.Count() == allLinks.Count() + 3);
             }
         }
     }

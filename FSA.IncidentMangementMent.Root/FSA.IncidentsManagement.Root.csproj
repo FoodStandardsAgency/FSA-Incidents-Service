@@ -11,7 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\BaseIncident.cs" />
     <Compile Remove="Models\IncidentAttachment.cs" />
+    <Compile Remove="Models\IncidentsDisplayModel.cs" />
     <Compile Remove="Models\ProductDashboard.cs" />
   </ItemGroup>
 

@@ -5,6 +5,7 @@ using FSA.IncidentsManagement.Root.DTOS.Lookups;
 using FSA.IncidentsManagement.Root.Models;
 using FSA.SIMSManagerDb.Entities;
 using FSA.SIMSManagerDb.Entities.Core;
+using FSA.SIMSManagerDb.Entities.Incident;
 using FSA.SIMSManagerDb.Entities.Lookups;
 using FSA.SIMSManagerDbEntities.Helpers;
 using System;
@@ -117,17 +118,19 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForMember(a => a.StatusId, o => o.MapFrom(a => a.IncidentStatusId))
                 .ForMember(a => a.LastChangedBy, o => o.MapFrom(a => a.ModifiedBy))
                 .ForMember(a => a.LastChangedDate, o => o.MapFrom(a => a.Modified))
-                .ForMember(a => a.AdminLeadId, o => o.MapFrom(@this => @this.AdminLeadId ?? 0));
+                .ForMember(a => a.AdminLeadId, o => o.MapFrom(@this => @this.AdminLeadId ?? 0))
+                .ForMember(a => a.Categories, o => o.MapFrom(@this => @this.Categories.Select(a => a.IncidentCategoryId).ToList()));
 
             CreateMap<SIMSIncident, IncidentDb>(MemberList.Source)
                 .IgnoreAuditData()
                 .ForMember(a => a.MostUniqueId, a => a.Ignore())
                 .ForMember(a => a.Id, m => m.MapFrom(a => a.CommonId))
-                .ForMember(a => a.IncidentStatusId, m => m.MapFrom(a => a.StatusId));
+                .ForMember(a => a.IncidentStatusId, m => m.MapFrom(a => a.StatusId))
+                .ForMember(a => a.Categories, m => m.MapFrom(a => a.Categories.Select(c => new IncidentCategoryJoinDb { IncidentId = a.CommonId, IncidentCategoryId = c }).ToList()));
 
             CreateMap<IncidentDb, SIMSIncidentDisplay>(MemberList.Destination)
                 .ForMember(a => a.SignalStatus, o => o.MapFrom(a => a.IncidentStatus.Title))
-                .ForMember(a => a.IncidentType, o => o.MapFrom(a => a.IncidentType.Title))
+                //.ForMember(a => a.IncidentType, o => o.MapFrom(a => a.IncidentType.Title))
                 .ForMember(a => a.IncidentStatus, o => o.MapFrom(a => a.IncidentStatus.Title))
                 .ForMember(a => a.IncidentSource, o => o.MapFrom(a => a.IncidentSource.Title))
                 .ForMember(a => a.Notifier, o => o.MapFrom(a => a.NotifierId.HasValue ? a.Notifier.Title : "Unassigned"))
@@ -138,13 +141,14 @@ namespace FSA.SIMSManagerDb.MapperProfile
                 .ForMember(a => a.LeadLocalAuthority, o => o.MapFrom(a => a.LeadLocalAuthorityId.HasValue ? a.LeadLocalAuthority.Title : "Unassigned"))
                 .ForMember(a => a.AdminLead, o => o.MapFrom(@this => @this.AdminLeadId.HasValue && @this.AdminLeadId != 0 ? @this.AdminLead.Title : "Unassigned"))
                 .ForMember(a => a.DeathIllness, o => o.MapFrom(@this => @this.DeathIllnessId != 0 ? @this.DeathIllness.Title : "Unassigned"))
-                .ForMember(a => a.PrincipalFBO, o => o.MapFrom(@this => "Penis"))//@this.PrincipalFBOId.HasValue && @this.PrincipalFBOId != 0 ? @this.PrincipalFBO.Title : "Unassigned"))
+                .ForMember(a => a.PrincipalFBO, o => o.MapFrom(@this => @this.PrincipalFBOId.HasValue && @this.PrincipalFBOId != 0 ? @this.PrincipalFBO.Title : "Unassigned"))
                 .ForMember(a => a.FBOEmail, o => o.MapFrom(@this => ""))
                 .ForMember(a => a.FBOPhone, o => o.MapFrom(@this => @this.PrincipalFBOId.HasValue && @this.PrincipalFBOId != 0 ? @this.PrincipalFBO.TelephoneNumber : "Unassigned"))
                 .ForMember(a => a.FBOAddressLine1, o => o.MapFrom(@this => @this.PrincipalFBOId.HasValue && @this.PrincipalFBOId != 0 ? @this.PrincipalFBO.AddressLine1 : "Unassigned"))
                 .ForMember(a => a.FBOAddressLine2, o => o.MapFrom(@this => @this.PrincipalFBOId.HasValue && @this.PrincipalFBOId != 0 ? @this.PrincipalFBO.AddressLine2 : "Unassigned"))
                 .ForMember(a => a.FBOAddressTown, o => o.MapFrom(@this => @this.PrincipalFBOId.HasValue && @this.PrincipalFBOId != 0 ? @this.PrincipalFBO.TownCity : "Unassigned"))
-                .ForMember(a => a.FBOAddressPostcode, o => o.MapFrom(@this => @this.PrincipalFBOId.HasValue && @this.PrincipalFBOId != 0 ? @this.PrincipalFBO.PostCode : "Unassigned"));
+                .ForMember(a => a.FBOAddressPostcode, o => o.MapFrom(@this => @this.PrincipalFBOId.HasValue && @this.PrincipalFBOId != 0 ? @this.PrincipalFBO.PostCode : "Unassigned"))
+                .ForMember(a => a.CategoryNames, o => o.MapFrom(a => a.Categories.Select(a => a.IncidentCategory.Title).ToList()));
 
 
             CreateMap<SimsSignal, SignalDb>(MemberList.Source)

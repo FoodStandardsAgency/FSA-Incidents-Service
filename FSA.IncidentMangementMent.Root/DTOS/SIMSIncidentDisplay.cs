@@ -1,8 +1,10 @@
-﻿namespace FSA.IncidentsManagement.Root.DTOS
+﻿using System.Collections.Generic;
+
+namespace FSA.IncidentsManagement.Root.DTOS
 {
     public class SIMSIncidentDisplay : SIMSIncident
     {
-        public string IncidentType { get; set; }
+        //public string IncidentType { get; set; }
         public string SignalStatus {get;set;}
         public string IncidentStatus {get;set;}
         public string Notifier {get;set;}
@@ -22,6 +24,7 @@
         public string DeathIllness {get;set;}
         public string AdminLead {get;set;}
         public string IncidentSource {get;set;}
+        public IEnumerable<string> CategoryNames { get; set; } = new List<string>();
         //public string FormattedOnlineFormid => this.OnlineFormId.HasValue ? GeneralExtensions.GenerateOnlineId(this.OnlineFormId.Value) : "";
     }
 }

@@ -54,7 +54,7 @@ namespace SIMS.TestProjects.Setup
         {
              new SIMSIncident{
                 IncidentTitle = "new Incident",
-                IncidentTypeId = 36,
+                Categories=new List<int>() { 2},
                 IncidentSourceId = 8,
                 ContactMethodId = 2,
                 StatusId = (int)SimsIncidentStatusTypes.Unassigned,
@@ -81,7 +81,7 @@ namespace SIMS.TestProjects.Setup
 
                 new SIMSIncident{
                 IncidentTitle = "Mislabelled ingredients omit peanuts",
-                IncidentTypeId = 72,
+                Categories=new List<int>() { 18},
                 ContactMethodId = 4,
                 IncidentSourceId = 8,
                 StatusId = (int)SimsIncidentStatusTypes.Open,
@@ -108,7 +108,7 @@ namespace SIMS.TestProjects.Setup
 
                 new SIMSIncident{
                 IncidentTitle = "Salmonella poisoning cases at local GP",
-                IncidentTypeId = 55,
+                Categories=new List<int>() { 19, 36 },
                 ContactMethodId = 1,
                 IncidentSourceId = 8,
                 StatusId = (int)SimsIncidentStatusTypes.Open,
@@ -133,32 +133,32 @@ namespace SIMS.TestProjects.Setup
                 LeadLocalAuthorityId = null,
                 IncidentClosed = null},
 
-                    new SIMSIncident{
-                    IncidentTitle = "Chinese Restaurant takeaway pinpointed as likely source for salmonella poisoning {unverified)",
-                    IncidentTypeId = 77,
-                    ContactMethodId = 2,
-                    StatusId = (int)SimsIncidentStatusTypes.Open,
-                    PriorityId = 1,
-                    IncidentSourceId = 2,
-                    ClassificationId = 1,
-                    DataSourceId = 2,
-                    SignalUrl = "https = //signalUrl.com",
-                    OnlineFormId = null,
-                    ProductTypeId = 3,
-                    LeadOffice = "",
-                    AdminLeadId = 2,
-                    LeadOfficer = this.userIds[3],
-                    FieldOfficer = "",
-                    LAAdvised = false,
-                    DeathIllnessId = 2,
-                    OIMTGroups = "OIMTGroups, OimitGroups And then some",
-                    ReceivedOn = DateTime.Now.ToUniversalTime(),
-                    SignalStatusId = null,
-                    SensitiveInfo = false,
-                    NotifierId = null,
-                    PrincipalFBOId = null,
-                    LeadLocalAuthorityId = null,
-                    IncidentClosed = null}
+                new SIMSIncident{
+                IncidentTitle = "Chinese Restaurant takeaway pinpointed as likely source for salmonella poisoning {unverified)",
+                Categories=new List<int>() { 14,5,8},
+                ContactMethodId = 2,
+                StatusId = (int)SimsIncidentStatusTypes.Open,
+                PriorityId = 1,
+                IncidentSourceId = 2,
+                ClassificationId = 1,
+                DataSourceId = 2,
+                SignalUrl = "https = //signalUrl.com",
+                OnlineFormId = null,
+                ProductTypeId = 3,
+                LeadOffice = "",
+                AdminLeadId = 2,
+                LeadOfficer = this.userIds[3],
+                FieldOfficer = "",
+                LAAdvised = false,
+                DeathIllnessId = 2,
+                OIMTGroups = "OIMTGroups, OimitGroups And then some",
+                ReceivedOn = DateTime.Now.ToUniversalTime(),
+                SignalStatusId = null,
+                SensitiveInfo = false,
+                NotifierId = null,
+                PrincipalFBOId = null,
+                LeadLocalAuthorityId = null,
+                IncidentClosed = null}
         };
 
         public IEnumerable<SimsProduct> GetNewProducts() => new List<SimsProduct>
@@ -354,7 +354,7 @@ namespace SIMS.TestProjects.Setup
                 DistributionDetails = "Where did this get done didded",
                 AdditionalInformation = "Anything else I added",
                 IsClosed = false,
-                
+
                 ReferenceNo = "R1234",
                 LADetails = "Local Authority text field"
             },
@@ -370,7 +370,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
                 DistributionDetails = "Distribution",
                 AdditionalInformation = @"Episodes of Columbo are between 70 and 98 minutes long, and have been broadcast in 44 countries. The 1971 episode 'Murder by the Book', directed by Steven Spielberg, was ranked No. 16 on TV Guide's 100 Greatest Episodes of All-Time[5] and in 1999, the magazine ranked Lt. Columbo No. 7 on its 50 Greatest TV Characters of All Time list.[6][7] In 2012, the program was ranked the third-best cop or legal show on Best in TV: The Greatest TV Shows of Our Time.[8] In 2013, TV Guide included it in its list of The 60 Greatest Dramas of All Time[9] and ranked it 33rd on its list of the 60 Best Series.[10] Also in 2013, the Writers Guild of America ranked it 57th on its list of 101 Best Written TV Series.[11]",
                 IsClosed = false,
-                
+
                 ReferenceNo = "RABCDE",
                 LADetails = "Local Authority text field"
             },
@@ -385,7 +385,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
                 DistributionDetails = "",
                 AdditionalInformation = @"Specifies the hosting plan that defines how resources are allocated to your function app. In the default Consumption plan, resources are added dynamically as required by your functions. In this serverless hosting model, you only pay for the time your functions run.",
                 IsClosed = false,
-                
+
                 ReferenceNo = "R1234-A1234",
                 LADetails = "Local Authority text field"
             },
@@ -399,7 +399,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
                 DistributionDetails = @"At the beginning of every episode, Columbo's genius was hidden by his frumpy, friendly and disarming demeanor, luring the killer into a false sense of security. In some cases, the killer's arrogance and dismissive attitude allow Columbo to manipulate his suspects into self-incrimination. While the details, and eventually the motivation(s), of the murderers' actions are shown to the viewer, Columbo's true thoughts and intentions are almost never revealed until close to the end of the episode (he occasionally begins to whistle the tune 'This Old Man' as the pieces begin to fall into place). Columbo generally maintains a friendly relationship with the murderer until the end. The point at which the detective first begins to suspect the murderer is generally not revealed, although it is often fairly early on. Columbo had a duality of character; the disarming and unkempt detective and the hidden genius sleuth. The genius would sometimes starkly manifest itself through his eyes as it did when Jack Cassidy’s killer escaped from the handcuffs in his magic show. Such moments always bode bad tidings for the killer. In some instances, such as Ruth Gordon's avenging elderly mystery writer in 'Try and Catch Me', Janet Leigh's terminally ill and deluded actress in 'Forgotten Lady', Donald Pleasence's elegant vintner in 'Any Old Port in a Storm', and Johnny Cash's enserfed singer in 'Swan Song', the killer is more sympathetic than the victim.[14] ",
                 AdditionalInformation = "",
                 IsClosed = false,
-                
+
                 ReferenceNo = "RABCDE",
                 LADetails = "Local Authority text field"
             },
@@ -413,7 +413,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
                 DistributionDetails = "Details deatisls details",
                 AdditionalInformation = @"Series producers Peter S. Fischer, Richard Levinson and William Link thought Lansbury would be perfect for the part of Jessica Fletcher but did not think that she would be interested in a television series. Earlier, she had acted in two film adaptations of Agatha Christie's mystery novels: as Salome Otterbourne in Death on the Nile and as Miss Marple in The Mirror Crack'd (1980). When the latter film did poorly—despite an all star cast including Rock Hudson, Elizabeth Taylor, Kim Novak, and Tony Curtis—the offer for Lansbury to reprise Miss Marple in three more films never materialized.[9] ",
                 IsClosed = false,
-                
+
                 ReferenceNo = "RJessica-Fletcher",
                 LADetails = "Local Authority text field"
             },
@@ -427,7 +427,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
                 DistributionDetails = "Where did this get done didded",
                 AdditionalInformation = "Anything else I added",
                 IsClosed = false,
-                
+
                 ReferenceNo = "R1234",
                 LADetails = "Local Authority text field"
             },
@@ -443,7 +443,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
                 DistributionDetails = "Distribution",
                 AdditionalInformation = @"Episodes of Columbo are between 70 and 98 minutes long, and have been broadcast in 44 countries. The 1971 episode 'Murder by the Book', directed by Steven Spielberg, was ranked No. 16 on TV Guide's 100 Greatest Episodes of All-Time[5] and in 1999, the magazine ranked Lt. Columbo No. 7 on its 50 Greatest TV Characters of All Time list.[6][7] In 2012, the program was ranked the third-best cop or legal show on Best in TV: The Greatest TV Shows of Our Time.[8] In 2013, TV Guide included it in its list of The 60 Greatest Dramas of All Time[9] and ranked it 33rd on its list of the 60 Best Series.[10] Also in 2013, the Writers Guild of America ranked it 57th on its list of 101 Best Written TV Series.[11]",
                 IsClosed = false,
-                
+
                 ReferenceNo = "RABCDE",
                 LADetails = "Local Authority text field"
             },
@@ -458,7 +458,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
                 DistributionDetails = "",
                 AdditionalInformation = @"Specifies the hosting plan that defines how resources are allocated to your function app. In the default Consumption plan, resources are added dynamically as required by your functions. In this serverless hosting model, you only pay for the time your functions run.",
                 IsClosed = false,
-                
+
                 ReferenceNo = "R1234-A1234",
                 LADetails = "Local Authority text field"
             },
@@ -472,7 +472,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
                 DistributionDetails = @"At the beginning of every episode, Columbo's genius was hidden by his frumpy, friendly and disarming demeanor, luring the killer into a false sense of security. In some cases, the killer's arrogance and dismissive attitude allow Columbo to manipulate his suspects into self-incrimination. While the details, and eventually the motivation(s), of the murderers' actions are shown to the viewer, Columbo's true thoughts and intentions are almost never revealed until close to the end of the episode (he occasionally begins to whistle the tune 'This Old Man' as the pieces begin to fall into place). Columbo generally maintains a friendly relationship with the murderer until the end. The point at which the detective first begins to suspect the murderer is generally not revealed, although it is often fairly early on. Columbo had a duality of character; the disarming and unkempt detective and the hidden genius sleuth. The genius would sometimes starkly manifest itself through his eyes as it did when Jack Cassidy’s killer escaped from the handcuffs in his magic show. Such moments always bode bad tidings for the killer. In some instances, such as Ruth Gordon's avenging elderly mystery writer in 'Try and Catch Me', Janet Leigh's terminally ill and deluded actress in 'Forgotten Lady', Donald Pleasence's elegant vintner in 'Any Old Port in a Storm', and Johnny Cash's enserfed singer in 'Swan Song', the killer is more sympathetic than the victim.[14] ",
                 AdditionalInformation = "",
                 IsClosed = false,
-                
+
                 ReferenceNo = "RABCDE",
                 LADetails = "Local Authority text field"
             },
@@ -486,7 +486,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
                 DistributionDetails = "Details deatisls details",
                 AdditionalInformation = @"Series producers Peter S. Fischer, Richard Levinson and William Link thought Lansbury would be perfect for the part of Jessica Fletcher but did not think that she would be interested in a television series. Earlier, she had acted in two film adaptations of Agatha Christie's mystery novels: as Salome Otterbourne in Death on the Nile and as Miss Marple in The Mirror Crack'd (1980). When the latter film did poorly—despite an all star cast including Rock Hudson, Elizabeth Taylor, Kim Novak, and Tony Curtis—the offer for Lansbury to reprise Miss Marple in three more films never materialized.[9] ",
                 IsClosed = false,
-                
+
                 ReferenceNo = "RJessica-Fletcher",
                 LADetails = "Local Authority text field"
             },
@@ -500,7 +500,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
                 DistributionDetails = "Where did this get done didded",
                 AdditionalInformation = "Anything else I added",
                 IsClosed = false,
-                
+
                 ReferenceNo = "R1234",
                 LADetails = "Local Authority text field"
             },
@@ -516,7 +516,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
                 DistributionDetails = "Distribution",
                 AdditionalInformation = @"Episodes of Columbo are between 70 and 98 minutes long, and have been broadcast in 44 countries. The 1971 episode 'Murder by the Book', directed by Steven Spielberg, was ranked No. 16 on TV Guide's 100 Greatest Episodes of All-Time[5] and in 1999, the magazine ranked Lt. Columbo No. 7 on its 50 Greatest TV Characters of All Time list.[6][7] In 2012, the program was ranked the third-best cop or legal show on Best in TV: The Greatest TV Shows of Our Time.[8] In 2013, TV Guide included it in its list of The 60 Greatest Dramas of All Time[9] and ranked it 33rd on its list of the 60 Best Series.[10] Also in 2013, the Writers Guild of America ranked it 57th on its list of 101 Best Written TV Series.[11]",
                 IsClosed = false,
-                
+
                 ReferenceNo = "RABCDE",
                 LADetails = "Local Authority text field"
             },
@@ -531,7 +531,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
                 DistributionDetails = "",
                 AdditionalInformation = @"Specifies the hosting plan that defines how resources are allocated to your function app. In the default Consumption plan, resources are added dynamically as required by your functions. In this serverless hosting model, you only pay for the time your functions run.",
                 IsClosed = false,
-                
+
                 ReferenceNo = "R1234-A1234",
                 LADetails = "Local Authority text field"
             },
@@ -545,7 +545,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
                 DistributionDetails = @"At the beginning of every episode, Columbo's genius was hidden by his frumpy, friendly and disarming demeanor, luring the killer into a false sense of security. In some cases, the killer's arrogance and dismissive attitude allow Columbo to manipulate his suspects into self-incrimination. While the details, and eventually the motivation(s), of the murderers' actions are shown to the viewer, Columbo's true thoughts and intentions are almost never revealed until close to the end of the episode (he occasionally begins to whistle the tune 'This Old Man' as the pieces begin to fall into place). Columbo generally maintains a friendly relationship with the murderer until the end. The point at which the detective first begins to suspect the murderer is generally not revealed, although it is often fairly early on. Columbo had a duality of character; the disarming and unkempt detective and the hidden genius sleuth. The genius would sometimes starkly manifest itself through his eyes as it did when Jack Cassidy’s killer escaped from the handcuffs in his magic show. Such moments always bode bad tidings for the killer. In some instances, such as Ruth Gordon's avenging elderly mystery writer in 'Try and Catch Me', Janet Leigh's terminally ill and deluded actress in 'Forgotten Lady', Donald Pleasence's elegant vintner in 'Any Old Port in a Storm', and Johnny Cash's enserfed singer in 'Swan Song', the killer is more sympathetic than the victim.[14] ",
                 AdditionalInformation = "",
                 IsClosed = false,
-                
+
                 ReferenceNo = "RABCDE",
                 LADetails = "Local Authority text field"
             },
@@ -559,7 +559,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
                 DistributionDetails = "Details deatisls details",
                 AdditionalInformation = @"Series producers Peter S. Fischer, Richard Levinson and William Link thought Lansbury would be perfect for the part of Jessica Fletcher but did not think that she would be interested in a television series. Earlier, she had acted in two film adaptations of Agatha Christie's mystery novels: as Salome Otterbourne in Death on the Nile and as Miss Marple in The Mirror Crack'd (1980). When the latter film did poorly—despite an all star cast including Rock Hudson, Elizabeth Taylor, Kim Novak, and Tony Curtis—the offer for Lansbury to reprise Miss Marple in three more films never materialized.[9] ",
                 IsClosed = false,
-                
+
                 ReferenceNo = "RJessica-Fletcher",
                 LADetails = "Local Authority text field"
             },
@@ -573,7 +573,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
                 DistributionDetails = "Where did this get done didded",
                 AdditionalInformation = "Anything else I added",
                 IsClosed = false,
-                
+
                 ReferenceNo = "R1234",
                 LADetails = "Local Authority text field"
             },
@@ -589,7 +589,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
                 DistributionDetails = "Distribution",
                 AdditionalInformation = @"Episodes of Columbo are between 70 and 98 minutes long, and have been broadcast in 44 countries. The 1971 episode 'Murder by the Book', directed by Steven Spielberg, was ranked No. 16 on TV Guide's 100 Greatest Episodes of All-Time[5] and in 1999, the magazine ranked Lt. Columbo No. 7 on its 50 Greatest TV Characters of All Time list.[6][7] In 2012, the program was ranked the third-best cop or legal show on Best in TV: The Greatest TV Shows of Our Time.[8] In 2013, TV Guide included it in its list of The 60 Greatest Dramas of All Time[9] and ranked it 33rd on its list of the 60 Best Series.[10] Also in 2013, the Writers Guild of America ranked it 57th on its list of 101 Best Written TV Series.[11]",
                 IsClosed = false,
-                
+
                 ReferenceNo = "RABCDE",
                 LADetails = "Local Authority text field"
             },
@@ -604,7 +604,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
                 DistributionDetails = "",
                 AdditionalInformation = @"Specifies the hosting plan that defines how resources are allocated to your function app. In the default Consumption plan, resources are added dynamically as required by your functions. In this serverless hosting model, you only pay for the time your functions run.",
                 IsClosed = false,
-                
+
                 ReferenceNo = "R1234-A1234",
                 LADetails = "Local Authority text field"
             },
@@ -618,7 +618,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
                 DistributionDetails = @"At the beginning of every episode, Columbo's genius was hidden by his frumpy, friendly and disarming demeanor, luring the killer into a false sense of security. In some cases, the killer's arrogance and dismissive attitude allow Columbo to manipulate his suspects into self-incrimination. While the details, and eventually the motivation(s), of the murderers' actions are shown to the viewer, Columbo's true thoughts and intentions are almost never revealed until close to the end of the episode (he occasionally begins to whistle the tune 'This Old Man' as the pieces begin to fall into place). Columbo generally maintains a friendly relationship with the murderer until the end. The point at which the detective first begins to suspect the murderer is generally not revealed, although it is often fairly early on. Columbo had a duality of character; the disarming and unkempt detective and the hidden genius sleuth. The genius would sometimes starkly manifest itself through his eyes as it did when Jack Cassidy’s killer escaped from the handcuffs in his magic show. Such moments always bode bad tidings for the killer. In some instances, such as Ruth Gordon's avenging elderly mystery writer in 'Try and Catch Me', Janet Leigh's terminally ill and deluded actress in 'Forgotten Lady', Donald Pleasence's elegant vintner in 'Any Old Port in a Storm', and Johnny Cash's enserfed singer in 'Swan Song', the killer is more sympathetic than the victim.[14] ",
                 AdditionalInformation = "",
                 IsClosed = false,
-                
+
                 ReferenceNo = "RABCDE",
                 LADetails = "Local Authority text field"
             },
@@ -632,7 +632,7 @@ The recurring plot's homicide suspects are uniformly clever, wealthy, and elite,
                 DistributionDetails = "Details deatisls details",
                 AdditionalInformation = @"Series producers Peter S. Fischer, Richard Levinson and William Link thought Lansbury would be perfect for the part of Jessica Fletcher but did not think that she would be interested in a television series. Earlier, she had acted in two film adaptations of Agatha Christie's mystery novels: as Salome Otterbourne in Death on the Nile and as Miss Marple in The Mirror Crack'd (1980). When the latter film did poorly—despite an all star cast including Rock Hudson, Elizabeth Taylor, Kim Novak, and Tony Curtis—the offer for Lansbury to reprise Miss Marple in three more films never materialized.[9] ",
                 IsClosed = false,
-                
+
                 ReferenceNo = "RJessica-Fletcher",
                 LADetails = "Local Authority text field"
             }

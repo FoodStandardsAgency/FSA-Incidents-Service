@@ -242,7 +242,7 @@ namespace FSA.SIMSManagerDb.Repositories
                         .Include(i => i.Classification)
                         .Include(i => i.DataSource)
                         .Include(i => i.DeathIllness)
-                        .Include(i => i.IncidentType)
+                        //.Include(i => i.IncidentType)
                         .Include(i => i.ProductType)
                         .Include(i => i.AdminLead)
                         .Include(i => i.Notifier) //.ThenInclude(o => o.Organisation)
@@ -251,6 +251,7 @@ namespace FSA.SIMSManagerDb.Repositories
                         .Include(i => i.ContactMethod)
                         .Include(i => i.IncidentSource)
                         .Include(i => i.IncidentStatus)
+                        .Include(i=>i.Categories).ThenInclude(a=>a.IncidentCategory)
                         .SingleAsync(p => p.Id == id);
             return mapper.Map<SIMSIncidentDisplay>(dbIncident);
 

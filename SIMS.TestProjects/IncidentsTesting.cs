@@ -6,6 +6,7 @@ using FSA.SIMSManagerDb.MapperProfile;
 using FSA.SIMSManagerDb.Repositories;
 using SIMS.TestProjects.Setup;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -46,7 +47,7 @@ namespace SIMS.Database
             var incident = new SIMSIncident
             {
                 IncidentTitle = "New Incident (no Lead officer)",
-                IncidentTypeId = 36,
+                Categories=new List<int>() { 36,21 },
                 ContactMethodId = 2,
                 IncidentSourceId = 14,
                 StatusId = (int)SimsIncidentStatusTypes.Unassigned,
@@ -89,7 +90,7 @@ namespace SIMS.Database
             var incident = new SIMSIncident
             {
                 IncidentTitle = "New Incident (no death illness)",
-                IncidentTypeId = 36,
+                Categories = new List<int>() { 4,5,6},
                 ContactMethodId = 2,
                 IncidentSourceId = 1,
                 StatusId = (int)SimsIncidentStatusTypes.Open,
@@ -134,7 +135,7 @@ namespace SIMS.Database
             var incident = new SIMSIncident
             {
                 IncidentTitle = "New Incident (Lead officer)",
-                IncidentTypeId = 36,
+                Categories = new List<int>() { 18},
                 IncidentSourceId = 4,
                 ContactMethodId = 2,
                 StatusId = (int)SimsIncidentStatusTypes.Unassigned,

@@ -34,10 +34,6 @@ namespace FSA.IncidentsManagement.ModelValidators
                  .ForMember(o => o.FboTypes, a => a.MapFrom(a => Utilities.SelectedFlags(a.FboTypes).Where(o => (int)o > 0)))
                  .ForMember(o => o.Contacts, a => a.Ignore());
 
-            CreateMap<IncidentCreateModel, BaseIncident>()
-                   .ConstructUsing(@this => @this.ToAutoMapper());
-            CreateMap<IncidentUpdateModel, BaseIncident>()
-                   .ConstructUsing(@this => @this.ToAutoMapper());
 
             CreateMap<IncidentCreateModel, SIMSIncident>()
                 .ForMember(a => a.NotifierId, b => b.MapFrom(c => c.NotifierId == 0 ? new Nullable<int>() : c.NotifierId))
@@ -48,7 +44,7 @@ namespace FSA.IncidentsManagement.ModelValidators
                 .ForMember(a => a.SignalStatusId, b => b.MapFrom(c => c.SignalStatusId == 0 ? new Nullable<int>() : c.SignalStatusId));
 
             CreateMap<IncidentUpdateModel, SIMSIncident>()
-                .ForMember(a=>a.CommonId, b=>b.MapFrom(c=>c.Id))
+                .ForMember(a => a.CommonId, b => b.MapFrom(c => c.Id))
                 .ForMember(a => a.NotifierId, b => b.MapFrom(c => c.NotifierId == 0 ? new Nullable<int>() : c.NotifierId))
                 .ForMember(a => a.PrincipalFBOId, b => b.MapFrom(c => c.PrincipalFBOId == 0 ? new Nullable<int>() : c.PrincipalFBOId))
                 .ForMember(a => a.AdminLeadId, b => b.MapFrom(c => c.AdminLeadId == 0 ? new Nullable<int>() : c.AdminLeadId))
@@ -67,75 +63,5 @@ namespace FSA.IncidentsManagement.ModelValidators
         }
     }
 
-    public static class MapUsing
-    {
-        public static BaseIncident ToAutoMapper(this IncidentUpdateModel @this)
-        {
-            return new BaseIncident(
-                id: @this.Id,
-                incidentTitle: @this.IncidentTitle,
-                incidentTypeId: @this.IncidentTypeId,
-                incidentSourceId: @this.IncidentSourceId,
-                contactMethodId: @this.ContactMethodId,
-                statusId: @this.StatusId,
-                signalStatusId: @this.SignalStatusId,
-                notifierId: @this.NotifierId == 0 ? new Nullable<int>() : @this.NotifierId,
-                priorityId: @this.PriorityId,
-                principalFBOId: @this.PrincipalFBOId == 0 ? new Nullable<int>() : @this.PrincipalFBOId,
-                classificationId: @this.ClassificationId,
-                dataSourceId: @this.DataSourceId,
-                signalUrl: @this.SignalUrl,
-                productTypeId: @this.ProductTypeId,
-                leadOfficer: @this.LeadOfficer,
-                leadOffice: @this.LeadOffice,
-                adminLeadId: @this.AdminLeadId == 0 ? new Nullable<int>() : @this.AdminLeadId,
-                oimtGroups: @this.OIMTGroups ?? "",
-                fieldOfficer: @this.FieldOfficer,
-                onlineFormId: @this.OnlineFormId,
-                leadLocalAuthorityId: @this.LeadLocalAuthorityId == 0 ? new Nullable<int>() : @this.LeadLocalAuthorityId,
-                lAAdvised: @this.LAAdvised,
-                deathIllnessId: @this.DeathIllnessId == 0 ? null : @this.DeathIllnessId,
-                mostUniqueId: Guid.Empty,
-                sensitiveInfo: @this.SensitiveInfo,
-                incidentClosed: null,
-                lastChangedBy: null,
-                lastChangedDate: DateTime.Now,
-                receivedOn: @this.ReceivedOn,
-                incidentCreated: DateTime.Now
-                );
-        }
-
-        public static BaseIncident ToAutoMapper(this IncidentCreateModel @this) => new BaseIncident(
-            id: @this.Id,
-           mostUniqueId: Guid.Empty,
-           incidentTitle: @this.IncidentTitle,
-           incidentSourceId: @this.IncidentSourceId,
-           incidentTypeId: @this.IncidentTypeId,
-           contactMethodId: @this.ContactMethodId,
-           statusId: @this.StatusId,
-           signalStatusId: @this.SignalStatusId,
-           notifierId: @this.NotifierId.HasValue && @this.NotifierId != 0 ? @this.NotifierId : null, // 0 used as an ordinal due to powerapp limitiaion
-           priorityId: @this.PriorityId,
-           principalFBOId: @this.PrincipalFBOId.HasValue && @this.PrincipalFBOId != 0 ? @this.PrincipalFBOId : null, // 0 used as an ordinal due to powerapp limitiaion
-           classificationId: @this.ClassificationId,
-           dataSourceId: @this.DataSourceId,
-           signalUrl: @this.SignalUrl,
-           productTypeId: @this.ProductTypeId,
-           leadOfficer: @this.LeadOfficer,
-           leadOffice: @this.LeadOffice,
-           adminLeadId: @this.AdminLeadId.HasValue && @this.AdminLeadId.Value != 0 ? @this.AdminLeadId : null, // 0 used as an ordinal due to powerapp limitiaion
-           oimtGroups: @this.OIMTGroups ?? "",
-           fieldOfficer: @this.FieldOfficer,
-           leadLocalAuthorityId: @this.LeadLocalAuthorityId.HasValue && @this.LeadLocalAuthorityId.Value != 0 ? @this.LeadLocalAuthorityId : null, // 0 used as an ordinal due to powerapp limitiaion
-           lAAdvised: @this.LAAdvised,
-           deathIllnessId: @this.DeathIllnessId == 0 ? null : @this.DeathIllnessId,
-           receivedOn: @this.ReceivedOn,
-           onlineFormId: null,
-           sensitiveInfo: @this.SensitiveInfo,
-           incidentCreated: @this.IncidentCreated,
-           incidentClosed: null,
-           lastChangedBy: null,
-           lastChangedDate: DateTime.Now
-       );
-    }
+  
 }

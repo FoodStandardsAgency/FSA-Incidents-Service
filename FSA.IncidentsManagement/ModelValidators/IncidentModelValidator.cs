@@ -13,7 +13,7 @@ namespace FSA.IncidentsManagement.ModelValidators
             RuleFor(incident => incident.StatusId).NotEqual(default(int)).WithMessage("Incorrect Status");
 
             RuleFor(incident => incident.ContactMethodId).NotEqual(default(int)).WithMessage("Incorrect Contact Method");
-            RuleFor(incident => incident.IncidentTypeId).NotEqual(default(int)).WithMessage("Incident type");
+            //RuleFor(incident => incident.IncidentTypeId).NotEqual(default(int)).WithMessage("Incident type");
 
             RuleFor(incident => incident.IncidentTitle).NotNull().WithMessage("Cannot have a null title.");
             //RuleFor(incident => incident.LeadOfficer).NotNull().WithMessage("Must have a lead officer assigned.");

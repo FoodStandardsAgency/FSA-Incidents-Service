@@ -34,7 +34,7 @@ namespace FSA.IncidentsManagement.Controllers
 
         [HttpGet("{id}")]
         [SwaggerOperation(Summary = "Get incident by id")]
-        [ProducesResponseType(typeof(IncidentsDisplayModel), 200)]
+        [ProducesResponseType(typeof(SIMSIncidentDisplay), 200)]
         [ProducesResponseType(500)]
         [Produces("application/json")]
         public async Task<IActionResult> GetIncident(int id)

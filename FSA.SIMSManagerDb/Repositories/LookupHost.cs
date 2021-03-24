@@ -23,7 +23,6 @@ namespace FSA.SIMSManagerDb.Repositories
             this.mapper = mapper;
         }
 
-        private ISimsReferenceData<HazardGroup> mCategories => new ReferenceDataRepo<HazardGroup, HazardGroupDb>(ctx, mapper);
         private ISimsReferenceData<Classification> mClassifications => new ReferenceDataRepo<Classification, ClassificationDb>(ctx, mapper);
         private ISimsReferenceData<Priority> mPriorities => new ReferenceDataRepo<Priority, PriorityDb>(ctx, mapper);
         private ISimsReferenceData<IncidentStatusLkUp> IncidentStatus => new ReferenceDataRepo<IncidentStatusLkUp, IncidentStatusDb>(ctx, mapper);
@@ -53,7 +52,6 @@ namespace FSA.SIMSManagerDb.Repositories
 
         public LookupsHost GetAll() => new LookupsHost
         {
-            Categories = this.mCategories.GetAll(),
             Classifications = this.mClassifications.GetAll(),
             Priorites = this.mPriorities.GetAll(),
             IncidentStatus = this.IncidentStatus.GetAll(),

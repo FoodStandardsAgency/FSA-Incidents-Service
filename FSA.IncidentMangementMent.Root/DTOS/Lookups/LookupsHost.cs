@@ -1,5 +1,4 @@
-﻿using FSA.IncidentsManagement.Root.Contracts;
-using FSA.IncidentsManagement.Root.DTOS.Lookups;
+﻿using FSA.IncidentsManagement.Root.DTOS.Lookups;
 using System.Collections.Generic;
 
 namespace FSA.IncidentsManagement.Root.Models
@@ -9,7 +8,6 @@ namespace FSA.IncidentsManagement.Root.Models
     /// </summary>
     public class LookupsHost
     {
-        public IEnumerable<HazardGroup> Categories { get; set; }
         public IEnumerable<Classification> Classifications { get; set; }
         public IEnumerable<Priority> Priorites { get; set; }
         public IEnumerable<IncidentStatusLkUp> IncidentStatus { get; set; }

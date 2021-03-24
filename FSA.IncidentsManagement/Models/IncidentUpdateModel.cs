@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FSA.IncidentsManagement.Models
 {
@@ -12,7 +10,7 @@ namespace FSA.IncidentsManagement.Models
         public int Id { get; set; }
         public string IncidentTitle { get; set; }
         public string IncidentDescription { get; set; }
-        public int IncidentTypeId { get; set; }
+        //public int IncidentTypeId { get; set; }
         public int ContactMethodId { get; set; }
         public int StatusId { get; set; }   // Not signal status
         public int PriorityId { get; set; }
@@ -35,6 +33,7 @@ namespace FSA.IncidentsManagement.Models
         public DateTime? ReceivedOn { get; set; }
         public int IncidentSourceId { get; set; }
         public int? OnlineFormId { get; set; }
+        public IEnumerable<int> Categories { get; set; }
         //public DateTime IncidentCreated { get; set; }
         //public DateTime? IncidentClosed { get; set; }
         //public string LastChangedBy { get; set; }
