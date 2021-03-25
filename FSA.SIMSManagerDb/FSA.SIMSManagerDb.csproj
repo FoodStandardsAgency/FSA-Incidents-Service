@@ -58,8 +58,22 @@
     <Compile Remove="Migrations\20210317143803_incidentCategoryDef.Designer.cs" />
     <Compile Remove="Migrations\20210317145059_incidentCategoryDef.cs" />
     <Compile Remove="Migrations\20210317145059_incidentCategoryDef.Designer.cs" />
+    <Compile Remove="Migrations\20210317150615_incidentCategoryDef.cs" />
+    <Compile Remove="Migrations\20210317150615_incidentCategoryDef.Designer.cs" />
     <Compile Remove="Migrations\20210318081653_moveHazardsToCategories.cs" />
     <Compile Remove="Migrations\20210318081653_moveHazardsToCategories.Designer.cs" />
+    <Compile Remove="Migrations\20210318083655_moveHazardsToCategories.cs" />
+    <Compile Remove="Migrations\20210318083655_moveHazardsToCategories.Designer.cs" />
+    <Compile Remove="Migrations\20210324105235_removeHazrdIndex.cs" />
+    <Compile Remove="Migrations\20210324105235_removeHazrdIndex.Designer.cs" />
+    <Compile Remove="Migrations\20210325090450_RemoveIncidentTypeIdx.cs" />
+    <Compile Remove="Migrations\20210325090450_RemoveIncidentTypeIdx.Designer.cs" />
+    <Compile Remove="Migrations\20210325095641_migrateToIncidentCategory.cs" />
+    <Compile Remove="Migrations\20210325095641_migrateToIncidentCategory.Designer.cs" />
+    <Compile Remove="Migrations\20210325100438_RemoveIncidentTypeIdx.cs" />
+    <Compile Remove="Migrations\20210325100438_RemoveIncidentTypeIdx.Designer.cs" />
+    <Compile Remove="Migrations\20210325102259_RemoveIncidentTypeIdx.cs" />
+    <Compile Remove="Migrations\20210325102259_RemoveIncidentTypeIdx.Designer.cs" />
     <Compile Remove="Repositories\SignalsLinkedRecords.cs" />
   </ItemGroup>
 

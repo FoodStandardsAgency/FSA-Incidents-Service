@@ -328,7 +328,15 @@ namespace FSA.SIMSManagerDb.Utilities
                    Title = "TSE's",
                    CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                    ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
+               },
+               new IncidentCategoryDb
+               {
+                   Id = 43,
+                   Title = "Environmental Pollutants",
+                   CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                   ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9"
                });
+
 
 
         }

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FSA.SIMSManagerDb.Migrations
 {
     [DbContext(typeof(SimsDbContext))]
-    [Migration("20210324105235_removeHazrdIndex")]
-    partial class removeHazrdIndex
+    [Migration("20210325102507_RemoveIncidentTypeIdx")]
+    partial class RemoveIncidentTypeIdx
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -6134,6 +6134,15 @@ namespace FSA.SIMSManagerDb.Migrations
                             Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
                             Title = "TSE's"
+                        },
+                        new
+                        {
+                            Id = 43,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "51b75a03-4bb1-4e03-bd91-469fe7a1e6e9",
+                            Title = "Environmental Pollutants"
                         });
                 });
 

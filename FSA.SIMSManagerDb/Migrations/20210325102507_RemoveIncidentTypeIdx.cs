@@ -2,7 +2,7 @@
 
 namespace FSA.SIMSManagerDb.Migrations
 {
-    public partial class removeHazrdIndex : Migration
+    public partial class RemoveIncidentTypeIdx : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
