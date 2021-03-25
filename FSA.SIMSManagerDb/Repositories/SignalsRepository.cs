@@ -6,6 +6,7 @@ using FSA.IncidentsManagement.Root.Models;
 using FSA.IncidentsManagement.Root.Shared;
 using FSA.SIMSManagerDb.Contracts;
 using FSA.SIMSManagerDb.Entities;
+using FSA.SIMSManagerDb.Entities.Incident;
 using FSA.SIMSManagerDb.Entities.Lookups;
 using FSA.SIMSManagerDbEntities.Helpers;
 using Microsoft.EntityFrameworkCore;
@@ -287,7 +288,7 @@ namespace FSA.SIMSManagerDb.Repositories
             return BuildOrClause(allClauses);
         }
 
-        private Expression<Func<T, bool>>BuildOrClause<T>(IEnumerable<Expression<Func<T,bool>>> clauses)
+        private Expression<Func<T, bool>> BuildOrClause<T>(IEnumerable<Expression<Func<T, bool>>> clauses)
         {
             var wordStack = new Stack<Expression<Func<T, bool>>>(clauses);
             // we are going to OR all the clauses together.
@@ -378,12 +379,14 @@ namespace FSA.SIMSManagerDb.Repositories
                         var reason = await ctx.ClosedSignalReasons.AsNoTracking().SingleOrDefaultAsync(a => a.Id == closeDetails.ReasonId);
                         closureReason += $"\nReason\n- {reason.Title}";
                     }
-                    
+
                 }
 
-                if (closeReasonId == SignalStatusTypes.Closed_Referrel_Offline) {
+                if (closeReasonId == SignalStatusTypes.Closed_Referrel_Offline)
+                {
                     closureReason = "Referral";
-                    if (closeDetails.TeamIds.Length > 0){
+                    if (closeDetails.TeamIds.Length > 0)
+                    {
                         var orAllTeams = new Stack<Expression<Func<CloseSignalTeamDb, bool>>>();
                         // ctx.ClosedSignalTeams.Where()
                         foreach (var id in closeDetails.TeamIds)
@@ -398,7 +401,7 @@ namespace FSA.SIMSManagerDb.Repositories
                 }
 
 
-                var note = this.ClosureNote(closureReason, null,closeDetails.UserReason);
+                var note = this.ClosureNote(closureReason, null, closeDetails.UserReason);
                 note.HostId = closeDetails.SignalId;
                 this.ctx.Add(dbClosedDetails);
                 this.ctx.SignalNotes.Add(note);
@@ -464,8 +467,8 @@ namespace FSA.SIMSManagerDb.Repositories
 
                 var signalNotes = this.mapper.Map<List<IncidentNoteDb>>(signal.Notes);
                 // fetch the relevant lookupIds
-                var incidentType = this.ctx.HazardGroups.FirstOrDefault(a => a.Title == hazardGroup);
-                incidentType = (incidentType == null) ? this.ctx.HazardGroups.FirstOrDefault(a => a.Id == 36) : incidentType;
+                var incidentType = this.ctx.IncidentCategories.FirstOrDefault(a => a.Title == hazardGroup);
+                incidentType = (incidentType == null) ? this.ctx.IncidentCategories.FirstOrDefault(a => a.Id == 1) : incidentType;
 
                 var otherDatasource = this.ctx.DataSources.FirstOrDefault(a => a.Title == "FSA RAM Referral");
                 var productType = this.ctx.ProductTypes.First(a => a.Title == "Undefined");
@@ -477,7 +480,8 @@ namespace FSA.SIMSManagerDb.Repositories
                     ProductTypeId = productType.Id,
                     IncidentStatusId = (int)IncidentStatusTypes.Unassigned,
                     DataSourceId = otherDatasource.Id,
-                    IncidentTypeId = incidentType.Id,
+                    //IncidentTypeId = incidentType.Id,
+                    Categories = new List<IncidentCategoryJoinDb> { new IncidentCategoryJoinDb { IncidentCategoryId = incidentType.Id, IncidentId = 0 } },
                     SignalUrl = signal.SourceLink,
                     LeadOfficer = "",
                     OIMTGroups = "",
@@ -524,8 +528,8 @@ namespace FSA.SIMSManagerDb.Repositories
 
             return new SignalNoteDb
             {
-                Note = $"{closure}{incident}{reasonBlock}", 
-                TagFlags=1
+                Note = $"{closure}{incident}{reasonBlock}",
+                TagFlags = 1
             };
         }
 
