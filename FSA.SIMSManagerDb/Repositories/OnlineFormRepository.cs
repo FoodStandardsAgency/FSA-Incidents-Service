@@ -3,6 +3,7 @@ using FSA.IncidentsManagement.Root.DTOS;
 using FSA.IncidentsManagement.Root.Shared;
 using FSA.SIMSManagerDb.Contracts;
 using FSA.SIMSManagerDb.Entities;
+using FSA.SIMSManagerDb.Entities.Incident;
 using FSA.SIMSManagerDbEntities.Helpers;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -173,6 +174,8 @@ namespace FSA.SIMSManagerDb.Repositories
                                             .Include(a => a.ProductType)
                                             .Include(a => a.PackSizes)
                                             .Where(o => o.HostId == onlineFormId).ToList();
+              //  var incidentType = this.ctx.IncidentCategories.FirstOrDefault(a => a.Title == hazardGroup);
+      //          incidentType = (incidentType == null) ? this.ctx.IncidentCategories.FirstOrDefault(a => a.Id == 1) : incidentType;
 
                 var prods = mapper.Map<List<IncidentProductDb>>(onlineProds);
                 var stakeholders = this.mapper.Map<List<IncidentStakeholderDb>>(dbEnt.Stakeholders);
@@ -187,7 +190,7 @@ namespace FSA.SIMSManagerDb.Repositories
                     ProductTypeId = productType.Id,
                     IncidentStatusId = (int)IncidentStatusTypes.Unassigned,
                     DataSourceId = 46, // Other
-                    IncidentTypeId = 36,
+                    Categories = new List<IncidentCategoryJoinDb> { new IncidentCategoryJoinDb { IncidentCategoryId = 1, IncidentId = 0 } }, // Unknown
                     NotifierId = null,
                     SignalUrl = "",
                     LeadOfficer = "",
