@@ -175,7 +175,7 @@ namespace FSA.SIMSManagerDb.Repositories
                                             .Include(a => a.PackSizes)
                                             .Where(o => o.HostId == onlineFormId).ToList();
               //  var incidentType = this.ctx.IncidentCategories.FirstOrDefault(a => a.Title == hazardGroup);
-      //          incidentType = (incidentType == null) ? this.ctx.IncidentCategories.FirstOrDefault(a => a.Id == 1) : incidentType;
+              // incidentType = (incidentType == null) ? this.ctx.IncidentCategories.FirstOrDefault(a => a.Id == 1) : incidentType;
 
                 var prods = mapper.Map<List<IncidentProductDb>>(onlineProds);
                 var stakeholders = this.mapper.Map<List<IncidentStakeholderDb>>(dbEnt.Stakeholders);

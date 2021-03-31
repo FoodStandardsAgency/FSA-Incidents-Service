@@ -512,8 +512,6 @@ namespace FSA.SIMSManagerDb.Repositories
                 signal.Notes.Add(note);
 
                 await ctx.SaveChangesAsync();
-
-
                 return savedIncident.Entity.Id;
             }
 
